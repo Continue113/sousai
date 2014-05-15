@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2014-5-13 16:55:34 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.sousai.domain.Ip" table="IPS">
+        <id name="id" type="java.lang.Long">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <property name="ips" type="java.lang.String">
+            <column name="IP" />
+        </property>
+        <property name="num" type="java.lang.Integer">
+            <column name="NUM" />
+        </property>
+        <many-to-one name="user" class="org.sousai.domain.User" fetch="join">
+            <column name="USER_ID" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

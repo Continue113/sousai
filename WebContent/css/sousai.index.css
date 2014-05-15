@@ -1,0 +1,57 @@
+/* 主页主体快捷图标 */
+.scmn{margin-top: 30px;}
+.scmn li a {
+	float: left;
+	height: 80px;
+	width: 152px;
+	border: 1px solid #ccc;
+	margin: 10px;
+	-webkit-box-shadow: #ccc 0px 0px 5px;
+	-moz-box-shadow: #ccc 0px 0px 5px;
+	box-shadow: #ccc 0px 0px 5px;
+	behavior: url(/PIE.htc);
+}
+
+.scmn li a:hover {
+	-webkit-box-shadow: #666 2px 2px 5px;
+	-moz-box-shadow: #666 2px 2px 5px;
+	box-shadow: #666 2px 2px 5px;
+	behavior: url(/PIE.htc);
+}
+
+.m-sc .u-pic {
+	position: relative;
+	top: 10px;
+	left: 10px;
+	width: 45px;
+	height: 41px;
+}
+
+.m-sc .m-dsc {
+	position: relative;
+	top: -35px;
+	left: 60px;
+}
+
+.m-sc .m-dsc .u-tt {
+	display: -moz-inline-box;
+	display: inline-block;
+	vertical-align: -10px;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.m-sc .m-dsc .u-dsc {
+	display: block;
+}
+
+.m-sc .u-label {
+	display: none;
+	position: relative;
+	top: -34px;
+	height: 25px;
+	line-height: 25px;
+	background-color: #ccc;
+	text-align: center;
+}
+

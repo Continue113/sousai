@@ -1,0 +1,42 @@
+
+
+.courtSearchDetail .courtShortInfo .title{font-weight: bold;font-size: 14px;color: #000;margin: 10px 0;}
+.courtSearchDetail .courtShortInfo .title span{margin-left: 10px;}
+.courtSearchDetail .courtShortInfo .courtImgs{margin-left: 0;}
+.courtSearchDetail .courtShortInfo .courtImg-big img{width:270px;height: 200px;border:1px solid #ccc;}
+
+.courtSearchDetail .courtShortInfo .courtImg-small > .breadcrumb{background-color: #fff;padding: 8px 0px;}
+.courtSearchDetail .courtShortInfo .courtImg-small > .breadcrumb > li{margin: 0 4px 0 0;border: 1px solid #fff;}
+.courtSearchDetail .courtShortInfo .courtImg-small > .breadcrumb > li.firstImg{margin-left: 2px;}
+.courtSearchDetail .courtShortInfo .courtImg-small > .breadcrumb > li.lastImg{margin-right: 0;}
+.courtSearchDetail .courtShortInfo .courtImg-small > .breadcrumb > li.active {border: 1px solid #51a351;}
+.courtSearchDetail .courtShortInfo .courtImg-small img{width: 45px;height: 45px;}
+.courtSearchDetail .courtShortInfo  table{font-size: 12px;}
+.courtSearchDetail .courtShortInfo  table .td2{width: 280px;}
+
+/** nav-tabs **/
+.courtSearchDetail .courtSearchDetail-content{margin-left: 0;}
+.courtSearchDetail .courtDetailMenu{border-bottom: 1px solid #ccc;}
+
+.courtSearchDetail .courtDetailMenu > .active > a {
+    border-top: 2px solid #62c462;
+    border-left: 0;
+    border-right: 0;
+}
+
+
+/** 场地评价列表 **/
+.courtBoxs{border: 1px solid #ccc;margin: 10px 0;float: left;width: 100%;padding-bottom: 20px;}
+.courtBox{margin: 10px;margin-bottom: 0;float: left;}
+.courtBox .courtBox-img{float:left;border: 1px solid #ccc;}
+.courtBox .courtBox-img img{width: 110px;height: 85px;}
+.courtBox .courtBox-block{float: right;margin-left: 10px;}
+.courtBox .courtBox-block p{margin-bottom: 0;font-size: 12px;}
+.courtBox .courtBox-block .courtBox-title{background-color: #f5f5f5;border: 1px solid #ccc;border-bottom: 0;padding:2px 5px;}
+.courtBox .courtBox-block > ul{clear:both;padding: 0;margin-bottom: 0;background-color: #fff;border: 1px solid #ccc;-webkit-border-radius: 0;
+  -moz-border-radius: 0;border-radius: 0;}
+.courtBox .courtBox-block > ul > li{padding-left:5px;vertical-align: middle;text-align: center;border-left: 1px solid #ccc;}
+.courtBox .courtBox-block .courtBox-address{width:200px;border-left: 0;}
+.courtBox .courtBox-block .courtBox-info{width:110px;}
+.courtBox .courtBox-block .courtBox-record{width:80px;}
+.courtBox .courtBox-block .courtBox-evaluation{width:200px;}

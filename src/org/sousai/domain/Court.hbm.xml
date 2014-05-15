@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2014-5-13 16:55:34 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.sousai.domain.Court" table="COURTS">
+        <id name="id" type="java.lang.Long">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <property name="name" type="java.lang.String">
+            <column name="NAME" />
+        </property>
+        <many-to-one name="courtType" class="org.sousai.domain.CourtType" fetch="join">
+            <column name="COURT_TYPE" />
+        </many-to-one>
+        <property name="matchType" type="java.lang.String">
+            <column name="MATCH_TYPE" />
+        </property>
+        <many-to-one name="region" class="org.sousai.domain.Region" fetch="join">
+            <column name="ADDR_ID" />
+        </many-to-one>
+        <property name="addr" type="java.lang.String">
+            <column name="DETAIL_ADDR" />
+        </property>
+        <property name="tableNum" type="java.lang.Integer">
+            <column name="TABLE_NUM" />
+        </property>
+        <property name="tel" type="java.lang.String">
+            <column name="TEL" />
+        </property>
+        <property name="price" type="java.lang.String">
+            <column name="PRICE" />
+        </property>
+        <property name="workTime" type="java.lang.String">
+            <column name="WORK_TIME" />
+        </property>
+        <property name="matches" type="java.lang.Integer">
+            <column name="MATCHES" />
+        </property>
+        <property name="intro" type="java.lang.String">
+            <column name="INTRO" />
+        </property>
+        <property name="verify" type="char">
+            <column name="VERIFY" />
+        </property>
+        <property name="relDate" type="java.sql.Date">
+            <column name="RELEASE_DATE" />
+        </property>
+        <property name="modDate" type="java.sql.Date">
+            <column name="MODIFY_DATE" />
+        </property>
+        <set name="courtPic" table="COURT_PICTURES" inverse="true" lazy="true">
+            <key>
+                <column name="courtID" />
+            </key>
+            <one-to-many class="org.sousai.domain.CourtPic" />
+        </set>
+        <set name="message" table="MESSAGES" inverse="true" lazy="true">
+            <key>
+                <column name="COURT_ID" />
+            </key>
+            <one-to-many class="org.sousai.domain.Message" />
+        </set>
+        <many-to-one name="user" class="org.sousai.domain.User">
+            <column name="UserId" not-null="false" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

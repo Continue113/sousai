@@ -1,0 +1,81 @@
+
+.matchSearch .matchSearch-remind {margin-top:5px;}
+.matchSearch .matchSearch-remind i{vertical-align: -1px;}
+.matchSearch .matchSearch-remind span{color:#62c462;font-weight: bold;}
+
+.matchSearch .searchbox-match-ad{border: 1px solid #ccc;border-top: 3px solid #abcf20;}
+.matchState > .controls > .checkbox{padding-top: 5px;}
+.matchSearch .form-horizontal .control-group{margin-top:10px;margin-bottom: 0; }
+.matchSearch .form-horizontal .control-label {width: 70px;}
+.matchSearch .form-horizontal .controls{margin-left: 80px;}
+.matchSearch .form-horizontal{margin: 0 10px 10px;}
+
+
+.matchSearch .breadcrumb-sortableMenu{margin-bottom:5px;-webkit-border-radius: 0;
+  -moz-border-radius: 0;border-radius: 0;
+/** 按钮样式**/
+  background-color: #f5f5f5;
+  background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
+  background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);
+  border-color: #e6e6e6 #e6e6e6 #bfbfbf;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  *background-color: #e6e6e6;
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  border: 1px solid #cccccc;
+  border-top:0;
+  *border: 0;
+  border-bottom-color: #b3b3b3;
+}
+.matchSearch .breadcrumb-sortableMenu li{border-right: 1px solid #ccc;padding: 0 5px;}
+.matchSearch .breadcrumb-sortableMenu li i{vertical-align: -3px;}
+
+/** 比赛列表 **/
+.matchSearch .matchs {border: 1px solid #ccc;padding:  10px;}
+.matchSearch .matchs .matchBox{margin: 0;}
+.matchSearch .matchs .matchBox-title{background-color: #f5f5f5;border: 1px solid #ccc;border-bottom: 0;padding:2px 5px;}
+.matchSearch .matchs .matchBox > ul{padding: 0;background-color: #fff;border: 1px solid #ccc;-webkit-border-radius: 0;
+  -moz-border-radius: 0;border-radius: 0;}
+.matchSearch .matchs .matchBox > ul > li{padding-left:5px; /*height: 50px;/*line-height:55px;*/vertical-align: middle;text-align: center;border-left: 1px solid #ccc;}
+.matchSearch .matchs .matchBox .matchBox-time{width: 230px;/*line-height:25px;*/border-left: 0;}
+.matchSearch .matchs .matchBox .matchBox-field{width: 150px;/*white-space: nowrap;-o-text-overflow: ellipsis;text-overflow:ellipsis;overflow:hidden;*/}
+.matchSearch .matchs .matchBox .matchBox-state{width: 45px;color: #ff040f;/*white-space: nowrap;*/}
+.matchSearch .matchs .matchBox .matchBox-info{width: 200px;/*white-space: nowrap;-o-text-overflow: ellipsis;text-overflow:ellipsis;overflow:hidden;*/}
+.matchSearch .matchs .matchBox .matchBox-btns{width: 75px;padding: 3px 2px;}
+/**b1**/
+.matchSearch .matchs .b1 .matchBox-time{width: 180px;}
+.matchSearch .matchs .b1 .matchBox-time > div{float:left;}
+.matchSearch .matchs .b1 .matchBox-time > div.line{height: 50px;line-height:50px;}
+.matchSearch .matchs .b1 .matchBox-field{width: 180px;}
+.matchSearch .matchs .b1 .matchBox-info{width: 220px;}
+/**b2**/
+.matchSearch .matchs .b2 ul li,.matchSearch .matchs .b3 ul li{text-align: left;}
+/**b3**/
+.matchSearch .matchs .matchBox-active > .matchBox-title{border: 1px solid #51a351;border-bottom: 0;background-color: #c0f449;color: #000;}
+.matchSearch .matchs .matchBox-active > ul{border: 1px solid #51a351;}
+
+/** 分页 **/
+.matchSearch .pagination{margin-top: 100px;}
+
+/** 重置最小宽度下form-horizontal的左边距 **/
+@media (max-width: 480px) {
+.matchSearch .form-horizontal .control-label {
+    float: none;
+    width: auto;
+    padding-top: 0;
+    text-align: left;
+  }
+.matchSearch .form-horizontal .controls {
+    margin-left: 0;
+  }
+.matchSearch .form-horizontal .control-list {
+    padding-top: 0;
+  }
+}
+/****/

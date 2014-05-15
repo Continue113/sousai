@@ -1,0 +1,71 @@
+<%@ page contentType="text/html; charset=utf-8" language="java" %>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+ <head> 
+  <meta charset="utf-8" /> 
+  <title>登录 &middot; 搜赛网</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+  <meta name="description" content="搜赛网登录页面" /> 
+  <meta name="author" content="" /> 
+  <!-- Le styles --> 
+  <link href="css/bootstrap.css" rel="stylesheet" /> 
+  <link href="css/bootstrap-responsive.css" rel="stylesheet" /> 
+  <link href="css/sousai.common.css" rel="stylesheet" /> 
+  <link href="css/sousai.login.css" rel="stylesheet" /> 
+  <!-- HTML5 shim, for IE6-8 support of HTML5 elements --> 
+  <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+    <![endif]--> 
+ </head> 
+ <body class="login"> 
+  <div class="container"> 
+   <div class="row"> 
+    <div class="span5 offset2"> 
+     <img src="img/logo.png" /> 
+     <span class="g-logotext">用户登录</span> 
+    </div> 
+   </div> 
+   <div class="row g-bd"> 
+    <div class="span3 offset2 loginImg"> 
+     <img src="img/defaultImg.png" /> 
+    </div> 
+    <div class="span3 offset2 form-signin"> 
+     <form action="processLogin" method="post"> 
+      <fieldset> 
+       <legend>会员登录</legend> 
+       <label for="inputUsername">用户名:</label> 
+       <input type="text" class="input-block-level" id="inputUsername" name="user.name" placeholder="用户名" /> 
+       <label for="inputPassword">密码:<a href="#">忘记密码?</a></label> 
+       <input type="password" class="input-block-level" id="inputPassword" name="user.pwd" placeholder="密码" /> 
+       <label class="checkbox"> <input type="checkbox" value="remember-me" /> 记住我 </label> 
+       <button class="span3 btn btn-success" type="submit" id="signinBtn">登录</button> 
+       <label><a href="#">免费注册</a></label> 
+      </fieldset> 
+     </form> 
+    </div> 
+   </div> 
+   <div class="row"> 
+    <div class="span2 offset2"> 
+     <i class="icon-user"></i> 
+     <a href="#">页面改进建议</a> 
+    </div> 
+   </div> 
+   <div class="row g-ftpush"></div> 
+  </div> 
+  <!-- /container --> 
+  <!-- </div>/warp --> 
+  <div class="row g-ft"> 
+   <hr /> 
+   <div class="container"> 
+    <div class="span12">
+      这里是footer 
+    </div> 
+   </div> 
+  </div> 
+  <!-- Le javascript
+    ================================================== --> 
+  <!-- Placed at the end of the document so the pages load faster --> 
+  <script src="js/jquery-1.11.0.min.js"></script> 
+  <script src="js/bootstrap.min.js"></script>  
+ </body>
+</html>

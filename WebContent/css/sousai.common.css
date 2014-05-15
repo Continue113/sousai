@@ -1,0 +1,351 @@
+html {
+  height: 100%;
+}
+body {  position: relative;
+  min-height: 100%;
+  _height: 100%;
+  _position:;
+  padding-top: 40px;}
+form legend {
+    display: none;
+}
+
+a {
+    color: #797979;
+}
+
+a:hover,a:focus {
+    color: #000;
+}
+
+a:hover,a:active{text-decoration: none;}
+
+ul{list-style: none;}
+
+.error{color: red;}
+/** 页头 **/
+.navbar-inverse .navbar-inner {
+    height: 36px;
+    background-color: #f5f5f5;
+background-image: -moz-linear-gradient(top, #f5f5f5, #f5f5f5);
+background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f5f5f5), to(#f5f5f5));
+background-image: -webkit-linear-gradient(top, #f5f5f5, #f5f5f5);
+background-image: -o-linear-gradient(top, #f5f5f5, #f5f5f5);
+background-image: linear-gradient(to bottom, #f5f5f5, #f5f5f5);
+background-repeat: repeat-x;
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff5f5f5', endColorstr='#fff5f5f5', GradientType=0);
+border-color: #f5f5f5;
+}
+.navbar-inner a.dropdown-hover:hover,.navbar-inner a.dropdown-hover:active,.navbar-inner a.dropdown-hover:focus{color:#abcf20;}
+.navbar-inner ul li:hover ul.dropdown-menu{display:block;} 
+.navbar-inner .dropdown-menu{margin-top: 0;}
+.hdcity {
+    margin: 8px 15px 0 0;
+    text-align: right;
+}
+.hdcity-hide {
+    display: none;
+}
+/** 请登录链接颜色 **/
+.unsignin,a.unsignin:hover{color: #abcf20;}
+.navbar .btn{margin-top: 0;}
+/** 页头和页尾占位块 **/
+.hdpush {
+    height: 50px;
+}
+.ftpush {
+    height: 100px;
+}
+/** 页尾 **/
+.footer {
+  margin: 150px auto 0 auto;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  padding-bottom: 50px;
+  text-align:center;
+}
+/** LOGO旁边的说明信息 **/
+.logotext {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    vertical-align: -18px;
+    padding-left: 10px;
+    margin-left: 5px;
+    font-size: 20px;
+    font-weight: normal;
+    background: url(../img/logoPoint-5-5.jpg) no-repeat 0 50%;
+}
+
+/** 比赛、场地搜索页面提醒搜索结果 **/
+.search-remind {margin-top:5px;}
+.search-remind i{vertical-align: -1px;}
+.search-remind span{color:#62c462;font-weight: bold;}
+/****/
+/** 表头标题 **/
+.page-header {margin: 0;}
+/** 广告框 **/
+.adFirst{margin-top:20px;height: 50px;border: 1px solid #ccc;}
+.adSecond{margin-top:20px;margin-left:-20px;height:700px;border: 1px solid #ccc;}
+/****/
+/** 缩略项外框hover focus颜色 **/
+a.thumbnail:hover,a.thumbnail:focus {
+  border-color: #51a351;
+  -webkit-box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
+  -moz-box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
+  box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
+}
+/** 水平排列表单 **/
+.searchbox-ad{border: 1px solid #ccc;border-top: 3px solid #abcf20;}
+.form-horizontal{margin: 0 10px 10px;}
+.form-horizontal .control-group{margin-top:10px;margin-bottom: 0; }
+.form-horizontal .control-label {width: 70px;}
+.form-horizontal .controls{margin-left: 80px;}
+/****/
+
+/** 重置最小宽度下form-horizontal的左边距 **/
+@media (max-width: 480px) {
+.form-horizontal .control-label {
+    float: none;
+    width: auto;
+    padding-top: 0;
+    text-align: left;
+  }
+.form-horizontal .controls {
+    margin-left: 0;
+  }
+.form-horizontal .control-list {
+    padding-top: 0;
+  }
+}
+/****/
+
+
+/** 更改默认表单输入框等颜色 **/
+select:focus {
+    outline: thin dotted #6bd308;
+}
+
+textarea:focus,select:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus {
+    border-color: rgba(107, 211, 8, 0.8);
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(107, 211, 8,.6);
+    -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(107, 211, 8,.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(107, 211, 8,.6);
+}
+
+/** 页面LOGO搜索框 **/
+ul.searchboxMenu {
+    margin-bottom: 3px;
+    border-bottom: 1px solid #abcf20;
+}
+ul.searchboxMenu a {
+    padding: 3px 15px;
+}
+ul.searchboxMenu > .active > a {
+  font-weight: bold;
+  color: #fff;
+  background-color: #abcf20;
+  border: 1px solid #abcf20;
+  border-bottom-color: transparent;
+}
+ul.searchboxMenu > li > a:hover,
+ul.searchboxMenu > li > a:focus,
+ul.searchboxMenu > .active > a:hover,
+ul.searchboxMenu > .active > a:focus {
+  font-weight: bold;
+  color: #fff;
+  background-color: #abcf20;
+}
+/** 覆盖原auto **/
+.tab-content{overflow: visible;}
+/** 搜索框 解决input-prepend的外框问题 **/
+.span7 > .tab-content {
+  padding-left: 1px;
+}
+.span7 > .tab-content > .tab-pane input[type="text"]{
+    border: 1px solid #abcf20;
+}
+.span7 > .tab-content .input-append .add-on,.span7 > .tab-content .input-prepend .add-on {
+    background-color: #abcf20;
+    border: 1px solid #abcf20;
+}
+.span7 > .tab-content .input-append .add-selectType{background-color: #fff;cursor: pointer;}
+.span7 > .tab-content .input-append .add-selectType .caret{vertical-align: 2px;}
+.span7 > .tab-content .input-append .btn-search {
+  width: 90px;
+  font-size: 16px;
+}
+/** 高级搜索 **/
+.span7 > .tab-content .searchbox-other {
+  line-height: 15px;
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  vertical-align: -3px;
+  font-size: 12px;
+  margin-left: 10px;
+}
+
+.span7 > .tab-content .searchbox-other p {
+  margin-bottom: 0;
+}
+/** 热门搜索 和 主页快捷搜赛 **/
+.breadcrumb-fff .breadcrumb {
+  background-color: #fff;
+  padding: 0 15px;
+  margin-bottom: 0;
+}
+/** 热门搜索 分割线 **/
+.span7 .breadcrumb-fff hr {
+  margin: 0;
+}
+.modal-body .breadcrumb-title{font-weight: bold;}
+
+/** 下拉框有小三角 **/
+.dropdown-menu:before {
+position: absolute;
+top: -7px;
+left: 9px;
+display: inline-block;
+border-right: 7px solid transparent;
+border-bottom: 7px solid #ccc;
+border-left: 7px solid transparent;
+border-bottom-color: rgba(0, 0, 0, 0.2);
+content: '';
+}
+.dropdown-menu:after {
+position: absolute;
+top: -6px;
+left: 10px;
+display: inline-block;
+border-right: 6px solid transparent;
+border-bottom: 6px solid #ffffff;
+border-left: 6px solid transparent;
+content: '';
+}
+
+/** 下拉框hover背景颜色 **/
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus,
+.dropdown-submenu:hover > a,
+.dropdown-submenu:focus > a {
+  text-decoration: none;
+  color: #000;
+  text-shadow: 0 1px 0 #ffffff;/** head导航下拉框的文字背景颜色 **/
+  background-color: #cccccc;
+  background-image: -moz-linear-gradient(top, #cccccc, #dddddd);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#cccccc), to(#dddddd));
+  background-image: -webkit-linear-gradient(top, #cccccc, #dddddd);
+  background-image: -o-linear-gradient(top, #cccccc, #dddddd);
+  background-image: linear-gradient(to bottom, #cccccc, #dddddd);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffcccccc', endColorstr='#ffdddddd', GradientType=0);
+}
+/****************************/
+.btn-success {
+  color: #fcffff;
+  text-shadow: #fff;
+  background-color: #abcf20;
+  background-image: -moz-linear-gradient(top, #abcf20, #abcf20);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#abcf20), to(#abcf20));
+  background-image: -webkit-linear-gradient(top, #abcf20, #abcf20);
+  background-image: -o-linear-gradient(top, #abcf20, #abcf20);
+  background-image: linear-gradient(to bottom, #abcf20, #abcf20);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffabcf20', endColorstr='#ffabcf20', GradientType=0);
+  border-color: #abcf20;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  *background-color: #abcf20;
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  border: 1px solid #abcf20;
+  font-weight: bold;
+}
+.btn-success:hover,
+.btn-success:focus,
+.btn-success:active,
+.btn-success.active,
+.btn-success.disabled,
+.btn-success[disabled] {
+  font-weight: bold;
+  color: #fff;
+  background-color: #abcf20;
+  *background-color: #abcf20;
+}
+.btn-success:active,
+.btn-success.active {
+  background-color: #abcf20 \9;
+}
+/** /链接颜色为绿色 **/
+
+/** 比赛列表 **/
+.matchBoxs{border: 1px solid #ccc;margin: 10px 0;float: left;padding: 10px;}
+.matchBox .matchBox-all{float: left;}
+.matchBox .matchBox-title{background-color: #f5f5f5;border: 1px solid #ccc;border-bottom: 0;padding:2px 5px;}
+.matchBox ul{padding: 0;background-color: #fff;border: 1px solid #ccc;-webkit-border-radius: 0;
+  -moz-border-radius: 0;border-radius: 0;}
+.matchBox ul > li{padding-left:5px;vertical-align: middle;text-align: center;border-left: 1px solid #ccc;}
+.matchBox .matchBox-time{width: 166px;border-left: 0;}
+.matchBox .matchBox-time > div{float:left;}
+.matchBox .matchBox-time > div.line{height: 50px;line-height:50px;}
+.matchBox .matchBox-address{width: 180px;}
+.matchBox .matchBox-state{width: 50px;color: #ff040f;}
+.matchBox .matchBox-info{width: 220px;}
+.matchBox .matchBox-btns{width: 85px;}
+
+/** 场地列表 **/
+.courtBoxs{border: 1px solid #ccc;margin: 10px 0;float: left;padding-bottom: 20px;}
+.courtBox{margin: 10px 0 0 10px;float: left;}
+.courtBox .courtBox-img{float:left;border: 1px solid #ccc;}
+.courtBox .courtBox-img img{width: 110px;height: 85px;}
+.courtBox .courtBox-block{float: right;margin-left: 10px;}
+.courtBox .courtBox-block p{margin-bottom: 0;font-size: 12px;}
+.courtBox .courtBox-block .courtBox-title{background-color: #f5f5f5;border: 1px solid #ccc;border-bottom: 0;padding:2px 5px;}
+.courtBox .courtBox-block .courtBox-title .btn-mini{line-height: 16px;}
+.courtBox .courtBox-block ul{clear:both;padding: 0;margin-bottom: 0;background-color: #fff;border: 1px solid #ccc;-webkit-border-radius: 0;
+  -moz-border-radius: 0;border-radius: 0;}
+.courtBox .courtBox-block ul > li{padding-left:5px;vertical-align: middle;text-align: center;border-left: 1px solid #ccc;}
+.courtBox .courtBox-block .courtBox-address{width:200px;border-left: 0;}
+.courtBox .courtBox-block .courtBox-info{width:110px;}
+.courtBox .courtBox-block .courtBox-record{width:80px;}
+.courtBox .courtBox-block .courtBox-evaluation{width:200px;}
+
+/** 列表滑过标题和外框变色 **/
+div.box-active div.matchBox-title , div.box-active > div.courtBox-block > div.courtBox-title {border: 1px solid #51a351;border-bottom: 0;background-color: #c0f449;color: #ffffff;font-weight: bold;}
+div.box-active div.matchBox-title a:first-child, div.box-active > div.courtBox-block > div.courtBox-title a:first-child{color: #fff;}
+div.box-active ul.breadcrumb, div.box-active > div.courtBox-block > ul.breadcrumb{border: 1px solid #51a351;}
+
+/** 筛选无结果 **/
+.jplist-no-results{float: left;
+width: 100%;text-align: center;margin-top: 20px;}
+/** 下拉列表右边距 **/
+.jplist-drop-down ul li span{
+  margin-right: 10px;
+}
+/** 下拉菜单分割线 **/
+.jplist-drop-down ul li.divider {
+height: 1px;
+margin: 3px 1px;
+overflow: hidden;
+background-color: #e5e5e5;
+border-bottom: 1px solid #ffffff;
+}

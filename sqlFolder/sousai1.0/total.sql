@@ -1,0 +1,14 @@
+create database if not exists sousai;
+use sousai;
+source F:/SQL/sousai/court_types.sql;
+source F:/SQL/sousai/court_pictures.sql;
+source F:/SQL/sousai/user_pictures.sql;
+source F:/SQL/sousai/courts.sql;
+source F:/SQL/sousai/users.sql;
+source F:/SQL/sousai/ips.sql;
+source F:/SQL/sousai/collection.sql;
+source F:/SQL/sousai/matches.sql;
+source F:/SQL/sousai/messages.sql;
+source F:/SQL/sousai/user_court.sql;
+source F:/SQL/sousai/user_match.sql;
+source F:/SQL/sousai/user_marks.sql;
