@@ -69,9 +69,9 @@ $("#collectLink").click(function(){
 function initProvince(){
 $.post("selRegion?region.level=0",null,function(ss){
   alert("ss内容为："+ss);
-  var jsondata = eval("("+ss+")");
+  //var jsondata = eval("("+ss+")");
   var ssToStr=JSON.stringify(ss); 
-  alert("ss内容为(字符串)："+jsondata+" ssToStr:"+ssToStr);
+  alert("ss内容为(字符串)-ssToStr:"+ssToStr);
 });
 /*$.ajax({
   url:"selRegion?region.level=0",
