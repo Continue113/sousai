@@ -71,7 +71,7 @@ $.post("selRegion?region.level=0",null,function(data){
   var selectProvince = $(".selectProvince");
   selectProvince.empty().append("<option value=0>请选择</option>");
   for ( var i = 0; i < data.length; i++) {
-  selectProvince.append("<option value=" + data[i].id + " data-order=\"" + data[i].order + "\" >"+ data[i].name + "</option>");
+  selectProvince.append("<option data-order=\"" + data[i].order + "\" >"+ data[i].name + "</option>");
   }
 });
 }
@@ -81,14 +81,14 @@ $(".selectProvince").change(function selCity(){
  var tgPrt = $(this).parent();
  if(tgPrt.find(".selectProvince option:selected").attr("value") != "0"){
   tgPrt.find(".selectCity").show();
-  $.post("selRegion?region.level=1&id="+tgPrt.find(".selectProvince option:selected").attr("value")+"&order="+tgPrt.find(".selectProvince option:selected").attr("data-order")+"",
+  $.post("selRegion?region.level=1&region.name="+tgPrt.find(".selectProvince option:selected").text()+"&region.order="+tgPrt.find(".selectProvince option:selected").attr("data-order")+"",
     null,
     function(data) {
  var selectCity = $(this).parent().find(".selectCity");
  selectCity.empty();
  selectCity.append("<option value=0>请选择</option>");
  for ( var i = 0; i < data.length; i++) {
- selectCity.append("<option value=" + data[i].id + " data-order=\"" + data[i].order + "\" >"+ data[i].name + "</option>");
+ selectCity.append("<option data-order=\"" + data[i].order + "\" >"+ data[i].name + "</option>");
  }
 });
  }else{
@@ -104,12 +104,12 @@ $(".selectCity").change(function selCountry(){
  var tgPrt = $(this).parent();
  if(tgPrt.find(".selectCity option:selected").attr("value") != "0"){
   tgPrt.find(".selectCountry").show(); 
-  $.post("selRegion?region.level=2&id="+tgPrt.find(".selectCity").attr("value")+"&order="+tgPrt.find(".selectProvince option:selected").attr("data-order")+"",null,function(data) {
+  $.post("selRegion?region.level=2&region.name="+tgPrt.find(".selectCity").text()+"&region.order="+tgPrt.find(".selectProvince option:selected").attr("data-order")+"",null,function(data) {
  var selectCountry = $(this).parent().find(".selectCountry");
  selectCountry.empty();
  selectCountry.append("<option value=0>请选择</option>");
  for ( var i = 0; i < data.length; i++) {
- selectCountry.append("<option value=" + data[i].id + " data-order=\"" + data[i].order + "\" >"+ data[i].name + "</option>");
+ selectCountry.append("<option data-order=\"" + data[i].order + "\" >"+ data[i].name + "</option>");
  }
 });
  }else{
