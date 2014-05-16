@@ -68,10 +68,13 @@ $("#collectLink").click(function(){
 //初始化省
 function initProvince(){
 $.post("selRegion?region.level=0",null,function(ss){
-  alert("ss内容为："+ss);
-  //var jsondata = eval("("+ss+")");
   var ssToStr=JSON.stringify(ss); 
-  alert("ss内容为(字符串)-ssToStr:"+ssToStr);
+  alert("收到的数据为："+ssToStr);
+  var selectProvince = $(".selectProvince");
+  selectProvince.empty().append("<option value=0>请选择</option>");
+  for ( var i = 0; i < ss.length; i++) {
+  selectProvince.append("<option value=" + ss[i].code + ">"+ ss[i].name + "</option>");
+  }
 });
 /*$.ajax({
   url:"selRegion?region.level=0",
