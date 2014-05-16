@@ -71,7 +71,7 @@ $.post("selRegion?region.level=0",null,function(data){
   var selectProvince = $(".selectProvince");
   selectProvince.empty().append("<option value=0>请选择省</option>");
   for ( var i = 0; i < data.length; i++) {
-  selectProvince.append("<option data-order=\"" + data[i].order + "\" >"+ data[i].name + "</option>");
+  selectProvince.append("<option value=" + data[i].code + " data-order=\"" + data[i].order + "\" >"+ data[i].name + "</option>");
   }
 });
 }
@@ -84,13 +84,13 @@ $(".selectProvince").change(function selCity(){
   type: "POST",
   url: "selRegion",
   contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-  data: {"region.level": 1,"region.name": tgPrt.find(".selectProvince option:selected").text(),"region.order": tgPrt.find(".selectProvince option:selected").attr("data-order")},
+  data: {"region.level": 1,"region.code": tgPrt.find(".selectProvince option:selected").attr("value"),"region.order": tgPrt.find(".selectProvince option:selected").attr("data-order")},
   dataType: "json",
   success: function(rspdata){
   var selectCity = $(".selectCity");
   selectCity.empty().append("<option value=0>请选择市</option>");
   for ( var i = 0; i < rspdata.length; i++) {
-  selectCity.append("<option data-order=\"" + rspdata[i].order + "\" >"+ rspdata[i].name + "</option>");
+  selectCity.append("<option value=" + rspdata[i].code + " data-order=\"" + rspdata[i].order + "\" >"+ rspdata[i].name + "</option>");
   }
   },
   error: function(){
@@ -115,13 +115,13 @@ $(".selectCity").change(function selCountry(){
   type: "POST",
   url: "selRegion",
   contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-  data: {"region.level": 2,"region.name": tgPrt.find(".selectCity option:selected").text(),"region.order": tgPrt.find(".selectCity option:selected").attr("data-order")},
+  data: {"region.level": 2,"region.code": tgPrt.find(".selectCity option:selected").attr("value"),"region.order": tgPrt.find(".selectCity option:selected").attr("data-order")},
   dataType: "json",
   success: function(rspdata){
   var selectCountry = $(".selectCountry");
   selectCountry.empty().append("<option value=0>请选择区</option>");
   for ( var i = 0; i < rspdata.length; i++) {
-  selectCountry.append("<option data-order=\"" + rspdata[i].order + "\" >"+ rspdata[i].name + "</option>");
+  selectCountry.append("<option value=" + rspdata[i].code + " data-order=\"" + rspdata[i].order + "\" >"+ rspdata[i].name + "</option>");
   }
   },
   error: function(){
