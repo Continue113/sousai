@@ -67,11 +67,12 @@ $("#collectLink").click(function(){
 /** 三级省市区联动 P:province C:city C:country**/
 //初始化省
 function initProvince(){
-$.post("selRegion?region.level=1",null,callbackProvince);
+$.post("selRegion?region.level=0",null,callbackProvince);
 }
 //省份
  function callbackProvince(data) {
   var data = eval("("+data+")");
+  alert("收到的数据为："+data);
   var selectProvince = $(".selectProvince");
   selectProvince.empty().append("<option value=0>请选择</option>");
   for ( var i = 0; i < data.length; i++) {
