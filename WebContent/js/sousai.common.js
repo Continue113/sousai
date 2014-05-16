@@ -68,8 +68,10 @@ $("#collectLink").click(function(){
 //初始化省
 function initProvince(){
 $.post("selRegion?region.level=0",null,function(ss){
+  alert("ss内容为："+ss);
   var jsondata = eval("("+ss+")");
-  alert("ss内容为："+jsondata);
+  var ssToStr=JSON.stringify(ss); 
+  alert("ss内容为(字符串)："+jsondata+" ssToStr:"+ssToStr);
 });
 /*$.ajax({
   url:"selRegion?region.level=0",
