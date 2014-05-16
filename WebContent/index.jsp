@@ -146,7 +146,6 @@
   <script src="js/sousai.common.js"></script> 
   <script>
   $(function(){
-    
     /** 首页快捷图标 **/
     $(".m-sc").hover(function(){
       $(this).find("div[class=u-label]").slideDown();
@@ -161,8 +160,6 @@
         $(this).find("img").attr("src",imgurl.split(".")[0]+"-grey.png");
       };
     });
-
-    initPCC();
   })
 
   </script>  

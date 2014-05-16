@@ -71,11 +71,12 @@ $.post("selRegion?region.level=2",null,callbackProvince);
 }
 //省份
  function callbackProvince(data) {
+  var data = eval("("+data+")");
   var selectProvince = $(".selectProvince");
   selectProvince.empty().append("<option value=0>请选择</option>");
-  $.each(data.roomList, function(i,item){
-  selectProvince.append("<option value=" + item.code + ">"+ item.name + "</option>");
-  });
+  for ( var i = 0; i < data.length; i++) {
+  selectProvince.append("<option value=" + data[i].code + ">"+ data[i].name + "</option>");
+  }
  }
   //市区
  function callbackCity(data) {
