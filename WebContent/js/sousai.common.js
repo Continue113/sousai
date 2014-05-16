@@ -83,7 +83,9 @@ $.ajax({
   }
  },
   error:function(xhr){alert('出错。。\n'+xhr.responseText);},
-});
+}).done(function() { alert("success"); })
+  .fail(function() { alert("error"); })
+  .always(function() { alert("complete"); });
 }
 //省份
  function callbackProvince(data) {
