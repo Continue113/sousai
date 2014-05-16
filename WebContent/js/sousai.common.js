@@ -73,9 +73,9 @@ $.ajax({
   type:"POST",
   data:null,
   datatype:"json",
-  success:function(data) {
-  var jsondata = eval("("+data+")");
-  alert("收到的数据为："+data);
+  success:function(rspdata) {
+  var jsondata = eval("("+rspdata+")");
+  alert("收到的数据为："+rspdata);
   var selectProvince = $(".selectProvince");
   selectProvince.empty().append("<option value=0>请选择</option>");
   for ( var i = 0; i < jsondata.length; i++) {
