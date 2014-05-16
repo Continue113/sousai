@@ -67,12 +67,26 @@ $("#collectLink").click(function(){
 /** 三级省市区联动 P:province C:city C:country**/
 //初始化省
 function initProvince(){
-$.post("selRegion?region.level=0",null,function(data){
+/*$.post("selRegion?region.level=0",null,function(data){
   var selectProvince = $(".selectProvince");
   selectProvince.empty().append("<option value=0>请选择</option>");
   for ( var i = 0; i < data.length; i++) {
   selectProvince.append("<option data-order=\"" + data[i].order + "\" >"+ data[i].name + "</option>");
   }
+});*/
+$.ajax({
+  type: "POST",
+  url: "selRegion",
+  data: {"region.level": 0},
+  success: function(data){
+  var selectProvince = $(".selectProvince");
+  selectProvince.empty().append("<option value=0>请选择</option>");
+  for ( var i = 0; i < data.length; i++) {
+  selectProvince.append("<option data-order=\"" + data[i].order + "\" >"+ data[i].name + "</option>");
+  },
+  dataType: "json",
+  contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+  error: function(){alert("出错了。");},
 });
 }
 //当选中一个省份后，查询对应的市区名称
@@ -104,7 +118,9 @@ $(".selectCity").change(function selCountry(){
  var tgPrt = $(this).parent();
  if(tgPrt.find(".selectCity option:selected").attr("value") != "0"){
   tgPrt.find(".selectCountry").show(); 
-  $.post("selRegion?region.level=2&region.name="+tgPrt.find(".selectCity").text()+"&region.order="+tgPrt.find(".selectProvince option:selected").attr("data-order")+"",null,function(data) {
+  $.post("selRegion?region.level=2&region.name="+tgPrt.find(".selectCity").text()+"&region.order="+tgPrt.find(".selectProvince option:selected").attr("data-order")+"",
+    null,
+    function(data) {
  var selectCountry = $(this).parent().find(".selectCountry");
  selectCountry.empty();
  selectCountry.append("<option value=0>请选择</option>");
