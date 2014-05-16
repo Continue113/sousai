@@ -5,7 +5,9 @@ body {  position: relative;
   min-height: 100%;
   _height: 100%;
   _position:;
-  padding-top: 40px;}
+  padding-top: 40px;
+  font: 12px/1.5 tahoma,arial,'Hiragino Sans GB',\5b8b\4f53,sans-serif;
+}
 form legend {
     display: none;
 }
@@ -25,27 +27,30 @@ ul{list-style: none;}
 .error{color: red;}
 /** 页头 **/
 .navbar-inverse .navbar-inner {
-    height: 36px;
+    padding: 5px 15px;
+    min-height: 25px;
     background-color: #f5f5f5;
-background-image: -moz-linear-gradient(top, #f5f5f5, #f5f5f5);
-background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f5f5f5), to(#f5f5f5));
-background-image: -webkit-linear-gradient(top, #f5f5f5, #f5f5f5);
-background-image: -o-linear-gradient(top, #f5f5f5, #f5f5f5);
-background-image: linear-gradient(to bottom, #f5f5f5, #f5f5f5);
-background-repeat: repeat-x;
-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff5f5f5', endColorstr='#fff5f5f5', GradientType=0);
-border-color: #f5f5f5;
+    background-image: -moz-linear-gradient(top, #f5f5f5, #f5f5f5);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f5f5f5), to(#f5f5f5));
+    background-image: -webkit-linear-gradient(top, #f5f5f5, #f5f5f5);
+    background-image: -o-linear-gradient(top, #f5f5f5, #f5f5f5);
+    background-image: linear-gradient(to bottom, #f5f5f5, #f5f5f5);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff5f5f5', endColorstr='#fff5f5f5', GradientType=0);
+    border-color: #f5f5f5;
+}
+.navbar-inner .breadcrumb{padding: 0;margin: 0;}
+.navbar-fixed-top .navbar-inner, .navbar-static-top .navbar-inner {
+-webkit-box-shadow: 0 0 0 rgba(0,0,0,.1);
+-moz-box-shadow: 0 0 0 0 rgba(0,0,0,.1);
+box-shadow: 0 0 0 0 rgba(0,0,0,.1);
 }
 .navbar-inner a.dropdown-hover:hover,.navbar-inner a.dropdown-hover:active,.navbar-inner a.dropdown-hover:focus{color:#abcf20;}
 .navbar-inner ul li:hover ul.dropdown-menu{display:block;} 
 .navbar-inner .dropdown-menu{margin-top: 0;}
-.hdcity {
-    margin: 8px 15px 0 0;
-    text-align: right;
-}
-.hdcity-hide {
-    display: none;
-}
+.hdcity {margin: 0;text-align: right;}
+.hdcity p{margin: 0;}
+.hdcity-hide {display: none;}
 /** 请登录链接颜色 **/
 .unsignin,a.unsignin:hover{color: #abcf20;}
 .navbar .btn{margin-top: 0;}
@@ -79,18 +84,17 @@ border-color: #f5f5f5;
     font-weight: normal;
     background: url(../img/logoPoint-5-5.jpg) no-repeat 0 50%;
 }
-
+/** 表格标题隐藏 **/
+.table caption {display: none;}
 /** 比赛、场地搜索页面提醒搜索结果 **/
 .search-remind {margin-top:5px;}
 .search-remind i{vertical-align: -1px;}
 .search-remind span{color:#62c462;font-weight: bold;}
-/****/
 /** 表头标题 **/
 .page-header {margin: 0;}
 /** 广告框 **/
 .adFirst{margin-top:20px;height: 50px;border: 1px solid #ccc;}
 .adSecond{margin-top:20px;margin-left:-20px;height:700px;border: 1px solid #ccc;}
-/****/
 /** 缩略项外框hover focus颜色 **/
 a.thumbnail:hover,a.thumbnail:focus {
   border-color: #51a351;
@@ -104,8 +108,6 @@ a.thumbnail:hover,a.thumbnail:focus {
 .form-horizontal .control-group{margin-top:10px;margin-bottom: 0; }
 .form-horizontal .control-label {width: 70px;}
 .form-horizontal .controls{margin-left: 80px;}
-/****/
-
 /** 重置最小宽度下form-horizontal的左边距 **/
 @media (max-width: 480px) {
 .form-horizontal .control-label {
@@ -121,9 +123,6 @@ a.thumbnail:hover,a.thumbnail:focus {
     padding-top: 0;
   }
 }
-/****/
-
-
 /** 更改默认表单输入框等颜色 **/
 select:focus {
     outline: thin dotted #6bd308;
@@ -183,12 +182,13 @@ ul.searchboxMenu > .active > a:focus {
 .span7 > .tab-content > .tab-pane input[type="text"]{
     border: 1px solid #abcf20;
 }
+.span7 > .tab-content .input-append, .span7 > .tab-content .input-prepend {margin-bottom: 2px;}
 .span7 > .tab-content .input-append .add-on,.span7 > .tab-content .input-prepend .add-on {
     background-color: #abcf20;
     border: 1px solid #abcf20;
 }
-.span7 > .tab-content .input-append .add-selectType{background-color: #fff;cursor: pointer;}
-.span7 > .tab-content .input-append .add-selectType .caret{vertical-align: 2px;}
+.span7 > .tab-content .input-append .add-selectType{width: 64px;text-align: center;background-color: #fff;cursor: pointer;}
+.span7 > .tab-content .input-append .add-selectType .caret{margin-top: 10px;}
 .span7 > .tab-content .input-append .btn-search {
   width: 90px;
   font-size: 16px;
@@ -200,10 +200,8 @@ ul.searchboxMenu > .active > a:focus {
   *display: inline;
   *zoom: 1;
   vertical-align: -3px;
-  font-size: 12px;
   margin-left: 10px;
 }
-
 .span7 > .tab-content .searchbox-other p {
   margin-bottom: 0;
 }
@@ -215,10 +213,10 @@ ul.searchboxMenu > .active > a:focus {
 }
 /** 热门搜索 分割线 **/
 .span7 .breadcrumb-fff hr {
-  margin: 0;
+  margin: 0;margin-top: 2px;
 }
+/** 选择分类对话框标题 **/
 .modal-body .breadcrumb-title{font-weight: bold;}
-
 /** 下拉框有小三角 **/
 .dropdown-menu:before {
 position: absolute;
@@ -330,8 +328,8 @@ content: '';
 .courtBox .courtBox-block .courtBox-evaluation{width:200px;}
 
 /** 列表滑过标题和外框变色 **/
-div.box-active div.matchBox-title , div.box-active > div.courtBox-block > div.courtBox-title {border: 1px solid #51a351;border-bottom: 0;background-color: #c0f449;color: #ffffff;font-weight: bold;}
-div.box-active div.matchBox-title a:first-child, div.box-active > div.courtBox-block > div.courtBox-title a:first-child{color: #fff;}
+div.box-active div.matchBox-title , div.box-active > div.courtBox-block > div.courtBox-title {border: 1px solid #51a351;border-bottom: 0;color: #000;font-weight: bold;}
+div.matchBox-title a:first-child, div.box-active div.matchBox-title a:first-child, div.courtBox-block > div.courtBox-title a:first-child, div.box-active > div.courtBox-block > div.courtBox-title a:first-child{color: #000;}
 div.box-active ul.breadcrumb, div.box-active > div.courtBox-block > ul.breadcrumb{border: 1px solid #51a351;}
 
 /** 筛选无结果 **/

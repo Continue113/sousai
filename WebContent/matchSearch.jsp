@@ -141,65 +141,13 @@
          <div class="jplist-panel jplist-panel-top"> 
           <div class="jplist-drop-down" data-control-type="drop-down" data-control-name="sort" data-control-action="sort" data-datetime-format="{year}-{month}-{day}"> 
            <ul>
-            <li><span data-path=".matchBox-releaseTime" data-order="asc" data-type="datetime" data-default="true">发布时间</span></li> 
-            <li><span data-path=".matchBox-matchTime" data-order="asc" data-type="datetime">比赛时间</span></li>
-            <li><span data-path=".matchBox-title" data-order="asc" data-type="text">标题</span></li>
-            <li><span data-path=".matchBox-state" data-order="asc" data-type="text">状态</span></li>
+            <li><span data-path="default" data-default="true">排序方式</span></li>
+            <li><span data-path=".matchBox-releaseTime" data-order="asc" data-type="datetime">发布时间</span><i class="icon-arrow-up"></i></li> 
+            <li><span data-path=".matchBox-matchTime" data-order="asc" data-type="datetime">比赛时间</span><i class="icon-arrow-up"></i></li>
+            <li><span data-path=".matchBox-title" data-order="asc" data-type="text">比赛名称</span><i class="icon-arrow-up"></i></li>
+            <li><span data-path=".matchBox-state" data-order="asc" data-type="text">比赛状态</span><i class="icon-arrow-up"></i></li>
            </ul> 
           </div>
-
-          <!-- jplist分类筛选级联下拉菜单 -->
-          <div class="jplist-drop-down matchType-filter" data-control-type="drop-down" data-control-name="matchType-filter" data-control-action="filter"> 
-           <ul> 
-            <li><span data-path="default">比赛类型</span></li> 
-            <li><span data-path=".courtBox-matchType-xql" data-forcn="matchType-filter-xql">小球类</span></li>
-            <li><span data-path=".courtBox-matchType-dql" data-forcn="matchType-filter-dql">大球类</span></li>
-            <li><span data-path=".courtBox-matchType-qpl" data-forcn="matchType-filter-qpl">棋牌类</span></li>
-            <li><span data-path=".courtBox-matchType-wyl" data-forcn="matchType-filter-wyl">文艺类</span></li>
-            <li><span data-path=".courtBox-matchType-qt" data-forcn="matchType-filter-qt">其他</span></li>
-           </ul>
-          </div>
-
-          <div class="jplist-drop-down matchType-filter-xql hide" data-control-type="drop-down" data-control-name="matchType-filter-xql" data-control-action="filter"> 
-           <ul>
-            <li><span data-path="default">请选择小球类型</span></li>
-            <li class="divider"></li>
-            <li><span class="pull-right" data-path=".courtBox-courtType-zq">乒乓球</span></li>
-            <li><span class="pull-right" data-path=".courtBox-courtType-pp">羽毛球</span></li> 
-            <li><span class="pull-right" data-path=".courtBox-courtType-lq">网球</span></li> 
-            <li><span class="pull-right" data-path=".courtBox-courtType-zq">台球</span></li>
-           </ul>
-          </div>
-
-          <div class="jplist-drop-down matchType-filter-dql hide" data-control-type="drop-down" data-control-name="matchType-filter-dql" data-control-action="filter"> 
-           <ul> 
-            <li><span data-path="default">请选择大球类型</span></li>
-            <li class="divider"></li>
-            <li><span class="pull-right" data-path=".courtBox-courtType-zq">篮球</span></li>
-            <li><span class="pull-right" data-path=".courtBox-courtType-pp">足球</span></li> 
-            <li><span class="pull-right" data-path=".courtBox-courtType-lq">排球</span></li>
-           </ul>
-          </div>
-
-          <div class="jplist-drop-down matchType-filter-qpl hide" data-control-type="drop-down" data-control-name="matchType-filter-qpl" data-control-action="filter"> 
-           <ul> 
-            <li><span data-path="default">请选择棋牌类型</span></li>
-            <li class="divider"></li>
-            <li><span class="pull-right" data-path=".courtBox-courtType-zq">麻将</span></li>
-            <li><span class="pull-right" data-path=".courtBox-courtType-pp">围棋</span></li> 
-            <li><span class="pull-right" data-path=".courtBox-courtType-lq">象棋</span></li> 
-            <li><span class="pull-right" data-path=".courtBox-courtType-zq">扑克牌</span></li>
-           </ul>
-          </div>
-
-          <div class="jplist-drop-down matchType-filter-wyl hide" data-control-type="drop-down" data-control-name="matchType-filter-wyl" data-control-action="filter"> 
-           <ul> 
-            <li><span data-path="default">请选择文艺类型</span></li>
-            <li class="divider"></li>
-            <li><span class="pull-right" data-path=".courtBox-courtType-zq">街舞</span></li>
-           </ul>
-          </div>
-          <!-- /jplist分类筛选级联下拉菜单 --> 
           <!-- checkbox text filter --> 
           <div class="jplist-group" data-control-type="checkbox-text-filter" data-control-action="filter" data-control-name="matchBox-state" data-path=".matchBox-state" data-logic="or"> 
            <input value="报名中" id="applying" type="checkbox" /> 
@@ -457,8 +405,8 @@
   <script src="js/jquery.ui.datepicker-zh-CN.js"></script> 
   <script src="js/bootstrap.min.js"></script> 
   <script src="js/jquery.wordLimit.js"></script> 
-  <script src="js/sousai.common.js"></script> 
   <script src="js/jplist.min.js"></script> 
+  <script src="js/sousai.common.js"></script> 
   <script>
   $(function(){
      /** 日期选择器 **/
@@ -478,7 +426,7 @@
     });
     /** /日期选择器 **/
 
-    /** 鼠标hover matchbox **/
+    /** 鼠标滑过比赛列表 **/
     $("div.matchBox").hover(function(){
       $(this).addClass("box-active");
     },function(){
@@ -502,21 +450,14 @@
     $("div[data-control-action='sort'] li").click(function(){
       if(sortflag==1){
             //执行方法;
-            $(this).find("span").attr("data-order","desc");
+            $(this).find("span").attr("data-order","desc").end().find("i").removeClass("icon-arrow-up").addClass("icon-arrow-down");
             sortflag=0;
         }else{
             //执行方法;
-            $(this).find("span").attr("data-order","asc");
+            $(this).find("span").attr("data-order","asc").end().find("i").removeClass("icon-arrow-down").addClass("icon-arrow-up");
             sortflag=1;
         }
     });
-    /** jplist分类筛选级联下拉菜单 **/
-    $(".matchType-filter ul>li").click(function(){
-              var datafor = $(this).find("span").data('forcn');
-              var targetParent = $(this).parent().parent().parent();
-              $(targetParent).find("div.hide").hide();
-              $(targetParent).find("."+datafor).show();
-            });
   })
   </script>  
  </body>

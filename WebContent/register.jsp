@@ -25,7 +25,9 @@
     <![endif]--> 
  </head> 
  <body class="register"> 
+  <s:include value="navbar.jsp" /><!-- 页首导航条 -->
   <div class="container"> 
+  <div class="hdpush"></div> 
    <div class="row"> 
     <div class="span5 offset1"> 
      <img src="img/logo.png" /> 
@@ -96,7 +98,7 @@
    <div class="row"> 
     <div class="span2 offset7"> 
      <i class="icon-user"></i> 
-     <a href="#">页面改进建议</a> 
+     <a href="tencent://message/?uin=822547462&Site=sousai.com&Menu=yes">页面改进建议</a> 
     </div> 
    </div> 
    <div class="row ftpush"></div> 
@@ -109,6 +111,7 @@
   <script src="js/jquery-1.11.0.min.js"></script> 
   <script src="js/bootstrap.min.js"></script> 
   <script src="js/jquery.validate.js"></script> 
+  <script src="js/sousai.common.js"></script> 
   <script>    
     $(function(){
       /** 生成验证码 **/
@@ -179,7 +182,7 @@
         required: "请输入用户名",
         minlength: "用户名至少4个字符",
         maxlength: "用户名最多16个字符",
-        remote: "该用户名已存在！"
+        remote: "该用户名已存在，请换个其他的用户名！"
       },
       "user.pwd": {
         required: "请输入密码",

@@ -17,6 +17,7 @@
   <link href="css/smoothness/jquery-ui-1.10.4.custom.css" rel="stylesheet" /> 
   <link href="css/bootstrap.css" rel="stylesheet" /> 
   <link href="css/bootstrap-responsive.css" rel="stylesheet" /> 
+  <link href="css/jplist.min.css" rel="stylesheet" /> 
   <link href="css/sousai.common.css" rel="stylesheet" />
   <link href="css/sousai.userCenter.css" rel="stylesheet" />
   <style>
@@ -36,6 +37,8 @@ border-radius: 0 4px 4px 0;
 .oldCourtsBox tr.active {
   font-weight: bold;
 }
+/** 添加场地按钮 **/
+.oldCourtsBox .jplist-panel > .text-center > .btn {margin-top: 10px;float: none;}
 /** 最小宽度情况下 **/
 @media (max-width: 480px) {
   /** 搜索现有场地按钮 **/
@@ -156,9 +159,9 @@ border-radius: 0 4px 4px 0;
           <div class="control-group"> 
            <label class="control-label" for="matchPlace">比赛地点：</label> 
            <div class="controls form-inline">
-            <select class="selectProvince span2" name="matchPlace"><option value="matchType_pingPong">重庆</option> </select>
-            <select class="selectCity span2 hide" name="matchPlace"><option value="matchType_pingPong">重庆</option> </select>
-            <select class="selectCountry span2 hide" name="matchPlace"><option value="matchType_pingPong">重庆</option> </select>
+            <select class="selectProvince span2" name="matchPlace"><option value="0">请选择</option><option value="matchType_pingPong">重庆</option> </select>
+            <select class="selectCity span2 hide" name="matchPlace"><option value="0">请选择</option><<option value="matchType_pingPong">重庆</option> </select>
+            <select class="selectCountry span2 hide" name="matchPlace"></select>
             <a href="#" class="btn btn-success pull-right" id="searchExistedCourt">搜索现有球场</a> 
            </div> 
           </div> 
@@ -175,7 +178,7 @@ border-radius: 0 4px 4px 0;
              </tr>
             </thead> 
             <tbody> 
-             <tr> 
+             <tr class="tritem"> 
               <td>奥体中心乒乓球俱乐部</td> 
               <td>袁家岗大公馆立交奥体路185号羽毛球馆</td> 
               <td>体育馆</td> 
@@ -183,7 +186,7 @@ border-radius: 0 4px 4px 0;
               <td>19次</td> 
               <td><a href="#">详细</a></td> 
              </tr> 
-             <tr> 
+             <tr class="tritem"> 
               <td>奥体中心乒乓球俱乐部</td> 
               <td>袁家岗大公馆立交奥体路185号羽毛球馆</td> 
               <td>体育馆</td> 
@@ -191,7 +194,7 @@ border-radius: 0 4px 4px 0;
               <td>19次</td> 
               <td><a href="#">详细</a></td> 
              </tr> 
-             <tr> 
+             <tr class="tritem"> 
               <td>奥体中心乒乓球俱乐部</td> 
               <td>袁家岗大公馆立交奥体路185号羽毛球馆</td> 
               <td>体育馆</td> 
@@ -201,9 +204,23 @@ border-radius: 0 4px 4px 0;
              </tr> 
             </tbody> 
            </table> 
+           <div class="jplist-no-results jplist-hidden">
+          <p>暂时没有结果哟！</p>
+         </div>
+         <div class="jplist-ios-button">
+          展开分页
+         </div>
+         <!-- panel 用在分页 --> 
+         <div class="jplist-panel"> 
+          <!-- pagination --> 
+          <div class="jplist-pagination" data-control-type="pagination" data-control-name="paging" data-control-action="paging" data-items-per-page="10"> 
+           <!-- default items per page (if no "items per page" dropdown on the page) --> 
+          </div> 
            <div class="text-center">
-            <a href="#" id="newCourtBtn" class="btn">没有我要的场地，我要添加新场地</a>
-           </div> 
+            <button id="newCourtBtn" class="btn">没有我要的场地，我要添加新场地</button>
+           </div>
+         </div>
+         <!-- /jplist-panel -->  
           </div> 
           <div class="control-group"> 
            <div class="releaseCourtBox"> 
@@ -247,6 +264,7 @@ border-radius: 0 4px 4px 0;
   <script src="tinymce/tinymce.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/jquery.validate.js"></script>
+  <script src="js/jplist.min.js"></script> 
   <script src="js/sousai.common.js"></script>
 <script>
     $(function () {
@@ -273,6 +291,13 @@ border-radius: 0 4px 4px 0;
       $(this).addClass("active");
     });
     /****/
+
+    /** 列表排序 **/
+    $('.oldCourtsBox').jplist({
+          itemsBox: '.table',
+          itemPath: '.tritem',
+          panelPath: '.jplist-panel'
+        });
 
     /** 搜索现有场地 **/
     $("#searchExistedCourt").click(function(){

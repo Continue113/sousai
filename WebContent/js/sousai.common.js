@@ -33,7 +33,7 @@ $.getScript('http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js',funct
       $('#myModal').modal("hide");
     });
 
-/** 添加收藏 **/
+/** 添加本地收藏 **/
 function AddFavorite(sURL, sTitle)
 {
     try
@@ -64,7 +64,63 @@ $("#collectLink").click(function(){
   return false;//设置a标签的href失效
 });
 
-
+/** 三级省市区联动 P:province C:city C:country**/
+//初始化省
+$.post("selRegion?region.level=0",null,callbackProvince);
+//省份
+ function callbackProvince(data) {
+  var selectProvince = $(".selectProvince");
+  selectProvince.empty();
+  selectProvince.append("<option value=0>请选择</option>");
+  $.each(data.roomList, function(i,item){ 
+  selectProvince.append("<option value=" + item.code + ">"+ item.name + "</option>");
+  }
+ }
+  //市区
+ function callbackCity(data) {
+  var selectCity = $(this).parent().find(".selectCity");
+  selectCity.empty();
+  selectCity.append("<option value=0>请选择</option>");
+  $.each(data.roomList, function(i,item){ 
+  selectCity.append("<option value=" + item.code + ">"+ item.name + "</option>");
+  }
+ }
+  //县区
+ function callbackCountry(data) {
+  var selectCountry = $(this).parent().find(".selectCountry");
+  selectCountry.empty();
+  selectCountry.append("<option value=0>请选择</option>");
+  $.each(data.roomList, function(i,item){ 
+  selectCountry.append("<option value=" + item.code + ">"+ item.name + "</option>");
+  }
+ }
+ //当选中一个省份后，查询对应的市区名称
+ $(".selectProvince").change(function selCity(){
+  //tgPrt: targetparent 目标父元素
+  var tgPrt = $(this).parent();
+  if(tgPrt.find(".selectProvince option:selected").attr("value") != "0"){
+   tgPrt.find(".selectCity").show();
+   $.post("selRegion?region.level=1&code="+tgPrt.find(".selectProvince").attr("value")+"",null,callbackCity);
+  }else{
+   //当用户没有选择省份的时候，就将市区下拉列表框中原有的“请选择”字样删除。
+   tgPrt.find(".selectCity").hide().empty();
+  }
+  //当用户进行一次省市县的操作后，再次选择省份的时候，后面的县区里面如果有值就要清空
+  tgPrt.find(".selectCountry").hide().empty();
+ });
+ //当选中市区名称后，查询对应的县区名称
+ $(".selectCity").change(function selCountry(){
+  //tgPrt: targetparent 目标父元素
+  var tgPrt = $(this).parent();
+  if(tgPrt.find(".selectCity option:selected").attr("value") != "0"){
+   tgPrt.find(".selectCountry").show(); 
+   $.post("selRegion?region.level=2&code="+tgPrt.find(".selectCity").attr("value")+"",null,callbackCountry);
+  }else{
+   //当用户没有选择市区的时候，就将县区下拉列表框中原有的“请选择”字样删除。
+   tgPrt.find(".selectCountry").hide().empty();
+  }
+ });
+/****/
 
 /** 高级搜索框级联下拉菜单 **/
 $(".selectMatchType").change(function(){
@@ -73,67 +129,11 @@ $(".selectMatchType").change(function(){
               $(this).parent().find("select.hide").hide();//隐藏所有子下拉菜单
               $(this).parent().find("."+datafor).show();//显示选择的子下拉菜单
             });
+/** 管理员界面搜索框级联下拉菜单 **/
+$(".selectFilter").change(function(){
+              var dataforFilter = $(this).parent().find(".selectFilter option:selected").attr("data-forFilter");
+              alert(dataforFilter);
+              $(this).parent().find("input[type='text']").attr("data-path",dataforFilter);//设置输入框筛选路径
+            });
 
-
-
- })
- /** 三级省市区联动 P:province C:city C:country**/
-//定义变量
-  var selectProvince = $(".selectProvince");
-  var selectCity = $(".selectCity");
-  var selectCountry = $(".selectCountry");
- // var dataRL = "region.level";
-function initPCC(){
-	alert("XXX");
-  $.post("selRegion",null,callbackProvince);
-}
-//省份
- function callbackProvince(data) {
-  var data = eval("(" + data + ")");
-  selectProvince.empty();
-  selectProvince.append("<option value=0>请选择</option>");
-  for ( var i = 0; i < data.length; i++) {
-   selectProvince.append("<option value=" + data[i].cityId + ">"+ data[i].province + "</option>");
-  }
- }
-  //市区
- function callbackCity(data) {
-  var data = eval("(" + data + ")");
-  selectCity.empty();
-  selectCity.append("<option value=0>请选择</option>");
-  for ( var i = 0; i < data.length; i++) {
-   selectCity.append("<option value=" + data[i].countryId + ">"+ data[i].city + "</option>");
-  }
- }
-  //县区
- function callbackCountry(data) {
-  var data = eval("(" + data + ")");
-  selectCountry.empty();
-  selectCountry.append("<option value=0>请选择</option>");
-  for ( var i = 0; i < data.length; i++) {
-   selectCountry.append("<option value=" + data[i].countryId + ">"+ data[i].country + "</option>");
-  }
- }
- //当选中一个省份后，查询对应的市区名称
- selectProvince.change(function selCity(){
-  if(selectProvince.val() != "0"){
-    selectCity.show();
-   $.post("menuAction_init2.action?cityId="+selectProvince.val()+"",null,callbackCity);
-  }else{
-   //当用户没有选择省份的时候，就将市区下拉列表框中原有的“请选择”字样删除。
-   $("#selectCity").empty();
-  }
-  //当用户进行一次省市县的操作后，再次选择省份的时候，后面的县区里面如果有值就要清空
-  selectCountry.empty();
- });
- //当选中市区名称后，查询对应的县区名称
- selectCity.change(function selCountry(){
-  if(selectCity.val() != "0"){
-  selectCountry.show(); 
-   $.post("menuAction_init3.action?countryId="+selectCity.val()+"",null,callbackCountry);
-  }else{
-   //当用户没有选择市区的时候，就将县区下拉列表框中原有的“请选择”字样删除。
-   $("#selectCountry").empty();
-  }
- });
-/****/
+})
