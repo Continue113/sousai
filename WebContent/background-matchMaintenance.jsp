@@ -15,8 +15,7 @@
   <meta name="description" content="搜赛网-管理员页面-比赛维护" /> 
   <meta name="author" content="" /> 
   <!-- Le styles --> 
-  <link href="css/smoothness/jquery-ui-1.10.4.custom.css" rel="stylesheet" /> 
-  <link href="css/bootstrap.css" rel="stylesheet" /> 
+  <link href="css/bootstrap.min.css" rel="stylesheet" /> 
   <link href="css/bootstrap-responsive.css" rel="stylesheet" /> 
   <link href="css/jplist.min.css" rel="stylesheet" /> 
   <link href="css/sousai.common.css" rel="stylesheet" /> 
@@ -27,16 +26,7 @@
     <![endif]--> 
  </head> 
  <body class="background"> 
-  <div class="navbar navbar-inverse navbar-fixed-top"> 
-   <div class="navbar-inner"> 
-    <div class="pull-left"> 
-     <ul class="breadcrumb">
-      <li>您好，<span id="userId">TESTKING</span>！ <a href="#">退出</a></li>
-     </ul> 
-    </div> 
-   </div> 
-  </div> 
-  <!-- /navbar --> 
+  <s:include value="background-head.jsp" /> <!-- 管理员界面页头 --> 
   <div class="container">
     <div class="row">
     <div class="span4"> 
@@ -45,11 +35,12 @@
     </div></div>
     <div class="row">
     	<div class="span11">
+       <!-- background-remind & backgroundMenu -->
        <ul class="breadcrumb background-remind"> 
         <li>提醒:</li> 
         <li><a href="#">待处理的比赛信息<span>(5)</span></a></li>
        </ul>
-     <div class="span2 backgroundMenu"> 
+     <div class="span2 backgroundMenu "> 
       <ul class="nav nav-stacked nav-side">
        <li><h5><a href="#"><i class="icon-minus"></i>系统发布:</a></h5></li>
        <li><a href="background-collections.jsp"><i class="icon-chevron-down "></i>全部采集</a></li>
@@ -65,6 +56,7 @@
        <li><a href="background-visitCount.jsp"><i class="icon-chevron-down "></i>访问量</a></li>
        </ul>
      </div> 
+<!-- /background-remind & backgroundMenu --> 
      <div class="span9">
          <!--全部采集主体开始-->
          <div id="matchMaintenance"> 
@@ -131,7 +123,7 @@
          <!-- /jplist-panel --> 
          </div>
          <!--全部采集主体结束-->
-     </div><!-- /span8 -->
+     </div><!-- /span9 -->
    </div><!-- /span11-->
    </div><!-- /row-->
    </div><!-- /container-->

@@ -15,7 +15,6 @@
   <meta name="description" content="搜赛网-管理员页面-采集设置" /> 
   <meta name="author" content="" /> 
   <!-- Le styles --> 
-  <link href="css/smoothness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" /> 
   <link href="css/bootstrap.min.css" rel="stylesheet" /> 
   <link href="css/bootstrap-responsive.css" rel="stylesheet" /> 
   <link href="css/jquery.fileupload.css" rel="stylesheet" /> 
@@ -56,7 +55,28 @@
     </div></div>
     <div class="row">
     	<div class="span11">
-       <s:include value="background-nav.jsp" /><!-- 管理员界面待处理提醒 和 侧边导航 --> 
+       <!-- background-remind & backgroundMenu -->
+       <ul class="breadcrumb background-remind"> 
+        <li>提醒:</li> 
+        <li><a href="#">待处理的比赛信息<span>(5)</span></a></li>
+       </ul>
+     <div class="span2 backgroundMenu "> 
+      <ul class="nav nav-stacked nav-side">
+       <li><h5><a href="#"><i class="icon-minus"></i>系统发布:</a></h5></li>
+       <li><a href="background-collections.jsp"><i class="icon-chevron-down "></i>全部采集</a></li>
+       <li class="active"><a href="background-collectionsSetting.jsp"><i class="icon-chevron-down "></i>采集设置</a></li>
+       <li><h5><a href="#"><i class="icon-minus"></i>数据维护:</a></h5></li>
+       <li><a href="background-matchMaintenance.jsp"><i class="icon-chevron-down "></i>比赛维护</a></li>
+       <li><a href="background-courtMaintenance.jsp"><i class="icon-chevron-down "></i>场地维护</a></li>
+       <li><a href="background-userMaintenance.jsp"><i class="icon-chevron-down "></i>用户维护</a></li>
+       <li><a href="background-evaluationMaintenance.jsp"><i class="icon-chevron-down "></i>评论维护</a></li>
+       <li><h5><a href="#"><i class="icon-minus"></i>网站统计</a></h5></li>
+       <li><a href="background-regUserCount.jsp"><i class="icon-chevron-down "></i>注册用户</a></li>
+       <li><a href="background-releaseCount.jsp"><i class="icon-chevron-down "></i>发布统计</a></li>
+       <li><a href="background-visitCount.jsp"><i class="icon-chevron-down "></i>访问量</a></li>
+       </ul>
+     </div> 
+<!-- /background-remind & backgroundMenu -->
      <div class="span9">
       <form class="form-horizontal" id="collectionsSettingForm" action="releaseCourtAction" method="post"  enctype="multipart/form-data"> 
          <fieldset> 
@@ -92,7 +112,7 @@
                 <span class="btn fileinput-button">
                     <i class="icon-plus"></i>
                     <span>选择文件</span>
-                    <input type="file" name="files[]" multiple="">
+                    <input type="file" name="files[]" >
                 </span>
                 <button type="submit" class="btn start">
                     <i class="icon-upload"></i>
