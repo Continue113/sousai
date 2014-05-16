@@ -82,7 +82,13 @@ $.ajax({
   selectProvince.append("<option value=" + jsondata[i].code + ">"+ jsondata[i].name + "</option>");
   }
  },
-  error:function(xhr){alert('出错。。\n'+xhr.responseText);},
+  error:function(xhr){
+    if(xhr.responseText == ""){
+      alert("xhr.responseText为空");
+    }else if(xhr.responseText == null){
+      alert("xhr.responseText为null");
+    }
+    alert('出错。。\n'+xhr.responseText);},
 }).done(function() { alert("success"); })
   .fail(function() { alert("error"); })
   .always(function() { alert("complete"); });
