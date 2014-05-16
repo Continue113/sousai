@@ -121,6 +121,8 @@ $.post("selRegion?region.level=0",null,callbackProvince);
    tgPrt.find(".selectCountry").hide().empty();
   }
  });
+ //立即调用初始化省
+ initProvince();
 /****/
 
 /** 高级搜索框级联下拉菜单 **/
