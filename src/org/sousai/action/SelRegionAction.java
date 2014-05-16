@@ -32,6 +32,7 @@ public class SelRegionAction extends UserBaseAction
 	private static final long serialVersionUID = 8955065723895264050L;
 	private Region region;
 	private List<Region> regions;
+	private Integer level;
 	
 	private String PROV_SUCCESS = "prov_success";
 	private String PROV_FAIL = "prov_fail";
@@ -62,15 +63,31 @@ public class SelRegionAction extends UserBaseAction
 		return this.regions;
 	}
 	
+	//level的setter和getter
+	public void setLevel(int level)
+	{
+		this.level = level;
+	}
+	public int getLevel()
+	{
+		return this.level;
+	}
+	
 	public String execute() throws Exception
 	{
 		System.out.println("SelRegion now!!");
 		ActionContext ctx = ActionContext.getContext();
+		System.out.println("1");
 		Region tempRegion = getRegion();
-		int level = tempRegion.getLevel();
-		
+		int level1 = 3;
+		System.out.println("2");
+		//level1 = getLevel();
+		level1 = tempRegion.getLevel();
+		System.out.println("3");
+		//int level2 = tempRegion.getLevel();
+		System.out.println("level = "+level1+"!!");
 		//查询省级地区
-		if(level == 0)
+		if(level1 == 0)
 		{
 			List<Region> provinces = umg.getProvince();
 			if(provinces!=null && provinces.size()!=0)
@@ -82,7 +99,7 @@ public class SelRegionAction extends UserBaseAction
 		}
 		
 		//查询市级地区
-		else if(level == 1)
+		/*else if(level1 == 1)
 		{
 			List<Region> cities = umg.getCity(tempRegion.getName(), tempRegion.getOrder());
 			if(cities!=null && cities.size()!=0)
@@ -94,7 +111,7 @@ public class SelRegionAction extends UserBaseAction
 		}
 		
 		//查询区级地区
-		else if(level == 2)
+		else if(level1 == 2)
 		{
 			List<Region> zones = umg.getZone(tempRegion.getName(), tempRegion.getOrder());
 			if(zones!=null && zones.size()!=0)
@@ -103,7 +120,7 @@ public class SelRegionAction extends UserBaseAction
 				return ZONE_SUCCESS;
 			}
 			return ZONE_FAIL;
-		}
+		}*/
 		
 		//level错误
 		else
