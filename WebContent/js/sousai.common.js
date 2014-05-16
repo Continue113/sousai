@@ -84,16 +84,19 @@ $(".selectProvince").change(function selCity(){
   $.ajax({
   type: "POST",
   url: "selRegion",
+  contentType: "application/x-www-form-urlencoded; charset=UTF-8",
   data: {"region.level": 1,"region.name": tgPrt.find(".selectProvince option:selected").text(),"region.order": tgPrt.find(".selectProvince option:selected").attr("data-order")},
+  dataType: "json",
   success: function(rspdata){
   var selectProvince = $(".selectProvince");
   selectProvince.empty().append("<option value=0>请选择</option>");
   for ( var i = 0; i < rspdata.length; i++) {
   selectProvince.append("<option data-order=\"" + rspdata[i].order + "\" >"+ rspdata[i].name + "</option>");
+  }
   },
-  dataType: "json",
-  contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-  error: function(){alert("出错了。");},
+  error: function(){
+    alert("出错了。");
+  },
 });
  }else{
   //当用户没有选择省份的时候，就将市区下拉列表框中原有的“请选择”字样删除。
@@ -102,6 +105,7 @@ $(".selectProvince").change(function selCity(){
  //当用户进行一次省市县的操作后，再次选择省份的时候，后面的县区里面如果有值就要清空
  tgPrt.find(".selectCountry").hide().empty();
 });
+
 //当选中市区名称后，查询对应的县区名称
 $(".selectCity").change(function selCountry(){
  //tgPrt: targetparent 目标父元素
@@ -111,16 +115,19 @@ $(".selectCity").change(function selCountry(){
   $.ajax({
   type: "POST",
   url: "selRegion",
+  contentType: "application/x-www-form-urlencoded; charset=UTF-8",
   data: {"region.level": 2,"region.name": tgPrt.find(".selectCity option:selected").text(),"region.order": tgPrt.find(".selectCity option:selected").attr("data-order")},
+  dataType: "json",
   success: function(rspdata){
   var selectProvince = $(".selectProvince");
   selectProvince.empty().append("<option value=0>请选择</option>");
   for ( var i = 0; i < rspdata.length; i++) {
   selectProvince.append("<option data-order=\"" + rspdata[i].order + "\" >"+ rspdata[i].name + "</option>");
+  }
   },
-  dataType: "json",
-  contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-  error: function(){alert("出错了。");},
+  error: function(){
+    alert("出错了。");
+  },
 });
  }else{
   //当用户没有选择市区的时候，就将县区下拉列表框中原有的“请选择”字样删除。
