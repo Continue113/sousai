@@ -67,7 +67,7 @@ $("#collectLink").click(function(){
 /** 三级省市区联动 P:province C:city C:country**/
 //初始化省
 function initProvince(){
-$.post("selRegion?region.level=0",null,callbackProvince);
+$.post("selRegion?region.level=1",null,callbackProvince);
 }
 //省份
  function callbackProvince(data) {
