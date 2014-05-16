@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.sousai.action.base.*;
 import org.sousai.domain.*;
+import org.sousai.tools.*;
 import org.sousai.service.*;
 import org.sousai.vo.*;
 
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import com.opensymphony.xwork2.*;
 
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.*;
 
 /**
@@ -92,24 +94,23 @@ public class SelRegionAction extends UserBaseAction
 			List<Region> provinces = umg.getProvince();
 			if(provinces!=null && provinces.size()!=0)
 			{
-				setRegions(provinces);
-				return PROV_SUCCESS;
+				//setRegions(provinces);
+				JSONUtils.toJson(ServletActionContext.getResponse(), provinces);
+				System.out.println(PROV_SUCCESS);
 			}
-			return PROV_FAIL;
+			System.out.println(PROV_FAIL);
 		}
-		
 		//查询市级地区
-		/*else if(level1 == 1)
+		else if(level1 == 1)
 		{
 			List<Region> cities = umg.getCity(tempRegion.getName(), tempRegion.getOrder());
 			if(cities!=null && cities.size()!=0)
 			{
 				setRegions(cities);
-				return CITY_SUCCESS;
+				System.out.println(CITY_SUCCESS);
 			}
-			return CITY_FAIL;
-		}
-		
+			System.out.println(CITY_FAIL);
+		}		
 		//查询区级地区
 		else if(level1 == 2)
 		{
@@ -117,15 +118,15 @@ public class SelRegionAction extends UserBaseAction
 			if(zones!=null && zones.size()!=0)
 			{
 				setRegions(zones);
-				return ZONE_SUCCESS;
+				System.out.println(ZONE_SUCCESS);
 			}
-			return ZONE_FAIL;
-		}*/
-		
+			System.out.println(ZONE_FAIL);
+		}
 		//level错误
 		else
 		{
-			return LEVEL_ERROR;
+			System.out.println(LEVEL_ERROR);
 		}
+		return null;
 	}
 }

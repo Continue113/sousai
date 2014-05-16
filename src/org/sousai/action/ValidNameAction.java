@@ -29,6 +29,7 @@ import org.apache.struts2.interceptor.*;
 
 public class ValidNameAction extends UserBaseAction
 {
+	private static final long serialVersionUID = 4622236412362778987L;
 	private final String NAME_UNUSE = "true";
 	private final String NAME_USED = "false";
 	
