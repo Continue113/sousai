@@ -67,7 +67,11 @@ $("#collectLink").click(function(){
 /** 三级省市区联动 P:province C:city C:country**/
 //初始化省
 function initProvince(){
-$.post("selRegion?region.level=0",null,function(ss){ alert(ss); });
+$.post("selRegion?region.level=0",null,function(ss){
+ if(ss.toString() == "" ){
+  alert("ss是空字符串");}
+  alert("ss内容为："+ss.toString());
+});
 /*$.ajax({
   url:"selRegion?region.level=0",
   type:"POST",
