@@ -14,8 +14,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
   <meta name="description" content="搜赛网用户中心-我的搜赛-发布比赛" /> 
   <meta name="author" content="" />
-  <link href="css/smoothness/jquery-ui-1.10.4.custom.css" rel="stylesheet" /> 
-  <link href="css/bootstrap.css" rel="stylesheet" /> 
+  <link href="css/smoothness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" /> 
+  <link href="css/bootstrap.min.css" rel="stylesheet" /> 
   <link href="css/bootstrap-responsive.css" rel="stylesheet" /> 
   <link href="css/jplist.min.css" rel="stylesheet" /> 
   <link href="css/sousai.common.css" rel="stylesheet" />
@@ -258,12 +258,12 @@ border-radius: 0 4px 4px 0;
     ================================================== --> 
   <!-- Placed at the end of the document so the pages load faster -->
   <script src="js/jquery-1.11.0.min.js"></script>
-  <script src="js/jquery-ui-1.10.4.custom.js"></script> 
+  <script src="js/jquery-ui-1.10.4.custom.min.js"></script> 
   <script src="js/jquery.ui.datepicker-zh-CN.js"></script> 
   <script src="tinymce/jquery.tinymce.min.js"></script> 
   <script src="tinymce/tinymce.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
-  <script src="js/jquery.validate.js"></script>
+  <script src="js/jquery.validate.min.js"></script>
   <script src="js/jplist.min.js"></script> 
   <script src="js/sousai.common.js"></script>
 <script>

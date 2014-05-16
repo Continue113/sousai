@@ -15,8 +15,8 @@
   <meta name="description" content="搜赛网-管理员页面-采集设置" /> 
   <meta name="author" content="" /> 
   <!-- Le styles --> 
-  <link href="css/smoothness/jquery-ui-1.10.4.custom.css" rel="stylesheet" /> 
-  <link href="css/bootstrap.css" rel="stylesheet" /> 
+  <link href="css/smoothness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" /> 
+  <link href="css/bootstrap.min.css" rel="stylesheet" /> 
   <link href="css/bootstrap-responsive.css" rel="stylesheet" /> 
   <link href="css/jquery.fileupload.css" rel="stylesheet" /> 
   <link href="css/jquery.fileupload-ui.css" rel="stylesheet" />
@@ -146,7 +146,7 @@
   <script src="js/jquery.fileupload.js"></script>
   <script src="js/jquery.fileupload-process.js"></script>
   <script src="js/jquery.fileupload-ui.js"></script>
-  <script src="js/jquery.validate.js"></script>
+  <script src="js/jquery.validate.min.js"></script>
   <script src="js/sousai.common.js"></script> 
 
 <script id="template-upload" type="text/x-tmpl">

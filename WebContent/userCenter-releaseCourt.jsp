@@ -15,7 +15,7 @@
   <meta name="description" content="搜赛网用户中心-我的搜赛-发布场地" /> 
   <meta name="author" content="" /> 
   <!-- Le styles --> 
-  <link href="css/bootstrap.css" rel="stylesheet" /> 
+  <link href="css/bootstrap.min.css" rel="stylesheet" /> 
   <link href="css/bootstrap-responsive.css" rel="stylesheet" /> 
   <link href="css/jquery.fileupload.css" rel="stylesheet" /> 
   <link href="css/jquery.fileupload-ui.css" rel="stylesheet" />
@@ -270,7 +270,7 @@
   <script src="js/jquery.fileupload-process.js"></script>
   <script src="js/jquery.fileupload-image.js"></script>
   <script src="js/jquery.fileupload-ui.js"></script>
-  <script src="js/jquery.validate.js"></script>
+  <script src="js/jquery.validate.min.js"></script>
   <script src="tinymce/jquery.tinymce.min.js"></script> 
   <script src="tinymce/tinymce.min.js"></script>
   <script src="js/sousai.common.js"></script>

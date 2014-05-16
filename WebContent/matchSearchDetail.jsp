@@ -15,7 +15,7 @@
   <meta name="description" content="搜赛网比赛搜索页面" /> 
   <meta name="author" content="" /> 
   <!-- Le styles --> 
-  <link href="css/bootstrap.css" rel="stylesheet" /> 
+  <link href="css/bootstrap.min.css" rel="stylesheet" /> 
   <link href="css/bootstrap-responsive.css" rel="stylesheet" /> 
   <link href="css/sousai.common.css" rel="stylesheet" /> 
   <link href="css/sousai.matchSearchDetail.css" rel="stylesheet" /> 

@@ -15,7 +15,7 @@
   <meta name="description" content="搜赛网注册页面" /> 
   <meta name="author" content="" /> 
   <!-- Le styles --> 
-  <link href="css/bootstrap.css" rel="stylesheet" /> 
+  <link href="css/bootstrap.min.css" rel="stylesheet" /> 
   <link href="css/bootstrap-responsive.css" rel="stylesheet" /> 
   <link href="css/sousai.common.css" rel="stylesheet" /> 
   <link href="css/sousai.register.css" rel="stylesheet" /> 
@@ -110,7 +110,7 @@
   <!-- Placed at the end of the document so the pages load faster --> 
   <script src="js/jquery-1.11.0.min.js"></script> 
   <script src="js/bootstrap.min.js"></script> 
-  <script src="js/jquery.validate.js"></script> 
+  <script src="js/jquery.validate.min.js"></script> 
   <script src="js/sousai.common.js"></script> 
   <script>    
     $(function(){

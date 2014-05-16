@@ -15,7 +15,7 @@
   <meta name="description" content="搜赛网用户中心-我的搜赛-我收藏的比赛" /> 
   <meta name="author" content="" />
 
-  <link href="css/bootstrap.css" rel="stylesheet" /> 
+  <link href="css/bootstrap.min.css" rel="stylesheet" /> 
   <link href="css/bootstrap-responsive.css" rel="stylesheet" />
   <link href="css/jplist.min.css" rel="stylesheet" /> 
   <link href="css/sousai.common.css" rel="stylesheet" />
