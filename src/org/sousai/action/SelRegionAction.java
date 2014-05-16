@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
 import com.opensymphony.xwork2.*;
 
 import org.apache.struts2.ServletActionContext;
@@ -95,10 +96,32 @@ public class SelRegionAction extends UserBaseAction
 			if(provinces!=null && provinces.size()!=0)
 			{
 				//setRegions(provinces);
-				JSONUtils.toJson(ServletActionContext.getResponse(), provinces);
+				//JSONUtils.toJson(ServletActionContext.getResponse(), provinces);
+				Gson gson = new Gson();
+		        //String result = gson.toJson(data);
+		        String test1 = "重庆";
+		        String test2 = "江津";
+		        String result = "{\"schoolId\":\"" + test1 + "\",\"schoolName\":\""+test2+"\"}";
+		        System.out.println(result);
+		        HttpServletResponse response = ServletActionContext.getResponse();
+		        response.setDateHeader("Expires", 0);  
+			    response.addHeader("Pragma", "no-cache");  
+			    response.setHeader("Cache-Control", "no-cache"); 
+		        response.setContentType("application/json;charset=UTF-8");
+		        response.setCharacterEncoding("UTF-8");
+		        /*PrintWriter out = response.getWriter();
+		        out.print(result);
+		        out.flush();
+		        out.close();*/
+		        response.getWriter().print(result);
+		        response.getWriter().flush();
+		        //response.getWriter().close();
 				System.out.println(PROV_SUCCESS);
 			}
-			System.out.println(PROV_FAIL);
+			else
+			{
+				System.out.println(PROV_FAIL);
+			}
 		}
 		//查询市级地区
 		else if(level1 == 1)
@@ -109,7 +132,10 @@ public class SelRegionAction extends UserBaseAction
 				setRegions(cities);
 				System.out.println(CITY_SUCCESS);
 			}
-			System.out.println(CITY_FAIL);
+			else
+			{
+				System.out.println(CITY_FAIL);
+			}
 		}		
 		//查询区级地区
 		else if(level1 == 2)
@@ -120,7 +146,11 @@ public class SelRegionAction extends UserBaseAction
 				setRegions(zones);
 				System.out.println(ZONE_SUCCESS);
 			}
-			System.out.println(ZONE_FAIL);
+			else
+			{
+				System.out.println(ZONE_FAIL);
+			}
+			
 		}
 		//level错误
 		else
