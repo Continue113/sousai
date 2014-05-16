@@ -69,7 +69,7 @@ $("#collectLink").click(function(){
 function initProvince(){
 $.post("selRegion?region.level=0",null,function(data){
   var selectProvince = $(".selectProvince");
-  selectProvince.empty().append("<option value=0>请选择</option>");
+  selectProvince.empty().append("<option value=0>请选择省</option>");
   for ( var i = 0; i < data.length; i++) {
   selectProvince.append("<option data-order=\"" + data[i].order + "\" >"+ data[i].name + "</option>");
   }
@@ -80,7 +80,6 @@ $(".selectProvince").change(function selCity(){
  //tgPrt: targetparent 目标父元素
  var tgPrt = $(this).parent();
  if(tgPrt.find(".selectProvince option:selected").attr("value") != "0"){
-  tgPrt.find(".selectCity").show();
   $.ajax({
   type: "POST",
   url: "selRegion",
@@ -88,16 +87,17 @@ $(".selectProvince").change(function selCity(){
   data: {"region.level": 1,"region.name": tgPrt.find(".selectProvince option:selected").text(),"region.order": tgPrt.find(".selectProvince option:selected").attr("data-order")},
   dataType: "json",
   success: function(rspdata){
-  var selectProvince = $(".selectProvince");
-  selectProvince.empty().append("<option value=0>请选择</option>");
+  var selectCity = $(".selectCity");
+  selectCity.empty().append("<option value=0>请选择市</option>");
   for ( var i = 0; i < rspdata.length; i++) {
-  selectProvince.append("<option data-order=\"" + rspdata[i].order + "\" >"+ rspdata[i].name + "</option>");
+  selectCity.append("<option data-order=\"" + rspdata[i].order + "\" >"+ rspdata[i].name + "</option>");
   }
   },
   error: function(){
     alert("出错了。");
   },
-});
+});//ajax 已得到城市
+  tgPrt.find(".selectCity").show();
  }else{
   //当用户没有选择省份的时候，就将市区下拉列表框中原有的“请选择”字样删除。
   tgPrt.find(".selectCity").hide().empty();
@@ -111,7 +111,6 @@ $(".selectCity").change(function selCountry(){
  //tgPrt: targetparent 目标父元素
  var tgPrt = $(this).parent();
  if(tgPrt.find(".selectCity option:selected").attr("value") != "0"){
-  tgPrt.find(".selectCountry").show(); 
   $.ajax({
   type: "POST",
   url: "selRegion",
@@ -119,16 +118,17 @@ $(".selectCity").change(function selCountry(){
   data: {"region.level": 2,"region.name": tgPrt.find(".selectCity option:selected").text(),"region.order": tgPrt.find(".selectCity option:selected").attr("data-order")},
   dataType: "json",
   success: function(rspdata){
-  var selectProvince = $(".selectProvince");
-  selectProvince.empty().append("<option value=0>请选择</option>");
+  var selectCountry = $(".selectCountry");
+  selectCountry.empty().append("<option value=0>请选择区</option>");
   for ( var i = 0; i < rspdata.length; i++) {
-  selectProvince.append("<option data-order=\"" + rspdata[i].order + "\" >"+ rspdata[i].name + "</option>");
+  selectCountry.append("<option data-order=\"" + rspdata[i].order + "\" >"+ rspdata[i].name + "</option>");
   }
   },
   error: function(){
     alert("出错了。");
   },
-});
+});//ajax 已得到区县
+  tgPrt.find(".selectCountry").show(); 
  }else{
   //当用户没有选择市区的时候，就将县区下拉列表框中原有的“请选择”字样删除。
   tgPrt.find(".selectCountry").hide().empty();
