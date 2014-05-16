@@ -67,7 +67,23 @@ $("#collectLink").click(function(){
 /** 三级省市区联动 P:province C:city C:country**/
 //初始化省
 function initProvince(){
-$.post("selRegion?region.level=0",null,callbackProvince);
+//$.post("selRegion?region.level=0",null,callbackProvince);
+$.ajax({
+  url:"selRegion?region.level=0",
+  type:"POST",
+  data:null,
+  datatype:"json",
+  success:function(data) {
+  var data = eval("("+data+")");
+  alert("收到的数据为："+data);
+  var selectProvince = $(".selectProvince");
+  selectProvince.empty().append("<option value=0>请选择</option>");
+  for ( var i = 0; i < data.length; i++) {
+  selectProvince.append("<option value=" + data[i].code + ">"+ data[i].name + "</option>");
+  }
+ },
+  error:function(xhr){alert('出错。。\n'+xhr.responseText);},
+});
 }
 //省份
  function callbackProvince(data) {
