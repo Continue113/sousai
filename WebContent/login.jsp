@@ -41,7 +41,23 @@
       <fieldset> 
        <legend>会员登录</legend> 
        <label for="inputUsername">用户名:</label> 
-       <input type="text" class="input-block-level" id="inputUsername" name="user.name" placeholder="用户名" /> 
+
+       <s:if test="#session.userBean.userName!=null"> 
+       <input type="text" class="input-block-level" id="inputUsername" name="user.name" placeholder="用户名" value="" />
+       <script type="text/javascript">
+       $(function(){
+       var username = "${session.userBean.userName}";//el表达式
+       $("#inputUsername").attr("value",username);
+       $("#sousaiRemindDialog").find(".SRD-content").text("您输入的密码和账户名不匹配，请重新输入。");
+       showSRD();
+       }
+       </script>
+       </s:if>
+
+       <s:else>
+       <input type="text" class="input-block-level" id="inputUsername" name="user.name" placeholder="用户名" value="" />
+       </s:else>
+
        <label for="inputPassword">密码:<a href="#">忘记密码?</a></label> 
        <input type="password" class="input-block-level" id="inputPassword" name="user.pwd" placeholder="密码" /> 
        <label class="checkbox"> <input type="checkbox" value="remember-me" />记住我</label> 
@@ -65,7 +81,12 @@
   <!-- Le javascript
     ================================================== --> 
   <!-- Placed at the end of the document so the pages load faster --> 
-  <script src="js/jquery-1.11.0.min.js"></script> 
-  <script src="js/bootstrap.min.js"></script>  
+  <script src="js/jquery-1.11.0.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script>
+  function showSRD(){
+    $("#sousaiRemindDialog").modal({backdrop:false});
+  }
+  </script>
  </body>
 </html>
