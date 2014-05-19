@@ -24,7 +24,11 @@
       <script src="js/html5shiv.js"></script>
   <![endif]-->
   <style>
-.table .match-from > a:first-child {width: 200px;}
+  form {margin: 0;}
+  form .btn {margin-bottom: 10px;}
+  .table th:first-child {text-align: center;padding-left: 0;}
+  .table td:first-child {text-align: right;}
+  .chartBox {height:500px;border:1px solid #ccc;padding:10px;}
   </style>
  </head> 
  <body class="background"> 
@@ -60,7 +64,156 @@
      </div> 
 <!-- /background-remind & backgroundMenu -->
      <div class="span9">
-         
+      <div class="toolBox">
+        <form class="from-inline" id="form1" name="form1" method="post" action="">
+          <label for="year">请选择年份</label>
+          <select class="span1" name="year" id="year">
+            <option>2010</option>
+            <option selected="selected">2011</option>
+          </select>
+        <button class="btn pull-right">显示表格</button>
+        </form>
+      </div>
+      <div class="hide" id="mainTable">
+        <table class="table table-bordered table-striped table-condensed table-hover ">
+          <thead>
+            <tr><th colspan="14">搜赛网统计数据（2014年）</th></tr>
+            <tr>
+              <th>项目</th>
+              <th>累计</th>
+              <th>1月</th>
+              <th>2月</th>
+              <th>3月</th>
+              <th>4月</th>
+              <th>5月</th>
+              <th>6月</th>
+              <th>7月</th>
+              <th>8月</th>
+              <th>9月</th>
+              <th>10月</th>
+              <th>11月</th>
+              <th>12月</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>访问量</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>注册用户</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>比赛发布（搜赛网）</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>比赛发布（自然人）</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>场地发布（搜赛网）</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>场地发布（自然人）</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>场地评论</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="chartBox" id="mainLine"></div>
+      <div class="chartBox" id="mainMap"></div>
+
      </div><!-- /span9 -->
    </div><!-- /span11-->
    </div><!-- /row-->
@@ -70,10 +223,33 @@
     ================================================== --> 
   <!-- Placed at the end of the document so the pages load faster --> 
   <script src="js/jquery-1.11.0.min.js"></script> 
-  <script src="js/bootstrap.min.js"></script> 
-  <script src="js/sousai.common.js"></script> 
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/esl.js"></script>
+  <script src="js/sousai.bg-eCount.js"></script>
+  <script src="js/sousai.bg-eCount-optionLine.js"></script>
+  <script src="js/sousai.bg-eCount-optionMap.js"></script>
+  <script src="js/sousai.common.js"></script>
   <script>
   $(function(){
+    //重复点击显示/隐藏表格
+    var flag = 1;
+    $("#form1 > button").click(function(){
+      if(flag==1){
+            //执行方法;
+            $("#mainTable").slideDown();
+            $(this).text("隐藏表格");
+            flag=0;
+            //禁止form自动提交表单
+            return false;
+        }else{
+            //执行方法;
+            $("#mainTable").slideUp();
+            $(this).text("显示表格");
+            flag=1;
+            //禁止form自动提交表单
+            return false;
+        }
+    });
   })
   </script>
 </body>
