@@ -43,10 +43,11 @@
        <label for="inputUsername">用户名:</label> 
 
        <s:if test="tip!=null"> 
-       <input type="text" class="input-block-level" id="inputUsername" name="user.name" placeholder="用户名" value="" />
+       <input type="text" class="input-block-level" id="inputUsername" name="user.name" placeholder="用户名" value="请重新输入用户名" />
        <script type="text/javascript">
        $(function(){
        var username = "${tip}";//el表达式
+       console.log(username);
        $("#inputUsername").attr("value",username);
        $("#sousaiRemindDialog").find(".SRD-content").text("您输入的密码和账户名不匹配，请重新输入。");
        showSRD();
