@@ -51,7 +51,7 @@
        $("#inputUsername").attr("value",username);
        $("#sousaiRemindDialog").find(".SRD-content").text("您输入的密码和账户名不匹配，请重新输入。");
        showSRD();
-       }
+       })
        </script>
        </s:if>
 
