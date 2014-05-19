@@ -78,8 +78,6 @@
   <script src="js/jquery.validate.min.js"></script> 
   <script>
   function showSRD(){
-    $("#sousaiRemindDialog").modal({backdrop:false});
-
       $("#formlogin").validate({
         submitHandler: function(){$('#registerModal').modal({backdrop:static});},
     rules: {
