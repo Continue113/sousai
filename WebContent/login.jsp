@@ -92,12 +92,13 @@
     },
     messages: {
       "user.name": {
+        required: "请输入用户名",
         minlength: "用户名至少4个字符",
         maxlength: "用户名最多16个字符"
       },
       "user.pwd": {
         required: "请输入密码",
-        minlength: "密码请设置至少6位"
+        minlength: "密码至少6位"
       }
     }
   });
