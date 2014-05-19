@@ -37,16 +37,17 @@
      <img src="img/defaultImg.png" /> 
     </div> 
     <div class="span3 offset2 form-signin"> 
-     <form action="processLogin" method="post"> 
+     <form id="formlogin" action="processLogin" method="post"> 
       <fieldset> 
        <legend>会员登录</legend> 
-       <label for="inputUsername">用户名:</label> 
-
        <s:if test="tip!=null"> 
+       <div class="error"><i class="icon-warning-sign"></i>您输入的密码和用户名不匹配，请重新输入。</div> 
+       <label for="inputUsername">用户名:</label> 
        <input type="text" class="input-block-level" id="inputUsername" name="user.name" placeholder="用户名" value='<s:property value="tip" />' required="required"/>
        </s:if>
 
        <s:else>
+       <label for="inputUsername">用户名:</label> 
        <input type="text" class="input-block-level" id="inputUsername" name="user.name" placeholder="用户名" value="" required="required"/>
        </s:else>
 

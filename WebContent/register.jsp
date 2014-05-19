@@ -41,7 +41,7 @@
    </div> 
    <div class="row"> 
     <div class="span4 offset1"> 
-     <form class="form-horizontal form-signin" id="formlogin" method="post" action="processReg"> 
+     <form class="form-horizontal form-signin" id="registerForm" method="post" action="processReg"> 
       <fieldset> 
        <legend>注册表单</legend> 
        <div class="control-group"> 
@@ -154,8 +154,8 @@
         }
       },"不相符，请重新输入");
 
-      $("#formlogin").validate({
-        submitHandler: function(){$('#registerModal').modal({backdrop:static});},
+      $("#registerForm").validate({
+        submitHandler: function(){$('#sousaiRemindDialog').modal({backdrop:static});},
     rules: {
       "user.name": {
         minlength: 4,
