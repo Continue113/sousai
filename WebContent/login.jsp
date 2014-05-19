@@ -42,11 +42,11 @@
        <legend>会员登录</legend> 
        <label for="inputUsername">用户名:</label> 
 
-       <s:if test="#session.userBean.userName!=null"> 
+       <s:if test="tip!=null"> 
        <input type="text" class="input-block-level" id="inputUsername" name="user.name" placeholder="用户名" value="" />
        <script type="text/javascript">
        $(function(){
-       var username = "${session.userBean.userName}";//el表达式
+       var username = "${tip}";//el表达式
        $("#inputUsername").attr("value",username);
        $("#sousaiRemindDialog").find(".SRD-content").text("您输入的密码和账户名不匹配，请重新输入。");
        showSRD();
@@ -74,7 +74,7 @@
     </div>
    </div>
    <div class="ftpush"> 
-   </div> 
+   </div>
   </div>
   <!-- /container --> 
   <s:include value="footer.jsp" /><!-- 页尾信息 -->
