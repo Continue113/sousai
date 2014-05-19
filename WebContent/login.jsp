@@ -41,7 +41,7 @@
       <fieldset> 
        <legend>会员登录</legend> 
        <s:if test="tip!=null"> 
-       <div class="error"><i class="icon-warning-sign"></i>您输入的密码和用户名不匹配，请重新输入。</div> 
+       <div class="error">您输入的密码和用户名不匹配，请重新输入。</div> 
        <label for="inputUsername">用户名:</label> 
        <input type="text" class="input-block-level" id="inputUsername" name="user.name" placeholder="用户名" value='<s:property value="tip" />' required="required"/>
        </s:if>
@@ -78,9 +78,9 @@
   <script src="js/bootstrap.min.js"></script>
   <script src="js/jquery.validate.min.js"></script> 
   <script>
-  function showSRD(){
+  $(function(){
+    /** 表单验证代码 **/
       $("#formlogin").validate({
-        submitHandler: function(){$('#registerModal').modal({backdrop:static});},
     rules: {
       "user.name": {
         minlength: 4,
@@ -101,8 +101,7 @@
       }
     }
   });
-/** /表单验证代码 **/
-  }
+})
   </script>
  </body>
 </html>
