@@ -11,7 +11,7 @@
     <div class="pull-left"> 
      <ul class="breadcrumb"> 
       <li><a href="#" id="collectLink">收藏网站</a> <span class="divider">|</span></li> 
-      <li><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=822547462&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:822547462:51" alt="点击这里给我发消息" title="点击这里给我发消息"/></a> <span class="divider">|</span></li>
+      <li><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=822547462&site=qq&menu=yes">在线联系</a> <span class="divider">|</span></li>
       <s:if test="#session.userBean.userName!=null">  
       <li>您好，<a tabindex="-1" href="userCenter-editUser.jsp"><span id="userId"><s:property value="#session.userBean.userName"/></span></a>！ <a href="processLogout">退出</a> <span class="divider">|</span></li> 
       <li class="dropdown"> <a class="dropdown-hover" href="#">我的比赛<b class="caret"></b></a> 
