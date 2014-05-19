@@ -43,24 +43,15 @@
        <label for="inputUsername">用户名:</label> 
 
        <s:if test="tip!=null"> 
-       <input type="text" class="input-block-level" id="inputUsername" name="user.name" placeholder="用户名" value='${tip} <s:property value="tip" />' />
-       <script>
-       $(function(){
-       var username = "${tip}";//el表达式
-       alert(username);
-       $("#inputUsername").attr("value",username);
-       $("#sousaiRemindDialog").find(".SRD-content").text("您输入的密码和账户名不匹配，请重新输入。");
-       showSRD();
-       })
-       </script>
+       <input type="text" class="input-block-level" id="inputUsername" name="user.name" placeholder="用户名" value='<s:property value="tip" />' required="required"/>
        </s:if>
 
        <s:else>
-       <input type="text" class="input-block-level" id="inputUsername" name="user.name" placeholder="用户名" value="" />
+       <input type="text" class="input-block-level" id="inputUsername" name="user.name" placeholder="用户名" value="" required="required"/>
        </s:else>
 
        <label for="inputPassword">密码:<a href="#">忘记密码?</a></label> 
-       <input type="password" class="input-block-level" id="inputPassword" name="user.pwd" placeholder="密码" /> 
+       <input type="password" class="input-block-level" id="inputPassword" name="user.pwd" placeholder="密码" required="required"/> 
        <label class="checkbox"> <input type="checkbox" value="remember-me" />记住我</label> 
        <input class="btn btn-success" type="submit" id="signinBtn" value="登&nbsp;&nbsp;录">
        <label><a href="register.jsp">免费注册</a></label> 
@@ -84,9 +75,34 @@
   <!-- Placed at the end of the document so the pages load faster --> 
   <script src="js/jquery-1.11.0.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
+  <script src="js/jquery.validate.min.js"></script> 
   <script>
   function showSRD(){
     $("#sousaiRemindDialog").modal({backdrop:false});
+
+      $("#formlogin").validate({
+        submitHandler: function(){$('#registerModal').modal({backdrop:static});},
+    rules: {
+      "user.name": {
+        minlength: 4,
+        maxlength: 16
+      },
+      "user.pwd": {
+        minlength: 6
+      }
+    },
+    messages: {
+      "user.name": {
+        minlength: "用户名至少4个字符",
+        maxlength: "用户名最多16个字符"
+      },
+      "user.pwd": {
+        required: "请输入密码",
+        minlength: "密码请设置至少6位"
+      }
+    }
+  });
+/** /表单验证代码 **/
   }
   </script>
  </body>
