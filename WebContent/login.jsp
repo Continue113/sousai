@@ -43,7 +43,7 @@
        <label for="inputUsername">用户名:</label> 
 
        <s:if test="tip!=null"> 
-       <input type="text" class="input-block-level" id="inputUsername" name="user.name" placeholder="用户名" value="请重新输入用户名" />
+       <input type="text" class="input-block-level" id="inputUsername" name="user.name" placeholder="用户名" value='${tip} <s:property value="tip" />' />
        <script>
        $(function(){
        var username = "${tip}";//el表达式
