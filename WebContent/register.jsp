@@ -157,6 +157,7 @@
 
       $("#registerForm").validate({
         submitHandler: function(){
+          alert("注册账户成功");
           $('#sousaiRemindDialog').modal({backdrop:static});
           //5秒后跳转至首页
           window.setTimeout("window.location='index.jsp'",5000);
@@ -164,7 +165,6 @@
           if (resetbtn == true){
             location.href = "index.jsp";
           }
-          alert("注册账户成功");
         },
     rules: {
       "user.name": {

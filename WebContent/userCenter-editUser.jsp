@@ -95,7 +95,7 @@ transition: all 0.2s ease-in-out;
         <div class="page-header">
          <h4>账户基本信息</h4>
         </div> 
-        <form id="editUserForm" class="form-horizontal" action="updateUserInfo" method="POST" enctype="multipart/form-data"> 
+        <form id="editUserForm" class="form-horizontal" > 
          <fieldset> 
           <legend>账户基本信息</legend> 
           <div class="control-group"> 
@@ -108,21 +108,21 @@ transition: all 0.2s ease-in-out;
            <label class="control-label" for="courtOpen">密码重置：</label> 
            <div class="controls"> 
             <label class="control-label-changePwd" for="inputUserPassword">旧密码</label> 
-            <input class="span3 add-on" type="password" id="inputUserPassword" name="inputUserPassword" placeholder="请输入旧密码" data-toggle="tooltip" data-placement="top" title="" data-original-title="请输入旧密码" /> 
+            <input class="span3 add-on ignore" type="password" id="inputUserPassword" name="inputUserPassword" placeholder="请输入旧密码" data-toggle="tooltip" data-placement="top" title="" data-original-title="请输入旧密码" /> 
            </div>
            <div class="controls"> 
             <label class="control-label-changePwd" for="inputUserNewPassword">新密码</label> 
-            <input class="span3 add-on" type="password" id="inputUserNewPassword" name="user.pwd" placeholder="请先输入旧密码，再输入新密码" data-toggle="tooltip" data-placement="top" title="" data-original-title="请先输入旧密码，再输入新密码" /> 
+            <input class="span3 add-on ignore" type="password" id="inputUserNewPassword" name="user.pwd" placeholder="请先输入旧密码，再输入新密码" data-toggle="tooltip" data-placement="top" title="" data-original-title="请先输入旧密码，再输入新密码" /> 
            </div>
            <div class="controls">
             <label class="control-label-changePwd" for="inputUserNewPassword2">确认密码</label> 
-            <input class="span3 add-on" type="password" id="inputUserNewPassword2" name="inputUserNewPassword2" placeholder="请先输入旧密码，再输入新密码" data-toggle="tooltip" data-placement="top" title="" data-original-title="请先输入旧密码，再输入新密码" /> 
+            <input class="span3 add-on ignore" type="password" id="inputUserNewPassword2" name="inputUserNewPassword2" placeholder="请先输入旧密码，再输入新密码" data-toggle="tooltip" data-placement="top" title="" data-original-title="请先输入旧密码，再输入新密码" /> 
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="inputUserEmail">注册邮箱：</label> 
            <div class="controls"> 
-            <input class="span3 add-on ignore" type="email" id="inputUserEmail" name="user.email" value="<s:property value="#session.userBean.userEmail" />" data-toggle="tooltip" data-placement="top" title="" data-original-title="可选择修改" /> 
+            <input class="span3 add-on" type="email" id="inputUserEmail" name="user.email" value="<s:property value="#session.userBean.userEmail" />" data-toggle="tooltip" data-placement="top" title="" data-original-title="可选择修改" /> 
            </div> 
           </div> 
           <div class="control-group"> 
@@ -292,42 +292,42 @@ $(function () {
     //添加验证旧密码方法
     $.validator.addMethod("isPwd",function(value,element,param){
       if(value === param){
-        $("#inputUserNewPassword").attr("placeholder","请输入新密码").attr("data-original-title","请输入新密码");
-        $("#inputUserNewPassword2").attr("placeholder","请再次输入新密码").attr("data-original-title","请再次输入新密码");
+        $("#inputUserNewPassword").attr("placeholder","请输入新密码").attr("data-original-title","请输入新密码").removeClass("ignore");
+        $("#inputUserNewPassword2").attr("placeholder","请再次输入新密码").attr("data-original-title","请再次输入新密码").removeClass("ignore");
         return true;
       }
       else{
-        $("#inputUserNewPassword").attr("placeholder","请先输入旧密码，再输入新密码").attr("data-original-title","请先输入旧密码，再输入新密码");
-        $("#inputUserNewPassword2").attr("placeholder","请先输入旧密码，再输入新密码").attr("data-original-title","请先输入旧密码，再输入新密码");
+        $("#inputUserNewPassword").attr("placeholder","请先输入旧密码，再输入新密码").attr("data-original-title","请先输入旧密码，再输入新密码").addClass("ignore");
+        $("#inputUserNewPassword2").attr("placeholder","请先输入旧密码，再输入新密码").attr("data-original-title","请先输入旧密码，再输入新密码").addClass("ignore");
         return false;
       }
     },"密码错误，请重新输入");
 
-    //var editUserValidator = 
+    //var editUserValidator = action="updateUserInfo" method="POST" enctype="multipart/form-data"
     $("#editUserForm").validate({
       submitHandler: function(){
-        /*$.ajax({
-        url: "updataUser",
+        $.ajax({
+        url: "updataUserInfo",
         type: "POST",
         dataType: 'json',
         data: {
+          "user.id": "<s:property value="#session.userBean.userId" />",
           "user.pwd": $("#inputUserNewPassword").val(),
           "user.email": $("#inputUserEmail").val(),
         },
         success: function(rspdata) {
-          alert("编辑账户成功");
+          alert("编辑账户成功"+rspdata);
         },
         error: function() {
           alert("抱歉，发送数据出错了，请重新输入。");
         },
-        });*/
-    alert("编辑账户成功");
+        });
       },
       ignore: ".ignore",
       rules: {
       inputUserPassword: {
         minlength: 6,
-        //isPwd: '<s:property value="#session.userBean.userPwd"/>'
+        isPwd: '<s:property value="#session.userBean.userPwd"/>'
       },
       "user.pwd": {
         minlength: 6
@@ -343,7 +343,7 @@ $(function () {
     messages: {
       inputUserPassword: {
         minlength: "密码至少6个字符",
-        //isPwd: "密码错误,请重新输入！"
+        isPwd: "密码错误,请重新输入！"
       },
       "user.pwd": {
         minlength: "密码请设置至少6位"
