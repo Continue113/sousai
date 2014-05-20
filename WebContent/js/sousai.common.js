@@ -65,8 +65,7 @@ $(function() {
   });
 
   /** 三级省市区联动 P:province C:city C:country**/
-  //初始化省
-
+  /*初始化省
   function initProvince() {
     $.post("selRegion?region.level=0", null, function(data) {
       var selectProvince = $(".selectProvince");
@@ -75,7 +74,7 @@ $(function() {
         selectProvince.append("<option value=" + data[i].code + " data-order=\"" + data[i].order + "\" >" + data[i].name + "</option>");
       }
     });
-  }
+  }*/
   //当选中一个省份后，查询对应的市区名称
   $(".selectProvince").change(function selCity() {
     //tgPrt: targetparent 目标父元素
@@ -144,7 +143,7 @@ $(function() {
     }
   });
   //立即调用初始化省
-  initProvince();
+  //initProvince();
   /****/
 
   /** 高级搜索框级联下拉菜单 **/
