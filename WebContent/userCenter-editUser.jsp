@@ -101,7 +101,7 @@ transition: all 0.2s ease-in-out;
           <div class="control-group"> 
            <label class="control-label" for="userName">用户名：</label> 
            <div class="controls"> 
-            <input class="span3" type="text" id="userName" value="<s:property value="#session.userBean.userName" />" disabled /> 
+            <input class="span3 ignore" type="text" id="userName" value="<s:property value="#session.userBean.userName" />" disabled /> 
            </div> 
           </div> 
           <div class="control-group"> 
@@ -122,7 +122,7 @@ transition: all 0.2s ease-in-out;
           <div class="control-group"> 
            <label class="control-label" for="inputUserEmail">注册邮箱：</label> 
            <div class="controls"> 
-            <input class="span3 add-on" type="email" id="inputUserEmail" name="user.email" value="<s:property value="#session.userBean.userEmail" />" data-toggle="tooltip" data-placement="top" title="" data-original-title="可选择修改" /> 
+            <input class="span3 add-on ignore" type="email" id="inputUserEmail" name="user.email" value="<s:property value="#session.userBean.userEmail" />" data-toggle="tooltip" data-placement="top" title="" data-original-title="可选择修改" /> 
            </div> 
           </div> 
           <div class="control-group"> 
@@ -290,7 +290,7 @@ $(function () {
 
     /** 编辑账户验证 **/
     //添加验证旧密码方法
-    /*$.validator.addMethod("isPwd",function(value,element,param){
+    $.validator.addMethod("isPwd",function(value,element,param){
       if(value === param){
         $("#inputUserNewPassword").attr("placeholder","请输入新密码").attr("data-original-title","请输入新密码");
         $("#inputUserNewPassword2").attr("placeholder","请再次输入新密码").attr("data-original-title","请再次输入新密码");
@@ -302,7 +302,7 @@ $(function () {
         return false;
       }
     },"密码错误，请重新输入");
-*/
+
     var editUserValidator = $("#editUserForm").validate({
       submitHandler: function(){
         /*$.ajax({
@@ -321,6 +321,7 @@ $(function () {
         },
         });*/
       },
+      ignore: ".ignore",
       rules: {
       inputUserPassword: {
         minlength: 6,
