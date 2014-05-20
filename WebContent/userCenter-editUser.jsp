@@ -292,9 +292,9 @@ $(function () {
     //添加验证旧密码方法
     $.validator.addMethod("isPwd",function(value,element,param){
       if(value === param){
-        return true;
         $("#inputUserNewPassword").removeAttr("disabled");
         $("#inputUserNewPassword2").removeAttr("disabled");
+        return true;
       }
       else{
         return false;
