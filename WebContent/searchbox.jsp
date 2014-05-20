@@ -4,7 +4,7 @@
 *searchbox.jsp
 *describe:用于每个页面LOGO旁的搜索框
 *author:king
-*date:2015-5-6
+*date:2015-5-20
 */%>
     <div class="span7"> 
      <ul class="nav nav-tabs searchboxMenu" id="searchbox-tab"> 
@@ -20,8 +20,8 @@
         <button class="btn btn-success btn-search" type="button">&nbsp;搜&nbsp;索</button> 
        </div> 
        <div class="searchbox-other"> 
-        <a href="#">发布比赛</a> 
-        <p><a href="#">高级搜索</a></p> 
+        <a href="userCenter-releaseMatch.jsp">发布比赛</a> 
+        <p><a href="macthSearch.jsp">高级搜索</a></p> 
        </div> 
       </div> 
       <div id="searchbox-court" class="tab-pane"> 
@@ -32,8 +32,8 @@
         <button class="btn btn-success btn-search" type="button">&nbsp;搜&nbsp;索</button> 
        </div> 
        <div class="searchbox-other"> 
-        <a href="#">发布场地</a> 
-        <p><a href="#">高级搜索</a></p> 
+        <a href="userCenter-releaseCourt.jsp">发布场地</a> 
+        <p><a href="courtSearch.jsp">高级搜索</a></p> 
        </div> 
       </div> 
      </div>
@@ -101,12 +101,12 @@
       <div class="span8 breadcrumb-fff"> 
        <ul class="breadcrumb"> 
         <li class="breadcrumb-title">热门搜索:</li> 
-        <li><a href="#">山东杯</a></li> 
-        <li><a href="#">山东杯</a></li> 
-        <li><a href="#">山东杯</a></li> 
-        <li><a href="#">山东杯</a></li> 
-        <li><a href="#">山东杯</a></li> 
-        <li><a href="#">更多&gt;&gt;</a></li> 
+        <li><a href="matchSearch.jsp?key=山东杯">山东杯</a></li> 
+        <li><a href="matchSearch.jsp?key=山东杯">山东杯</a></li> 
+        <li><a href="matchSearch.jsp?key=山东杯">山东杯</a></li> 
+        <li><a href="matchSearch.jsp?key=山东杯">山东杯</a></li> 
+        <li><a href="matchSearch.jsp?key=山东杯">山东杯</a></li> 
+        <li><a href="matchSearch.jsp">更多&gt;&gt;</a></li> 
        </ul> 
        <hr class="span5" /> 
       </div> 

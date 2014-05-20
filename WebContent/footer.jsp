@@ -4,7 +4,7 @@
 *footer.jsp
 *describe:footer用于搜赛网页尾版权信息，友情链接等
 *author:king
-*date:2015-5-6
+*date:2015-5-20
 */%>
   <div class="footer"> 
    <div class="container"> 
@@ -24,6 +24,6 @@
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
-    <!--<button class="btn btn-success">确定</button>-->
+    <button class="btn btn-success">确定</button>
   </div>
   </div>

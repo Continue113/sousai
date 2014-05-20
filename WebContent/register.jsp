@@ -4,7 +4,7 @@
 *register.jsp
 *describe:register用于搜赛网用户注册
 *author:king
-*date:2015-5-6
+*date:2015-5-20
 */%>
 <!DOCTYPE html>
 <html>

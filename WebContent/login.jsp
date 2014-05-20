@@ -4,7 +4,7 @@
 *login.jsp
 *describe:login用于搜赛网登录
 *author:king
-*date:2015-5-6
+*date:2015-5-20
 */%>
 <!DOCTYPE html>
 <html>
