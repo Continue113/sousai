@@ -307,7 +307,7 @@ $(function () {
     $("#editUserForm").validate({
       submitHandler: function(){
         $.ajax({
-        url: "updataUserInfo",
+        url: "updateUserInfo",
         type: "POST",
         dataType: 'json',
         data: {
