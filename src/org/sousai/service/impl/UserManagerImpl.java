@@ -1,5 +1,6 @@
 package org.sousai.service.impl;
 
+import java.io.InputStream;
 import java.util.List;
 
 import org.sousai.service.UserManager;
@@ -134,14 +135,51 @@ public class UserManagerImpl implements UserManager
 	}
 
 	@Override
-	public List<Region> getCity(String province, int order) {
+	public List<Region> getCity(String provinceCode, int order) {
 		// TODO Auto-generated method stub
-		return regionDao.getSonByName(province, order);
+		return regionDao.getSonByCode(provinceCode, order);
 	}
 
 	@Override
-	public List<Region> getZone(String City, int order) {
+	public List<Region> getZone(String cityCode, int order) {
 		// TODO Auto-generated method stub
-		return regionDao.getSonByName(City, order);
+		return regionDao.getSonByCode(cityCode, order);
+	}
+
+	@Override
+	public int upLoadPic(int pic, Object po) 
+	{
+		// TODO Auto-generated method stub
+		if(pic == USER_PIC)
+		{
+			return pic;
+		}
+		else if(pic == COURT_PIC)
+		{
+			courtPicDao.save((CourtPic)po);
+			return pic;
+		}
+		
+		return PIC_FAIL;
+	}
+
+	@Override
+	public InputStream getPic(Long courtId) 
+	{
+		// TODO Auto-generated method stub
+		//courtDao.get(courtId).get
+		return null;
+	}
+
+	@Override
+	public int updateUser(User user) {
+		// TODO Auto-generated method stub
+		try{
+			userDao.update(user);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return 1;
 	}
 }

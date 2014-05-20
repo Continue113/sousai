@@ -2,8 +2,8 @@ create table users
 (
 ID bigint not null primary key auto_increment,
 name varchar(32) not null unique,
-pwd varchar(16) not null,
-email varchar(32) not null,
+pwd varchar(16) binary not null,
+email varchar(32) binary not null,
 reg_time timestamp not null default current_timestamp,
 last_log_time timestamp not null default current_timestamp,
 type char(1) not null default '0',

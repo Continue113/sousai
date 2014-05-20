@@ -20,7 +20,8 @@
 		<action name="processLogin"
 			class="org.sousai.action.LoginAction">
 			<result name="user">index.jsp</result>
-			<result name="error">error.jsp</result>
+			<result name="error">login.jsp</result>
+			<result name="input">login.jsp</result>
 		</action>
 
 		<!-- 定义处理注册的Action -->
@@ -40,6 +41,24 @@
 			class="org.sousai.action.SelRegionAction">
 		</action>
 		
+		<!-- 定义注销的Action -->
+		<action name="processLogout"
+			class="org.sousai.action.LogoutAction">
+			<result>index.jsp</result>
+		</action>
+		
+		<!-- 上传图片的Action -->
+		<action name="upLoadPic"
+			class="org.sousai.action.UpLoadPicAction">
+			<result>error.jsp</result>
+		</action>
+		
+		<!-- 更新用户信息的Action -->
+		<action name="updateUser"
+			class="org.sousai.action.UpdateUserAction">
+			<result>userCenter-editUser.jsp</result>
+		</action>
+
 		<action name="*">
 			<result>content/{1}.jsp</result>
 		</action>

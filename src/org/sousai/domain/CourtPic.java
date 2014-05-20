@@ -15,12 +15,12 @@ public class CourtPic implements Serializable
 	private Court court;
 	
 	//默认构造器
-	CourtPic()
+	public CourtPic()
 	{		
 	}
 	
 	//初始化所有参数的构造器
-	CourtPic(Long id, String path, Blob pic, Court court)
+	public CourtPic(Long id, String path, Blob pic, Court court)
 	{
 		this.id = id;
 		this.path = path;
