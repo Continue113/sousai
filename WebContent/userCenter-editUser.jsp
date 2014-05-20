@@ -112,17 +112,17 @@ transition: all 0.2s ease-in-out;
            </div>
            <div class="controls"> 
             <label class="control-label-changePwd" for="inputUserNewPassword">新密码</label> 
-            <input class="span3 add-on" type="password" id="inputUserNewPassword" name="user.npwd" placeholder="请输入新密码" data-toggle="tooltip" data-placement="top" title="" data-original-title="请输入新密码" /> 
+            <input class="span3 add-on" type="password" id="inputUserNewPassword" name="user.npwd" placeholder="请输入新密码" data-toggle="tooltip" data-placement="top" title="" data-original-title="请输入新密码" disabled/> 
            </div>
            <div class="controls"> 
             <label class="control-label-changePwd" for="inputUserNewPassword2">确认密码</label> 
-            <input class="span3 add-on" type="password" id="inputUserNewPassword2" name="inputUserNewPassword2" placeholder="请再次输入新密码" data-toggle="tooltip" data-placement="top" title="" data-original-title="请再次输入新密码" /> 
+            <input class="span3 add-on" type="password" id="inputUserNewPassword2" name="inputUserNewPassword2" placeholder="请再次输入新密码" data-toggle="tooltip" data-placement="top" title="" data-original-title="请再次输入新密码" disabled/> 
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="inputUserEmail">注册邮箱：</label> 
            <div class="controls"> 
-            <input class="span3 add-on" type="email" id="inputUserEmail" name="user.Email" value="123456789@qq.com" data-toggle="tooltip" data-placement="top" title="" data-original-title="可选择修改" /> 
+            <input class="span3 add-on" type="email" id="inputUserEmail" name="user.Email" value="<s:property value="#session.userBean.userEmail" />" data-toggle="tooltip" data-placement="top" title="" data-original-title="可选择修改" /> 
            </div> 
           </div> 
           <div class="control-group"> 
@@ -299,6 +299,8 @@ $(function () {
     $.validator.addMethod("isPwd",function(value,element,param){
       if(value === param){
         return true;
+        $("#inputUserNewPassword").removeAttr("disabled");
+        $("#inputUserNewPassword2").removeAttr("disabled");
       }
       else{
         return false;
