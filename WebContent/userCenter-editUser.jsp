@@ -95,7 +95,7 @@ transition: all 0.2s ease-in-out;
         <div class="page-header">
          <h4>账户基本信息</h4>
         </div> 
-        <form id="editUserForm" class="form-horizontal" > 
+        <form id="editUserForm" class="form-horizontal" action="updateUserInfo" method="POST" enctype="multipart/form-data"> 
          <fieldset> 
           <legend>账户基本信息</legend> 
           <div class="control-group"> 
@@ -108,15 +108,15 @@ transition: all 0.2s ease-in-out;
            <label class="control-label" for="courtOpen">密码重置：</label> 
            <div class="controls"> 
             <label class="control-label-changePwd" for="inputUserPassword">旧密码</label> 
-            <input class="span3 add-on ignore" type="password" id="inputUserPassword" name="inputUserPassword" placeholder="请输入旧密码" data-toggle="tooltip" data-placement="top" title="" data-original-title="请输入旧密码" /> 
+            <input class="span3 add-on" type="password" id="inputUserPassword" name="inputUserPassword" placeholder="请输入旧密码" data-toggle="tooltip" data-placement="top" title="" data-original-title="请输入旧密码" /> 
            </div>
            <div class="controls"> 
             <label class="control-label-changePwd" for="inputUserNewPassword">新密码</label> 
-            <input class="span3 add-on ignore" type="password" id="inputUserNewPassword" name="user.pwd" placeholder="请先输入旧密码，再输入新密码" data-toggle="tooltip" data-placement="top" title="" data-original-title="请先输入旧密码，再输入新密码" /> 
+            <input class="span3 add-on" type="password" id="inputUserNewPassword" name="user.pwd" placeholder="请先输入旧密码，再输入新密码" data-toggle="tooltip" data-placement="top" title="" data-original-title="请先输入旧密码，再输入新密码" /> 
            </div>
            <div class="controls">
             <label class="control-label-changePwd" for="inputUserNewPassword2">确认密码</label> 
-            <input class="span3 add-on ignore" type="password" id="inputUserNewPassword2" name="inputUserNewPassword2" placeholder="请先输入旧密码，再输入新密码" data-toggle="tooltip" data-placement="top" title="" data-original-title="请先输入旧密码，再输入新密码" /> 
+            <input class="span3 add-on" type="password" id="inputUserNewPassword2" name="inputUserNewPassword2" placeholder="请先输入旧密码，再输入新密码" data-toggle="tooltip" data-placement="top" title="" data-original-title="请先输入旧密码，再输入新密码" /> 
            </div> 
           </div> 
           <div class="control-group"> 
@@ -292,19 +292,18 @@ $(function () {
     //添加验证旧密码方法
     $.validator.addMethod("isPwd",function(value,element,param){
       if(value === param){
-        $("#inputUserNewPassword").attr("placeholder","请输入新密码").attr("data-original-title","请输入新密码").removeClass("ignore");
-        $("#inputUserNewPassword2").attr("placeholder","请再次输入新密码").attr("data-original-title","请再次输入新密码").removeClass("ignore");
+        $("#inputUserNewPassword").attr("placeholder","请输入新密码").attr("data-original-title","请输入新密码");
+        $("#inputUserNewPassword2").attr("placeholder","请再次输入新密码").attr("data-original-title","请再次输入新密码");
         return true;
       }
       else{
-        $("#inputUserNewPassword").attr("placeholder","请先输入旧密码，再输入新密码").attr("data-original-title","请先输入旧密码，再输入新密码").addClass("ignore");
-        $("#inputUserNewPassword2").attr("placeholder","请先输入旧密码，再输入新密码").attr("data-original-title","请先输入旧密码，再输入新密码").addClass("ignore");
+        $("#inputUserNewPassword").attr("placeholder","请先输入旧密码，再输入新密码").attr("data-original-title","请先输入旧密码，再输入新密码");
+        $("#inputUserNewPassword2").attr("placeholder","请先输入旧密码，再输入新密码").attr("data-original-title","请先输入旧密码，再输入新密码");
         return false;
       }
     },"密码错误，请重新输入");
 
-    //var editUserValidator = action="updateUserInfo" method="POST" enctype="multipart/form-data"
-    $("#editUserForm").validate({
+    var editUserValidator = $("#editUserForm").validate({
       submitHandler: function(){
         $.ajax({
         url: "updateUserInfo",
@@ -362,7 +361,7 @@ $(function () {
       var resetbtn = confirm("确定重置吗？");
       if (resetbtn == true){
         $("#resetBtn").click();
-        $("#editUserForm").validate().resetForm();
+        editUserValidator.resetForm();
       }
     });
     /****/
