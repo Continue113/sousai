@@ -101,18 +101,18 @@ transition: all 0.2s ease-in-out;
           <div class="control-group"> 
            <label class="control-label" for="userName">用户名：</label> 
            <div class="controls"> 
-            <input class="span3" type="text" id="userName" value="TESTKING" disabled /> 
+            <input class="span3" type="text" id="userName" value="<s:porperty value="#session.userBean.userName" />" disabled /> 
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="courtOpen">密码重置：</label> 
            <div class="controls"> 
             <label class="control-label-changePwd" for="inputUserPassword">旧密码</label> 
-            <input class="span3 add-on" type="password" id="inputUserPassword" name="inputUserPassword" placeholder="请输入旧密码" data-toggle="tooltip" data-placement="top" title="" data-original-title="请输入旧密码" /> 
+            <input class="span3 add-on" type="password" id="inputUserPassword" name="user.pwd" placeholder="请输入旧密码" data-toggle="tooltip" data-placement="top" title="" data-original-title="请输入旧密码" /> 
            </div>
            <div class="controls"> 
             <label class="control-label-changePwd" for="inputUserNewPassword">新密码</label> 
-            <input class="span3 add-on" type="password" id="inputUserNewPassword" name="inputUserNewPassword" placeholder="请输入新密码" data-toggle="tooltip" data-placement="top" title="" data-original-title="请输入新密码" /> 
+            <input class="span3 add-on" type="password" id="inputUserNewPassword" name="user.npwd" placeholder="请输入新密码" data-toggle="tooltip" data-placement="top" title="" data-original-title="请输入新密码" /> 
            </div>
            <div class="controls"> 
             <label class="control-label-changePwd" for="inputUserNewPassword2">确认密码</label> 
@@ -122,7 +122,7 @@ transition: all 0.2s ease-in-out;
           <div class="control-group"> 
            <label class="control-label" for="inputUserEmail">注册邮箱：</label> 
            <div class="controls"> 
-            <input class="span3 add-on" type="email" id="inputUserEmail" name="inputUserEmail" value="123456789@qq.com" data-toggle="tooltip" data-placement="top" title="" data-original-title="可选择修改" /> 
+            <input class="span3 add-on" type="email" id="inputUserEmail" name="user.Email" value="123456789@qq.com" data-toggle="tooltip" data-placement="top" title="" data-original-title="可选择修改" /> 
            </div> 
           </div> 
           <div class="control-group"> 
@@ -173,6 +173,7 @@ transition: all 0.2s ease-in-out;
            <div class="controls"> 
             <input type="submit" value="保存修改" class="btn btn-success" /> 
             <input type="button" value="重置" id="resetEditUserForm" class="btn" />
+            <!-- 隐藏重置表单按钮 -->
             <input type="reset" id="resetBtn" class="btn hide" />  
            </div>
           </div> 
@@ -283,7 +284,7 @@ transition: all 0.2s ease-in-out;
 {% } %}
 </script>
 <script>
-    $(function () {
+$(function () {
     /** editUser鼠标点击选择头像 **/
     $("#systemIcons li").click(function(){
       $(this).parent().find("li").removeClass("active");
@@ -298,11 +299,10 @@ transition: all 0.2s ease-in-out;
       submitHandler: function(){alert("编辑账户成功");},
       ignore: "",
       rules: {
-      inputUserPassword: {
+      "user.pwd": {
         minlength: 6,
-        maxlength: 12,
         remote: { //异步验证用户名是否重复
-          url: "login.action",
+          url: "validPwd",
           type: "post",
           dataType: "json",
           data: { userName: function(){
@@ -310,64 +310,59 @@ transition: all 0.2s ease-in-out;
           }}
         }
       },
-      inputUserNewPassword: {
+      "user.npwd": {
         minlength: 6
       },
       inputUserNewPassword2: {
         minlength: 6,
         equalTo: "#inputUserNewPassword"
       },
-      inputUserEmail: {
+      "user.Email": {
         email: true
       }
     },
     messages: {
-      inputUserPassword: {
+      "user.pwd": {
         minlength: "密码至少6个字符",
-        maxlength: "密码最多12个字符",
-        remote: "密码错误！"
+        remote: "密码错误,请重新输入！"
       },
-      inputUserNewPassword: {
+      "user.npwd": {
         minlength: "密码请设置至少6位"
       },
       inputUserNewPassword2: {
         minlength: "密码请设置至少6位",
         equalTo: "两次密码输入不相符，请重新输入"
       },
-      inputUserEmail: {
+      "user.Email": {
         email: "请输入有效的邮箱"
       }
     }
   });
     /** 取消编辑账户 **/
     $("#resetEditUserForm").click(function(){
-      /*var resetbtn = confirm("确定重置吗？");
+      var resetbtn = confirm("确定重置吗？");
       if (resetbtn == true){
         $("#resetBtn").click();
-        //editUserValidator.resetForm();
-      }*/
-      $("#modal1").modal({
-        backdrop:false,
-        keyboard:false
-      });
-      $("#ensureResetForm").click(function(){
+        editUserValidator.resetForm();
+      }
+      /*$("#ensureResetForm").click(function(){
         $("#modal1").modal("hide");
         $("#resetBtn").click();
         editUserValidator.resetForm();
-      });
+      });*/
     });
     /****/
 
-        $('#editUserForm').fileupload({
-            url: 'server/java/'
-        });
-        $('#editUserForm').fileupload('option', {
-            disableImageResize: /Android(?!.*Chrome)|Opera/
-                .test(window.navigator.userAgent),
-            maxFileSize: 5000000,
-            maxNumberOfFiles : 1,
-            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i
-        });
-    })
+    $('#editUserForm').fileupload({
+        url: 'server/java/'
+    });
+    $('#editUserForm').fileupload('option', {
+        disableImageResize: /Android(?!.*Chrome)|Opera/
+            .test(window.navigator.userAgent),
+        maxFileSize: 5000000,
+        maxNumberOfFiles : 1,
+        acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i
+    });
+})
 </script>
 </body></html>

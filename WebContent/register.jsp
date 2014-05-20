@@ -155,7 +155,15 @@
       },"不相符，请重新输入");
 
       $("#registerForm").validate({
-        submitHandler: function(){$('#sousaiRemindDialog').modal({backdrop:static});},
+        submitHandler: function(){
+          $('#sousaiRemindDialog').modal({backdrop:static});
+          //5秒后跳转至首页
+          window.setTimeout("window.location='index.jsp'",5000);
+          var resetbtn = confirm("注册成功，将在5秒后跳转至首页。点击确定跳转至首页。");
+          if (resetbtn == true){
+            location.href = "index.jsp";
+          }
+        },
     rules: {
       "user.name": {
         minlength: 4,
