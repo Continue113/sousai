@@ -4,7 +4,6 @@ import java.util.*;
 
 import org.sousai.domain.*;
 import org.sousai.dao.*;
-
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -19,18 +18,18 @@ import java.util.List;
 public class UserDaoHibernate extends HibernateDaoSupport
 		implements UserDao
 {
-	public User get(Integer id)
+	public User get(Long id)
 	{
 		return getHibernateTemplate()
 				.get(User.class, id);
 	}
 
 	@Override
-	public Integer save(User user) {
+	public Long save(User user) {
 		// TODO Auto-generated method stub
 		System.out.println("save now turn to getHibernateTemplate().save "+user.getId()+"   "+ user.getName()+"   "+user.getPwd()+"   ");
-		return (Integer)getHibernateTemplate()
-				.save(user);
+		return Long.parseLong(getHibernateTemplate()
+				.save(user).toString());
 	}
 
 	@Override
@@ -53,7 +52,7 @@ public class UserDaoHibernate extends HibernateDaoSupport
 	}
 
 	@Override
-	public void delete(Integer id) {
+	public void delete(Long id) {
 		// TODO Auto-generated method stub
 		getHibernateTemplate().delete(get(id));
 		

@@ -47,6 +47,14 @@ public interface RegionDao
 	Region getByName(String name, int order);
 	
 	/**
+	 * 根据地区code，获得地区数据
+	 * @param code 地区code
+	 * @param order 地区顺序
+	 * @return 地区数据
+	 */
+	Region getByCode(String code, int order);
+	
+	/**
 	 * 根据地区名字与级别，获得地区数据
 	 * @param name 地区名字
 	 * @param level 地区级别
@@ -60,6 +68,14 @@ public interface RegionDao
 	 * @return 所有下1级地区
 	 */
 	List<Region> getSon(Integer id);
+	
+	/**
+	 * 根据地区Code，获取其数据库中下1级地区
+	 * @param code 地区code
+	 * @param order 顺序
+	 * @return 所有下1级地区
+	 */
+	List<Region> getSonByCode(String code, int order);
 	
 	/**
 	 * 根据地区名字，获取其数据库中下1级地区

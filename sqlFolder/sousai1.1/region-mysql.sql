@@ -3557,4 +3557,8 @@ update region set region_level=1 where parent_id=1;
 update region set region_level=2 where parent_id between 2 and 32;
 update region set region_level=3 where parent_id>32;
 
+-- select * from region as r1, region as r2, region as r3 where r2.region_name='县' and r1.parent_id=r2.region_id and r2.parent_id=r3.parent_id and r3.region_name='市辖区';
+update region as r1 join region as r2 join region as r3 set r1.parent_id = r3.region_id where r2.region_name='县' and r1.parent_id=r2.region_id and r2.parent_id=r3.parent_id and r3.region_name='市辖区';
+update region as r1 join region as r2 set r1.region_name = r2.region_name where r1.parent_id=r2.region_id and r1.region_name='市辖区';
+delete from region where region_name='县';
 -- set foreign_key_checks=1

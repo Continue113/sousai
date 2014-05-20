@@ -5,20 +5,9 @@ import java.util.List;
 import org.sousai.action.base.*;
 import org.sousai.domain.*;
 import org.sousai.tools.*;
-import org.sousai.service.*;
-import org.sousai.vo.*;
 
-import static org.sousai.service.UserManager.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import com.google.gson.Gson;
-import com.opensymphony.xwork2.*;
 
 import org.apache.struts2.ServletActionContext;
-import org.apache.struts2.interceptor.*;
 
 /**
  * Description:
@@ -35,7 +24,7 @@ public class SelRegionAction extends UserBaseAction
 	private static final long serialVersionUID = 8955065723895264050L;
 	private Region region;
 	private List<Region> regions;
-	private Integer level;
+	//private Integer level;
 	
 	private String PROV_SUCCESS = "prov_success";
 	private String PROV_FAIL = "prov_fail";
@@ -67,19 +56,19 @@ public class SelRegionAction extends UserBaseAction
 	}
 	
 	//level的setter和getter
-	public void setLevel(int level)
+	/*public void setLevel(int level)
 	{
 		this.level = level;
 	}
 	public int getLevel()
 	{
 		return this.level;
-	}
+	}*/
 	
 	public String execute() throws Exception
 	{
 		System.out.println("SelRegion now!!");
-		ActionContext ctx = ActionContext.getContext();
+		//ActionContext ctx = ActionContext.getContext();
 		System.out.println("1");
 		Region tempRegion = getRegion();
 		int level1 = 3;
@@ -96,26 +85,7 @@ public class SelRegionAction extends UserBaseAction
 			if(provinces!=null && provinces.size()!=0)
 			{
 				//setRegions(provinces);
-				//JSONUtils.toJson(ServletActionContext.getResponse(), provinces);
-				Gson gson = new Gson();
-		        //String result = gson.toJson(data);
-		        String test1 = "重庆";
-		        String test2 = "江津";
-		        String result = "{\"schoolId\":\"" + test1 + "\",\"schoolName\":\""+test2+"\"}";
-		        System.out.println(result);
-		        HttpServletResponse response = ServletActionContext.getResponse();
-		        response.setDateHeader("Expires", 0);  
-			    response.addHeader("Pragma", "no-cache");  
-			    response.setHeader("Cache-Control", "no-cache"); 
-		        response.setContentType("application/json;charset=UTF-8");
-		        response.setCharacterEncoding("UTF-8");
-		        /*PrintWriter out = response.getWriter();
-		        out.print(result);
-		        out.flush();
-		        out.close();*/
-		        response.getWriter().print(result);
-		        response.getWriter().flush();
-		        //response.getWriter().close();
+				JSONUtils.toJson(ServletActionContext.getResponse(), provinces);
 				System.out.println(PROV_SUCCESS);
 			}
 			else
@@ -126,24 +96,27 @@ public class SelRegionAction extends UserBaseAction
 		//查询市级地区
 		else if(level1 == 1)
 		{
-			List<Region> cities = umg.getCity(tempRegion.getName(), tempRegion.getOrder());
+			System.out.println(tempRegion.getName()+" "+tempRegion.getOrder());
+			List<Region> cities = umg.getCity(tempRegion.getCode(), tempRegion.getOrder());
 			if(cities!=null && cities.size()!=0)
 			{
-				setRegions(cities);
+				//setRegions(cities);
+				JSONUtils.toJson(ServletActionContext.getResponse(), cities);
 				System.out.println(CITY_SUCCESS);
 			}
 			else
 			{
 				System.out.println(CITY_FAIL);
 			}
-		}		
+		}
 		//查询区级地区
 		else if(level1 == 2)
 		{
-			List<Region> zones = umg.getZone(tempRegion.getName(), tempRegion.getOrder());
+			List<Region> zones = umg.getZone(tempRegion.getCode(), tempRegion.getOrder());
 			if(zones!=null && zones.size()!=0)
 			{
-				setRegions(zones);
+				//setRegions(zones);
+				JSONUtils.toJson(ServletActionContext.getResponse(), zones);
 				System.out.println(ZONE_SUCCESS);
 			}
 			else

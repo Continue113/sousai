@@ -2,15 +2,10 @@ package org.sousai.action;
 
 import org.sousai.action.base.*;
 import org.sousai.domain.*;
-import org.sousai.service.*;
 import org.sousai.vo.*;
 import static org.sousai.service.UserManager.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import com.opensymphony.xwork2.*;
-import org.apache.struts2.interceptor.*;
 
 /**
  * Description:
@@ -25,6 +20,7 @@ import org.apache.struts2.interceptor.*;
 
 public class LoginAction extends UserBaseAction
 {
+	private static final long serialVersionUID = 3350273490378394711L;
 	//����һ��������Ϊ�û���¼�ɹ���Result��
 	private final String USER_RESULT = "user";
 	//����һ��������Ϊ����Ա��½�ɹ���Result��
@@ -46,15 +42,15 @@ public class LoginAction extends UserBaseAction
 	
 	
 	
-	//tip���Ե�getter��setter
-	/*public void setTip(String tip)
+	//tip属性的setter和getter
+	public void setTip(String tip)
 	{
 		this.tip = tip;
 	}
 	public String getTip()
 	{
 		return this.tip;
-	}*/
+	}
 	
 	public UserBean getUserInfo()
 	{
@@ -104,7 +100,9 @@ public class LoginAction extends UserBaseAction
 		else
 		{
 			//setTip("�û���/���벻ƥ��");
-			System.out.println("�õģ�ʧ����");
+			System.out.println("valid Error");
+			System.out.println(user.getName());
+			setTip(user.getName());
 			return ERROR;
 		}
 			

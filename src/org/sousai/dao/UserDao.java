@@ -1,57 +1,58 @@
 package org.sousai.dao;
 
 import java.util.*;
+
 import org.sousai.domain.*;
 public interface UserDao {
 	/**
-	 * ¸ù¾İ±êÊ¶ÊôĞÔÀ´¼ÓÔØUserÊµÀı
+	 * ï¿½ï¿½İ±ï¿½Ê¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½UserÊµï¿½ï¿½
 	 * @param id
-	 * @return Ö¸¶¨±êÊ¶ÊôĞÔ¶ÔÓ¦µÄUserÊµÀı
+	 * @return Ö¸ï¿½ï¿½ï¿½ï¿½Ê¶ï¿½ï¿½ï¿½Ô¶ï¿½Ó¦ï¿½ï¿½UserÊµï¿½ï¿½
 	 */
-	User get(Integer id);
+	User get(Long id);
 	
 	/**
-	 * ³Ö¾Ã»¯Ö¸¶¨µÄUserÊµÀı 
+	 * ï¿½Ö¾Ã»ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½UserÊµï¿½ï¿½ 
 	 * @param user
-	 * @return UserÊµÀı±»³Ö¾Ã»¯ºóµÄ±êÊ¶ÊôĞÔÖµ
+	 * @return UserÊµï¿½ï¿½Ö¾Ã»ï¿½ï¿½ï¿½Ä±ï¿½Ê¶ï¿½ï¿½ï¿½ï¿½Öµ
 	 */
-	Integer save(User user);
+	Long save(User user);
 	
 	/**
-	 * ĞŞ¸ÄÖ¸¶¨µÄUserÊµÀı
-	 * @param user ĞèÒª±»ĞŞ¸ÄµÄUserÊµÀı
+	 * ï¿½Ş¸ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½UserÊµï¿½ï¿½
+	 * @param user ï¿½ï¿½Òªï¿½ï¿½ï¿½Ş¸Äµï¿½UserÊµï¿½ï¿½
 	 */
 	void update(User user);
 	
 	/**
-	 * É¾³ıÖ¸¶¨µÄUserÊµÀı
-	 * @param user ĞèÒª±»É¾³ıµÄUserÊµÀı
+	 * É¾ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½UserÊµï¿½ï¿½
+	 * @param user ï¿½ï¿½Òªï¿½ï¿½É¾ï¿½ï¿½ï¿½UserÊµï¿½ï¿½
 	 */
 	void delete(User user);
 	
 	/**
-	 * ¸ù¾İ±íÊ¾ÊôĞÔÉ¾³ıUserÊµÀı
-	 * @param id ĞèÒª±»É¾³ıµÄUserÊµÀıµÄ±êÊ¶ÊôĞÔÖµ
+	 * ï¿½ï¿½İ±ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½UserÊµï¿½ï¿½
+	 * @param id ï¿½ï¿½Òªï¿½ï¿½É¾ï¿½ï¿½ï¿½UserÊµï¿½ï¿½Ä±ï¿½Ê¶ï¿½ï¿½ï¿½ï¿½Öµ
 	 */
-	void delete(Integer id);
+	void delete(Long id);
 	
 	/**
-	 * ²éÑ¯È«²¿µÄUserÊµÀı
-	 * @return Êı¾İ¿âÖĞÈ«²¿µÄUserÊµÀı
+	 * ï¿½ï¿½Ñ¯È«ï¿½ï¿½ï¿½ï¿½UserÊµï¿½ï¿½
+	 * @return ï¿½ï¿½İ¿ï¿½ï¿½ï¿½È«ï¿½ï¿½ï¿½ï¿½UserÊµï¿½ï¿½
 	 */
 	List<User> findAll();
 	
 	/**
-	 * ²éÑ¯ÓÃ»§ÃûºÍÃÜÂëÆ¥ÅäµÄUserÊµÀı
+	 * ï¿½ï¿½Ñ¯ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½UserÊµï¿½ï¿½
 	 * @param user
-	 * @return ÓÃ»§ÃûºÍÃÜÂë¶¼Æ¥ÅäµÄUserÊµÀı
+	 * @return ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë¶¼Æ¥ï¿½ï¿½ï¿½UserÊµï¿½ï¿½
 	 */
 	List<User> findByNameAndPass(User user);
 	
 	/**
-	 * ¸ù¾İÓÃ»§Ãû²éÕÒÓÃ»§
-	 * @param name ÓÃ»§µÄÃû×Ö
-	 * @return Ãû×Ö¶ÔÓ¦µÄÓÃ»§
+	 * ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½
+	 * @param name ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	 * @return ï¿½ï¿½ï¿½Ö¶ï¿½Ó¦ï¿½ï¿½ï¿½Ã»ï¿½
 	 */
 	User findByName(String name);
 	

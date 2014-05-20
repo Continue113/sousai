@@ -90,12 +90,34 @@ public class RegionDaoHibernate extends HibernateDaoSupport implements RegionDao
 	public List<Region> getSonByNameAndLevel(String name, Integer level,
 			int order) {
 		// TODO Auto-generated method stub
-		Region TempRegion = getByNameAndLevel(name, level, order);
-		if(TempRegion == null)
+		Region tempRegion = getByNameAndLevel(name, level, order);
+		if(tempRegion == null)
 		{
 			return null;
 		}
-		return (List<Region>)getHibernateTemplate().find("from Region r where r.parentId=?", TempRegion.getId());
+		return (List<Region>)getHibernateTemplate().find("from Region r where r.parentId=?", tempRegion.getId());
+	}
+
+	@Override
+	public List<Region> getSonByCode(String code, int order) {
+		// TODO Auto-generated method stub
+		Region tempRegion = getByCode(code, order);
+		if(tempRegion == null)
+		{
+			return null;
+		}
+		return (List<Region>)getHibernateTemplate().find("from Region r where r.parentId=?", tempRegion.getId());
+	}
+
+	@Override
+	public Region getByCode(String code, int order) {
+		// TODO Auto-generated method stub
+		List<Region> regions = (List<Region>)getHibernateTemplate().find("from Region where code=? and order=?", code, order);
+		if(regions != null && regions.size()!=0)
+		{
+			return regions.get(0);
+		}
+		return null;
 	}
 
 }
