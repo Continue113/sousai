@@ -95,7 +95,7 @@ transition: all 0.2s ease-in-out;
         <div class="page-header">
          <h4>账户基本信息</h4>
         </div> 
-        <form id="editUserForm" class="form-horizontal" action="updateUser" method="POST" enctype="multipart/form-data"> 
+        <form id="editUserForm" class="form-horizontal" action="updateUser?user.id=<s:property value="#session.userBean.userId" />" method="POST" enctype="multipart/form-data"> 
          <fieldset> 
           <legend>账户基本信息</legend> 
           <div class="control-group"> 
@@ -114,7 +114,7 @@ transition: all 0.2s ease-in-out;
             <label class="control-label-changePwd" for="inputUserNewPassword">新密码</label> 
             <input class="span3 add-on" type="password" id="inputUserNewPassword" name="user.pwd" placeholder="请输入新密码" data-toggle="tooltip" data-placement="top" title="" data-original-title="请输入新密码" disabled/> 
            </div>
-           <div class="controls"> 
+           <div class="controls">
             <label class="control-label-changePwd" for="inputUserNewPassword2">确认密码</label> 
             <input class="span3 add-on" type="password" id="inputUserNewPassword2" name="inputUserNewPassword2" placeholder="请再次输入新密码" data-toggle="tooltip" data-placement="top" title="" data-original-title="请再次输入新密码" disabled/> 
            </div> 
