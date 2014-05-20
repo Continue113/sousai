@@ -304,7 +304,23 @@ $(function () {
     },"密码错误，请重新输入");
 
     var editUserValidator = $("#editUserForm").validate({
-      submitHandler: function(){alert("编辑账户成功");},
+      submitHandler: function(){
+        /*$.ajax({
+        url: "updataUser",
+        type: "POST",
+        dataType: 'json',
+        data: {
+          "user.pwd": $("#inputUserNewPassword").val(),
+          "user.email": $("#inputUserEmail").val(),
+        },
+        success: function(rspdata) {
+          alert("编辑账户成功");
+        },
+        error: function() {
+          alert("抱歉，发送数据出错了，请重新输入。");
+        },
+        });*/
+      },
       ignore: "",
       rules: {
       inputUserPassword: {
