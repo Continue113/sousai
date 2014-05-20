@@ -95,7 +95,7 @@ transition: all 0.2s ease-in-out;
         <div class="page-header">
          <h4>账户基本信息</h4>
         </div> 
-        <form id="editUserForm" class="form-horizontal" action="updateUser?user.id=<s:property value="#session.userBean.userId" />" method="POST" enctype="multipart/form-data"> 
+        <form id="editUserForm" class="form-horizontal" action="updateUser" method="POST" enctype="multipart/form-data"> 
          <fieldset> 
           <legend>账户基本信息</legend> 
           <div class="control-group"> 
