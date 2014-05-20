@@ -354,15 +354,28 @@ $(function () {
     /****/
 
     $('#editUserForm').fileupload({
-        url: 'server/java/'
+        url: 'uploadPic'
     });
-    $('#editUserForm').fileupload('option', {
+    $('#editUserForm').addClass('fileupload-processing');
+    $.ajax({
+        // Uncomment the following to send cross-domain cookies:
+        //xhrFields: {withCredentials: true},
+        url: $('#editUserForm').fileupload('option', 'url'),
+        dataType: 'json',
+        context: $('#editUserForm')[0]
+    }).always(function () {
+        $(this).removeClass('fileupload-processing');
+    }).done(function (result) {
+        $(this).fileupload('option', 'done')
+            .call(this, $.Event('done'), {result: result});
+    });
+    /*$('#editUserForm').fileupload('option', {
         disableImageResize: /Android(?!.*Chrome)|Opera/
             .test(window.navigator.userAgent),
         maxFileSize: 5000000,
         maxNumberOfFiles : 1,
         acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i
-    });
+    });*/
 })
 </script>
 </body></html>
