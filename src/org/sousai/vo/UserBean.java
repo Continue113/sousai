@@ -30,7 +30,7 @@ public class UserBean implements Serializable
 	}
 	
 	//��ʼ���������ԵĹ�����
-	public UserBean(long userId, String userName, String userPwd,
+	public UserBean(Long userId, String userName, String userPwd,
 			String userEmail, char userType, String userPicId,
 			Timestamp userRegTime, Timestamp userLastLogTime)
 	{
@@ -49,7 +49,7 @@ public class UserBean implements Serializable
 	{
 		this.userId = userId;
 	}
-	public long getUserId()
+	public Long getUserId()
 	{
 		return this.userId;
 	}

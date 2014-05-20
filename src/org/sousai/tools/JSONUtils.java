@@ -12,7 +12,7 @@ public class JSONUtils {
         throws IOException {
         Gson gson = new Gson();
         String result = gson.toJson(data);
-        System.out.println(result);
+        //System.out.println(result);
         //response.setDateHeader("Expires", 0);  
 	    //response.addHeader("Pragma", "no-cache");  
 	    response.setHeader("Cache-Control", "no-cache"); 

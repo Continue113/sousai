@@ -47,18 +47,18 @@
 			<result>index.jsp</result>
 		</action>
 		
+		<!-- 更新用户信息的Action -->
+		<action name="updateUserInfo"
+			class="org.sousai.action.UpdateUserAction">
+			<result>userCenter-editUser.jsp</result>
+		</action>
+		
 		<!-- 上传图片的Action -->
-		<action name="upLoadPic"
+		<action name="uploadPic"
 			class="org.sousai.action.UploadPicAction">
 			<result>error.jsp</result>
 		</action>
 		
-		<!-- 更新用户信息的Action -->
-		<action name="updateUser"
-			class="org.sousai.action.UpdateUserAction">
-			<result>userCenter-editUser.jsp</result>
-		</action>
-
 	</package>
 	
 </struts>

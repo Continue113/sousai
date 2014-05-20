@@ -9,7 +9,7 @@
 <table width=780 align="center"
 	background="${pageContext.request.contextPath}/images/bodybg.jpg">
   <tr>
-	<td colspan="3">请单击后面链接开始使用系统<a href="login.action">登录系统</a></td>
+	<td colspan="3">请单击后面链接开始使用系统<a href="updateUser.action">登录系统</a></td>
   </tr>
   <tr> 
 	<td colspan="3"> 

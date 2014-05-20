@@ -3,6 +3,7 @@ package org.sousai.dao;
 import java.util.*;
 
 import org.sousai.domain.*;
+
 public interface UserDao {
 	/**
 	 * ��ݱ�ʶ����������Userʵ��

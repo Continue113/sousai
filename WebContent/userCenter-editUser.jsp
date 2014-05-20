@@ -95,7 +95,7 @@ transition: all 0.2s ease-in-out;
         <div class="page-header">
          <h4>账户基本信息</h4>
         </div> 
-        <form id="editUserForm" class="form-horizontal" action="updateUserInfo" method="POST" enctype="multipart/form-data"> 
+        <form id="editUserForm" class="form-horizontal" action="updateUser?user.id=<s:property value="#session.userBean.userId" />" method="POST" enctype="multipart/form-data"> 
          <fieldset> 
           <legend>账户基本信息</legend> 
           <div class="control-group"> 
@@ -112,11 +112,11 @@ transition: all 0.2s ease-in-out;
            </div>
            <div class="controls"> 
             <label class="control-label-changePwd" for="inputUserNewPassword">新密码</label> 
-            <input class="span3 add-on" type="password" id="inputUserNewPassword" name="user.pwd" placeholder="请先输入旧密码，再输入新密码" data-toggle="tooltip" data-placement="top" title="" data-original-title="请先输入旧密码，再输入新密码" /> 
+            <input class="span3 add-on" type="password" id="inputUserNewPassword" name="user.pwd" placeholder="请输入新密码" data-toggle="tooltip" data-placement="top" title="" data-original-title="请输入新密码" disabled/> 
            </div>
            <div class="controls">
             <label class="control-label-changePwd" for="inputUserNewPassword2">确认密码</label> 
-            <input class="span3 add-on" type="password" id="inputUserNewPassword2" name="inputUserNewPassword2" placeholder="请先输入旧密码，再输入新密码" data-toggle="tooltip" data-placement="top" title="" data-original-title="请先输入旧密码，再输入新密码" /> 
+            <input class="span3 add-on" type="password" id="inputUserNewPassword2" name="inputUserNewPassword2" placeholder="请再次输入新密码" data-toggle="tooltip" data-placement="top" title="" data-original-title="请再次输入新密码" disabled/> 
            </div> 
           </div> 
           <div class="control-group"> 
@@ -292,35 +292,17 @@ $(function () {
     //添加验证旧密码方法
     $.validator.addMethod("isPwd",function(value,element,param){
       if(value === param){
-        $("#inputUserNewPassword").attr("placeholder","请输入新密码").attr("data-original-title","请输入新密码");
-        $("#inputUserNewPassword2").attr("placeholder","请再次输入新密码").attr("data-original-title","请再次输入新密码");
+        $("#inputUserNewPassword").removeAttr("disabled");
+        $("#inputUserNewPassword2").removeAttr("disabled");
         return true;
       }
       else{
-        $("#inputUserNewPassword").attr("placeholder","请先输入旧密码，再输入新密码").attr("data-original-title","请先输入旧密码，再输入新密码");
-        $("#inputUserNewPassword2").attr("placeholder","请先输入旧密码，再输入新密码").attr("data-original-title","请先输入旧密码，再输入新密码");
         return false;
       }
     },"密码错误，请重新输入");
 
     var editUserValidator = $("#editUserForm").validate({
-      submitHandler: function(){
-        /*$.ajax({
-        url: "updataUser",
-        type: "POST",
-        dataType: 'json',
-        data: {
-          "user.pwd": $("#inputUserNewPassword").val(),
-          "user.email": $("#inputUserEmail").val(),
-        },
-        success: function(rspdata) {
-          alert("编辑账户成功");
-        },
-        error: function() {
-          alert("抱歉，发送数据出错了，请重新输入。");
-        },
-        });*/
-      },
+      submitHandler: function(){alert("编辑账户成功");},
       ignore: "",
       rules: {
       inputUserPassword: {

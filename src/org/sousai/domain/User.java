@@ -1,5 +1,7 @@
 package org.sousai.domain;
 
+import org.sousai.vo.*;
+
 import java.io.Serializable;
 //import java.sql.Date;
 import java.sql.Timestamp;
@@ -44,6 +46,18 @@ public class User implements Serializable{
 		this.picId = picId;
 		//this.regTime = regTime;
 		//this.lastLogTime = lastLogTime;
+	}
+	
+	public User(UserBean userBean)
+	{
+		this.id = userBean.getUserId();
+		this.name = userBean.getUserName();
+		this.pwd = userBean.getUserPwd();
+		this.email = userBean.getUserEmail();
+		this.type = userBean.getUserType();
+		this.picId = userBean.getUserPicId();
+		this.regTime = userBean.getUserRegTime();
+		this.lastLogTime = userBean.getUserLastLogTime();
 	}
 	
 	//id锟斤拷锟皆碉拷setter锟斤拷getter锟斤拷锟斤拷

@@ -80,10 +80,7 @@ public class LoginAction extends UserBaseAction
 				, user.getName());
 			ctx.getSession().put(WebConstant.LEVEL
 				, WebConstant.USER_LEVEL);*/
-			System.out.println("+++++++++++++++++++++");
-			//setTip("���Ѿ��ɹ���¼ϵͳ");
 			ctx.getSession().put("userBean", getUserInfo());
-			System.out.println("test set");
 			return USER_RESULT;
 		}
 		//��¼���Ϊ����
