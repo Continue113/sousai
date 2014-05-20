@@ -112,11 +112,11 @@ transition: all 0.2s ease-in-out;
            </div>
            <div class="controls"> 
             <label class="control-label-changePwd" for="inputUserNewPassword">新密码</label> 
-            <input class="span3 add-on" type="password" id="inputUserNewPassword" name="user.pwd" placeholder="请输入新密码" data-toggle="tooltip" data-placement="top" title="" data-original-title="请输入新密码" disabled/> 
+            <input class="span3 add-on" type="password" id="inputUserNewPassword" name="user.pwd" placeholder="请先输入旧密码，再输入新密码" data-toggle="tooltip" data-placement="top" title="" data-original-title="请先输入旧密码，再输入新密码" /> 
            </div>
            <div class="controls">
             <label class="control-label-changePwd" for="inputUserNewPassword2">确认密码</label> 
-            <input class="span3 add-on" type="password" id="inputUserNewPassword2" name="inputUserNewPassword2" placeholder="请再次输入新密码" data-toggle="tooltip" data-placement="top" title="" data-original-title="请再次输入新密码" disabled/> 
+            <input class="span3 add-on" type="password" id="inputUserNewPassword2" name="inputUserNewPassword2" placeholder="请先输入旧密码，再输入新密码" data-toggle="tooltip" data-placement="top" title="" data-original-title="请先输入旧密码，再输入新密码" /> 
            </div> 
           </div> 
           <div class="control-group"> 
@@ -292,11 +292,13 @@ $(function () {
     //添加验证旧密码方法
     $.validator.addMethod("isPwd",function(value,element,param){
       if(value === param){
-        $("#inputUserNewPassword").removeAttr("disabled");
-        $("#inputUserNewPassword2").removeAttr("disabled");
+        $("#inputUserNewPassword").Attr("placeholder","请输入新密码");
+        $("#inputUserNewPassword2").Attr("placeholder","请再次输入新密码");
         return true;
       }
       else{
+        $("#inputUserNewPassword").Attr("placeholder","请先输入旧密码，再输入新密码");
+        $("#inputUserNewPassword2").Attr("placeholder","请先输入旧密码，再输入新密码");
         return false;
       }
     },"密码错误，请重新输入");
