@@ -101,7 +101,7 @@ transition: all 0.2s ease-in-out;
           <div class="control-group"> 
            <label class="control-label" for="userName">用户名：</label> 
            <div class="controls"> 
-            <input class="span3" type="text" id="userName" value="<s:porperty value="#session.userBean.userName" />" disabled /> 
+            <input class="span3" type="text" id="userName" value="<s:property value="#session.userBean.userName" />" disabled /> 
            </div> 
           </div> 
           <div class="control-group"> 
