@@ -136,7 +136,7 @@ transition: all 0.2s ease-in-out;
                 <span class="btn fileinput-button">
                     <i class="icon-plus"></i>
                     <span>选择图片</span>
-                    <input type="file" name="files[]" accept="image/png, image/gif, image/jpg, image/jpeg">
+                    <input type="file" name="image" accept="image/png, image/gif, image/jpg, image/jpeg">
                 </span>
                 <!-- The global file processing state -->
                 <span class="fileupload-process"></span>
@@ -356,6 +356,15 @@ $(function () {
     $('#editUserForm').fileupload({
         url: 'uploadPic'
     });
+    // Enable iframe cross-domain access via redirect option:
+    $('#editUserForm').fileupload(
+        'option',
+        'redirect',
+        window.location.href.replace(
+            /\/[^\/]*$/,
+            '/cors/result.html?%s'
+        )
+    );
     $('#editUserForm').addClass('fileupload-processing');
     $.ajax({
         // Uncomment the following to send cross-domain cookies:
