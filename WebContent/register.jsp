@@ -164,6 +164,7 @@
           if (resetbtn == true){
             location.href = "index.jsp";
           }
+          alert("注册账户成功");
         },
     rules: {
       "user.name": {

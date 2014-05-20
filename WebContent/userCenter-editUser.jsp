@@ -303,7 +303,8 @@ $(function () {
       }
     },"密码错误，请重新输入");
 
-    var editUserValidator = $("#editUserForm").validate({
+    //var editUserValidator = 
+    $("#editUserForm").validate({
       submitHandler: function(){
         /*$.ajax({
         url: "updataUser",
@@ -320,6 +321,7 @@ $(function () {
           alert("抱歉，发送数据出错了，请重新输入。");
         },
         });*/
+    alert("编辑账户成功");
       },
       ignore: ".ignore",
       rules: {
@@ -360,7 +362,7 @@ $(function () {
       var resetbtn = confirm("确定重置吗？");
       if (resetbtn == true){
         $("#resetBtn").click();
-        editUserValidator.resetForm();
+        $("#editUserForm").validate().resetForm();
       }
     });
     /****/
