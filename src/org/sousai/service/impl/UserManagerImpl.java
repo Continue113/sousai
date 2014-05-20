@@ -147,7 +147,7 @@ public class UserManagerImpl implements UserManager
 	}
 
 	@Override
-	public int upLoadPic(int pic, Object po) 
+	public int uploadPic(int pic, Object po) 
 	{
 		// TODO Auto-generated method stub
 		if(pic == USER_PIC)

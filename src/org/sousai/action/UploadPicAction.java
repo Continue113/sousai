@@ -24,7 +24,7 @@ import com.opensymphony.xwork2.*;
  * @version 1.0
  *
  */
-public class UpLoadPicAction extends UserBaseAction
+public class UploadPicAction extends UserBaseAction
 {
 	private static final long serialVersionUID = 4648603485473458818L;
 	
@@ -62,7 +62,7 @@ public class UpLoadPicAction extends UserBaseAction
 	        Blob blobPic = Hibernate.createBlob(fin);// InputStream 转 Blob
 	        CourtPic tempPic = new CourtPic();
 	        tempPic.setPic(blobPic);
-	        umg.upLoadPic(COURT_PIC, tempPic);
+	        umg.uploadPic(COURT_PIC, tempPic);
 	        result = SUCCESS;
 		}
 		result = ERROR;

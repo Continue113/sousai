@@ -107,7 +107,7 @@ public interface UserManager
 	 * @param po UserPic实例或是CourtPic实例
 	 * @return 图片类型 1：用户头像  2：场地图片 0：存储失败
 	 */
-	public int upLoadPic(int pic, Object po);
+	public int uploadPic(int pic, Object po);
 	
 	public InputStream getPic(Long courtId);
 	
