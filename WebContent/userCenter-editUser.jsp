@@ -290,7 +290,7 @@ $(function () {
 
     /** 编辑账户验证 **/
     //添加验证旧密码方法
-    /*$.validator.addMethod("isPwd",function(value,element,param){
+    $.validator.addMethod("isPwd",function(value,element,param){
       if(value === param){
         $("#inputUserNewPassword").attr("placeholder","请输入新密码").attr("data-original-title","请输入新密码");
         $("#inputUserNewPassword2").attr("placeholder","请再次输入新密码").attr("data-original-title","请再次输入新密码");
@@ -319,7 +319,7 @@ $(function () {
         error: function() {
           alert("抱歉，发送数据出错了，请重新输入。");
         },
-        });*//*
+        });*/
       },
       ignore: "",
       rules: {
@@ -354,7 +354,7 @@ $(function () {
         email: "请输入有效的邮箱"
       }
     }
-  });*/
+  });
     /** 取消编辑账户 **/
     $("#resetEditUserForm").click(function(){
       var resetbtn = confirm("确定重置吗？");
