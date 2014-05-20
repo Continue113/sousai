@@ -295,20 +295,23 @@ $(function () {
     /****/
 
     /** 编辑账户验证 **/
+    //添加验证旧密码方法
+    $.validator.addMethod("isPwd",function(value,element,param){
+      if(value === param){
+        return true;
+      }
+      else{
+        return false;
+      }
+    },"密码错误，请重新输入");
+
     var editUserValidator = $("#editUserForm").validate({
       submitHandler: function(){alert("编辑账户成功");},
       ignore: "",
       rules: {
       "user.pwd": {
         minlength: 6,
-        remote: { //异步验证用户名是否重复
-          url: "validPwd",
-          type: "post",
-          dataType: "json",
-          data: { userName: function(){
-            return encodeURICoponent($("#inputUserPassword").val());
-          }}
-        }
+        isPwd: '<s:property value="#session.userBean.userPwd"/>'
       },
       "user.npwd": {
         minlength: 6
@@ -324,7 +327,7 @@ $(function () {
     messages: {
       "user.pwd": {
         minlength: "密码至少6个字符",
-        remote: "密码错误,请重新输入！"
+        isPwd: "密码错误,请重新输入！"
       },
       "user.npwd": {
         minlength: "密码请设置至少6位"

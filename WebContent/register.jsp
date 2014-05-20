@@ -143,6 +143,7 @@
       /** /工具提示**/
 
       /** 表单验证代码 **/
+      //添加验证 验证码方法
       $.validator.addMethod("isEqual",function(value,element,param){
         var target = $(param);
         if(value.toUpperCase() == target.text().toUpperCase()){
