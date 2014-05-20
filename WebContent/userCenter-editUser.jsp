@@ -290,7 +290,7 @@ $(function () {
 
     /** 编辑账户验证 **/
     //添加验证旧密码方法
-    $.validator.addMethod("isPwd",function(value,element,param){
+    /*$.validator.addMethod("isPwd",function(value,element,param){
       if(value === param){
         $("#inputUserNewPassword").attr("placeholder","请输入新密码").attr("data-original-title","请输入新密码");
         $("#inputUserNewPassword2").attr("placeholder","请再次输入新密码").attr("data-original-title","请再次输入新密码");
@@ -302,7 +302,7 @@ $(function () {
         return false;
       }
     },"密码错误，请重新输入");
-
+*/
     var editUserValidator = $("#editUserForm").validate({
       submitHandler: function(){
         /*$.ajax({
@@ -324,7 +324,7 @@ $(function () {
       rules: {
       inputUserPassword: {
         minlength: 6,
-        isPwd: '<s:property value="#session.userBean.userPwd"/>'
+        //isPwd: '<s:property value="#session.userBean.userPwd"/>'
       },
       "user.pwd": {
         minlength: 6
@@ -340,7 +340,7 @@ $(function () {
     messages: {
       inputUserPassword: {
         minlength: "密码至少6个字符",
-        isPwd: "密码错误,请重新输入！"
+        //isPwd: "密码错误,请重新输入！"
       },
       "user.pwd": {
         minlength: "密码请设置至少6位"
