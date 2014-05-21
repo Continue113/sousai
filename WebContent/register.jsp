@@ -65,7 +65,7 @@
        <div class="control-group"> 
         <label class="control-label" for="inputEmail">邮箱&nbsp;:</label> 
         <div class="controls"> 
-         <input type="email" class="input-block-level" id="inputEmail" name="user.Email" placeholder="电子邮箱" required="required" /> 
+         <input type="email" class="input-block-level" id="inputEmail" name="user.email" placeholder="电子邮箱" required="required" /> 
         </div> 
        </div> 
        <div class="control-group"> 
@@ -157,14 +157,28 @@
 
       $("#registerForm").validate({
         submitHandler: function(){
-          alert("注册账户成功");
-          $('#sousaiRemindDialog').modal({backdrop:static});
-          //5秒后跳转至首页
-          window.setTimeout("window.location='index.jsp'",5000);
-          var resetbtn = confirm("注册成功，将在5秒后跳转至首页。点击确定跳转至首页。");
-          if (resetbtn == true){
-            location.href = "index.jsp";
-          }
+          $.ajax({
+            url: "processReg",
+            type: "POST",
+            dataType: "json",
+            data: {
+              "user.name": $("#inputUsername").val(),
+              "user.pwd": $("#inputUserPassword").val(),
+              "user.email": $("#inputUserEmail").val(),
+            },
+            success: function(resdata){
+              $('#sousaiRemindDialog').modal({backdrop:static});
+              //5秒后跳转至首页
+              window.setTimeout("window.location='index.jsp'",5000);
+              var resetbtn = confirm("注册成功，将在5秒后跳转至首页。点击确定跳转至首页。");
+              if (resetbtn == true){
+                location.href = "index.jsp";
+              }
+            },
+            error: function(){
+              alert("抱歉，发送数据出错了，请重新输入。");
+            },
+          });
         },
     rules: {
       "user.name": {
@@ -179,7 +193,7 @@
         minlength: 6,
         equalTo: "#inputPassword"
       },
-      "user.Email": {
+      "user.email": {
         email: true
       },
       inputValidateCode: {
@@ -203,7 +217,7 @@
         minlength: "密码请设置至少6位",
         equalTo: "两次密码输入不相符，请重新输入"
       },
-      "user.Email": {
+      "user.email": {
         required: "请输入邮箱",
         email: "请输入有效的邮箱"
       },

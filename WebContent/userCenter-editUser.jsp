@@ -289,6 +289,13 @@ $(function () {
     /****/
 
     /** 编辑账户验证 **/
+    //定义发送至服务器的数据，旧密码未验证通过的情况下，不发送填写的新密码
+    var senddata = {
+      "user.id": "<s:property value="#session.userBean.userId" />",
+      "user.pwd": null,
+      "user.email": $("#inputUserEmail").val(),
+    };
+
     //添加验证旧密码方法
     $.validator.addMethod("isPwd",function(value,element,param){
       if(value === param){
@@ -302,6 +309,17 @@ $(function () {
         return false;
       }
     },"密码错误，请重新输入");
+    //添加验证是否填写旧密码，且旧密码是否正确。
+    $.validator.addMethod("isPass",function(value,element,param){
+      if($("#inputUserPassword").val() === param){
+        senddata["user.pwd"] =  $("#inputUserNewPassword").val();
+        return true;
+      }
+      else{
+        senddata["user.pwd"] =  null;
+        return false;
+      }
+    },"请先输入旧密码");
 
     var editUserValidator = $("#editUserForm").validate({
       submitHandler: function(){
@@ -309,11 +327,7 @@ $(function () {
         url: "updateUserInfo",
         type: "POST",
         dataType: 'json',
-        data: {
-          "user.id": "<s:property value="#session.userBean.userId" />",
-          "user.pwd": $("#inputUserNewPassword").val(),
-          "user.email": $("#inputUserEmail").val(),
-        },
+        data: senddata,
         success: function(rspdata) {
           alert("编辑账户成功"+rspdata);
         },
@@ -329,7 +343,8 @@ $(function () {
         isPwd: '<s:property value="#session.userBean.userPwd"/>'
       },
       "user.pwd": {
-        minlength: 6
+        minlength: 6,
+        isPass: '<s:property value="#session.userBean.userPwd"/>'
       },
       inputUserNewPassword2: {
         minlength: 6,
@@ -345,7 +360,8 @@ $(function () {
         isPwd: "密码错误,请重新输入！"
       },
       "user.pwd": {
-        minlength: "密码请设置至少6位"
+        minlength: "密码请设置至少6位",
+        isPass: "请先输入旧密码"
       },
       inputUserNewPassword2: {
         minlength: "密码请设置至少6位",
