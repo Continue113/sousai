@@ -371,7 +371,7 @@ $(function () {
         fileInput : uploader.find("input:file"),
         success: function(respdata){
           alert("成功回调内容为"+respdata);
-          $("#systemIcons > ul").append('<li class="thumbnail"><img src="data:image/gif;base64,'+respdata+' /></li>')
+          $("#systemIcons > ul").append('<li class="thumbnail"><img src="data:image/gif;base64,'+respdata+'" /></li>')
         },
         error: function(jqXHR,textStatus,errorThrown){alert("jqXHR:"+jqXHR+",textStatus:"+textStatus+",errorThrown:"+errorThrown);},
     });
