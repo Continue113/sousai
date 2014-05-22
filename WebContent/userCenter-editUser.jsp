@@ -370,7 +370,7 @@ $(function () {
         maxNumberOfFiles : 1,
         fileInput : uploader.find("input:file"),
         success: function(respdata){alert("成功回调内容为"+respdata);},
-        error: function(){alert("ajax出错");},
+        error: function(jqXHR,textStatus,errorThrown){alert("jqXHR:"+jqXHR+",textStatus:"+textStatus+",errorThrown:"+errorThrown);},
     });
 })
 </script>
