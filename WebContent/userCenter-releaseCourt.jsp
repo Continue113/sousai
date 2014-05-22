@@ -1,42 +1,33 @@
 <%@ page language="java" contentType="text/html;charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib prefix="s" uri="/struts-tags" %>
-<%/*
-*userCenter.jsp
-*describe:搜赛网用户中心下发布场地页面
-*author:king
-*date:2015-5-6
-*/%>
 <!DOCTYPE html>
 <html>
  <head> 
-  <meta charset="utf-8" /> 
   <title>我的搜赛 &middot; 发布场地 &middot; 搜赛网</title> 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
   <meta name="description" content="搜赛网用户中心-我的搜赛-发布场地" /> 
-  <meta name="author" content="" /> 
-  <!-- Le styles --> 
+  <meta name="author" content="KING@CQU" /> 
+  <!-- styles --> 
   <link href="css/bootstrap.min.css" rel="stylesheet" /> 
   <link href="css/bootstrap-responsive.css" rel="stylesheet" /> 
   <link href="css/jquery.fileupload.css" rel="stylesheet" /> 
-  <link href="css/jquery.fileupload-ui.css" rel="stylesheet" />
-  <link href="css/sousai.common.css" rel="stylesheet" />
+  <link href="css/jquery.fileupload-ui.css" rel="stylesheet" /> 
+  <link href="css/sousai.common.css" rel="stylesheet" /> 
   <link href="css/sousai.userCenter.css" rel="stylesheet" /> 
-  <!-- HTML5 shim, for IE6-8 support of HTML5 elements --> 
-  <!--[if lt IE 9]>
-      <script src="js/html5shiv.js"></script>
-    <![endif]-->
  </head> 
- <body class="userCenter">
-  <s:include value="navbar.jsp" /><!-- 页首导航条 -->
+ <body class="userCenter"> 
+  <s:include value="navbar.jsp" />
+  <!-- 页首导航条 --> 
   <div class="container"> 
    <div class="hdpush"></div> 
    <div class="row"> 
     <div class="span4"> 
-     <img src="img/logo.png" />
+     <img src="img/logo.png" /> 
      <span class="logotext">我的搜赛</span> 
     </div> 
-    <s:include value="searchbox.jsp" /><!-- 搜索框 -->
- <!--   <div class="span7"> 
+    <s:include value="searchbox.jsp" />
+    <!-- 搜索框 --> 
+    <!--   <div class="span7"> 
      <ul class="nav nav-tabs searchboxMenu"> 
       <li class="active"><a href="#searchbox-match" data-toggle="tab">比赛</a></li> 
       <li><a href="#searchbox-field" data-toggle="tab">场地</a></li> 
@@ -55,16 +46,17 @@
        </div> 
       </div> 
      </div> 
-    </div> -->
-   </div><!-- /row -->
+    </div> --> 
+   </div>
+   <!-- /row --> 
    <div class="row"> 
     <div class="span11"> 
-     <div class="navbar">
+     <div class="navbar"> 
       <div class="navbar-inner"> 
        <ul class="nav"> 
-        <li class="active"><a href="#">我的搜赛网</a></li>
-       </ul>
-      </div>
+        <li class="active"><a href="#">我的搜赛网</a></li> 
+       </ul> 
+      </div> 
      </div> 
      <div class="span2 mySousaiMenu "> 
       <ul class="nav nav-stacked nav-side"> 
@@ -77,107 +69,67 @@
       </ul> 
      </div> 
      <div class="span8"> 
-      <div class="userCenter-remind">
+      <div class="userCenter-remind"> 
        <ul class="breadcrumb"> 
         <li>比赛信息:</li> 
         <li><a href="#">乒乓球<span>(5)</span></a></li> 
         <li><a href="#">羽毛球<span>(5)</span></a></li> 
         <li><a href="#">保宁球<span>(5)</span></a></li> 
         <li><a href="#">网球<span>(5)</span></a></li> 
-       </ul>
+       </ul> 
       </div> 
       <div class="tab-content"> 
        <div id="releaseCourt" class="tab-pane active"> 
-        <div class="page-header">
-         <h4>场地基本信息</h4>
+        <div class="page-header"> 
+         <h4>场地基本信息</h4> 
         </div> 
-        <form class="form-horizontal" id="releaseCourtForm" action="releaseCourtAction" method="post"  enctype="multipart/form-data"> 
+        <form class="form-horizontal" id="releaseCourtForm" action="releaseCourtAction" method="post" enctype="multipart/form-data"> 
          <fieldset> 
           <legend>场地基本信息</legend> 
           <div class="control-group"> 
            <label class="control-label" for="inputCourtName">场地名称：</label> 
            <div class="controls"> 
-            <input class="span5 add-on" type="text" id="inputCourtName" name="inputCourtName" placeholder="如：2012年XXXXXXX杯乒乓球季度赛" data-toggle="tooltip" data-placement="top" title="" data-original-title="限定30个字符以下" required="required"/> 
+            <input class="span5 add-on" type="text" id="inputCourtName" name="inputCourtName" placeholder="如：2012年XXXXXXX杯乒乓球季度赛" data-toggle="tooltip" data-placement="top" title="" data-original-title="限定30个字符以下" required="required" /> 
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="selectCourtType">场地类型：</label> 
            <div class="controls"> 
-          <!-- 选择场地类型 --> 
-          <select name="courtType"> 
-            <option value="0">请选择场地类型</option>
-            <option value="courtType-inner">室内</option>
-            <option value="courtType-outer">室外</option>
-            <option value="courtType-zq">体育局</option>
-            <option value="courtType-pp">俱乐部</option>
-            <option value="courtType-lq">社区</option> 
-            <option value="courtType-zq">单位</option>
-            <option value="courtType-zq">学校</option>
-            <option value="courtType-pp">临时</option> 
-            <option value="courtType-lq">公共</option> 
-            <option value="courtType-zq">其他</option>
-          </select>
-          <!-- /选择场地类型 --> 
+            <!-- 选择场地类型 --> 
+            <select name="courtType"> <option value="0">请选择场地类型</option> <option value="courtType-inner">室内</option> <option value="courtType-outer">室外</option> <option value="courtType-zq">体育局</option> <option value="courtType-pp">俱乐部</option> <option value="courtType-lq">社区</option> <option value="courtType-zq">单位</option> <option value="courtType-zq">学校</option> <option value="courtType-pp">临时</option> <option value="courtType-lq">公共</option> <option value="courtType-zq">其他</option> </select> 
+            <!-- /选择场地类型 --> 
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="selectMatchType">比赛类型：</label> 
            <div class="controls"> 
-         <!-- 选择比赛类型 --> 
-          <select name="matchType" class="selectMatchType">
-            <option value="0">请选择比赛类型</option>
-            <option value="matchType-xql" data-for="matchType-xql">小球类</option>
-            <option value="matchType-dql" data-for="matchType-dql">大球类</option>
-            <option value="matchType-qpl" data-for="matchType-qpl">棋牌类</option>
-            <option value="matchType-wyl" data-for="matchType-wyl">文艺类</option>
-            <option id="matchType-qt">其他</option>
-          </select>
-          <select name="matchType-xql" class="matchType-xql hide">
-            <option value="0">请选择(小球类)</option>
-            <option value="matchType_pingPong">乒乓球</option>
-            <option value="matchType_pingPong">羽毛球</option>
-            <option value="matchType_pingPong">网球</option>
-            <option value="matchType_pingPong">台球</option>
-          </select>
-          <select name="matchType-dql" class="matchType-dql hide">
-            <option value="0">请选择(大球类)</option>
-            <option value="matchType_pingPong">篮球</option>
-            <option value="matchType_pingPong">足球</option>
-            <option value="matchType_pingPong">排球</option>
-          </select>
-          <select name="matchType-qpl" class="matchType-qpl hide">
-            <option value="0">请选择(棋牌类)</option>
-            <option value="matchType_pingPong">麻将</option>
-            <option value="matchType_pingPong">围棋</option>
-            <option value="matchType_pingPong">象棋</option>
-            <option value="matchType_pingPong">扑克牌</option>
-          </select>
-          <select name="matchType-wyl" class="matchType-wyl hide">
-            <option value="0">请选择(文艺类)</option>
-            <option value="matchType_pingPong">街舞</option>
-          </select>
-          <!-- /选择比赛类型 -->
+            <!-- 选择比赛类型 --> 
+            <select name="matchType" class="selectMatchType"> <option value="0">请选择比赛类型</option> <option value="matchType-xql" data-for="matchType-xql">小球类</option> <option value="matchType-dql" data-for="matchType-dql">大球类</option> <option value="matchType-qpl" data-for="matchType-qpl">棋牌类</option> <option value="matchType-wyl" data-for="matchType-wyl">文艺类</option> <option id="matchType-qt">其他</option> </select> 
+            <select name="matchType-xql" class="matchType-xql hide"> <option value="0">请选择(小球类)</option> <option value="matchType_pingPong">乒乓球</option> <option value="matchType_pingPong">羽毛球</option> <option value="matchType_pingPong">网球</option> <option value="matchType_pingPong">台球</option> </select> 
+            <select name="matchType-dql" class="matchType-dql hide"> <option value="0">请选择(大球类)</option> <option value="matchType_pingPong">篮球</option> <option value="matchType_pingPong">足球</option> <option value="matchType_pingPong">排球</option> </select> 
+            <select name="matchType-qpl" class="matchType-qpl hide"> <option value="0">请选择(棋牌类)</option> <option value="matchType_pingPong">麻将</option> <option value="matchType_pingPong">围棋</option> <option value="matchType_pingPong">象棋</option> <option value="matchType_pingPong">扑克牌</option> </select> 
+            <select name="matchType-wyl" class="matchType-wyl hide"> <option value="0">请选择(文艺类)</option> <option value="matchType_pingPong">街舞</option> </select> 
+            <!-- /选择比赛类型 --> 
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="selectCourtPlace">场地区域：</label> 
-           <div class="controls form-inline">
-            <select class="selectProvince span2"><option value="0">请选择省</option><option value="110000" data-order="0">北京市</option><option value="120000" data-order="0">天津市</option><option value="130000" data-order="0">河北省</option><option value="140000" data-order="0">山西省</option><option value="150000" data-order="0">内蒙古自治区</option><option value="210000" data-order="0">辽宁省</option><option value="220000" data-order="0">吉林省</option><option value="230000" data-order="0">黑龙江省</option><option value="310000" data-order="0">上海市</option><option value="320000" data-order="0">江苏省</option><option value="330000" data-order="0">浙江省</option><option value="340000" data-order="0">安徽省</option><option value="350000" data-order="0">福建省</option><option value="360000" data-order="0">江西省</option><option value="370000" data-order="0">山东省</option><option value="410000" data-order="0">河南省</option><option value="420000" data-order="0">湖北省</option><option value="430000" data-order="0">湖南省</option><option value="440000" data-order="0">广东省</option><option value="450000" data-order="0">广西壮族自治区</option><option value="460000" data-order="0">海南省</option><option value="500000" data-order="0">重庆市</option><option value="510000" data-order="0">四川省</option><option value="520000" data-order="0">贵州省</option><option value="530000" data-order="0">云南省</option><option value="540000" data-order="0">西藏自治区</option><option value="610000" data-order="0">陕西省</option><option value="620000" data-order="0">甘肃省</option><option value="630000" data-order="0">青海省</option><option value="640000" data-order="0">宁夏回族自治区</option><option value="650000" data-order="0">新疆维吾尔自治区</option></select>
-
-            <select class="selectCity span2 hide" name="matchPlace"></select>
-            <select class="selectCountry span2 hide" name="matchPlace"></select>
+           <div class="controls form-inline"> 
+            <select class="selectProvince span2"><option value="0">请选择省</option><option value="110000" data-order="0">北京市</option><option value="120000" data-order="0">天津市</option><option value="130000" data-order="0">河北省</option><option value="140000" data-order="0">山西省</option><option value="150000" data-order="0">内蒙古自治区</option><option value="210000" data-order="0">辽宁省</option><option value="220000" data-order="0">吉林省</option><option value="230000" data-order="0">黑龙江省</option><option value="310000" data-order="0">上海市</option><option value="320000" data-order="0">江苏省</option><option value="330000" data-order="0">浙江省</option><option value="340000" data-order="0">安徽省</option><option value="350000" data-order="0">福建省</option><option value="360000" data-order="0">江西省</option><option value="370000" data-order="0">山东省</option><option value="410000" data-order="0">河南省</option><option value="420000" data-order="0">湖北省</option><option value="430000" data-order="0">湖南省</option><option value="440000" data-order="0">广东省</option><option value="450000" data-order="0">广西壮族自治区</option><option value="460000" data-order="0">海南省</option><option value="500000" data-order="0">重庆市</option><option value="510000" data-order="0">四川省</option><option value="520000" data-order="0">贵州省</option><option value="530000" data-order="0">云南省</option><option value="540000" data-order="0">西藏自治区</option><option value="610000" data-order="0">陕西省</option><option value="620000" data-order="0">甘肃省</option><option value="630000" data-order="0">青海省</option><option value="640000" data-order="0">宁夏回族自治区</option><option value="650000" data-order="0">新疆维吾尔自治区</option></select> 
+            <select class="selectCity span2 hide" name="matchPlace"></select> 
+            <select class="selectCountry span2 hide" name="matchPlace"></select> 
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="inputCourtAddress">详细地址：</label> 
            <div class="controls"> 
-            <input class="span5 add-on" type="text" id="inputCourtAddress" name="inputCourtAddress" placeholder="如：某地某桥某号某号楼" data-toggle="tooltip" data-placement="top" title="" data-original-title="限定30个字符以下" required="required"/> 
+            <input class="span5 add-on" type="text" id="inputCourtAddress" name="inputCourtAddress" placeholder="如：某地某桥某号某号楼" data-toggle="tooltip" data-placement="top" title="" data-original-title="限定30个字符以下" required="required" /> 
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="inputCourtTables">赛场数：</label> 
            <div class="controls"> 
-            <input class="span5" type="text" id="inputCourtTables" placeholder="如：乒乓球台12张 或 足球场1个"/> 
+            <input class="span5" type="text" id="inputCourtTables" placeholder="如：乒乓球台12张 或 足球场1个" /> 
            </div> 
           </div> 
           <div class="control-group"> 
@@ -189,96 +141,80 @@
           <div class="control-group"> 
            <label class="control-label" for="inputCourtPrice">价格：</label> 
            <div class="controls"> 
-            <input class="span5" type="text" id="inputCourtPrice" placeholder="如：50元/小时/场 或 免费"/> 
+            <input class="span5" type="text" id="inputCourtPrice" placeholder="如：50元/小时/场 或 免费" /> 
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="inputCourtOpenTime">开放时间：</label> 
            <div class="controls"> 
-            <input class="span5" type="text" id="inputCourtOpenTime" placeholder="如：每天9:00-18:00"/> 
+            <input class="span5" type="text" id="inputCourtOpenTime" placeholder="如：每天9:00-18:00" /> 
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="uploadCourtImgs">场地图片：</label> 
-           <div class="controls">
-            <div class="fileupload-buttonbar">
-                <span class="btn fileinput-button">
-                    <i class="icon-plus"></i>
-                    <span>选择图片</span>
-                    <input type="file" name="files[]" multiple="" accept="image/png, image/gif, image/jpg, image/jpeg">
-                </span>
-                <button type="submit" class="btn start">
-                    <i class="icon-upload"></i>
-                    <span>上传</span>
-                </button>
-                <button type="reset" class="btn cancel">
-                    <i class="icon-ban-circle"></i>
-                    <span>取消</span>
-                </button>
-                <button type="button" class="btn delete">
-                    <i class="icon-trash"></i>
-                    <span>删除</span>
-                </button>
-                <input type="checkbox" class="toggle">
-                <span class="fileupload-process"></span>
-            <div class=" fileupload-progress fade">
-                <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-                    <div class="progress-bar progress-bar-success" style="width:0%;"></div>
-                </div>
-                <div class="progress-extended">&nbsp;</div>
-            </div>
-        <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table> 
-      </div>
+           <div class="controls"> 
+            <div class="fileupload-buttonbar"> 
+             <span class="btn fileinput-button"> <i class="icon-plus"></i> <span>选择图片</span> <input type="file" name="files[]" multiple="" accept="image/png, image/gif, image/jpg, image/jpeg" /> </span> 
+             <button type="submit" class="btn start"> <i class="icon-upload"></i> <span>上传</span> </button> 
+             <button type="reset" class="btn cancel"> <i class="icon-ban-circle"></i> <span>取消</span> </button> 
+             <button type="button" class="btn delete"> <i class="icon-trash"></i> <span>删除</span> </button> 
+             <input type="checkbox" class="toggle" /> 
+             <span class="fileupload-process"></span> 
+             <div class=" fileupload-progress fade"> 
+              <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100"> 
+               <div class="progress-bar progress-bar-success" style="width:0%;"></div> 
+              </div> 
+              <div class="progress-extended">
+               &nbsp;
+              </div> 
+             </div> 
+             <table role="presentation" class="table table-striped">
+              <tbody class="files"></tbody>
+             </table> 
+            </div> 
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="inputCourtInfo">场地简介：</label> 
           </div> 
           <textarea id="inputCourtInfo" name="inputCourtInfo" required="required"></textarea> 
-          <div class="control-group">
+          <div class="control-group"> 
            <div class="controls"> 
             <input type="submit" class="btn btn-success " name="release" value="确定发布" /> 
-            <input type="reset" class="btn" id="resetCourtForm" value="清空内容" />
+            <input type="reset" class="btn" id="resetCourtForm" value="清空内容" /> 
             <button class="btn" name="preView">预览</button> 
-           </div>
+           </div> 
           </div> 
          </fieldset> 
         </form> 
-       </div>
+       </div> 
        <!-- /releaseCourt --> 
-      </div>
+      </div> 
       <!-- /tab-content --> 
-     </div>
+     </div> 
      <!-- /span8 offset2 --> 
-    </div>
+    </div> 
     <!-- /span11 主要代码 --> 
-   </div>
+   </div> 
    <!-- /row --> 
-   <div class="ftpush">
+   <div class="ftpush"> 
+   </div> 
   </div> 
-  </div>
   <!-- /container --> 
-  <s:include value="footer.jsp" /><!-- 页首导航条 --> 
-  <!-- Le javascript
-    ================================================== --> 
-  <!-- Placed at the end of the document so the pages load faster -->
-  
-  <script src="js/jquery-1.11.0.min.js"></script>
-  <script src="js/jquery.ui.widget.js"></script>
-  <script src="js/tmpl.min.js"></script>
-  <script src="js/load-image.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/jquery.iframe-transport.js"></script>
-  <script src="js/jquery.fileupload.js"></script>
-  <script src="js/jquery.fileupload-process.js"></script>
-  <script src="js/jquery.fileupload-image.js"></script>
-  <script src="js/jquery.fileupload-ui.js"></script>
-  <script src="js/jquery.validate.min.js"></script>
+  <s:include value="footer.jsp" />
+  <!-- 页首导航条 --> 
+  <script src="js/jquery.ui.widget.js"></script> 
+  <script src="js/tmpl.min.js"></script> 
+  <script src="js/load-image.min.js"></script> 
+  <script src="js/jquery.iframe-transport.js"></script> 
+  <script src="js/jquery.fileupload.js"></script> 
+  <script src="js/jquery.fileupload-process.js"></script> 
+  <script src="js/jquery.fileupload-image.js"></script> 
+  <script src="js/jquery.fileupload-ui.js"></script> 
+  <script src="js/jquery.validate.min.js"></script> 
   <script src="tinymce/jquery.tinymce.min.js"></script> 
-  <script src="tinymce/tinymce.min.js"></script>
-  <script src="js/sousai.common.js"></script>
-
-<script id="template-upload" type="text/x-tmpl">
+  <script src="tinymce/tinymce.min.js"></script> 
+  <script id="template-upload" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
     <tr class="template-upload fade">
         <td>
@@ -308,9 +244,9 @@
         </td>
     </tr>
 {% } %}
-</script>
-<!-- The template to display files available for download -->
-<script id="template-download" type="text/x-tmpl">
+</script> 
+  <!-- The template to display files available for download --> 
+  <script id="template-download" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
     <tr class="template-download fade">
         <td>
@@ -351,7 +287,7 @@
         </td>
     </tr>
 {% } %}
-</script>
+</script> 
   <script>
   $(function(){
     /** tinymce **/

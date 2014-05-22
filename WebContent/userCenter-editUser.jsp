@@ -1,27 +1,18 @@
 <%@ page language="java" contentType="text/html;charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib prefix="s" uri="/struts-tags" %>
-<%/*
-*userCenter-editUser.jsp
-*describe:搜赛网用户中心下编辑账户页面。
-*author:king
-*date:2015-5-12
-*/%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="utf-8" /> 
   <title>我的搜赛 &middot; 编辑账户 &middot; 搜赛网</title> 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
   <meta name="description" content="搜赛网用户中心-我的搜赛-编辑账户" /> 
-  <meta name="author" content="" />
-
+  <meta name="author" content="KING@CQU" />
   <link href="css/bootstrap.min.css" rel="stylesheet" /> 
   <link href="css/bootstrap-responsive.css" rel="stylesheet" /> 
   <link href="css/jquery.fileupload.css" rel="stylesheet" /> 
   <link href="css/jquery.fileupload-ui.css" rel="stylesheet" />
   <link href="css/sousai.common.css" rel="stylesheet" />
   <link href="css/sousai.userCenter.css" rel="stylesheet" />
-
   <style>
 /** 更改密码label排列方式 **/
 .control-label-changePwd{margin: 5px 0 0 0;}
@@ -181,21 +172,15 @@ transition: all 0.2s ease-in-out;
   </div>
   <!-- /container --> 
   <s:include value="footer.jsp" /><!-- 页首导航条 --> 
-  <!-- Le javascript
-    ================================================== --> 
-  <!-- Placed at the end of the document so the pages load faster -->
-  <script src="js/jquery-1.11.0.min.js"></script>
   <script src="js/jquery.ui.widget.js"></script>
   <script src="js/tmpl.min.js"></script>
   <script src="js/load-image.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
   <script src="js/jquery.iframe-transport.js"></script>
   <script src="js/jquery.fileupload.js"></script>
   <script src="js/jquery.fileupload-process.js"></script>
   <script src="js/jquery.fileupload-image.js"></script>
   <script src="js/jquery.fileupload-ui.js"></script>
   <script src="js/jquery.validate.min.js"></script>
-  <script src="js/sousai.common.js"></script>
 
 <script id="template-upload" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}

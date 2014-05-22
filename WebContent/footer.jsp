@@ -1,11 +1,5 @@
 <%@ page language="java" contentType="text/html;charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib prefix="s" uri="/struts-tags" %>
-<%/*
-*footer.jsp
-*describe:footer用于搜赛网页尾版权信息，友情链接等
-*author:king
-*date:2015-5-20
-*/%>
   <div class="footer"> 
    <div class="container"> 
     <!-- 一行一排 --> 
@@ -27,3 +21,11 @@
     <button class="btn btn-success">确定</button>
   </div>
   </div>
+  <!-- HTML5 elements ,IE9模式, for IE6-8 --> 
+  <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/IE9.js"></script>
+  <![endif]--> 
+  <script src="js/jquery-1.11.0.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/sousai.common.js"></script> 

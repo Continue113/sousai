@@ -1,20 +1,12 @@
 <%@ page language="java" contentType="text/html;charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib prefix="s" uri="/struts-tags" %>
-<%/*
-*userCenter-myMatch.jsp
-*describe:搜赛网用户中心下我发布的比赛
-*author:king
-*date:2015-5-12
-*/%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="utf-8" /> 
   <title>我的搜赛 &middot; 我发布的比赛 &middot; 搜赛网</title> 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
   <meta name="description" content="搜赛网用户中心-我的搜赛-我发布的比赛" /> 
-  <meta name="author" content="" />
-
+  <meta name="author" content="KING@CQU" />
   <link href="css/bootstrap.min.css" rel="stylesheet" /> 
   <link href="css/bootstrap-responsive.css" rel="stylesheet" />
   <link href="css/jplist.min.css" rel="stylesheet" /> 
@@ -225,7 +217,6 @@
    <div class="ftpush"></div> 
   </div>
   <!-- /container --> 
-  <s:include value="footer.jsp" /><!-- 页首导航条 -->
 
   <div class="modal hide fade" id="modal-loadRecord">
     <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -238,17 +229,12 @@
       <a href="#" class="btn" id="btn-preview">预览</a>
     </div>
 </div>
+  <s:include value="footer.jsp" /><!-- 页首导航条 -->
 
-  <!-- Le javascript
-    ================================================== --> 
-  <!-- Placed at the end of the document so the pages load faster -->
-  <script src="js/jquery-1.11.0.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
   <script src="js/jquery.wordLimit.js"></script>
   <script src="js/jplist.min.js"></script> 
   <script src="tinymce/jquery.tinymce.min.js"></script> 
   <script src="tinymce/tinymce.min.js"></script>
-  <script src="js/sousai.common.js"></script>
   <script>
     $(function () {
       //鼠标滑过场地列表
@@ -310,10 +296,11 @@
         $("#modal-loadRecord").modal("hide");
         $("#modal-loadRecord").remove();
       });
-/*      $("#ensureload").click(function(){
-*        $("#modal-loadRecord").modal("hide");
-*        $("#modal-loadRecord").remove();
-*      });*/
+    /*$("#ensureload").click(function(){
+        $("#modal-loadRecord").modal("hide");
+        $("#modal-loadRecord").remove();
+      });
+    */
     });
 
     })

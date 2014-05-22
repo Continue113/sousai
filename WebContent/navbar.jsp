@@ -1,11 +1,5 @@
 <%@ page language="java" contentType="text/html;charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib prefix="s" uri="/struts-tags" %>
-<%/*
-*navbar.jsp
-*describe:navbar用于搜赛网页首导航条
-*author:king
-*date:2015-5-20
-*/%>
   <div class="navbar navbar-inverse navbar-fixed-top"> 
    <div class="navbar-inner"> 
     <div class="pull-left"> 

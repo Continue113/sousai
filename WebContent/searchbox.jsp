@@ -1,11 +1,5 @@
 <%@ page language="java" contentType="text/html;charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib prefix="s" uri="/struts-tags" %>
-<%/*
-*searchbox.jsp
-*describe:用于每个页面LOGO旁的搜索框
-*author:king
-*date:2015-5-20
-*/%>
     <div class="span7"> 
      <ul class="nav nav-tabs searchboxMenu" id="searchbox-tab"> 
       <li class="active"><a href="#searchbox-match" data-toggle="tab">比赛</a></li> 

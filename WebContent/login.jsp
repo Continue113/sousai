@@ -1,28 +1,17 @@
 ﻿<%@ page language="java" contentType="text/html;charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib prefix="s" uri="/struts-tags" %>
-<%/*
-*login.jsp
-*describe:login用于搜赛网登录
-*author:king
-*date:2015-5-20
-*/%>
 <!DOCTYPE html>
 <html>
  <head> 
-  <meta charset="utf-8" /> 
   <title>登录 &middot; 搜赛网</title> 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
   <meta name="description" content="搜赛网登录页面" /> 
-  <meta name="author" content="" /> 
-  <!-- Le styles --> 
+  <meta name="author" content="KING@CQU" /> 
+  <!-- styles --> 
   <link href="css/bootstrap.min.css" rel="stylesheet" /> 
   <link href="css/bootstrap-responsive.css" rel="stylesheet" /> 
   <link href="css/sousai.common.css" rel="stylesheet" /> 
-  <link href="css/sousai.login.css" rel="stylesheet" /> 
-  <!-- HTML5 shim, for IE6-8 support of HTML5 elements --> 
-  <!--[if lt IE 9]>
-      <script src="js/html5shiv.js"></script>
-    <![endif]--> 
+  <link href="css/sousai.login.css" rel="stylesheet" />
  </head> 
  <body class="login"> 
   <div class="container"> 
@@ -41,20 +30,20 @@
       <fieldset> 
        <legend>会员登录</legend> 
        <s:if test="tip!=null"> 
-       <div class="error">您输入的密码和用户名不匹配，请重新输入。</div> 
-       <label for="inputUsername">用户名:</label> 
-       <input type="text" class="input-block-level" id="inputUsername" name="user.name" placeholder="用户名" value='<s:property value="tip" />' required="required"/>
-       </s:if>
-
-       <s:else>
-       <label for="inputUsername">用户名:</label> 
-       <input type="text" class="input-block-level" id="inputUsername" name="user.name" placeholder="用户名" value="" required="required"/>
-       </s:else>
-
+        <div class="error">
+         您输入的密码和用户名不匹配，请重新输入。
+        </div> 
+        <label for="inputUsername">用户名:</label> 
+        <input type="text" class="input-block-level" id="inputUsername" name="user.name" placeholder="用户名" value="&lt;s:property value=&quot;tip&quot; /&gt;" required="required" /> 
+       </s:if> 
+       <s:else> 
+        <label for="inputUsername">用户名:</label> 
+        <input type="text" class="input-block-level" id="inputUsername" name="user.name" placeholder="用户名" value="" required="required" /> 
+       </s:else> 
        <label for="inputPassword">密码:<a href="#">忘记密码?</a></label> 
-       <input type="password" class="input-block-level" id="inputPassword" name="user.pwd" placeholder="密码" required="required"/> 
+       <input type="password" class="input-block-level" id="inputPassword" name="user.pwd" placeholder="密码" required="required" /> 
        <label class="checkbox"> <input type="checkbox" value="remember-me" />记住我</label> 
-       <input class="btn btn-success" type="submit" id="signinBtn" value="登&nbsp;&nbsp;录">
+       <input class="btn btn-success" type="submit" id="signinBtn" value="登&nbsp;&nbsp;录" /> 
        <label><a href="register.jsp">免费注册</a></label> 
       </fieldset> 
      </form> 
@@ -63,19 +52,15 @@
    <div class="row"> 
     <div class="span2 offset2"> 
      <i class="icon-user"></i> 
-     <a href="tencent://message/?uin=822547462&Site=sousai.com&Menu=yes" target="blank">页面改进建议</a> 
-    </div>
-   </div>
+     <a href="tencent://message/?uin=822547462&amp;Site=sousai.com&amp;Menu=yes" target="blank">页面改进建议</a> 
+    </div> 
+   </div> 
    <div class="ftpush"> 
-   </div>
-  </div>
+   </div> 
+  </div> 
   <!-- /container --> 
-  <s:include value="footer.jsp" /><!-- 页尾信息 -->
-  <!-- Le javascript
-    ================================================== --> 
-  <!-- Placed at the end of the document so the pages load faster --> 
-  <script src="js/jquery-1.11.0.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
+  <s:include value="footer.jsp" />
+  <!-- 页尾信息 --> 
   <script src="js/jquery.validate.min.js"></script> 
   <script>
   $(function(){
@@ -103,6 +88,6 @@
     }
   });
 })
-  </script>
+  </script>  
  </body>
 </html>

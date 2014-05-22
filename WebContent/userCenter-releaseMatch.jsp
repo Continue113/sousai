@@ -1,25 +1,18 @@
 <%@ page language="java" contentType="text/html;charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib prefix="s" uri="/struts-tags" %>
-<%/*
-*userCenter-editUser.jsp
-*describe:搜赛网用户中心下发布比赛页面。
-*author:king
-*date:2015-5-12
-*/%>
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" /> 
+<html>
+ <head> 
   <title>我的搜赛 &middot; 发布比赛 &middot; 搜赛网</title> 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
   <meta name="description" content="搜赛网用户中心-我的搜赛-发布比赛" /> 
-  <meta name="author" content="" />
+  <meta name="author" content="KING@CQU" /> 
   <link href="css/smoothness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" /> 
   <link href="css/bootstrap.min.css" rel="stylesheet" /> 
   <link href="css/bootstrap-responsive.css" rel="stylesheet" /> 
   <link href="css/jplist.min.css" rel="stylesheet" /> 
-  <link href="css/sousai.common.css" rel="stylesheet" />
-  <link href="css/sousai.userCenter.css" rel="stylesheet" />
+  <link href="css/sousai.common.css" rel="stylesheet" /> 
+  <link href="css/sousai.userCenter.css" rel="stylesheet" /> 
   <style>
 /** 现有场地框 **/
 .oldCourtsBox{border: 3px solid #ddd;
@@ -44,28 +37,30 @@ border-radius: 0 4px 4px 0;
   /** 搜索现有场地按钮 **/
   #searchExistedCourt{margin-top: 5px;}
 }
-  </style>
-</head>
-<body class="userCenter">
-<s:include value="navbar.jsp" /><!-- 页首导航条 -->
-<div class="container"> 
- <div class="hdpush"></div> 
- <div class="row"> 
-  <div class="span4"> 
-   <img src="img/logo.png" />
-   <span class="logotext">我的搜赛</span> 
-  </div> 
-  <s:include value="searchbox.jsp" /><!-- 搜索框 -->
- </div><!-- /row -->
-
-    <div class="row"> 
+  </style> 
+ </head> 
+ <body class="userCenter"> 
+  <s:include value="navbar.jsp" />
+  <!-- 页首导航条 --> 
+  <div class="container"> 
+   <div class="hdpush"></div> 
+   <div class="row"> 
+    <div class="span4"> 
+     <img src="img/logo.png" /> 
+     <span class="logotext">我的搜赛</span> 
+    </div> 
+    <s:include value="searchbox.jsp" />
+    <!-- 搜索框 --> 
+   </div>
+   <!-- /row --> 
+   <div class="row"> 
     <div class="span11"> 
-     <div class="navbar">
+     <div class="navbar"> 
       <div class="navbar-inner"> 
        <ul class="nav"> 
-        <li class="active"><a href="#">我的搜赛网</a></li>
-       </ul>
-      </div>
+        <li class="active"><a href="#">我的搜赛网</a></li> 
+       </ul> 
+      </div> 
      </div> 
      <div class="span2 mySousaiMenu "> 
       <ul class="nav nav-stacked nav-side"> 
@@ -78,105 +73,76 @@ border-radius: 0 4px 4px 0;
       </ul> 
      </div> 
      <div class="span8"> 
-      <div class="userCenter-remind">
+      <div class="userCenter-remind"> 
        <ul class="breadcrumb"> 
         <li>比赛信息:</li> 
         <li><a href="#">乒乓球<span>(5)</span></a></li> 
         <li><a href="#">羽毛球<span>(5)</span></a></li> 
         <li><a href="#">保宁球<span>(5)</span></a></li> 
         <li><a href="#">网球<span>(5)</span></a></li> 
-       </ul>
+       </ul> 
       </div> 
-      <div class="tab-content">
-
+      <div class="tab-content"> 
        <div id="releaseMatch" class="tab-pane active"> 
-        <div class="page-header">
-         <h4>比赛基本信息</h4>
+        <div class="page-header"> 
+         <h4>比赛基本信息</h4> 
         </div> 
         <form id="releaseMatchForm" class="form-horizontal" action=""> 
-         <fieldset>
+         <fieldset> 
           <legend>比赛基本信息</legend> 
           <div class="control-group"> 
            <label class="control-label" for="searchKey">比赛名称：</label> 
            <div class="controls"> 
-            <input class="span5 add-on" type="text" id="inputMatchTitle" name="inputMatchTitle" placeholder="如：2012年XXXXXXX杯乒乓球季度赛" data-toggle="tooltip" data-placement="top" title="" data-original-title="限定30个字符以下" required="required"/> 
+            <input class="span5 add-on" type="text" id="inputMatchTitle" name="inputMatchTitle" placeholder="如：2012年XXXXXXX杯乒乓球季度赛" data-toggle="tooltip" data-placement="top" title="" data-original-title="限定30个字符以下" required="required" /> 
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="matchType">比赛类型：</label> 
            <div class="controls"> 
-         <!-- 选择比赛类型 --> 
-          <select name="matchType" class="selectMatchType">
-            <option value="0">请选择比赛类型</option>
-            <option value="matchType-xql" data-for="matchType-xql">小球类</option>
-            <option value="matchType-dql" data-for="matchType-dql">大球类</option>
-            <option value="matchType-qpl" data-for="matchType-qpl">棋牌类</option>
-            <option value="matchType-wyl" data-for="matchType-wyl">文艺类</option>
-            <option id="matchType-qt">其他</option>
-          </select>
-          <select name="matchType-xql" class="matchType-xql hide">
-            <option value="0">请选择(小球类)</option>
-            <option value="matchType_pingPong">乒乓球</option>
-            <option value="matchType_pingPong">羽毛球</option>
-            <option value="matchType_pingPong">网球</option>
-            <option value="matchType_pingPong">台球</option>
-          </select>
-          <select name="matchType-dql" class="matchType-dql hide">
-            <option value="0">请选择(大球类)</option>
-            <option value="matchType_pingPong">篮球</option>
-            <option value="matchType_pingPong">足球</option>
-            <option value="matchType_pingPong">排球</option>
-          </select>
-          <select name="matchType-qpl" class="matchType-qpl hide">
-            <option value="0">请选择(棋牌类)</option>
-            <option value="matchType_pingPong">麻将</option>
-            <option value="matchType_pingPong">围棋</option>
-            <option value="matchType_pingPong">象棋</option>
-            <option value="matchType_pingPong">扑克牌</option>
-          </select>
-          <select name="matchType-wyl" class="matchType-wyl hide">
-            <option value="0">请选择(文艺类)</option>
-            <option value="matchType_pingPong">街舞</option>
-          </select>
-          <!-- /选择比赛类型 -->
+            <!-- 选择比赛类型 --> 
+            <select name="matchType" class="selectMatchType"> <option value="0">请选择比赛类型</option> <option value="matchType-xql" data-for="matchType-xql">小球类</option> <option value="matchType-dql" data-for="matchType-dql">大球类</option> <option value="matchType-qpl" data-for="matchType-qpl">棋牌类</option> <option value="matchType-wyl" data-for="matchType-wyl">文艺类</option> <option id="matchType-qt">其他</option> </select> 
+            <select name="matchType-xql" class="matchType-xql hide"> <option value="0">请选择(小球类)</option> <option value="matchType_pingPong">乒乓球</option> <option value="matchType_pingPong">羽毛球</option> <option value="matchType_pingPong">网球</option> <option value="matchType_pingPong">台球</option> </select> 
+            <select name="matchType-dql" class="matchType-dql hide"> <option value="0">请选择(大球类)</option> <option value="matchType_pingPong">篮球</option> <option value="matchType_pingPong">足球</option> <option value="matchType_pingPong">排球</option> </select> 
+            <select name="matchType-qpl" class="matchType-qpl hide"> <option value="0">请选择(棋牌类)</option> <option value="matchType_pingPong">麻将</option> <option value="matchType_pingPong">围棋</option> <option value="matchType_pingPong">象棋</option> <option value="matchType_pingPong">扑克牌</option> </select> 
+            <select name="matchType-wyl" class="matchType-wyl hide"> <option value="0">请选择(文艺类)</option> <option value="matchType_pingPong">街舞</option> </select> 
+            <!-- /选择比赛类型 --> 
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="matchTime">比赛时间：</label> 
            <div class="controls form-inline"> 
             <div class="input-append"> 
-             <input type="text" id="inputMatchTimefrom" name="inputMatchTimefrom" placeholder="请选择开始日期" required="required"/> 
+             <input type="text" id="inputMatchTimefrom" name="inputMatchTimefrom" placeholder="请选择开始日期" required="required" /> 
              <span class="add-on" data-toggle="tooltip" data-placement="top" title="" data-original-title="点击输入框可以选择开始日期"><i class="icon-calendar"></i></span> 
             </div> 
             <label for="to">—</label> 
             <div class="input-append"> 
-             <input type="text" id="inputMatchTimeto" name="inputMatchTimeto" placeholder="请选择结束日期" required="required"/> 
+             <input type="text" id="inputMatchTimeto" name="inputMatchTimeto" placeholder="请选择结束日期" required="required" /> 
              <span class="add-on" data-toggle="tooltip" data-placement="top" title="" data-original-title="一天以内结束的比赛，日期为同一天"><i class="icon-calendar"></i></span> 
             </div> 
-           </div>
+           </div> 
            <div class="controls controls-error"></div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="matchPlace">比赛地点：</label> 
-           <div class="controls form-inline">
-            <select class="selectProvince span2"><option value="0">请选择省</option><option value="110000" data-order="0">北京市</option><option value="120000" data-order="0">天津市</option><option value="130000" data-order="0">河北省</option><option value="140000" data-order="0">山西省</option><option value="150000" data-order="0">内蒙古自治区</option><option value="210000" data-order="0">辽宁省</option><option value="220000" data-order="0">吉林省</option><option value="230000" data-order="0">黑龙江省</option><option value="310000" data-order="0">上海市</option><option value="320000" data-order="0">江苏省</option><option value="330000" data-order="0">浙江省</option><option value="340000" data-order="0">安徽省</option><option value="350000" data-order="0">福建省</option><option value="360000" data-order="0">江西省</option><option value="370000" data-order="0">山东省</option><option value="410000" data-order="0">河南省</option><option value="420000" data-order="0">湖北省</option><option value="430000" data-order="0">湖南省</option><option value="440000" data-order="0">广东省</option><option value="450000" data-order="0">广西壮族自治区</option><option value="460000" data-order="0">海南省</option><option value="500000" data-order="0">重庆市</option><option value="510000" data-order="0">四川省</option><option value="520000" data-order="0">贵州省</option><option value="530000" data-order="0">云南省</option><option value="540000" data-order="0">西藏自治区</option><option value="610000" data-order="0">陕西省</option><option value="620000" data-order="0">甘肃省</option><option value="630000" data-order="0">青海省</option><option value="640000" data-order="0">宁夏回族自治区</option><option value="650000" data-order="0">新疆维吾尔自治区</option></select>
-
-            <select class="selectCity span2 hide" name="matchPlace"></select>
-            <select class="selectCountry span2 hide" name="matchPlace"></select>
+           <div class="controls form-inline"> 
+            <select class="selectProvince span2"><option value="0">请选择省</option><option value="110000" data-order="0">北京市</option><option value="120000" data-order="0">天津市</option><option value="130000" data-order="0">河北省</option><option value="140000" data-order="0">山西省</option><option value="150000" data-order="0">内蒙古自治区</option><option value="210000" data-order="0">辽宁省</option><option value="220000" data-order="0">吉林省</option><option value="230000" data-order="0">黑龙江省</option><option value="310000" data-order="0">上海市</option><option value="320000" data-order="0">江苏省</option><option value="330000" data-order="0">浙江省</option><option value="340000" data-order="0">安徽省</option><option value="350000" data-order="0">福建省</option><option value="360000" data-order="0">江西省</option><option value="370000" data-order="0">山东省</option><option value="410000" data-order="0">河南省</option><option value="420000" data-order="0">湖北省</option><option value="430000" data-order="0">湖南省</option><option value="440000" data-order="0">广东省</option><option value="450000" data-order="0">广西壮族自治区</option><option value="460000" data-order="0">海南省</option><option value="500000" data-order="0">重庆市</option><option value="510000" data-order="0">四川省</option><option value="520000" data-order="0">贵州省</option><option value="530000" data-order="0">云南省</option><option value="540000" data-order="0">西藏自治区</option><option value="610000" data-order="0">陕西省</option><option value="620000" data-order="0">甘肃省</option><option value="630000" data-order="0">青海省</option><option value="640000" data-order="0">宁夏回族自治区</option><option value="650000" data-order="0">新疆维吾尔自治区</option></select> 
+            <select class="selectCity span2 hide" name="matchPlace"></select> 
+            <select class="selectCountry span2 hide" name="matchPlace"></select> 
             <a href="#" class="btn btn-success pull-right" id="searchExistedCourt">搜索现有球场</a> 
            </div> 
           </div> 
           <div class="control-group oldCourtsBox"> 
            <table class="table table-striped table-hover"> 
             <thead> 
-             <tr>
+             <tr> 
               <th>球场名称</th> 
               <th>详细地址</th> 
               <th>类型</th> 
               <th>球台数</th> 
               <th>比赛次数</th> 
               <th>详细</th> 
-             </tr>
+             </tr> 
             </thead> 
             <tbody> 
              <tr class="tritem"> 
@@ -205,69 +171,64 @@ border-radius: 0 4px 4px 0;
              </tr> 
             </tbody> 
            </table> 
-           <div class="jplist-no-results jplist-hidden">
-          <p>暂时没有结果哟！</p>
-         </div>
-         <div class="jplist-ios-button">
-          展开分页
-         </div>
-         <!-- panel 用在分页 --> 
-         <div class="jplist-panel"> 
-          <!-- pagination --> 
-          <div class="jplist-pagination" data-control-type="pagination" data-control-name="paging" data-control-action="paging" data-items-per-page="10"> 
-           <!-- default items per page (if no "items per page" dropdown on the page) --> 
-          </div> 
-           <div class="text-center">
-            <button id="newCourtBtn" class="btn">没有我要的场地，我要添加新场地</button>
-           </div>
-         </div>
-         <!-- /jplist-panel -->  
+           <div class="jplist-no-results jplist-hidden"> 
+            <p>暂时没有结果哟！</p> 
+           </div> 
+           <div class="jplist-ios-button">
+             展开分页 
+           </div> 
+           <!-- panel 用在分页 --> 
+           <div class="jplist-panel"> 
+            <!-- pagination --> 
+            <div class="jplist-pagination" data-control-type="pagination" data-control-name="paging" data-control-action="paging" data-items-per-page="10"> 
+             <!-- default items per page (if no "items per page" dropdown on the page) --> 
+            </div> 
+            <div class="text-center"> 
+             <button id="newCourtBtn" class="btn">没有我要的场地，我要添加新场地</button> 
+            </div> 
+           </div> 
+           <!-- /jplist-panel --> 
           </div> 
           <div class="control-group"> 
            <div class="releaseCourtBox"> 
             <label class="checkbox"><input type="checkbox" id="newCourtCheckbox" name="matchState_all" />添加新场地&nbsp;&nbsp;(重庆-沙坪坝区)</label> 
-           </div>
-          </div>
+           </div> 
+          </div> 
           <div class="control-group"> 
-           <label class="control-label" for="inputMatchRules">比赛规程：</label>
-          </div>
+           <label class="control-label" for="inputMatchRules">比赛规程：</label> 
+          </div> 
           <textarea id="inputMatchRules" name="inputMatchRules" required="required"></textarea> 
-          <div class="control-group">
+          <div class="control-group"> 
            <div class="controls"> 
             <input type="submit" class="btn btn-success " name="release" value="确定发布" /> 
-            <input type="reset" class="btn" id="resetMatchForm" value="清空内容" />
+            <input type="reset" class="btn" id="resetMatchForm" value="清空内容" /> 
             <button class="btn" name="preView">预览</button> 
-           </div>
+           </div> 
           </div> 
          </fieldset> 
-        </form>
-       </div>
+        </form> 
+       </div> 
        <!-- /releaseMatch --> 
-      </div>
+      </div> 
       <!-- /tab-content --> 
-     </div>
+     </div> 
      <!-- /span8 offset2 --> 
-    </div>
+    </div> 
     <!-- /span11 主要代码 --> 
-   </div>
+   </div> 
    <!-- /row --> 
    <div class="ftpush"></div> 
-  </div>
+  </div> 
   <!-- /container --> 
-  <s:include value="footer.jsp" /><!-- 页首导航条 --> 
-  <!-- Le javascript
-    ================================================== --> 
-  <!-- Placed at the end of the document so the pages load faster -->
-  <script src="js/jquery-1.11.0.min.js"></script>
+  <s:include value="footer.jsp" />
+  <!-- 页首导航条 --> 
   <script src="js/jquery-ui-1.10.4.custom.min.js"></script> 
   <script src="js/jquery.ui.datepicker-zh-CN.js"></script> 
   <script src="tinymce/jquery.tinymce.min.js"></script> 
-  <script src="tinymce/tinymce.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/jquery.validate.min.js"></script>
+  <script src="tinymce/tinymce.min.js"></script> 
+  <script src="js/jquery.validate.min.js"></script> 
   <script src="js/jplist.min.js"></script> 
-  <script src="js/sousai.common.js"></script>
-<script>
+  <script>
     $(function () {
      /** 日期选择器 **/
      $( "#inputMatchTimefrom" ).datepicker({
@@ -408,5 +369,6 @@ border-radius: 0 4px 4px 0;
       matchValidator.resetForm();
     });
     })
-</script>
-</body></html>
+</script> 
+ </body>
+</html>
