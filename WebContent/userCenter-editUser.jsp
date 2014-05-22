@@ -366,9 +366,11 @@ $(function () {
         dataType: "json",
         autoUpload: true,
         acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
-        maxFileSize: 5000000,
+        maxFileSize: 1000000,
         maxNumberOfFiles : 1,
         fileInput : uploader.find("input:file"),
+        success: function(respdata){alert("成功回调内容为"+respdata);},
+        error: function(){alert("ajax出错");},
     });
 })
 </script>
