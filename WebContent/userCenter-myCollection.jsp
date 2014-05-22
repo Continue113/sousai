@@ -4,7 +4,7 @@
 *userCenter-myCollection.jsp
 *describe:搜赛网用户中心下我收藏的比赛
 *author:king
-*date:2015-5-12
+*date:2015-5-21
 */%>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,11 +55,17 @@
      <div class="span8"> 
       <div class="userCenter-remind">
        <ul class="breadcrumb"> 
-        <li>比赛信息:</li> 
-        <li><a href="#">乒乓球<span>(5)</span></a></li> 
-        <li><a href="#">羽毛球<span>(5)</span></a></li> 
-        <li><a href="#">保宁球<span>(5)</span></a></li> 
-        <li><a href="#">网球<span>(5)</span></a></li> 
+        <li>比赛信息:</li>
+        <!-- 迭代所有已收藏的比赛的比赛数量 -->
+        <s:iterator var="match" value="#response.matchlist" status="statu">
+        <s:if test="%{#response.matchlist.length !== 0}">
+          <li><a href="#"><s:property value="#match.matchType"/><span>(<s:property value="#match.matchTypeNumber"/>)</span></a></li>
+        </s:if>
+        <s:else>
+          <li>还没有收藏比赛</li>
+        </s:else>
+        </s:iterator>
+        <!-- /迭代所有已收藏的比赛的比赛数量 -->
        </ul>
       </div> 
       <div class="tab-content">
@@ -80,14 +86,18 @@
            </ul> 
           </div>
           <!-- jplist分类筛选级联下拉菜单 -->
+          <s:if test="%{#response.matchlist.length !== 0}">
           <div class="jplist-drop-down matchType-filter" data-control-type="drop-down" data-control-name="matchType-filter" data-control-action="filter"> 
            <ul> 
-            <li><span data-path="default">比赛类型</span></li> 
-            <li><span data-path=".courtBox-matchType-xql" data-forcn="matchType-filter-xql">乒乓球</span></li>
-            <li><span data-path=".courtBox-matchType-dql" data-forcn="matchType-filter-dql">足球</span></li>
-            <li><span data-path=".courtBox-matchType-qpl" data-forcn="matchType-filter-qpl">篮球</span></li>
+            <li><span data-path="default">比赛类型</span></li>
+            <!-- 迭代所有已收藏的比赛的比赛类型 -->
+            <s:iterator var="match" value="#response.matchTypelist" status="statu">
+            <li><span data-path=".courtBox-matchType-<s:property value="#match.matchTypeId"/>"><s:property value="#match.matchType"/></span></li>
+            </s:iterator>
+            <!-- /迭代所有已收藏的比赛的比赛类型-->
            </ul>
           </div>
+          </s:if>
           <!-- /jplist分类筛选级联下拉菜单 --> 
           <!-- checkbox text filter --> 
           <div class="jplist-group" data-control-type="checkbox-text-filter" data-control-action="filter" data-control-name="matchBox-state-collection" data-path=".matchBox-state" data-logic="or"> 
@@ -114,7 +124,50 @@
           </div> 
          </div>
          <!-- /panel --> 
-         <div class="matchBoxs"> 
+         <div class="matchBoxs">
+
+          <!-- 迭代match -->
+          <s:iterator var="match" value="#response.matchlist" status="statu">
+          <div class="matchBox"><div class="matchBox-all"> 
+           <div class="matchBox-title">
+            <a href="matchSearchDetail.jsp?match.id=<s:property value="#match.matchId"/>"><s:property value="#match.matchTitle"/></a>
+            <span class="pull-right">发布时间：<span class="matchBox-releaseTime"><s:property value="#match.matchReleaseTime">/</span></span>
+           </div>
+           <div class="hidden">
+            <span class="matchBox-type-pp"><s:property value="#match.matchType"/></span>
+           </div> 
+           <ul class="breadcrumb">
+            <li class="matchBox-time">
+              <s:if test="%{#statu.matchFirstTime == #statu.matchLastTime}">
+              <!-- 若比赛时间为同一天，则只显示一个时间 -->
+                <div class="matchBox-matchTime">
+                  <s:property value="#match.matchFirstTime"/>
+                  <p><s:property value="#match.matchFirstDay"/></p>
+                </div>
+              </s:if>
+              <s:else>
+             <div class="matchBox-matchTime">
+              <s:property value="#match.matchFirstTime"/>
+              <p><s:property value="#match.matchFirstDay"/></p>
+             </div>
+             <div class="line">
+              &nbsp;-&nbsp;
+             </div>
+             <div>
+              <s:property value="#match.matchLastTime"/>
+              <p><s:property value="#match.matchLastDay"/></p>
+             </div>
+              </s:else>
+            </li> 
+            <li class="matchBox-address "><a href="courtSearchDrtail.jsp?court.id=<s:property value="#match.courtId"/>"><s:property value="#match.matchCourt"/></a></li> 
+            <li class="matchBox-state "><s:property value="#match.matchState"/></li> 
+            <li class="matchBox-info "><a href="matchSearchDetail.jsp?match.id=<s:property value="#match.matchId"/>"><s:property value="#match.matchInfo"/></a></li> 
+            <li class="matchBox-btns "><a href="matchSearchDetail.jsp?match.id=<s:property value="#match.matchId"/>" class="btn btn-mini">查看详细</a></li> 
+           </ul> 
+          </div></div>
+          </s:iterator>
+          <!-- /迭代match-->
+
           <div class="matchBox"><div class="matchBox-all"> 
            <div class="matchBox-title">
             <a href="#">一北京东城区草根杯乒乓球比赛</a>
@@ -141,169 +194,9 @@
             <li class="matchBox-info "><a href="#">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
             <li class="matchBox-btns "><a href="#" class="btn btn-mini">查看详细</a></li> 
            </ul> 
-          </div></div> 
-          <div class="matchBox"><div class="matchBox-all"> 
-           <div class="matchBox-title">
-            <a href="#">三北京东城区草根杯乒乓球比赛</a>
-            <span class="pull-right">发布时间：<span class="matchBox-releaseTime">2013-10-17</span></span>
-           </div>
-           <div class="hidden">
-            <span class="matchBox-type-zq">足球</span>
-           </div> 
-           <ul class="breadcrumb"> 
-            <li class="matchBox-time">
-             <div class="matchBox-matchTime">
-              2013-10-10
-              <p>星期五</p>
-             </div>
-             <div class="line">
-              &nbsp;-&nbsp;
-             </div>
-             <div>
-              2013-10-20
-              <p>星期日</p>
-             </div></li> 
-            <li class="matchBox-address "><a href="#">二北京东城区北京大学体育馆草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
-            <li class="matchBox-state ">已结束</li> 
-            <li class="matchBox-info "><a href="#">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
-            <li class="matchBox-btns "><a href="#" class="btn btn-mini">查看详细</a></li> 
-           </ul> 
-          </div> </div>
-          <div class="matchBox"><div class="matchBox-all">  
-           <div class="matchBox-title">
-            <a href="#">二北京东城区草根杯乒乓球比赛</a>
-            <span class="pull-right">发布时间：<span class="matchBox-releaseTime">2013-10-16</span></span>
-           </div>
-           <div class="hidden">
-            <span class="matchBox-type-lq">蓝球</span>
-           </div> 
-           <ul class="breadcrumb"> 
-            <li class="matchBox-time">
-             <div class="matchBox-matchTime">
-              2013-10-19
-              <p>星期五</p>
-             </div>
-             <div class="line">
-              &nbsp;-&nbsp;
-             </div>
-             <div>
-              2013-10-20
-              <p>星期日</p>
-             </div></li> 
-            <li class="matchBox-address "><a href="#">二北京东城区北京大学体育馆草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
-            <li class="matchBox-state ">报名中</li> 
-            <li class="matchBox-info "><a href="#">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
-            <li class="matchBox-btns "><a href="#" class="btn btn-mini">查看详细</a></li> 
-           </ul> 
-          </div> </div>
-          <div class="matchBox"> <div class="matchBox-all"> 
-           <div class="matchBox-title">
-            <a href="#">九北京东城区草根杯乒乓球比赛</a>
-            <span class="pull-right">发布时间：<span class="matchBox-releaseTime">2013-10-17</span></span>
-           </div>
-           <div class="hidden">
-            <span class="matchBox-type-pp">乒乓球</span>
-           </div> 
-           <ul class="breadcrumb"> 
-            <li class="matchBox-time">
-             <div class="matchBox-matchTime">
-              2013-10-24
-              <p>星期五</p>
-             </div>
-             <div class="line">
-              &nbsp;-&nbsp;
-             </div>
-             <div>
-              2013-10-20
-              <p>星期日</p>
-             </div></li> 
-            <li class="matchBox-address "><a href="#">二北京东城区北京大学体育馆草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
-            <li class="matchBox-state ">比赛中</li> 
-            <li class="matchBox-info "><a href="#">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
-            <li class="matchBox-btns "><a href="#" class="btn btn-mini">查看详细</a></li> 
-           </ul> 
-          </div> </div>
-          <div class="matchBox"> <div class="matchBox-all"> 
-           <div class="matchBox-title">
-            <a href="#">二北京东城区草根杯乒乓球比赛</a>
-            <span class="pull-right">发布时间：<span class="matchBox-releaseTime">2013-10-15</span></span>
-           </div>
-           <div class="hidden">
-            <span class="matchBox-type-zq">足球</span>
-           </div> 
-           <ul class="breadcrumb"> 
-            <li class="matchBox-time">
-             <div class="matchBox-matchTime">
-              2013-10-18
-              <p>星期五</p>
-             </div>
-             <div class="line">
-              &nbsp;-&nbsp;
-             </div>
-             <div>
-              2013-10-20
-              <p>星期日</p>
-             </div></li> 
-            <li class="matchBox-address "><a href="#">二北京东城区北京大学体育馆草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
-            <li class="matchBox-state ">比赛中</li> 
-            <li class="matchBox-info "><a href="#">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
-            <li class="matchBox-btns "><a href="#" class="btn btn-mini">查看详细</a></li> 
-           </ul> 
-          </div> </div>
-          <div class="matchBox"> <div class="matchBox-all"> 
-           <div class="matchBox-title">
-            <a href="#">五北京东城区草根杯乒乓球比赛</a>
-            <span class="pull-right">发布时间：<span class="matchBox-releaseTime">2013-10-7</span></span>
-           </div>
-           <div class="hidden">
-            <span class="matchBox-type-lq">蓝球</span>
-           </div> 
-           <ul class="breadcrumb"> 
-            <li class="matchBox-time">
-             <div class="matchBox-matchTime">
-              2013-10-18
-              <p>星期五</p>
-             </div>
-             <div class="line">
-              &nbsp;-&nbsp;
-             </div>
-             <div>
-              2013-10-20
-              <p>星期日</p>
-             </div></li> 
-            <li class="matchBox-address "><a href="#">二北京东城区北京大学体育馆草根杯乒乓球比赛北京东城区草根杯乒乓球></a></li> 
-            <li class="matchBox-state ">报名中</li> 
-            <li class="matchBox-info "><a href="#">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
-            <li class="matchBox-btns "><a href="#" class="btn btn-mini">查看详细</a></li> 
-           </ul> 
-          </div> </div>
-          <div class="matchBox"> <div class="matchBox-all"> 
-           <div class="matchBox-title">
-            <a href="#">二北京东城区草根杯乒乓球比赛</a>
-            <span class="pull-right">发布时间：<span class="matchBox-releaseTime">2013-10-30</span></span>
-           </div>
-           <div class="hidden">
-            <span class="matchBox-type-pp">乒乓球</span>
-           </div> 
-           <ul class="breadcrumb"> 
-            <li class="matchBox-time">
-             <div class="matchBox-matchTime">
-              2013-10-1
-              <p>星期五</p>
-             </div>
-             <div class="line">
-              &nbsp;-&nbsp;
-             </div>
-             <div>
-              2013-10-20
-              <p>星期日</p>
-             </div></li> 
-            <li class="matchBox-address "><a href="#">二北京东城区北京大学体育馆草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
-            <li class="matchBox-state ">报名中</li> 
-            <li class="matchBox-info "><a href="#">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
-            <li class="matchBox-btns "><a href="#" class="btn btn-mini">查看详细</a></li> 
-           </ul> 
-          </div></div>
+          </div>
+          </div> 
+
          </div>
          <!-- /matchBoxs --> 
          <div class="jplist-no-results jplist-hidden">

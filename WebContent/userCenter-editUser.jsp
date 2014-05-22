@@ -130,23 +130,17 @@ transition: all 0.2s ease-in-out;
            <div class="controls"> 
             <div class="crtUserIcon"><img src="img/defaultImg.png" /></div>
            </div>
-        <!--<div class="controls">
+           <div class="controls">
             <div class="fileupload-buttonbar">
                 <span class="btn fileinput-button">
                     <i class="icon-plus"></i>
                     <span>选择图片</span>
-                    <input type="file" name="image" accept="image/png, image/gif, image/jpg, image/jpeg">
+                    <input type="file" name="image" data-url="updatePic" accept="image/png, image/gif, image/jpg, image/jpeg">
                 </span>
                 <span class="fileupload-process"></span>
-            <div class="fileupload-progress fade">
-                <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-                    <div class="progress-bar progress-bar-success" style="width:0%;"></div>
-                </div>
-                <div class="progress-extended">&nbsp;</div>
             </div>
-        </div>
-        <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
-           </div> -->
+            <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
+           </div>
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="systemIcons">系统头像：</label> 
@@ -380,40 +374,17 @@ $(function () {
         editUserValidator.resetForm();
       }
     });
-    /****/
-/*
-    $('#editUserForm').fileupload({
-        url: 'uploadPic'
-    });
-    // Enable iframe cross-domain access via redirect option:
-    $('#editUserForm').fileupload(
-        'option',
-        'redirect',
-        window.location.href.replace(
-            /\/[^\/]*$/,
-            '/cors/result.html?%s'
-        )
-    );
-    $('#editUserForm').addClass('fileupload-processing');
-    $.ajax({
-        // Uncomment the following to send cross-domain cookies:
-        //xhrFields: {withCredentials: true},
-        url: $('#editUserForm').fileupload('option', 'url'),
-        dataType: 'json',
-        context: $('#editUserForm')[0]
-    }).always(function () {
-        $(this).removeClass('fileupload-processing');
-    }).done(function (result) {
-        $(this).fileupload('option', 'done')
-            .call(this, $.Event('done'), {result: result});
-    });
-    /*$('#editUserForm').fileupload('option', {
-        disableImageResize: /Android(?!.*Chrome)|Opera/
-            .test(window.navigator.userAgent),
+    /** 上传图片 **/
+    var uploader = $('#editUserForm');
+    uploader.fileupload({
+        url : 'updatePic',
+        dataType: "json",
+        autoUpload: true,
+        acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
         maxFileSize: 5000000,
         maxNumberOfFiles : 1,
-        acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i
-    });*/
+        fileInput : uploader.find("input:file"),
+    });
 })
 </script>
 </body></html>
