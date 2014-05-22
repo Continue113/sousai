@@ -126,7 +126,7 @@ transition: all 0.2s ease-in-out;
                 <span class="btn fileinput-button">
                     <i class="icon-plus"></i>
                     <span>选择图片</span>
-                    <input type="file" name="image" data-url="updatePic" accept="image/png, image/gif, image/jpg, image/jpeg">
+                    <input type="file" name="image" data-url="uploadPic" accept="image/png, image/gif, image/jpg, image/jpeg">
                 </span>
                 <span class="fileupload-process"></span>
             </div>
@@ -362,6 +362,7 @@ $(function () {
     var uploader = $('#editUserForm');
     uploader.fileupload({
         url : 'uploadPic',
+        type: "POST",
         dataType: "json",
         autoUpload: true,
         acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
