@@ -9,8 +9,6 @@
   <meta name="author" content="KING@CQU" />
   <link href="css/bootstrap.min.css" rel="stylesheet" /> 
   <link href="css/bootstrap-responsive.css" rel="stylesheet" /> 
-  <link href="css/jquery.fileupload.css" rel="stylesheet" /> 
-  <link href="css/jquery.fileupload-ui.css" rel="stylesheet" />
   <link href="css/sousai.common.css" rel="stylesheet" />
   <link href="css/sousai.userCenter.css" rel="stylesheet" />
   <style>
@@ -126,9 +124,8 @@ transition: all 0.2s ease-in-out;
                 <span class="btn fileinput-button">
                     <i class="icon-plus"></i>
                     <span>选择图片</span>
-                    <input type="file" name="image" data-url="uploadPic" accept="image/png, image/gif, image/jpg, image/jpeg">
+                    <input class="hide" type="file" name="image" accept="image/png, image/gif, image/jpg, image/jpeg">
                 </span>
-                <span class="fileupload-process"></span>
             </div>
             <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
            </div>
@@ -172,89 +169,7 @@ transition: all 0.2s ease-in-out;
   </div>
   <!-- /container --> 
   <s:include value="footer.jsp" /><!-- 页首导航条 --> 
-  <script src="js/jquery.ui.widget.js"></script>
-  <script src="js/tmpl.min.js"></script>
-  <script src="js/load-image.min.js"></script>
-  <script src="js/jquery.iframe-transport.js"></script>
-  <script src="js/jquery.fileupload.js"></script>
-  <script src="js/jquery.fileupload-process.js"></script>
-  <script src="js/jquery.fileupload-image.js"></script>
-  <script src="js/jquery.fileupload-ui.js"></script>
   <script src="js/jquery.validate.min.js"></script>
-<script id="template-upload" type="text/x-tmpl">
-{% for (var i=0, file; file=o.files[i]; i++) { %}
-    <tr class="template-upload fade">
-        <td>
-            <span class="preview"></span>
-        </td>
-        <td>
-            <p class="name">{%=file.name%}</p>
-            <strong class="error text-danger"></strong>
-        </td>
-        <td>
-            <p class="size">上传中...</p>
-            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
-        </td>
-        <td>
-            {% if (!i && !o.options.autoUpload) { %}
-                <button class="btn start" disabled>
-                    <i class="icon-upload"></i>
-                    <span>开始</span>
-                </button>
-            {% } %}
-            {% if (!i) { %}
-                <button class="btn cancel">
-                    <i class="icon-ban-circle"></i>
-                    <span>取消</span>
-                </button>
-            {% } %}
-        </td>
-    </tr>
-{% } %}
-</script>
-<!-- The template to display files available for download -->
-<script id="template-download" type="text/x-tmpl">
-{% for (var i=0, file; file=o.files[i]; i++) { %}
-    <tr class="template-download fade">
-        <td>
-            <span class="preview">
-                {% if (file.thumbnailUrl) { %}
-                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
-                {% } %}
-            </span>
-        </td>
-        <td>
-            <p class="name">
-                {% if (file.url) { %}
-                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
-                {% } else { %}
-                    <span>{%=file.name%}</span>
-                {% } %}
-            </p>
-            {% if (file.error) { %}
-                <div><span class="label label-danger">Error</span> {%=file.error%}</div>
-            {% } %}
-        </td>
-        <td>
-            <span class="size">{%=o.formatFileSize(file.size)%}</span>
-        </td>
-        <td>
-            {% if (file.deleteUrl) { %}
-                <button class="btn delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
-                    <i class="icon-trash"></i>
-                    <span>删除</span>
-                </button>
-                <input type="checkbox" name="delete" value="1" class="toggle">
-            {% } else { %}
-                <button class="btn cancel">
-                    <i class="icon-ban-circle"></i>
-                    <span>取消</span>
-                </button>
-            {% } %}
-        </td>
-    </tr>
-{% } %}
-</script>
 <script>
 $(function () {
     /** editUser鼠标点击选择头像 **/
@@ -364,7 +279,6 @@ $(function () {
         url : 'uploadPic',
         type: "POST",
         dataType: "json",
-        autoUpload: true,
         acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
         maxFileSize: 1000000,
         maxNumberOfFiles : 1,
