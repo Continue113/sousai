@@ -371,10 +371,10 @@ $(function () {
         fileInput : uploader.find("input:file"),
         success: function(respdata){
          // alert("成功回调内容为"+respdata);
-          $(".files").append('<tr class="template-download fade in"><td><span class="preview"><img src="data:image/gif;base64,'+respdata+'" /></li></span></td><td><p class="name"><span>XXXX.JPG</span></p></td><td><span class="size"> XXXX MB</span></td><td><button class="btn delete"><i class="icon-trash"></i><span>删除</span></button></td></tr>');
+          $(".files").append('<tr class="template-download fade in"><td><span class="preview"><img src="data:image/gif;base64,'+respdata+'" /></span></td><td><p class="name"><span>XXXX.JPG</span></p></td><td><span class="size"> XXXX MB</span></td><td><button class="btn delete"><i class="icon-trash"></i><span>删除</span></button></td></tr>');
         },
         error: function(){
-          $(".files").append('<tr class="template-download fade in"><td><span class="preview"></li></span></td><td><p class="name"><span>XXXX.JPG</span></p><div><span class="label label-danger">Error</span> 上传出错了，请重新上传</div></td><td><span class="size"> XXXX MB</span></td><td><button class="btn cancel"><i class="icon-ban-circle"></i><span>取消</span></button></td></tr>')
+          $(".files").append('<tr class="template-download fade in"><td><span class="preview"></span></td><td><p class="name"><span>XXXX.JPG</span></p><div><span class="label label-danger">Error</span> 上传出错了，请重新上传</div></td><td><span class="size"> XXXX MB</span></td><td><button class="btn cancel"><i class="icon-ban-circle"></i><span>取消</span></button></td></tr>')
 
         },
     });
