@@ -213,7 +213,7 @@ transition: all 0.2s ease-in-out;
 {% } %}
 </script>
 <!-- The template to display files available for download -->
-<script id="template-download" type="text/x-tmpl">
+<script id="template-downloadOLD" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
     <tr class="template-download fade">
         <td>
@@ -364,16 +364,19 @@ $(function () {
         url : 'uploadPic',
         type: "POST",
         dataType: "json",
-        autoUpload: true,
+        autoUpload: false,
         acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
         maxFileSize: 1000000,
         maxNumberOfFiles : 1,
         fileInput : uploader.find("input:file"),
         success: function(respdata){
-          alert("成功回调内容为"+respdata);
-          $("#systemIcons > ul").append('<li class="thumbnail"><img src="data:image/gif;base64,'+respdata+'" /></li>')
+         // alert("成功回调内容为"+respdata);
+          $(".files").append('<tr class="template-download fade in"><td><span class="preview"><img src="data:image/gif;base64,'+respdata+'" /></li></span></td><td><p class="name"><span>XXXX.JPG</span></p></td><td><span class="size"> XXXX MB</span></td><td><button class="btn delete"><i class="icon-trash"></i><span>删除</span></button></td></tr>');
         },
-        error: function(jqXHR,textStatus,errorThrown){alert("jqXHR:"+jqXHR+",textStatus:"+textStatus+",errorThrown:"+errorThrown);},
+        error: function(){
+          $(".files").append('<tr class="template-download fade in"><td><span class="preview"></li></span></td><td><p class="name"><span>XXXX.JPG</span></p><div><span class="label label-danger">Error</span> 上传出错了，请重新上传</div></td><td><span class="size"> XXXX MB</span></td><td><button class="btn cancel"><i class="icon-ban-circle"></i><span>取消</span></button></td></tr>')
+
+        },
     });
 })
 </script>
