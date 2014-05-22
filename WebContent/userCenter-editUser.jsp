@@ -181,7 +181,6 @@ transition: all 0.2s ease-in-out;
   <script src="js/jquery.fileupload-image.js"></script>
   <script src="js/jquery.fileupload-ui.js"></script>
   <script src="js/jquery.validate.min.js"></script>
-
 <script id="template-upload" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
     <tr class="template-upload fade">
@@ -362,7 +361,7 @@ $(function () {
     /** 上传图片 **/
     var uploader = $('#editUserForm');
     uploader.fileupload({
-        url : 'updatePic',
+        url : 'uploadPic',
         dataType: "json",
         autoUpload: true,
         acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
