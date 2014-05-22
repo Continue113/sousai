@@ -123,7 +123,7 @@
           <div class="matchBox"><div class="matchBox-all"> 
            <div class="matchBox-title">
             <a href="matchSearchDetail.jsp?match.id=<s:property value="#match.matchId"/>"><s:property value="#match.matchTitle"/></a>
-            <span class="pull-right">发布时间：<span class="matchBox-releaseTime"><s:property value="#match.matchReleaseTime">/</span></span>
+            <span class="pull-right">发布时间：<span class="matchBox-releaseTime"><s:property value="#match.matchReleaseTime"/></span></span>
            </div>
            <div class="hidden">
             <span class="matchBox-type-pp"><s:property value="#match.matchType"/></span>

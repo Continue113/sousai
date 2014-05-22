@@ -193,16 +193,13 @@ ul.searchboxMenu > .active > a:focus {
   width: 90px;
   font-size: 16px;
 }
+.span7 > .tab-content > .tab-pane > .span6 {margin-left: 0;}
 /** 高级搜索 **/
-.span7 > .tab-content .searchbox-other {
+.span7 > .tab-content > .tab-pane > .span1 {
   line-height: 15px;
-  display: inline-block;
-  *display: inline;
-  *zoom: 1;
-  vertical-align: -3px;
-  margin-left: 10px;
+  margin-left: 0;
 }
-.span7 > .tab-content .searchbox-other p {
+.span7 > .tab-content .span1 p {
   margin-bottom: 0;
 }
 /** 热门搜索 和 主页快捷搜赛 **/
