@@ -126,7 +126,7 @@ transition: all 0.2s ease-in-out;
                 <span class="btn fileinput-button">
                     <i class="icon-plus"></i>
                     <span>选择图片</span>
-                    <input type="file" name="image" data-url="uploadPic" accept="image/png, image/gif, image/jpg, image/jpeg">
+                    <input type="file" name="image" data-url="uploadPic" multiple="" accept="image/png, image/gif, image/jpg, image/jpeg">
                 </span>
                 <span class="fileupload-process"></span>
             </div>
@@ -215,7 +215,7 @@ transition: all 0.2s ease-in-out;
 <!-- The template to display files available for download -->
 <script id="template-download" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
-    <tr class="template-download fade">
+    <tr class="template-download fade ">
         <td>
             <span class="preview">
                 {% if (file.thumbnailUrl) { %}
@@ -362,22 +362,17 @@ $(function () {
     var uploader = $('#editUserForm');
     uploader.fileupload({
         url : 'uploadPic',
-        type: "POST",
         dataType: "json",
-        autoUpload: false,
         acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
         maxFileSize: 1000000,
         maxNumberOfFiles : 1,
         fileInput : uploader.find("input:file"),
         success: function(respdata){
-         // alert("成功回调内容为"+respdata);
-          $(".files").append('<tr class="template-download fade in"><td><span class="preview"><img src="data:image/gif;base64,'+respdata+'" /></span></td><td><p class="name"><span>XXXX.JPG</span></p></td><td><span class="size"> XXXX MB</span></td><td><button class="btn delete"><i class="icon-trash"></i><span>删除</span></button></td></tr>');
-        },
-        error: function(){
-          $(".files").append('<tr class="template-download fade in"><td><span class="preview"></span></td><td><p class="name"><span>XXXX.JPG</span></p><div><span class="label label-danger">Error</span> 上传出错了，请重新上传</div></td><td><span class="size"> XXXX MB</span></td><td><button class="btn cancel"><i class="icon-ban-circle"></i><span>取消</span></button></td></tr>')
-
+          console.log("成功回调内容为"+respdata);
+         /* $(".files").append('<tr class="template-download fade in"><td><span class="preview"><img src="data:image/gif;base64,'+respdata+'" /></span></td><td><p class="name"><span>XXXX.JPG</span></p></td><td><span class="size"> XXXX MB</span></td><td><button class="btn delete"><i class="icon-trash"></i><span>删除</span></button></td></tr>');*/
         },
     });
+
 })
 </script>
 </body></html>
