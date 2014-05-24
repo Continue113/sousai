@@ -12,6 +12,9 @@
   <link href="css/jplist.min.css" rel="stylesheet" /> 
   <link href="css/sousai.common.css" rel="stylesheet" />
   <link href="css/sousai.userCenter.css" rel="stylesheet" />
+  <!--[if lte IE 8]>
+  <link href="css/sousai.IE8.css" rel="stylesheet" /> 
+  <![endif]-->
 </head>
 <body class="userCenter">
 <s:include value="navbar.jsp" /><!-- 页首导航条 -->

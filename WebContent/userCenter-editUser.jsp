@@ -13,33 +13,36 @@
   <link href="css/jquery.fileupload-ui.css" rel="stylesheet" />
   <link href="css/sousai.common.css" rel="stylesheet" />
   <link href="css/sousai.userCenter.css" rel="stylesheet" />
+  <!--[if lte IE 8]>
+  <link href="css/sousai.IE8.css" rel="stylesheet" /> 
+  <![endif]-->
   <style>
-/** 更改密码label排列方式 **/
-.control-label-changePwd{margin: 5px 0 0 0;}
-/** 当前头像 **/
-#editUserForm .crtUserIcon {
-display: inline-block;
-padding: 4px;
-border: 1px solid #ddd;
--webkit-border-radius: 4px;
--moz-border-radius: 4px;
-border-radius: 4px;
--webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
--moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
--webkit-transition: all 0.2s ease-in-out;
--moz-transition: all 0.2s ease-in-out;
--o-transition: all 0.2s ease-in-out;
-transition: all 0.2s ease-in-out;
-}
-#editUserForm .crtUserIcon > img{width: 100px;height: 100px;}
-/** 选中图片边框为绿色 **/
-.active{border-color: #51a351;}
-/** 缩略图**/
-.userCenter .thumbnail img{width: 50px;height: 50px;}
-#imghead {filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=image);}
-#uploadImgForm {position: relative;top: -270px;left: 210px;}
-#uploadImgForm > .span5 {margin-left: 0;margin-top: 3px;border-top: 1px solid #ccc;}
+  /** 更改密码label排列方式 **/
+  .control-label-changePwd{margin: 5px 0 0 0;}
+  /** 当前头像 **/
+  #editUserForm .crtUserIcon {
+  display: inline-block;
+  padding: 4px;
+  border: 1px solid #ddd;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  }
+  #editUserForm .crtUserIcon > img{width: 100px;height: 100px;}
+  /** 选中图片边框为绿色 **/
+  .active{border-color: #51a351;}
+  /** 缩略图**/
+  .userCenter .thumbnail img{width: 50px;height: 50px;}
+  #imghead {filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=image);}
+  #uploadImgForm {position: relative;top: -270px;left: 210px;}
+  #uploadImgForm > .span5 {margin-left: 0;margin-top: 3px;border-top: 1px solid #ccc;}
   </style>
 
 </head>

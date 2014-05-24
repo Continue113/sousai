@@ -13,30 +13,33 @@
   <link href="css/jplist.min.css" rel="stylesheet" /> 
   <link href="css/sousai.common.css" rel="stylesheet" /> 
   <link href="css/sousai.userCenter.css" rel="stylesheet" /> 
+  <!--[if lte IE 8]>
+  <link href="css/sousai.IE8.css" rel="stylesheet" /> 
+  <![endif]-->
   <style>
-/** 现有场地框 **/
-.oldCourtsBox{border: 3px solid #ddd;
--webkit-border-radius: 0 0 6px 6px;
--moz-border-radius: 0 0 6px 6px;
-border-radius: 0 0 6px 6px;}
-/** 避免验证后无圆角 **/
-.input-append span.add-on{
--webkit-border-radius: 0 4px 4px 0;
--moz-border-radius: 0 4px 4px 0;
-border-radius: 0 4px 4px 0;
-}
-/** 现有场地表格 **/
-.oldCourtsBox tr{cursor: pointer;}
-.oldCourtsBox tr.active {
-  font-weight: bold;
-}
-/** 添加场地按钮 **/
-.oldCourtsBox .jplist-panel > .text-center > .btn {margin-top: 10px;float: none;}
-/** 最小宽度情况下 **/
-@media (max-width: 480px) {
-  /** 搜索现有场地按钮 **/
-  #searchExistedCourt{margin-top: 5px;}
-}
+  /** 现有场地框 **/
+  .oldCourtsBox{border: 3px solid #ddd;
+  -webkit-border-radius: 0 0 6px 6px;
+  -moz-border-radius: 0 0 6px 6px;
+  border-radius: 0 0 6px 6px;}
+  /** 避免验证后无圆角 **/
+  .input-append span.add-on{
+  -webkit-border-radius: 0 4px 4px 0;
+  -moz-border-radius: 0 4px 4px 0;
+  border-radius: 0 4px 4px 0;
+  }
+  /** 现有场地表格 **/
+  .oldCourtsBox tr{cursor: pointer;}
+  .oldCourtsBox tr.active {
+    font-weight: bold;
+  }
+  /** 添加场地按钮 **/
+  .oldCourtsBox .jplist-panel > .text-center > .btn {margin-top: 10px;float: none;}
+  /** 最小宽度情况下 **/
+  @media (max-width: 480px) {
+    /** 搜索现有场地按钮 **/
+    #searchExistedCourt{margin-top: 5px;}
+  }
   </style> 
  </head> 
  <body class="userCenter"> 

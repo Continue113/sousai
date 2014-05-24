@@ -7,13 +7,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
   <meta name="description" content="搜赛网-管理员页面-采集设置" /> 
   <meta name="author" content="KING@CQU" /> 
-  <!-- styles --> 
   <link href="css/bootstrap.min.css" rel="stylesheet" /> 
   <link href="css/bootstrap-responsive.css" rel="stylesheet" /> 
   <link href="css/jquery.fileupload.css" rel="stylesheet" /> 
   <link href="css/jquery.fileupload-ui.css" rel="stylesheet" /> 
   <link href="css/sousai.common.css" rel="stylesheet" /> 
   <link href="css/sousai.background.css" rel="stylesheet" /> 
+  <!--[if lte IE 8]>
+  <link href="css/sousai.IE8.css" rel="stylesheet" /> 
+  <![endif]-->
   <style>
   .form-horizontal .control-label {width: 140px;}
   .form-horizontal .controls {margin-left: 150px;}

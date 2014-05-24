@@ -7,25 +7,25 @@
      </ul> 
      <div class="tab-content"> 
       <div id="searchbox-match" class="tab-pane active"> 
-       <div class="input-prepend input-append"> 
+       <div class="input-prepend input-append span6"> 
         <span class="add-on"><i class="icon-search icon-white"></i></span> 
         <input type="text" class="span4" placeholder="输入您想要的比赛" /> 
         <span class="add-on add-selectType"><span>所有分类</span><b class="caret"></b></span> 
         <button class="btn btn-success btn-search" type="button">&nbsp;搜&nbsp;索</button> 
        </div> 
-       <div class="searchbox-other"> 
+       <div class="span1"> 
         <a href="userCenter-releaseMatch.jsp">发布比赛</a> 
         <p><a href="macthSearch.jsp">高级搜索</a></p> 
        </div> 
       </div> 
       <div id="searchbox-court" class="tab-pane"> 
-       <div class="input-prepend input-append"> 
+       <div class="input-prepend input-append span6"> 
         <span class="add-on"><i class="icon-search icon-white"></i></span> 
         <input type="text" class="span4" placeholder="输入您要找的场地" /> 
         <span class="add-on add-selectType">所有分类<b class="caret"></b></span> 
         <button class="btn btn-success btn-search" type="button">&nbsp;搜&nbsp;索</button> 
        </div> 
-       <div class="searchbox-other"> 
+       <div class="span1"> 
         <a href="userCenter-releaseCourt.jsp">发布场地</a> 
         <p><a href="courtSearch.jsp">高级搜索</a></p> 
        </div> 

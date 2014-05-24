@@ -3,15 +3,17 @@
 <!DOCTYPE html>
 <html>
  <head> 
-  <title>&lt;s:property value=&quot;&quot;/&gt;天津市第五届百年皖酒“杯 &middot; 搜赛网</title> 
+  <title><s:property value=""/>天津市第五届百年皖酒“杯 &middot; 搜赛网</title> 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
   <meta name="description" content="搜赛网比赛搜索页面" /> 
   <meta name="author" content="KING@CQU" /> 
-  <!-- styles --> 
   <link href="css/bootstrap.min.css" rel="stylesheet" /> 
   <link href="css/bootstrap-responsive.css" rel="stylesheet" /> 
   <link href="css/sousai.common.css" rel="stylesheet" /> 
   <link href="css/sousai.matchSearchDetail.css" rel="stylesheet" /> 
+  <!--[if lte IE 8]>
+  <link href="css/sousai.IE8.css" rel="stylesheet" /> 
+  <![endif]-->
  </head> 
  <body class="matchSearchDetail"> 
   <s:include value="navbar.jsp" />
