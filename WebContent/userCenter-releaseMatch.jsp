@@ -99,12 +99,7 @@ border-radius: 0 4px 4px 0;
           <div class="control-group"> 
            <label class="control-label" for="matchType">比赛类型：</label> 
            <div class="controls"> 
-            <!-- 选择比赛类型 --> 
-            <select name="matchType" class="selectMatchType"> <option value="0">请选择比赛类型</option> <option value="matchType-xql" data-for="matchType-xql">小球类</option> <option value="matchType-dql" data-for="matchType-dql">大球类</option> <option value="matchType-qpl" data-for="matchType-qpl">棋牌类</option> <option value="matchType-wyl" data-for="matchType-wyl">文艺类</option> <option id="matchType-qt">其他</option> </select> 
-            <select name="matchType-xql" class="matchType-xql hide"> <option value="0">请选择(小球类)</option> <option value="matchType_pingPong">乒乓球</option> <option value="matchType_pingPong">羽毛球</option> <option value="matchType_pingPong">网球</option> <option value="matchType_pingPong">台球</option> </select> 
-            <select name="matchType-dql" class="matchType-dql hide"> <option value="0">请选择(大球类)</option> <option value="matchType_pingPong">篮球</option> <option value="matchType_pingPong">足球</option> <option value="matchType_pingPong">排球</option> </select> 
-            <select name="matchType-qpl" class="matchType-qpl hide"> <option value="0">请选择(棋牌类)</option> <option value="matchType_pingPong">麻将</option> <option value="matchType_pingPong">围棋</option> <option value="matchType_pingPong">象棋</option> <option value="matchType_pingPong">扑克牌</option> </select> 
-            <select name="matchType-wyl" class="matchType-wyl hide"> <option value="0">请选择(文艺类)</option> <option value="matchType_pingPong">街舞</option> </select> 
+            <s:include value="selectMatchType.jsp" />
             <!-- /选择比赛类型 --> 
            </div> 
           </div> 
@@ -127,7 +122,7 @@ border-radius: 0 4px 4px 0;
            <label class="control-label" for="matchPlace">比赛地点：</label> 
            <div class="controls form-inline"> 
             <s:include value="selectPCC.jsp" />
-            <!-- 选择省市区三级下拉框 --> 
+            <!-- /选择省市区三级下拉框 --> 
             <a href="#" class="btn btn-success pull-right" id="searchExistedCourt">搜索现有球场</a> 
            </div> 
           </div> 
