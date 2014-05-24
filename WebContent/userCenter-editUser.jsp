@@ -37,6 +37,9 @@ transition: all 0.2s ease-in-out;
 .active{border-color: #51a351;}
 /** 缩略图**/
 .userCenter .thumbnail img{width: 50px;height: 50px;}
+#imghead {filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=image);}
+#uploadImgForm {position: relative;top: -270px;left: 210px;}
+#uploadImgForm > .span5 {margin-left: 0;margin-top: 3px;border-top: 1px solid #ccc;}
   </style>
 
 </head>
@@ -121,18 +124,7 @@ transition: all 0.2s ease-in-out;
            <div class="controls"> 
             <div class="crtUserIcon"><img src="img/defaultImg.png" /></div>
            </div>
-           <div class="controls">
-            <div class="fileupload-buttonbar">
-                <span class="btn fileinput-button">
-                    <i class="icon-plus"></i>
-                    <span>选择图片</span>
-                    <input type="file" name="image" data-url="uploadPic" multiple="" accept="image/png, image/gif, image/jpg, image/jpeg">
-                </span>
-                <span class="fileupload-process"></span>
-            </div>
-            <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
-           </div>
-          </div> 
+         </div>
           <div class="control-group"> 
            <label class="control-label" for="systemIcons">系统头像：</label> 
            <div class="controls" id="systemIcons"> 
@@ -158,6 +150,21 @@ transition: all 0.2s ease-in-out;
           </div> 
          </fieldset> 
         </form>
+          
+        <form id="uploadImgForm" enctype="multipart/form-data" method="POST" action="uploadPic" onsubmit="return chekcForm(this)">
+        <span class="btn fileinput-button"><i class="icon-plus"></i><span>选择图片</span></span>
+        <input id="imgInput" class="hide0" type="file" name="image" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this)">
+        <table class=" span5">
+          <tbody class="files">
+          <tr class="hide">
+            <td><span id="preview"><img id="imghead" src="img/loading.gif" /></span></td>
+            <td><span class="name">name</span><p class="hide" id="message"></p></td>
+            <td><span class="size">size</span></td>
+            <td><input class="btn start" type="submit" value="上传"/><input type="reset" value="取消" class="btn cancle" /></td>
+          </tr>
+          </tbody>
+        </table>
+        </form>
        </div>
        <!-- /editUser --> 
       </div>
@@ -172,89 +179,7 @@ transition: all 0.2s ease-in-out;
   </div>
   <!-- /container --> 
   <s:include value="footer.jsp" /><!-- 页首导航条 --> 
-  <script src="js/jquery.ui.widget.js"></script>
-  <script src="js/tmpl.min.js"></script>
-  <script src="js/load-image.min.js"></script>
-  <script src="js/jquery.iframe-transport.js"></script>
-  <script src="js/jquery.fileupload.js"></script>
-  <script src="js/jquery.fileupload-process.js"></script>
-  <script src="js/jquery.fileupload-image.js"></script>
-  <script src="js/jquery.fileupload-ui.js"></script>
   <script src="js/jquery.validate.min.js"></script>
-<script id="template-upload" type="text/x-tmpl">
-{% for (var i=0, file; file=o.files[i]; i++) { %}
-    <tr class="template-upload fade">
-        <td>
-            <span class="preview"></span>
-        </td>
-        <td>
-            <p class="name">{%=file.name%}</p>
-            <strong class="error text-danger"></strong>
-        </td>
-        <td>
-            <p class="size">上传中...</p>
-            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
-        </td>
-        <td>
-            {% if (!i && !o.options.autoUpload) { %}
-                <button class="btn start" disabled>
-                    <i class="icon-upload"></i>
-                    <span>开始</span>
-                </button>
-            {% } %}
-            {% if (!i) { %}
-                <button class="btn cancel">
-                    <i class="icon-ban-circle"></i>
-                    <span>取消</span>
-                </button>
-            {% } %}
-        </td>
-    </tr>
-{% } %}
-</script>
-<!-- The template to display files available for download -->
-<script id="template-download" type="text/x-tmpl">
-{% for (var i=0, file; file=o.files[i]; i++) { %}
-    <tr class="template-download fade ">
-        <td>
-            <span class="preview">
-                {% if (file.thumbnailUrl) { %}
-                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
-                {% } %}
-            </span>
-        </td>
-        <td>
-            <p class="name">
-                {% if (file.url) { %}
-                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
-                {% } else { %}
-                    <span>{%=file.name%}</span>
-                {% } %}
-            </p>
-            {% if (file.error) { %}
-                <div><span class="label label-danger">Error</span> {%=file.error%}</div>
-            {% } %}
-        </td>
-        <td>
-            <span class="size">{%=o.formatFileSize(file.size)%}</span>
-        </td>
-        <td>
-            {% if (file.deleteUrl) { %}
-                <button class="btn delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
-                    <i class="icon-trash"></i>
-                    <span>删除</span>
-                </button>
-                <input type="checkbox" name="delete" value="1" class="toggle">
-            {% } else { %}
-                <button class="btn cancel">
-                    <i class="icon-ban-circle"></i>
-                    <span>取消</span>
-                </button>
-            {% } %}
-        </td>
-    </tr>
-{% } %}
-</script>
 <script>
 $(function () {
     /** editUser鼠标点击选择头像 **/
@@ -330,7 +255,7 @@ $(function () {
       },
       "user.email": {
         email: true
-      }
+      },
     },
     messages: {
       inputUserPassword: {
@@ -359,20 +284,139 @@ $(function () {
       }
     });
     /** 上传图片 **/
-    var uploader = $('#editUserForm');
-    uploader.fileupload({
-        url : 'uploadPic',
-        dataType: "json",
-        acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
-        maxFileSize: 1000000,
-        maxNumberOfFiles : 1,
-        fileInput : uploader.find("input:file"),
-        success: function(respdata){
-          console.log("成功回调内容为"+respdata);
-         /* $(".files").append('<tr class="template-download fade in"><td><span class="preview"><img src="data:image/gif;base64,'+respdata+'" /></span></td><td><p class="name"><span>XXXX.JPG</span></p></td><td><span class="size"> XXXX MB</span></td><td><button class="btn delete"><i class="icon-trash"></i><span>删除</span></button></td></tr>');*/
-        },
+    $(".fileinput-button").click(function(){
+      $("#imgInput").trigger('click');
     });
-
+    $(".start").click(function(){
+      $(this).attr("disabled","disabled")
+      $(this).parents().find(".name").append('<img src="img/loading.gif" width="25" />');
+    });
+    $(".cancle").click(function(){
+      $(".files .hide").fadeOut();
+    });
 })
+//验证上传图片格式，大小，并在通过后显示图片预览
+function imgValid(img){
+   var imgname = img.files[0].name;  
+   var imgsize = img.files[0].size;  
+   var imgsizeMB = (imgsize/1024/1024).toFixed(2);
+   var imgtype = img.files[0].type; 
+   //console.log(imgtype);
+   if(imgsize >= 1*1024*1024) {
+    alert("照片大小为 "+imgsizeMB+"MB,照片太大了，请上传小于1MB的照片.");
+   }else if(imgtype !== "image/png" && imgtype !== "image/gif" && imgtype !== "image/jpg" && imgtype !== "image/jpeg" ){
+    alert("文件格式为 "+imgtype+",请上传png,gif,jpg,jpeg格式的照片.");
+   }else{
+    $(".files .hide").find(".name").text(imgname);
+    $(".files .hide").find(".size").text(imgsizeMB+"MB");
+    $(".files .hide").fadeIn();
+    previewImage(img);
+  }
+}
+//iframe上传图片，并接受回调
+// 服务器端输出：out.print("JSON字串");  // {"statusCode":200; "message":"上传成功"; "ImgUrl":"图片相对服务器路径img/picName.jpg"}
+var frame = {
+  ajaxDone: function(json) {
+    if (json.statusCode == 200) {
+      $("#message").html(json.message).show();
+      $(".start .name").find("img").remove();
+      $(".crtUserIcon > img").attr("src",json.ImgUrl);
+      //$.jquery.load(json.loadUrl);
+    } else {
+      $("#message").html(json.message).show();
+    }
+  },
+  frameDone: function(config) {
+    var ifr = null,fm = null,defConfig = {
+      formObj: $('#uploadImgForm'),
+      complete: function(response) {},
+    };
+
+    config = $.extend(defConfig, config);
+
+    var $form = config.formObj;
+    var frameName = 'callbackframe';
+
+    ifr = $('<iframe name="' + frameName + '" id="' + frameName + '" class="hide"></iframe>');
+    ifr.appendTo($('body'));
+    $form.attr("target", frameName);
+    console.log("iframe已添加至body");
+    
+    ifr.load(function() {
+      var response = this.contentWindow.document.body.innerHTML;
+      config.complete.call(this, response);
+      ifr.remove();
+      ifr = null;
+    });
+    return false;
+  }
+}
+
+function checkForm(form) {
+  frame.frameDone({
+    formObj: $form,
+    complete: function(response) {
+      var j = $.parseJSON(response);
+      frame.ajaxDone(j);
+    }
+  });
+  return true;
+}
+//图片上传预览    IE是用了滤镜。
+function previewImage(file)
+{
+  var MAXWIDTH  = 100; 
+  var MAXHEIGHT = 100;
+  var div = document.getElementById('preview');
+  if (file.files && file.files[0])
+  {
+      div.innerHTML ='<img id=imghead>';
+      var img = document.getElementById('imghead');
+      img.onload = function(){
+        var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+        img.width  =  rect.width;
+        img.height =  rect.height;
+        //img.style.marginLeft = rect.left+'px';
+        //img.style.marginTop = rect.top+'px';
+      }
+      var reader = new FileReader();
+      reader.onload = function(evt){img.src = evt.target.result;}
+      reader.readAsDataURL(file.files[0]);
+  }
+  else //兼容IE
+  {
+    var sFilter='filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="';
+    file.select();
+    var src = document.selection.createRange().text;
+    div.innerHTML = '<img id=imghead>';
+    var img = document.getElementById('imghead');
+    img.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = src;
+    var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+    status =('rect:'+rect.top+','+rect.left+','+rect.width+','+rect.height);
+    div.innerHTML = "<div id=divhead style='width:"+rect.width+"px;height:"+rect.height+"px;"+sFilter+src+"\"'></div>";
+  }
+}
+function clacImgZoomParam( maxWidth, maxHeight, width, height ){
+    var param = {top:0, left:0, width:width, height:height};
+    if( width>maxWidth || height>maxHeight )
+    {
+        rateWidth = width / maxWidth;
+        rateHeight = height / maxHeight;
+        
+        if( rateWidth > rateHeight )
+        {
+            param.width =  maxWidth;
+            param.height = Math.round(height / rateWidth);
+        }else
+        {
+            param.width = Math.round(width / rateHeight);
+            param.height = maxHeight;
+        }
+    }
+    
+    param.left = Math.round((maxWidth - param.width) / 2);
+    param.top = Math.round((maxHeight - param.height) / 2);
+    return param;
+}
 </script>
 </body></html>
