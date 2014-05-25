@@ -214,8 +214,8 @@ $(function () {
     $.validator.addMethod("isPass",function(value,element,param){
       if($("#inputUserNewPassword").val==""){return true;}
       else{
-        if($("#inputUserPassword").val() !== param) {return false;}
-        else {return true;}
+        if($("#inputUserPassword").val() === param) {return true;}
+        else($("#inputUserPassword").val() !== param) {return false;}
       }
     },"请先输入旧密码");
 
@@ -236,7 +236,7 @@ $(function () {
           dataType: 'json',
           data: null,
           success: function(rspdata) {
-            window.setTimeout("window.location='userCenter-editUser.jsp'",3000);
+            window.setTimeout("window.location='userCenter-editUser.jsp'",1000);
             alert("编辑账户成功,请刷新页面。");
           },
           error: function() {
