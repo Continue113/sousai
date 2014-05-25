@@ -74,10 +74,11 @@
          <div class="jplist-panel jplist-panel-top"> 
           <div class="jplist-drop-down " data-control-type="drop-down" data-control-name="sort-collection" data-control-action="sort" data-datetime-format="{year}-{month}-{day}"> 
            <ul>
-            <li><span data-path=".matchBox-releaseTime" data-order="asc" data-type="datetime" data-default="true">发布时间</span></li> 
-            <li><span data-path=".matchBox-matchTime" data-order="asc" data-type="datetime">比赛时间</span></li>
-            <li><span data-path=".matchBox-title" data-order="asc" data-type="text">标题</span></li>
-            <li><span data-path=".matchBox-state" data-order="asc" data-type="text">状态</span></li>
+            <li><span data-path="default">排序方式</span></li>
+            <li><span data-path=".matchBox-releaseTime" data-order="asc" data-type="datetime" data-default="true">发布时间</span><i class="icon-arrow-up"></i></li> 
+            <li><span data-path=".matchBox-matchTime" data-order="asc" data-type="datetime">比赛时间</span><i class="icon-arrow-up"></i></li>
+            <li><span data-path=".matchBox-title" data-order="asc" data-type="text">比赛名称</span><i class="icon-arrow-up"></i></li>
+            <li><span data-path=".matchBox-state" data-order="asc" data-type="text">比赛状态</span><i class="icon-arrow-up"></i></li>
            </ul> 
           </div>
           <!-- jplist分类筛选级联下拉菜单 -->
@@ -247,11 +248,11 @@
     $("div[data-control-action='sort'] li").click(function(){
       if(sortflag==1){
             //执行方法;
-            $(this).find("span").attr("data-order","desc");
+            $(this).find("span").attr("data-order","desc").end().find("i").removeClass("icon-arrow-up").addClass("icon-arrow-down");
             sortflag=0;
         }else{
             //执行方法;
-            $(this).find("span").attr("data-order","asc");
+            $(this).find("span").attr("data-order","asc").end().find("i").removeClass("icon-arrow-down").addClass("icon-arrow-up");
             sortflag=1;
         }
     });

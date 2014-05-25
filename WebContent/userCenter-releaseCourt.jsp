@@ -95,18 +95,18 @@
            </div> 
           </div> 
           <div class="control-group"> 
+           <label class="control-label" for="selectMatchType">比赛类型：</label> 
+           <div class="controls"> 
+            <s:include value="selectMatchType.jsp" /> 
+            <!-- /选择比赛类型 --> 
+           </div> 
+          </div> 
+          <div class="control-group"> 
            <label class="control-label" for="selectCourtType">场地类型：</label> 
            <div class="controls"> 
             <!-- 选择场地类型 --> 
             <select name="courtType"> <option value="0">请选择场地类型</option> <option value="courtType-inner">室内</option> <option value="courtType-outer">室外</option> <option value="courtType-zq">体育局</option> <option value="courtType-pp">俱乐部</option> <option value="courtType-lq">社区</option> <option value="courtType-zq">单位</option> <option value="courtType-zq">学校</option> <option value="courtType-pp">临时</option> <option value="courtType-lq">公共</option> <option value="courtType-zq">其他</option> </select> 
             <!-- /选择场地类型 --> 
-           </div> 
-          </div> 
-          <div class="control-group"> 
-           <label class="control-label" for="selectMatchType">比赛类型：</label> 
-           <div class="controls"> 
-            <s:include value="selectMatchType.jsp" /> 
-            <!-- /选择比赛类型 --> 
            </div> 
           </div> 
           <div class="control-group"> 
@@ -176,9 +176,9 @@
           <textarea id="inputCourtInfo" name="inputCourtInfo" required="required"></textarea> 
           <div class="control-group"> 
            <div class="controls"> 
-            <input type="submit" class="btn btn-success " name="release" value="确定发布" /> 
-            <input type="reset" class="btn" id="resetCourtForm" value="清空内容" /> 
-            <button class="btn" name="preView">预览</button> 
+            <input type="submit" class="btn btn-success pull-right" name="release" value="确定发布" /> 
+            <input type="reset" class="btn pull-right" id="resetCourtForm" value="清空内容" /> 
+            <button class="btn pull-right" name="preView">预览</button> 
            </div> 
           </div> 
          </fieldset> 

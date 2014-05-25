@@ -74,10 +74,12 @@
          <div class="jplist-panel jplist-panel-top"> 
           <div class="jplist-drop-down" data-control-type="drop-down" data-control-name="sort" data-control-action="sort" data-datetime-format="{year}-{month}-{day}"> 
            <ul> 
-            <li><span data-path=".courtBox-releaseTime" data-order="asc" data-type="datetime" data-default="true">发布时间</span></li> 
-            <li><span data-path=".courtBox-recordNumb" data-order="asc" data-type="number">比赛次数</span></li> 
-            <li><span data-path=".courtBox-title" data-order="asc" data-type="text">标题</span></li> 
-            <li><span data-path=".courtBox-infoNumb" data-order="asc" data-type="number">赛场</span></li> 
+            <li><span data-path="default">排序方式</span></li>
+            <li><span data-path=".courtBox-releaseTime" data-order="asc" data-type="datetime" data-default="true">发布时间</span><i class="icon-arrow-up"></i></li> 
+            <li><span data-path=".courtBox-recordNumb" data-order="asc" data-type="number">比赛次数</span><i class="icon-arrow-up"></i></li> 
+            <li><span data-path=".courtBox-title" data-order="asc" data-type="text">场地名称</span><i class="icon-arrow-up"></i></li> 
+            <li><span data-path=".courtBox-info" data-order="asc" data-type="text">场地类型</span><i class="icon-arrow-up"></i></li> 
+            <li><span data-path=".courtBox-address" data-order="asc" data-type="number">详细地址</span><i class="icon-arrow-up"></i></li> 
            </ul> 
           </div>
 
@@ -238,11 +240,11 @@
     $("div[data-control-action='sort'] li").click(function(){
       if(sortflag==1){
             //执行方法;
-            $(this).find("span").attr("data-order","desc");
+            $(this).find("span").attr("data-order","desc").end().find("i").removeClass("icon-arrow-up").addClass("icon-arrow-down");
             sortflag=0;
         }else{
             //执行方法;
-            $(this).find("span").attr("data-order","asc");
+            $(this).find("span").attr("data-order","asc").end().find("i").removeClass("icon-arrow-down").addClass("icon-arrow-up");
             sortflag=1;
         }
     });

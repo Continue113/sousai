@@ -1,0 +1,24 @@
+/** 页面LOGO搜索框 无法在用户代理字符串为IE8下正常显示 **/
+
+/** 搜索框搜索按钮 **/
+.span7 > .tab-content .input-append .btn-search {
+  width: 75px;
+}
+/** 搜索框其他链接 **/
+.span7 > .tab-content > .tab-pane > .span1 {
+  margin-left: 19px; 
+}
+/** 比赛列表 **/
+.matchBox .matchBox-time{width: 135px;}
+.matchBox .matchBox-court{width: 135px;}
+.matchBox .matchBox-state{width: 40px;}
+.matchBox .matchBox-info{width: 180px;}
+.matchBox .matchBox-btns{width: 60px;}
+/** 场地列表 **/
+.courtBox .courtBox-block .courtBox-address{width:135px;}
+.courtBox .courtBox-block .courtBox-info{width:98px;}
+.courtBox .courtBox-block .courtBox-record{width:38px;}
+.courtBox .courtBox-block .courtBox-evaluation{width:178px;}
+/** 广告框 用户代理字符串为IE8时：无边框 无大小 只能使用内联样式 **/
+.adFirst {margin-top: 20px;border: 1px solid #ccc;height: 50px;}
+.adSecond {margin-top: 20px;margin-left: -10px;border: 1px solid #ccc;height: 700px;}

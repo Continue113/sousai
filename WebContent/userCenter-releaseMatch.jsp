@@ -197,9 +197,9 @@
           <textarea id="inputMatchRules" name="inputMatchRules" required="required"></textarea> 
           <div class="control-group"> 
            <div class="controls"> 
-            <input type="submit" class="btn btn-success " name="release" value="确定发布" /> 
-            <input type="reset" class="btn" id="resetMatchForm" value="清空内容" /> 
-            <button class="btn" name="preView">预览</button> 
+            <input type="submit" class="btn btn-success pull-right" name="release" value="确定发布" /> 
+            <input type="reset" class="btn pull-right" id="resetMatchForm" value="清空内容" /> 
+            <button class="btn pull-right" name="preView">预览</button> 
            </div> 
           </div> 
          </fieldset> 
