@@ -195,7 +195,7 @@ $(function () {
     /** 编辑账户验证 **/
     //添加验证旧密码方法
     $.validator.addMethod("isPwd",function(value,element,param){
-      if(value === param && value == ""){
+      if(value === param || value == ""){
         return true;
       }else{
         return false;
