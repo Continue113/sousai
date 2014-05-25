@@ -27,7 +27,7 @@ public class UserDaoHibernate extends HibernateDaoSupport
 	@Override
 	public Long save(User user) {
 		// TODO Auto-generated method stub
-		System.out.println("save now turn to getHibernateTemplate().save "+user.getId()+"   "+ user.getName()+"   "+user.getPwd()+"   ");
+		//System.out.println("save now turn to getHibernateTemplate().save "+user.getId()+"   "+ user.getName()+"   "+user.getPwd()+"   ");
 		return Long.parseLong(getHibernateTemplate()
 				.save(user).toString());
 	}

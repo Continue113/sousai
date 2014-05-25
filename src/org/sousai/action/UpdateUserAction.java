@@ -1,8 +1,10 @@
 package org.sousai.action;
 
+import org.apache.struts2.ServletActionContext;
 import org.sousai.action.base.UserBaseAction;
 import org.sousai.domain.*;
 import org.sousai.vo.*;
+import org.sousai.tools.*;
 
 import com.opensymphony.xwork2.ActionContext;
 
@@ -26,17 +28,50 @@ public class UpdateUserAction extends UserBaseAction
 	@Override
 	public String execute() throws Exception
 	{
-		System.out.println("update user");
+
+		String result = "true";
 		User tempUser = new User((UserBean)ActionContext.getContext().getSession().get("userBean"));
-		System.out.println(""+tempUser.getName());
-		System.out.println("" + getUser().getPwd());
-		System.out.println("" + getUser().getEmail());
-		tempUser.setPwd(getUser().getPwd());
-		tempUser.setEmail(getUser().getEmail());
-		if(umg.updateUser(getUser()) != 0)
+		String pwd = getUser().getPwd();
+		if(!pwd.isEmpty())
 		{
-			return SUCCESS;
+			if(MyValidation.validatePwd(pwd))
+			{
+				tempUser.setPwd(pwd);
+			}
+			else
+			{
+				result = "ERROR";
+			}
 		}
-		return ERROR;
+		String email = getUser().getEmail();
+		if(!email.isEmpty())
+		{
+			if(MyValidation.validateEmail(email))
+			{
+				tempUser.setEmail(email);
+			}
+			else
+			{
+				result = "ERROR";
+			}
+		}
+		MyPrint.myPrint(tempUser.getEmail());
+		MyPrint.myPrint(tempUser.getPwd());
+		if(result == "true" && umg.updateUser(tempUser) == 1)
+		{
+			MyPrint.myPrint("Update user SUCCESS");
+			umg.updateInfo("userBean", tempUser.getId());
+			UserBean tempUserBean = (UserBean)ActionContext.getContext().getSession().get("userBean");
+			MyPrint.myPrint(tempUserBean.getUserEmail());
+			MyPrint.myPrint(tempUserBean.getUserPwd());
+			result = "SUCCESS";
+		}
+		else
+		{
+			MyPrint.myPrint("Update user ERROR");
+			result = "ERROR2";
+		}
+		JSONUtils.toJson(ServletActionContext.getResponse(), result);
+		return null;
 	}
 }
