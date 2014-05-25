@@ -15,7 +15,7 @@
        </div> 
        <div class="span1"> 
         <a href="userCenter-releaseMatch.jsp">发布比赛</a> 
-        <p><a href="macthSearch.jsp">高级搜索</a></p> 
+        <p><a href="matchSearch.jsp">高级搜索</a></p> 
        </div> 
       </div> 
       <div id="searchbox-court" class="tab-pane"> 

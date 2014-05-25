@@ -160,7 +160,7 @@
           <tbody class="files">
           <tr class="hide">
             <td><span id="preview"><img id="imghead" src="img/loading.gif" /></span></td>
-            <td><span class="name">name</span><p class="hide" id="message"></p></td>
+            <td><span class="name">name</span></td>
             <td><span class="size">size</span></td>
             <td><input class="btn start" type="submit" value="上传"/><input type="reset" value="取消" class="btn cancle" /></td>
           </tr>
@@ -219,6 +219,7 @@ $(function () {
     $.validator.addMethod("isPass",function(value,element,param){
       if($("#inputUserPassword").val() === param){
         senddata["user.pwd"] =  $("#inputUserNewPassword").val();
+        console.log(senddata["user.pwd"]);
         return true;
       }
       else{
@@ -235,7 +236,8 @@ $(function () {
         dataType: 'json',
         data: senddata,
         success: function(rspdata) {
-          alert("编辑账户成功"+rspdata);
+          window.setTimeout("window.location='userCenter-editUser.jsp'",3000);
+          alert("编辑账户成功,请刷新页面。");
         },
         error: function() {
           alert("抱歉，发送数据出错了，请重新输入。");
@@ -312,7 +314,8 @@ function ajaxFileUpload() {
     dataType: 'json',
     success: function(respdata, status) {
       console.log(respdata);
-      if(respdata.statusCode == 1){
+      var jsondata = respdata.parseJSON();
+      if(jsondata.statusCode == 1){
         alert("上传头像成功.");
         var imgURL = $("#imghead").attr("src");
         $(".crtUserIcon > img").attr("src",imgURL);

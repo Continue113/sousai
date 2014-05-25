@@ -155,7 +155,7 @@
              </div>
               </s:else>
             </li> 
-            <li class="matchBox-address "><a href="courtSearchDrtail.jsp?court.id=<s:property value="#match.courtId"/>"><s:property value="#match.matchCourt"/></a></li> 
+            <li class="matchBox-court "><a href="courtSearchDrtail.jsp?court.id=<s:property value="#match.courtId"/>"><s:property value="#match.matchCourt"/></a></li> 
             <li class="matchBox-state "><s:property value="#match.matchState"/></li> 
             <li class="matchBox-info "><a href="matchSearchDetail.jsp?match.id=<s:property value="#match.matchId"/>"><s:property value="#match.matchInfo"/></a></li> 
             <li class="matchBox-btns "><a href="matchSearchDetail.jsp?match.id=<s:property value="#match.matchId"/>" class="btn btn-mini">查看详细</a></li> 
@@ -185,7 +185,7 @@
               2013-10-20
               <p>星期日</p>
              </div></li> 
-            <li class="matchBox-address "><a href="#">一北京东城区北京大学体育乓</a></li> 
+            <li class="matchBox-court "><a href="#">一北京东城区北京大学体育乓</a></li> 
             <li class="matchBox-state ">报名中</li> 
             <li class="matchBox-info "><a href="#">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
             <li class="matchBox-btns "><a href="#" class="btn btn-mini">修改规程</a><a href="#" class="btn btn-mini">查看详细</a></li> 
