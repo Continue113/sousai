@@ -212,12 +212,11 @@ $(function () {
     },"密码错误，请重新输入");
     //添加验证是否填写旧密码，且旧密码是否正确。
     $.validator.addMethod("isPass",function(value,element,param){
-        if($("#inputUserPassword").val() === param || $("#inputUserPassword").val() == ""){
-          return true;
-        }
-        else{
-          return false;
-        }
+      if($("#inputUserNewPassword").val==""){return true;}
+      else{
+        if($("#inputUserPassword").val() !== param) {return false;}
+        else {return true;}
+      }
     },"请先输入旧密码");
 
     var editUserValidator = $("#editUserForm").validate({
