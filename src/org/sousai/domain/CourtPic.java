@@ -11,7 +11,8 @@ public class CourtPic implements Serializable
 	private static final long serialVersionUID = -5076690952824550177L;
 	private Long id;
 	private String path;
-	private Blob pic;
+	//private Blob pic;
+	private byte[] pic;
 	private Court court;
 	
 	//默认构造器
@@ -20,7 +21,8 @@ public class CourtPic implements Serializable
 	}
 	
 	//初始化所有参数的构造器
-	public CourtPic(Long id, String path, Blob pic, Court court)
+	//public CourtPic(Long id, String path, Blob pic, Court court)
+	public CourtPic(Long id ,String path, byte[]pic, Court court)
 	{
 		this.id = id;
 		this.path = path;
@@ -49,13 +51,21 @@ public class CourtPic implements Serializable
 	}
 	
 	//pic属性的setter和getter
-	public void setPic(Blob pic)
+	/*public void setPic(Blob pic)
 	{
 		this.pic = pic;
 	}
 	public Blob getPic()
 	{
-		return pic;
+		return this.pic;
+	}*/
+	public void setPic(byte[] pic)
+	{
+		this.pic = pic;
+	}
+	public byte[] getPic()
+	{
+		return this.pic;
 	}
 	
 	//court属性的setter和getter

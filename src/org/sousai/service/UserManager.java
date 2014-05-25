@@ -106,9 +106,20 @@ public interface UserManager
 	 * @param pic 图片类型 1：用户头像  2：场地图片
 	 * @param po UserPic实例或是CourtPic实例
 	 * @return 图片类型 1：用户头像  2：场地图片 0：存储失败
+	 * @throws Exception 
 	 */
-	public int uploadPic(int pic, Object po);
+	public int uploadPic(int pic, Object po) throws Exception;
+	
+	public int uploadCourtPic(CourtPic courtPic);
 	
 	public InputStream getPic(Long courtId);
+	
+	/**
+	 * 更新Session中用户，比赛，场地信息
+	 * @param key "userBean"、"courtBean"、"matchBean"中德一个，表明需要更新的信息
+	 * @param id 在数据库中德标识
+	 * @return 1成功   0失败
+	 */
+	public int updateInfo(String key, Long id);
 	
 }

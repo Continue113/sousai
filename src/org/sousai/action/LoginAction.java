@@ -64,7 +64,7 @@ public class LoginAction extends UserBaseAction
 		//����ActionContextʵ��
 		ActionContext ctx = ActionContext.getContext();
 		//��ȡHttpSession�е�rand����
-		System.out.println(getUser().getName()+"  "+getUser().getPwd());
+		//System.out.println(getUser().getName()+"  "+getUser().getPwd());
 		//String ver2 = (String)ctx.getSession().get("rand");
 		
 		if(umg==null)

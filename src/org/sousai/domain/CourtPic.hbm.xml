@@ -3,7 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 2014-5-13 16:55:34 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
-    <class name="org.sousai.domain.CourtPic" table="COURT_PICTURES">
+    <class name="org.sousai.domain.CourtPic" table="COURT_PICTURES" dynamic-insert="true">
         <id name="id" type="java.lang.Long">
             <column name="ID" />
             <generator class="identity" />
@@ -11,7 +11,8 @@
         <property name="path" type="java.lang.String">
             <column name="PIC_PATH" />
         </property>
-        <property name="pic" type="java.sql.Blob">
+<!--        <property name="pic" type="java.sql.Blob"> -->
+		<property name="pic" type="binary">
             <column name="PIC" />
         </property>
         <many-to-one name="court" class="org.sousai.domain.Court" fetch="join">

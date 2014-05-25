@@ -6,6 +6,7 @@
 <title>JavaEE简单工作流系统</title>
 </head>
 <body>
+<img src="data:image/png;base64,${encodeString}" />
 <table width=780 align="center"
 	background="${pageContext.request.contextPath}/images/bodybg.jpg">
   <tr>

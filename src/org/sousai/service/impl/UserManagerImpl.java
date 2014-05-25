@@ -4,9 +4,12 @@ import java.io.InputStream;
 import java.util.List;
 
 import org.sousai.service.UserManager;
+import org.sousai.tools.*;
 import org.sousai.dao.*;
 import org.sousai.domain.*;
 import org.sousai.vo.*;
+
+import com.opensymphony.xwork2.ActionContext;
 
 /**
  * Description:
@@ -147,7 +150,7 @@ public class UserManagerImpl implements UserManager
 	}
 
 	@Override
-	public int uploadPic(int pic, Object po) 
+	public int uploadPic(int pic, Object po) throws Exception
 	{
 		// TODO Auto-generated method stub
 		if(pic == USER_PIC)
@@ -159,7 +162,7 @@ public class UserManagerImpl implements UserManager
 			courtPicDao.save((CourtPic)po);
 			return pic;
 		}
-		
+		MyPrint.myPrint("FAIL");
 		return PIC_FAIL;
 	}
 
@@ -179,6 +182,40 @@ public class UserManagerImpl implements UserManager
 		}
 		catch(Exception e){
 			e.printStackTrace();
+		}
+		return 1;
+	}
+
+	@Override
+	public int uploadCourtPic(CourtPic courtPic) {
+		// TODO Auto-generated method stub
+		try{
+			courtPicDao.save(courtPic);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return 1;
+	}
+
+	@Override
+	public int updateInfo(String key, Long id) {
+		// TODO Auto-generated method stub
+		ActionContext ctx = ActionContext.getContext();
+		//更新用户信息
+		if(key == "userBean")
+		{
+			ctx.getSession().put(key, new UserBean(userDao.get(id)));
+		}
+		//更新场地信息
+		else if(key == "courtBean")
+		{
+			ctx.getSession().put(key, null);
+		}
+		//更新比赛信息
+		else if(key == "matchBean")
+		{
 		}
 		return 1;
 	}

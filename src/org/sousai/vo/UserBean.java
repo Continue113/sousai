@@ -3,6 +3,8 @@ package org.sousai.vo;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+import org.sousai.domain.User;
+
 /**
  * Description:
  * <br/> UserBean is a VO of the object in table users
@@ -44,6 +46,17 @@ public class UserBean implements Serializable
 		this.setUserType(userType);
 	}
 	
+	public UserBean(User user)
+	{
+		this.userId = user.getId();
+		this.userName = user.getName();
+		this.userEmail = user.getEmail();
+		this.userLastLogTime = user.getLastLogTime();
+		this.userPicId = user.getPicId();
+		this.userPwd = user.getPwd();
+		this.userRegTime = user.getRegTime();
+		this.userType = user.getType();
+	}
 	//userId ��setter��getter
 	public void setUserId(long userId)
 	{
