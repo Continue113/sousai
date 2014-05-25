@@ -95,6 +95,13 @@
           </div>
           </s:if>
           <!-- /jplist分类筛选级联下拉菜单 --> 
+          <!-- 选择省市区三级下拉框 -->
+          <s:include value="selectPCC.jsp" />
+          <!-- js本地关键字查找 --> 
+          <div class="text-filter-box input-append"> 
+           <input data-path=".matchBox-all" type="text" value="" placeholder="请输入关键字" data-control-type="textbox" data-control-name="desc-filter-collection" data-control-action="filter" /> 
+           <span class="add-on"><i class="icon-search"></i></span> 
+          </div> 
           <!-- 复选框查找比赛状态 --> 
           <div class="jplist-group" data-control-type="checkbox-text-filter" data-control-action="filter" data-control-name="matchBox-state-collection" data-path=".matchBox-state" data-logic="or"> 
            <input value="报名中" id="applying" type="checkbox" /> 
@@ -112,13 +119,6 @@
            <label for="saturday">星期六</label> 
            <input value="星期日" id="sunday" type="checkbox" /> 
            <label for="sunday">星期日</label> 
-          </div> 
-          <!-- 选择省市区三级下拉框 -->
-          <s:include value="selectPCC.jsp" />
-          <!-- js本地关键字查找 --> 
-          <div class="text-filter-box input-append"> 
-           <input data-path=".matchBox-all" type="text" value="" placeholder="请输入关键字" data-control-type="textbox" data-control-name="desc-filter-collection" data-control-action="filter" /> 
-           <span class="add-on"><i class="icon-search"></i></span> 
           </div> 
          </div>
          <!-- /panel --> 
