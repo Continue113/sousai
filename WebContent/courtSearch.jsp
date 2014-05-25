@@ -65,8 +65,8 @@
         <div class="control-group"> 
          <label class="control-label" for="matchPlace">场地地点：</label> 
          <div class="controls form-inline"> 
+          <!-- 选择省市区三级下拉框 -->  
           <s:include value="selectPCC.jsp" />
-          <!-- /选择省市区三级下拉框 -->  
           <input type="submit" value="搜&nbsp;&nbsp;索" class="btn span2 btn-success btn-small pull-right" /> 
          </div> 
         </div> 
@@ -156,7 +156,9 @@
           <li><span class="pull-right" data-path=".courtBox-courtType-zq">其他</span></li> 
          </ul> 
         </div> 
-        <!-- filter by description --> 
+        <!-- 选择省市区三级下拉框 -->
+        <s:include value="selectPCC.jsp" />
+        <!-- js本地关键字查找 --> 
         <div class="text-filter-box input-append"> 
          <input data-path=".courtBox-block" type="text" value="" placeholder="请输入关键字" data-control-type="textbox" data-control-name="desc-filter" data-control-action="filter" /> 
          <span class="add-on"><i class="icon-search"></i></span> 

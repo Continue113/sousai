@@ -83,8 +83,8 @@
         <div class="control-group"> 
          <label class="control-label" for="matchPlace">比赛地点：</label> 
          <div class="controls form-inline"> 
+          <!-- 选择省市区三级下拉框 --> 
           <s:include value="selectPCC.jsp" />
-          <!-- /选择省市区三级下拉框 --> 
           <input type="submit" value="搜&nbsp;&nbsp;索" class="btn span2 btn-success btn-small pull-right" /> 
          </div> 
         </div> 
@@ -108,7 +108,7 @@
          <li><span data-path=".matchBox-state" data-order="asc" data-type="text">比赛状态</span><i class="icon-arrow-up"></i></li> 
         </ul> 
        </div> 
-       <!-- checkbox text filter --> 
+       <!-- 复选框查找比赛状态 --> 
        <div class="jplist-group" data-control-type="checkbox-text-filter" data-control-action="filter" data-control-name="matchBox-state" data-path=".matchBox-state" data-logic="or"> 
         <input value="报名中" id="applying" type="checkbox" /> 
         <label for="applying">报名中</label> 
@@ -117,7 +117,7 @@
         <input value="已结束" id="played" type="checkbox" /> 
         <label for="played">已结束</label> 
        </div> 
-       <!-- checkbox text filter --> 
+       <!-- 复选框查找比赛星期 --> 
        <div class="jplist-group" data-control-type="checkbox-text-filter" data-control-action="filter" data-control-name="matchBox-time" data-path=".matchBox-time" data-logic="or"> 
         <input value="工作日" id="workday" type="checkbox" /> 
         <label for="workday">工作日</label> 
@@ -126,7 +126,9 @@
         <input value="星期日" id="sunday" type="checkbox" /> 
         <label for="sunday">星期日</label> 
        </div> 
-       <!-- filter by description --> 
+       <!-- 选择省市区三级下拉框 -->
+       <s:include value="selectPCC.jsp" />
+       <!-- js本地关键字查找 --> 
        <div class="text-filter-box input-append"> 
         <input data-path=".matchBox-all" type="text" value="" placeholder="请输入关键字" data-control-type="textbox" data-control-name="desc-filter" data-control-action="filter" /> 
         <span class="add-on"><i class="icon-search"></i></span> 
@@ -156,7 +158,7 @@
              2013-10-20 
             <p>星期日</p> 
            </div></li> 
-          <li class="matchBox-address "><a href="#">一北京东城区北京大学体育乓</a></li> 
+          <li class="matchBox-court "><a href="#">一北京东城区北京大学体育乓</a></li> 
           <li class="matchBox-state ">报名中</li> 
           <li class="matchBox-info "><a href="#">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
           <li class="matchBox-btns "><a href="#" class="btn btn-mini">收藏比赛</a><a href="#" class="btn btn-mini">查看详细</a></li> 
@@ -185,7 +187,7 @@
              2013-10-20 
             <p>星期日</p> 
            </div></li> 
-          <li class="matchBox-address "><a href="#">二北京东城区北京大学体育馆草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
+          <li class="matchBox-court "><a href="#">二北京东城区北京大学体育馆草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
           <li class="matchBox-state ">已结束</li> 
           <li class="matchBox-info "><a href="#">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
           <li class="matchBox-btns "><a href="#" class="btn btn-mini">收藏比赛</a><a href="#" class="btn btn-mini">查看详细</a></li> 
@@ -214,7 +216,7 @@
              2013-10-20 
             <p>星期日</p> 
            </div></li> 
-          <li class="matchBox-address "><a href="#">二北京东城区北京大学体育馆草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
+          <li class="matchBox-court "><a href="#">二北京东城区北京大学体育馆草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
           <li class="matchBox-state ">报名中</li> 
           <li class="matchBox-info "><a href="#">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
           <li class="matchBox-btns "><a href="#" class="btn btn-mini">收藏比赛</a><a href="#" class="btn btn-mini">查看详细</a></li> 
@@ -243,7 +245,7 @@
              2013-10-20 
             <p>星期日</p> 
            </div></li> 
-          <li class="matchBox-address "><a href="#">二北京东城区北京大学体育馆草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
+          <li class="matchBox-court "><a href="#">二北京东城区北京大学体育馆草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
           <li class="matchBox-state ">比赛中</li> 
           <li class="matchBox-info "><a href="#">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
           <li class="matchBox-btns "><a href="#" class="btn btn-mini">收藏比赛</a><a href="#" class="btn btn-mini">查看详细</a></li> 
@@ -272,7 +274,7 @@
              2013-10-20 
             <p>星期日</p> 
            </div></li> 
-          <li class="matchBox-address "><a href="#">二北京东城区北京大学体育馆草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
+          <li class="matchBox-court "><a href="#">二北京东城区北京大学体育馆草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
           <li class="matchBox-state ">比赛中</li> 
           <li class="matchBox-info "><a href="#">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
           <li class="matchBox-btns "><a href="#" class="btn btn-mini">收藏比赛</a><a href="#" class="btn btn-mini">查看详细</a></li> 
@@ -301,7 +303,7 @@
              2013-10-20 
             <p>星期日</p> 
            </div></li> 
-          <li class="matchBox-address "><a href="#">二北京东城区北京大学体育馆草根杯乒乓球比赛北京东城区草根杯乒乓球&gt;</a></li> 
+          <li class="matchBox-court "><a href="#">二北京东城区北京大学体育馆草根杯乒乓球比赛北京东城区草根杯乒乓球&gt;</a></li> 
           <li class="matchBox-state ">报名中</li> 
           <li class="matchBox-info "><a href="#">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
           <li class="matchBox-btns "><a href="#" class="btn btn-mini">收藏比赛</a><a href="#" class="btn btn-mini">查看详细</a></li> 
@@ -330,7 +332,7 @@
              2013-10-20 
             <p>星期日</p> 
            </div></li> 
-          <li class="matchBox-address "><a href="#">二北京东城区北京大学体育馆草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
+          <li class="matchBox-court "><a href="#">二北京东城区北京大学体育馆草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
           <li class="matchBox-state ">报名中</li> 
           <li class="matchBox-info "><a href="#">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
           <li class="matchBox-btns "><a href="#" class="btn btn-mini">收藏比赛</a><a href="#" class="btn btn-mini">查看详细</a></li> 

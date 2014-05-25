@@ -92,7 +92,7 @@
         <div class="page-header">
          <h4>账户基本信息</h4>
         </div> 
-        <form id="editUserForm" class="form-horizontal" action="updateUserInfo" method="POST" enctype="multipart/form-data"> 
+        <form id="editUserForm" class="form-horizontal"> 
          <fieldset> 
           <legend>账户基本信息</legend> 
           <div class="control-group"> 
@@ -153,7 +153,7 @@
           </div> 
          </fieldset> 
         </form>
-        <form id="uploadImgForm" enctype="multipart/form-data" method="POST" action="uploadPic">
+        <form id="uploadImgForm" enctype="multipart/form-data" method="POST">
         <span class="btn fileinput-button"><i class="icon-plus"></i><span>选择图片</span></span>
         <input id="imgInput" class="hide" type="file" name="image" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this)">
         <table class=" span5">
@@ -195,13 +195,6 @@ $(function () {
     /****/
 
     /** 编辑账户验证 **/
-    //定义发送至服务器的数据，旧密码未验证通过的情况下，不发送填写的新密码
-    var senddata = {
-      "user.id": "<s:property value="#session.userBean.userId" />",
-      "user.pwd": null,
-      "user.email": $("#inputUserEmail").val(),
-    };
-
     //添加验证旧密码方法
     $.validator.addMethod("isPwd",function(value,element,param){
       if(value === param){
@@ -218,31 +211,38 @@ $(function () {
     //添加验证是否填写旧密码，且旧密码是否正确。
     $.validator.addMethod("isPass",function(value,element,param){
       if($("#inputUserPassword").val() === param){
-        senddata["user.pwd"] =  $("#inputUserNewPassword").val();
-        console.log(senddata["user.pwd"]);
         return true;
       }
       else{
-        senddata["user.pwd"] =  null;
         return false;
       }
     },"请先输入旧密码");
 
     var editUserValidator = $("#editUserForm").validate({
       submitHandler: function(){
-        $.ajax({
-        url: "updateUserInfo",
-        type: "POST",
-        dataType: 'json',
-        data: senddata,
-        success: function(rspdata) {
-          window.setTimeout("window.location='userCenter-editUser.jsp'",3000);
-          alert("编辑账户成功,请刷新页面。");
-        },
-        error: function() {
-          alert("抱歉，发送数据出错了，请重新输入。");
-        },
-        });
+        //定义发送至服务器的数据，旧密码未验证通过的情况下，不发送填写的新密码
+        if($("#inputUserNewPassword").val() == "" && $("#inputUserEmail").val() == '<s:property value="#session.userBean.userEmail" />'){
+          return false;
+        }else{
+          var sendurl = 'updateUserInfo?user.id=<s:property value="#session.userBean.userId" />';
+          if($("#inputUserNewPassword").val() !== "" )
+            sendurl += "&user.pwd="+$("#inputUserNewPassword").val();
+          if($("#inputUserEmail").val() !== "" )
+            sendurl += "&user.email="+$("#inputUserEmail").val();
+          $.ajax({
+          url: sendurl,
+          type: "POST",
+          dataType: 'json',
+          data: null,
+          success: function(rspdata) {
+            window.setTimeout("window.location='userCenter-editUser.jsp'",3000);
+            alert("编辑账户成功,请刷新页面。");
+          },
+          error: function() {
+            alert("抱歉，发送数据出错了，请重新输入。");
+          },
+          });
+      }
       },
       ignore: ".ignore",
       rules: {

@@ -113,7 +113,9 @@
            <input value="星期日" id="sunday" type="checkbox" /> 
            <label for="sunday">星期日</label> 
           </div> 
-          <!-- filter by description --> 
+          <!-- 选择省市区三级下拉框 -->
+          <s:include value="selectPCC.jsp" />
+          <!-- js本地关键字查找 --> 
           <div class="text-filter-box input-append"> 
            <input data-path=".matchBox-all" type="text" value="" placeholder="请输入关键字" data-control-type="textbox" data-control-name="desc-filter" data-control-action="filter" /> 
            <span class="add-on"><i class="icon-search"></i></span> 

@@ -79,7 +79,7 @@ $(function() {
   $(".selectProvince").change(function selCity() {
     //tgPrt: targetparent 目标父元素
     var tgPrt = $(this).parent();
-    if (tgPrt.find(".selectProvince option:selected").attr("value") != "0") {
+    if (tgPrt.find(".selectProvince option:selected").attr("value") != 0) {
       $.ajax({
         type: "POST",
         url: "selRegion",
@@ -114,7 +114,7 @@ $(function() {
   $(".selectCity").change(function selCountry() {
     //tgPrt: targetparent 目标父元素
     var tgPrt = $(this).parent();
-    if (tgPrt.find(".selectCity option:selected").attr("value") != "0") {
+    if (tgPrt.find(".selectCity option:selected").attr("value") != 0) {
       $.ajax({
         type: "POST",
         url: "selRegion",
@@ -156,8 +156,22 @@ $(function() {
   /** 管理员界面搜索框级联下拉菜单 **/
   $(".selectFilter").change(function() {
     var dataforFilter = $(this).parent().find(".selectFilter option:selected").attr("data-forFilter");
-    alert(dataforFilter);
+    console.log(dataforFilter);
     $(this).parent().find("input[type='text']").attr("data-path", dataforFilter); //设置输入框筛选路径
+  });
+
+  //jplist-panel 中选择省市区自动输入搜索框
+  $(".jplist-panel > select.span2").change(function () {
+    var dataforFilter = $(this).parent().find(".selectProvince option:selected");
+    var inputFilter = $(this).parent().find(".text-filter-box > input:text");
+    if(dataforFilter.attr("value") != 0){
+      alert("!==0");
+      inputFilter.get(0).value = dataforFilter.text();
+      inputFilter.keyup();
+    }else{
+      inputFilter.get(0).value = "";
+      inputFilter.keyup();
+    }
   });
 
 })
