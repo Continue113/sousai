@@ -9,8 +9,6 @@
   <meta name="author" content="KING@CQU" />
   <link href="css/bootstrap.min.css" rel="stylesheet" /> 
   <link href="css/bootstrap-responsive.css" rel="stylesheet" /> 
-  <link href="css/jquery.fileupload.css" rel="stylesheet" /> 
-  <link href="css/jquery.fileupload-ui.css" rel="stylesheet" />
   <link href="css/sousai.common.css" rel="stylesheet" />
   <link href="css/sousai.userCenter.css" rel="stylesheet" />
   <!--[if lte IE 8]>
@@ -197,25 +195,17 @@ $(function () {
     /** 编辑账户验证 **/
     //添加验证旧密码方法
     $.validator.addMethod("isPwd",function(value,element,param){
-      if(value === param || value == ""){
-        if(value === param){
-        $("#inputUserNewPassword").attr("placeholder","请输入新密码").attr("data-original-title","请输入新密码");
-        $("#inputUserNewPassword2").attr("placeholder","请再次输入新密码").attr("data-original-title","请再次输入新密码");
-      }
+      if(value === param && value == ""){
         return true;
-      }
-      else{
-        $("#inputUserNewPassword").attr("placeholder","请先输入旧密码，再输入新密码").attr("data-original-title","请先输入旧密码，再输入新密码");
-        $("#inputUserNewPassword2").attr("placeholder","请先输入旧密码，再输入新密码").attr("data-original-title","请先输入旧密码，再输入新密码");
+      }else{
         return false;
       }
     },"密码错误，请重新输入");
     //添加验证是否填写旧密码，且旧密码是否正确。
     $.validator.addMethod("isPass",function(value,element,param){
-      if($("#inputUserNewPassword").val==""){return true;}
-      else{
-        if($("#inputUserPassword").val() === param) {return true;}
-        else($("#inputUserPassword").val() !== param) {return false;}
+      if(value == ""){return true;}
+      else if( $("#inputUserPassword").val() != ""){
+        return true;
       }
     },"请先输入旧密码");
 
@@ -253,7 +243,7 @@ $(function () {
       },
       "user.pwd": {
         minlength: 6,
-        isPass: '<s:property value="#session.userBean.userPwd"/>'
+        isPass: true
       },
       inputUserNewPassword2: {
         minlength: 6,
