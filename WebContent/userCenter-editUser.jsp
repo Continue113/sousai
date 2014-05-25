@@ -126,7 +126,6 @@
            <label class="control-label" for="userIcon">头像设置：</label> 
            <div class="controls"> 
             <div class="crtUserIcon"><img src="img/defaultImg.png" /></div>
-            <input id="imgupload" type="file" name="image" >
            </div>
          </div>
           <div class="control-group"> 
@@ -293,7 +292,6 @@ $(function () {
     });
     $(".start").click(function(){
       $(this).attr("disabled","disabled");
-      $(this).parents().find(".name").append('<img src="img/loading.gif" width="25" />');
       ajaxFileUpload();
     });
     $(".cancle").click(function(){
@@ -302,31 +300,28 @@ $(function () {
     });
 })
 function ajaxFileUpload() {
-    $(".start .name img").ajaxStart(function(){
-      $(this).show();
-    }).ajaxComplete(function(){
-      $(this).hide();
-    });
-    /*
-      prepareing ajax file upload
-      url: the url of script file handling the uploaded files
-      fileElementId: the file type of input element id and it will be the index of  $_FILES Array()
-      dataType: it support json, xml
-      secureuri:use secure protocol
-      success: call back function when the ajax complete
-      error: callback function when the ajax failed
-    */
+  $(".start .name").ajaxStart(function(){
+    $(this).append('<img src="img/loading.gif" width="25" />');
+  }).ajaxComplete(function(){
+    $(this).remove("img");
+  });
   $.ajaxFileUpload({
     url: 'uploadPic',
     secureuri: false,
     fileElementId: 'imgInput',
     dataType: 'json',
     success: function(respdata, status) {
-      alert(respdata);
       console.log(respdata);
+      if(respdata.statusCode == 1){
+        alert("上传头像成功.");
+        var imgURL = $("#imghead").attr("src");
+        $(".crtUserIcon > img").attr("src",imgURL);
+        $(".cancle").trigger('click');
+      }
     },
     error: function(data, status, e) {
-      alert(e);
+      alert("上传图片出错，请重新上传.");
+      console.log(e);
     }
   });
   return false;
