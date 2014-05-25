@@ -182,6 +182,7 @@
   </div>
   <!-- /container --> 
   <s:include value="footer.jsp" /><!-- 页首导航条 --> 
+  <script src="js/ajaxfileupload.js"></script>
   <script src="js/jquery.validate.min.js"></script>
 <script>
 $(function () {
@@ -293,7 +294,7 @@ $(function () {
     $(".start").click(function(){
       $(this).attr("disabled","disabled")
       $(this).parents().find(".name").append('<img src="img/loading.gif" width="25" />');
-      return checkForm($("#uploadImgForm"));
+      ajaxFileUpload();
     });
     $(".cancle").click(function(){
       $(".files .hide").fadeOut();
@@ -317,7 +318,59 @@ function imgValid(img){
     previewImage(img);
   }
 }
-//iframe上传图片，并接受回调
+
+  function ajaxFileUpload()
+  {
+    /*starting setting some animation when the ajax starts and completes
+    $("#loading")
+    .ajaxStart(function(){
+      $(this).show();
+    })
+    .ajaxComplete(function(){
+      $(this).hide();
+    });
+    
+    /*
+      prepareing ajax file upload
+      url: the url of script file handling the uploaded files
+      fileElementId: the file type of input element id and it will be the index of  $_FILES Array()
+      dataType: it support json, xml
+      secureuri:use secure protocol
+      success: call back function when the ajax complete
+      error: callback function when the ajax failed
+    */
+    $.ajaxFileUpload
+    (
+      {
+        url:'uploadPic', 
+        secureuri:false,
+        fileElementId:'imgInput',
+        dataType: 'json',
+        success: function (data, status)
+        {
+          /*if(typeof(data.error) != 'undefined')
+          {
+            if(data.error != '')
+            {
+              alert(data.error);
+            }else
+            {
+              alert(data.msg);
+            }
+          }*/
+          alert(data);
+        },
+        error: function (data, status, e)
+        {
+          alert(e);
+        }
+      }
+    )
+    
+    return false;
+
+  }  
+/*iframe上传图片，并接受回调
 // 服务器端输出：out.print("JSON字串");  // {"statusCode":200; "message":"上传成功"; "ImgUrl":"图片相对服务器路径img/picName.jpg"}
 var frame = {
   ajaxDone: function(json) {
@@ -366,6 +419,7 @@ function checkForm(form) {
   });
   return true;
 }
+*/
 //图片上传预览    IE是用了滤镜。
 function previewImage(file)
 {
