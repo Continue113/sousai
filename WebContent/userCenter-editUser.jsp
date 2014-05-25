@@ -154,7 +154,7 @@
          </fieldset> 
         </form>
           
-        <form id="uploadImgForm" enctype="multipart/form-data" method="POST" action="uploadPic" onsubmit="return chekcForm(this);">
+        <form id="uploadImgForm" enctype="multipart/form-data" method="POST" action="uploadPic">
         <span class="btn fileinput-button"><i class="icon-plus"></i><span>选择图片</span></span>
         <input id="imgInput" class="hide" type="file" name="image" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this)">
         <table class=" span5">
@@ -290,10 +290,11 @@ $(function () {
     $(".fileinput-button").click(function(){
       $("#imgInput").trigger('click');
     });
-    /*$(".start").click(function(){
+    $(".start").click(function(){
       $(this).attr("disabled","disabled")
       $(this).parents().find(".name").append('<img src="img/loading.gif" width="25" />');
-    });*/
+      return checkForm($("#uploadImgForm"));
+    });
     $(".cancle").click(function(){
       $(".files .hide").fadeOut();
     });
@@ -348,16 +349,14 @@ var frame = {
     ifr.load(function() {
       var response = this.contentWindow.document.body.innerHTML;
       config.complete.call(this, response);
-      ifr.remove();
-      ifr = null;
+      //ifr.remove();
+      //ifr = null;
     });
     return false;
   }
 }
 
 function checkForm(form) {
-  $(".start").attr("disabled","disabled")
-  $(".start").parents().find(".name").append('<img src="img/loading.gif" width="25" />');
   frame.frameDone({
     formObj: $form,
     complete: function(response) {
