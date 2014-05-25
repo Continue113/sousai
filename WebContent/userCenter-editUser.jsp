@@ -126,6 +126,7 @@
            <label class="control-label" for="userIcon">头像设置：</label> 
            <div class="controls"> 
             <div class="crtUserIcon"><img src="img/defaultImg.png" /></div>
+            <input id="imgupload" type="file" name="image" >
            </div>
          </div>
           <div class="control-group"> 
@@ -153,7 +154,6 @@
           </div> 
          </fieldset> 
         </form>
-          
         <form id="uploadImgForm" enctype="multipart/form-data" method="POST" action="uploadPic">
         <span class="btn fileinput-button"><i class="icon-plus"></i><span>选择图片</span></span>
         <input id="imgInput" class="hide" type="file" name="image" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this)">
@@ -182,7 +182,9 @@
   </div>
   <!-- /container --> 
   <s:include value="footer.jsp" /><!-- 页首导航条 --> 
-  <script src="js/ajaxfileupload.js"></script>
+  <script src="js/vendor/jquery.ui.widget.js"></script>
+  <script src="js/jquery.xdr-transport.js"></script>
+  <script src="js/jquery.fileupload.js"></script>
   <script src="js/jquery.validate.min.js"></script>
 <script>
 $(function () {
@@ -300,6 +302,36 @@ $(function () {
       $(".files .hide").fadeOut();
     });
 })
+function ajaxFileUpload() {
+    $(".start .name img").ajaxStart(function(){
+      $(this).show();
+    }).ajaxComplete(function(){
+      $(this).hide();
+    });
+    /*
+      prepareing ajax file upload
+      url: the url of script file handling the uploaded files
+      fileElementId: the file type of input element id and it will be the index of  $_FILES Array()
+      dataType: it support json, xml
+      secureuri:use secure protocol
+      success: call back function when the ajax complete
+      error: callback function when the ajax failed
+    */
+  $.ajaxFileUpload({
+    url: 'uploadPic',
+    secureuri: false,
+    fileElementId: 'imgInput',
+    dataType: 'json',
+    success: function(respdata, status) {
+      alert(respdata);
+      console.log(respdata);
+    },
+    error: function(data, status, e) {
+      alert(e);
+    }
+  });
+  return false;
+}
 //验证上传图片格式，大小，并在通过后显示图片预览
 function imgValid(img){
    var imgname = img.files[0].name;  
@@ -318,109 +350,7 @@ function imgValid(img){
     previewImage(img);
   }
 }
-
-  function ajaxFileUpload()
-  {
-    /*starting setting some animation when the ajax starts and completes
-    $("#loading")
-    .ajaxStart(function(){
-      $(this).show();
-    })
-    .ajaxComplete(function(){
-      $(this).hide();
-    });
-    
-    /*
-      prepareing ajax file upload
-      url: the url of script file handling the uploaded files
-      fileElementId: the file type of input element id and it will be the index of  $_FILES Array()
-      dataType: it support json, xml
-      secureuri:use secure protocol
-      success: call back function when the ajax complete
-      error: callback function when the ajax failed
-    */
-    $.ajaxFileUpload
-    (
-      {
-        url:'uploadPic', 
-        secureuri:false,
-        fileElementId:'imgInput',
-        dataType: 'json',
-        success: function (data, status)
-        {
-          /*if(typeof(data.error) != 'undefined')
-          {
-            if(data.error != '')
-            {
-              alert(data.error);
-            }else
-            {
-              alert(data.msg);
-            }
-          }*/
-          alert(data);
-        },
-        error: function (data, status, e)
-        {
-          alert(e);
-        }
-      }
-    )
-    
-    return false;
-
-  }  
-/*iframe上传图片，并接受回调
-// 服务器端输出：out.print("JSON字串");  // {"statusCode":200; "message":"上传成功"; "ImgUrl":"图片相对服务器路径img/picName.jpg"}
-var frame = {
-  ajaxDone: function(json) {
-    if (json.statusCode == 200) {
-      $("#message").html(json.message).show();
-      $(".start .name").find("img").remove();
-      $(".crtUserIcon > img").attr("src",json.ImgUrl);
-      //$.jquery.load(json.loadUrl);
-    } else {
-      $("#message").html(json.message).show();
-    }
-  },
-  frameDone: function(config) {
-    var ifr = null,fm = null,defConfig = {
-      formObj: $('#uploadImgForm'),
-      complete: function(response) {},
-    };
-
-    config = $.extend(defConfig, config);
-
-    var $form = config.formObj;
-    var frameName = 'callbackframe';
-
-    ifr = $('<iframe name="' + frameName + '" id="' + frameName + '" class="hide"></iframe>');
-    ifr.appendTo($('body'));
-    $form.attr("target", frameName);
-    console.log("iframe已添加至body");
-    
-    ifr.load(function() {
-      var response = this.contentWindow.document.body.innerHTML;
-      config.complete.call(this, response);
-      //ifr.remove();
-      //ifr = null;
-    });
-    return false;
-  }
-}
-
-function checkForm(form) {
-  frame.frameDone({
-    formObj: $form,
-    complete: function(response) {
-      var j = $.parseJSON(response);
-      frame.ajaxDone(j);
-    }
-  });
-  return true;
-}
-*/
-//图片上传预览    IE是用了滤镜。
+//图片上传预览 IE是用了滤镜。
 function previewImage(file)
 {
   var MAXWIDTH  = 100; 
