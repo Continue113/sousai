@@ -182,9 +182,7 @@
   </div>
   <!-- /container --> 
   <s:include value="footer.jsp" /><!-- 页首导航条 --> 
-  <script src="js/vendor/jquery.ui.widget.js"></script>
-  <script src="js/jquery.xdr-transport.js"></script>
-  <script src="js/jquery.fileupload.js"></script>
+  <script src="js/ajaxfileupload.js"></script>
   <script src="js/jquery.validate.min.js"></script>
 <script>
 $(function () {
@@ -294,11 +292,12 @@ $(function () {
       $("#imgInput").trigger('click');
     });
     $(".start").click(function(){
-      $(this).attr("disabled","disabled")
+      $(this).attr("disabled","disabled");
       $(this).parents().find(".name").append('<img src="img/loading.gif" width="25" />');
       ajaxFileUpload();
     });
     $(".cancle").click(function(){
+      $(this).parents().find(".start").removeAttr("disabled");
       $(".files .hide").fadeOut();
     });
 })
