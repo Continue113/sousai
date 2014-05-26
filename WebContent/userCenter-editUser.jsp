@@ -304,7 +304,7 @@ function ajaxFileUpload() {
     fileElementId: 'imgInput',
     dataType: 'json',
     success: function(respdata, status) {
-      console.log(respdata);
+      console.log(typeof respdata + "内容为："+respdata);
       var jsondata = respdata.parseJSON();
       if(jsondata.statusCode == 1){
         alert("上传头像成功.");
