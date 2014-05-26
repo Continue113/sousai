@@ -165,8 +165,8 @@
           <textarea id="inputCourtInfo" name="inputCourtInfo" required="required"></textarea> 
           <div class="control-group"> 
            <div class="controls"> 
-            <button id="fileSubmit" type="submit" class="btn btn-success pull-right start"><!-- <i class="icon-upload"></i> --><span>确定发布</span> </button> 
-            <!--<input type="submit" class="btn btn-success pull-right" name="release" value="确定发布" /> -->
+            <!--<button id="fileSubmit" type="submit" class="btn btn-success pull-right start"> <i class="icon-upload"></i> <span>确定发布</span> </button> -->
+            <input type="submit" class="btn btn-success pull-right" name="release" value="确定发布" /> 
             <input type="reset" class="btn pull-right" id="resetCourtForm" value="清空内容" /> 
             <button class="btn pull-right" name="preView">预览</button> 
            </div> 
@@ -234,7 +234,7 @@
         //  },
         //  });
       },
-      ignore: "",
+      ignore: ".ignore",
       rules:{
         inputCourtName:{
           minlength: 6,
