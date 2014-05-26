@@ -9,13 +9,14 @@
   <meta name="author" content="KING@CQU" /> 
   <link href="css/bootstrap.min.css" rel="stylesheet" /> 
   <link href="css/bootstrap-responsive.css" rel="stylesheet" /> 
-  <link href="css/jquery.fileupload.css" rel="stylesheet" /> 
-  <link href="css/jquery.fileupload-ui.css" rel="stylesheet" /> 
   <link href="css/sousai.common.css" rel="stylesheet" /> 
   <link href="css/sousai.userCenter.css" rel="stylesheet" /> 
   <!--[if lte IE 8]>
   <link href="css/sousai.IE8.css" rel="stylesheet" /> 
   <![endif]-->
+  <style type="text/css">
+  .preview > img {height:70px;}
+  </style>
  </head> 
  <body class="userCenter"> 
   <s:include value="navbar.jsp" />
@@ -85,9 +86,7 @@
         <div class="page-header"> 
          <h4>场地基本信息</h4> 
         </div> 
-        <form class="form-horizontal" id="releaseCourtForm" action="releaseCourtAction" method="post" enctype="multipart/form-data"> 
-         <fieldset> 
-          <legend>场地基本信息</legend> 
+        <div class="form-horizontal" id="releaseCourtForm" > 
           <div class="control-group"> 
            <label class="control-label" for="inputCourtName">场地名称：</label> 
            <div class="controls"> 
@@ -149,25 +148,18 @@
           <div class="control-group"> 
            <label class="control-label" for="uploadCourtImgs">场地图片：</label> 
            <div class="controls"> 
+            <form id="uploadForm" action="uploadPic" method="post" enctype="multipart/form-data">
             <div class="fileupload-buttonbar"> 
-             <span class="btn fileinput-button"> <i class="icon-plus"></i> <span>选择图片</span> <input type="file" name="files[]" multiple="" accept="image/png, image/gif, image/jpg, image/jpeg" /> </span> 
-             <button type="submit" class="btn start"> <i class="icon-upload"></i> <span>上传</span> </button> 
+             <span class="btn fileinput-button"> <i class="icon-plus"></i> <span>选择图片</span> 
+             </span> 
+             <input class="hide" id="fileImage" type="file" name="files[]" multiple="" accept="image/png, image/gif, image/jpg, image/jpeg" />
+             <button id="fileSubmit" type="submit" class="btn start"> <i class="icon-upload"></i> <span>上传</span> </button> 
              <button type="reset" class="btn cancel"> <i class="icon-ban-circle"></i> <span>取消</span> </button> 
-             <button type="button" class="btn delete"> <i class="icon-trash"></i> <span>删除</span> </button> 
-             <input type="checkbox" class="toggle" /> 
-             <span class="fileupload-process"></span> 
-             <div class=" fileupload-progress fade"> 
-              <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100"> 
-               <div class="progress-bar progress-bar-success" style="width:0%;"></div> 
-              </div> 
-              <div class="progress-extended">
-               &nbsp;
-              </div> 
-             </div> 
-             <table role="presentation" class="table table-striped">
+             <table class="table table-striped">
               <tbody class="files"></tbody>
              </table> 
             </div> 
+            </form>
            </div> 
           </div> 
           <div class="control-group"> 
@@ -181,8 +173,7 @@
             <button class="btn pull-right" name="preView">预览</button> 
            </div> 
           </div> 
-         </fieldset> 
-        </form> 
+        </div> 
        </div> 
        <!-- /releaseCourt --> 
       </div> 
@@ -199,91 +190,10 @@
   <!-- /container --> 
   <s:include value="footer.jsp" />
   <!-- 页首导航条 --> 
-  <script src="js/jquery.ui.widget.js"></script> 
-  <script src="js/tmpl.min.js"></script> 
-  <script src="js/load-image.min.js"></script> 
-  <script src="js/jquery.iframe-transport.js"></script> 
-  <script src="js/jquery.fileupload.js"></script> 
-  <script src="js/jquery.fileupload-process.js"></script> 
-  <script src="js/jquery.fileupload-image.js"></script> 
-  <script src="js/jquery.fileupload-ui.js"></script> 
   <script src="js/jquery.validate.min.js"></script> 
   <script src="tinymce/jquery.tinymce.min.js"></script> 
   <script src="tinymce/tinymce.min.js"></script> 
-  <script id="template-upload" type="text/x-tmpl">
-{% for (var i=0, file; file=o.files[i]; i++) { %}
-    <tr class="template-upload fade">
-        <td>
-            <span class="preview"></span>
-        </td>
-        <td>
-            <p class="name">{%=file.name%}</p>
-            <strong class="error text-danger"></strong>
-        </td>
-        <td>
-            <p class="size">上传中...</p>
-            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
-        </td>
-        <td>
-            {% if (!i && !o.options.autoUpload) { %}
-                <button class="btn start" disabled>
-                    <i class="icon-upload"></i>
-                    <span>开始</span>
-                </button>
-            {% } %}
-            {% if (!i) { %}
-                <button class="btn cancel">
-                    <i class="icon-ban-circle"></i>
-                    <span>取消</span>
-                </button>
-            {% } %}
-        </td>
-    </tr>
-{% } %}
-</script> 
-  <!-- The template to display files available for download --> 
-  <script id="template-download" type="text/x-tmpl">
-{% for (var i=0, file; file=o.files[i]; i++) { %}
-    <tr class="template-download fade">
-        <td>
-            <span class="preview">
-                {% if (file.thumbnailUrl) { %}
-                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
-                {% } %}
-            </span>
-        </td>
-        <td>
-            <p class="name">
-                {% if (file.url) { %}
-                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
-                {% } else { %}
-                    <span>{%=file.name%}</span>
-                {% } %}
-            </p>
-            {% if (file.error) { %}
-                <div><span class="label label-danger">Error</span> {%=file.error%}</div>
-            {% } %}
-        </td>
-        <td>
-            <span class="size">{%=o.formatFileSize(file.size)%}</span>
-        </td>
-        <td>
-            {% if (file.deleteUrl) { %}
-                <button class="btn delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
-                    <i class="icon-trash"></i>
-                    <span>删除</span>
-                </button>
-                <input type="checkbox" name="delete" value="1" class="toggle">
-            {% } else { %}
-                <button class="btn cancel">
-                    <i class="icon-ban-circle"></i>
-                    <span>取消</span>
-                </button>
-            {% } %}
-        </td>
-    </tr>
-{% } %}
-</script> 
+  <script src="js/zxxFile.js"></script>
   <script>
   $(function(){
     /** tinymce **/
@@ -365,44 +275,106 @@
     $("#resetCourtForm").click(function(){
       courtValidator.resetForm();
     });
-    /****/
- 
-    /** 用户头像图片上传 **/
-    $('#releaseCourtForm').fileupload({
-            url: 'server/java/'
-        });
-        $('#releaseCourtForm').fileupload('option', {
-            disableImageResize: /Android(?!.*Chrome)|Opera/
-                .test(window.navigator.userAgent),
-            maxFileSize: 5000000,
-            maxNumberOfFiles : 5,
-            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i
-        });
-    //文件上传地址
-    //var url = 'http://localhost:8080/myfileupload/upload';
-    //初始化，主要是设置上传参数，以及事件处理方法(回调函数)
-    /*$('#editUserForm').fileupload({
-        autoUpload: false,//是否自动上传
-        url: url,//上传地址
-        maxFileSize: 5000000,
-        acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
-        dataType: 'json',
-        done: function (e, data) {//设置文件上传完毕事件的回调函数
-            $.each(data.result.files, function (index, file) {//
-                $('<p/>').text(file.name).appendTo('#files');
-            });
-        },
-        progressall: function (e, data) {//设置上传进度事件的回调函数
-            var progress = parseInt(data.loaded / data.total * 100, 10);
-            $('#progress .bar').css(
-                'width',
-                progress + '%'
-            );
+    /** 上传图片 **/
+    $(".fileinput-button").click(function(){
+      $("#fileImage").trigger('click');
+    });
+    $('button[type="reset"]').on('click',function(){
+      $(".upload-append-list").fadeOut();
+      //转换为DOM元素，并调用DOM的form reset方法
+      $("#uploadForm").get[0].reset();
+    });
+
+    var params = {
+      fileInput: $("#fileImage").get(0),
+      upButton: $("#fileSubmit").get(0),
+      url: "uploadPic",
+      filter: function(files) {
+        var arrFiles = [];
+        for (var i = 0, file; file = files[i]; i++) {
+          if (file.type.indexOf("image") == 0) {
+            if (file.size >= 1*1024*1024) {
+              alert('" '+file.name +' "照片太大了，请上传小于1MB的照片');  
+            } else {
+              arrFiles.push(file);
+            }     
+          } else {
+            alert('文件" ' + file.name + ' "不是图片。');  
+          }
         }
-    });*/
+        return arrFiles;
+      },
+      onSelect: function(files) {
+        var html = '', i = 0;
+        $(".files").html('<tr class="upload_loading"></tr>');
+        var funAppendImage = function() {
+          file = files[i];
+          if (file) {
+            var reader = new FileReader()
+            reader.onload = function(e) {
+              /*html = html + '<div id="uploadList_'+ i +'" class="upload_append_list"><p><strong>' + file.name + '</strong>    '+ 
+                '<a href="javascript:" class="upload_delete" title="删除" data-index="'+ i +'">删除</a><br />' +
+                '<img id="uploadImage_' + i + '" src="' + e.target.result + '" class="upload_image" /></p>'+ 
+                '<span id="uploadProgress_' + i + '" class="upload_progress"></span>' +
+              '</div>';*/
+              html = html + 
+              '<tr class="upload-append-list" id="uploadList-'+ i +'">'+
+              '<td><span class="preview"><img id="uploadImage-' + i + '" src="' + e.target.result + '"/></p></span></td>'+
+              '<td><span class="name">' + file.name + '</span></td>'+
+              '<td><span class="size">' + (file.size/1024/1024).toFixed(2) + 'MB</span></td>'+
+              '<td><span id="uploadProgress-' + i + '" class="upload_progress"></span></td>' +
+              '<td><button type="reset" class="btn cancel" data-index="'+ i +'"><i class="icon-ban-circle"></i><span>取消</span></button></td></tr>';
+              i++;
+              funAppendImage();
+            }
+            reader.readAsDataURL(file);
+          } else {
+            $(".files").html(html);
+            if (html) {
+              //删除方法
+              $(".cancel").click(function() {
+                ZXXFILE.funDeleteFile(files[parseInt($(this).attr("data-index"))]);
+                return false; 
+              });
+              //提交按钮显示
+              $("#fileSubmit").show();  
+            } else {
+              //提交按钮隐藏
+              $("#fileSubmit").hide();  
+            }
+          }
+        };
+        funAppendImage();   
+      },
+      onDelete: function(file) {
+        $("#uploadList-" + file.index).fadeOut();
+      },
+      onProgress: function(file, loaded, total) {
+        var eleProgress = $("#uploadProgress-" + file.index), percent = (loaded / total * 100).toFixed(2) + '%';
+        eleProgress.show().html(percent);
+      },
+      onSuccess: function(file, response) {
+        //$("#uploadInf").append("<p>上传成功，图片地址是：" + response + "</p>");
+        console.log(response);
+        alert( file.name + "上传成功！");
+      },
+      onFailure: function(file) {
+        //$("#uploadInf").append("<p>图片" + file.name + "上传失败！</p>");  
+        alert(file.name + "上传失败！");
+        $("#uploadImage-" + file.index).css("opacity", 0.2);
+      },
+      onComplete: function() {
+        //提交按钮隐藏
+        $("#fileSubmit").hide();
+        //file控件value置空
+        $("#fileImage").val("");
+        //$("#uploadInf").append("<p>当前图片全部上传完毕，可继续添加上传。</p>");
+        alert("上传图片完成！");
+      }
+    };
+    ZXXFILE = $.extend(ZXXFILE, params);
+    ZXXFILE.init();
   })
-
-
-  </script>  
+</script>
  </body>
 </html>

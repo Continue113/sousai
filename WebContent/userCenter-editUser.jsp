@@ -38,7 +38,7 @@
   .active{border-color: #51a351;}
   /** 缩略图**/
   .userCenter .thumbnail img{width: 50px;height: 50px;}
-  #imghead {filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=image);}
+  #imghead {height:70px;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=image);}
   #uploadImgForm {position: relative;top: -270px;left: 210px;}
   #uploadImgForm > .span5 {margin-left: 0;margin-top: 3px;border-top: 1px solid #ccc;}
   </style>
