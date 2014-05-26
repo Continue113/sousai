@@ -221,18 +221,18 @@
     }).validate({
       submitHandler: function(){
         console.log("通过验证，正在发送数据...");
-        $.ajax({
-          url: "uploadCourtPic?imgNames=fack1&images=1111",
-          type: "POST",
-          dataType: 'json',
-          data: null,
-          success: function(rspdata) {
-            alert(rspdata);
-          },
-          error: function() {
-            alert("抱歉，发送数据出错了，请重新输入。");
-          },
-          });
+        //$.ajax({
+        //  url: "uploadCourtPic?imgNames=fack1&images=1111",
+        //  type: "POST",
+        //  dataType: 'json',
+        //  data: null,
+        //  success: function(rspdata) {
+        //    alert(rspdata);
+        //  },
+        //  error: function() {
+        //    alert("抱歉，发送数据出错了，请重新输入。");
+        //  },
+        //  });
       },
       ignore: "",
       rules:{
