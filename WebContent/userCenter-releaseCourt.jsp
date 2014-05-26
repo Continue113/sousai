@@ -86,7 +86,7 @@
         <div class="page-header"> 
          <h4>场地基本信息</h4> 
         </div> 
-        <div class="form-horizontal" id="releaseCourtForm" > 
+        <form class="form-horizontal" id="releaseCourtForm" action="uploadPic" method="post" enctype="multipart/form-data"> 
           <div class="control-group"> 
            <label class="control-label" for="inputCourtName">场地名称：</label> 
            <div class="controls"> 
@@ -148,18 +148,15 @@
           <div class="control-group"> 
            <label class="control-label" for="uploadCourtImgs">场地图片：</label> 
            <div class="controls"> 
-            <form id="uploadForm" action="uploadPic" method="post" enctype="multipart/form-data">
             <div class="fileupload-buttonbar"> 
              <span class="btn fileinput-button"> <i class="icon-plus"></i> <span>选择图片</span> 
              </span> 
-             <input class="hide" id="fileImage" type="file" name="files[]" multiple="" accept="image/png, image/gif, image/jpg, image/jpeg" />
-             <button id="fileSubmit" type="submit" class="btn start"> <i class="icon-upload"></i> <span>上传</span> </button> 
+             <input class="hide" id="fileImage" type="file" name="images" multiple="" accept="image/png, image/gif, image/jpg, image/jpeg" />
              <button type="reset" class="btn cancel"> <i class="icon-ban-circle"></i> <span>取消</span> </button> 
              <table class="table table-striped">
               <tbody class="files"></tbody>
              </table> 
             </div> 
-            </form>
            </div> 
           </div> 
           <div class="control-group"> 
@@ -168,12 +165,13 @@
           <textarea id="inputCourtInfo" name="inputCourtInfo" required="required"></textarea> 
           <div class="control-group"> 
            <div class="controls"> 
-            <input type="submit" class="btn btn-success pull-right" name="release" value="确定发布" /> 
+            <button id="fileSubmit" type="submit" class="btn btn-success pull-right start"><!-- <i class="icon-upload"></i> --><span>确定发布</span> </button> 
+            <!--<input type="submit" class="btn btn-success pull-right" name="release" value="确定发布" /> -->
             <input type="reset" class="btn pull-right" id="resetCourtForm" value="清空内容" /> 
             <button class="btn pull-right" name="preView">预览</button> 
            </div> 
           </div> 
-        </div> 
+        </form> 
        </div> 
        <!-- /releaseCourt --> 
       </div> 
@@ -281,17 +279,17 @@
     });
     $('button[type="reset"]').on('click',function(){
       $(".upload-append-list").fadeOut();
-      //转换为DOM元素，并调用DOM的form reset方法
-      $("#uploadForm").get[0].reset();
+      $("#fileImage").val("");
     });
-
+    var imagesName = "";
     var params = {
       fileInput: $("#fileImage").get(0),
       upButton: $("#fileSubmit").get(0),
-      url: "uploadPic",
+      url: "uploadCourtPic"+imagesName,
       filter: function(files) {
         var arrFiles = [];
         for (var i = 0, file; file = files[i]; i++) {
+          imagesName += "?image="+file.name;
           if (file.type.indexOf("image") == 0) {
             if (file.size >= 1*1024*1024) {
               alert('" '+file.name +' "照片太大了，请上传小于1MB的照片');  
