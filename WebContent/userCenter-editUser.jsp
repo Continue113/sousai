@@ -305,8 +305,8 @@ function ajaxFileUpload() {
     dataType: 'json',
     success: function(respdata, status) {
       console.log(respdata);
-      //var jsondata = respdata.parseJSON();
-      if(respdata.statusCode == 1){
+      var jsondata = respdata.parseJSON();
+      if(jsondata.statusCode == 1){
         alert("上传头像成功.");
         var imgURL = $("#imghead").attr("src");
         $(".crtUserIcon > img").attr("src",imgURL);
