@@ -151,7 +151,7 @@
             <div class="fileupload-buttonbar"> 
              <span class="btn fileinput-button"> <i class="icon-plus"></i> <span>选择图片</span> 
              </span> 
-             <input class="hide" id="fileImage" type="file" name="images" multiple="" accept="image/png, image/gif, image/jpg, image/jpeg" />
+             <input class="hide1" id="fileImage" type="file" name="images" multiple="" accept="image/png, image/gif, image/jpg, image/jpeg" />
              <button type="reset" class="btn cancel"> <i class="icon-ban-circle"></i> <span>取消</span> </button> 
              <table class="table table-striped">
               <tbody class="files"></tbody>
@@ -222,7 +222,7 @@
       submitHandler: function(){
         console.log("通过验证，正在发送数据...");
         $.ajax({
-          url: "uploadCourtPic?imgNames=fack1"+imagesName,
+          url: "uploadCourtPic?imgNames=fack1",
           type: "POST",
           dataType: 'json',
           data: null,
@@ -295,7 +295,8 @@
       $(".upload-append-list").fadeOut();
       $("#fileImage").val("");
     });
-    var imagesName = "";
+
+    /*var imagesName = "";
     var params = {
       fileInput: $("#fileImage").get(0),
       upButton: $("#fileSubmit").get(0),
@@ -324,11 +325,6 @@
           if (file) {
             var reader = new FileReader()
             reader.onload = function(e) {
-              /*html = html + '<div id="uploadList_'+ i +'" class="upload_append_list"><p><strong>' + file.name + '</strong>    '+ 
-                '<a href="javascript:" class="upload_delete" title="删除" data-index="'+ i +'">删除</a><br />' +
-                '<img id="uploadImage_' + i + '" src="' + e.target.result + '" class="upload_image" /></p>'+ 
-                '<span id="uploadProgress_' + i + '" class="upload_progress"></span>' +
-              '</div>';*/
               html = html + 
               '<tr class="upload-append-list" id="uploadList-'+ i +'">'+
               '<td><span class="preview"><img id="uploadImage-' + i + '" src="' + e.target.result + '"/></p></span></td>'+
@@ -385,7 +381,7 @@
       }
     };
     ZXXFILE = $.extend(ZXXFILE, params);
-    ZXXFILE.init();
+    ZXXFILE.init();*/
   })
 </script>
  </body>
