@@ -225,7 +225,7 @@
       $("#" + editor.id).valid();
     }
     });
-    /** 场地验证 **/
+    /** 场地验证 **
     var courtValidator = $("#releaseCourtForm").submit(function() {
       // update underlying textarea before submit validation
       tinyMCE.triggerSave();
@@ -294,7 +294,7 @@
         }
       }
     }
-    /** 清空场地表单 **/
+    /** 清空场地表单 **
     $("#resetCourtForm").click(function(){
       courtValidator.resetForm();
     });
@@ -307,7 +307,7 @@
       $("#fileImage").val("");
     });
 
-    /*var imagesName = "";
+    var imagesNames = "";
     var params = {
       fileInput: $("#fileImage").get(0),
       upButton: $("#fileSubmit").get(0),
@@ -315,7 +315,7 @@
       filter: function(files) {
         var arrFiles = [];
         for (var i = 0, file; file = files[i]; i++) {
-          imagesName += "&?image="+file.name;
+          imagesNames += "&?imgNames="+file.name;
           if (file.type.indexOf("image") == 0) {
             if (file.size >= 1*1024*1024) {
               alert('" '+file.name +' "照片太大了，请上传小于1MB的照片');  
