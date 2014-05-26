@@ -172,6 +172,17 @@
            </div> 
           </div> 
         </form> 
+
+        <form class="form-horizontal" action="uploadCourtPic" method="post" enctype="multipart/form-data"> 
+          <p>测试form</p>
+            <input type="file" name="images" /> 
+            <input type="text" name="imgNames" value="清空内容" /> 
+            <p>可多选</p>
+            <input type="file" name="images" multiple="multiple"/> 
+            <input type="text" name="imgNames" value="清空内容" /> 
+            <input type="submit" class="btn pull-right" value="确定发布" /> 
+            <input type="reset" class="btn pull-right" value="清空内容" /> 
+        </form>
        </div> 
        <!-- /releaseCourt --> 
       </div> 
