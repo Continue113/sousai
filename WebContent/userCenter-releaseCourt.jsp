@@ -222,7 +222,7 @@
       submitHandler: function(){
         console.log("通过验证，正在发送数据...");
         $.ajax({
-          url: "uploadCourtPic?imgNames=fack1",
+          url: "uploadCourtPic?imgNames=fack1&image=1111",
           type: "POST",
           dataType: 'json',
           data: null,
