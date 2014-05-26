@@ -86,7 +86,7 @@
         <div class="page-header"> 
          <h4>场地基本信息</h4> 
         </div> 
-        <form class="form-horizontal" id="releaseCourtForm" action="uploadPic" method="post" enctype="multipart/form-data"> 
+        <form class="form-horizontal" id="releaseCourtForm" action="uploadCourtPic" method="post" enctype="multipart/form-data"> 
           <div class="control-group"> 
            <label class="control-label" for="inputCourtName">场地名称：</label> 
            <div class="controls"> 
