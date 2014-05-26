@@ -311,7 +311,7 @@
     var params = {
       fileInput: $("#fileImage").get(0),
       upButton: $("#fileSubmit").get(0),
-      url: "uploadCourtPic?images=XXXXXX&imgNames=fack1"+imagesName,
+      url: "uploadCourtPic?images=XXXXXX&imgNames=fack1"+imagesNames,
       filter: function(files) {
         var arrFiles = [];
         for (var i = 0, file; file = files[i]; i++) {
