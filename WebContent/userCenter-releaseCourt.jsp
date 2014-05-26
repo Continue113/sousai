@@ -219,7 +219,21 @@
       // update underlying textarea before submit validation
       tinyMCE.triggerSave();
     }).validate({
-      submitHandler: function(){alert("发布场地成功");},
+      submitHandler: function(){
+        console.log("通过验证，正在发送数据...");
+        $.ajax({
+          url: "uploadCourtPic?imgNames=fack1"+imagesName,
+          type: "POST",
+          dataType: 'json',
+          data: null,
+          success: function(rspdata) {
+            alert(rspdata);
+          },
+          error: function() {
+            alert("抱歉，发送数据出错了，请重新输入。");
+          },
+          });
+      },
       ignore: "",
       rules:{
         inputCourtName:{
@@ -285,11 +299,11 @@
     var params = {
       fileInput: $("#fileImage").get(0),
       upButton: $("#fileSubmit").get(0),
-      url: "uploadCourtPic"+imagesName,
+      url: "uploadCourtPic?imgNames=fack1"+imagesName,
       filter: function(files) {
         var arrFiles = [];
         for (var i = 0, file; file = files[i]; i++) {
-          imagesName += "?image="+file.name;
+          imagesName += "&?image="+file.name;
           if (file.type.indexOf("image") == 0) {
             if (file.size >= 1*1024*1024) {
               alert('" '+file.name +' "照片太大了，请上传小于1MB的照片');  
@@ -363,7 +377,7 @@
       },
       onComplete: function() {
         //提交按钮隐藏
-        $("#fileSubmit").hide();
+        //$("#fileSubmit").hide();
         //file控件value置空
         $("#fileImage").val("");
         //$("#uploadInf").append("<p>当前图片全部上传完毕，可继续添加上传。</p>");
