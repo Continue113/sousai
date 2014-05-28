@@ -262,10 +262,10 @@
     toolbar1: "newdocument bold italic underline | fontsizeselect | bullist numlist | alignleft aligncenter alignright alignjustify | link unlink image searchreplace table | undo redo preview fullscreen",
     image_advtab: true,
     // update validation status on change
-    onchange_callback: function(editor) {
-      tinyMCE.triggerSave();
-      //$("#" + editor.id).valid();
-    }
+    //onchange_callback: function(editor) {
+    //  tinyMCE.triggerSave();
+    //  $("#" + editor.id).valid();
+    //}
     });
     /** 场地验证 **//*
     var courtValidator = $("#releaseCourtForm").submit(function() {
@@ -389,10 +389,8 @@
         imgsizeMB = (imgsize/1024/1024).toFixed(2);
         if(imgsize >= 1*1024*1024) {
           alert("照片大小为 "+imgsizeMB+"MB,照片太大了，请上传小于1MB的照片.");
-          return false;
         }else if(imgtype != "image/png" && imgtype != "image/gif" && imgtype != "image/jpg" && imgtype != "image/jpeg" ){
           alert("文件格式为 "+imgtype+",请上传png,gif,jpg,jpeg格式的照片.");
-          return false;
         }else{
           //alert(files[0].name + "," + files[0].size + " bytes");
           fileName.text(imgname);
@@ -422,10 +420,8 @@
           imgsizeMB = (imgsize/1024/1024).toFixed(2);
           if(imgsize >= 1*1024*1024) {
             alert("照片大小为 "+imgsizeMB+"MB,照片太大了，请上传小于1MB的照片.");
-            return false;
           }else if(imgtype != "image/png" && imgtype != "image/gif" && imgtype != "image/jpg" && imgtype != "image/jpeg" ){
             alert("文件格式为 "+imgtype+",请上传png,gif,jpg,jpeg格式的照片.");
-            return false;
           }else{
             img.src = this.result;
             //img.width = 100;
@@ -452,10 +448,8 @@
           //alert(nfile+","+img.fileSize + " bytes");
           if(imgsize >= 1*1024*1024) {
             alert("照片大小为 "+imgsizeMB+"MB,照片太大了，请上传小于1MB的照片.");
-            return false;
           }else if(imgtype != ".png" && imgtype != ".gif" && imgtype != ".jpg" && imgtype != ".jpeg" ){
             alert("文件格式为 "+imgtype+",请上传png,gif,jpg,jpeg格式的照片.");
-            return false;
           }
         }
         $(fileList).find("img").remove();
