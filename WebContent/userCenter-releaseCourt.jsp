@@ -216,7 +216,7 @@
           <div class="control-group"> 
            <label class="control-label" for="inputCourtInfo">场地简介：</label> 
           </div> 
-          <!--<textarea id="inputCourtInfo" name="inputCourtInfo" required="required"></textarea> -->
+          <textarea id="inputCourtInfo" name="courtInfo"></textarea>
           <div class="control-group"> 
            <div class="controls"> 
             <!--<button id="fileSubmit" type="submit" class="btn btn-success pull-right start"> <i class="icon-upload"></i> <span>确定发布</span> </button> -->
