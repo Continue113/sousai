@@ -39,8 +39,8 @@
   /** 缩略图**/
   .userCenter .thumbnail img{width: 50px;height: 50px;}
   #imghead {height:70px;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=image);}
-  #uploadImgForm {position: relative;top: -270px;left: 210px;}
-  #uploadImgForm > .span5 {margin-left: 0;margin-top: 3px;border-top: 1px solid #ccc;}
+  /*#uploadImgForm {position: relative;top: -270px;left: 210px;}*/
+  /*#uploadImgForm > .span5 {margin-left: 0;margin-top: 3px;border-top: 1px solid #ccc;}*/
   </style>
 
 </head>
@@ -124,6 +124,19 @@
            <label class="control-label" for="userIcon">头像设置：</label> 
            <div class="controls"> 
             <div class="crtUserIcon"><img src="img/defaultImg.png" /></div>
+          </div> 
+          <div class="controls">
+            <span class="btn fileinput-button"><i class="icon-plus"></i><span>选择图片</span></span>
+            <table class=" span5">
+              <tbody class="files">
+              <tr class="hide">
+                <td><span id="preview"><img id="imghead" src="img/loading.gif" /></span></td>
+                <td><span class="name">name</span></td>
+                <td><span class="size">size</span></td>
+                <td><button class="btn" id="start"><i class="icon-plus"></i>上传</button><button class="btn" id="cancel"><i class="icon-plus"></i>取消</button></td>
+              </tr>
+              </tbody>
+            </table>
            </div>
          </div>
           <div class="control-group"> 
@@ -151,19 +164,9 @@
           </div> 
          </fieldset> 
         </form>
-        <form id="uploadImgForm" enctype="multipart/form-data" method="POST">
-        <span class="btn fileinput-button"><i class="icon-plus"></i><span>选择图片</span></span>
-        <input id="imgInput" class="hide" type="file" name="image" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this)">
-        <table class=" span5">
-          <tbody class="files">
-          <tr class="hide">
-            <td><span id="preview"><img id="imghead" src="img/loading.gif" /></span></td>
-            <td><span class="name">name</span></td>
-            <td><span class="size">size</span></td>
-            <td><input class="btn start" type="submit" value="上传"/><input type="reset" value="取消" class="btn cancle" /></td>
-          </tr>
-          </tbody>
-        </table>
+        <form  class="hide" id="uploadImgForm" enctype="multipart/form-data" method="POST">
+        <input id="imgInput" type="file" name="image" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this)">
+        <input class="btn start" type="submit" value="上传"/><input type="reset" value="取消" class="btn cancle" />
         </form>
        </div>
        <!-- /editUser --> 
@@ -283,17 +286,17 @@ $(function () {
     $(".fileinput-button").click(function(){
       $("#imgInput").trigger('click');
     });
-    $(".start").click(function(){
-      $(this).attr("disabled","disabled");
+    $("#start").click(function(){
+      $("#uploadImgForm > .start").trigger("click").attr("disabled","disabled");
       ajaxFileUpload();
     });
-    $(".cancle").click(function(){
-      $(this).parents().find(".start").removeAttr("disabled");
+    $("#cancle").click(function(){
+      $("#uploadImgForm > .cancle").trigger("click").parents().find(".start").removeAttr("disabled");
       $(".files .hide").fadeOut();
     });
 })
 function ajaxFileUpload() {
-  $(".start .name").ajaxStart(function(){
+  $(".files .name").ajaxStart(function(){
     $(this).append('<img src="img/loading.gif" width="25" />');
   }).ajaxComplete(function(){
     $(this).remove("img");
@@ -305,7 +308,7 @@ function ajaxFileUpload() {
     dataType: 'json',
     success: function(respdata, status) {
       console.log(typeof respdata + "内容为："+respdata);
-      var jsondata = eval("("+respdata+")");//respdata.parseJSON();
+      var jsondata = eval("("+respdata+")");
       if(jsondata.statusCode == 1){
         alert("上传头像成功.");
         var imgURL = $("#imghead").attr("src");

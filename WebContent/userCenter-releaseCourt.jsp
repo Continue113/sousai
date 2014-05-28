@@ -149,12 +149,22 @@
            <label class="control-label" for="uploadCourtImgs">场地图片：</label> 
            <div class="controls"> 
             <div class="fileupload-buttonbar"> 
-             <span class="btn fileinput-button"> <i class="icon-plus"></i> <span>选择图片</span> 
-             </span> 
-             <input class="hide1" id="fileImage" type="file" name="images" multiple="" accept="image/png, image/gif, image/jpg, image/jpeg" />
-             <button type="reset" class="btn cancel"> <i class="icon-ban-circle"></i> <span>取消</span> </button> 
+             <button class="btn allCancel"> <i class="icon-ban-circle"></i> <span>全部取消</span> </button> 
+             <button class="btn plus"> <i class="icon-ban-plus"></i> <span>添加</span> </button> 
              <table class="table table-striped">
-              <tbody class="files"></tbody>
+              <tbody class="files">
+              <tr>
+                <td>
+                  <span class="btn fileinput-button"><i class="icon-plus"></i><span>选择图片</span></span>
+                  <input class="hide fileImage" type="file" name="images" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this)"/>
+                  <input class="hide fileImageNames" type="text" name="imgNames" value=""/>
+                  <span class="preview"><img src="img/loading.gif" /></span>
+                </td>
+                <td><span class="name"></span></td>
+                <td><span class="size"></span></td>
+                <td><button class="btn cancel"><i class="icon-ban-circle"></i>取消</button></td>
+              </tr>
+              </tbody>
              </table> 
             </div> 
            </div> 
@@ -172,17 +182,6 @@
            </div> 
           </div> 
         </form> 
-
-        <form class="form-horizontal" action="uploadCourtPic" method="post" enctype="multipart/form-data"> 
-          <p>测试form</p>
-            <input type="file" name="images" /> 
-            <input type="text" name="imgNames" value="清空内容" /> 
-            <p>可多选</p>
-            <input type="file" name="images" multiple="multiple"/> 
-            <input type="text" name="imgNames" value="清空内容" /> 
-            <input type="submit" class="btn pull-right" value="确定发布" /> 
-            <input type="reset" class="btn pull-right" value="清空内容" /> 
-        </form>
        </div> 
        <!-- /releaseCourt --> 
       </div> 
@@ -225,7 +224,7 @@
       $("#" + editor.id).valid();
     }
     });
-    /** 场地验证 **
+    /** 场地验证 **/
     var courtValidator = $("#releaseCourtForm").submit(function() {
       // update underlying textarea before submit validation
       tinyMCE.triggerSave();
@@ -294,105 +293,125 @@
         }
       }
     }
-    /** 清空场地表单 **
+    //清空场地表单
     $("#resetCourtForm").click(function(){
       courtValidator.resetForm();
     });
-    /** 上传图片 **/
-    $(".fileinput-button").click(function(){
-      $("#fileImage").trigger('click');
+    //添加选项
+    $(".plus").click(function(){
+      var trNumb = $(".files > tr").length;
+      if(trNumb == 5){
+        alert("抱歉，每个场地最多只可以上传5张图片！");
+      }else{
+        var trHtml = '<tr><td><span class="btn fileinput-button"><i class="icon-plus"></i><span>选择图片</span></span><input class="hide fileImage" type="file"   name="images" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this)"/><input class="hide fileImageNames" type="text"   name="imgNames" value=""/><span class="preview"><img src="img/loading.gif" /></span></td><td><span class="name"></span></td><td><span class="size"></span>  </td><td><button class="btn cancel"><i class="icon-ban-circle"></i>取消</button></td></tr>'
+        $(".files").append(trHtml);
+      }
     });
-    $('button[type="reset"]').on('click',function(){
-      $(".upload-append-list").fadeOut();
-      $("#fileImage").val("");
+    //全部取消
+    $(".allCancel").on('click',function(){
+      //表格行隐藏并清空所有的输入框，文件名称，文件大小
+      $(".files > tr").fadeOut().remove()//.find("input").val("").end().find(".name").text("").end().find("size").text("");
     });
+    //选择图片
+    $(".fileinput-button").on('click',function(){
+      $(this).parent().find("input:file").trigger('click');
+    });
+    //检测是否支持HTML5 File API 
+    window.URL = window.URL || window.webkitURL;
+    //验证上传图片格式，大小，并在通过后显示图片预览
+    function imgValid(obj) {
+      var files = obj.files,
+            img = new Image(),
+            imgname, imgsize, imgsizeMB, imgtype,
+       fileList = $(this).parent().parent().find(".preview").get[0],
+       fileName = $(this).parent().parent().find(".name"),
+       fileSize = $(this).parent().parent().find(".size"); //jquery对象转换为DOM对象
 
-    var imagesNames = "";
-    var params = {
-      fileInput: $("#fileImage").get(0),
-      upButton: $("#fileSubmit").get(0),
-      url: "uploadCourtPic?images=XXXXXX&imgNames=fack1"+imagesNames,
-      filter: function(files) {
-        var arrFiles = [];
-        for (var i = 0, file; file = files[i]; i++) {
-          imagesNames += "&?imgNames="+file.name;
-          if (file.type.indexOf("image") == 0) {
-            if (file.size >= 1*1024*1024) {
-              alert('" '+file.name +' "照片太大了，请上传小于1MB的照片');  
-            } else {
-              arrFiles.push(file);
-            }     
-          } else {
-            alert('文件" ' + file.name + ' "不是图片。');  
+      if(window.URL){
+        //File API
+        imgname = files[0].name;
+        imgtype = files[0].type;
+        imgsize = files[0].size;
+        imgsizeMB = (imgsize/1024/1024).toFixed(2);
+        if(imgsize >= 1*1024*1024) {
+          alert("照片大小为 "+imgsizeMB+"MB,照片太大了，请上传小于1MB的照片.");
+          return false;
+        }else if(imgtype != "image/png" && imgtype != "image/gif" && imgtype != "image/jpg" && imgtype != "image/jpeg" ){
+          alert("文件格式为 "+imgtype+",请上传png,gif,jpg,jpeg格式的照片.");
+          return false;
+        }else{
+          //alert(files[0].name + "," + files[0].size + " bytes");
+          fileName.text(imgname);
+          fileSize.text(imgsizeMB+"MB");
+          img.src = window.URL.createObjectURL(files[0]); //创建一个objectURL，并不是你的本地路径
+          img.height = 70;
+          img.onload = function(e) {
+             window.URL.revokeObjectURL(this.src); //图片加载后，释放objectURL
+          }
+          //清除上一次的预览图片
+          $(this).parent().parent().find(".preview > img").remove();
+          fileList.appendChild(img);
+        }
+      }else if(window.FileReader){
+        //opera不支持createObjectURL/revokeObjectURL方法。我们用FileReader对象来处理
+        //清除上一次的预览图片
+        $(this).parent().parent().find(".preview > img").remove();
+        var reader = new FileReader();
+        reader.readAsDataURL(files[0]);
+        reader.onload = function(e){
+          //alert(files[0].name + "," +e.total + " bytes");
+          imgname = files[0].name;
+          imgtype = files[0].type;
+          imgsize = e.total;
+          imgsizeMB = (imgsize/1024/1024).toFixed(2);
+          if(imgsize >= 1*1024*1024) {
+            alert("照片大小为 "+imgsizeMB+"MB,照片太大了，请上传小于1MB的照片.");
+            return false;
+          }else if(imgtype != "image/png" && imgtype != "image/gif" && imgtype != "image/jpg" && imgtype != "image/jpeg" ){
+            alert("文件格式为 "+imgtype+",请上传png,gif,jpg,jpeg格式的照片.");
+            return false;
+          }else{
+            img.src = this.result;
+            img.height = 70;
+            fileList.appendChild(img);
+            fileName.text(imgname);
+            fileSize.text(imgsizeMB+"MB");
           }
         }
-        return arrFiles;
-      },
-      onSelect: function(files) {
-        var html = '', i = 0;
-        $(".files").html('<tr class="upload_loading"></tr>');
-        var funAppendImage = function() {
-          file = files[i];
-          if (file) {
-            var reader = new FileReader()
-            reader.onload = function(e) {
-              html = html + 
-              '<tr class="upload-append-list" id="uploadList-'+ i +'">'+
-              '<td><span class="preview"><img id="uploadImage-' + i + '" src="' + e.target.result + '"/></p></span></td>'+
-              '<td><span class="name">' + file.name + '</span></td>'+
-              '<td><span class="size">' + (file.size/1024/1024).toFixed(2) + 'MB</span></td>'+
-              '<td><span id="uploadProgress-' + i + '" class="upload_progress"></span></td>' +
-              '<td><button type="reset" class="btn cancel" data-index="'+ i +'"><i class="icon-ban-circle"></i><span>取消</span></button></td></tr>';
-              i++;
-              funAppendImage();
-            }
-            reader.readAsDataURL(file);
-          } else {
-            $(".files").html(html);
-            if (html) {
-              //删除方法
-              $(".cancel").click(function() {
-                ZXXFILE.funDeleteFile(files[parseInt($(this).attr("data-index"))]);
-                return false; 
-              });
-              //提交按钮显示
-              $("#fileSubmit").show();  
-            } else {
-              //提交按钮隐藏
-              $("#fileSubmit").hide();  
-            }
+      }else{
+        //ie
+        obj.select();
+        obj.blur();
+        var nfile = document.selection.createRange().text;//IE下为文件路径
+        var fileText =nfile.substring(filePath.lastIndexOf("."),filePath.length);//文件后缀名
+        document.selection.empty();
+        imgname = nfile;
+        imgtype =fileText.toLowerCase();//转化为统一小写后缀名.jpg等
+        imgsize = img.fileSize;
+        imgsizeMB = (imgsize/1024/1024).toFixed(2);
+        img.src = nfile;
+        img.height = 70;
+        img.onload=function(){
+          //alert(nfile+","+img.fileSize + " bytes");
+          if(imgsize >= 1*1024*1024) {
+            alert("照片大小为 "+imgsizeMB+"MB,照片太大了，请上传小于1MB的照片.");
+            return false;
+          }else if(imgtype != ".png" && imgtype != ".gif" && imgtype != ".jpg" && imgtype != ".jpeg" ){
+            alert("文件格式为 "+imgtype+",请上传png,gif,jpg,jpeg格式的照片.");
+            return false;
           }
-        };
-        funAppendImage();   
-      },
-      onDelete: function(file) {
-        $("#uploadList-" + file.index).fadeOut();
-      },
-      onProgress: function(file, loaded, total) {
-        var eleProgress = $("#uploadProgress-" + file.index), percent = (loaded / total * 100).toFixed(2) + '%';
-        eleProgress.show().html(percent);
-      },
-      onSuccess: function(file, response) {
-        //$("#uploadInf").append("<p>上传成功，图片地址是：" + response + "</p>");
-        console.log(response);
-        alert( file.name + "上传成功！");
-      },
-      onFailure: function(file) {
-        //$("#uploadInf").append("<p>图片" + file.name + "上传失败！</p>");  
-        alert(file.name + "上传失败！");
-        $("#uploadImage-" + file.index).css("opacity", 0.2);
-      },
-      onComplete: function() {
-        //提交按钮隐藏
-        //$("#fileSubmit").hide();
-        //file控件value置空
-        $("#fileImage").val("");
-        //$("#uploadInf").append("<p>当前图片全部上传完毕，可继续添加上传。</p>");
-        alert("上传图片完成！");
+        }
+        fileList.appendChild(img);
+        //fileList.style.filter="progid:DXImageTransform.Microsoft.AlphaImageLoader(  sizingMethod='image',src='"+nfile+"')";
+        fileName.text(imgname);
+        fileSize.text(imgsizeMB+"MB");
       }
-    };
-    ZXXFILE = $.extend(ZXXFILE, params);
-    ZXXFILE.init();
+    }
+    //取消上传
+    $('.cancel').on('click',function(){
+      //$(this).parent().find("input:file").val("");
+      $(this).parent().parent().fadeOut().remove();
+    });
   })
 </script>
  </body>
