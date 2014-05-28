@@ -15,7 +15,7 @@
   <link href="css/sousai.IE8.css" rel="stylesheet" /> 
   <![endif]-->
   <style type="text/css">
-  .preview > img {height:70px;}
+  .files img {height: 70px;width: auto;}
   </style>
  </head> 
  <body class="userCenter"> 
@@ -149,20 +149,64 @@
            <label class="control-label" for="uploadCourtImgs">场地图片：</label> 
            <div class="controls"> 
             <div class="fileupload-buttonbar"> 
-             <button class="btn allCancel"> <i class="icon-ban-circle"></i> <span>全部取消</span> </button> 
-             <button class="btn plus"> <i class="icon-ban-plus"></i> <span>添加</span> </button> 
+             <span class="btn plus"><i class="icon-plus"></i><span>添加</span></span> 
+             <span class="btn allCancel"> <i class="icon-ban-circle"></i> <span>全部取消</span> </span> 
              <table class="table table-striped">
               <tbody class="files">
-              <tr>
+              <tr id="tr1">
                 <td>
                   <span class="btn fileinput-button"><i class="icon-plus"></i><span>选择图片</span></span>
-                  <input class="hide fileImage" type="file" name="images" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this)"/>
+                  <input class="hide fileImage" type="file" name="images" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this,1)"/>
                   <input class="hide fileImageNames" type="text" name="imgNames" value=""/>
-                  <span class="preview"><img src="img/loading.gif" /></span>
+                  <span id="preview1"></span>
                 </td>
                 <td><span class="name"></span></td>
                 <td><span class="size"></span></td>
-                <td><button class="btn cancel"><i class="icon-ban-circle"></i>取消</button></td>
+                <td><span class="btn cancel"><i class="icon-ban-circle"></i>取消</span></td>
+              </tr>
+              <tr class="hide" id="tr2">
+                <td>
+                  <span class="btn fileinput-button"><i class="icon-plus"></i><span>选择图片</span></span>
+                  <input class="hide fileImage" type="file" name="images" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this,2)"/>
+                  <input class="hide fileImageNames" type="text" name="imgNames" value=""/>
+                  <span id="preview2"></span>
+                </td>
+                <td><span class="name"></span></td>
+                <td><span class="size"></span></td>
+                <td><span class="btn cancel"><i class="icon-ban-circle"></i>取消</span></td>
+              </tr>
+              <tr class="hide" id="tr3">
+                <td>
+                  <span class="btn fileinput-button"><i class="icon-plus"></i><span>选择图片</span></span>
+                  <input class="hide fileImage" type="file" name="images" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this,3)"/>
+                  <input class="hide fileImageNames" type="text" name="imgNames" value=""/>
+                  <span id="preview3"></span>
+                </td>
+                <td><span class="name"></span></td>
+                <td><span class="size"></span></td>
+                <td><span class="btn cancel"><i class="icon-ban-circle"></i>取消</span></td>
+              </tr>
+              <tr class="hide" id="tr4">
+                <td>
+                  <span class="btn fileinput-button"><i class="icon-plus"></i><span>选择图片</span></span>
+                  <input class="hide fileImage" type="file" name="images" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this,4)"/>
+                  <input class="hide fileImageNames" type="text" name="imgNames" value=""/>
+                  <span id="preview4"></span>
+                </td>
+                <td><span class="name"></span></td>
+                <td><span class="size"></span></td>
+                <td><span class="btn cancel"><i class="icon-ban-circle"></i>取消</span></td>
+              </tr>
+              <tr class="hide" id="tr5">
+                <td>
+                  <span class="btn fileinput-button"><i class="icon-plus"></i><span>选择图片</span></span>
+                  <input class="hide fileImage" type="file" name="images" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this,5)"/>
+                  <input class="hide fileImageNames" type="text" name="imgNames" value=""/>
+                  <span id="preview5"></span>
+                </td>
+                <td><span class="name"></span></td>
+                <td><span class="size"></span></td>
+                <td><span class="btn cancel"><i class="icon-ban-circle"></i>取消</span></td>
               </tr>
               </tbody>
              </table> 
@@ -201,7 +245,6 @@
   <script src="js/jquery.validate.min.js"></script> 
   <script src="tinymce/jquery.tinymce.min.js"></script> 
   <script src="tinymce/tinymce.min.js"></script> 
-  <script src="js/zxxFile.js"></script>
   <script>
   $(function(){
     /** tinymce **/
@@ -298,34 +341,44 @@
       courtValidator.resetForm();
     });
     //添加选项
+    var trNumb = 1;
     $(".plus").click(function(){
-      var trNumb = $(".files > tr").length;
       if(trNumb == 5){
         alert("抱歉，每个场地最多只可以上传5张图片！");
       }else{
-        var trHtml = '<tr><td><span class="btn fileinput-button"><i class="icon-plus"></i><span>选择图片</span></span><input class="hide fileImage" type="file"   name="images" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this)"/><input class="hide fileImageNames" type="text"   name="imgNames" value=""/><span class="preview"><img src="img/loading.gif" /></span></td><td><span class="name"></span></td><td><span class="size"></span>  </td><td><button class="btn cancel"><i class="icon-ban-circle"></i>取消</button></td></tr>'
-        $(".files").append(trHtml);
+        trNumb++;
+        $("#tr"+trNumb).fadeIn();
       }
     });
     //全部取消
-    $(".allCancel").on('click',function(){
+    $(".allCancel").on('click',function(event){
       //表格行隐藏并清空所有的输入框，文件名称，文件大小
-      $(".files > tr").fadeOut().remove()//.find("input").val("").end().find(".name").text("").end().find("size").text("");
+      $(".files > tr").fadeOut().find("input").val("").end().find(".name").text("").end().find("size").text("");
+      trNumb = 0;
     });
-    //选择图片
-    $(".fileinput-button").on('click',function(){
-      $(this).parent().find("input:file").trigger('click');
+    $(".fileinput-button").on("click", function(event) {
+      //event.preventDefault();
+      console.log("选择图片");
+      $(this).parent().find('input[type="file"]').trigger('click');
     });
+    //取消上传
+    $('.cancel').on('click',function(event){
+      console.log("取消");
+      $(this).parent().parent().fadeOut().find("input").val("").end().find(".name").text("").end().find("size").text("");
+      trNumb--;
+    });
+  })
     //检测是否支持HTML5 File API 
     window.URL = window.URL || window.webkitURL;
     //验证上传图片格式，大小，并在通过后显示图片预览
-    function imgValid(obj) {
+    function imgValid(obj,id) {
       var files = obj.files,
-            img = new Image(),
-            imgname, imgsize, imgsizeMB, imgtype,
-       fileList = $(this).parent().parent().find(".preview").get[0],
-       fileName = $(this).parent().parent().find(".name"),
-       fileSize = $(this).parent().parent().find(".size"); //jquery对象转换为DOM对象
+            img = new Image(), imgname, imgsize, imgsizeMB, imgtype, 
+      previewId = "preview" + id,
+       fileList = document.getElementById(previewId),
+       inputNames = $("#tr"+id+' input[type="text"]'),
+       fileName = $("#tr"+id+" .name"),
+       fileSize = $("#tr"+id+" .size"); //jquery对象转换为DOM对象
 
       if(window.URL){
         //File API
@@ -343,19 +396,21 @@
           //alert(files[0].name + "," + files[0].size + " bytes");
           fileName.text(imgname);
           fileSize.text(imgsizeMB+"MB");
+          inputNames.attr("value",imgname);
+          //imgHtml += window.URL.createObjectURL(files[0]) +"\" />"
           img.src = window.URL.createObjectURL(files[0]); //创建一个objectURL，并不是你的本地路径
-          img.height = 70;
+          //img.width = 100;
           img.onload = function(e) {
              window.URL.revokeObjectURL(this.src); //图片加载后，释放objectURL
           }
           //清除上一次的预览图片
-          $(this).parent().parent().find(".preview > img").remove();
+          $(fileList).find("img").remove();
           fileList.appendChild(img);
         }
       }else if(window.FileReader){
         //opera不支持createObjectURL/revokeObjectURL方法。我们用FileReader对象来处理
         //清除上一次的预览图片
-        $(this).parent().parent().find(".preview > img").remove();
+        $(fileList).find("img").remove();
         var reader = new FileReader();
         reader.readAsDataURL(files[0]);
         reader.onload = function(e){
@@ -372,10 +427,11 @@
             return false;
           }else{
             img.src = this.result;
-            img.height = 70;
+            //img.width = 100;
             fileList.appendChild(img);
             fileName.text(imgname);
             fileSize.text(imgsizeMB+"MB");
+            inputNames.attr("value",imgname);
           }
         }
       }else{
@@ -383,14 +439,14 @@
         obj.select();
         obj.blur();
         var nfile = document.selection.createRange().text;//IE下为文件路径
-        var fileText =nfile.substring(filePath.lastIndexOf("."),filePath.length);//文件后缀名
+        var fileText =nfile.substring(nfile.lastIndexOf("."),nfile.length);//文件后缀名
         document.selection.empty();
         imgname = nfile;
         imgtype =fileText.toLowerCase();//转化为统一小写后缀名.jpg等
         imgsize = img.fileSize;
         imgsizeMB = (imgsize/1024/1024).toFixed(2);
         img.src = nfile;
-        img.height = 70;
+        //img.width = 100;
         img.onload=function(){
           //alert(nfile+","+img.fileSize + " bytes");
           if(imgsize >= 1*1024*1024) {
@@ -401,18 +457,14 @@
             return false;
           }
         }
+        $(fileList).find("img").remove();
         fileList.appendChild(img);
-        //fileList.style.filter="progid:DXImageTransform.Microsoft.AlphaImageLoader(  sizingMethod='image',src='"+nfile+"')";
+        //fileList.style.filter="progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='image',src='"+nfile+" style=\"width:120px\"')";
         fileName.text(imgname);
         fileSize.text(imgsizeMB+"MB");
+        inputNames.attr("value",imgname);
       }
     }
-    //取消上传
-    $('.cancel').on('click',function(){
-      //$(this).parent().find("input:file").val("");
-      $(this).parent().parent().fadeOut().remove();
-    });
-  })
 </script>
  </body>
 </html>
