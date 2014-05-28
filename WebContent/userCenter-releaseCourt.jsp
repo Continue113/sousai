@@ -149,7 +149,7 @@
            <label class="control-label" for="uploadCourtImgs">场地图片：</label> 
            <div class="controls"> 
             <div class="fileupload-buttonbar"> 
-             <span class="btn plus"><i class="icon-plus"></i><span>添加</span></span> 
+             <span class="btn plus"><i class="icon-plus"></i><span>添加图片栏</span></span> 
              <span class="btn allCancel"> <i class="icon-ban-circle"></i> <span>全部取消</span> </span> 
              <table class="table table-striped">
               <tbody class="files">
@@ -264,10 +264,10 @@
     // update validation status on change
     onchange_callback: function(editor) {
       tinyMCE.triggerSave();
-      $("#" + editor.id).valid();
+      //$("#" + editor.id).valid();
     }
     });
-    /** 场地验证 **/
+    /** 场地验证 **//*
     var courtValidator = $("#releaseCourtForm").submit(function() {
       // update underlying textarea before submit validation
       tinyMCE.triggerSave();
@@ -340,6 +340,7 @@
     $("#resetCourtForm").click(function(){
       courtValidator.resetForm();
     });
+    */
     //添加选项
     var trNumb = 1;
     $(".plus").click(function(){
