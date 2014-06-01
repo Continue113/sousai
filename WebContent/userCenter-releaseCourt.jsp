@@ -158,8 +158,8 @@
                   <span class="btn fileinput-button"><i class="icon-plus"></i><span>选择图片</span></span>
                   <input class="hide fileImage" type="file" name="images" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this,1)"/>
                   <input class="hide fileImageNames" type="text" name="imgNames" value=""/>
-                  <span id="preview1"></span>
                 </td>
+                <td><span class="preview" id="preview1"></span></td>
                 <td><span class="name"></span></td>
                 <td><span class="size"></span></td>
                 <td><span class="btn cancel"><i class="icon-ban-circle"></i>取消</span></td>
@@ -169,8 +169,8 @@
                   <span class="btn fileinput-button"><i class="icon-plus"></i><span>选择图片</span></span>
                   <input class="hide fileImage" type="file" name="images" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this,2)"/>
                   <input class="hide fileImageNames" type="text" name="imgNames" value=""/>
-                  <span id="preview2"></span>
                 </td>
+                <td><span class="preview" id="preview2"></span></td>
                 <td><span class="name"></span></td>
                 <td><span class="size"></span></td>
                 <td><span class="btn cancel"><i class="icon-ban-circle"></i>取消</span></td>
@@ -180,8 +180,8 @@
                   <span class="btn fileinput-button"><i class="icon-plus"></i><span>选择图片</span></span>
                   <input class="hide fileImage" type="file" name="images" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this,3)"/>
                   <input class="hide fileImageNames" type="text" name="imgNames" value=""/>
-                  <span id="preview3"></span>
                 </td>
+                <td><span class="preview" id="preview3"></span></td>
                 <td><span class="name"></span></td>
                 <td><span class="size"></span></td>
                 <td><span class="btn cancel"><i class="icon-ban-circle"></i>取消</span></td>
@@ -191,8 +191,8 @@
                   <span class="btn fileinput-button"><i class="icon-plus"></i><span>选择图片</span></span>
                   <input class="hide fileImage" type="file" name="images" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this,4)"/>
                   <input class="hide fileImageNames" type="text" name="imgNames" value=""/>
-                  <span id="preview4"></span>
                 </td>
+                <td><span class="preview" id="preview4"></span></td>
                 <td><span class="name"></span></td>
                 <td><span class="size"></span></td>
                 <td><span class="btn cancel"><i class="icon-ban-circle"></i>取消</span></td>
@@ -202,8 +202,8 @@
                   <span class="btn fileinput-button"><i class="icon-plus"></i><span>选择图片</span></span>
                   <input class="hide fileImage" type="file" name="images" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this,5)"/>
                   <input class="hide fileImageNames" type="text" name="imgNames" value=""/>
-                  <span id="preview5"></span>
                 </td>
+                <td><span class="preview" id="preview5"></span></td>
                 <td><span class="name"></span></td>
                 <td><span class="size"></span></td>
                 <td><span class="btn cancel"><i class="icon-ban-circle"></i>取消</span></td>
@@ -219,10 +219,9 @@
           <textarea id="inputCourtInfo" name="courtInfo"></textarea>
           <div class="control-group"> 
            <div class="controls"> 
-            <!--<button id="fileSubmit" type="submit" class="btn btn-success pull-right start"> <i class="icon-upload"></i> <span>确定发布</span> </button> -->
-            <input type="submit" class="btn btn-success pull-right" name="release" value="确定发布" /> 
-            <input type="reset" class="btn pull-right" id="resetCourtForm" value="清空内容" /> 
-            <button class="btn pull-right" name="preView">预览</button> 
+            <button type="submit" class="btn btn-success pull-right"><span>确定发布</span></button> 
+            <button type="reset" class="btn pull-right"><span>情况内容</span></button> 
+            <button type="button" class="btn pull-right">预览</button> 
            </div> 
           </div> 
         </form> 
@@ -247,46 +246,45 @@
   <script src="tinymce/tinymce.min.js"></script> 
   <script>
   $(function(){
-    /** tinymce **/
+    //tinymce
     tinymce.init({
       mode: 'textareas',
       language :'zh_CN',
       menubar: false,
       toolbar_items_size: 'small',
       plugins: [
-                "advlist autolink autosave link image preview ",
-                "searchreplace fullscreen ",
-                "table"
-        ],
-        height:300,
-    toolbar1: "newdocument bold italic underline | fontsizeselect | bullist numlist | alignleft aligncenter alignright alignjustify | link unlink image searchreplace table | undo redo preview fullscreen",
-    image_advtab: true,
-    // update validation status on change
-    //onchange_callback: function(editor) {
-    //  tinyMCE.triggerSave();
-    //  $("#" + editor.id).valid();
-    //}
+      "advlist autolink autosave link image preview ",
+      "searchreplace fullscreen ",
+      "table"
+      ],
+      height:300,
+      toolbar1: "newdocument bold italic underline | fontsizeselect | bullist numlist | alignleft aligncenter alignright alignjustify | link unlink image searchreplace table | undo redo preview fullscreen",
+      image_advtab: true,
+      onchange_callback: function(editor) {
+        tinyMCE.triggerSave();
+        $("#" + editor.id).valid();
+      }
     });
-    /** 场地验证 **//*
+    //场地验证
     var courtValidator = $("#releaseCourtForm").submit(function() {
       // update underlying textarea before submit validation
       tinyMCE.triggerSave();
     }).validate({
-      submitHandler: function(){
-        console.log("通过验证，正在发送数据...");
-        //$.ajax({
-        //  url: "uploadCourtPic?imgNames=fack1&images=1111",
-        //  type: "POST",
-        //  dataType: 'json',
-        //  data: null,
-        //  success: function(rspdata) {
-        //    alert(rspdata);
-        //  },
-        //  error: function() {
-        //    alert("抱歉，发送数据出错了，请重新输入。");
-        //  },
-        //  });
-      },
+      //submitHandler: function(){
+      //  console.log("通过验证，正在发送数据...");
+      //  $.ajax({
+      //    url: "uploadCourtPic?imgNames=fack1&images=1111",
+      //    type: "POST",
+      //    dataType: 'json',
+      //    data: null,
+      //    success: function(rspdata) {
+      //      alert(rspdata);
+      //    },
+      //    error: function() {
+      //      alert("抱歉，发送数据出错了，请重新输入。");
+      //    },
+      //    });
+      //},
       ignore: ".ignore",
       rules:{
         inputCourtName:{
@@ -337,10 +335,9 @@
       }
     }
     //清空场地表单
-    $("#resetCourtForm").click(function(){
+    $('button[type="reset"]').click(function(){
       courtValidator.resetForm();
     });
-    */
     //添加选项
     var trNumb = 1;
     $(".plus").click(function(){
@@ -459,7 +456,26 @@
         fileSize.text(imgsizeMB+"MB");
         inputNames.attr("value",imgname);
       }
+      //场地预览
+      function courtPreview(){
+        //定义变量名 场地名称 比赛类型（大类、类型） 场地类型 场地区域（省、市、区） 详细地址 赛场数 联系电话 价格 开放时间 场地图片 
+        var courtName = $("#inputCourtName").val(),
+            matchTypeGenera = $("selectMatchType option:selected").val(),
+            matchType,
+            courtType = $('select[name="courtType"] option:selected').val(),
+            courtProvince = $(".selectProvince option:selected").val(),
+            courtCity = $(".selectCity option:selected").val(),
+            courtCountry = $(".selectCountry option:selected").val(),
+            courtAddress = $("#inputCourtAddress").val(),
+            courtTables = $("#inputCourtTables").val(),
+            courtTel = $("#inputCourtTel").val(),
+            courtPrice = $("#inputCourtPrice").val(),
+            courtOpenTime = $("#inputCourtOpenTime").val(),
+            courtPics = $(".files .preview > img").attr("src");
+        //将内容发送到预览页面
+
+      }
     }
-</script>
+    </script>
  </body>
 </html>

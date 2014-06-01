@@ -38,9 +38,7 @@
   .active{border-color: #51a351;}
   /** 缩略图**/
   .userCenter .thumbnail img{width: 50px;height: 50px;}
-  #imghead {height:70px;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=image);}
-  /*#uploadImgForm {position: relative;top: -270px;left: 210px;}*/
-  /*#uploadImgForm > .span5 {margin-left: 0;margin-top: 3px;border-top: 1px solid #ccc;}*/
+  #imghead {filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=image);height: 70px;}
   </style>
 
 </head>
@@ -124,8 +122,6 @@
            <label class="control-label" for="userIcon">头像设置：</label> 
            <div class="controls"> 
             <div class="crtUserIcon"><img src="img/defaultImg.png" /></div>
-          </div> 
-          <div class="controls">
             <span class="btn fileinput-button"><i class="icon-plus"></i><span>选择图片</span></span>
             <table class=" span5">
               <tbody class="files">
@@ -133,7 +129,7 @@
                 <td><span id="preview"><img id="imghead" src="img/loading.gif" /></span></td>
                 <td><span class="name">name</span></td>
                 <td><span class="size">size</span></td>
-                <td><button class="btn" id="start"><i class="icon-plus"></i>上传</button><button class="btn" id="cancel"><i class="icon-plus"></i>取消</button></td>
+                <td><span class="btn" id="start"><i class="icon-plus"></i>上传</span><span class="btn" id="cancel"><i class="icon-ban-circle"></i>取消</span></td>
               </tr>
               </tbody>
             </table>
@@ -338,64 +334,27 @@ function imgValid(img){
     $(".files .hide").find(".name").text(imgname);
     $(".files .hide").find(".size").text(imgsizeMB+"MB");
     $(".files .hide").fadeIn();
+    alert("1");
     previewImage(img);
   }
 }
 //图片上传预览 IE是用了滤镜。
-function previewImage(file)
-{
-  var MAXWIDTH  = 100; 
-  var MAXHEIGHT = 100;
-  var div = document.getElementById('preview');
-  if (file.files && file.files[0])
-  {
-      div.innerHTML ='<img id=imghead>';
-      var img = document.getElementById('imghead');
-      img.onload = function(){
-        var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
-        img.width  =  rect.width;
-        img.height =  rect.height;
-        //img.style.marginLeft = rect.left+'px';
-        //img.style.marginTop = rect.top+'px';
-      }
-      var reader = new FileReader();
-      reader.onload = function(evt){img.src = evt.target.result;}
-      reader.readAsDataURL(file.files[0]);
-  }
-  else //兼容IE
-  {
-    var sFilter='filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="';
-    file.select();
-    var src = document.selection.createRange().text;
-    div.innerHTML = '<img id=imghead>';
-    var img = document.getElementById('imghead');
-    img.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = src;
-    var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
-    status =('rect:'+rect.top+','+rect.left+','+rect.width+','+rect.height);
-    div.innerHTML = "<div id=divhead style='width:"+rect.width+"px;height:"+rect.height+"px;"+sFilter+src+"\"'></div>";
-  }
-}
-function clacImgZoomParam( maxWidth, maxHeight, width, height ){
-    var param = {top:0, left:0, width:width, height:height};
-    if( width>maxWidth || height>maxHeight )
-    {
-        rateWidth = width / maxWidth;
-        rateHeight = height / maxHeight;
-        
-        if( rateWidth > rateHeight )
-        {
-            param.width =  maxWidth;
-            param.height = Math.round(height / rateWidth);
-        }else
-        {
-            param.width = Math.round(width / rateHeight);
-            param.height = maxHeight;
-        }
-    }
-    
-    param.left = Math.round((maxWidth - param.width) / 2);
-    param.top = Math.round((maxHeight - param.height) / 2);
-    return param;
+function previewImage(file){
+  var div = document.getElementById('preview');  
+  var img = document.getElementById('imghead');  
+  if (file.files && file.files[0]){
+    //img.onload = function(){}
+    var reader = new FileReader();  
+    reader.onload = function(evt){img.src = evt.target.result;}  
+    reader.readAsDataURL(file.files[0]);  
+  }else {
+    alert("22");
+    var sFilter='filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="'
+    file.select();  
+    var src = document.selection.createRange().text;  
+    img.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = src;  
+    div.innerHTML = "<div id=imghead style='width:70px;"+sFilter+src+"\"'></div>";  
+  }  
 }
 </script>
 </body></html>
