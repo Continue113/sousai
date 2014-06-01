@@ -78,8 +78,9 @@ $(function() {
   //当选中一个省份后，查询对应的市区名称
   $(".selectProvince").change(function selCity() {
     //tgPrt: targetparent 目标父元素
-    var tgPrt = $(this).parent();
-    if (tgPrt.find(".selectProvince option:selected").attr("value") != 0) {
+    var tgPrt = $(this).parent(),
+    tgPrtVal = tgPrt.find(".selectProvince option:selected").attr("value");
+    if (tgPrtVal != 0 && tgPrtVal != 810000 && tgPrtVal != 820000 ) {
       $.ajax({
         type: "POST",
         url: "selRegion",

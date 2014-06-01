@@ -86,11 +86,11 @@
         <div class="page-header"> 
          <h4>场地基本信息</h4> 
         </div> 
-        <form class="form-horizontal" id="releaseCourtForm" action="uploadCourtPic" method="post" enctype="multipart/form-data"> 
+        <form class="form-horizontal" id="releaseCourtForm" action="relCourt" method="post" enctype="multipart/form-data"> 
           <div class="control-group"> 
            <label class="control-label" for="inputCourtName">场地名称：</label> 
            <div class="controls"> 
-            <input class="span5 add-on" type="text" id="inputCourtName" name="inputCourtName" placeholder="如：2012年XXXXXXX杯乒乓球季度赛" data-toggle="tooltip" data-placement="top" title="" data-original-title="限定30个字符以下" required="required" /> 
+            <input class="span5 add-on" type="text" id="inputCourtName" name="name" placeholder="如：2012年XXXXXXX杯乒乓球季度赛" data-toggle="tooltip" data-placement="top" title="" data-original-title="限定30个字符以下" required="required" /> 
            </div> 
           </div> 
           <div class="control-group"> 
@@ -98,14 +98,28 @@
            <div class="controls"> 
             <s:include value="selectMatchType.jsp" /> 
             <!-- /选择比赛类型 --> 
+            <input class="hide" id="inputMatchType" type="text" name="matchType" value=""/>
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="selectCourtType">场地类型：</label> 
            <div class="controls"> 
             <!-- 选择场地类型 --> 
-            <select name="courtType"> <option value="0">请选择场地类型</option> <option value="courtType-inner">室内</option> <option value="courtType-outer">室外</option> <option value="courtType-zq">体育局</option> <option value="courtType-pp">俱乐部</option> <option value="courtType-lq">社区</option> <option value="courtType-zq">单位</option> <option value="courtType-zq">学校</option> <option value="courtType-pp">临时</option> <option value="courtType-lq">公共</option> <option value="courtType-zq">其他</option> </select> 
+            <select name="selectCourtType"> 
+              <option value="0">请选择场地类型</option> 
+              <option value="courtType-inner">室内</option> 
+              <option value="courtType-outer">室外</option> 
+              <option value="courtType-zq">体育局</option> 
+              <option value="courtType-pp">俱乐部</option> 
+              <option value="courtType-lq">社区</option> 
+              <option value="courtType-zq">单位</option> 
+              <option value="courtType-zq">学校</option> 
+              <option value="courtType-pp">临时</option> 
+              <option value="courtType-lq">公共</option> 
+              <option value="courtType-zq">其他</option> 
+            </select> 
             <!-- /选择场地类型 --> 
+            <input class="hide" id="inputCourtType" type="text" name="courtType" value=""/>
            </div> 
           </div> 
           <div class="control-group"> 
@@ -113,36 +127,37 @@
            <div class="controls form-inline"> 
             <s:include value="selectPCC.jsp" />
             <!-- /选择省市区三级下拉框 --> 
+            <input class="hide" id="inputRegion" type="text" name="region" value=""/>
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="inputCourtAddress">详细地址：</label> 
            <div class="controls"> 
-            <input class="span5 add-on" type="text" id="inputCourtAddress" name="inputCourtAddress" placeholder="如：某地某桥某号某号楼" data-toggle="tooltip" data-placement="top" title="" data-original-title="限定30个字符以下" required="required" /> 
+            <input class="span5 add-on" type="text" id="inputCourtAddress" name="addr" placeholder="如：某地某桥某号某号楼" data-toggle="tooltip" data-placement="top" title="" data-original-title="限定30个字符以下" required="required" /> 
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="inputCourtTables">赛场数：</label> 
            <div class="controls"> 
-            <input class="span5" type="text" id="inputCourtTables" placeholder="如：乒乓球台12张 或 足球场1个" /> 
+            <input class="span5" type="text" id="inputCourtTables" name="tableNum" placeholder="如：乒乓球台12张 或 足球场1个" /> 
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="inputCourtTel">联系电话：</label> 
            <div class="controls"> 
-            <input class="span5" type="text" id="inputCourtTel" placeholder="固定电话或移动电话 或 无" /> 
+            <input class="span5" type="text" id="inputCourtTel" name="tel" placeholder="固定电话或移动电话 或 无" /> 
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="inputCourtPrice">价格：</label> 
            <div class="controls"> 
-            <input class="span5" type="text" id="inputCourtPrice" placeholder="如：50元/小时/场 或 免费" /> 
+            <input class="span5" type="text" id="inputCourtPrice" name="price" placeholder="如：50元/小时/场 或 免费" /> 
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="inputCourtOpenTime">开放时间：</label> 
            <div class="controls"> 
-            <input class="span5" type="text" id="inputCourtOpenTime" placeholder="如：每天9:00-18:00" /> 
+            <input class="span5" type="text" id="inputCourtOpenTime" name="workTime" placeholder="如：每天9:00-18:00" /> 
            </div> 
           </div> 
           <div class="control-group"> 
@@ -216,10 +231,10 @@
           <div class="control-group"> 
            <label class="control-label" for="inputCourtInfo">场地简介：</label> 
           </div> 
-          <textarea id="inputCourtInfo" name="courtInfo"></textarea>
+          <textarea id="inputCourtInfo" name="intro"></textarea>
           <div class="control-group"> 
            <div class="controls"> 
-            <button type="submit" class="btn btn-success pull-right"><span>确定发布</span></button> 
+            <button type="button" class="btn btn-success pull-right" id="Rls"><span>确定发布</span></button> 
             <button type="reset" class="btn pull-right"><span>情况内容</span></button> 
             <button type="button" class="btn pull-right">预览</button> 
            </div> 
@@ -246,6 +261,19 @@
   <script src="tinymce/tinymce.min.js"></script> 
   <script>
   $(function(){
+    //点击确认发布，获取地区，比赛类型，场地类型
+    $("#Rls").click(function(){
+      //获取地区Code
+      if( $(".form-inline > .selectCountry option:selected").attr("value") !=0 ){
+        $("#inputRegion").attr("value") = $(".form-inline > .selectCountry option:selected").attr("value");
+      }else if( $(".form-inline > .selectCity option:selected").attr("value") !=0 ){
+        $("#inputRegion").attr("value") = $(".form-inline > .selectCity option:selected").attr("value");
+      }else{
+        $("#inputRegion").attr("value") = $(".form-inline > .selectProvince option:selected").attr("value");
+      }
+      //提交表单
+      $("#releaseCourtForm").submit();
+    });
     //tinymce
     tinymce.init({
       mode: 'textareas',
@@ -287,33 +315,33 @@
       //},
       ignore: ".ignore",
       rules:{
-        inputCourtName:{
+        name:{
           minlength: 6,
           maxlength: 30
         },
-        inputCourtAddress:{
+        addr:{
           minlength: 6,
           maxlength: 30
         }
       },
       messages: {
-      inputCourtName: {
+      name: {
         required: "请输入场地名称",
         minlength: "场地名称至少6个字符",
         maxlength: "场地名称至多30个字符"
       },
-      inputCourtAddress: {
+      addr: {
         required: "请输入场地地址",
         minlength: "场地地址至少6个字符",
         maxlength: "场地地址至多30个字符"
       },      
       selectMatchType: "请选择一种比赛类型",
       selectCourtType: "请选择一种场地类型",
-      inputCourtInfo: "请输入场地简介"
+      intro: "请输入场地简介"
     },
     errorPlacement: function(error, element){
         if (element.is("textarea")) {
-          error.insertAfter($("label[for='inputCourtInfo']"));
+          error.insertAfter($("label[for='inputinfo']"));
         }
         else error.insertAfter(element);
     }
