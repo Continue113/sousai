@@ -256,13 +256,14 @@
   <!-- /container --> 
   <s:include value="footer.jsp" />
   <!-- 页首导航条 --> 
-  <script src="js/jquery.validate.min.js"></script> 
+  <!--<script src="js/jquery.validate.min.js"></script>--> 
   <script src="tinymce/jquery.tinymce.min.js"></script> 
   <script src="tinymce/tinymce.min.js"></script> 
   <script>
   $(function(){
     //点击确认发布，获取地区，比赛类型，场地类型
     $("#Rls").click(function(){
+      console.log("填写隐藏地区表单");
       //获取地区Code
       if( $(".form-inline > .selectCountry option:selected").attr("value") !=0 ){
         $("#inputRegion").attr("value") = $(".form-inline > .selectCountry option:selected").attr("value");
@@ -272,6 +273,7 @@
         $("#inputRegion").attr("value") = $(".form-inline > .selectProvince option:selected").attr("value");
       }
       //提交表单
+      console.log("完成隐藏地区输入框填写，提交表单");
       $("#releaseCourtForm").submit();
     });
     //tinymce
@@ -294,7 +296,7 @@
       }
     });
     //场地验证
-    var courtValidator = $("#releaseCourtForm").submit(function() {
+    /*var courtValidator = $("#releaseCourtForm").submit(function() {
       // update underlying textarea before submit validation
       tinyMCE.triggerSave();
     }).validate({
@@ -365,7 +367,7 @@
     //清空场地表单
     $('button[type="reset"]').click(function(){
       courtValidator.resetForm();
-    });
+    });*/
     //添加选项
     var trNumb = 1;
     $(".plus").click(function(){
