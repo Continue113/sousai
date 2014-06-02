@@ -147,13 +147,13 @@ $(function() {
   //initProvince();
   /****/
 
-  /** 高级搜索框级联下拉菜单 **/
+  /** 高级搜索框级联下拉菜单 
   $(".selectMatchType").change(function() {
     var datafor = $(this).parent().find(".selectMatchType option:selected").data('for');
     $(this).parent().find("select.hide").find("option[value=0]").attr("selected", "selected"); //设置所有隐藏下拉菜单选择默认项
     $(this).parent().find("select.hide").hide(); //隐藏所有子下拉菜单
     $(this).parent().find("." + datafor).show(); //显示选择的子下拉菜单
-  });
+  });**/
   /** 管理员界面搜索框级联下拉菜单 **/
   $(".selectFilter").change(function() {
     var dataforFilter = $(this).parent().find(".selectFilter option:selected").attr("data-forFilter");
@@ -172,6 +172,43 @@ $(function() {
     }else{
       inputFilter.get(0).value = "";
       inputFilter.keyup();
+    }
+  });
+  //初始化比赛类型
+  function initMatchType(){
+    $.post("selRegion?region.level=0", null, function(data) {
+      var type = $(".selectMatchType");
+      type.empty().append("<option value=0>请选择类型</option>");
+      for (var i = 0; i < data.length; i++) {
+        type.append("<option value=" + data[i].code + " data-order=\"" + data[i].order + "\" >" + data[i].name + "</option>");
+      }
+      type.append("<option value=-1>其他</option>");
+    });
+  }
+  //初始化场地类型
+  function initCourtType(){
+    $.post("selRegion?region.level=0", null, function(data) {
+      var type = $(".selectCourtType");
+      type.empty().append("<option value=0>请选择类型</option>");
+      for (var i = 0; i < data.length; i++) {
+        type.append("<option value=" + data[i].code + " data-order=\"" + data[i].order + "\" >" + data[i].name + "</option>");
+      }
+      type.append("<option value=-1>其他</option>");
+    });
+  }
+  //立即初始化比赛类型
+  initMatchType();
+  var omtf = 0;//other match type flag
+  $(".selectMatchType").change(function(){
+    if($(this).parent().find(".selectMatchType option:selected").attr("value") == -1 && omtf == 0){
+      $(this).removeAttr("name").parent().find(".hide").slideDown();
+      $("#otherMatchType").attr("name","matchType");
+      omtf = 1;
+    }else{
+      $(this).attr("name","matchType").parent().find(".hide").slideUp();
+      $("#otherMatchType").removeAttr("name");
+      omtf = 0;
+      initCourtType();
     }
   });
 

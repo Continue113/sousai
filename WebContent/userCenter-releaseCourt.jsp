@@ -96,16 +96,16 @@
           <div class="control-group"> 
            <label class="control-label" for="selectMatchType">比赛类型：</label> 
            <div class="controls"> 
-            <s:include value="selectMatchType.jsp" /> 
-            <!-- /选择比赛类型 --> 
-            <input class="hide" id="inputMatchType" type="text" name="matchType" value=""/>
+            <select class="selectMatchType" name="matchType"></select>
+            <label class="hide" class="control-label" for="otherMatchType">请输入类型：</label>
+            <input class="hide" id="otherMatchType" type="text" value="" holderplace="请填写比赛类型"/>
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="selectCourtType">场地类型：</label> 
            <div class="controls"> 
             <!-- 选择场地类型 --> 
-            <select name="selectCourtType"> 
+            <select class="selectCourtType" name="courtType"> 
               <option value="0">请选择场地类型</option> 
               <option value="courtType-inner">室内</option> 
               <option value="courtType-outer">室外</option> 
@@ -119,7 +119,7 @@
               <option value="courtType-zq">其他</option> 
             </select> 
             <!-- /选择场地类型 --> 
-            <input class="hide" id="inputCourtType" type="text" name="courtType" value=""/>
+            <input class="hide" id="inputCourtType" type="text" value=""/>
            </div> 
           </div> 
           <div class="control-group"> 
