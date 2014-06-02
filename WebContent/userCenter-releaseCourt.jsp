@@ -266,11 +266,11 @@
       console.log("填写隐藏地区表单");
       //获取地区Code
       if( $(".form-inline > .selectCountry option:selected").attr("value") !=0 ){
-        $("#inputRegion").attr("value") = $(".form-inline > .selectCountry option:selected").attr("value");
+        $("#inputRegion").attr("value",$(".form-inline > .selectCountry option:selected").attr("value"));
       }else if( $(".form-inline > .selectCity option:selected").attr("value") !=0 ){
-        $("#inputRegion").attr("value") = $(".form-inline > .selectCity option:selected").attr("value");
-      }else{
-        $("#inputRegion").attr("value") = $(".form-inline > .selectProvince option:selected").attr("value");
+        $("#inputRegion").attr("value",$(".form-inline > .selectCity option:selected").attr("value"));
+      }else
+        $("#inputRegion").attr("value",$(".form-inline > .selectProvince option:selected").attr("value"));
       }
       //提交表单
       console.log("完成隐藏地区输入框填写，提交表单");
