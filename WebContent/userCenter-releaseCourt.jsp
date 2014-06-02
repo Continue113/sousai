@@ -90,13 +90,13 @@
           <div class="control-group"> 
            <label class="control-label" for="inputCourtName">场地名称：</label> 
            <div class="controls"> 
-            <input class="span5 add-on" type="text" id="inputCourtName" name="name" placeholder="如：2012年XXXXXXX杯乒乓球季度赛" data-toggle="tooltip" data-placement="top" title="" data-original-title="限定30个字符以下" required="required" /> 
+            <input class="span5 add-on" type="text" id="inputCourtName" name="court.name" placeholder="如：2012年XXXXXXX杯乒乓球季度赛" data-toggle="tooltip" data-placement="top" title="" data-original-title="限定30个字符以下" required="required" /> 
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="selectMatchType">比赛类型：</label> 
            <div class="controls"> 
-            <select class="selectMatchType" name="matchType"></select>
+            <select class="selectMatchType" name="court.matchType"></select>
             <label class="hide" class="control-label" for="otherMatchType">请输入类型：</label>
             <input class="hide" id="otherMatchType" type="text" value="" holderplace="请填写比赛类型"/>
            </div> 
@@ -105,7 +105,7 @@
            <label class="control-label" for="selectCourtType">场地类型：</label> 
            <div class="controls"> 
             <!-- 选择场地类型 --> 
-            <select class="selectCourtType" name="courtType"> 
+            <select class="selectCourtType" name="court.courtType"> 
               <option value="0">请选择场地类型</option> 
               <option value="courtType-inner">室内</option> 
               <option value="courtType-outer">室外</option> 
@@ -127,37 +127,37 @@
            <div class="controls form-inline"> 
             <s:include value="selectPCC.jsp" />
             <!-- /选择省市区三级下拉框 --> 
-            <input class="hide" id="inputRegion" type="text" name="region" value=""/>
+            <input class="hide" id="inputRegion" type="text" name="court.region" value=""/>
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="inputCourtAddress">详细地址：</label> 
            <div class="controls"> 
-            <input class="span5 add-on" type="text" id="inputCourtAddress" name="addr" placeholder="如：某地某桥某号某号楼" data-toggle="tooltip" data-placement="top" title="" data-original-title="限定30个字符以下" required="required" /> 
+            <input class="span5 add-on" type="text" id="inputCourtAddress" name="court.addr" placeholder="如：某地某桥某号某号楼" data-toggle="tooltip" data-placement="top" title="" data-original-title="限定30个字符以下" required="required" /> 
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="inputCourtTables">赛场数：</label> 
            <div class="controls"> 
-            <input class="span5" type="text" id="inputCourtTables" name="tableNum" placeholder="如：乒乓球台12张 或 足球场1个" /> 
+            <input class="span5" type="text" id="inputCourtTables" name="court.tableNum" placeholder="如：乒乓球台12张 或 足球场1个" /> 
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="inputCourtTel">联系电话：</label> 
            <div class="controls"> 
-            <input class="span5" type="text" id="inputCourtTel" name="tel" placeholder="固定电话或移动电话 或 无" /> 
+            <input class="span5" type="text" id="inputCourtTel" name="court.tel" placeholder="固定电话或移动电话 或 无" /> 
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="inputCourtPrice">价格：</label> 
            <div class="controls"> 
-            <input class="span5" type="text" id="inputCourtPrice" name="price" placeholder="如：50元/小时/场 或 免费" /> 
+            <input class="span5" type="text" id="inputCourtPrice" name="court.price" placeholder="如：50元/小时/场 或 免费" /> 
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="inputCourtOpenTime">开放时间：</label> 
            <div class="controls"> 
-            <input class="span5" type="text" id="inputCourtOpenTime" name="workTime" placeholder="如：每天9:00-18:00" /> 
+            <input class="span5" type="text" id="inputCourtOpenTime" name="court.workTime" placeholder="如：每天9:00-18:00" /> 
            </div> 
           </div> 
           <div class="control-group"> 
@@ -273,7 +273,7 @@
         $("#inputRegion").attr("value",$(".form-inline > .selectProvince option:selected").attr("value"));
       }
       //提交表单
-      //console.log("完成隐藏地区输入框填写,提交表单");
+      alert("完成隐藏地区输入框填写,提交表单");
       $("#releaseCourtForm").submit();
     });
     //tinymce
