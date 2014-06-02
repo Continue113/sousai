@@ -105,7 +105,7 @@
            <label class="control-label" for="selectCourtType">场地类型：</label> 
            <div class="controls"> 
             <!-- 选择场地类型 --> 
-            <select class="selectCourtType" name="court.courtType"> 
+            <select class="selectCourtType" name="court.courtType1"> 
               <option value="0">请选择场地类型</option> 
               <option value="courtType-inner">室内</option> 
               <option value="courtType-outer">室外</option> 
@@ -127,7 +127,7 @@
            <div class="controls form-inline"> 
             <s:include value="selectPCC.jsp" />
             <!-- /选择省市区三级下拉框 --> 
-            <input class="hide" id="inputRegion" type="text" name="court.region" value=""/>
+            <input class="hide" id="inputRegion" type="text" name="court.region1" value=""/>
            </div> 
           </div> 
           <div class="control-group"> 
