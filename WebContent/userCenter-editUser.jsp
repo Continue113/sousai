@@ -16,7 +16,7 @@
   <![endif]-->
   <style>
   /** 更改密码label排列方式 **/
-  .control-label-changePwd{margin: 5px 0 0 0;}
+  .control-label-changePwd {margin: 5px 0 0 0;}
   /** 当前头像 **/
   #editUserForm .crtUserIcon {
   display: inline-block;
@@ -33,12 +33,13 @@
   -o-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
   }
-  #editUserForm .crtUserIcon > img{width: 100px;height: 100px;}
+  #editUserForm .crtUserIcon > img {width: 100px;height: 100px;}
   /** 选中图片边框为绿色 **/
   .active{border-color: #51a351;}
   /** 缩略图**/
-  .userCenter .thumbnail img{width: 50px;height: 50px;}
+  .userCenter .thumbnail img {width: 50px;height: 50px;}
   #imghead {filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=image);height: 70px;}
+  .fileinput-button {margin-top: 5px;}
   </style>
 
 </head>
@@ -122,14 +123,18 @@
            <label class="control-label" for="userIcon">头像设置：</label> 
            <div class="controls"> 
             <div class="crtUserIcon"><img src="img/defaultImg.png" /></div>
+           </div>
+           <div class="controls"> 
             <span class="btn fileinput-button"><i class="icon-plus"></i><span>选择图片</span></span>
-            <table class=" span5">
+            <span class="error">请上传小于 200KB 的 jpg、jpeg、png、gif 格式的图片。</span>
+            <table class="table">
               <tbody class="files">
               <tr class="hide">
                 <td><span id="preview"><img id="imghead" src="img/loading.gif" /></span></td>
                 <td><span class="name">name</span></td>
                 <td><span class="size">size</span></td>
-                <td><span class="btn" id="start"><i class="icon-plus"></i>上传</span><span class="btn" id="cancel"><i class="icon-ban-circle"></i>取消</span></td>
+                <td><span class="btn" id="start"><i class="icon-upload"></i>上传</span></td>
+                <td><span class="btn" id="cancel"><i class="icon-ban-circle"></i>取消</span></td>
               </tr>
               </tbody>
             </table>
@@ -320,41 +325,43 @@ function ajaxFileUpload() {
   return false;
 }
 //验证上传图片格式，大小，并在通过后显示图片预览
-function imgValid(img){
-   var imgname = img.files[0].name;  
-   var imgsize = img.files[0].size;  
-   var imgsizeMB = (imgsize/1024/1024).toFixed(2);
-   var imgtype = img.files[0].type; 
-   //console.log(imgtype);
-   if(imgsize >= 1*1024*1024) {
-    alert("照片大小为 "+imgsizeMB+"MB,照片太大了，请上传小于1MB的照片.");
-   }else if(imgtype !== "image/png" && imgtype !== "image/gif" && imgtype !== "image/jpg" && imgtype !== "image/jpeg" ){
-    alert("文件格式为 "+imgtype+",请上传png,gif,jpg,jpeg格式的照片.");
-   }else{
-    $(".files .hide").find(".name").text(imgname);
-    $(".files .hide").find(".size").text(imgsizeMB+"MB");
-    $(".files .hide").fadeIn();
-    alert("1");
-    previewImage(img);
-  }
-}
-//图片上传预览 IE是用了滤镜。
-function previewImage(file){
-  var div = document.getElementById('preview');  
-  var img = document.getElementById('imghead');  
-  if (file.files && file.files[0]){
-    //img.onload = function(){}
+function imgValid(file){
+  var div = document.getElementById('preview'),
+      img = document.getElementById('imghead'),
+      fileName = $(".files .hide").find(".name"),
+      fileSize = $(".files .hide").find(".size"),
+      imgname,imgsize,imgsizeMB,imgtype;
+  if(file.files && file.files[0]){
+    imgname = file.files[0].name,
+    imgsize = file.files[0].size,
+    imgsizeKB = (imgsize/1024).toFixed(2),
+    imgtype = file.files[0].type; 
+    //console.log(imgtype);
+    if(imgsize >= 200*1024) {
+     alert("照片大小为 "+imgsizeKB+"KB,照片太大了，请上传小于200KB的照片.");
+    }else if(imgtype !== "image/png" && imgtype !== "image/gif" && imgtype !== "image/jpg" &&  imgtype !== "image/jpeg" ){
+     alert("文件格式为 "+imgtype+",请上传png,gif,jpg,jpeg格式的照片.");
+    }else{
+     fileName.text(imgname);
+     fileSize.text(imgsizeKB+"KB");
+     $(".files .hide").fadeIn();
+    }
     var reader = new FileReader();  
     reader.onload = function(evt){img.src = evt.target.result;}  
-    reader.readAsDataURL(file.files[0]);  
+    reader.readAsDataURL(file.files[0]);
   }else {
-    alert("22");
-    var sFilter='filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="'
-    file.select();  
-    var src = document.selection.createRange().text;  
-    img.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = src;  
-    div.innerHTML = "<div id=imghead style='width:70px;"+sFilter+src+"\"'></div>";  
-  }  
+    //ie 只能得到文件名
+    var nfile = $("#imgInput").val();//fake路径
+    var fileText =nfile.substring(nfile.lastIndexOf("."),nfile.length);//文件后缀名
+    imgname = nfile.substring(nfile.lastIndexOf("\\")+1,nfile.length);//文件名;
+    imgtype =fileText.toLowerCase();//转化为统一小写后缀名.jpg等
+    if(imgtype != ".png" && imgtype != ".gif" && imgtype != ".jpg" && imgtype != ".jpeg" ){
+        alert("文件格式为 "+imgtype+",请上传png,gif,jpg,jpeg格式的照片.");
+    }
+    fileName.text(imgname);
+    fileSize.text("");
+    $(".files .hide").fadeIn();
+  }
 }
 </script>
 </body></html>

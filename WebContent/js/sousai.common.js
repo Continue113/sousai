@@ -176,7 +176,7 @@ $(function() {
   });
   //初始化比赛类型
   function initMatchType(){
-    $.post("selRegion?region.level=0", null, function(data) {
+    $.post("url", null, function(data) {
       var type = $(".selectMatchType");
       type.empty().append("<option value=0>请选择类型</option>");
       for (var i = 0; i < data.length; i++) {
@@ -187,7 +187,7 @@ $(function() {
   }
   //初始化场地类型
   function initCourtType(){
-    $.post("selRegion?region.level=0", null, function(data) {
+    $.post("url", null, function(data) {
       var type = $(".selectCourtType");
       type.empty().append("<option value=0>请选择类型</option>");
       for (var i = 0; i < data.length; i++) {

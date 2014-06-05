@@ -90,7 +90,8 @@
           <div class="control-group"> 
            <label class="control-label" for="inputCourtName">场地名称：</label> 
            <div class="controls"> 
-            <input class="span5 add-on" type="text" id="inputCourtName" name="court.name" placeholder="如：2012年XXXXXXX杯乒乓球季度赛" data-toggle="tooltip" data-placement="top" title="" data-original-title="限定30个字符以下" required="required" /> 
+            <input class="span5" type="text" id="inputCourtName" name="court.name" placeholder="如：2012年XXXXXXX杯乒乓球季度赛"/> 
+            <label class="hide error">场地名称不能为空！</label>
            </div> 
           </div> 
           <div class="control-group"> 
@@ -133,7 +134,8 @@
           <div class="control-group"> 
            <label class="control-label" for="inputCourtAddress">详细地址：</label> 
            <div class="controls"> 
-            <input class="span5 add-on" type="text" id="inputCourtAddress" name="court.addr" placeholder="如：某地某桥某号某号楼" data-toggle="tooltip" data-placement="top" title="" data-original-title="限定30个字符以下" required="required" /> 
+            <input class="span5" type="text" id="inputCourtAddress" name="court.addr" placeholder="如：某地某桥某号某号楼"/>
+            <label class="hide error">场地地址不能为空！</label>
            </div> 
           </div> 
           <div class="control-group"> 
@@ -166,62 +168,19 @@
             <div class="fileupload-buttonbar"> 
              <span class="btn plus"><i class="icon-plus"></i><span>添加图片栏</span></span> 
              <span class="btn allCancel"> <i class="icon-ban-circle"></i> <span>全部取消</span> </span> 
+             <span class="error">请上传小于 200KB 的 jpg、jpeg、png、gif 格式的图片。</span>
              <table class="table table-striped">
               <tbody class="files">
               <tr id="tr1">
                 <td>
-                  <span class="btn fileinput-button"><i class="icon-plus"></i><span>选择图片</span></span>
-                  <input class="hide fileImage" type="file" name="images" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this,1)"/>
+                  <span class="btn fileinput-button" onclick="selectPic(1)"><i class="icon-plus"></i><span>选择图片</span></span>
+                  <input class="hide fileImage" id="fileImage1" type="file" name="images" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this,1)"/>
                   <input class="hide fileImageNames" type="text" name="imgNames" value=""/>
                 </td>
                 <td><span class="preview" id="preview1"></span></td>
                 <td><span class="name"></span></td>
                 <td><span class="size"></span></td>
-                <td><span class="btn cancel"><i class="icon-ban-circle"></i>取消</span></td>
-              </tr>
-              <tr class="hide" id="tr2">
-                <td>
-                  <span class="btn fileinput-button"><i class="icon-plus"></i><span>选择图片</span></span>
-                  <input class="hide fileImage" type="file" name="images" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this,2)"/>
-                  <input class="hide fileImageNames" type="text" name="imgNames" value=""/>
-                </td>
-                <td><span class="preview" id="preview2"></span></td>
-                <td><span class="name"></span></td>
-                <td><span class="size"></span></td>
-                <td><span class="btn cancel"><i class="icon-ban-circle"></i>取消</span></td>
-              </tr>
-              <tr class="hide" id="tr3">
-                <td>
-                  <span class="btn fileinput-button"><i class="icon-plus"></i><span>选择图片</span></span>
-                  <input class="hide fileImage" type="file" name="images" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this,3)"/>
-                  <input class="hide fileImageNames" type="text" name="imgNames" value=""/>
-                </td>
-                <td><span class="preview" id="preview3"></span></td>
-                <td><span class="name"></span></td>
-                <td><span class="size"></span></td>
-                <td><span class="btn cancel"><i class="icon-ban-circle"></i>取消</span></td>
-              </tr>
-              <tr class="hide" id="tr4">
-                <td>
-                  <span class="btn fileinput-button"><i class="icon-plus"></i><span>选择图片</span></span>
-                  <input class="hide fileImage" type="file" name="images" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this,4)"/>
-                  <input class="hide fileImageNames" type="text" name="imgNames" value=""/>
-                </td>
-                <td><span class="preview" id="preview4"></span></td>
-                <td><span class="name"></span></td>
-                <td><span class="size"></span></td>
-                <td><span class="btn cancel"><i class="icon-ban-circle"></i>取消</span></td>
-              </tr>
-              <tr class="hide" id="tr5">
-                <td>
-                  <span class="btn fileinput-button"><i class="icon-plus"></i><span>选择图片</span></span>
-                  <input class="hide fileImage" type="file" name="images" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this,5)"/>
-                  <input class="hide fileImageNames" type="text" name="imgNames" value=""/>
-                </td>
-                <td><span class="preview" id="preview5"></span></td>
-                <td><span class="name"></span></td>
-                <td><span class="size"></span></td>
-                <td><span class="btn cancel"><i class="icon-ban-circle"></i>取消</span></td>
+                <td><span class="btn cancel" onclick="deleteTr(1)"><i class="icon-ban-circle"></i>取消</span></td>
               </tr>
               </tbody>
              </table> 
@@ -234,7 +193,7 @@
           <textarea id="inputCourtInfo" name="intro"></textarea>
           <div class="control-group"> 
            <div class="controls"> 
-            <button type="button" class="btn btn-success pull-right" id="Rls"><span>确定发布</span></button> 
+            <button type="button" class="btn btn-success pull-right" id="rlsCourt"><span>确定发布</span></button> 
             <button type="reset" class="btn pull-right"><span>情况内容</span></button> 
             <button type="button" class="btn pull-right">预览</button> 
            </div> 
@@ -256,14 +215,21 @@
   <!-- /container --> 
   <s:include value="footer.jsp" />
   <!-- 页首导航条 --> 
-  <!--<script src="js/jquery.validate.min.js"></script>--> 
   <script src="tinymce/jquery.tinymce.min.js"></script> 
   <script src="tinymce/tinymce.min.js"></script> 
   <script>
   $(function(){
     //点击确认发布，获取地区，比赛类型，场地类型
-    $("#Rls").click(function(){
-      console.log("填写隐藏地区表单");
+    $("#rlsCourt").click(function(){
+      //检测场地名称 场地地址
+      if($("#inputCourtName").val() == ""){
+        $("#inputCourtName").focus().parent().find("label").slideDown();
+        return false;
+      }else if($("#inputCourtAddress").val() == ""){
+        $("#inputCourtAddress").focus().parent().find("label").slideDown();
+        return false;
+      }
+      //console.log("填写隐藏地区表单");
       //获取地区Code
       if( $(".form-inline > .selectCountry option:selected").attr("value") !=0 ){
         $("#inputRegion").attr("value",$(".form-inline > .selectCountry option:selected").attr("value"));
@@ -295,217 +261,106 @@
         $("#" + editor.id).valid();
       }
     });
-    //场地验证
-    /*var courtValidator = $("#releaseCourtForm").submit(function() {
-      // update underlying textarea before submit validation
-      tinyMCE.triggerSave();
-    }).validate({
-      //submitHandler: function(){
-      //  console.log("通过验证，正在发送数据...");
-      //  $.ajax({
-      //    url: "uploadCourtPic?imgNames=fack1&images=1111",
-      //    type: "POST",
-      //    dataType: 'json',
-      //    data: null,
-      //    success: function(rspdata) {
-      //      alert(rspdata);
-      //    },
-      //    error: function() {
-      //      alert("抱歉，发送数据出错了，请重新输入。");
-      //    },
-      //    });
-      //},
-      ignore: ".ignore",
-      rules:{
-        name:{
-          minlength: 6,
-          maxlength: 30
-        },
-        addr:{
-          minlength: 6,
-          maxlength: 30
-        }
-      },
-      messages: {
-      name: {
-        required: "请输入场地名称",
-        minlength: "场地名称至少6个字符",
-        maxlength: "场地名称至多30个字符"
-      },
-      addr: {
-        required: "请输入场地地址",
-        minlength: "场地地址至少6个字符",
-        maxlength: "场地地址至多30个字符"
-      },      
-      selectMatchType: "请选择一种比赛类型",
-      selectCourtType: "请选择一种场地类型",
-      intro: "请输入场地简介"
-    },
-    errorPlacement: function(error, element){
-        if (element.is("textarea")) {
-          error.insertAfter($("label[for='inputinfo']"));
-        }
-        else error.insertAfter(element);
-    }
-  });
-
-    courtValidator.focusInvalid = function() {
-      // put focus on tinymce on submit validation
-      if( this.settings.focusInvalid ) {
-        try {
-          var toFocus = $(this.findLastActive() || this.errorList.length && this.errorList[0].element || []);
-          if (toFocus.is("textarea")) {
-            tinyMCE.get(toFocus.attr("id")).focus();
-          } else {
-            toFocus.filter(":visible").focus();
-          }
-        } catch(e) {
-          // ignore IE throwing errors when focusing hidden elements
-        }
-      }
-    }
-    //清空场地表单
-    $('button[type="reset"]').click(function(){
-      courtValidator.resetForm();
-    });*/
     //添加选项
-    var trNumb = 1;
     $(".plus").click(function(){
-      if(trNumb == 5){
+      if(trNumb == 3){
         alert("抱歉，每个场地最多只可以上传5张图片！");
       }else{
         trNumb++;
+        $(".files").append('<tr class="hide" id="tr'+trNumb+'"><td><span class="btn fileinput-button"  onclick="selectPic('+trNumb+')"><i class="icon-plus"></i><span>选择图片</span></span><input class="hide fileImage" id="fileImage'+trNumb+'" type="file" name="images" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this,'+trNumb+')"/><input class="hide fileImageNames" type="text" name="imgNames" value=""/></td><td><span class="preview" id="preview'+trNumb+'"></span></td><td><span class="name"></span></td><td><span class="size"></span></td><td><span class="btn cancel" onclick="deleteTr('+trNumb+')"><i class="icon-ban-circle"></i>取消</span></td></tr>')
         $("#tr"+trNumb).fadeIn();
       }
     });
     //全部取消
     $(".allCancel").on('click',function(event){
       //表格行隐藏并清空所有的输入框，文件名称，文件大小
-      $(".files > tr").fadeOut().find("input").val("").end().find(".name").text("").end().find("size").text("");
+      $(".files > tr").fadeOut();
+      setTimeout(function(){
+        $(".files > tr").remove();
+      },1000);
       trNumb = 0;
     });
-    $(".fileinput-button").on("click", function(event) {
-      //event.preventDefault();
-      console.log("选择图片");
-      $(this).parent().find('input[type="file"]').trigger('click');
-    });
-    //取消上传
-    $('.cancel').on('click',function(event){
-      console.log("取消");
-      $(this).parent().parent().fadeOut().find("input").val("").end().find(".name").text("").end().find("size").text("");
-      trNumb--;
-    });
   })
-    //检测是否支持HTML5 File API 
-    window.URL = window.URL || window.webkitURL;
-    //验证上传图片格式，大小，并在通过后显示图片预览
-    function imgValid(obj,id) {
-      var files = obj.files,
-            img = new Image(), imgname, imgsize, imgsizeMB, imgtype, 
-      previewId = "preview" + id,
-       fileList = document.getElementById(previewId),
-       inputNames = $("#tr"+id+' input[type="text"]'),
-       fileName = $("#tr"+id+" .name"),
-       fileSize = $("#tr"+id+" .size"); //jquery对象转换为DOM对象
+  //记录表格中的上传图片的数量
+  var trNumb = 1;
+  //验证上传图片格式，大小，并在通过后显示图片预览
+  function imgValid(obj,id) {
+    var files = obj.files,
+          img = new Image(), imgname, imgsize, imgsizeMB, imgtype, 
+    previewId = "preview" + id,
+     fileList = document.getElementById(previewId),
+     inputNames = $("#tr"+id+' input[type="text"]'),
+     fileName = $("#tr"+id+" .name"),
+     fileSize = $("#tr"+id+" .size"); //jquery对象转换为DOM对象
 
-      if(window.URL){
-        //File API
+    if(obj.files && obj.files[0]){
+      //清除上一次的预览图片
+      $(fileList).find("img").remove();
+      var reader = new FileReader();
+      reader.readAsDataURL(files[0]);
+      reader.onload = function(e){
+        //alert(files[0].name + "," +e.total + " bytes");
         imgname = files[0].name;
         imgtype = files[0].type;
-        imgsize = files[0].size;
-        imgsizeMB = (imgsize/1024/1024).toFixed(2);
-        if(imgsize >= 1*1024*1024) {
-          alert("照片大小为 "+imgsizeMB+"MB,照片太大了，请上传小于1MB的照片.");
+        imgsize = e.total;
+        imgsizeKB = (imgsize/1024).toFixed(2);
+        if(imgsize >= 200*1024) {
+          alert("照片大小为 "+imgsizeKB+"KB,照片太大了，请上传小于200KB的照片.");
         }else if(imgtype != "image/png" && imgtype != "image/gif" && imgtype != "image/jpg" && imgtype != "image/jpeg" ){
           alert("文件格式为 "+imgtype+",请上传png,gif,jpg,jpeg格式的照片.");
         }else{
-          //alert(files[0].name + "," + files[0].size + " bytes");
-          fileName.text(imgname);
-          fileSize.text(imgsizeMB+"MB");
-          inputNames.attr("value",imgname);
-          //imgHtml += window.URL.createObjectURL(files[0]) +"\" />"
-          img.src = window.URL.createObjectURL(files[0]); //创建一个objectURL，并不是你的本地路径
+          img.src = this.result;
           //img.width = 100;
-          img.onload = function(e) {
-             window.URL.revokeObjectURL(this.src); //图片加载后，释放objectURL
-          }
-          //清除上一次的预览图片
-          $(fileList).find("img").remove();
           fileList.appendChild(img);
+          fileName.text(imgname);
+          fileSize.text(imgsizeKB+"KB");
+          inputNames.attr("value",imgname);
         }
-      }else if(window.FileReader){
-        //opera不支持createObjectURL/revokeObjectURL方法。我们用FileReader对象来处理
-        //清除上一次的预览图片
-        $(fileList).find("img").remove();
-        var reader = new FileReader();
-        reader.readAsDataURL(files[0]);
-        reader.onload = function(e){
-          //alert(files[0].name + "," +e.total + " bytes");
-          imgname = files[0].name;
-          imgtype = files[0].type;
-          imgsize = e.total;
-          imgsizeMB = (imgsize/1024/1024).toFixed(2);
-          if(imgsize >= 1*1024*1024) {
-            alert("照片大小为 "+imgsizeMB+"MB,照片太大了，请上传小于1MB的照片.");
-          }else if(imgtype != "image/png" && imgtype != "image/gif" && imgtype != "image/jpg" && imgtype != "image/jpeg" ){
-            alert("文件格式为 "+imgtype+",请上传png,gif,jpg,jpeg格式的照片.");
-          }else{
-            img.src = this.result;
-            //img.width = 100;
-            fileList.appendChild(img);
-            fileName.text(imgname);
-            fileSize.text(imgsizeMB+"MB");
-            inputNames.attr("value",imgname);
-          }
-        }
-      }else{
-        //ie
-        obj.select();
-        obj.blur();
-        var nfile = document.selection.createRange().text;//IE下为文件路径
-        var fileText =nfile.substring(nfile.lastIndexOf("."),nfile.length);//文件后缀名
-        document.selection.empty();
-        imgname = nfile;
-        imgtype =fileText.toLowerCase();//转化为统一小写后缀名.jpg等
-        imgsize = img.fileSize;
-        imgsizeMB = (imgsize/1024/1024).toFixed(2);
-        img.src = nfile;
-        //img.width = 100;
-        img.onload=function(){
-          //alert(nfile+","+img.fileSize + " bytes");
-          if(imgsize >= 1*1024*1024) {
-            alert("照片大小为 "+imgsizeMB+"MB,照片太大了，请上传小于1MB的照片.");
-          }else if(imgtype != ".png" && imgtype != ".gif" && imgtype != ".jpg" && imgtype != ".jpeg" ){
-            alert("文件格式为 "+imgtype+",请上传png,gif,jpg,jpeg格式的照片.");
-          }
-        }
-        $(fileList).find("img").remove();
-        fileList.appendChild(img);
-        //fileList.style.filter="progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='image',src='"+nfile+" style=\"width:120px\"')";
-        fileName.text(imgname);
-        fileSize.text(imgsizeMB+"MB");
-        inputNames.attr("value",imgname);
       }
-      //场地预览
-      function courtPreview(){
-        //定义变量名 场地名称 比赛类型（大类、类型） 场地类型 场地区域（省、市、区） 详细地址 赛场数 联系电话 价格 开放时间 场地图片 
-        var courtName = $("#inputCourtName").val(),
-            matchTypeGenera = $("selectMatchType option:selected").val(),
-            matchType,
-            courtType = $('select[name="courtType"] option:selected').val(),
-            courtProvince = $(".selectProvince option:selected").val(),
-            courtCity = $(".selectCity option:selected").val(),
-            courtCountry = $(".selectCountry option:selected").val(),
-            courtAddress = $("#inputCourtAddress").val(),
-            courtTables = $("#inputCourtTables").val(),
-            courtTel = $("#inputCourtTel").val(),
-            courtPrice = $("#inputCourtPrice").val(),
-            courtOpenTime = $("#inputCourtOpenTime").val(),
-            courtPics = $(".files .preview > img").attr("src");
-        //将内容发送到预览页面
-
+    }else{
+      //ie 只能得到文件名
+      var nfile = $("#tr"+id+' input[type="file"]').val();//fake路径
+      var fileText =nfile.substring(nfile.lastIndexOf("."),nfile.length);//文件后缀名
+      imgname = nfile.substring(nfile.lastIndexOf("\\")+1,nfile.length);//文件名;
+      imgtype =fileText.toLowerCase();//转化为统一小写后缀名.jpg等
+      if(imgtype != ".png" && imgtype != ".gif" && imgtype != ".jpg" && imgtype != ".jpeg" ){
+          alert("文件格式为 "+imgtype+",请上传png,gif,jpg,jpeg格式的照片.");
       }
+      fileName.text(imgname);
+      fileSize.text("");
+      inputNames.attr("value",imgname);
     }
-    </script>
+  }
+  //场地预览
+  function courtPreview(){
+    //定义变量名 场地名称 比赛类型（大类、类型） 场地类型 场地区域（省、市、区） 详细地址 赛场数 联系电话 价格 开放时间 场地图片 
+    var courtName = $("#inputCourtName").val(),
+        matchTypeGenera = $("selectMatchType option:selected").val(),
+        matchType,
+        courtType = $('select[name="courtType"] option:selected').val(),
+        courtProvince = $(".selectProvince option:selected").val(),
+        courtCity = $(".selectCity option:selected").val(),
+        courtCountry = $(".selectCountry option:selected").val(),
+        courtAddress = $("#inputCourtAddress").val(),
+        courtTables = $("#inputCourtTables").val(),
+        courtTel = $("#inputCourtTel").val(),
+        courtPrice = $("#inputCourtPrice").val(),
+        courtOpenTime = $("#inputCourtOpenTime").val(),
+        courtPics = $(".files .preview > img").attr("src");
+    //将内容发送到预览页面
+  }
+  //选择图片
+  function selectPic(id){
+    $("#fileImage"+id).trigger('click');
+  }
+  //取消上传
+  function deleteTr(id){
+    $("#tr"+id).fadeOut();
+    setTimeout(function(){
+      $("#tr"+id).remove();
+    },1000);
+    trNumb--;
+  }
+  </script>
  </body>
 </html>
