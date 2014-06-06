@@ -30,26 +30,6 @@
     </div> 
     <s:include value="searchbox.jsp" />
     <!-- 搜索框 --> 
-    <!--   <div class="span7"> 
-     <ul class="nav nav-tabs searchboxMenu"> 
-      <li class="active"><a href="#searchbox-match" data-toggle="tab">比赛</a></li> 
-      <li><a href="#searchbox-field" data-toggle="tab">场地</a></li> 
-     </ul> 
-     <div class="tab-content"> 
-      <div id="searchbox-match" class="tab-pane active"> 
-       <div class="input-append"> 
-        <input type="text" class="span5" placeholder="输入您想要的比赛" /> 
-        <button class="btn btn-success btn-matchsearch-append" type="button"><i class="icon-search icon-white"></i>&nbsp;搜&nbsp;索</button> 
-       </div> 
-      </div> 
-      <div id="searchbox-field" class="tab-pane"> 
-       <div class="input-append"> 
-        <input type="text" class="span5" placeholder="输入您要找的场地" /> 
-        <button class="btn btn-success btn-matchsearch-append" type="button"><i class="icon-search icon-white"></i>&nbsp;搜&nbsp;索</button> 
-       </div> 
-      </div> 
-     </div> 
-    </div> --> 
    </div>
    <!-- /row --> 
    <div class="row"> 
@@ -194,8 +174,8 @@
           <div class="control-group"> 
            <div class="controls"> 
             <button type="button" class="btn btn-success pull-right" id="rlsCourt"><span>确定发布</span></button> 
-            <button type="reset" class="btn pull-right"><span>情况内容</span></button> 
-            <button type="button" class="btn pull-right">预览</button> 
+            <button type="reset" class="btn pull-right"><span>重置</span></button> 
+            <button type="button" class="btn pull-right" onclick="courtPreview()">预览</button> 
            </div> 
           </div> 
         </form> 
@@ -334,20 +314,23 @@
   //场地预览
   function courtPreview(){
     //定义变量名 场地名称 比赛类型（大类、类型） 场地类型 场地区域（省、市、区） 详细地址 赛场数 联系电话 价格 开放时间 场地图片 
-    var courtName = $("#inputCourtName").val(),
-        matchTypeGenera = $("selectMatchType option:selected").val(),
-        matchType,
-        courtType = $('select[name="courtType"] option:selected').val(),
-        courtProvince = $(".selectProvince option:selected").val(),
-        courtCity = $(".selectCity option:selected").val(),
-        courtCountry = $(".selectCountry option:selected").val(),
-        courtAddress = $("#inputCourtAddress").val(),
-        courtTables = $("#inputCourtTables").val(),
-        courtTel = $("#inputCourtTel").val(),
-        courtPrice = $("#inputCourtPrice").val(),
-        courtOpenTime = $("#inputCourtOpenTime").val(),
-        courtPics = $(".files .preview > img").attr("src");
+    //var courtName = $("#inputCourtName").val(),
+    //    matchTypeGenera = $("selectMatchType option:selected").val(),
+    //    matchType,
+    //    courtType = $('select[name="courtType"] option:selected').val(),
+    //    courtProvince = $(".selectProvince option:selected").val(),
+    //    courtCity = $(".selectCity option:selected").val(),
+    //    courtCountry = $(".selectCountry option:selected").val(),
+    //    courtAddress = $("#inputCourtAddress").val(),
+    //    courtTables = $("#inputCourtTables").val(),
+    //    courtTel = $("#inputCourtTel").val(),
+    //    courtPrice = $("#inputCourtPrice").val(),
+    //    courtOpenTime = $("#inputCourtOpenTime").val(),
+    //    courtPics = $(".files .preview > img").attr("src");
     //将内容发送到预览页面
+    //改变form表单action
+    $("#releaseCourtForm").attr("action","previewCourtSearchDetail.jsp").attr("target","_blank").submit().attr("action","relCourt").removeAttr("target");
+    console.log("提交到另一个页面，并改回原来action。")
   }
   //选择图片
   function selectPic(id){

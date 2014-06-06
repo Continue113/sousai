@@ -130,7 +130,7 @@
             <table class="table">
               <tbody class="files">
               <tr class="hide">
-                <td><span id="preview"><img id="imghead" src="img/loading.gif" /></span></td>
+                <td><span id="preview"><img id="imghead" src="" /></span></td>
                 <td><span class="name">name</span></td>
                 <td><span class="size">size</span></td>
                 <td><span class="btn" id="start"><i class="icon-upload"></i>上传</span></td>
@@ -157,10 +157,10 @@
           </div> 
           <div class="control-group">
            <div class="controls"> 
-            <input type="submit" value="保存修改" class="btn btn-success" /> 
-            <input type="button" value="重置" id="resetEditUserForm" class="btn" />
+            <button type="submit" class="btn btn-success">保存修改</button>
+            <button type="button" class="btn" id="resetEditUserForm">重置</button>
             <!-- 隐藏重置表单按钮 -->
-            <input type="reset" id="resetBtn" class="btn hide" />  
+            <button type="reset" id="resetBtn" class="btn hide"></button>
            </div>
           </div> 
          </fieldset> 
@@ -279,7 +279,7 @@ $(function () {
     $("#resetEditUserForm").click(function(){
       var resetbtn = confirm("确定重置吗？");
       if (resetbtn == true){
-        $("#resetBtn").click();
+        $("#resetBtn").trigger('click');
         editUserValidator.resetForm();
       }
     });
@@ -292,7 +292,6 @@ $(function () {
       ajaxFileUpload();
     });
     $("#cancle").click(function(){
-      $("#uploadImgForm > .cancle").trigger("click").parents().find(".start").removeAttr("disabled");
       $(".files .hide").fadeOut();
     });
 })
