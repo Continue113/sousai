@@ -301,8 +301,11 @@ function ajaxFileUpload() {
   }).ajaxComplete(function(){
     $(this).remove("img");
   });
+  //获得图片后缀名
+  var picExt = $("#uploadImgForm > input:file").val();
+  picExt = picExt.substring(picExt.lastIndexOf(".")+1,picExt.length);
   $.ajaxFileUpload({
-    url: 'uploadPic',
+    url: 'uploadUserPic?imgType='+picExt,
     secureuri: false,
     fileElementId: 'imgInput',
     dataType: 'json',
@@ -340,7 +343,7 @@ function imgValid(file){
      alert("照片大小为 "+imgsizeKB+"KB,照片太大了，请上传小于200KB的照片.");
     }else if(imgtype !== "image/png" && imgtype !== "image/gif" && imgtype !== "image/jpg" &&  imgtype !== "image/jpeg" ){
      alert("文件格式为 "+imgtype+",请上传png,gif,jpg,jpeg格式的照片.");
-    }else{
+    }else{      
      fileName.text(imgname);
      fileSize.text(imgsizeKB+"KB");
      $(".files .hide").fadeIn();
