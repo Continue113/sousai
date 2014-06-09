@@ -28,11 +28,12 @@ public class UpdateUserAction extends UserBaseAction
 	@Override
 	public String execute() throws Exception
 	{
-
+		MyPrint.myPrint("in update user");
 		String result = "true";
 		User tempUser = new User((UserBean)ActionContext.getContext().getSession().get("userBean"));
 		String pwd = getUser().getPwd();
-		if(!pwd.isEmpty())
+		MyPrint.myPrint("new pwd = " + pwd);
+		if(pwd != null && !pwd.isEmpty())
 		{
 			if(MyValidation.validatePwd(pwd))
 			{
@@ -44,7 +45,8 @@ public class UpdateUserAction extends UserBaseAction
 			}
 		}
 		String email = getUser().getEmail();
-		if(!email.isEmpty())
+		MyPrint.myPrint("new email = " + email);
+		if(email != null && !email.isEmpty())
 		{
 			if(MyValidation.validateEmail(email))
 			{

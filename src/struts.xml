@@ -52,12 +52,24 @@
 			class="org.sousai.action.UpdateUserAction">
 		</action>
 		
-		<!-- 上传图片的Action -->
-		<action name="uploadPic"
-			class="org.sousai.action.UploadPicAction">
+		<!-- 上传用户头像的Action -->
+		<action name="uploadUserPic"
+			class="org.sousai.action.UploadUserPicAction">
 		</action>
 		
+		<!-- 同时上传多张场地图片的action -->
+		<action name="uploadCourtPic"
+			class="org.sousai.action.UploadCourtPicAction">
+			<result>main.jsp</result> 
+		</action>
+		
+		<!-- 发布场地的action -->
+		<action name="relCourt"
+			class="org.sousai.action.RelCourtAction">
+			<result>main.jsp</result>
+		</action>
 	</package>
+
 <!--	<package name="ajax" extends="json-default">
 		<action name="uploadPic"
 			class="org.sousai.action.UploadPicAction">

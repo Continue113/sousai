@@ -1,8 +1,17 @@
 package org.sousai.service.impl;
 
+import java.awt.Image;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.struts2.ServletActionContext;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.sousai.service.UserManager;
 import org.sousai.tools.*;
 import org.sousai.dao.*;
@@ -10,6 +19,9 @@ import org.sousai.domain.*;
 import org.sousai.vo.*;
 
 import com.opensymphony.xwork2.ActionContext;
+import com.sun.jimi.core.Jimi;
+import com.sun.jimi.core.JimiException;
+import com.sun.jimi.core.JimiReader;
 
 /**
  * Description:
@@ -187,16 +199,80 @@ public class UserManagerImpl implements UserManager
 	}
 
 	@Override
-	public int uploadCourtPic(CourtPic courtPic) {
+	public String uploadPic(int flag, File[] images, String[] imgNames, Long UserId)
+	{
 		// TODO Auto-generated method stub
-		try{
-			courtPicDao.save(courtPic);
-		}
-		catch(Exception e)
+		MyPrint.myPrint("in uploadPicAction");
+		if(images != null && imgNames != null)
 		{
-			e.printStackTrace();
+			MyPrint.myPrint("images not null!");
+			try {
+				ServletActionContext.getRequest().setCharacterEncoding("UTF-8");
+			} catch (UnsupportedEncodingException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				return "fail";
+			}
+	        String realPath = ServletActionContext.getServletContext().getRealPath("/files");
+	        realPath += "/" + UserId;
+	        //判断是用户头像还是场地图片
+	        if(flag == USER_PIC)
+	        {
+	        	//判断图片数量是否为1
+	        	if(images.length>1 || imgNames.length>1)
+	        	{
+	        		return "TooManyUserPic";
+	        	}
+	        	realPath += "/UserHead";
+	        	File savedir=new File(realPath);
+	            if(!savedir.getParentFile().exists())
+	            {
+	                savedir.getParentFile().mkdirs();
+	            }
+	            File savefile = new File(savedir, imgNames[0]);
+                try {
+					FileUtils.copyFile(images[0], savefile);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return "fail";
+				}
+	        }
+	        else if(flag == COURT_PIC)
+	        {
+
+				if(images.length>3 || imgNames.length>3)
+				{
+					return "TooManyPicsOrNames";
+				}
+	        	realPath += "/CourtPic";
+	        	File savedir=new File(realPath);
+	            if(!savedir.getParentFile().exists())
+	            {
+	                savedir.getParentFile().mkdirs();
+	            }
+	            for(int i=0;i<images.length;i++){
+	            	MyPrint.myPrint("i = " + i);
+	            	MyPrint.myPrint("imgNames.length = " + imgNames.length);
+	            	MyPrint.myPrint("imgNames["+i+"] = "+imgNames[i]);
+	                File savefile = new File(savedir, imgNames[i]);
+	                try {
+						FileUtils.copyFile(images[i], savefile);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						return "fail";
+					}
+	            }
+		        MyPrint.myPrint(realPath);
+		        MyPrint.myPrint(images.toString());
+	        }
+	        return realPath;
 		}
-		return 1;
+		else
+		{
+			return "ImageOrNamesNull";
+		}
 	}
 
 	@Override
@@ -218,5 +294,62 @@ public class UserManagerImpl implements UserManager
 		{
 		}
 		return 1;
+	}
+
+	@Override
+	public int releaseCourt(Court court) {
+		// TODO Auto-generated method stub
+		if(courtDao.save(court) != null)
+		{	
+			return 1;
+		}
+		return 0;
+	}
+	
+	@Override
+	public void pushPicBase64(File resImage)
+	{
+		try{
+			ByteArrayOutputStream output = new ByteArrayOutputStream();  
+	    	MyPrint.myPrint("FLAG  1");
+	        JimiReader reader = Jimi.createJimiReader(new FileInputStream(resImage));
+	    	//JimiReader reader = Jimi.createJimiReader("G:\\Users\\myic\\workspace\\Git\\sousai\\WebContent\\img\\logo.png");
+	        MyPrint.myPrint("FLAG  2");
+	        Image image = reader.getImage();  
+	        MyPrint.myPrint("FLAG  3");
+	        Jimi.putImage("image/png", image, output);  
+	        MyPrint.myPrint("FLAG  4");
+	        output.flush();  
+	        //MyPrint.myPrint("output = " + output.toString());
+	        output.close();  
+	        String encodeString = Base64.encodeBase64String(output.toByteArray()); 
+	        JSONUtils.toJson(ServletActionContext.getResponse(), encodeString);
+	    } catch (IOException e) {  
+	        e.printStackTrace();  
+	    } catch (JimiException e) {  
+	        e.printStackTrace();  
+	    }
+	}
+
+	@Override
+	public String saveUserPic(File images, String imgNames, Long userId) {
+		// TODO Auto-generated method stub
+		File tempImgs[] ={images};
+		String tempImgNames[] = {imgNames};
+		return uploadPic(USER_PIC, tempImgs, tempImgNames, userId);
+		
+	}
+
+	@Override
+	public String saveCourtPic(File[] images, String[] imgNames, Long userId) {
+		// TODO Auto-generated method stub
+		return uploadPic(COURT_PIC, images, imgNames, userId);
+		
+	}
+
+	@Override
+	public String uploadPicByStream(File resImage) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -122,7 +122,7 @@ public class UploadPicAction extends UserBaseAction
 		}
         System.out.println(result);
         //String string = "{\"files\": [{\"name\": \"picture1.jpg\",\"size\": 146538,\"url\": \"http://192.168.137.1:8080/sousai/files/picture1.jpg\",\"thumbnailUrl\": \"http://192.168.137.1:8080/sousai/files/thumbnail/picture1.jpg\",\"deleteUrl\": \"http://192.168.137.1:8080/sousai/files/picture1.jpg\",\"deleteType\": \"DELETE\"},{\"name\": \"picture2.jpg\",\"size\": 19602,\"url\": \"http://192.168.137.1:8080/sousai/files/picture2.jpg\",\"thumbnailUrl\": \"http://192.168.137.1:8080/sousai/files/thumbnail/picture2.jpg\",\"deleteUrl\": \"http://192.168.137.1:8080/sousai/files/picture2.jpg\",\"deleteType\": \"DELETE\"}]}";
-        String string = "{\"statusCode\":1; \"ImgUrl\":\"图片相对服务器路径img/picName.jpg\"}";
+        String string = "{\"statusCode\":1,\"ImgUrl\":\"图片相对服务器路径img/picName.jpg\"}";
         MyPrint.myPrint(string);
         //System.out.println("encodeString= "+ encodeString);
 		JSONUtils.toJson(ServletActionContext.getResponse(), string);

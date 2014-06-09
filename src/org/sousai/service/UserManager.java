@@ -6,6 +6,7 @@ import org.sousai.vo.*;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.*;
+import java.io.File;
 
 /**
  * Description:
@@ -33,10 +34,11 @@ public interface UserManager
 	//用户名不可用
 	public final static int NAME_USED = 0;
 	
-	//用户头像
+	//图片
 	public final static int USER_PIC = 1;
 	public final static int COURT_PIC = 2;
 	public final static int PIC_FAIL = 0;
+
 	
 	/**
 	 * ��½
@@ -110,7 +112,7 @@ public interface UserManager
 	 */
 	public int uploadPic(int pic, Object po) throws Exception;
 	
-	public int uploadCourtPic(CourtPic courtPic);
+	public String uploadPic(int flag, File[] images, String[] imgNames, Long userId);
 	
 	public InputStream getPic(Long courtId);
 	
@@ -122,4 +124,35 @@ public interface UserManager
 	 */
 	public int updateInfo(String key, Long id);
 	
+	/**
+	 * 用户发布场地
+	 * @param court 场地信息
+	 * @return 1 成功   0失败
+	 */
+	public int releaseCourt(Court court);
+	
+	public String uploadPicByStream(File resImage);
+	/**
+	 * 将图片字节流转换成Base64格式，以JSON传输到浏览器
+	 * @param image 图片文件
+	 */
+	public void pushPicBase64(File image);
+	
+	/**
+	 * 将用户头像存入服务器中
+	 * @param images 用户头像
+	 * @param imgNames 文件名
+	 * @param userId 用户表示名
+	 * @return "fail"失败    若成功，则返回路径名
+	 */
+	public String saveUserPic(File images, String imgNames, Long userId);
+	
+	/**
+	 * 将场地图片存入服务器中
+	 * @param images 用户头像
+	 * @param imgNames 文件名
+	 * @param userId 用户表示名
+	 * @return "fail"失败    若成功，则返回路径名
+	 */
+	public String saveCourtPic(File[] images, String[] imgNames, Long userId);
 }

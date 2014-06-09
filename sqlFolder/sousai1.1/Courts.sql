@@ -2,9 +2,9 @@ create table courts
 (
 ID bigint primary key auto_increment,
 name varchar(64) not null,
-court_type int not null,
+court_type int not null default 1,
 match_type varchar(32) not null,
-addr_id int null default 0,
+addr_id int null default 1,
 detail_addr varchar(255) not null,
 table_num int(16) unsigned null,
 tel varchar(32) null,

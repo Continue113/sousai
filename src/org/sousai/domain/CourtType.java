@@ -10,7 +10,8 @@ public class CourtType implements Serializable
 	
 	private Integer id;
 	private String name;
-	private Integer matchId;
+	//private Integer matchId;
+	private Match match;
 	
 	//默认构造器
 	CourtType()
@@ -18,11 +19,12 @@ public class CourtType implements Serializable
 	}
 	
 	//初始化全部参数的构造器
-	CourtType(Integer id, String name, Integer matchId)
+	//CourtType(Integer id, String name, Integer matchId)
+	CourtType(Integer id, String name, Match match)
 	{
 		this.id = id;
 		this.name = name;
-		this.matchId = matchId;
+		//this.matchId = matchId;
 	}
 
 	//id属性的setter和getter
@@ -46,12 +48,20 @@ public class CourtType implements Serializable
 	}
 	
 	//matchId属性的setter和getter
-	public void setMatchId(Integer matchId)
+	/*public void setMatchId(Integer matchId)
 	{
 		this.matchId = matchId;
 	}
 	public Integer getMatchId()
 	{
 		return this.matchId;
+	}*/
+	public void setMatch(Match match)
+	{
+		this.match = match;
+	}
+	public Match getMatch()
+	{
+		return this.match;
 	}
 }
