@@ -1,12 +1,42 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 2014-5-13 16:55:34 by Hibernate Tools 3.4.0.CR1 -->
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2014-6-13 15:56:58 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
- <class name="org.sousai.domain.Match" table="MATCHES">
-  <id name="id" type="java.lang.Long">
-   <column name="ID"/>
-   <generator class="identity"/>
-  </id>
- </class>
+    <class name="org.sousai.domain.Match" table="MATCHES">
+        <id name="id" type="java.lang.Long">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <property name="name" type="java.lang.String">
+            <column name="NAME" />
+        </property>
+        <property name="type" type="java.lang.String">
+            <column name="TYPE" />
+        </property>
+        <property name="beginTime" type="java.sql.Date">
+            <column name="BEGINTIME" />
+        </property>
+        <property name="endTime" type="java.sql.Date">
+            <column name="ENDTIME" />
+        </property>
+        <many-to-one name="court" class="org.sousai.domain.Court" fetch="join">
+            <column name="COURT" />
+        </many-to-one>
+        <property name="rule" type="java.lang.String">
+            <column name="RULE" />
+        </property>
+        <property name="relTime" type="java.sql.Timestamp">
+            <column name="RELTIME" />
+        </property>
+        <property name="verify" type="char">
+            <column name="VERIFY" />
+        </property>
+        <property name="score" type="java.lang.String">
+            <column name="SCORE" />
+        </property>
+        <many-to-one name="user" class="org.sousai.domain.User" fetch="join">
+            <column name="USER" />
+        </many-to-one>
+    </class>
 </hibernate-mapping>

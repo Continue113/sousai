@@ -24,6 +24,12 @@
 	<bean id="regionDao"
 		class="org.sousai.dao.impl.RegionDaoHibernate"
 		parent="daoTemplate"/>
+	<bean id="mtDao"
+		class="org.sousai.dao.impl.MatchTypeDaoHibernate"
+		parent="daoTemplate"/>
+	<bean id="ctDao"
+		class="org.sousai.dao.impl.CourtTypeDaoHibernate"
+		parent="daoTemplate"/>
 		
 
 </beans>

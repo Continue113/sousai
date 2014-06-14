@@ -41,6 +41,8 @@
 				<value>org/sousai/domain/Message.hbm.xml</value>
 				<value>org/sousai/domain/Region.hbm.xml</value>
 				<value>org/sousai/domain/CourtType.hbm.xml</value>
+				<value>org/sousai/domain/Match.hbm.xml</value>
+				<value>org/sousai/domain/MatchType.hbm.xml</value>
 				<!-- <value>org/crazyit/hrsystem/domain/Attend.hbm.xml</value>
 				<value>org/crazyit/hrsystem/domain/AttendType.hbm.xml</value>
 				<value>org/crazyit/hrsystem/domain/CheckBack.hbm.xml</value>
@@ -90,7 +92,9 @@
 		p:courtDao-ref="courtDao"
 		p:courtPicDao-ref="courtPicDao"
 		p:mesgDao-ref="mesgDao"
-		p:regionDao-ref="regionDao"/>
+		p:regionDao-ref="regionDao"
+		p:matchTypeDao-ref="mtDao"
+		p:courtTypeDao-ref="ctDao"/>
 		
 <!-- 定义两个业务逻辑组件，继承业务逻辑组件的模板 -->
 	<bean id="userManager"

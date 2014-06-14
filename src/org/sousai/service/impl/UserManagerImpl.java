@@ -39,6 +39,9 @@ public class UserManagerImpl implements UserManager
 	private CourtPicDao courtPicDao;
 	private MesgDao mesgDao;
 	private RegionDao regionDao;
+	private CourtTypeDao courtTypeDao;
+	private MatchTypeDao matchTypeDao;
+	private MatchDao matchDao;
 	
 	public void setUserDao(UserDao userDao)
 	{
@@ -65,14 +68,29 @@ public class UserManagerImpl implements UserManager
 		this.regionDao = regionDao;
 	}
 	
+	public void setCourtTypeDao(CourtTypeDao courtTypeDao)
+	{
+		this.courtTypeDao = courtTypeDao;
+	}
+	
+	public void setMatchTypeDao(MatchTypeDao matchTypeDao)
+	{
+		this.matchTypeDao = matchTypeDao;
+	}
+	
+	public void setMatchDao(MatchDao matchDao)
+	{
+		this.matchDao = matchDao;
+	}
+	
 	@Override
 	public int validLogin(User user) {
 		// TODO Auto-generated method stub
 		System.out.println("validLogin Now!!!");
 		if (userDao.findByNameAndPass(user).size() >= 1)
 		{
-			System.out.println("valid success");
-			System.out.println("test set");
+			MyPrint.myPrint("valid success");
+			MyPrint.myPrint("test set");
 			user = userDao.findByName(user.getName());
 			if(user == null)
 			{
@@ -80,19 +98,20 @@ public class UserManagerImpl implements UserManager
 			}
 			else if(user.getCourt() != null)
 			{
-				System.out.println("userid " + user.getId());
-				System.out.println("court not null!");
-				System.out.println(" " + user.getCourt().size());
+				MyPrint.myPrint("userid " + user.getId());
+				MyPrint.myPrint("court not null!");
+				MyPrint.myPrint(" " + user.getCourt().size());
+				MyPrint.myPrint("court.findByUser = " + courtDao.findByUser(user).size());
 			}
 			return LOGIN_USER;
 		}
-		System.out.println("valid fail");
+		MyPrint.myPrint("valid fail");
 		return LOGIN_FAIL;
 	}
 	@Override
 	public UserBean getByName(String name) {
 		// TODO Auto-generated method stub
-		System.out.println("getByName now turn to transform");
+		MyPrint.myPrint("getByName now turn to transform");
 		User user = userDao.findByName(name);
 		if(user != null)
 		{
@@ -106,7 +125,7 @@ public class UserManagerImpl implements UserManager
 	@Override
 	public UserBean transform(User user) {
 		// TODO Auto-generated method stub
-		System.out.println("transform now");
+		MyPrint.myPrint("transform now");
 		//System.out.println(""+user.getName());
 		return new UserBean(user.getId(), user.getName(), 
 				user.getPwd(), user.getEmail(), user.getType(), user.getPicId(),
@@ -121,7 +140,7 @@ public class UserManagerImpl implements UserManager
 	public int register(User user)
 	{
 		// TODO Auto-generated method stub
-		System.out.println("register now turn to userDao.save");
+		MyPrint.myPrint("register now turn to userDao.save");
 		if(userDao.save(user) != null)
 		{
 			return REG_SUCCESS;

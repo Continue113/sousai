@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 2014-6-9 19:58:35 by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated 2014-6-13 18:42:27 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
-    <class name="org.sousai.domain.CourtType" table="COURTTYPE">
+    <class name="org.sousai.domain.CourtType" table="COURT_TYPES">
         <id name="id" type="java.lang.Integer">
             <column name="ID" />
             <generator class="identity" />
@@ -11,8 +11,8 @@
         <property name="name" type="java.lang.String">
             <column name="NAME" />
         </property>
-        <many-to-one name="match" class="org.sousai.domain.Match" fetch="join">
-            <column name="MATCH" />
+        <many-to-one name="matchType" class="org.sousai.domain.MatchType" fetch="join">
+            <column name="MATCHID" />
         </many-to-one>
     </class>
 </hibernate-mapping>

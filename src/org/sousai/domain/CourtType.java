@@ -11,7 +11,7 @@ public class CourtType implements Serializable
 	private Integer id;
 	private String name;
 	//private Integer matchId;
-	private Match match;
+	private MatchType matchType;
 	
 	//默认构造器
 	CourtType()
@@ -20,10 +20,11 @@ public class CourtType implements Serializable
 	
 	//初始化全部参数的构造器
 	//CourtType(Integer id, String name, Integer matchId)
-	CourtType(Integer id, String name, Match match)
+	CourtType(Integer id, String name, MatchType matchType)
 	{
 		this.id = id;
 		this.name = name;
+		this.matchType = matchType;
 		//this.matchId = matchId;
 	}
 
@@ -56,12 +57,12 @@ public class CourtType implements Serializable
 	{
 		return this.matchId;
 	}*/
-	public void setMatch(Match match)
+	public void setMatchType(MatchType matchType)
 	{
-		this.match = match;
+		this.matchType = matchType;
 	}
-	public Match getMatch()
+	public MatchType getMatchType()
 	{
-		return this.match;
+		return this.matchType;
 	}
 }
