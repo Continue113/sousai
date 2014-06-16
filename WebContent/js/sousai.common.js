@@ -198,7 +198,7 @@ $(function() {
     });
   }
   //立即初始化比赛类型
-  initMatchType();
+  //initMatchType();
   var omtf = 0;//other match type flag
   $(".selectMatchType").change(function(){
     if($(this).parent().find(".selectMatchType option:selected").attr("value") == -1 && omtf == 0){

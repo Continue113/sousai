@@ -261,6 +261,8 @@
       },1000);
       trNumb = 0;
     });
+    //初始化比赛类型
+    initMatchType();
   })
   //记录表格中的上传图片的数量
   var trNumb = 1;
@@ -344,6 +346,19 @@
       $("#tr"+id).remove();
     },1000);
     trNumb--;
+  }
+  //初始化比赛类型
+  function initMatchType(){
+    alert("调用初始化比赛类型");
+    $.post("showMT", null, function(data) {
+      alert("回调内容为:"data);//id name 
+      var type = $(".selectMatchType");
+      type.empty().append("<option value=0>请选择类型</option>");
+      for (var i = 0; i < data.length; i++) {
+        type.append("<option value=" + data[i].code + " data-order=\"" + data[i].order + "\" >" + data[i].name + "</option>");
+      }
+      type.append("<option value=-1>其他</option>");
+    });
   }
   </script>
  </body>
