@@ -86,7 +86,8 @@
            <label class="control-label" for="selectCourtType">场地类型：</label> 
            <div class="controls"> 
             <!-- 选择场地类型 --> 
-            <select class="selectCourtType" name="courtType"> 
+            <select class="selectCourtType" name="courtTypeId">
+              <option value="1">testId</option>
               <option value="0">请选择场地类型</option> 
               <option value="courtType-inner">室内</option> 
               <option value="courtType-outer">室外</option> 
