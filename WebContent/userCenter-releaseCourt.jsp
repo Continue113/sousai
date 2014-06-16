@@ -352,7 +352,7 @@
     alert("调用初始化比赛类型");
     console.log("调用初始化比赛类型");
     $.post("showMT", null, function(data) {
-      alert("回调内容为:"data);//id name 
+      alert("回调内容为:"+data);//id name 
       var type = $(".selectMatchType");
       type.empty().append("<option value=0>请选择比赛类型</option>");
       for (var i = 0; i < data.length; i++) {

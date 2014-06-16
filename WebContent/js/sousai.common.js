@@ -175,9 +175,9 @@ $(function() {
     }
   });
   //初始化比赛类型
-  function initMatchType(){
+  /*function initMatchType(){
     $.post("showMT", null, function(data) {
-      alert("回调内容为:"data);//id name 
+      alert("回调内容为:"+data);//id name 
       var type = $(".selectMatchType");
       type.empty().append("<option value=0>请选择类型</option>");
       for (var i = 0; i < data.length; i++) {
@@ -185,7 +185,7 @@ $(function() {
       }
       type.append("<option value=-1>其他</option>");
     });
-  }
+  }*/
   //初始化场地类型
   function initCourtType(){
     $.post("url", null, function(data) {
