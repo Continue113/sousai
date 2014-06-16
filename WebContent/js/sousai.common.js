@@ -176,7 +176,8 @@ $(function() {
   });
   //初始化比赛类型
   function initMatchType(){
-    $.post("url", null, function(data) {
+    $.post("showMT", null, function(data) {
+      alert("回调内容为:"data);//id name 
       var type = $(".selectMatchType");
       type.empty().append("<option value=0>请选择类型</option>");
       for (var i = 0; i < data.length; i++) {
