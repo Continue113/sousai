@@ -161,24 +161,7 @@ public class UserManagerImpl implements UserManager
 		return NAME_USED;
 	}
 
-	@Override
-	public List<Region> getProvince() {
-		// TODO Auto-generated method stub
-		//0为数据库中中国的id
-		return regionDao.getSon(1);
-	}
-
-	@Override
-	public List<Region> getCity(String provinceCode, int order) {
-		// TODO Auto-generated method stub
-		return regionDao.getSonByCode(provinceCode, order);
-	}
-
-	@Override
-	public List<Region> getZone(String cityCode, int order) {
-		// TODO Auto-generated method stub
-		return regionDao.getSonByCode(cityCode, order);
-	}
+	
 
 	@Override
 	public int uploadPic(int pic, Object po) throws Exception
@@ -371,4 +354,5 @@ public class UserManagerImpl implements UserManager
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
 }

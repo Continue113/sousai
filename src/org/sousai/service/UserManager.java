@@ -82,28 +82,6 @@ public interface UserManager
 	public int validName(String name);
 	
 	/**
-	 * 获取所有省份
-	 * @return 所有省份
-	 */
-	public List<Region> getProvince();
-	
-	/**
-	 * 获取对应省份下属市级地区
-	 * @param province 省份
-	 * @param order 顺序号，防重复省名，最小为0
-	 * @return 对应市级地区
-	 */
-	public List<Region> getCity(String provinceCode, int order);
-	
-	/**
-	 * 获取对应市级地区的下属区级地区
-	 * @param city 市级地区
-	 * @param order 顺序号，防重复市名，最小为0
-	 * @return 对应区级地区
-	 */
-	public List<Region> getZone(String cityCode, int order);
-	
-	/**
 	 * 存储图片
 	 * @param pic 图片类型 1：用户头像  2：场地图片
 	 * @param po UserPic实例或是CourtPic实例
@@ -155,4 +133,5 @@ public interface UserManager
 	 * @return "fail"失败    若成功，则返回路径名
 	 */
 	public String saveCourtPic(File[] images, String[] imgNames, Long userId);
+	
 }

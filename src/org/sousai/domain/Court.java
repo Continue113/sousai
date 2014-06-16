@@ -1,6 +1,8 @@
 package org.sousai.domain;
 
 import org.sousai.domain.*;
+import org.sousai.dao.*;
+
 
 import java.io.Serializable;
 import java.sql.Date;

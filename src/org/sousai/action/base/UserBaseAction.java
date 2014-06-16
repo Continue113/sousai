@@ -7,12 +7,17 @@ import com.opensymphony.xwork2.ActionSupport;
 
 public class UserBaseAction extends ActionSupport{
 	
-	//ÒÀÀµµÄÒµÎñÂß¼­×é¼þ
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òµï¿½ï¿½ï¿½ß¼ï¿½ï¿½ï¿½ï¿½
 	protected UserManager umg;
+	protected CommonManager cmg;
 	
 	public void setUserManager (UserManager umg) 
 	{
 		this.umg = umg;
 	}
 
+	public void setCommonManager(CommonManager cmg)
+	{
+		this.cmg = cmg;
+	}
 }

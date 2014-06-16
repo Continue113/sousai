@@ -76,7 +76,7 @@ public class SelRegionAction extends UserBaseAction
 		//查询省级地区
 		if(level == 0)
 		{
-			List<Region> provinces = umg.getProvince();
+			List<Region> provinces = cmg.getProvince();
 			if(provinces!=null && provinces.size()!=0)
 			{
 				//setRegions(provinces);
@@ -92,7 +92,7 @@ public class SelRegionAction extends UserBaseAction
 		else if(level == 1)
 		{
 			System.out.println(tempRegion.getName()+" "+tempRegion.getOrder());
-			List<Region> cities = umg.getCity(tempRegion.getCode(), tempRegion.getOrder());
+			List<Region> cities = cmg.getCity(tempRegion.getCode(), tempRegion.getOrder());
 			if(cities!=null && cities.size()!=0)
 			{
 				//setRegions(cities);
@@ -107,7 +107,7 @@ public class SelRegionAction extends UserBaseAction
 		//查询区级地区
 		else if(level == 2)
 		{
-			List<Region> zones = umg.getZone(tempRegion.getCode(), tempRegion.getOrder());
+			List<Region> zones = cmg.getZone(tempRegion.getCode(), tempRegion.getOrder());
 			if(zones!=null && zones.size()!=0)
 			{
 				//setRegions(zones);

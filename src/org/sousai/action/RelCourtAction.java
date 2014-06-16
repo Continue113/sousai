@@ -28,6 +28,7 @@ public class RelCourtAction extends UserBaseAction
 	private static final long serialVersionUID = -4998633570436062940L;
 
 	private Court court;
+	private Integer courtTypeId;
 	private File[] images;
 	private String[] imgNames;
 	
@@ -61,11 +62,22 @@ public class RelCourtAction extends UserBaseAction
 		return this.imgNames;
 	}
 	
+	//courtTypeId的setter和getter
+	public void setCourtTypeId(Integer id)
+	{
+		this.courtTypeId = id;
+	}
+	public Integer getCourtTypeId()
+	{
+		return this.courtTypeId;
+	}
+	
 	public String execute() throws Exception
 	{
 		MyPrint.myPrint("RelCourtAction now");
 		String result;
 		Court tempCourt = getCourt();
+		tempCourt.setCourtType(cmg.findCourtTypeById(getCourtTypeId()));
 		try{
 			User tempUser = new User((UserBean)ActionContext.getContext().getSession().get("userBean"));
 			tempCourt.setUser(tempUser);

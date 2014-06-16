@@ -45,7 +45,7 @@ public interface CourtDao
 	List<Court> findAll();
 	
 	/**
-	 * 根据用户
+	 * 根据用户,获取用户所发布的所有场地
 	 * @return List<Court> 该用户发布的场地
 	 */
 	List<Court> findByUser(User user);
