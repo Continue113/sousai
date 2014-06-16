@@ -350,12 +350,13 @@
   //初始化比赛类型
   function initMatchType(){
     alert("调用初始化比赛类型");
+    console.log("调用初始化比赛类型");
     $.post("showMT", null, function(data) {
       alert("回调内容为:"data);//id name 
       var type = $(".selectMatchType");
-      type.empty().append("<option value=0>请选择类型</option>");
+      type.empty().append("<option value=0>请选择比赛类型</option>");
       for (var i = 0; i < data.length; i++) {
-        type.append("<option value=" + data[i].code + " data-order=\"" + data[i].order + "\" >" + data[i].name + "</option>");
+        type.append("<option value=\"" + data[i].id + "\">" + data[i].name + "</option>");
       }
       type.append("<option value=-1>其他</option>");
     });
