@@ -86,20 +86,7 @@
            <label class="control-label" for="selectCourtType">场地类型：</label> 
            <div class="controls"> 
             <!-- 选择场地类型 --> 
-            <select class="selectCourtType" name="courtTypeId">
-              <option value="1">testId</option>
-              <option value="0">请选择场地类型</option> 
-              <option value="courtType-inner">室内</option> 
-              <option value="courtType-outer">室外</option> 
-              <option value="courtType-zq">体育局</option> 
-              <option value="courtType-pp">俱乐部</option> 
-              <option value="courtType-lq">社区</option> 
-              <option value="courtType-zq">单位</option> 
-              <option value="courtType-zq">学校</option> 
-              <option value="courtType-pp">临时</option> 
-              <option value="courtType-lq">公共</option> 
-              <option value="courtType-zq">其他</option> 
-            </select> 
+            <select class="selectCourtType" name="courtTypeId"></select> 
             <!-- /选择场地类型 --> 
             <input class="hide" id="inputCourtType" type="text" value=""/>
            </div> 
@@ -261,41 +248,6 @@
       },1000);
       trNumb = 0;
     });
-    //初始化比赛类型
-    initMatchType();
-    //点击比赛类型获取相应场地类型
-    $(".selectMatchType").change(function selMatchType() {
-      alert("改变比赛类型");
-    //tgPrt: targetparent 目标父元素
-    var tgPrt = $(this).parent();
-    if (tgPrt.find(".selectMatchType option:selected").attr("value") != 0) {
-      alert("获得比赛类型");
-      $.ajax({
-        type: "POST",
-        url: "showCT",
-        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-        data: {
-          "matchId": tgPrt.find(".selectMatchType option:selected").attr("value"),
-        },
-        dataType: "json",
-        success: function(rspdata) {
-          alert("获得场地类型:"+ rspdata);
-          var selectCourtType = $(".selectCourtType");
-          selectCourtType.empty().append("<option value=0>请选择场地类型</option>");
-          for (var i = 0; i < rspdata.length; i++) {
-            selectCourtType.append("<option value=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</option>");
-          }
-        },
-        error: function() {
-          alert("抱歉，获取场地类型出错了。");
-        },
-      }); //ajax 已得到场地类型
-      tgPrt.find(".selectCourtType").show();
-    } else {
-      //当用户没有选择场地类型的时候，就将场地类型下拉列表框中原有的“请选择”字样删除。
-      tgPrt.find(".selectCourtType").hide().empty();
-    }
-    });
   })
 
   //记录表格中的上传图片的数量
@@ -380,19 +332,6 @@
       $("#tr"+id).remove();
     },1000);
     trNumb--;
-  }
-  //初始化比赛类型
-  function initMatchType(){
-    //console.log("调用初始化比赛类型");
-    $.post("showMT", null, function(data) {
-      //alert("回调内容为:"+data);//id name 
-      var type = $(".selectMatchType");
-      type.empty().append("<option value=0>请选择比赛类型</option>");
-      for (var i = 0; i < data.length; i++) {
-        type.append("<option value=\"" + data[i].id + "\">" + data[i].name + "</option>");
-      }
-      type.append("<option value=-1>其他</option>");
-    });
   }
   </script>
  </body>

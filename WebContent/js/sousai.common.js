@@ -175,30 +175,22 @@ $(function() {
     }
   });
   //初始化比赛类型
-  /*function initMatchType(){
+  function initMatchType(){
+    //console.log("调用初始化比赛类型");
     $.post("showMT", null, function(data) {
-      alert("回调内容为:"+data);//id name 
+      //alert("回调内容为:"+data);//id name 
       var type = $(".selectMatchType");
-      type.empty().append("<option value=0>请选择类型</option>");
+      type.empty().append("<option value=0>请选择比赛类型</option>");
       for (var i = 0; i < data.length; i++) {
-        type.append("<option value=" + data[i].code + " data-order=\"" + data[i].order + "\" >" + data[i].name + "</option>");
+        type.append("<option value=\"" + data[i].id + "\">" + data[i].name + "</option>");
       }
       type.append("<option value=-1>其他</option>");
     });
   }
-  //初始化场地类型
-  function initCourtType(){
-    $.post("url", null, function(data) {
-      var type = $(".selectCourtType");
-      type.empty().append("<option value=0>请选择类型</option>");
-      for (var i = 0; i < data.length; i++) {
-        type.append("<option value=" + data[i].code + " data-order=\"" + data[i].order + "\" >" + data[i].name + "</option>");
-      }
-      type.append("<option value=-1>其他</option>");
-    });
-  }*/
   //立即初始化比赛类型
-  //initMatchType();
+  initMatchType();
+
+/*
   var omtf = 0;//other match type flag
   $(".selectMatchType").change(function(){
     if($(this).parent().find(".selectMatchType option:selected").attr("value") == -1 && omtf == 0){
@@ -212,5 +204,42 @@ $(function() {
       initCourtType();
     }
   });
+*/
+    //点击比赛类型获取相应场地类型
+    $(".selectMatchType").change(function selMatchType() {
+      alert("改变比赛类型");
+      //tgPrt: targetparent 目标父元素
+      var tgPrt = $(this).parent();
+      if (tgPrt.find(".selectMatchType option:selected").attr("value") != -1){
+        //当用户选择其他的时候，弹出隐藏的label和input
+        tgPrt.find(".hide").slideDown();
+      }else if (tgPrt.find(".selectMatchType option:selected").attr("value") = 0) {
+        //当用户没有选择场地类型的时候，就将场地类型下拉列表框中原有的“请选择”字样删除。
+        tgPrt.find(".selectCourtType").empty();
+      } else {
+        alert("获得比赛类型");
+        $.ajax({
+          type: "POST",
+          url: "showCT",
+          contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+          data: {
+            "matchId": tgPrt.find(".selectMatchType option:selected").attr("value"),
+          },
+          dataType: "json",
+          success: function(rspdata) {
+            alert("获得场地类型:"+ rspdata);
+            var selectCourtType = $(".selectCourtType");
+            selectCourtType.empty().append("<option value=0>请选择场地类型</option>");
+            for (var i = 0; i < rspdata.length; i++) {
+              selectCourtType.append("<option value=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</  option>");
+            }
+          },
+          error: function() {
+            alert("抱歉，获取场地类型出错了。");
+          },
+        }); //ajax 已得到场地类型
+        //tgPrt.find(".selectCourtType").show();
+      }
+    });
 
 })
