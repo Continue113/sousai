@@ -185,7 +185,7 @@ $(function() {
       }
       type.append("<option value=-1>其他</option>");
     });
-  }*/
+  }
   //初始化场地类型
   function initCourtType(){
     $.post("url", null, function(data) {
@@ -196,7 +196,7 @@ $(function() {
       }
       type.append("<option value=-1>其他</option>");
     });
-  }
+  }*/
   //立即初始化比赛类型
   //initMatchType();
   var omtf = 0;//other match type flag
