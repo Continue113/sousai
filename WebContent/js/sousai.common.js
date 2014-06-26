@@ -210,14 +210,16 @@ $(function() {
       alert("改变比赛类型");
       //tgPrt: targetparent 目标父元素
       var tgPrt = $(this).parent();
-      if (tgPrt.find(".selectMatchType option:selected").attr("value") != -1){
+      if (tgPrt.find(".selectMatchType option:selected").attr("value") = -1){
         //当用户选择其他的时候，弹出隐藏的label和input
         tgPrt.find(".hide").slideDown();
       }else if (tgPrt.find(".selectMatchType option:selected").attr("value") = 0) {
         //当用户没有选择场地类型的时候，就将场地类型下拉列表框中原有的“请选择”字样删除。
         tgPrt.find(".selectCourtType").empty();
+        tgPrt.find(".hide").slideUp();
       } else {
         alert("获得比赛类型");
+        tgPrt.find(".hide").slideUp();
         $.ajax({
           type: "POST",
           url: "showCT",
