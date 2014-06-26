@@ -263,7 +263,41 @@
     });
     //初始化比赛类型
     initMatchType();
+    //点击比赛类型获取相应场地类型
+    $(".selectMatchType").change(function selMatchType() {
+      alert("改变比赛类型");
+    //tgPrt: targetparent 目标父元素
+    var tgPrt = $(this).parent();
+    if (tgPrt.find(".selectMatchType option:selected").attr("value") != 0) {
+      alert("获得比赛类型");
+      $.ajax({
+        type: "POST",
+        url: "showCT",
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        data: {
+          "matchId": tgPrt.find(".selectMatchType option:selected").attr("value"),
+        },
+        dataType: "json",
+        success: function(rspdata) {
+          alert("获得场地类型:"+ rspdata);
+          var selectCourtType = $(".selectCourtType");
+          selectCourtType.empty().append("<option value=0>请选择场地类型</option>");
+          for (var i = 0; i < rspdata.length; i++) {
+            selectCourtType.append("<option value=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</option>");
+          }
+        },
+        error: function() {
+          alert("抱歉，获取场地类型出错了。");
+        },
+      }); //ajax 已得到场地类型
+      tgPrt.find(".selectCourtType").show();
+    } else {
+      //当用户没有选择场地类型的时候，就将场地类型下拉列表框中原有的“请选择”字样删除。
+      tgPrt.find(".selectCourtType").hide().empty();
+    }
+    });
   })
+
   //记录表格中的上传图片的数量
   var trNumb = 1;
   //验证上传图片格式，大小，并在通过后显示图片预览
@@ -315,7 +349,7 @@
     }
   }
   //场地预览
-  function courtPreview(){
+  //function courtPreview(){
     //定义变量名 场地名称 比赛类型（大类、类型） 场地类型 场地区域（省、市、区） 详细地址 赛场数 联系电话 价格 开放时间 场地图片 
     //var courtName = $("#inputCourtName").val(),
     //    matchTypeGenera = $("selectMatchType option:selected").val(),
@@ -332,9 +366,9 @@
     //    courtPics = $(".files .preview > img").attr("src");
     //将内容发送到预览页面
     //改变form表单action
-    $("#releaseCourtForm").attr("action","previewCourtSearchDetail.jsp").attr("target","_blank").submit().attr("action","relCourt").removeAttr("target");
-    console.log("提交到另一个页面，并改回原来action。")
-  }
+    //$("#releaseCourtForm").attr("action","previewCourtSearchDetail.jsp").attr("target","_blank").submit().attr("action","relCourt").removeAttr("target");
+    //console.log("提交到另一个页面，并改回原来action。")
+  //}
   //选择图片
   function selectPic(id){
     $("#fileImage"+id).trigger('click');
@@ -349,10 +383,9 @@
   }
   //初始化比赛类型
   function initMatchType(){
-    alert("调用初始化比赛类型");
-    console.log("调用初始化比赛类型");
+    //console.log("调用初始化比赛类型");
     $.post("showMT", null, function(data) {
-      alert("回调内容为:"+data);//id name 
+      //alert("回调内容为:"+data);//id name 
       var type = $(".selectMatchType");
       type.empty().append("<option value=0>请选择比赛类型</option>");
       for (var i = 0; i < data.length; i++) {
