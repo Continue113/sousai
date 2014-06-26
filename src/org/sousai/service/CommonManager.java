@@ -38,4 +38,17 @@ public interface CommonManager
 	 * @return 指定的CourtType
 	 */
 	public CourtType findCourtTypeById(Integer id);
+	
+	/**
+	 * 返回所有比赛类型
+	 * @return 所有比赛类型
+	 */
+	public List<MatchType> findAllMatchType();
+	
+	/**
+	 * 返回相关对应比赛类型的场地类型
+	 * @param id 比赛类型id
+	 * @return 与比赛类型id相关的场地类型
+	 */
+	public List<CourtType> findCourtTypeByMatchTypeId(Integer id);
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.sousai.dao.MatchTypeDao;
 import org.sousai.domain.MatchType;
+import org.sousai.tools.MyPrint;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 public class MatchTypeDaoHibernate extends HibernateDaoSupport implements MatchTypeDao {
@@ -42,6 +43,7 @@ public class MatchTypeDaoHibernate extends HibernateDaoSupport implements MatchT
 	@Override
 	public List<MatchType> findAll() {
 		// TODO Auto-generated method stub
+		MyPrint.myPrint("findAll");
 		return (List<MatchType>)getHibernateTemplate().find("from MatchType");
 	}
 

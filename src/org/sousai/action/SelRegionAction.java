@@ -70,6 +70,16 @@ public class SelRegionAction extends UserBaseAction
 		System.out.println("SelRegion now!!");
 		//ActionContext ctx = ActionContext.getContext();
 		Region tempRegion = getRegion();
+		if(tempRegion!=null)
+		{
+			MyPrint.myPrint("tempRegion.getName() = "+tempRegion.getName());
+			MyPrint.myPrint("tempRegion.getCode() = "+tempRegion.getCode());
+			MyPrint.myPrint("tempRegion.getLevel() = "+tempRegion.getLevel());
+		}
+		else
+		{
+			MyPrint.myPrint("tempRegion null");
+		}
 		//level = getLevel();
 		int level = tempRegion.getLevel();
 		//int level2 = tempRegion.getLevel();

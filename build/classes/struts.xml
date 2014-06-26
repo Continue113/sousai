@@ -68,6 +68,16 @@
 			class="org.sousai.action.RelCourtAction">
 			<result>main.jsp</result>
 		</action>
+		
+		<!-- 获取所有比赛类型的action -->
+		<action name="showMT"
+			class="org.sousai.action.ShowMatchTypesAction">
+		</action>
+		
+		<!-- 获取对应比赛类型的场地类型的action -->
+		<action name="showCT"
+			class="org.sousai.action.ShowCourtTypesAction">
+		</action>
 	</package>
 
 <!--	<package name="ajax" extends="json-default">

@@ -46,8 +46,8 @@ public interface CourtTypeDao
 	
 	/**
 	 * 返回指定比赛场地
-	 * @param matchType 比赛类型
+	 * @param id 比赛类型标识id
 	 * @return 返回所有该比赛场地
 	 */
-	List<CourtType> findByMatchType(MatchType matchType);
+	List<CourtType> findByMatchTypeId(Integer id);
 }

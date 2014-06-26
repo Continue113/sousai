@@ -48,9 +48,9 @@ public class CourtTypeDaoHibernate extends HibernateDaoSupport implements CourtT
 	}
 
 	@Override
-	public List<CourtType> findByMatchType(MatchType matchType) {
+	public List<CourtType> findByMatchTypeId(Integer id) {
 		// TODO Auto-generated method stub
-		return (List<CourtType>)getHibernateTemplate().find("from CourtType where matchType=?", matchType);
+		return (List<CourtType>)getHibernateTemplate().find("from CourtType where matchId=?", id);
 	}
 
 }
