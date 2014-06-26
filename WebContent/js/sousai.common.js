@@ -190,60 +190,60 @@ $(function() {
   //立即初始化比赛类型
   initMatchType();
 
-/*
-  var omtf = 0;//other match type flag
-  $(".selectMatchType").change(function(){
-    if($(this).parent().find(".selectMatchType option:selected").attr("value") == -1 && omtf == 0){
-      $(this).removeAttr("name").parent().find(".hide").slideDown();
-      $("#otherMatchType").attr("name","matchType");
+  //点击比赛类型获取相应场地类型
+  var omtf = 0;//other match type flag ；0表示默认，1表示已经选过“其他”选项
+  $(".selectMatchType").change(function selMatchType() {
+    console.log("改变比赛类型");
+    //tgPrt: targetparent 目标父元素
+    var tgPrt = $(this).parent();
+    if (tgPrt.find(".selectMatchType option:selected").attr("value") == -1 && omtf == 0){
+      //移除name属性，即不会使用select内容提交
+      $(this).removeAttr("name")
+      //当用户选择其他的时候，弹出隐藏的label和input
+      tgPrt.find(".hide").slideDown();
+      //添加输入框的name属性，并改变omtf
+      $("#otherMatchType").attr("name","court.matchType");
       omtf = 1;
-    }else{
-      $(this).attr("name","matchType").parent().find(".hide").slideUp();
-      $("#otherMatchType").removeAttr("name");
-      omtf = 0;
-      initCourtType();
+    }else if (tgPrt.find(".selectMatchType option:selected").attr("value") == 0) {
+      //当用户没有选择场地类型的时候，就将场地类型下拉列表框中原有的“请选择”字样删除。
+      tgPrt.find(".selectCourtType").empty();
+      //若已选择“其他”则改为默认选项
+      if( omtf == 1){
+        $(this).attr("name","court.matchType");
+        tgPrt.find(".hide").slideUp();
+        $("#otherMatchType").removeAttr("name");
+        omft = 0;
+      }
+    }else {
+      //若已选择“其他”则改为默认选项
+      if( omtf == 1){
+        $(this).attr("name","court.matchType");
+        tgPrt.find(".hide").slideUp();
+        $("#otherMatchType").removeAttr("name");
+        omft = 0;
+      }
+      console.log("获得比赛类型");
+      $.ajax({
+        type: "POST",
+        url: "showCT",
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        data: {
+          "matchId": tgPrt.find(".selectMatchType option:selected").attr("value"),
+        },
+        dataType: "json",
+        success: function(rspdata) {
+          alert("获得场地类型:"+ rspdata);
+          var sctCourtType = $(".selectCourtType");
+          sctCourtType.empty().append("<option value=0>请选择场地类型</option>");
+          for (var i = 0; i < rspdata.length; i++) {
+            sctCourtType.append("<option value=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</  option>");
+          }
+        },
+        error: function() {
+          alert("抱歉，获取场地类型出错了。");
+        },
+      }); //ajax 已得到场地类型
     }
   });
-*/
-    //点击比赛类型获取相应场地类型
-    $(".selectMatchType").change(function selMatchType() {
-      alert("改变比赛类型");
-      //tgPrt: targetparent 目标父元素
-      var tgPrt = $(this).parent();
-      if (tgPrt.find(".selectMatchType option:selected").attr("value") == -1){
-        //当用户选择其他的时候，弹出隐藏的label和input
-        alert("-1");
-        tgPrt.find(".hide").slideDown();
-      }else if (tgPrt.find(".selectMatchType option:selected").attr("value") == 0) {
-        //当用户没有选择场地类型的时候，就将场地类型下拉列表框中原有的“请选择”字样删除。
-        alert("0");
-        tgPrt.find(".selectCourtType").empty();
-        tgPrt.find(".hide").slideUp();
-      } else {
-        alert("获得比赛类型");
-        tgPrt.find(".hide").slideUp();
-        $.ajax({
-          type: "POST",
-          url: "showCT",
-          contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-          data: {
-            "matchId": tgPrt.find(".selectMatchType option:selected").attr("value"),
-          },
-          dataType: "json",
-          success: function(rspdata) {
-            alert("获得场地类型:"+ rspdata);
-            var selectCourtType = $(".selectCourtType");
-            selectCourtType.empty().append("<option value=0>请选择场地类型</option>");
-            for (var i = 0; i < rspdata.length; i++) {
-              selectCourtType.append("<option value=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</  option>");
-            }
-          },
-          error: function() {
-            alert("抱歉，获取场地类型出错了。");
-          },
-        }); //ajax 已得到场地类型
-        //tgPrt.find(".selectCourtType").show();
-      }
-    });
 
 })
