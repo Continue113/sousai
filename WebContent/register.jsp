@@ -154,6 +154,7 @@
               "user.email": $("#inputUserEmail").val(),
             },
             success: function(resdata){
+            	console.log(resdata);
               $('#sousaiRemindDialog').modal({backdrop:static});
               //5秒后跳转至首页
               window.setTimeout("window.location='index.jsp'",5000);
@@ -162,7 +163,8 @@
                 location.href = "index.jsp";
               }
             },
-            error: function(){
+            error: function(jqXHR,textStatus,errorThrown){
+            	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
               alert("抱歉，发送数据出错了，请重新输入。");
             },
           });
