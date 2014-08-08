@@ -43,9 +43,9 @@
         </div> 
        </div> 
        <div class="control-group"> 
-        <label class="control-label" for="inputPassword">密码&nbsp;:</label> 
+        <label class="control-label" for="inputUserPassword">密码&nbsp;:</label> 
         <div class="controls"> 
-         <input type="password" class="input-block-level" id="inputPassword" name="user.pwd" placeholder="密码" required="required" data-toggle="tooltip" data-placement="right" title="" data-original-title="密码至少6位，建议不要使用过于简单的密码。" /> 
+         <input type="password" class="input-block-level" id="inputUserPassword" name="user.pwd" placeholder="密码" required="required" data-toggle="tooltip" data-placement="right" title="" data-original-title="密码至少6位，建议不要使用过于简单的密码。" /> 
         </div> 
        </div> 
        <div class="control-group"> 
@@ -55,9 +55,9 @@
         </div> 
        </div> 
        <div class="control-group"> 
-        <label class="control-label" for="inputEmail">邮箱&nbsp;:</label> 
+        <label class="control-label" for="inputUserEmail">邮箱&nbsp;:</label> 
         <div class="controls"> 
-         <input type="email" class="input-block-level" id="inputEmail" name="user.email" placeholder="电子邮箱" required="required" /> 
+         <input type="email" class="input-block-level" id="inputUserEmail" name="user.email" placeholder="电子邮箱" required="required" /> 
         </div> 
        </div> 
        <div class="control-group"> 

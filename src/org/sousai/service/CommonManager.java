@@ -34,7 +34,7 @@ public interface CommonManager
 	
 	/**
 	 * 通过id返回制定的CourtType
-	 * @param id标识属性
+	 * @param id 标识属性
 	 * @return 指定的CourtType
 	 */
 	public CourtType findCourtTypeById(Integer id);
@@ -46,9 +46,16 @@ public interface CommonManager
 	public List<MatchType> findAllMatchType();
 	
 	/**
+	 * 获取除id以外的所有比赛类型
+	 * @param id 筛选掉的比赛类型
+	 * @return 获取除id以外的所有比赛类型
+	 */
+	public List<MatchType> findAllMatchTypeEpt(Integer id);
+	/**
 	 * 返回相关对应比赛类型的场地类型
 	 * @param id 比赛类型id
 	 * @return 与比赛类型id相关的场地类型
+	 * @throws Exception 
 	 */
-	public List<CourtType> findCourtTypeByMatchTypeId(Integer id);
+	public List<CourtType> findCourtTypeByMatchTypeId(Integer id) throws Exception;
 }

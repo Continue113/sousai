@@ -41,7 +41,14 @@ public interface MatchTypeDao
 	
 	/**
 	 * 获取所有场地
-	 * @return 所有场地
+	 * @return 所有比赛类型
 	 */
 	List<MatchType> findAll();
+	
+	/**
+	 * 获取除开对应id的所有比赛类型
+	 * @param id 不显示的比赛类型
+	 * @return 除开id对应比赛类型的其他比赛类型
+	 */
+	List<MatchType> findAllExcept(Integer id);
 }
