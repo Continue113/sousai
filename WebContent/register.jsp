@@ -155,7 +155,7 @@
             },
             success: function(resdata){
             	console.log(resdata);
-              $('#sousaiRemindDialog').modal({backdrop:static});
+              //$('#sousaiRemindDialog').modal({backdrop:static});
               console.log("dialoged!");
               //5秒后跳转至首页
               window.setTimeout("window.location='index.jsp'",5000);
