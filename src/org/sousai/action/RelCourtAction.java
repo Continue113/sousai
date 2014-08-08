@@ -78,8 +78,11 @@ public class RelCourtAction extends UserBaseAction
 		String result;
 		Court tempCourt = getCourt();
 		tempCourt.setCourtType(cmg.findCourtTypeById(getCourtTypeId()));
+		tempCourt.setVerify('0');
 		try{
 			User tempUser = new User((UserBean)ActionContext.getContext().getSession().get("userBean"));
+			MyPrint.myPrint("tempCourt.getVeryfy = "+tempCourt.getVerify());
+			MyPrint.myPrint("tempCourt.getRegion = "+tempCourt.getRegion());
 			tempCourt.setUser(tempUser);
 			//tempCourt.setUser(new User((UserBean)ActionContext.getContext().getSession().get("userBean")));
 		}

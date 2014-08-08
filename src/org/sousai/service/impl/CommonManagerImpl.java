@@ -9,28 +9,55 @@ import org.sousai.service.CommonManager;
 import org.sousai.tools.MyPrint;
 import org.sousai.dao.*;
 
-public class CommonManagerImp implements CommonManager {
+public class CommonManagerImpl implements CommonManager {
 
+	private UserDao userDao;
+	private CourtDao courtDao;
+	private CourtPicDao courtPicDao;
+	private MesgDao mesgDao;
 	private RegionDao regionDao;
 	private CourtTypeDao courtTypeDao;
 	private MatchTypeDao matchTypeDao;
+	private MatchDao matchDao;
 	
-	//regionDao的setter和getter
+	public void setUserDao(UserDao userDao)
+	{
+		this.userDao = userDao;
+	}
+	
+	public void setCourtDao(CourtDao courtDao)
+	{
+		this.courtDao = courtDao;
+	}
+	
+	public void setCourtPicDao(CourtPicDao courtPicDao)
+	{
+		this.courtPicDao = courtPicDao;
+	}
+	
+	public void setMesgDao(MesgDao mesgDao)
+	{
+		this.mesgDao = mesgDao;
+	}
+	
 	public void setRegionDao(RegionDao regionDao)
 	{
 		this.regionDao = regionDao;
 	}
 	
-	//courtTypeDao的setter和getter
 	public void setCourtTypeDao(CourtTypeDao courtTypeDao)
 	{
 		this.courtTypeDao = courtTypeDao;
 	}
 	
-	//matchTypeDao的setter和getter
 	public void setMatchTypeDao(MatchTypeDao matchTypeDao)
 	{
 		this.matchTypeDao = matchTypeDao;
+	}
+	
+	public void setMatchDao(MatchDao matchDao)
+	{
+		this.matchDao = matchDao;
 	}
 	
 	@Override
@@ -69,9 +96,15 @@ public class CommonManagerImp implements CommonManager {
 	}
 
 	@Override
-	public List<CourtType> findCourtTypeByMatchTypeId(Integer id) {
+	public List<CourtType> findCourtTypeByMatchTypeId(Integer id) throws Exception {
 		// TODO Auto-generated method stub
 		return courtTypeDao.findByMatchTypeId(id);
+	}
+
+	@Override
+	public List<MatchType> findAllMatchTypeEpt(Integer id) {
+		// TODO Auto-generated method stub
+		return matchTypeDao.findAllExcept(id);
 	}
 
 }
