@@ -109,7 +109,7 @@
           <div class="control-group"> 
            <label class="control-label" for="inputCourtTables">赛场数：</label> 
            <div class="controls"> 
-            <input class="span5" type="text" id="inputCourtTables" name="court.tableNum" placeholder="如：乒乓球台12张 或 足球场1个" /> 
+            <input class="span5" type="text" id="inputCourtTables" name="court.tableNum" placeholder="如：12 或 1 " /> 
            </div> 
           </div> 
           <div class="control-group"> 
@@ -232,7 +232,7 @@
     //添加选项
     $(".plus").click(function(){
       if(trNumb == 3){
-        alert("抱歉，每个场地最多只可以上传5张图片！");
+        alert("抱歉，每个场地最多只可以上传3张图片！");
       }else{
         trNumb++;
         $(".files").append('<tr class="hide" id="tr'+trNumb+'"><td><span class="btn fileinput-button"  onclick="selectPic('+trNumb+')"><i class="icon-plus"></i><span>选择图片</span></span><input class="hide fileImage" id="fileImage'+trNumb+'" type="file" name="images" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this,'+trNumb+')"/><input class="hide fileImageNames" type="text" name="imgNames" value=""/></td><td><span class="preview" id="preview'+trNumb+'"></span></td><td><span class="name"></span></td><td><span class="size"></span></td><td><span class="btn cancel" onclick="deleteTr('+trNumb+')"><i class="icon-ban-circle"></i>取消</span></td></tr>')
