@@ -49,9 +49,9 @@
         </div> 
        </div> 
        <div class="control-group"> 
-        <label class="control-label" for="inputPassword2">确认密码&nbsp;:</label> 
+        <label class="control-label" for="inputUserPassword2">确认密码&nbsp;:</label> 
         <div class="controls"> 
-         <input type="password" class="input-block-level" id="inputPassword2" name="inputPassword2" placeholder="确认密码" required="required" /> 
+         <input type="password" class="input-block-level" id="inputUserPassword2" name="inputPassword2" placeholder="确认密码" required="required" /> 
         </div> 
        </div> 
        <div class="control-group"> 
@@ -126,7 +126,7 @@
 
       /** 工具提示 **/
       $("#inputUsername").tooltip();
-      $("#inputPassword").tooltip();
+      $("#inputUserPassword").tooltip();
       /** /工具提示**/
 
       /** 表单验证代码 **/
@@ -176,9 +176,9 @@
       "user.pwd": {
         minlength: 6
       },
-      inputPassword2: {
+      inputUserPassword2: {
         minlength: 6,
-        equalTo: "#inputPassword"
+        equalTo: "#inputUserPassword"
       },
       "user.email": {
         email: true
