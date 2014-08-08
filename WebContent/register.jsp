@@ -156,12 +156,14 @@
             success: function(resdata){
             	console.log(resdata);
               $('#sousaiRemindDialog').modal({backdrop:static});
+              console.log("dialoged!");
               //5秒后跳转至首页
               window.setTimeout("window.location='index.jsp'",5000);
               var resetbtn = confirm("注册成功，将在5秒后跳转至首页。点击确定跳转至首页。");
               if (resetbtn == true){
                 location.href = "index.jsp";
               }
+              console.log("location.hrefed!")
             },
             error: function(jqXHR,textStatus,errorThrown){
             	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
