@@ -127,9 +127,11 @@ public class UserManagerImpl implements UserManager
 		// TODO Auto-generated method stub
 		MyPrint.myPrint("transform now");
 		//System.out.println(""+user.getName());
-		return new UserBean(user.getId(), user.getName(), 
+		/*return new UserBean(user.getId(), user.getName(), 
 				user.getPwd(), user.getEmail(), user.getType(), user.getPicId(),
-				user.getRegTime(), user.getLastLogTime());
+				user.getRegTime(), user.getLastLogTime());*/
+		return new UserBean(user.getId(), user.getName(), 
+				user.getPwd(), user.getEmail(), user.getType());
 		/*UserBean userBean = new UserBean(user.getId(), user.getName(), 
 				user.getPwd(), user.getEmail(), user.getType(), user.getPicId(),
 				user.getRegTime(), user.getLastLogTime());

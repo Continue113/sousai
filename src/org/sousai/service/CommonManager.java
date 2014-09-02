@@ -40,12 +40,6 @@ public interface CommonManager
 	public CourtType findCourtTypeById(Integer id);
 	
 	/**
-	 * 返回所有比赛类型
-	 * @return 所有比赛类型
-	 */
-	public List<MatchType> findAllMatchType();
-	
-	/**
 	 * 获取除id以外的所有比赛类型
 	 * @param id 筛选掉的比赛类型
 	 * @return 获取除id以外的所有比赛类型
@@ -58,4 +52,12 @@ public interface CommonManager
 	 * @throws Exception 
 	 */
 	public List<CourtType> findCourtTypeByMatchTypeId(Integer id) throws Exception;
+	
+	/**
+	 * 通过MatchClass id，查询MatchType
+	 * @param mcId MatchClass的id
+	 * @param id 不显式的比赛类型的id
+	 * @return 对应MatchClass的所有MatchType
+	 */
+	public List<MatchType> findMatchTypeByMatchClassIdEpt(Integer mcId, Integer id);
 }

@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.sousai.domain.*;
 import org.sousai.dao.*;
+import org.sousai.tools.MyPrint;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -28,8 +29,20 @@ public class UserDaoHibernate extends HibernateDaoSupport
 	public Long save(User user) {
 		// TODO Auto-generated method stub
 		//System.out.println("save now turn to getHibernateTemplate().save "+user.getId()+"   "+ user.getName()+"   "+user.getPwd()+"   ");
+		MyPrint.myPrint(""+user.getId()+"name"+user.getName()+"pwd"+user.getPwd()+"Email"+user.getEmail()+"type"+user.getType());
 		return Long.parseLong(getHibernateTemplate()
 				.save(user).toString());
+		/*String test;
+		try{
+			test = getHibernateTemplate().save(user).toString();
+			MyPrint.myPrint(test);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return (long) 000000;*/
+		
 	}
 
 	@Override

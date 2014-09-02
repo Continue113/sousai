@@ -46,6 +46,16 @@ public class UserBean implements Serializable
 		this.setUserType(userType);
 	}
 	
+	public UserBean(Long userId, String userName, String userPwd,
+			String userEmail, char userType)
+	{
+		this.setUserId(userId);
+		this.setUserName(userName);
+		this.setUserPwd(userPwd);
+		this.setUserEmail(userEmail);
+		this.setUserType(userType);
+	}
+	
 	public UserBean(User user)
 	{
 		this.userId = user.getId();

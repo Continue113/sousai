@@ -41,10 +41,10 @@ public class MatchTypeDaoHibernate extends HibernateDaoSupport implements MatchT
 	}
 
 	@Override
-	public List<MatchType> findAll() {
+	public List<MatchType> findAllByMcIdExcept(Integer mcId, Integer id) {
 		// TODO Auto-generated method stub
-		MyPrint.myPrint("findAll");
-		return (List<MatchType>)getHibernateTemplate().find("from MatchType");
+		MyPrint.myPrint("findAllByMcId");
+		return (List<MatchType>)getHibernateTemplate().find("from MatchType where mcid=? and id<>", mcId, id);
 	}
 
 	@Override

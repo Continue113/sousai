@@ -89,13 +89,6 @@ public class CommonManagerImpl implements CommonManager {
 	}
 
 	@Override
-	public List<MatchType> findAllMatchType() {
-		// TODO Auto-generated method stub
-		MyPrint.myPrint("findAllMatchType");
-		return matchTypeDao.findAll();
-	}
-
-	@Override
 	public List<CourtType> findCourtTypeByMatchTypeId(Integer id) throws Exception {
 		// TODO Auto-generated method stub
 		return courtTypeDao.findByMatchTypeId(id);
@@ -105,6 +98,12 @@ public class CommonManagerImpl implements CommonManager {
 	public List<MatchType> findAllMatchTypeEpt(Integer id) {
 		// TODO Auto-generated method stub
 		return matchTypeDao.findAllExcept(id);
+	}
+
+	@Override
+	public List<MatchType> findMatchTypeByMatchClassIdEpt(Integer mcId, Integer id) {
+		// TODO Auto-generated method stub
+		return matchTypeDao.findAllByMcIdExcept(mcId, id);
 	}
 
 }

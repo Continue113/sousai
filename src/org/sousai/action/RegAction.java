@@ -2,20 +2,23 @@ package org.sousai.action;
 
 import static org.sousai.service.UserManager.REG_SUCCESS;
 
+import org.apache.struts2.ServletActionContext;
 import org.sousai.action.base.UserBaseAction;
 import org.sousai.domain.User;
+import org.sousai.tools.JSONUtils;
+import org.sousai.tools.MyPrint;
 import org.sousai.vo.UserBean;
 
 import com.opensymphony.xwork2.ActionContext;
 
 public class RegAction extends UserBaseAction 
 {
-	//·â×°ÇëÇó²ÎÊý
+	//ï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	private User user;
-	//´¦ÀíµÇÂ¼ºóµÄÌáÊ¾ÐÅÏ¢
+	//ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½Ï¢
 	private String tip;
 	
-	//ÇëÇó²ÎÊýµÄgetterºÍsetter
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½getterï¿½ï¿½setter
 	public void setUser(User user)
 	{
 		this.user = user;
@@ -27,7 +30,7 @@ public class RegAction extends UserBaseAction
 	
 	
 	
-	//tipÊôÐÔµÄgetterºÍsetter
+	//tipï¿½ï¿½ï¿½Ôµï¿½getterï¿½ï¿½setter
 	public void setTip(String tip)
 	{
 		this.tip = tip;
@@ -42,21 +45,23 @@ public class RegAction extends UserBaseAction
 		return umg.getByName(getUser().getName());
 	
 	}
-	//´¦ÀíÓÃ»§ÇëÇó
+	//ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½
 	public String execute()
 		throws Exception
 	{
-		//´´½¨ActionContextÊµÀý
+		//ï¿½ï¿½ï¿½ï¿½ActionContextÊµï¿½ï¿½
 		ActionContext ctx = ActionContext.getContext();
 		System.out.println("RegAction turn to umg.register");
-		user.setEmail("test11@stest.com");
+		//user.setEmail("test11@stest.com");
+		MyPrint.myPrint("Pwd"+getUser().getPwd());
+		MyPrint.myPrint("email"+getUser().getEmail());
 		user.setType('0');
 		if(umg==null)
 		{
 			System.out.println("umg null!!!");
 		}
 		
-		//×¢²á³É¹¦
+		//×¢ï¿½ï¿½É¹ï¿½
 		if(umg.register(getUser()) == REG_SUCCESS)
 		{
 			/*ctx.getSession().put(WebConstant.USER 
@@ -64,21 +69,23 @@ public class RegAction extends UserBaseAction
 			ctx.getSession().put(WebConstant.LEVEL
 				, WebConstant.USER_LEVEL);*/
 			System.out.println("+++++++++++++++++++++");
-			setTip("ÄúÒÑ¾­³É¹¦×¢²á");
+			setTip("ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½É¹ï¿½×¢ï¿½ï¿½");
 			ctx.getSession().put("userBean", getUserInfo());
-			return "success";
+			MyPrint.myPrint("SUCCESS");
+			JSONUtils.toJson(ServletActionContext.getResponse(), "success");
+			return null;
 		}
-		//µÇÂ¼½á¹ûÎª¾­Àí
+		//ï¿½ï¿½Â¼ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½
 		/*else if (result == LOGIN_ADMIN)
 		{
 			ctx.getSession().put(WebConstant.USER 
 				, manager.getName());
 			ctx.getSession().put(WebConstant.LEVEL
 				, WebConstant.MGR_LEVEL);
-			setTip("ÄúÒÑ¾­³É¹¦µÇÂ¼ÏµÍ³");
+			setTip("ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½É¹ï¿½ï¿½ï¿½Â¼ÏµÍ³");
 			return MGR_RESULT;
 		}*/
-		//ÓÃ»§ÃûºÍÃÜÂë²»Æ¥Åä
+		//ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë²»Æ¥ï¿½ï¿½
 		else
 		{
 			return ERROR;
