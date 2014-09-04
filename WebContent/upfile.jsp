@@ -1,12 +1,12 @@
 <%@page import="java.io.*,sun.misc.*,java.util.*,org.sousai.tools.*"%>
 <%
 //String path=application.getRealPath(request.getRequestURI()); 
-String path=application.getRealPath("/files/userHeads");
+String path=application.getRealPath("");
 MyPrint.myPrint("path=" + path);
 //String dir=new File(path).getParent(); 
 String dir=new File(path).getPath();
 MyPrint.myPrint("dir=" + dir);
-String savePath = "./";  //保存图片路径 可以修改
+String savePath = "./files/userHeads/";  //保存图片路径 可以修改
 MyPrint.myPrint("savePath=" + savePath);
 String _savePath = dir + savePath;
 MyPrint.myPrint("_savePath=" + _savePath);
@@ -57,7 +57,7 @@ fout3.write(new BASE64Decoder().decodeBuffer(pic3));
 fout3.close();
 
 String picUrl = savePath+savePicName;
-
+MyPrint.myPrint(picUrl);
 out.println("{\"status\":1,\"picUrl\":\""+picUrl+"\"}"); //返回图片地址
 
 %>
