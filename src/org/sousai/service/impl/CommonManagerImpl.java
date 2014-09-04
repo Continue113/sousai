@@ -3,6 +3,7 @@ package org.sousai.service.impl;
 import java.util.List;
 
 import org.sousai.domain.CourtType;
+import org.sousai.domain.MatchClass;
 import org.sousai.domain.MatchType;
 import org.sousai.domain.Region;
 import org.sousai.service.CommonManager;
@@ -17,6 +18,7 @@ public class CommonManagerImpl implements CommonManager {
 	private MesgDao mesgDao;
 	private RegionDao regionDao;
 	private CourtTypeDao courtTypeDao;
+	private MatchClassDao matchClassDao;
 	private MatchTypeDao matchTypeDao;
 	private MatchDao matchDao;
 	
@@ -50,6 +52,10 @@ public class CommonManagerImpl implements CommonManager {
 		this.courtTypeDao = courtTypeDao;
 	}
 	
+	public void setMatchClassDao(MatchClassDao matchClassDao)
+	{
+		this.matchClassDao = matchClassDao;
+	}
 	public void setMatchTypeDao(MatchTypeDao matchTypeDao)
 	{
 		this.matchTypeDao = matchTypeDao;
@@ -104,6 +110,19 @@ public class CommonManagerImpl implements CommonManager {
 	public List<MatchType> findMatchTypeByMatchClassIdEpt(Integer mcId, Integer id) {
 		// TODO Auto-generated method stub
 		return matchTypeDao.findAllByMcIdExcept(mcId, id);
+	}
+
+	@Override
+	public List<MatchClass> findAllMatchClass() {
+		// TODO Auto-generated method stub
+		return matchClassDao.findAll();
+	}
+
+	@Override
+	public List<MatchClass> findAllMatchClassEpt(Integer id) throws Exception{
+		// TODO Auto-generated method stub
+		MyPrint.myPrint("in findAllMatchClassEpt");
+		return matchClassDao.findAllExcept(id);
 	}
 
 }

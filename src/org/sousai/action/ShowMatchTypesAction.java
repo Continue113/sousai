@@ -11,6 +11,7 @@ public class ShowMatchTypesAction extends UserBaseAction {
 
 	private static final long serialVersionUID = -1333849702909567869L;
 	
+	//接收到的比赛大类的id
 	public int mcId;
 	//不显示比赛类型中“默认”这一纪录，数据库中"默认"的id=1
 	private final int DefaultId = 1;

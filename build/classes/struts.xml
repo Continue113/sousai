@@ -69,7 +69,12 @@
 			<result>main.jsp</result>
 		</action>
 		
-		<!-- 获取所有比赛类型的action -->
+		<!-- 获取所有比赛大类的action -->
+		<action name="showMC"
+			class="org.sousai.action.ShowMatchClassAction">
+		</action>
+		
+		<!-- 获取比赛大类下的比赛小类的action -->
 		<action name="showMT"
 			class="org.sousai.action.ShowMatchTypesAction">
 		</action>

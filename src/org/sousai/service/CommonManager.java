@@ -60,4 +60,18 @@ public interface CommonManager
 	 * @return 对应MatchClass的所有MatchType
 	 */
 	public List<MatchType> findMatchTypeByMatchClassIdEpt(Integer mcId, Integer id);
+	
+	/**
+	 * 查询所有的比赛大类
+	 * @return 所有比赛大类
+	 */
+	public List<MatchClass> findAllMatchClass();
+	
+	/**
+	 * 查询除给定id以外的所有比赛大类
+	 * @param id不查询的比赛大类
+	 * @return 除开id标明的数据外的其他比赛大类
+	 * @throws Exception 
+	 */
+	public List<MatchClass> findAllMatchClassEpt(Integer id) throws Exception;
 }
