@@ -362,4 +362,51 @@ public class UserManagerImpl implements UserManager
 		return null;
 	}
 	
+	@Override
+	public String uploadUserPic(int flag, File[] images, String[] imgNames, Long UserId)
+	{
+		// TODO Auto-generated method stub
+		MyPrint.myPrint("in uploadPicAction");
+		if(images != null && imgNames != null)
+		{
+			MyPrint.myPrint("images not null!");
+			try {
+				ServletActionContext.getRequest().setCharacterEncoding("UTF-8");
+			} catch (UnsupportedEncodingException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				return "fail";
+			}
+	        String realPath = ServletActionContext.getServletContext().getRealPath("/files");
+	        realPath += "/" + UserId;
+	        //判断是用户头像还是场地图片
+	        if(flag == USER_PIC)
+	        {
+	        	//判断图片数量是否为1
+	        	if(images.length>1 || imgNames.length>1)
+	        	{
+	        		return "TooManyUserPic";
+	        	}
+	        	realPath += "/UserHead";
+	        	File savedir=new File(realPath);
+	            if(!savedir.getParentFile().exists())
+	            {
+	                savedir.getParentFile().mkdirs();
+	            }
+	            File savefile = new File(savedir, imgNames[0]);
+                try {
+					FileUtils.copyFile(images[0], savefile);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return "fail";
+				}
+	        }
+	        return realPath;
+		}
+		else
+		{
+			return "ImageOrNamesNull";
+		}
+	}
 }

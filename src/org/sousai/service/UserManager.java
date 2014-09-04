@@ -120,7 +120,7 @@ public interface UserManager
 	 * 将用户头像存入服务器中
 	 * @param images 用户头像
 	 * @param imgNames 文件名
-	 * @param userId 用户表示名
+	 * @param userId 用户标识名
 	 * @return "fail"失败    若成功，则返回路径名
 	 */
 	public String saveUserPic(File images, String imgNames, Long userId);
@@ -133,5 +133,7 @@ public interface UserManager
 	 * @return "fail"失败    若成功，则返回路径名
 	 */
 	public String saveCourtPic(File[] images, String[] imgNames, Long userId);
+
+	String uploadUserPic(int flag, File[] images, String[] imgNames, Long UserId);
 	
 }
