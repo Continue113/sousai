@@ -225,7 +225,7 @@ $(function() {
       },
     }); //ajax 已得到具体比赛类型
     //出现下拉列表
-	tgPrt.find(".selectParticularMatchType").show();
+	tgPrt.find(".selectParticularMatchType").removeClass("hide");
 	//}
   })
   
