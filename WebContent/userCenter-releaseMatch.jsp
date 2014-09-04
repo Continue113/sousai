@@ -102,8 +102,10 @@
           <div class="control-group"> 
            <label class="control-label" for="matchType">比赛类型：</label> 
            <div class="controls"> 
-            <s:include value="selectMatchType.jsp" />
-            <!-- /选择比赛类型 --> 
+            <select class="selectMatchType" name="mcId"></select>
+            <select class="selectParticularMatchType hide" name="court.matchType"></select>
+            <label class="omthide hide" class="control-label" for="otherMatchType">请输入类型：</label>
+            <input class="omthide hide" id="otherMatchType" type="text" value="" placeholder="请填写比赛类型"/>
            </div> 
           </div> 
           <div class="control-group"> 
@@ -226,146 +228,215 @@
   <script src="js/jquery.validate.min.js"></script> 
   <script src="js/jplist.min.js"></script> 
   <script>
-    $(function () {
-     /** 日期选择器 **/
-     $( "#inputMatchTimefrom" ).datepicker({
-      defaultDate: "+1w",
-      changeMonth: true,
-      onClose: function( selectedDate ) {
-        $( "#to" ).datepicker( "option", "minDate", selectedDate );
+  $(function () {
+  //初始化比赛类型
+  function initMatchType(){
+    //console.log("调用初始化比赛类型");
+    $.post("showMC", null, function(data) {
+      //alert("回调内容为:"+data);//id name 
+      var type = $(".selectMatchType");
+      type.empty().append("<option value=0>请选择比赛类型</option>");
+      for (var i = 0; i < data.length; i++) {
+        type.append("<option value=\"" + data[i].id + "\">" + data[i].name + "</option>");
       }
+      //type.append("<option value=-1>其他</option>"); //暂时去掉大类比赛类型的“其他”选项
     });
-    $( "#inputMatchTimeto" ).datepicker({
-      defaultDate: "+1w",
-      changeMonth: true,
-      onClose: function( selectedDate ) {
-        $( "#matchTimefrom" ).datepicker( "option", "maxDate", selectedDate );
-      }
-    });
-    /** /日期选择器 **/
+  }
 
-    /** 选中表格某行 **/
-    $("tbody>tr").click(function(){
-      $("tr").removeClass("active");
-      $(this).addClass("active");
-    });
-    /****/
-
-    /** 列表排序 **/
-    $('.oldCourtsBox').jplist({
-          itemsBox: '.table',
-          itemPath: '.tritem',
-          panelPath: '.jplist-panel'
-        });
-
-    /** 搜索现有场地 **/
-    $("#searchExistedCourt").click(function(){
-      $("div.oldCourtsBox").slideDown();
-      if($("#newCourtCheckbox").is(":checked")){
-        $("div.inputCourt").slideUp();
-        $("div.inputCourt").remove();
-        $("#newCourtCheckbox").attr("checked",false);
-      }
-    });
-    /** 添加新场地 **/
-    $("#newCourtBtn").click(function () {
-      $("#newCourtCheckbox").click();
-    });
-
-    $("#newCourtCheckbox").click(function () {
-      if($(this).is(":checked")){
-        var inputCourtStr = '<div class="inputCourt hide"><div class="control-group"><label class="control-label" for="courtName">场地名称：</label><div class="controls"><input type="text" id="courtName" name="inputCourtName" placeholder="如：2012年XXXXXXX杯乒乓球季度赛" class="span5 add-on" data-toggle="tooltip" data-placement="top" title="" data-original-title="限定30个字符以下" required="required"/></div></div><div class="control-group"><label class="control-label" for="courtAddress">详细地址：</label><div class="controls"><input type="text" id="courtAddress" name="inputCourtAddress" placeholder="如：某某桥某某路XXXXXXX杯乒乓球季度赛某楼" class="span5 add-on" data-toggle="tooltip" data-placement="top" title="" data-original-title="限定30个字符以下" required="required"/></div></div><div class="control-group"><label class="control-label" for="courtType">场地类型：</label><div class="controls"><select name="selectCourtType"><option value="0">请选择场地类型</option><option value="courtType-inner">室内</option><option value="courtType-outer">室外</option><option value="courtType-zq">体育局</option><option value="courtType-pp">俱乐部</option><option value="courtType-lq">社区</option><option value="courtType-zq">单位</option><option value="courtType-zq">学校</option><option value="courtType-pp">临时</option><option value="courtType-lq">公共</option><option value="courtType-zq">其他</option></select></div></div></div>'
-      $(inputCourtStr).insertAfter($(this).parent());
-      $("div.inputCourt").slideDown();
-      $("div.oldCourtsBox").slideUp();
-    }
-    else {
-      $("div.oldCourtsBox").slideDown();
-      $("div.inputCourt").slideUp();
-      $("div.inputCourt").remove();
-    }
-    });
-    /****/    
-    /** tinymce **/
-    tinymce.init({
-      mode: 'textareas',
-      language :'zh_CN',
-      menubar: false,
-      toolbar_items_size: 'small',
-      plugins: [
-                "advlist autolink autosave link image preview ",
-                "searchreplace fullscreen ",
-                "table"
-        ],
-        height:300,
-    toolbar1: "newdocument bold italic underline | fontsizeselect | bullist numlist | alignleft aligncenter alignright alignjustify | link unlink image searchreplace table | undo redo preview fullscreen",
-    image_advtab: true,
-    // update validation status on change
-    onchange_callback: function(editor) {
-      tinyMCE.triggerSave();
-      $("#" + editor.id).valid();
-    }
-    });
-    /** 表单验证 **/
-    var matchValidator = $("#releaseMatchForm").submit(function() {
-      // update underlying textarea before submit validation
-      tinyMCE.triggerSave();
-    }).validate({
-      submitHandler: function(){alert("发布比赛成功");},
-      ignore: "",
-    rules: {
-      inputMatchTitle: {
-        minlength: 6,
-        maxlength: 30
-      }
-    },
-    messages: {
-      inputMatchTitle: {
-        required: "请输入比赛名称",
-        minlength: "比赛名称至少6个字符",
-        maxlength: "比赛名称至多30个字符"
+  //立即初始化比赛类型
+  initMatchType();
+  
+  //点击大类比赛类型获得具体比赛类型
+  $(".selectMatchType").change(function selParticularMatchType() {
+  //tgPrt: targetparent 目标父元素
+  var tgPrt = $(this).parent();
+    $.ajax({
+      type: "POST",
+      url: "showMT",
+      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+      data: {
+        "mcId": tgPrt.find(".selectMatchType option:selected").attr("value"),
       },
-      inputMatchRules: "请输入比赛规程",
-      inputCourtName: "请输入场地名称",
-      inputCourtAddress: "请输入场地地址",
-      selectMatchType: "请选择一种比赛类型",
-      selectCourtType: "请选择一种场地类型",
-      inputMatchTimefrom: "请选择开始日期",
-      inputMatchTimeto: "请选择结束日期",
-      inputMatchRules: "请填写比赛规程"
-    },
-    errorPlacement: function(error, element){
-      if(element.parent().hasClass("input-append")){
-        error.appendTo($(".controls-error"));
-      }
-      else if (element.is("textarea")) {
-          error.insertAfter($("label[for='inputMatchRules']"));
+      dataType: "json",
+      success: function(rspdata) {
+        var sctParMatchType = $(".selectParticularMatchType");
+        sctParMatchType.empty().append("<option value=0>请选择比赛类型</option>");
+        for (var i = 0; i < rspdata.length; i++) {
+          sctParMatchType.append("<option value=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</  option>");
         }
-        else error.insertAfter(element);
+        sctParMatchType.append("<option value=-1>其他</option>"); //每一个大类比赛类型的“其他”选项
+      },
+      error: function() {
+        alert("抱歉，获取比赛类型出错了。");
+      },
+    }); //ajax 已得到具体比赛类型
+    //出现具体比赛类型下拉列表并且不再隐藏
+    tgPrt.find(".selectParticularMatchType").removeClass("hide");
+  });
+
+    //点击比赛类型获取相应场地类型
+  var omtf = 0;//other match type flag ；0表示默认，1表示已经选过“其他”选项
+  $(".selectParticularMatchType").change(function selMatchType() {
+    //tgPrt: targetparent 目标父元素
+    var tgPrt = $(this).parent();
+    if (tgPrt.find(".selectParticularMatchType option:selected").attr("value") == -1 && omtf == 0){
+      //移除name属性，即不会使用select内容提交
+      $(this).removeAttr("name");
+      //当用户选择其他的时候，弹出隐藏的label和input
+      tgPrt.find(".omthide").slideDown();
+      //添加输入框的name属性，并改变omtf
+      $("#otherMatchType").attr("name","court.matchType");
+      omtf = 1;
+    }else {
+      //若已选择“其他”则改为默认选项
+      if( omtf == 1){
+        $(this).attr("name","court.matchType");
+        tgPrt.find(".omthide").slideUp();
+        $("#otherMatchType").removeAttr("name");
+        omtf = 0;
+      }
     }
   });
 
-    matchValidator.focusInvalid = function() {
-      // put focus on tinymce on submit validation
-      if( this.settings.focusInvalid ) {
-        try {
-          var toFocus = $(this.findLastActive() || this.errorList.length && this.errorList[0].element || []);
-          if (toFocus.is("textarea")) {
-            tinyMCE.get(toFocus.attr("id")).focus();
-          } else {
-            toFocus.filter(":visible").focus();
-          }
-        } catch(e) {
-          // ignore IE throwing errors when focusing hidden elements
+  /** 日期选择器 **/
+  $( "#inputMatchTimefrom" ).datepicker({
+    defaultDate: "+1w",
+    changeMonth: true,
+    onClose: function( selectedDate ) {
+      $( "#to" ).datepicker( "option", "minDate", selectedDate );
+    }
+  });
+  $( "#inputMatchTimeto" ).datepicker({
+    defaultDate: "+1w",
+    changeMonth: true,
+    onClose: function( selectedDate ) {
+      $( "#matchTimefrom" ).datepicker( "option", "maxDate", selectedDate );
+    }
+  });
+  /** /日期选择器 **/
+
+  /** 选中表格某行 **/
+  $("tbody>tr").click(function(){
+    $("tr").removeClass("active");
+    $(this).addClass("active");
+  });
+  /****/
+
+  /** 列表排序 **/
+  $('.oldCourtsBox').jplist({
+        itemsBox: '.table',
+        itemPath: '.tritem',
+        panelPath: '.jplist-panel'
+      });
+
+  /** 搜索现有场地 **/
+  $("#searchExistedCourt").click(function(){
+    $("div.oldCourtsBox").slideDown();
+    if($("#newCourtCheckbox").is(":checked")){
+      $("div.inputCourt").slideUp();
+      $("div.inputCourt").remove();
+      $("#newCourtCheckbox").attr("checked",false);
+    }
+  });
+  /** 添加新场地 **/
+  $("#newCourtBtn").click(function () {
+    $("#newCourtCheckbox").click();
+  });
+
+  $("#newCourtCheckbox").click(function () {
+    if($(this).is(":checked")){
+      var inputCourtStr = '<div class="inputCourt hide"><div class="control-group"><label class="control-label" for="courtName">场地名称：</label><div class="controls"><input type="text" id="courtName" name="inputCourtName" placeholder="如：2012年XXXXXXX杯乒乓球季度赛" class="span5 add-on" data-toggle="tooltip" data-placement="top" title="" data-original-title="限定30个字符以下" required="required"/></div></div><div class="control-group"><label class="control-label" for="courtAddress">详细地址：</label><div class="controls"><input type="text" id="courtAddress" name="inputCourtAddress" placeholder="如：某某桥某某路XXXXXXX杯乒乓球季度赛某楼" class="span5 add-on" data-toggle="tooltip" data-placement="top" title="" data-original-title="限定30个字符以下" required="required"/></div></div><div class="control-group"><label class="control-label" for="courtType">场地类型：</label><div class="controls"><select name="selectCourtType"><option value="0">请选择场地类型</option><option value="courtType-inner">室内</option><option value="courtType-outer">室外</option><option value="courtType-zq">体育局</option><option value="courtType-pp">俱乐部</option><option value="courtType-lq">社区</option><option value="courtType-zq">单位</option><option value="courtType-zq">学校</option><option value="courtType-pp">临时</option><option value="courtType-lq">公共</option><option value="courtType-zq">其他</option></select></div></div></div>'
+    $(inputCourtStr).insertAfter($(this).parent());
+    $("div.inputCourt").slideDown();
+    $("div.oldCourtsBox").slideUp();
+  }
+  else {
+    $("div.oldCourtsBox").slideDown();
+    $("div.inputCourt").slideUp();
+    $("div.inputCourt").remove();
+  }
+  });
+  /****/    
+  /** tinymce **/
+  tinymce.init({
+    mode: 'textareas',
+    language :'zh_CN',
+    menubar: false,
+    toolbar_items_size: 'small',
+    plugins: [
+              "advlist autolink autosave link image preview ",
+              "searchreplace fullscreen ",
+              "table"
+      ],
+      height:300,
+  toolbar1: "newdocument bold italic underline | fontsizeselect | bullist numlist | alignleft aligncenter alignright alignjustify | link unlink image searchreplace table | undo redo preview fullscreen",
+  image_advtab: true,
+  // update validation status on change
+  onchange_callback: function(editor) {
+    tinyMCE.triggerSave();
+    $("#" + editor.id).valid();
+  }
+  });
+  /** 表单验证 **/
+  var matchValidator = $("#releaseMatchForm").submit(function() {
+    // update underlying textarea before submit validation
+    tinyMCE.triggerSave();
+  }).validate({
+    submitHandler: function(){alert("发布比赛成功");},
+    ignore: "",
+  rules: {
+    inputMatchTitle: {
+      minlength: 6,
+      maxlength: 30
+    }
+  },
+  messages: {
+    inputMatchTitle: {
+      required: "请输入比赛名称",
+      minlength: "比赛名称至少6个字符",
+      maxlength: "比赛名称至多30个字符"
+    },
+    inputMatchRules: "请输入比赛规程",
+    inputCourtName: "请输入场地名称",
+    inputCourtAddress: "请输入场地地址",
+    selectMatchType: "请选择一种比赛类型",
+    selectCourtType: "请选择一种场地类型",
+    inputMatchTimefrom: "请选择开始日期",
+    inputMatchTimeto: "请选择结束日期",
+    inputMatchRules: "请填写比赛规程"
+  },
+  errorPlacement: function(error, element){
+    if(element.parent().hasClass("input-append")){
+      error.appendTo($(".controls-error"));
+    }
+    else if (element.is("textarea")) {
+        error.insertAfter($("label[for='inputMatchRules']"));
+      }
+      else error.insertAfter(element);
+  }
+  });
+
+  matchValidator.focusInvalid = function() {
+    // put focus on tinymce on submit validation
+    if( this.settings.focusInvalid ) {
+      try {
+        var toFocus = $(this.findLastActive() || this.errorList.length && this.errorList[0].element || []);
+        if (toFocus.is("textarea")) {
+          tinyMCE.get(toFocus.attr("id")).focus();
+        } else {
+          toFocus.filter(":visible").focus();
         }
+      } catch(e) {
+        // ignore IE throwing errors when focusing hidden elements
       }
     }
+  }
 
-    /** 清空比赛表单 **/
-    $("#resetMatchForm").click(function(){
-      matchValidator.resetForm();
-    });
-    })
+  /** 清空比赛表单 **/
+  $("#resetMatchForm").click(function(){
+    matchValidator.resetForm();
+  });
+})
 </script> 
  </body>
 </html>

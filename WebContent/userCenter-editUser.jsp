@@ -122,7 +122,7 @@
           <div class="control-group"> 
            <label class="control-label" for="userIcon">头像设置：</label> 
            <div class="controls"> 
-            <div class="crtUserIcon"><img src="img/defaultImg.png" /></div>
+            <div class="crtUserIcon"><img src="<s:property value="#session.userBean.userPic" />" /></div>
            </div>
            <!-- hide old uploadpic
            <div class="controls"> 
@@ -150,7 +150,7 @@ WIDTH="650" HEIGHT="450" id="sousaiUserIconUpload">
 <PARAM NAME=quality VALUE=high>
 <PARAM NAME=bgcolor VALUE=#FFFFFF>
 <param name="flashvars" value="imgUrl=img/defaultIcon.png&uploadUrl=./upfile.jsp&uploadSrc=false" />
-<EMBED src="avatar.swf" quality=high bgcolor=#FFFFFF WIDTH="650" HEIGHT="450" wmode="transparent" flashVars="imgUrl=./default.jpg&uploadUrl=./upfile.jsp&uploadSrc=false"
+<EMBED src="avatar.swf" quality=high bgcolor=#FFFFFF WIDTH="650" HEIGHT="450" wmode="transparent" flashVars="imgUrl=img/defaultIcon.png&uploadUrl=./upfile.jsp&uploadSrc=false"
 NAME="myMovieName" ALIGN="" TYPE="application/x-shockwave-flash" allowScriptAccess="always"
 PLUGINSPAGE="http://www.macromedia.com/go/getflashplayer">
 </EMBED>
@@ -254,7 +254,7 @@ $(function () {
             alert("抱歉，发送数据出错了，请重新输入。");
           },
           });
-      }
+        }
       },
       ignore: ".ignore",
       rules: {
@@ -292,26 +292,27 @@ $(function () {
       }
     }
   });
-    /** 取消编辑账户 **/
-    $("#resetEditUserForm").click(function(){
-      var resetbtn = confirm("确定重置吗？");
-      if (resetbtn == true){
-        $("#resetBtn").trigger('click');
-        editUserValidator.resetForm();
-      }
-    });
-    /** 上传图片 **/
-    $(".fileinput-button").click(function(){
-      $("#imgInput").trigger('click');
-    });
-    $("#start").click(function(){
-      $("#uploadImgForm > .start").trigger("click").attr("disabled","disabled");
-      ajaxFileUpload();
-    });
-    $("#cancle").click(function(){
-      $(".files .hide").fadeOut();
-    });
+  /** 取消编辑账户 **/
+  $("#resetEditUserForm").click(function(){
+    var resetbtn = confirm("确定重置吗？");
+    if (resetbtn == true){
+      $("#resetBtn").trigger('click');
+      editUserValidator.resetForm();
+    }
+  });
+  /** 上传图片 **//*
+  $(".fileinput-button").click(function(){
+    $("#imgInput").trigger('click');
+  });
+  $("#start").click(function(){
+    $("#uploadImgForm > .start").trigger("click").attr("disabled","disabled");
+    ajaxFileUpload();
+  });
+  $("#cancle").click(function(){
+    $(".files .hide").fadeOut();
+  });*/
 })
+/*
 function ajaxFileUpload() {
   $(".files .name").ajaxStart(function(){
     $(this).append('<img src="img/loading.gif" width="25" />');
@@ -382,29 +383,27 @@ function imgValid(file){
     $(".files .hide").fadeIn();
   }
 }
-/*
- * flash上传头像
- */
+*/
+/** flash上传头像 **/
 function uploadevent(status,picUrl,callbackdata){
-	//alert(picUrl); //后端存储图片
-	//alert(callbackdata);
-	        status += '';
-	     switch(status){
-	     case '1':
-			var time = new Date().getTime();
-			var filename162 = picUrl+'_162.jpg';
-			var filename48 = picUrl+'_48.jpg';
-			var filename20 = picUrl+"_20.jpg";
-
-			//document.getElementById('avatar_priview').innerHTML = "头像1 : <img src='"+filename162+"?" + time + "'/> <br/> 头像2: <img src='"+filename48+"?" + time + "'/><br/> 头像3: <img src='"+filename20+"?" + time + "'/>" ;
-			//显示图片上传预览
-		break;
-	     case '-1':
-		  window.location.reload();
-	     break;
-	     default:
-	     window.location.reload();
-	    } 
-	   }
+	alert(picUrl); //后端存储图片
+	alert(callbackdata);
+  status += '';
+  switch(status){
+	case '1':
+	var time = new Date().getTime();
+	var filename162 = picUrl+'_162.jpg';
+	var filename48 = picUrl+'_48.jpg';
+	var filename20 = picUrl+"_20.jpg";
+  //显示图片上传预览
+  $(".crtUserIcon > img").attr("src",filename162);
+  break;
+  case '-1':
+  window.location.reload();
+  break;
+	default:
+	window.location.reload();
+}
+}
 </script>
 </body></html>
