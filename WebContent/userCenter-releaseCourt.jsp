@@ -207,10 +207,8 @@
   
   //点击大类比赛类型获得具体比赛类型
   $(".selectMatchType").change(function selParticularMatchType() {
-  console.log("改变大类比赛类型");
   //tgPrt: targetparent 目标父元素
   var tgPrt = $(this).parent();
-    console.log("获得具体比赛类型");
     $.ajax({
       type: "POST",
       url: "showMT",
@@ -220,7 +218,6 @@
       },
       dataType: "json",
       success: function(rspdata) {
-        //alert("获得具体比赛类型:"+ rspdata);
         var sctParMatchType = $(".selectParticularMatchType");
         sctParMatchType.empty().append("<option value=0>请选择比赛类型</option>");
         for (var i = 0; i < rspdata.length; i++) {
@@ -239,11 +236,9 @@
   //点击比赛类型获取相应场地类型
   var omtf = 0;//other match type flag ；0表示默认，1表示已经选过“其他”选项
   $(".selectParticularMatchType").change(function selMatchType() {
-    console.log("改变比赛类型");
     //tgPrt: targetparent 目标父元素
     var tgPrt = $(this).parent();
     if (tgPrt.find(".selectParticularMatchType option:selected").attr("value") == -1 && omtf == 0){
-      alert("value=-1 omtf=0");
       //移除name属性，即不会使用select内容提交
       $(this).removeAttr("name");
       //当用户选择其他的时候，弹出隐藏的label和input
@@ -252,25 +247,22 @@
       $("#otherMatchType").attr("name","court.matchType");
       omtf = 1;
     }else if (tgPrt.find(".selectParticularMatchType option:selected").attr("value") == 0) {
-      alert("value=0");
       //当用户没有选择场地类型的时候，就将场地类型下拉列表框中原有的“请选择”字样删除。
       tgPrt.find(".selectCourtType").empty();
       //若已选择“其他”则改为默认选项
       if( omtf == 1){
-        alert("value=0 omtf=1");
         $(this).attr("name","court.matchType");
         tgPrt.find(".omthide").slideUp();
         $("#otherMatchType").removeAttr("name");
-        omft = 0;
+        omtf = 0;
       }
     }else {
       //若已选择“其他”则改为默认选项
       if( omtf == 1){
-        alert("选择某比赛类型 omtf=1");
         $(this).attr("name","court.matchType");
         tgPrt.find(".omthide").slideUp();
         $("#otherMatchType").removeAttr("name");
-        omft = 0;
+        omtf = 0;
       }
       console.log("获得比赛类型");
       $.ajax({
@@ -282,7 +274,6 @@
         },
         dataType: "json",
         success: function(rspdata) {
-          //alert("获得场地类型:"+ rspdata);
           var sctCourtType = $(".selectCourtType");
           sctCourtType.empty().append("<option value=0>请选择场地类型</option>");
           for (var i = 0; i < rspdata.length; i++) {
