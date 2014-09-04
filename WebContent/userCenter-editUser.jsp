@@ -124,6 +124,7 @@
            <div class="controls"> 
             <div class="crtUserIcon"><img src="img/defaultImg.png" /></div>
            </div>
+           <!-- hide old uploadpic
            <div class="controls"> 
             <span class="btn fileinput-button"><i class="icon-plus"></i><span>选择图片</span></span>
             <span class="error">请上传小于 200KB 的 jpg、jpeg、png、gif 格式的图片。</span>
@@ -138,6 +139,22 @@
               </tr>
               </tbody>
             </table>
+           </div>
+           -->
+           <!-- flash upload div -->
+           <div class="controls" >
+           <OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"
+WIDTH="650" HEIGHT="450" id="sousaiUserIconUpload">
+<PARAM NAME=movie VALUE="avatar.swf">
+<PARAM NAME=quality VALUE=high>
+<PARAM NAME=bgcolor VALUE=#FFFFFF>
+<param name="flashvars" value="imgUrl=img/defaultIcon.png&uploadUrl=./upfile.jsp&uploadSrc=false" />
+<EMBED src="avatar.swf" quality=high bgcolor=#FFFFFF WIDTH="650" HEIGHT="450" wmode="transparent" flashVars="imgUrl=./default.jpg&uploadUrl=./upfile.jsp&uploadSrc=false"
+NAME="myMovieName" ALIGN="" TYPE="application/x-shockwave-flash" allowScriptAccess="always"
+PLUGINSPAGE="http://www.macromedia.com/go/getflashplayer">
+</EMBED>
+</OBJECT>
            </div>
          </div>
           <div class="control-group"> 
@@ -365,5 +382,29 @@ function imgValid(file){
     $(".files .hide").fadeIn();
   }
 }
+/*
+ * flash上传头像
+ */
+function uploadevent(status,picUrl,callbackdata){
+	//alert(picUrl); //后端存储图片
+	//alert(callbackdata);
+	        status += '';
+	     switch(status){
+	     case '1':
+			var time = new Date().getTime();
+			var filename162 = picUrl+'_162.jpg';
+			var filename48 = picUrl+'_48.jpg';
+			var filename20 = picUrl+"_20.jpg";
+
+			//document.getElementById('avatar_priview').innerHTML = "头像1 : <img src='"+filename162+"?" + time + "'/> <br/> 头像2: <img src='"+filename48+"?" + time + "'/><br/> 头像3: <img src='"+filename20+"?" + time + "'/>" ;
+			//显示图片上传预览
+		break;
+	     case '-1':
+		  window.location.reload();
+	     break;
+	     default:
+	     window.location.reload();
+	    } 
+	   }
 </script>
 </body></html>

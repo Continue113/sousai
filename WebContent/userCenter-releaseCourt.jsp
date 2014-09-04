@@ -77,9 +77,10 @@
           <div class="control-group"> 
            <label class="control-label" for="selectMatchType">比赛类型：</label> 
            <div class="controls"> 
-            <select class="selectMatchType" name="court.matchType"></select>
+            <select class="selectMatchType" name="mcId"></select>
+            <select class="selectParticularMatchType hide" name="court.matchType"></select>
             <label class="hide" class="control-label" for="otherMatchType">请输入类型：</label>
-            <input class="hide" id="otherMatchType" type="text" value="" holderplace="请填写比赛类型"/>
+            <input class="hide" id="otherMatchType" type="text" value="" placeholder="请填写比赛类型"/>
            </div> 
           </div> 
           <div class="control-group"> 
