@@ -398,7 +398,6 @@ function uploadevent(status,picUrl,callbackdata){
 	var filename20 = picUrl+"_20.jpg";
   //显示图片上传预览
   $(".crtUserIcon > img").attr("src",filename162+"?"+time);
-  document.getElementById('avatar_priview').innerHTML = "头像1 : <img src='"+filename162+"?" + time + "'/> <br/> 头像2: <img src='"+filename48+"?" + time + "'/><br/> 头像3: <img src='"+filename20+"?" + time + "'/>" ;
   break;
   case '-1':
   window.location.reload();
