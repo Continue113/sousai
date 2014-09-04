@@ -187,8 +187,6 @@ $(function() {
       //type.append("<option value=-1>其他</option>"); //暂时去掉大类比赛类型的“其他”选项
     });
   }
-  //立即初始化比赛类型
-  initMatchType();
   
   //点击大类比赛类型获得具体比赛类型
   $(".selectMatchType").change(function selParticularMatchType() {
@@ -239,7 +237,7 @@ $(function() {
       //移除name属性，即不会使用select内容提交
       $(this).removeAttr("name")
       //当用户选择其他的时候，弹出隐藏的label和input
-      tgPrt.find(".hide").slideDown();
+      tgPrt.find(".omthide").slideDown();
       //添加输入框的name属性，并改变omtf
       $("#otherMatchType").attr("name","court.matchType");
       omtf = 1;
@@ -249,7 +247,7 @@ $(function() {
       //若已选择“其他”则改为默认选项
       if( omtf == 1){
         $(this).attr("name","court.matchType");
-        tgPrt.find(".hide").slideUp();
+        tgPrt.find(".omthide").slideUp();
         $("#otherMatchType").removeAttr("name");
         omft = 0;
       }
@@ -257,7 +255,7 @@ $(function() {
       //若已选择“其他”则改为默认选项
       if( omtf == 1){
         $(this).attr("name","court.matchType");
-        tgPrt.find(".hide").slideUp();
+        tgPrt.find(".omthide").slideUp();
         $("#otherMatchType").removeAttr("name");
         omft = 0;
       }

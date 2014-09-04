@@ -79,8 +79,8 @@
            <div class="controls"> 
             <select class="selectMatchType" name="mcIdOLD"></select>
             <select class="selectParticularMatchType hide" name="court.matchType"></select>
-            <label class="hide" class="control-label" for="otherMatchType">请输入类型：</label>
-            <input class="hide" id="otherMatchType" type="text" value="" placeholder="请填写比赛类型"/>
+            <label class="omthide hide" class="control-label" for="otherMatchType">请输入类型：</label>
+            <input class="omthide hide" id="otherMatchType" type="text" value="" placeholder="请填写比赛类型"/>
            </div> 
           </div> 
           <div class="control-group"> 
@@ -188,6 +188,9 @@
   <script src="tinymce/tinymce.min.js"></script> 
   <script>
   $(function(){
+    //立即初始化比赛类型
+    initMatchType();
+    
     //点击确认发布，获取地区，比赛类型，场地类型
     $("#rlsCourt").click(function(){
       //检测场地名称 场地地址
