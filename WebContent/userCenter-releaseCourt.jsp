@@ -210,13 +210,6 @@
   console.log("改变大类比赛类型");
   //tgPrt: targetparent 目标父元素
   var tgPrt = $(this).parent();
-  /*
-  if (tgPrt.find(".selectMatchType option:selected").attr("value") == 0) {
-    //当用户没有选择大类比赛类型的时候，就将具体比赛类型下拉列表框隐藏并清空。
-      tgPrt.find(".selectParticularMatchType").hide().empty();
-      }else {
-        //当用户选择了某大类比赛类型的时候，就获取相应具体比赛类型下拉别表并出现。
-  */
     console.log("获得具体比赛类型");
     $.ajax({
       type: "POST",
@@ -239,9 +232,8 @@
         alert("抱歉，获取比赛类型出错了。");
       },
     }); //ajax 已得到具体比赛类型
-    //出现下拉列表
-  tgPrt.find(".selectParticularMatchType").removeClass("hide");
-  //}
+    //出现具体比赛类型下拉列表并且不再隐藏
+    tgPrt.find(".selectParticularMatchType").removeClass("hide");
   })
   
   //点击比赛类型获取相应场地类型
@@ -251,18 +243,21 @@
     //tgPrt: targetparent 目标父元素
     var tgPrt = $(this).parent();
     if (tgPrt.find(".selectParticularMatchType option:selected").attr("value") == -1 && omtf == 0){
+      alert("value=-1 omtf=0");
       //移除name属性，即不会使用select内容提交
-      $(this).removeAttr("name")
+      $(this).removeAttr("name");
       //当用户选择其他的时候，弹出隐藏的label和input
       tgPrt.find(".omthide").slideDown();
       //添加输入框的name属性，并改变omtf
       $("#otherMatchType").attr("name","court.matchType");
       omtf = 1;
     }else if (tgPrt.find(".selectParticularMatchType option:selected").attr("value") == 0) {
+      alert("value=0");
       //当用户没有选择场地类型的时候，就将场地类型下拉列表框中原有的“请选择”字样删除。
       tgPrt.find(".selectCourtType").empty();
       //若已选择“其他”则改为默认选项
       if( omtf == 1){
+        alert("value=0 omtf=1");
         $(this).attr("name","court.matchType");
         tgPrt.find(".omthide").slideUp();
         $("#otherMatchType").removeAttr("name");
@@ -271,6 +266,7 @@
     }else {
       //若已选择“其他”则改为默认选项
       if( omtf == 1){
+        alert("选择某比赛类型 omtf=1");
         $(this).attr("name","court.matchType");
         tgPrt.find(".omthide").slideUp();
         $("#otherMatchType").removeAttr("name");
