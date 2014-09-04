@@ -144,17 +144,18 @@
            <!-- flash upload div -->
            <div class="controls" >
            <OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
-codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"
-WIDTH="650" HEIGHT="450" id="sousaiUserIconUpload">
-<PARAM NAME=movie VALUE="avatar.swf">
-<PARAM NAME=quality VALUE=high>
-<PARAM NAME=bgcolor VALUE=#FFFFFF>
-<param name="flashvars" value="imgUrl=img/defaultIcon.png&uploadUrl=./upfile.jsp&uploadSrc=false" />
-<EMBED src="avatar.swf" quality=high bgcolor=#FFFFFF WIDTH="650" HEIGHT="450" wmode="transparent" flashVars="imgUrl=img/defaultIcon.png&uploadUrl=./upfile.jsp&uploadSrc=false"
-NAME="myMovieName" ALIGN="" TYPE="application/x-shockwave-flash" allowScriptAccess="always"
-PLUGINSPAGE="http://www.macromedia.com/go/getflashplayer">
-</EMBED>
-</OBJECT>
+            codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"
+            WIDTH="650" HEIGHT="450" id="sousaiUserIconUpload">
+            <PARAM NAME=movie VALUE="avatar.swf">
+            <PARAM NAME=quality VALUE=high>
+            <PARAM NAME=bgcolor VALUE=#FFFFFF>
+            <param name="flashvars" value="imgUrl=img/defaultIcon.png&uploadUrl=./upfile.jsp&uploadSrc=false" />
+            <EMBED src="avatar.swf" quality=high bgcolor=#FFFFFF WIDTH="650" HEIGHT="450" wmode="transparent" flashVars="imgUrl=img/defaultIcon.png&uploadUrl=./upfile.jsp&uploadSrc=false"
+            NAME="myMovieName" ALIGN="" TYPE="application/x-shockwave-flash" allowScriptAccess="always"
+            PLUGINSPAGE="http://www.macromedia.com/go/getflashplayer">
+            </EMBED>
+            </OBJECT>
+           <div id="avatar_priview"></div>
            </div>
          </div>
           <div class="control-group"> 
@@ -397,6 +398,7 @@ function uploadevent(status,picUrl,callbackdata){
 	var filename20 = picUrl+"_20.jpg";
   //显示图片上传预览
   $(".crtUserIcon > img").attr("src",filename162+"?"+time);
+  document.getElementById('avatar_priview').innerHTML = "头像1 : <img src='"+filename162+"?" + time + "'/> <br/> 头像2: <img src='"+filename48+"?" + time + "'/><br/> 头像3: <img src='"+filename20+"?" + time + "'/>" ;
   break;
   case '-1':
   window.location.reload();
