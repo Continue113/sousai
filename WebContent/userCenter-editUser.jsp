@@ -386,8 +386,8 @@ function imgValid(file){
 */
 /** flash上传头像 **/
 function uploadevent(status,picUrl,callbackdata){
-	alert(picUrl); //后端存储图片
-	alert(callbackdata);
+	console.log(picUrl); //后端存储图片
+	console.log(callbackdata);
   status += '';
   switch(status){
 	case '1':
@@ -396,7 +396,7 @@ function uploadevent(status,picUrl,callbackdata){
 	var filename48 = picUrl+'_48.jpg';
 	var filename20 = picUrl+"_20.jpg";
   //显示图片上传预览
-  $(".crtUserIcon > img").attr("src",filename162);
+  $(".crtUserIcon > img").attr("src","1.png?"+time);
   break;
   case '-1':
   window.location.reload();
