@@ -203,10 +203,10 @@ $(function() {
     console.log("获得具体比赛类型");
     $.ajax({
       type: "POST",
-      url: "showCT",
+      url: "showMT",
       contentType: "application/x-www-form-urlencoded; charset=UTF-8",
       data: {
-        "matchId": tgPrt.find(".selectMatchType option:selected").attr("value"),
+        "mcId": tgPrt.find(".selectMatchType option:selected").attr("value"),
       },
       dataType: "json",
       success: function(rspdata) {
