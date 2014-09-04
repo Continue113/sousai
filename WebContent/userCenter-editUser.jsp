@@ -396,7 +396,7 @@ function uploadevent(status,picUrl,callbackdata){
 	var filename48 = picUrl+'_48.jpg';
 	var filename20 = picUrl+"_20.jpg";
   //显示图片上传预览
-  $(".crtUserIcon > img").attr("src","1.png?"+time);
+  $(".crtUserIcon > img").attr("src",filename162+"?"+time);
   break;
   case '-1':
   window.location.reload();
