@@ -77,7 +77,9 @@
           <div class="control-group"> 
            <label class="control-label" for="selectMatchType">比赛类型：</label> 
            <div class="controls"> 
-            <select class="selectMatchType" name="mcId"></select>
+            <select class="selectMatchType" name="mcId">
+              <option>请选择比赛类型</option>
+            </select>
             <select class="selectParticularMatchType hide" name="court.matchType"></select>
             <label class="omthide hide" class="control-label" for="otherMatchType">请输入类型：</label>
             <input class="omthide hide" id="otherMatchType" type="text" value="" placeholder="请填写比赛类型"/>
@@ -194,11 +196,9 @@
     $.post("showMC", null, function(data) {
       //alert("回调内容为:"+data);//id name 
       var type = $(".selectMatchType");
-      type.empty().append("<option value=0>请选择比赛类型</option>");
       for (var i = 0; i < data.length; i++) {
         type.append("<option value=\"" + data[i].id + "\">" + data[i].name + "</option>");
       }
-      //type.append("<option value=-1>其他</option>"); //暂时去掉大类比赛类型的“其他”选项
     });
   }
 
@@ -287,119 +287,119 @@
     }
   });
 
-    //点击确认发布，获取地区，比赛类型，场地类型
-    $("#rlsCourt").click(function(){
-      //检测场地名称 场地地址
-      if($("#inputCourtName").val() == ""){
-        $("#inputCourtName").focus().parent().find("label").slideDown();
-        return false;
-      }else if($("#inputCourtAddress").val() == ""){
-        $("#inputCourtAddress").focus().parent().find("label").slideDown();
-        return false;
-      }
-      //console.log("填写隐藏地区表单");
-      //获取地区Code
-      if( $(".form-inline > .selectCountry option:selected").attr("value") !=0 ){
-        $("#inputRegion").attr("value",$(".form-inline > .selectCountry option:selected").attr("value"));
-      }else if( $(".form-inline > .selectCity option:selected").attr("value") !=0 ){
-        $("#inputRegion").attr("value",$(".form-inline > .selectCity option:selected").attr("value"));
-      }else{
-        $("#inputRegion").attr("value",$(".form-inline > .selectProvince option:selected").attr("value"));
-      }
-      //提交表单
-      alert("完成隐藏地区输入框填写,提交表单");
-      $("#releaseCourtForm").submit();
-    });
-    //tinymce
-    tinymce.init({
-      mode: 'textareas',
-      language :'zh_CN',
-      menubar: false,
-      toolbar_items_size: 'small',
-      plugins: [
-      "advlist autolink autosave link image preview ",
-      "searchreplace fullscreen ",
-      "table"
-      ],
-      height:300,
-      toolbar1: "newdocument bold italic underline | fontsizeselect | bullist numlist | alignleft aligncenter alignright alignjustify | link unlink image searchreplace table | undo redo preview fullscreen",
-      image_advtab: true,
-      onchange_callback: function(editor) {
-        tinyMCE.triggerSave();
-        $("#" + editor.id).valid();
-      }
-    });
-    //添加选项
-    $(".plus").click(function(){
-      if(trNumb == 3){
-        alert("抱歉，每个场地最多只可以上传3张图片！");
-      }else{
-        trNumb++;
-        $(".files").append('<tr class="hide" id="tr'+trNumb+'"><td><span class="btn fileinput-button"  onclick="selectPic('+trNumb+')"><i class="icon-plus"></i><span>选择图片</span></span><input class="hide fileImage" id="fileImage'+trNumb+'" type="file" name="images" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this,'+trNumb+')"/><input class="hide fileImageNames" type="text" name="imgNames" value=""/></td><td><span class="preview" id="preview'+trNumb+'"></span></td><td><span class="name"></span></td><td><span class="size"></span></td><td><span class="btn cancel" onclick="deleteTr('+trNumb+')"><i class="icon-ban-circle"></i>取消</span></td></tr>')
-        $("#tr"+trNumb).fadeIn();
-      }
-    });
-    //全部取消
-    $(".allCancel").on('click',function(event){
-      //表格行隐藏并清空所有的输入框，文件名称，文件大小
-      $(".files > tr").fadeOut();
-      setTimeout(function(){
-        $(".files > tr").remove();
-      },1000);
-      trNumb = 0;
-    });
-  })
-
-  //记录表格中的上传图片的数量
-  var trNumb = 1;
-  //验证上传图片格式，大小，并在通过后显示图片预览
-  function imgValid(obj,id) {
-    var files = obj.files,
-          img = new Image(), imgname, imgsize, imgsizeMB, imgtype, 
-    previewId = "preview" + id,
-     fileList = document.getElementById(previewId),
-     inputNames = $("#tr"+id+' input[type="text"]'),
-     fileName = $("#tr"+id+" .name"),
-     fileSize = $("#tr"+id+" .size"); //jquery对象转换为DOM对象
-
-    if(obj.files && obj.files[0]){
-      //清除上一次的预览图片
-      $(fileList).find("img").remove();
-      var reader = new FileReader();
-      reader.readAsDataURL(files[0]);
-      reader.onload = function(e){
-        //alert(files[0].name + "," +e.total + " bytes");
-        imgname = files[0].name;
-        imgtype = files[0].type;
-        imgsize = e.total;
-        imgsizeKB = (imgsize/1024).toFixed(2);
-        if(imgsize >= 200*1024) {
-          alert("照片大小为 "+imgsizeKB+"KB,照片太大了，请上传小于200KB的照片.");
-        }else if(imgtype != "image/png" && imgtype != "image/gif" && imgtype != "image/jpg" && imgtype != "image/jpeg" ){
-          alert("文件格式为 "+imgtype+",请上传png,gif,jpg,jpeg格式的照片.");
-        }else{
-          img.src = this.result;
-          //img.width = 100;
-          fileList.appendChild(img);
-          fileName.text(imgname);
-          fileSize.text(imgsizeKB+"KB");
-          inputNames.attr("value",imgname);
-        }
-      }
-    }else{
-      //ie 只能得到文件名
-      var nfile = $("#tr"+id+' input[type="file"]').val();//fake路径
-      var fileText =nfile.substring(nfile.lastIndexOf("."),nfile.length);//文件后缀名
-      imgname = nfile.substring(nfile.lastIndexOf("\\")+1,nfile.length);//文件名;
-      imgtype =fileText.toLowerCase();//转化为统一小写后缀名.jpg等
-      if(imgtype != ".png" && imgtype != ".gif" && imgtype != ".jpg" && imgtype != ".jpeg" ){
-          alert("文件格式为 "+imgtype+",请上传png,gif,jpg,jpeg格式的照片.");
-      }
-      fileName.text(imgname);
-      fileSize.text("");
-      inputNames.attr("value",imgname);
+  //点击确认发布，获取地区，比赛类型，场地类型
+  $("#rlsCourt").click(function(){
+    //检测场地名称 场地地址
+    if($("#inputCourtName").val() == ""){
+      $("#inputCourtName").focus().parent().find("label").slideDown();
+      return false;
+    }else if($("#inputCourtAddress").val() == ""){
+      $("#inputCourtAddress").focus().parent().find("label").slideDown();
+      return false;
     }
+    //console.log("填写隐藏地区表单");
+    //获取地区Code
+    if( $(".form-inline > .selectCountry option:selected").attr("value") !=0 ){
+      $("#inputRegion").attr("value",$(".form-inline > .selectCountry option:selected").attr("value"));
+    }else if( $(".form-inline > .selectCity option:selected").attr("value") !=0 ){
+      $("#inputRegion").attr("value",$(".form-inline > .selectCity option:selected").attr("value"));
+    }else{
+      $("#inputRegion").attr("value",$(".form-inline > .selectProvince option:selected").attr("value"));
+    }
+    //提交表单
+    alert("完成隐藏地区输入框填写,提交表单");
+    $("#releaseCourtForm").submit();
+  });
+  //tinymce
+  tinymce.init({
+    mode: 'textareas',
+    language :'zh_CN',
+    menubar: false,
+    toolbar_items_size: 'small',
+    plugins: [
+    "advlist autolink autosave link image preview ",
+    "searchreplace fullscreen ",
+    "table"
+    ],
+    height:300,
+    toolbar1: "newdocument bold italic underline | fontsizeselect | bullist numlist | alignleft aligncenter alignright alignjustify | link unlink image searchreplace table | undo redo preview fullscreen",
+    image_advtab: true,
+    onchange_callback: function(editor) {
+      tinyMCE.triggerSave();
+      $("#" + editor.id).valid();
+    }
+  });
+  //添加选项
+  $(".plus").click(function(){
+    if(trNumb == 3){
+      alert("抱歉，每个场地最多只可以上传3张图片！");
+    }else{
+      trNumb++;
+      $(".files").append('<tr class="hide" id="tr'+trNumb+'"><td><span class="btn fileinput-button"  onclick="selectPic('+trNumb+')"><i class="icon-plus"></i><span>选择图片</span></span><input class="hide fileImage" id="fileImage'+trNumb+'" type="file" name="images" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this,'+trNumb+')"/><input class="hide fileImageNames" type="text" name="imgNames" value=""/></td><td><span class="preview" id="preview'+trNumb+'"></span></td><td><span class="name"></span></td><td><span class="size"></span></td><td><span class="btn cancel" onclick="deleteTr('+trNumb+')"><i class="icon-ban-circle"></i>取消</span></td></tr>')
+      $("#tr"+trNumb).fadeIn();
+    }
+  });
+  //全部取消
+  $(".allCancel").on('click',function(event){
+    //表格行隐藏并清空所有的输入框，文件名称，文件大小
+    $(".files > tr").fadeOut();
+    setTimeout(function(){
+      $(".files > tr").remove();
+    },1000);
+    trNumb = 0;
+  });
+})
+
+//记录表格中的上传图片的数量
+var trNumb = 1;
+//验证上传图片格式，大小，并在通过后显示图片预览
+function imgValid(obj,id) {
+  var files = obj.files,
+        img = new Image(), imgname, imgsize, imgsizeMB, imgtype, 
+  previewId = "preview" + id,
+   fileList = document.getElementById(previewId),
+   inputNames = $("#tr"+id+' input[type="text"]'),
+   fileName = $("#tr"+id+" .name"),
+   fileSize = $("#tr"+id+" .size"); //jquery对象转换为DOM对象
+
+  if(obj.files && obj.files[0]){
+    //清除上一次的预览图片
+    $(fileList).find("img").remove();
+    var reader = new FileReader();
+    reader.readAsDataURL(files[0]);
+    reader.onload = function(e){
+      //alert(files[0].name + "," +e.total + " bytes");
+      imgname = files[0].name;
+      imgtype = files[0].type;
+      imgsize = e.total;
+      imgsizeKB = (imgsize/1024).toFixed(2);
+      if(imgsize >= 200*1024) {
+        alert("照片大小为 "+imgsizeKB+"KB,照片太大了，请上传小于200KB的照片.");
+      }else if(imgtype != "image/png" && imgtype != "image/gif" && imgtype != "image/jpg" && imgtype != "image/jpeg" ){
+        alert("文件格式为 "+imgtype+",请上传png,gif,jpg,jpeg格式的照片.");
+      }else{
+        img.src = this.result;
+        //img.width = 100;
+        fileList.appendChild(img);
+        fileName.text(imgname);
+        fileSize.text(imgsizeKB+"KB");
+        inputNames.attr("value",imgname);
+      }
+    }
+  }else{
+    //ie 只能得到文件名
+    var nfile = $("#tr"+id+' input[type="file"]').val();//fake路径
+    var fileText =nfile.substring(nfile.lastIndexOf("."),nfile.length);//文件后缀名
+    imgname = nfile.substring(nfile.lastIndexOf("\\")+1,nfile.length);//文件名;
+    imgtype =fileText.toLowerCase();//转化为统一小写后缀名.jpg等
+    if(imgtype != ".png" && imgtype != ".gif" && imgtype != ".jpg" && imgtype != ".jpeg" ){
+        alert("文件格式为 "+imgtype+",请上传png,gif,jpg,jpeg格式的照片.");
+    }
+    fileName.text(imgname);
+    fileSize.text("");
+    inputNames.attr("value",imgname);
   }
+}
   //场地预览
   //function courtPreview(){
     //定义变量名 场地名称 比赛类型（大类、类型） 场地类型 场地区域（省、市、区） 详细地址 赛场数 联系电话 价格 开放时间 场地图片 

@@ -102,7 +102,9 @@
           <div class="control-group"> 
            <label class="control-label" for="matchType">比赛类型：</label> 
            <div class="controls"> 
-            <select class="selectMatchType" name="mcId"></select>
+            <select class="selectMatchType" name="mcId">
+              <option>请选择比赛类型</option>
+            </select>
             <select class="selectParticularMatchType hide" name="court.matchType"></select>
             <label class="omthide hide" class="control-label" for="otherMatchType">请输入类型：</label>
             <input class="omthide hide" id="otherMatchType" type="text" value="" placeholder="请填写比赛类型"/>
@@ -143,7 +145,15 @@
               <th>详细</th> 
              </tr> 
             </thead> 
-            <tbody> 
+            <tbody>
+             <tr class="tritem">
+              <td>TESTING DATA</td> 
+              <td>TESTING DATA</td> 
+              <td>TESTING DATA</tdTESTING DATA> 
+              <td>TESTING DATA</td> 
+              <td>TESTING DATA</td> 
+              <td><a href="#">详细</a></td> 
+             </tr>>
              <tr class="tritem"> 
               <td>奥体中心乒乓球俱乐部</td> 
               <td>袁家岗大公馆立交奥体路185号羽毛球馆</td> 
@@ -235,11 +245,9 @@
     $.post("showMC", null, function(data) {
       //alert("回调内容为:"+data);//id name 
       var type = $(".selectMatchType");
-      type.empty().append("<option value=0>请选择比赛类型</option>");
       for (var i = 0; i < data.length; i++) {
         type.append("<option value=\"" + data[i].id + "\">" + data[i].name + "</option>");
       }
-      //type.append("<option value=-1>其他</option>"); //暂时去掉大类比赛类型的“其他”选项
     });
   }
 
