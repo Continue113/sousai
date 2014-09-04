@@ -195,11 +195,13 @@ $(function() {
 	console.log("改变大类比赛类型");
 	//tgPrt: targetparent 目标父元素
 	var tgPrt = $(this).parent();
+	/*
 	if (tgPrt.find(".selectMatchType option:selected").attr("value") == 0) {
 		//当用户没有选择大类比赛类型的时候，就将具体比赛类型下拉列表框隐藏并清空。
 	    tgPrt.find(".selectParticularMatchType").hide().empty();
 	    }else {
 	    	//当用户选择了某大类比赛类型的时候，就获取相应具体比赛类型下拉别表并出现。
+	*/
     console.log("获得具体比赛类型");
     $.ajax({
       type: "POST",
@@ -210,7 +212,7 @@ $(function() {
       },
       dataType: "json",
       success: function(rspdata) {
-        alert("获得具体比赛类型:"+ rspdata);
+        //alert("获得具体比赛类型:"+ rspdata);
         var sctParMatchType = $(".selectParticularMatchType");
         sctParMatchType.empty().append("<option value=0>请选择比赛类型</option>");
         for (var i = 0; i < rspdata.length; i++) {
@@ -224,7 +226,7 @@ $(function() {
     }); //ajax 已得到具体比赛类型
     //出现下拉列表
 	tgPrt.find(".selectParticularMatchType").show();
-	}
+	//}
   })
   
   //点击比赛类型获取相应场地类型
@@ -269,7 +271,7 @@ $(function() {
         },
         dataType: "json",
         success: function(rspdata) {
-          alert("获得场地类型:"+ rspdata);
+          //alert("获得场地类型:"+ rspdata);
           var sctCourtType = $(".selectCourtType");
           sctCourtType.empty().append("<option value=0>请选择场地类型</option>");
           for (var i = 0; i < rspdata.length; i++) {
