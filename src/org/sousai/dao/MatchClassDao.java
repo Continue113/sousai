@@ -1,6 +1,7 @@
 package org.sousai.dao;
 
 import java.util.List;
+
 import org.sousai.domain.*;
 
 
@@ -48,8 +49,9 @@ public interface MatchClassDao {
 		 * 获取除开对应id的所有比赛大类
 		 * @param id 不显示的比赛大类
 		 * @return 除开id对应比赛大类的其他比赛大类
+		 * @throws Exception 
 		 */
-		List<MatchClass> findAllExcept(Integer id);
+		List<MatchClass> findAllExcept(Integer id) throws Exception;
 	
 
 }

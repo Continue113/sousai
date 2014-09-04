@@ -40,6 +40,7 @@ public class UserManagerImpl implements UserManager
 	private MesgDao mesgDao;
 	private RegionDao regionDao;
 	private CourtTypeDao courtTypeDao;
+	private MatchClassDao matchClassDao;
 	private MatchTypeDao matchTypeDao;
 	private MatchDao matchDao;
 	
@@ -73,6 +74,10 @@ public class UserManagerImpl implements UserManager
 		this.courtTypeDao = courtTypeDao;
 	}
 	
+	public void setMatchClassDao(MatchClassDao matchClassDao)
+	{
+		this.matchClassDao = matchClassDao;
+	}
 	public void setMatchTypeDao(MatchTypeDao matchTypeDao)
 	{
 		this.matchTypeDao = matchTypeDao;

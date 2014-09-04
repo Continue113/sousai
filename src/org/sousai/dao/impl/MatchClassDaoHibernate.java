@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.sousai.dao.MatchClassDao;
 import org.sousai.domain.MatchClass;
+import org.sousai.tools.MyPrint;
 import org.springframework.orm.hibernate3.support.*;
 public class MatchClassDaoHibernate extends HibernateDaoSupport implements MatchClassDao {
 
@@ -44,8 +45,9 @@ public class MatchClassDaoHibernate extends HibernateDaoSupport implements Match
 	}
 
 	@Override
-	public List<MatchClass> findAllExcept(Integer id) {
+	public List<MatchClass> findAllExcept(Integer id) throws Exception{
 		// TODO Auto-generated method stub
+		MyPrint.myPrint("in findAllExcept");
 		return (List<MatchClass>)getHibernateTemplate().find("from MatchClass where id<>?", id);
 	}
 
