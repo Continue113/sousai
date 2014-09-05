@@ -1,4 +1,9 @@
 $(function() {
+  /** 点击LOGO跳转至首页 **/
+	$("img[src='img/logo.png']").click(function(){
+		window.location.href="index.jsp";
+		});
+	
   /** 切换城市 **/
   $("#changeCityBtn").click(function() {
     $(this).parents("p").hide();
@@ -34,7 +39,7 @@ $(function() {
     });
   });
   $("#myModal a").click(function() {
-    var val = $(this).text()
+    var val = $(this).text();
     $(".add-selectType span").text(val);
     $('#myModal').modal("hide");
   });
@@ -53,9 +58,9 @@ $(function() {
     }
   }
   $("#collectLink").click(function() {
-    var sURL = document.URL
-    var sTitle = $("title").text()
-    AddFavorite(sURL, sTitle)
+    var sURL = document.URL;
+    var sTitle = $("title").text();
+    AddFavorite(sURL, sTitle);
     $("#sousaiRemindDialog > .modal-body > .SRD-content").text("由于浏览器限制，请使用Ctrl+D进行添加"); //设置弹出框的内容
     $("#sousaiRemindDialog > .modal-footer > button.btn-success").hide(); //设置弹出框确定按钮
     $("#sousaiRemindDialog").modal({
@@ -143,7 +148,7 @@ $(function() {
       tgPrt.find(".selectCountry").hide().empty();
     }
   });
-  //立即调用初始化省
+  //立即调用初始化省 已经使用硬编码的方式替代初始化省
   //initProvince();
   /****/
 
@@ -176,4 +181,4 @@ $(function() {
   });
   
 
-})
+});

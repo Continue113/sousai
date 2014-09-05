@@ -78,7 +78,7 @@
            <label class="control-label" for="selectMatchType">比赛类型：</label> 
            <div class="controls"> 
             <select class="selectMatchType" name="mcId">
-              <option>请选择比赛类型</option>
+              <option value=0>请选择比赛类型</option>
             </select>
             <select class="selectParticularMatchType hide" name="court.matchType"></select>
             <label class="omthide hide" class="control-label" for="otherMatchType">请输入类型：</label>
@@ -136,6 +136,8 @@
           <div class="control-group"> 
            <label class="control-label" for="uploadCourtImgs">场地图片：</label> 
            <div class="controls"> 
+           <!-- OLD pic upload -->
+           
             <div class="fileupload-buttonbar"> 
              <span class="btn plus"><i class="icon-plus"></i><span>添加图片栏</span></span> 
              <span class="btn allCancel"> <i class="icon-ban-circle"></i> <span>全部取消</span> </span> 
@@ -156,6 +158,8 @@
               </tbody>
              </table> 
             </div> 
+           
+            
            </div> 
           </div> 
           <div class="control-group"> 
@@ -188,6 +192,7 @@
   <!-- 页首导航条 --> 
   <script src="tinymce/jquery.tinymce.min.js"></script> 
   <script src="tinymce/tinymce.min.js"></script> 
+  <script src="uploadify/jquery.uploadify.min.js" type="text/javascript"></script>
   <script>
   $(function(){
     //初始化比赛类型
@@ -209,6 +214,9 @@
   $(".selectMatchType").change(function selParticularMatchType() {
   //tgPrt: targetparent 目标父元素
   var tgPrt = $(this).parent();
+  if (tgPrt.find(".selectMatchType option:selected").attr("value") == 0) {
+	  //当点击默认选项时什么都不做
+  }else {
     $.ajax({
       type: "POST",
       url: "showMT",
@@ -231,7 +239,8 @@
     }); //ajax 已得到具体比赛类型
     //出现具体比赛类型下拉列表并且不再隐藏
     tgPrt.find(".selectParticularMatchType").removeClass("hide");
-  })
+  }
+  });
   
   //点击比赛类型获取相应场地类型
   var omtf = 0;//other match type flag ；0表示默认，1表示已经选过“其他”选项
@@ -329,13 +338,16 @@
       $("#" + editor.id).valid();
     }
   });
+
+  // OLD pic upload js
+ 
   //添加选项
   $(".plus").click(function(){
     if(trNumb == 3){
       alert("抱歉，每个场地最多只可以上传3张图片！");
     }else{
       trNumb++;
-      $(".files").append('<tr class="hide" id="tr'+trNumb+'"><td><span class="btn fileinput-button"  onclick="selectPic('+trNumb+')"><i class="icon-plus"></i><span>选择图片</span></span><input class="hide fileImage" id="fileImage'+trNumb+'" type="file" name="images" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this,'+trNumb+')"/><input class="hide fileImageNames" type="text" name="imgNames" value=""/></td><td><span class="preview" id="preview'+trNumb+'"></span></td><td><span class="name"></span></td><td><span class="size"></span></td><td><span class="btn cancel" onclick="deleteTr('+trNumb+')"><i class="icon-ban-circle"></i>取消</span></td></tr>')
+      $(".files").append('<tr class="hide" id="tr'+trNumb+'"><td><span class="btn fileinput-button"  onclick="selectPic('+trNumb+')"><i class="icon-plus"></i><span>选择图片</span></span><input class="hide fileImage" id="fileImage'+trNumb+'" type="file" name="images" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this,'+trNumb+')"/><input class="hide fileImageNames" type="text" name="imgNames" value=""/></td><td><span class="preview" id="preview'+trNumb+'"></span></td><td><span class="name"></span></td><td><span class="size"></span></td><td><span class="btn cancel" onclick="deleteTr('+trNumb+')"><i class="icon-ban-circle"></i>取消</span></td></tr>');
       $("#tr"+trNumb).fadeIn();
     }
   });
@@ -348,14 +360,13 @@
     },1000);
     trNumb = 0;
   });
-})
 
 //记录表格中的上传图片的数量
 var trNumb = 1;
 //验证上传图片格式，大小，并在通过后显示图片预览
 function imgValid(obj,id) {
   var files = obj.files,
-        img = new Image(), imgname, imgsize, imgsizeMB, imgtype, 
+        img = new Image(), imgname, imgsize, imgsizeKB, imgtype, 
   previewId = "preview" + id,
    fileList = document.getElementById(previewId),
    inputNames = $("#tr"+id+' input[type="text"]'),
@@ -385,7 +396,7 @@ function imgValid(obj,id) {
         fileSize.text(imgsizeKB+"KB");
         inputNames.attr("value",imgname);
       }
-    }
+    };
   }else{
     //ie 只能得到文件名
     var nfile = $("#tr"+id+' input[type="file"]').val();//fake路径
@@ -400,6 +411,20 @@ function imgValid(obj,id) {
     inputNames.attr("value",imgname);
   }
 }
+
+  //选择图片
+  function selectPic(id){
+    $("#fileImage"+id).trigger('click');
+  }
+  //取消上传
+  function deleteTr(id){
+    $("#tr"+id).fadeOut();
+    setTimeout(function(){
+      $("#tr"+id).remove();
+    },1000);
+    trNumb--;
+  }
+ 
   //场地预览
   //function courtPreview(){
     //定义变量名 场地名称 比赛类型（大类、类型） 场地类型 场地区域（省、市、区） 详细地址 赛场数 联系电话 价格 开放时间 场地图片 
@@ -421,18 +446,8 @@ function imgValid(obj,id) {
     //$("#releaseCourtForm").attr("action","previewCourtSearchDetail.jsp").attr("target","_blank").submit().attr("action","relCourt").removeAttr("target");
     //console.log("提交到另一个页面，并改回原来action。")
   //}
-  //选择图片
-  function selectPic(id){
-    $("#fileImage"+id).trigger('click');
-  }
-  //取消上传
-  function deleteTr(id){
-    $("#tr"+id).fadeOut();
-    setTimeout(function(){
-      $("#tr"+id).remove();
-    },1000);
-    trNumb--;
-  }
+
+  });
   </script>
  </body>
 </html>

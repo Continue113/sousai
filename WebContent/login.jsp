@@ -67,7 +67,7 @@
   <script>
   $(function(){
     /** 表单验证代码 **/
-      $("#formlogin").validate({
+    $("#formlogin").validate({
     rules: {
       "user.name": {
         minlength: 4,
@@ -88,8 +88,64 @@
         minlength: "密码至少6位"
       }
     }
-  });
-})
-  </script>  
+    });
+    
+    /** 记住我：仅记住用户名**/
+    $("input[value='remember-me']").click(function(){
+    	if($("input[value='remember-me']").is(":checked")){
+    	}else {
+    		//取消 记住我
+    		deleteCookie("sousaiUserName");
+    	}
+    });
+
+    //新建指定的cookie,cookieKey为cookie名、value为cookie值，expiresTime为cookie有效期
+	function setCookie(name,value){
+    var Days = 30;
+    var exp = new Date();
+    exp.setTime(exp.getTime() + Days*24*60*60*1000);
+    document.cookie = name + "="+ escape(value) + ";rmbMe=1;expires=" + exp.toGMTString();
+	}
+	//获取指定的cookie值
+	function getCookie(name){
+    var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)"); 
+    if(arr=document.cookie.match(reg)) 
+        return (arr[2]);
+    else
+        return null;
+	}
+    //删除指定值的cookie
+    function deleteCookie(cookieKey){
+    	//清除cookie 设置时间为过去的时间即可
+		var crtdate = new Date();
+		crtdate.setTime(crtdate.getTime()-10000);
+		document.cookie = cookieKey+" = v;path = './'; expires = "+crtdate.toGMTString();    	
+    }
+    
+    //登录时检测 记住我 选项是否为勾选状态，
+    $("#signinBtn").click(function(){
+    	if($("input[value='remember-me']").is(":checked")){
+    		//勾选 记住我，更新已存在的cookie或新建一个cookie;
+    		var userName = $("#inputUsername").val();
+    	    setCookie("sousaiUserName",userName);
+    	    alert("set cookie yet and then submit:"+ getCookie("sousaiUserName"));
+    	    $("#signinBtn").submit();
+    	}else {
+    		//若没有勾选 记住我，则直接提交
+    		$("#signinBtn").submit();
+    	}
+    });
+    
+    //计入此页面查找已存在的cookie
+    if(getCookie("sousaiUserName") != null){
+    	$("#inputUsername").val(unescape(getCookie("sousaiUserName")));
+		$("input[value='remember-me']").attr("checked","checked");
+	}else {
+		alert(getCookie("sousaiUserName"));
+		$("#inputUsername").val("");
+	}
+});
+
+  </script>
  </body>
 </html>

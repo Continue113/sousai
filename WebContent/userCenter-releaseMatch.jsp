@@ -18,7 +18,7 @@
   <![endif]-->
   <style>
   /** 现有场地框 **/
-  .oldCourtsBox{border: 3px solid #ddd;
+  .existCourtsBox{border: 3px solid #ddd;
   -webkit-border-radius: 0 0 6px 6px;
   -moz-border-radius: 0 0 6px 6px;
   border-radius: 0 0 6px 6px;}
@@ -29,12 +29,12 @@
   border-radius: 0 4px 4px 0;
   }
   /** 现有场地表格 **/
-  .oldCourtsBox tr{cursor: pointer;}
-  .oldCourtsBox tr.active {
+  .existCourtsBox tr{cursor: pointer;}
+  .existCourtsBox tr.active {
     font-weight: bold;
   }
   /** 添加场地按钮 **/
-  .oldCourtsBox .jplist-panel > .text-center > .btn {margin-top: 10px;float: none;}
+  .existCourtsBox .jplist-panel > .text-center > .btn {margin-top: 10px;float: none;}
   /** 最小宽度情况下 **/
   @media (max-width: 480px) {
     /** 搜索现有场地按钮 **/
@@ -103,7 +103,7 @@
            <label class="control-label" for="matchType">比赛类型：</label> 
            <div class="controls"> 
             <select class="selectMatchType" name="mcId">
-              <option>请选择比赛类型</option>
+              <option value=0>请选择比赛类型</option>
             </select>
             <select class="selectParticularMatchType hide" name="court.matchType"></select>
             <label class="omthide hide" class="control-label" for="otherMatchType">请输入类型：</label>
@@ -133,7 +133,7 @@
             <a href="#" class="btn btn-success pull-right" id="searchExistedCourt">搜索现有球场</a> 
            </div> 
           </div> 
-          <div class="control-group oldCourtsBox"> 
+          <div class="control-group existCourtsBox"> 
            <table class="table table-striped table-hover"> 
             <thead> 
              <tr> 
@@ -149,11 +149,11 @@
              <tr class="tritem">
               <td>TESTING DATA</td> 
               <td>TESTING DATA</td> 
-              <td>TESTING DATA</tdTESTING DATA> 
+              <td>TESTING DATA</td> 
               <td>TESTING DATA</td> 
               <td>TESTING DATA</td> 
               <td><a href="#">详细</a></td> 
-             </tr>>
+             </tr>
              <tr class="tritem"> 
               <td>奥体中心乒乓球俱乐部</td> 
               <td>袁家岗大公馆立交奥体路185号羽毛球馆</td> 
@@ -258,6 +258,9 @@
   $(".selectMatchType").change(function selParticularMatchType() {
   //tgPrt: targetparent 目标父元素
   var tgPrt = $(this).parent();
+  if (tgPrt.find(".selectMatchType option:selected").attr("value") == 0) {
+	  //当点击默认选项时什么都不做
+  }else {
     $.ajax({
       type: "POST",
       url: "showMT",
@@ -280,6 +283,7 @@
     }); //ajax 已得到具体比赛类型
     //出现具体比赛类型下拉列表并且不再隐藏
     tgPrt.find(".selectParticularMatchType").removeClass("hide");
+  }
   });
 
     //点击比赛类型获取相应场地类型
@@ -331,7 +335,7 @@
   /****/
 
   /** 列表排序 **/
-  $('.oldCourtsBox').jplist({
+  $('.existCourtsBox').jplist({
         itemsBox: '.table',
         itemPath: '.tritem',
         panelPath: '.jplist-panel'
@@ -339,11 +343,72 @@
 
   /** 搜索现有场地 **/
   $("#searchExistedCourt").click(function(){
-    $("div.oldCourtsBox").slideDown();
+	  //tgPrt: targetparent 目标父元素
+	  var tgPrt = $(this).parent();
+	  //获取省市区信息
+	  var province = tgPrt.find(".selectProvince option:selected").text(),
+	      city = tgPrt.find(".selectCity option:selected").text(), 
+	      country = tgPrt.find(".selectCountry option:selected").text();
+	  if(province == "请选择省"){
+		  alert("请至少选择一个比赛地点！");		  
+	  }else {
+	  //alert(province + city + country);  //得到省市区信息
+	  /*
+	  *测试
+	  *
+	  var rspdatainame = '球场漫长名称萨达都是俺的阿斯顿爱戴阿斯顿爱戴',
+	  rspdataiaddress = '详细地址萨达萨达阿锁打打打阿斯顿阿锁打阿飞暗示法阿飞啊方法飞萨芬十分阿飞啊'+province +city +country,
+	  rspdataitype = '体育馆',
+	  rspdatainumber = '50',
+	  rspdataimatchnumber = '20次',
+	  rspdataihref = 'http://www.baidu.com' ;
+	  $(".existCourtsBox > table > tbody").empty().append(
+			'<tr class="tritem"><td>'
+			+ rspdatainame + '</td><td>'
+	        + rspdataiaddress + '</td><td>'
+	        + rspdataitype + '</td><td>'
+	        + rspdatainumber + '</td><td>'
+	        + rspdataimatchnumber + '</td><td><a target="_blank" href="'
+	        + rspdataihref + '">详细</a></td></tr>'
+	        );
+	  */
+	  
+	  //ajax 获取已有场地信息列表
+	  $.ajax({
+	      type: "POST",
+	      url: "showMT",
+	      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+	      data: {
+	        "mcId": tgPrt.find(".selectMatchType option:selected").attr("value"),
+	      },
+	      dataType: "json",
+	      success: function(rspdata) {
+	        var existCourtsTbody = $(".existCourtsBox > table > tbody");
+	        existCourtsTbody.empty(); //清空已有场地列表
+	        for (var i = 0; i < rspdata.length; i++) {	        		   
+	        	existCourtsTbody.append(
+	        			'<tr class="tritem"><td>'
+	    	        	+ rspdata[i].name + '</td><td>'
+	    	        	+ rspdata[i].address + '</td><td>'
+	    	        	+ rspdata[i].type + '</td><td>'
+	    	        	+ rspdata[i].number + '</td><td>'
+	    	        	+ rspdata[i].matchnumber + '</td><td><a target="_blank" href="'
+	    	        	+ rspdata[i].href + '">详细</a></td></tr>'	        			
+	        	);
+	        }
+	      },
+	      error: function() {
+	        alert("抱歉，获取已有场地信息出错了。");
+	      },
+	    }); //ajax 已得到相应地点场地列表
+	  
+    $("div.existCourtsBox").slideDown(); //将已有场地类表滑出
+    //若添加新场地列表存在，则隐藏并删除
     if($("#newCourtCheckbox").is(":checked")){
       $("div.inputCourt").slideUp();
       $("div.inputCourt").remove();
       $("#newCourtCheckbox").attr("checked",false);
+    }
     }
   });
   /** 添加新场地 **/
@@ -353,13 +418,13 @@
 
   $("#newCourtCheckbox").click(function () {
     if($(this).is(":checked")){
-      var inputCourtStr = '<div class="inputCourt hide"><div class="control-group"><label class="control-label" for="courtName">场地名称：</label><div class="controls"><input type="text" id="courtName" name="inputCourtName" placeholder="如：2012年XXXXXXX杯乒乓球季度赛" class="span5 add-on" data-toggle="tooltip" data-placement="top" title="" data-original-title="限定30个字符以下" required="required"/></div></div><div class="control-group"><label class="control-label" for="courtAddress">详细地址：</label><div class="controls"><input type="text" id="courtAddress" name="inputCourtAddress" placeholder="如：某某桥某某路XXXXXXX杯乒乓球季度赛某楼" class="span5 add-on" data-toggle="tooltip" data-placement="top" title="" data-original-title="限定30个字符以下" required="required"/></div></div><div class="control-group"><label class="control-label" for="courtType">场地类型：</label><div class="controls"><select name="selectCourtType"><option value="0">请选择场地类型</option><option value="courtType-inner">室内</option><option value="courtType-outer">室外</option><option value="courtType-zq">体育局</option><option value="courtType-pp">俱乐部</option><option value="courtType-lq">社区</option><option value="courtType-zq">单位</option><option value="courtType-zq">学校</option><option value="courtType-pp">临时</option><option value="courtType-lq">公共</option><option value="courtType-zq">其他</option></select></div></div></div>'
+      var inputCourtStr = '<div class="inputCourt hide"><div class="control-group"><label class="control-label" for="courtName">场地名称：</label><div class="controls"><input type="text" id="courtName" name="inputCourtName" placeholder="如：2012年XXXXXXX杯乒乓球季度赛" class="span5 add-on" data-toggle="tooltip" data-placement="top" title="" data-original-title="限定30个字符以下" required="required"/></div></div><div class="control-group"><label class="control-label" for="courtAddress">详细地址：</label><div class="controls"><input type="text" id="courtAddress" name="inputCourtAddress" placeholder="如：某某桥某某路XXXXXXX杯乒乓球季度赛某楼" class="span5 add-on" data-toggle="tooltip" data-placement="top" title="" data-original-title="限定30个字符以下" required="required"/></div></div><div class="control-group"><label class="control-label" for="courtType">场地类型：</label><div class="controls"><select name="selectCourtType"><option value="0">请选择场地类型</option><option value="courtType-inner">室内</option><option value="courtType-outer">室外</option><option value="courtType-zq">体育局</option><option value="courtType-pp">俱乐部</option><option value="courtType-lq">社区</option><option value="courtType-zq">单位</option><option value="courtType-zq">学校</option><option value="courtType-pp">临时</option><option value="courtType-lq">公共</option><option value="courtType-zq">其他</option></select></div></div></div>';
     $(inputCourtStr).insertAfter($(this).parent());
     $("div.inputCourt").slideDown();
-    $("div.oldCourtsBox").slideUp();
+    $("div.existCourtsBox").slideUp();
   }
   else {
-    $("div.oldCourtsBox").slideDown();
+    $("div.existCourtsBox").slideDown();
     $("div.inputCourt").slideUp();
     $("div.inputCourt").remove();
   }
@@ -438,13 +503,13 @@
         // ignore IE throwing errors when focusing hidden elements
       }
     }
-  }
+  };
 
   /** 清空比赛表单 **/
   $("#resetMatchForm").click(function(){
     matchValidator.resetForm();
   });
-})
+});
 </script> 
  </body>
 </html>
