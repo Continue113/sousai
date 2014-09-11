@@ -133,6 +133,38 @@ public interface UserManager
 	 * @return "fail"失败    若成功，则返回路径名
 	 */
 	public String saveCourtPic(File[] images, String[] imgNames, Long userId);
+	
+	/**
+	 * 发布评论或回复
+	 * @param message 所发布的评论或回复实体
+	 * @return 若成功，返回数据库中id标识，失败为0
+	 */
+	public Long relMessage(Message message);
+	/**
+	 * 发布评论
+	 * @param mesg 评论内容
+	 * @param courtId 所评论的场地标识
+	 * @param userId 发布评论的用户标识
+	 * @return 1成功，0失败
+	 */
+	//public Integer relMessage(String mesg, Long courtId, Long userId);
+	
+	/**
+	 * 发布回复
+	 * @param mesg 回复内容
+	 * @param parentId 所回复的评论的标识
+	 * @param courtId 场地标识
+	 * @param userId 用户表示
+	 * @return 1成功，0失败
+	 */
+	//public Integer relReply(String mesg, Long parentId, Long courtId, Long userId);
+	
+	/**
+	 * 查看指定场地的所有评论及回复
+	 * @param courtId
+	 * @return 指定场地的所有评论及回复
+	 */
+	public List<Message> getMessages(Long courtId);
 
 	String uploadUserPic(int flag, File[] images, String[] imgNames, Long UserId);
 	

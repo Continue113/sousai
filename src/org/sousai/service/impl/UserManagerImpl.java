@@ -409,4 +409,18 @@ public class UserManagerImpl implements UserManager
 			return "ImageOrNamesNull";
 		}
 	}
+
+	
+
+	@Override
+	public List<Message> getMessages(Long courtId) {
+		// TODO Auto-generated method stub
+		return mesgDao.getByCourtId(courtId);
+	}
+
+	@Override
+	public Long relMessage(Message message) {
+		// TODO Auto-generated method stub
+		return mesgDao.save(message);
+	}
 }

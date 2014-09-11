@@ -83,6 +83,16 @@
 		<action name="showCT"
 			class="org.sousai.action.ShowCourtTypesAction">
 		</action>
+		
+		<!-- 发布评论的action -->
+		<action name="relMsg"
+			class="org.sousai.action.RelMessageAction">
+		</action>
+		
+		<!-- 获取指定场地所有评论的action -->
+		<action name="showMsgs"
+			class="org.sousai.action.ShowMessagesAction">
+		</action>
 	</package>
 
 <!--	<package name="ajax" extends="json-default">
