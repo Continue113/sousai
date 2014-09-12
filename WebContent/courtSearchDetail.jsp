@@ -333,7 +333,7 @@
       $(".media-body > a").slideDown();
       $(this).hide();
       var img = 'img/defaultImg.png',
-       	  name = <s:property value="#session.userBean.userName"/>,
+       	  name ? <s:property value="#session.userBean.userName"/> : "******",
        	  respStr = '<div class="media evaluation-response hide"><div class="pull-left"><img class="media-object" src="'+img+'" /><div class="evaluationName">'+name+'</div></div>';
       respStr +='<div class="media-body"><div class="inputRadios pull-right"><textarea id="inputResponse"></textarea><div class="radios pull-right"><label for="publicResponse1" class="radio inline"><input type="radio" id="publicResponse1" name="responseState1" value="publicResponse" checked="checked"/>公开</label><label for="hideResponse1"class="radio inline"><input type="radio" id="hideResponse1" name="responseState1" value="hideResponse"/>匿名</label></div></div><button class="btn pull-right" id="cancle">取消</button><button id="fbpl" class="span2 btn btn-success pull-right"">发表评论</button><input type="submit" class="span2 btn btn-success pull-right hide" value="发表评论"/> </div></div>';
       if( $(this).parents(".media-body").length == 2){
