@@ -360,9 +360,9 @@
         dataType: "json",
         success: function(rspdata) {
         	console.log(rspdata);
-        	if(rspdata == 0)
-        		alert("发表评论成功！");
-        	else alert("发表评论失败！");
+        	if(rspdata == 0){
+        		alert("发表评论失败！");
+        	}
         },
         error: function() {
           //alert("抱歉，获取评论出错了。");
