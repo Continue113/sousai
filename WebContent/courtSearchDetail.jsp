@@ -200,7 +200,7 @@
           <img class="media-object" src="img/defaultImg.png" /> 
           <div class="evaluationName">
            <s:if test="#session.userBean.userName!=null">
-           <s:property value="#session.userBean.userId"/>
+           <s:property value="#session.userBean.userName"/>
            </s:if>
            <s:else>SOUSAI.COM</s:else>
           </div> 
@@ -310,6 +310,41 @@
         dataType: "json",
         success: function(rspdata) {
         	alert(rspdata);
+        	var evaluations = $(".evaluations");
+            evaluations.empty();
+            for (var i = 0; i < rspdata.length; i++) {
+            	if(rspdata[i].visible == 0){ //公开的评论
+            		evaluations.append(
+              	//"<option value=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</  option>"
+              	'<div class="media evaluation"> 
+          			<div class="pull-left"> 
+          			 <img class="media-object" src="img/defaultImg.png"> 
+          			 <div class="evaluationName">'+rspdata[i].name+'</div> 
+          			</div> 
+          			<div class="media-body"> 
+          			 <p>'+rspdata[i].mesg+'</p> 
+          			 <p class="releasetime">'+rspdata[i].time+'</p> 
+          			 <a class="pull-right" href="#myModal">我要补充下</a> 
+          			</div> 
+         		</div>'
+              	);
+            	}else { //匿名的评论
+            		evaluations.append(
+              	//"<option value=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</  option>"
+              	'<div class="media evaluation"> 
+          			<div class="pull-left"> 
+          			 <img class="media-object" src="img/defaultImg.png"> 
+          			 <div class="evaluationName">SOUSAI匿名用户</div> 
+          			</div> 
+          			<div class="media-body"> 
+          			 <p>'+rspdata[i].mesg+'</p> 
+          			 <p class="releasetime">'+rspdata[i].time+'</p> 
+          			 <a class="pull-right" href="#myModal">我要补充下</a> 
+          			</div> 
+         		</div>'
+              	);
+            	}
+            }
         },
         error: function() {
           //alert("抱歉，获取评论出错了。");
@@ -325,7 +360,7 @@
       var img = 'img/defaultImg.png'
       var name = 'TEST1250'
       var respStr = '<div class="media evaluation-response hide"><div class="pull-left"><img class="media-object" src="'+img+'" /><div class="evaluationName">'+name+'</div></div>';
-      respStr +='<div class="media-body"><div class="inputRadios pull-right"><textarea id="inputResponse"></textarea><div class="radios pull-right"><label for="publicResponse1" class="radio inline"><input type="radio" id="publicResponse1" name="responseState" value="publicResponse" checked="checked"/>公开</label><label for="hideResponse1"class="radio inline"><input type="radio" id="hideResponse1" name="responseState" value="hideResponse"/>匿名</label></div></div><button class="btn pull-right" id="cancle">取消</button><button id="fbpl" class="span2 btn btn-success pull-right"">发表评论</button><input type="submit" class="span2 btn btn-success pull-right hide" value="发表评论"/> </div></div>';
+      respStr +='<div class="media-body"><div class="inputRadios pull-right"><textarea id="inputResponse"></textarea><div class="radios pull-right"><label for="publicResponse1" class="radio inline"><input type="radio" id="publicResponse1" name="responseState1" value="publicResponse" checked="checked"/>公开</label><label for="hideResponse1"class="radio inline"><input type="radio" id="hideResponse1" name="responseState1" value="hideResponse"/>匿名</label></div></div><button class="btn pull-right" id="cancle">取消</button><button id="fbpl" class="span2 btn btn-success pull-right"">发表评论</button><input type="submit" class="span2 btn btn-success pull-right hide" value="发表评论"/> </div></div>';
       if( $(this).parents(".media-body").length == 2){
         $(this).parent().parent().parent().append(respStr).end().parent().find(".evaluation-response").slideDown();
       }
@@ -367,24 +402,49 @@
         error: function() {
           //alert("抱歉，获取评论出错了。");
         },
-        }); //ajax 已得到城市
+        }); //ajax 已发送评论到服务器
         target.append(respCode);
       }
     });
     /** 我要补充下 **/
      $("body").on("click","#fbpl",function(){
-      var respVal = $(this).parents().find("textarea").val()
-      var respName = $(this).parent().parent().find(".evaluationName").text()
-      var respImgSrc = $(this).parent().parent().find("img").attr("src")
-      var respDate = new Date()
-      var respTime = respDate.toLocaleString()
-      var target = $(this).parent().parent().parent()
-      var respCode = '<div class="media evaluation'
+      var respVal = $(this).parents().find("textarea").val(),
+          respName = $(this).parent().parent().find(".evaluationName").text(),
+          respImgSrc = $(this).parent().parent().find("img").attr("src"),
+          respDate = new Date(),
+          respTime = respDate.toLocaleString(),
+          target = $(this).parent().parent().parent(),
+          respState1 = $('input:radio[name="responseState1"]:checked').val(),
+      	  respCode = '<div class="media evaluation';
+
       if(target.find(".evaluation").length == 0){
         respCode += ' evaluation-first'
       }
       respCode += '"><div class="pull-left"><img class="media-object" src="'+respImgSrc+'" /><div class="evaluationName">'+respName+'</div></div><div class="media-body"><p>'+respVal+'</p><p class="releasetime">'+respTime+'</p><a class="pull-right" href="#myModal">我要补充下</a></div></div>'
+
       if(respVal!==""){
+      	$.ajax({
+  		type: "POST",
+        url: "relMsg",
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        data: {
+          "message.parentId": 0,  //若为评论，则为0；若为回复则为所回复评论的id
+          "message.userId": <s:property value="#session.userBean.userId"/>, //发表评论或回复的用户id
+          "message.courtId": 1, //评论或回复所在的场地id
+          "message.mesg": respVal, //评论或回复的具体内容
+          "message.visible": respState1, //是否匿名,默认为0不匿名，1为匿名
+        },
+        dataType: "json",
+        success: function(rspdata) {
+        	console.log(rspdata);
+        	if(rspdata == 0){
+        		alert("发表评论失败！");
+        	}
+        },
+        error: function() {
+          //alert("抱歉，获取评论出错了。");
+        },
+        }); //ajax 已得到发送评论到服务器
       $(".media-body > a").slideDown();
       target.append(respCode);
       $(".evaluations .evaluation-response").slideUp("slow").remove();
