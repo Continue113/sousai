@@ -333,7 +333,7 @@
       $(".media-body > a").slideDown();
       $(this).hide();
       var img = 'img/defaultImg.png',
-       	  name ? <s:property value="#session.userBean.userName"/> : "******",
+       	  name = "******",//<s:property value="#session.userBean.userName"/> 
        	  respStr = '<div class="media evaluation-response hide"><div class="pull-left"><img class="media-object" src="'+img+'" /><div class="evaluationName">'+name+'</div></div>';
       respStr +='<div class="media-body"><div class="inputRadios pull-right"><textarea id="inputResponse"></textarea><div class="radios pull-right"><label for="publicResponse1" class="radio inline"><input type="radio" id="publicResponse1" name="responseState1" value="publicResponse" checked="checked"/>公开</label><label for="hideResponse1"class="radio inline"><input type="radio" id="hideResponse1" name="responseState1" value="hideResponse"/>匿名</label></div></div><button class="btn pull-right" id="cancle">取消</button><button id="fbpl" class="span2 btn btn-success pull-right"">发表评论</button><input type="submit" class="span2 btn btn-success pull-right hide" value="发表评论"/> </div></div>';
       if( $(this).parents(".media-body").length == 2){
@@ -353,8 +353,7 @@
           respTime = respDate.toLocaleString(),          
           respCode = '<div class="media evaluation"><div class="pull-left"><img class="media-object" src="'+respImgSrc+'" /><div class="evaluationName">'+respName+'</div></div><div class="media-body"><p>'+respVal+'</p><p class="releasetime">'+respTime+'</p><a class="pull-right" href="#myModal">我要补充下</a></div></div>',
           respState = $('input:radio[name="responseState"]:checked').val(),
-          respUserID = 1,//初始化respUserID
-          //<s:property value="#session.userBean.userId"/>
+          respUserID = 1,//初始化respUserID <s:property value="#session.userBean.userId"/>
           target = $(".evaluations");
       if(respVal!==""){
       	$.ajax({
@@ -391,6 +390,7 @@
           respTime = respDate.toLocaleString(),
           target = $(this).parent().parent().parent(),
           respState1 = $('input:radio[name="responseState1"]:checked').val(),
+          respUserID = 1,//初始化respUserID <s:property value="#session.userBean.userId"/>
       	  respCode = '<div class="media evaluation';
 
       if(target.find(".evaluation").length == 0){
@@ -405,7 +405,7 @@
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         data: {
           "message.parentId": 0,  //若为评论，则为0；若为回复则为所回复评论的id
-          "message.userId": <s:property value="#session.userBean.userId"/>, //发表评论或回复的用户id
+          "message.userId": respUserID, //发表评论或回复的用户id
           "message.courtId": 1, //评论或回复所在的场地id
           "message.mesg": respVal, //评论或回复的具体内容
           "message.visible": respState1, //是否匿名,默认为0不匿名，1为匿名
