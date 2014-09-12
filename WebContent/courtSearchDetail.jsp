@@ -199,15 +199,18 @@
          <div class="pull-left"> 
           <img class="media-object" src="img/defaultImg.png" /> 
           <div class="evaluationName">
-           xmoy8427
+           <s:if test="#session.userBean.userName!=null">
+           <s:property value="#session.userBean.userId"/>
+           </s:if>
+           <s:else>SOUSAI.COM</s:else>
           </div> 
          </div> 
          <div class="media-body"> 
           <div class="inputRadios pull-right"> 
            <textarea id="inputResponse"></textarea> 
            <div class="radios pull-right"> 
-            <label for="publicResponse" class="radio inline"><input type="radio" id="publicResponse" name="responseState" value="publicResponse" checked="checked" />公开</label> 
-            <label for="hideResponse" class="radio inline"><input type="radio" id="hideResponse" name="responseState" value="hideResponse" />匿名</label> 
+            <label for="publicResponse" class="radio inline"><input type="radio" id="publicResponse" name="responseState" value="0" checked="checked" />公开</label> 
+            <label for="hideResponse" class="radio inline"><input type="radio" id="hideResponse" name="responseState" value="1" />匿名</label> 
            </div> 
           </div> 
           <input type="submit" class="span2 btn btn-success pull-right hide" value="发表评论" /> 
@@ -311,7 +314,7 @@
         error: function() {
           //alert("抱歉，获取评论出错了。");
         },
-        }); //ajax 已得到城市
+        }); //ajax 已得到评论信息
 
      /** 评论回复 **/
      $("body").on("click",".media-body > a",function(){
@@ -333,13 +336,15 @@
      });
     /** 直接发表评论 **/
     $("#FBPL").click(function(){
-      var respVal = $(this).parents().find("textarea").val()
-      var respName = $(this).parent().parent().find(".evaluationName").text()
-      var respImgSrc = $(this).parent().parent().find("img").attr("src")
-      var respDate = new Date()
-      var respTime = respDate.toLocaleString()
-      var target = $(".evaluations")
-      var respCode = '<div class="media evaluation"><div class="pull-left"><img class="media-object" src="'+respImgSrc+'" /><div class="evaluationName">'+respName+'</div></div><div class="media-body"><p>'+respVal+'</p><p class="releasetime">'+respTime+'</p><a class="pull-right" href="#myModal">我要补充下</a></div></div>'
+      var respVal = $(this).parents().find("textarea").val(),
+          respName = $(this).parent().parent().find(".evaluationName").text(),
+          respImgSrc = $(this).parent().parent().find("img").attr("src"),
+          respDate = new Date(),
+          respTime = respDate.toLocaleString(),          
+          respCode = '<div class="media evaluation"><div class="pull-left"><img class="media-object" src="'+respImgSrc+'" /><div class="evaluationName">'+respName+'</div></div><div class="media-body"><p>'+respVal+'</p><p class="releasetime">'+respTime+'</p><a class="pull-right" href="#myModal">我要补充下</a></div></div>',
+          respState = $('input:radio[name="responseState"]:checked').val(),
+          target = $(".evaluations");
+
       if(respVal!==""){
       	$.ajax({
   		type: "POST",
@@ -350,7 +355,7 @@
           "message.userId": <s:property value="#session.userBean.userId"/>, //发表评论或回复的用户id
           "message.courtId": 1, //评论或回复所在的场地id
           "message.mesg": respVal, //评论或回复的具体内容
-          "message.show": 0, //是否匿名,默认为0不匿名，1为匿名
+          "message.visible": respState, //是否匿名,默认为0不匿名，1为匿名
         },
         dataType: "json",
         success: function(rspdata) {
