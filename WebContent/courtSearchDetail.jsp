@@ -296,6 +296,23 @@
   <script src="js/jplist.min.js"></script> 
   <script>
   $(function(){
+  	/** 拉取评论 **/
+  	$.ajax({
+  		type: "POST",
+        url: "showMsgs",
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        data: {
+          "courtId": 1,
+        },
+        dataType: "json",
+        success: function(rspdata) {
+        	alert(rspdata);
+        },
+        error: function() {
+          //alert("抱歉，获取评论出错了。");
+        },
+        }); //ajax 已得到城市
+
      /** 评论回复 **/
      $("body").on("click",".media-body > a",function(){
       $(".evaluations .evaluation-response").slideUp(
@@ -324,6 +341,28 @@
       var target = $(".evaluations")
       var respCode = '<div class="media evaluation"><div class="pull-left"><img class="media-object" src="'+respImgSrc+'" /><div class="evaluationName">'+respName+'</div></div><div class="media-body"><p>'+respVal+'</p><p class="releasetime">'+respTime+'</p><a class="pull-right" href="#myModal">我要补充下</a></div></div>'
       if(respVal!==""){
+      	$.ajax({
+  		type: "POST",
+        url: "relMsg",
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        data: {
+          "message.parentId": 0,  //若为评论，则为0；若为回复则为所回复评论的id
+          "message.userId": <s:property value="#session.userBean.userId"/>, //发表评论或回复的用户id
+          "message.courtId": 1, //评论或回复所在的场地id
+          "message.mesg": respVal, //评论或回复的具体内容
+          "message.show": 0, //是否匿名,默认为0不匿名，1为匿名
+        },
+        dataType: "json",
+        success: function(rspdata) {
+        	console.log(rspdata);
+        	if(rspdata == 0)
+        		alert("发表评论成功！");
+        	else alert("发表评论失败！");
+        },
+        error: function() {
+          //alert("抱歉，获取评论出错了。");
+        },
+        }); //ajax 已得到城市
         target.append(respCode);
       }
     });

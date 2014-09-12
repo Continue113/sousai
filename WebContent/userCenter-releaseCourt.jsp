@@ -338,92 +338,6 @@
       $("#" + editor.id).valid();
     }
   });
-
-  // OLD pic upload js
- 
-  //添加选项
-  $(".plus").click(function(){
-    if(trNumb == 3){
-      alert("抱歉，每个场地最多只可以上传3张图片！");
-    }else{
-      trNumb++;
-      $(".files").append('<tr class="hide" id="tr'+trNumb+'"><td><span class="btn fileinput-button"  onclick="selectPic('+trNumb+')"><i class="icon-plus"></i><span>选择图片</span></span><input class="hide fileImage" id="fileImage'+trNumb+'" type="file" name="images" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this,'+trNumb+')"/><input class="hide fileImageNames" type="text" name="imgNames" value=""/></td><td><span class="preview" id="preview'+trNumb+'"></span></td><td><span class="name"></span></td><td><span class="size"></span></td><td><span class="btn cancel" onclick="deleteTr('+trNumb+')"><i class="icon-ban-circle"></i>取消</span></td></tr>');
-      $("#tr"+trNumb).fadeIn();
-    }
-  });
-  //全部取消
-  $(".allCancel").on('click',function(event){
-    //表格行隐藏并清空所有的输入框，文件名称，文件大小
-    $(".files > tr").fadeOut();
-    setTimeout(function(){
-      $(".files > tr").remove();
-    },1000);
-    trNumb = 0;
-  });
-
-//记录表格中的上传图片的数量
-var trNumb = 1;
-//验证上传图片格式，大小，并在通过后显示图片预览
-function imgValid(obj,id) {
-  var files = obj.files,
-        img = new Image(), imgname, imgsize, imgsizeKB, imgtype, 
-  previewId = "preview" + id,
-   fileList = document.getElementById(previewId),
-   inputNames = $("#tr"+id+' input[type="text"]'),
-   fileName = $("#tr"+id+" .name"),
-   fileSize = $("#tr"+id+" .size"); //jquery对象转换为DOM对象
-
-  if(obj.files && obj.files[0]){
-    //清除上一次的预览图片
-    $(fileList).find("img").remove();
-    var reader = new FileReader();
-    reader.readAsDataURL(files[0]);
-    reader.onload = function(e){
-      //alert(files[0].name + "," +e.total + " bytes");
-      imgname = files[0].name;
-      imgtype = files[0].type;
-      imgsize = e.total;
-      imgsizeKB = (imgsize/1024).toFixed(2);
-      if(imgsize >= 200*1024) {
-        alert("照片大小为 "+imgsizeKB+"KB,照片太大了，请上传小于200KB的照片.");
-      }else if(imgtype != "image/png" && imgtype != "image/gif" && imgtype != "image/jpg" && imgtype != "image/jpeg" ){
-        alert("文件格式为 "+imgtype+",请上传png,gif,jpg,jpeg格式的照片.");
-      }else{
-        img.src = this.result;
-        //img.width = 100;
-        fileList.appendChild(img);
-        fileName.text(imgname);
-        fileSize.text(imgsizeKB+"KB");
-        inputNames.attr("value",imgname);
-      }
-    };
-  }else{
-    //ie 只能得到文件名
-    var nfile = $("#tr"+id+' input[type="file"]').val();//fake路径
-    var fileText =nfile.substring(nfile.lastIndexOf("."),nfile.length);//文件后缀名
-    imgname = nfile.substring(nfile.lastIndexOf("\\")+1,nfile.length);//文件名;
-    imgtype =fileText.toLowerCase();//转化为统一小写后缀名.jpg等
-    if(imgtype != ".png" && imgtype != ".gif" && imgtype != ".jpg" && imgtype != ".jpeg" ){
-        alert("文件格式为 "+imgtype+",请上传png,gif,jpg,jpeg格式的照片.");
-    }
-    fileName.text(imgname);
-    fileSize.text("");
-    inputNames.attr("value",imgname);
-  }
-}
-
-  //选择图片
-  function selectPic(id){
-    $("#fileImage"+id).trigger('click');
-  }
-  //取消上传
-  function deleteTr(id){
-    $("#tr"+id).fadeOut();
-    setTimeout(function(){
-      $("#tr"+id).remove();
-    },1000);
-    trNumb--;
-  }
  
   //场地预览
   //function courtPreview(){
@@ -447,6 +361,89 @@ function imgValid(obj,id) {
     //console.log("提交到另一个页面，并改回原来action。")
   //}
 
+  });
+  //选择图片
+  function selectPic(id){
+    $("#fileImage"+id).trigger('click');
+  }
+  //取消上传
+  function deleteTr(id){
+    $("#tr"+id).fadeOut();
+    setTimeout(function(){
+      $("#tr"+id).remove();
+    },1000);
+    trNumb--;
+  }
+//记录表格中的上传图片的数量
+  var trNumb = 1;
+  //验证上传图片格式，大小，并在通过后显示图片预览
+  function imgValid(obj,id) {
+    var files = obj.files,
+          img = new Image(), imgname, imgsize, imgsizeKB, imgtype, 
+    previewId = "preview" + id,
+     fileList = document.getElementById(previewId),
+     inputNames = $("#tr"+id+' input[type="text"]'),
+     fileName = $("#tr"+id+" .name"),
+     fileSize = $("#tr"+id+" .size"); //jquery对象转换为DOM对象
+
+    if(obj.files && obj.files[0]){
+      //清除上一次的预览图片
+      $(fileList).find("img").remove();
+      var reader = new FileReader();
+      reader.readAsDataURL(files[0]);
+      reader.onload = function(e){
+        //alert(files[0].name + "," +e.total + " bytes");
+        imgname = files[0].name;
+        imgtype = files[0].type;
+        imgsize = e.total;
+        imgsizeKB = (imgsize/1024).toFixed(2);
+        if(imgsize >= 200*1024) {
+          alert("照片大小为 "+imgsizeKB+"KB,照片太大了，请上传小于200KB的照片.");
+        }else if(imgtype != "image/png" && imgtype != "image/gif" && imgtype != "image/jpg" && imgtype != "image/jpeg" ){
+          alert("文件格式为 "+imgtype+",请上传png,gif,jpg,jpeg格式的照片.");
+        }else{
+          img.src = this.result;
+          //img.width = 100;
+          fileList.appendChild(img);
+          fileName.text(imgname);
+          fileSize.text(imgsizeKB+"KB");
+          inputNames.attr("value",imgname);
+        }
+      };
+    }else{
+      //ie 只能得到文件名
+      var nfile = $("#tr"+id+' input[type="file"]').val();//fake路径
+      var fileText =nfile.substring(nfile.lastIndexOf("."),nfile.length);//文件后缀名
+      imgname = nfile.substring(nfile.lastIndexOf("\\")+1,nfile.length);//文件名;
+      imgtype =fileText.toLowerCase();//转化为统一小写后缀名.jpg等
+      if(imgtype != ".png" && imgtype != ".gif" && imgtype != ".jpg" && imgtype != ".jpeg" ){
+          alert("文件格式为 "+imgtype+",请上传png,gif,jpg,jpeg格式的照片.");
+      }
+      fileName.text(imgname);
+      fileSize.text("");
+      inputNames.attr("value",imgname);
+    }
+  }
+  // OLD pic upload js
+  
+  //添加选项
+  $(".plus").click(function(){
+    if(trNumb == 3){
+      alert("抱歉，每个场地最多只可以上传3张图片！");
+    }else{
+      trNumb++;
+      $(".files").append('<tr class="hide" id="tr'+trNumb+'"><td><span class="btn fileinput-button"  onclick="selectPic('+trNumb+')"><i class="icon-plus"></i><span>选择图片</span></span><input class="hide fileImage" id="fileImage'+trNumb+'" type="file" name="images" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this,'+trNumb+')"/><input class="hide fileImageNames" type="text" name="imgNames" value=""/></td><td><span class="preview" id="preview'+trNumb+'"></span></td><td><span class="name"></span></td><td><span class="size"></span></td><td><span class="btn cancel" onclick="deleteTr('+trNumb+')"><i class="icon-ban-circle"></i>取消</span></td></tr>');
+      $("#tr"+trNumb).fadeIn();
+    }
+  });
+  //全部取消
+  $(".allCancel").on('click',function(event){
+    //表格行隐藏并清空所有的输入框，文件名称，文件大小
+    $(".files > tr").fadeOut();
+    setTimeout(function(){
+      $(".files > tr").remove();
+    },1000);
+    trNumb = 0;
   });
   </script>
  </body>
