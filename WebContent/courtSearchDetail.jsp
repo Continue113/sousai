@@ -310,21 +310,15 @@
         dataType: "json",
         success: function(rspdata) {
         	alert(rspdata);
-        	var evaluations = $(".evaluations");
+        	var evaluations = $(".evaluations"),userName;
             evaluations.empty();
             for (var i = 0; i < rspdata.length; i++) {
-            	if(rspdata[i].visible == 0){ //公开的评论
-            		evaluations.append(
-              	//"<option value=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</  option>"
-              	'<div class="media evaluation"><div class="pull-left"><img class="media-object" src="img/defaultImg.png"><div class="evaluationName">'+rspdata[i].name+'</div></div><div class="media-body"><p>'+rspdata[i].mesg+'</p><p class="releasetime">'+rspdata[i].time+'</p><a class="pull-right" href="#myModal">我要补充下</a></div> 
-         		</div>'
-              	);
-            	}else { //匿名的评论
-            		evaluations.append(
-              	//"<option value=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</  option>"
-              	'<div class="media evaluation"><div class="pull-left"><img class="media-object" src="img/defaultImg.png"><div class="evaluationName">SOUSAI匿名用户</div></div><div class="media-body"><p>'+rspdata[i].mesg+'</p><p class="releasetime">'+rspdata[i].time+'</p><a class="pull-right" href="#myModal">我要补充下</a></div></div>'
-              	);
+            	if(rspdata[i].visible == 0){ 
+            		userName = rspdata[i].userId; //公开的评论
+            	}else { 
+            		userName = '******';//匿名的评论
             	}
+            		evaluations.append('<div class="media evaluation"><div class="pull-left"><img class="media-object" src="img/defaultImg.png"><div class="evaluationName">'+userName+'</div></div><div class="media-body"><p>'+rspdata[i].mesg+'</p><p class="releasetime">'+rspdata[i].time+'</p><a class="pull-right" href="#myModal">我要补充下</a></div></div>');
             }
         },
         error: function() {
