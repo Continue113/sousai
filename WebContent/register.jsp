@@ -63,7 +63,7 @@
        <div class="control-group"> 
         <label class="control-label" for="inputValidateCode">验证码&nbsp;:</label> 
         <div class="controls form-inline"> 
-         <input type="password" class="input-block-level" id="inputValidateCode" name="inputValidateCode" placeholder="验证码" required="required" /> 
+         <input type="text" class="input-block-level" id="inputValidateCode" name="inputValidateCode" placeholder="验证码" required="required" /> 
          <div id="inputValidateImg" class="code" onclick="createCode()"></div> 
          <span class="code-changeLink" onclick="createCode()">换一张</span> 
         </div> 

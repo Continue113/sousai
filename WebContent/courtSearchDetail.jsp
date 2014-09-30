@@ -125,45 +125,42 @@
           </div> 
           <div class="media-body"> 
            <p>天津市第五届百年皖酒“杯XXXXXXXXXX</p> 
-           <p class="releasetime">2013年12月29日 15:39</p> 
-           <a class="pull-right" href="#myModal">我要补充下</a> 
+           <p class="releasetime">2013年12月29日 15:39<a class="pull-right" href="#myModal">我要补充下</a></p> 
+            
           </div> 
          </div> 
          <div class="media evaluation"> 
           <div class="pull-left"> 
            <img class="media-object" src="img/defaultImg.png" /> 
-           <div class="evaluationName" style="width:70px;">
+           <div class="evaluationName" data-userId="001" >
              KINGLIONXXXXXX 
            </div> 
           </div> 
           <div class="media-body"> 
            <p>天津市第五届百年皖酒“杯XXXXXXXXXX</p> 
-           <p class="releasetime">2013年12月29日 15:39</p> 
-           <a class="pull-right" href="#myModal">我要补充下</a> 
-           <div class="media evaluation evaluation-first"> 
+           <p class="releasetime">2013年12月29日 15:39<a class="pull-right" href="#myModal">我要补充下</a></p> 
+           <div class="media evaluation evaluation-first1"> 
             <div class="pull-left"> 
              <img class="media-object" src="img/defaultImg.png" /> 
-             <div class="evaluationName" style="width:70px;">
+             <div class="evaluationName" data-userId="011" >
                KINGLIONXXXXXX 
              </div> 
             </div> 
             <div class="media-body"> 
              <p>天津市第五届百年皖酒“杯XXXXXXXXXX</p> 
-             <p class="releasetime">2013年12月29日 15:39</p> 
-             <a class="pull-right" href="#myModal">我要补充下</a> 
+             <p class="releasetime">2013年12月29日 15:39<a class="pull-right" href="#myModal">我要补充下</a></p> 
             </div> 
            </div> 
-           <div class="media evaluation"> 
+           <div class="media evaluation evaluation-first1"> 
             <div class="pull-left"> 
              <img class="media-object" src="img/defaultImg.png" /> 
-             <div class="evaluationName" style="width:70px;">
+            <div class="evaluationName" data-userId="012">
                KINGLIONXXXXXX 
-             </div> 
+             </div>
             </div> 
             <div class="media-body"> 
              <p>天津市第五届百年皖酒“杯XXXXXXXXXX</p> 
-             <p class="releasetime">2013年12月29日 15:39</p> 
-             <a class="pull-right" href="#myModal">我要补充下</a> 
+             <p class="releasetime">2013年12月29日 15:39<a class="pull-right" href="#myModal">我要补充下</a></p> 
             </div> 
            </div> 
           </div> 
@@ -171,20 +168,19 @@
          <div class="media evaluation"> 
           <div class="pull-left"> 
            <img class="media-object" src="img/defaultImg.png" /> 
-           <div class="evaluationName">
+           <div class="evaluationName" data-userId="002">
             123456789KING
            </div> 
           </div> 
           <div class="media-body"> 
            <p>天津市第五届百年皖酒“杯XXXXXXXXXX</p> 
-           <p class="releasetime">2013年12月29日 15:39</p> 
-           <a class="pull-right" href="#myModal">我要补充下</a> 
+           <p class="releasetime">2013年12月29日 15:39<a class="pull-right" href="#myModal">我要补充下</a></p> 
           </div> 
          </div> 
          <div class="media evaluation"> 
           <div class="pull-left"> 
            <img class="media-object" src="img/defaultImg.png" /> 
-           <div class="evaluationName">
+           <div class="evaluationName" data-userId="003">
             123456789KING
            </div> 
           </div> 
@@ -197,13 +193,18 @@
         </div> 
         <div class="media evaluation-response"> 
          <div class="pull-left"> 
-          <img class="media-object" src="img/defaultImg.png" /> 
-          <div class="evaluationName">
            <s:if test="#session.userBean.userName!=null">
+           <img class="media-object" src="img/defaultImg.png" /> 
+           <div class="evaluationName" id="myEvaluationName" data-userId='<s:property value="#session.userBean.userId"/>' >
            <s:property value="#session.userBean.userName"/>
+           </div>
            </s:if>
-           <s:else>SOUSAI.COM</s:else>
-          </div> 
+           <s:else>
+           <img class="media-object" src="img/defaultImg.png" alt="请登录" /> 
+           <div class="evaluationName" id="myEvaluationName" data-userid="0" >
+           	<a href="login.jsp" >请登录</a>
+           </div>
+          </s:else>
          </div> 
          <div class="media-body"> 
           <div class="inputRadios pull-right"> 
@@ -214,7 +215,7 @@
            </div> 
           </div> 
           <input type="submit" class="span2 btn btn-success pull-right hide" value="发表评论" /> 
-          <button id="FBPL" class="span2 btn btn-success pull-right">发表评论</button> 
+          <button id="reply" class="span2 btn btn-success pull-right<s:if test="#session.userBean.userName!=null"></s:if><s:else> disabled</s:else>">发表评论</button> 
          </div> 
         </div> 
        </div> 
@@ -299,7 +300,7 @@
   <script src="js/jplist.min.js"></script> 
   <script>
   $(function(){
-  	/** 拉取评论 **/
+  	/** 拉取评论  
   	$.ajax({
   		type: "POST",
         url: "showMsgs",
@@ -309,7 +310,6 @@
         },
         dataType: "json",
         success: function(rspdata) {
-        	alert(rspdata);
         	var evaluations = $(".evaluations"),userName;
             evaluations.empty();
             for (var i = 0; i < rspdata.length; i++) {
@@ -318,24 +318,23 @@
             	}else { 
             		userName = '******';//匿名的评论
             	}
-            		evaluations.append('<div class="media evaluation"><div class="pull-left"><img class="media-object" src="img/defaultImg.png"><div class="evaluationName">'+userName+'</div></div><div class="media-body"><p>'+rspdata[i].mesg+'</p><p class="releasetime">'+rspdata[i].time+'</p><a class="pull-right" href="#myModal">我要补充下</a></div></div>');
+            		evaluations.append('<div class="media evaluation"><div class="pull-left"><img class="media-object" src="img/defaultImg.png"><div class="evaluationName" data-userId="'+rspdata[i].userId+'">'+userName+'</div></div><div class="media-body"><p>'+rspdata[i].mesg+'</p><p class="releasetime">'+rspdata[i].time+'</p><a class="pull-right" href="#myModal">我要补充下</a></div></div>');
             }
         },
         error: function() {
           //alert("抱歉，获取评论出错了。");
         },
         }); //ajax 已得到评论信息
-
+        **/
      /** 评论回复 **/
-     $("body").on("click",".media-body > a",function(){
-      $(".evaluations .evaluation-response").slideUp(
-        "slow").remove();
+     $("body").on("click",".media-body a",function(){
+      $(".evaluations .evaluation-response").slideUp("slow").remove();
       $(".media-body > a").slideDown();
       $(this).hide();
       var img = 'img/defaultImg.png',
        	  name = "******",//<s:property value="#session.userBean.userName"/> 
        	  respStr = '<div class="media evaluation-response hide"><div class="pull-left"><img class="media-object" src="'+img+'" /><div class="evaluationName">'+name+'</div></div>';
-      respStr +='<div class="media-body"><div class="inputRadios pull-right"><textarea id="inputResponse"></textarea><div class="radios pull-right"><label for="publicResponse1" class="radio inline"><input type="radio" id="publicResponse1" name="responseState1" value="publicResponse" checked="checked"/>公开</label><label for="hideResponse1"class="radio inline"><input type="radio" id="hideResponse1" name="responseState1" value="hideResponse"/>匿名</label></div></div><button class="btn pull-right" id="cancle">取消</button><button id="fbpl" class="span2 btn btn-success pull-right"">发表评论</button><input type="submit" class="span2 btn btn-success pull-right hide" value="发表评论"/> </div></div>';
+      respStr +='<div class="media-body"><div class="inputRadios pull-right"><textarea id="inputResponse"></textarea><div class="radios pull-right"><label for="publicResponse1" class="radio inline"><input type="radio" id="publicResponse1" name="responseState1" value="publicResponse" checked="checked"/>公开</label><label for="hideResponse1"class="radio inline"><input type="radio" id="hideResponse1" name="responseState1" value="hideResponse"/>匿名</label></div></div><button class="btn pull-right" id="cancle">取消</button><button id="addReply" class="span2 btn btn-success pull-right"">发表评论</button><input type="submit" class="span2 btn btn-success pull-right hide" value="发表评论"/> </div></div>';
       if( $(this).parents(".media-body").length == 2){
         $(this).parent().parent().parent().append(respStr).end().parent().find(".evaluation-response").slideDown();
       }
@@ -345,70 +344,65 @@
     return false;
      });
     /** 直接发表评论 **/
-    $("#FBPL").click(function(){
-      var respVal = $(this).parents().find("textarea").val(),
+    $("#reply").click(function(){
+      var parentId = 0,
+      userId = $("#myEvaluationName").data("userid"),
+      courtId = 1,
+      	  mesg = $(this).parents().find("textarea").val(),
+          visibale = $('input:radio[name="responseState"]:checked').val(),
           respName = $(this).parent().parent().find(".evaluationName").text(),
           respImgSrc = $(this).parent().parent().find("img").attr("src"),
           respDate = new Date(),
           respTime = respDate.toLocaleString(),          
-          respCode = '<div class="media evaluation"><div class="pull-left"><img class="media-object" src="'+respImgSrc+'" /><div class="evaluationName">'+respName+'</div></div><div class="media-body"><p>'+respVal+'</p><p class="releasetime">'+respTime+'</p><a class="pull-right" href="#myModal">我要补充下</a></div></div>',
-          respState = $('input:radio[name="responseState"]:checked').val(),
-          respUserID = 1,//初始化respUserID <s:property value="#session.userBean.userId"/>
+          respCode = '<div class="media evaluation"><div class="pull-left"><img class="media-object" src="'+respImgSrc+'" /><div class="evaluationName">'+respName+'</div></div><div class="media-body"><p>'+mesg+'</p><p class="releasetime">'+respTime+'</p><a class="pull-right" href="#myModal">我要补充下</a></div></div>',
           target = $(".evaluations");
-      if(respVal!==""){
-      	$.ajax({
-  		type: "POST",
-        url: "relMsg",
-        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-        data: {
-          "message.parentId": 0,  //若为评论，则为0；若为回复则为所回复评论的id
-          "message.userId": respUserID, //发表评论或回复的用户id
-          "message.courtId": 1, //评论或回复所在的场地id
-          "message.mesg": respVal, //评论或回复的具体内容
-          "message.visible": respState, //是否匿名,默认为0不匿名，1为匿名
-        },
-        dataType: "json",
-        success: function(rspdata) {
-        	console.log(rspdata);
-        	if(rspdata == 0){
-        		alert("发表评论失败！");
-        	}
-        },
-        error: function() {
-          //alert("抱歉，获取评论出错了。");
-        },
-        }); //ajax 已发送评论到服务器
+          if(userId != 0){
+      if(mesg != ""){
+    	sendEvaluation(parentId,userId,courtId,mesg,visibale);
         target.append(respCode);
+      }
+      }else{
+    	  $("#SRDcontent").empty().append('<p style="font-size:16px;color:red;">请先<a href="login.jsp">登录</a>再评论。</p>');
+      	$('#sousaiRemindDialog').modal({backdrop:true,show:true});
       }
     });
     /** 我要补充下 **/
-     $("body").on("click","#fbpl",function(){
-      var respVal = $(this).parents().find("textarea").val(),
+     $("body").on("click","#addReply",function(){
+      var parentId = $(this).parents().parents().find(".evaluationName").data("userId"),
+      userId = $("#myEvaluationName").data("userId"),
+      courtId = 1,
+      	  mesg = $(this).parents().find("textarea").val(),
+      	  visibale = $('input:radio[name="responseState"]:checked').val(),
           respName = $(this).parent().parent().find(".evaluationName").text(),
           respImgSrc = $(this).parent().parent().find("img").attr("src"),
           respDate = new Date(),
           respTime = respDate.toLocaleString(),
           target = $(this).parent().parent().parent(),
-          respState1 = $('input:radio[name="responseState1"]:checked').val(),
-          respUserID = 1,//初始化respUserID <s:property value="#session.userBean.userId"/>
       	  respCode = '<div class="media evaluation';
 
       if(target.find(".evaluation").length == 0){
-        respCode += ' evaluation-first'
+        respCode += ' evaluation-first';
       }
-      respCode += '"><div class="pull-left"><img class="media-object" src="'+respImgSrc+'" /><div class="evaluationName">'+respName+'</div></div><div class="media-body"><p>'+respVal+'</p><p class="releasetime">'+respTime+'</p><a class="pull-right" href="#myModal">我要补充下</a></div></div>'
+      respCode += '"><div class="pull-left"><img class="media-object" src="'+respImgSrc+'" /><div class="evaluationName">'+respName+'</div></div><div class="media-body"><p>'+mesg+'</p><p class="releasetime">'+respTime+'</p><a class="pull-right" href="#myModal">我要补充下</a></div></div>'
 
-      if(respVal!==""){
+      if(mesg != ""){
+    	  sendEvaluation(parentId,userId,courtId,mesg,visibale);
+      	  $(".media-body > a").slideDown();
+          target.append(respCode);
+          $(".evaluations .evaluation-response").slideUp("slow").remove();
+      }
+    });
+    function sendEvaluation(parentId,userId,courtId,mesg,visibale){ //发送评论到服务器
       	$.ajax({
   		type: "POST",
         url: "relMsg",
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         data: {
-          "message.parentId": 0,  //若为评论，则为0；若为回复则为所回复评论的id
-          "message.userId": respUserID, //发表评论或回复的用户id
-          "message.courtId": 1, //评论或回复所在的场地id
-          "message.mesg": respVal, //评论或回复的具体内容
-          "message.visible": respState1, //是否匿名,默认为0不匿名，1为匿名
+          "message.parentId": parentId,  //若为评论，则为0；若为回复则为所回复评论的id
+          "message.userId": userId, //发表评论或回复的用户id
+          "message.courtId": courtId, //评论或回复所在的场地id
+          "message.mesg": mesg, //评论或回复的具体内容
+          "message.visible": visibale, //是否匿名,默认为0不匿名，1为匿名
         },
         dataType: "json",
         success: function(rspdata) {
@@ -421,15 +415,11 @@
           //alert("抱歉，获取评论出错了。");
         },
         }); //ajax 已得到发送评论到服务器
-      $(".media-body > a").slideDown();
-      target.append(respCode);
-      $(".evaluations .evaluation-response").slideUp("slow").remove();
     }
-    });
     /** 点击取消 **/
      $("body").on("click","#cancle",function(){
       $(".evaluations .evaluation-response").slideUp("slow").remove();
-      $(".media-body > a").slideDown();
+      $(".media-body a").slideDown();
     });
 
     /** 鼠标hover切换图片 **/
@@ -442,7 +432,7 @@
     /****/
 
     /** 字数限制，溢出省略 **/
-    $(".evaluationName").wordLimit(9);
+    //$(".evaluationName").wordLimit(9);
     /****/
 
     /** 列表排序 **/

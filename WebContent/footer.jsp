@@ -3,6 +3,7 @@
   <div class="footer"> 
    <div class="container"> 
     <!-- 一行一排 --> 
+    <p><a href="background-collections.jsp">background-collections.jsp</a><a href="courtSearch.jsp">courtSearch.jsp</a><a href="courtSearchDetail.jsp">courtSearchDetail.jsp</a><a href="error.jsp">error.jsp</a><a href="login.jsp">login.jsp</a><a href="logout.jsp">logout.jsp</a><a href="main.jsp">main.jsp</a><a href="matchSearch.jsp">matchSearch.jsp</a><a href="matchSearchDetail.jsp">matchSearchDetail.jsp</a><a href="navbar.jsp">navbar.jsp</a><a href="previewCourtSearchDetail.jsp">previewCourtSearchDetail.jsp</a><a href="register.jsp">register.jsp</a><a href="searchbox.jsp">searchbox.jsp</a><a href="selectMatchType.jsp">selectMatchType.jsp</a><a href="selectPCC.jsp">selectPCC.jsp</a><a href="userCenter-editUser.jsp">userCenter-editUser.jsp</a></p>
     <p>KING</p> 
    </div> 
   </div><!-- /footer -->
@@ -14,7 +15,8 @@
     <h5 id="sousaiRemindDialogAll">搜赛网提醒：</h5>
   </div>
   <div class="modal-body">
-    <div class="SRD-content">搜赛网小提示，可以点击在线联系向我们提意见哟~</div>
+  <div id="SRDcontent"></div>
+    <div class="SRDadd">搜赛网小提示，可以点击在线联系向我们提意见哟~</div>
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
