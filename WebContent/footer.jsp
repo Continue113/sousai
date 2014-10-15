@@ -2,10 +2,13 @@
 <%@taglib prefix="s" uri="/struts-tags" %>
   <div class="footer"> 
    <div class="container"> 
-    <!-- 一行一排 --> 
-    <p><a href="background-collections.jsp">background-collections.jsp</a><a href="courtSearch.jsp">courtSearch.jsp</a><a href="courtSearchDetail.jsp">courtSearchDetail.jsp</a><a href="error.jsp">error.jsp</a><a href="login.jsp">login.jsp</a><a href="logout.jsp">logout.jsp</a><a href="main.jsp">main.jsp</a><a href="matchSearch.jsp">matchSearch.jsp</a><a href="matchSearchDetail.jsp">matchSearchDetail.jsp</a><a href="navbar.jsp">navbar.jsp</a><a href="previewCourtSearchDetail.jsp">previewCourtSearchDetail.jsp</a><a href="register.jsp">register.jsp</a><a href="searchbox.jsp">searchbox.jsp</a><a href="selectMatchType.jsp">selectMatchType.jsp</a><a href="selectPCC.jsp">selectPCC.jsp</a><a href="userCenter-editUser.jsp">userCenter-editUser.jsp</a></p>
+    <!-- 一行一排 -->
     <p>KING</p> 
-   </div> 
+    <span><a href="login.jsp">login.jsp </a><a href="register.jsp">register.jsp </a></span>
+    <span><a href="courtSearch.jsp">courtSearch.jsp </a><a href="courtSearchDetail.jsp">courtSearchDetail.jsp </a><a href="previewCourtSearchDetail.jsp">previewCourtSearchDetail.jsp </a></span>
+    <span><a href="matchSearch.jsp">matchSearch.jsp </a><a href="matchSearchDetail.jsp">matchSearchDetail.jsp </a></span>
+    <span><a href="userCenter-editUser.jsp">userCenter-editUser.jsp </a><a href="background-collections.jsp">background-collections.jsp </a></span>
+    </div> 
   </div><!-- /footer -->
 
   <!-- 搜赛提示对话框-->

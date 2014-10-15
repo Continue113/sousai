@@ -300,7 +300,7 @@
   <script src="js/jplist.min.js"></script> 
   <script>
   $(function(){
-  	/** 拉取评论  
+  	/** 拉取评论  **/
   	$.ajax({
   		type: "POST",
         url: "showMsgs",
@@ -313,11 +313,11 @@
         	var evaluations = $(".evaluations"),userName;
             evaluations.empty();
             for (var i = 0; i < rspdata.length; i++) {
-            	if(rspdata[i].visible == 0){ 
-            		userName = rspdata[i].userId; //公开的评论
-            	}else { 
-            		userName = '******';//匿名的评论
-            	}
+            	if(rspdata[i].userName == null){ 
+            		userName = '******'; //匿名的评论
+            	}else{
+            		userName = rspdata[i].userName;//公开的评论
+            	};
             		evaluations.append('<div class="media evaluation"><div class="pull-left"><img class="media-object" src="img/defaultImg.png"><div class="evaluationName" data-userId="'+rspdata[i].userId+'">'+userName+'</div></div><div class="media-body"><p>'+rspdata[i].mesg+'</p><p class="releasetime">'+rspdata[i].time+'</p><a class="pull-right" href="#myModal">我要补充下</a></div></div>');
             }
         },
@@ -325,16 +325,16 @@
           //alert("抱歉，获取评论出错了。");
         },
         }); //ajax 已得到评论信息
-        **/
+        //**/
      /** 评论回复 **/
      $("body").on("click",".media-body a",function(){
       $(".evaluations .evaluation-response").slideUp("slow").remove();
       $(".media-body > a").slideDown();
       $(this).hide();
       var img = 'img/defaultImg.png',
-       	  name = "******",//<s:property value="#session.userBean.userName"/> 
-       	  respStr = '<div class="media evaluation-response hide"><div class="pull-left"><img class="media-object" src="'+img+'" /><div class="evaluationName">'+name+'</div></div>';
-      respStr +='<div class="media-body"><div class="inputRadios pull-right"><textarea id="inputResponse"></textarea><div class="radios pull-right"><label for="publicResponse1" class="radio inline"><input type="radio" id="publicResponse1" name="responseState1" value="publicResponse" checked="checked"/>公开</label><label for="hideResponse1"class="radio inline"><input type="radio" id="hideResponse1" name="responseState1" value="hideResponse"/>匿名</label></div></div><button class="btn pull-right" id="cancle">取消</button><button id="addReply" class="span2 btn btn-success pull-right"">发表评论</button><input type="submit" class="span2 btn btn-success pull-right hide" value="发表评论"/> </div></div>';
+       	  respName = <s:if test="#session.userBean.userName!=null"><s:property value="#session.userBean.userName"/></s:if><s:else>"******"</s:else>,
+       	  respStr = '<div class="media evaluation-response hide"><div class="pull-left"><img class="media-object" src="'+img+'" /><div class="evaluationName">'+respName+'</div></div>';
+      respStr +='<div class="media-body"><div class="inputRadios pull-right"><textarea id="inputResponse"></textarea><div class="radios pull-right"><label for="publicResponse1" class="radio inline"><input type="radio" id="publicResponse1" name="responseState1" value="0" checked="checked"/>公开</label><label for="hideResponse1"class="radio inline"><input type="radio" id="hideResponse1" name="responseState1" value="1"/>匿名</label></div></div><button class="btn pull-right" id="cancle">取消</button><button id="addReply" class="span2 btn btn-success pull-right"">发表评论</button><input type="submit" class="span2 btn btn-success pull-right hide" value="发表评论"/> </div></div>';
       if( $(this).parents(".media-body").length == 2){
         $(this).parent().parent().parent().append(respStr).end().parent().find(".evaluation-response").slideDown();
       }
@@ -358,7 +358,7 @@
           target = $(".evaluations");
           if(userId != 0){
       if(mesg != ""){
-    	sendEvaluation(parentId,userId,courtId,mesg,visibale);
+    	sendEvaluation(parentId,userId,courtId,mesg,visibale,respName);
         target.append(respCode);
       }
       }else{
@@ -371,14 +371,15 @@
       var parentId = $(this).parents().parents().find(".evaluationName").data("userId"),
       userId = $("#myEvaluationName").data("userId"),
       courtId = 1,
-      	  mesg = $(this).parents().find("textarea").val(),
       	  visibale = $('input:radio[name="responseState"]:checked').val(),
           respName = $(this).parent().parent().find(".evaluationName").text(),
           respImgSrc = $(this).parent().parent().find("img").attr("src"),
           respDate = new Date(),
           respTime = respDate.toLocaleString(),
           target = $(this).parent().parent().parent(),
-      	  respCode = '<div class="media evaluation';
+      	  respCode = '<div class="media evaluation',
+      	  parentMesg = $(this).parent().parent().find("p:first-child").text(),
+      	  mesg = "<p><i>回复："+ parentMesg + "</i></p><p>" + $(this).parents().find("textarea").val() + "</p>";
 
       if(target.find(".evaluation").length == 0){
         respCode += ' evaluation-first';
@@ -386,13 +387,16 @@
       respCode += '"><div class="pull-left"><img class="media-object" src="'+respImgSrc+'" /><div class="evaluationName">'+respName+'</div></div><div class="media-body"><p>'+mesg+'</p><p class="releasetime">'+respTime+'</p><a class="pull-right" href="#myModal">我要补充下</a></div></div>'
 
       if(mesg != ""){
-    	  sendEvaluation(parentId,userId,courtId,mesg,visibale);
+    	  sendEvaluation(parentId,userId,courtId,mesg,visibale,respName);
       	  $(".media-body > a").slideDown();
           target.append(respCode);
           $(".evaluations .evaluation-response").slideUp("slow").remove();
       }
     });
-    function sendEvaluation(parentId,userId,courtId,mesg,visibale){ //发送评论到服务器
+    function sendEvaluation(parentId,userId,courtId,mesg,visibale,userName){ //发送评论到服务器
+    	if (visibale==1) {
+    		userName = null;
+    	};
       	$.ajax({
   		type: "POST",
         url: "relMsg",
@@ -402,7 +406,7 @@
           "message.userId": userId, //发表评论或回复的用户id
           "message.courtId": courtId, //评论或回复所在的场地id
           "message.mesg": mesg, //评论或回复的具体内容
-          "message.visible": visibale, //是否匿名,默认为0不匿名，1为匿名
+          "message.userName": userName, //是否匿名,默认为公开为0有userName，若匿名为1则为******
         },
         dataType: "json",
         success: function(rspdata) {
