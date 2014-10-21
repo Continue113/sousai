@@ -64,8 +64,8 @@
         <label class="control-label" for="inputValidateCode">验证码&nbsp;:</label> 
         <div class="controls form-inline"> 
          <input type="text" class="input-block-level" id="inputValidateCode" name="inputValidateCode" placeholder="验证码" required="required" /> 
-         <div id="inputValidateImg" class="code" onclick="createCode()"></div> 
-         <span class="code-changeLink" onclick="createCode()">换一张</span> 
+         <div id="inputValidateImg" class="code" onclick="createCode('inputValidateImg')"></div> 
+         <span class="code-changeLink" onclick="createCode('inputValidateImg')">换一张</span> 
         </div> 
        </div> 
        <div class="control-group"> 
@@ -101,27 +101,7 @@
   <script src="js/jquery.validate.min.js"></script> 
   <script>    
     $(function(){
-      /** 生成验证码 **/
-        var code;
-        function createCode() {
-            code = "";
-            var codeLength = 4; //验证码的长度
-            var checkCode = document.getElementById("inputValidateImg");
-            var codeChars = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 
-            'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
-            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'); //所有候选组成验证码的字符，当然也可以用中文的
-            for (var i = 0; i < codeLength; i++) 
-            {
-                var charNum = Math.floor(Math.random() * 52);
-                code += codeChars[charNum];
-            }
-            if (checkCode) 
-            {
-                checkCode.className = "code";
-                checkCode.innerHTML = code;
-            }
-        }
-      createCode()
+      createCode("inputValidateImg");
       /** /生成验证码 **/
 
       /** 工具提示 **/
@@ -163,7 +143,7 @@
               if (resetbtn == true){
                 location.href = "index.jsp";
               }
-              console.log("location.hrefed!")
+              console.log("location.hrefed!");
             },
             error: function(jqXHR,textStatus,errorThrown){
             	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);

@@ -115,107 +115,143 @@
         </div> 
        </div> 
        <div id="courtEvaluation" class="tab-pane "> 
+       <!-- 原失败评论列表 -->
         <div class="evaluations"> 
+
          <div class="media evaluation"> 
-          <div class="pull-left"> 
+          <div class="pull-left author" data-filed='{"userName":"KINGLION","userId":001}'> 
            <img class="media-object" src="img/defaultImg.png" /> 
            <div class="evaluationName">
              KINGLION 
            </div> 
           </div> 
           <div class="media-body"> 
-           <p>天津市第五届百年皖酒“杯XXXXXXXXXX</p> 
-           <p class="releasetime">2013年12月29日 15:39<a class="pull-right" href="#myModal">我要补充下</a></p> 
-            
-          </div> 
-         </div> 
-         <div class="media evaluation"> 
-          <div class="pull-left"> 
-           <img class="media-object" src="img/defaultImg.png" /> 
-           <div class="evaluationName" data-userId="001" >
-             KINGLIONXXXXXX 
-           </div> 
-          </div> 
-          <div class="media-body"> 
-           <p>天津市第五届百年皖酒“杯XXXXXXXXXX</p> 
-           <p class="releasetime">2013年12月29日 15:39<a class="pull-right" href="#myModal">我要补充下</a></p> 
-           <div class="media evaluation evaluation-first1"> 
+           <p class="evaluation-authorMain">天津市第五届百年皖酒“杯XXXXXXXXXX</p> 
+           <p class="releasetime">2013年12月29日 15:39</p> 
+           <ul class="evaluation-tool-reply">
+           <li class="evaluation-tool"><a class="evaluation-tool-a" href="#myModal">我要补充下</a></li>
+           <li class="evaluation-reply">
+            <div class="media evaluation"> 
             <div class="pull-left"> 
              <img class="media-object" src="img/defaultImg.png" /> 
-             <div class="evaluationName" data-userId="011" >
+             <div class="evaluationName" >
                KINGLIONXXXXXX 
              </div> 
             </div> 
             <div class="media-body"> 
-             <p>天津市第五届百年皖酒“杯XXXXXXXXXX</p> 
-             <p class="releasetime">2013年12月29日 15:39<a class="pull-right" href="#myModal">我要补充下</a></p> 
+             <p class="evaluation-main">天津市第五届百年皖酒“杯XXXXXXXXXX</p> 
+             <p class="releasetime">2013年12月29日 15:39</p> 
+             <a class="pull-right evaluation-tool-a" href="#myModal">我要补充下</a> 
             </div> 
            </div> 
-           <div class="media evaluation evaluation-first1"> 
+           </li>
+           <li class="evaluation-reply">
+            <div class="media evaluation"> 
             <div class="pull-left"> 
              <img class="media-object" src="img/defaultImg.png" /> 
-            <div class="evaluationName" data-userId="012">
+             <div class="evaluationName">
                KINGLIONXXXXXX 
-             </div>
+             </div> 
             </div> 
             <div class="media-body"> 
-             <p>天津市第五届百年皖酒“杯XXXXXXXXXX</p> 
-             <p class="releasetime">2013年12月29日 15:39<a class="pull-right" href="#myModal">我要补充下</a></p> 
+             <p class="evaluation-main">天津市第五届百年皖酒“杯XXXXXXXXXX</p> 
+             <p class="releasetime">2013年12月29日 15:39</p> 
+             <a class="pull-right evaluation-tool-a" href="#myModal">我要补充下</a> 
             </div> 
            </div> 
+           </li>
+           <li class="evaluation-reply">
+            <div class="media evaluation"> 
+            <div class="pull-left"> 
+             <img class="media-object" src="img/defaultImg.png" /> 
+             <div class="evaluationName">
+               KINGLIONXXXXXX 
+             </div> 
+            </div> 
+            <div class="media-body"> 
+             <p class="evaluation-main">天津市第五届百年皖酒“杯XXXXXXXXXX</p> 
+             <p class="releasetime">2013年12月29日 15:39</p> 
+             <a class="pull-right evaluation-tool-a" href="#myModal">我要补充下</a> 
+            </div> 
+           </div> 
+           </li>
+           </ul>
           </div> 
          </div> 
+
          <div class="media evaluation"> 
-          <div class="pull-left"> 
+          <div class="pull-left author"> 
            <img class="media-object" src="img/defaultImg.png" /> 
-           <div class="evaluationName" data-userId="002">
-            123456789KING
+           <div class="evaluationName">
+             KINGLION 
            </div> 
           </div> 
           <div class="media-body"> 
-           <p>天津市第五届百年皖酒“杯XXXXXXXXXX</p> 
-           <p class="releasetime">2013年12月29日 15:39<a class="pull-right" href="#myModal">我要补充下</a></p> 
-          </div> 
-         </div> 
-         <div class="media evaluation"> 
-          <div class="pull-left"> 
-           <img class="media-object" src="img/defaultImg.png" /> 
-           <div class="evaluationName" data-userId="003">
-            123456789KING
-           </div> 
-          </div> 
-          <div class="media-body"> 
-           <p>天津市第五届百年皖酒“杯XXXXXXXXXX</p> 
+           <p class="evaluation-authorMain">天津市第五届百年皖酒“杯XXXXXXXXXX</p> 
            <p class="releasetime">2013年12月29日 15:39</p> 
-           <a class="pull-right" href="#myModal">我要补充下</a> 
+           <ul class="evaluation-tool-reply">
+           <li class="evaluation-tool"><a class="evaluation-tool-a" href="#myModal">我要补充下</a></li>
+           <li class="evaluation-reply">
+            <div class="media evaluation"> 
+            <div class="pull-left"> 
+             <img class="media-object" src="img/defaultImg.png" /> 
+             <div class="evaluationName" >
+               KINGLIONXXXXXX 
+             </div> 
+            </div> 
+            <div class="media-body"> 
+             <p class="evaluation-main">天津市第五届百年皖酒“杯XXXXXXXXXX</p> 
+             <p class="releasetime">2013年12月29日 15:39</p> 
+             <a class="pull-right evaluation-tool-a" href="#myModal">我要补充下</a> 
+            </div> 
+           </div> 
+           </li>
+           <li class="evaluation-reply">
+            <div class="media evaluation"> 
+            <div class="pull-left"> 
+             <img class="media-object" src="img/defaultImg.png" /> 
+             <div class="evaluationName">
+               KINGLIONXXXXXX 
+             </div> 
+            </div> 
+            <div class="media-body"> 
+             <p class="evaluation-main">天津市第五届百年皖酒“杯XXXXXXXXXX</p> 
+             <p class="releasetime">2013年12月29日 15:39</p> 
+             <a class="pull-right evaluation-tool-a" href="#myModal">我要补充下</a> 
+            </div> 
+           </div> 
+           </li>
+           </ul>
           </div> 
          </div> 
-        </div> 
+
+        </div> <!-- /evaluations-->
         <div class="media evaluation-response"> 
          <div class="pull-left"> 
            <s:if test="#session.userBean.userName!=null">
            <img class="media-object" src="img/defaultImg.png" /> 
-           <div class="evaluationName" id="myEvaluationName" data-userId='<s:property value="#session.userBean.userId"/>' >
+           <div class="evaluationName" id="evaluationName-main" data-userid='<s:property value="#session.userBean.userId"/>' >
            <s:property value="#session.userBean.userName"/>
            </div>
            </s:if>
            <s:else>
            <img class="media-object" src="img/defaultImg.png" alt="请登录" /> 
-           <div class="evaluationName" id="myEvaluationName" data-userid="0" >
+           <div class="evaluationName" id="evaluationName-main" data-userid="0" >
            	<a href="login.jsp" >请登录</a>
            </div>
           </s:else>
          </div> 
          <div class="media-body"> 
-          <div class="inputRadios pull-right"> 
-           <textarea id="inputResponse"></textarea> 
-           <div class="radios pull-right"> 
-            <label for="publicResponse" class="radio inline"><input type="radio" id="publicResponse" name="responseState" value="0" checked="checked" />公开</label> 
-            <label for="hideResponse" class="radio inline"><input type="radio" id="hideResponse" name="responseState" value="1" />匿名</label> 
+          <div class="inputRadios pull-right">
+           <textarea id="inputResponse-main" <s:if test="#session.userBean.userName!=null"></s:if><s:else>disabled="disabled" readonly="readonly"</s:else> ></textarea> 
+           <div class="radios">
+            <div class="validateCode-main pull-left">验证码&nbsp;:<input type="text" class="input-small" id="inputValidateCodeMain" name="inputValidateCode" placeholder="验证码" required="required" /><span id="inputValidateImg" class="code" onclick="createCode('inputValidateImg')"></span><span class="code-changeLink" onclick="createCode('inputValidateImg')"> 换一张</span></div> 
+            <label for="hideResponse-main" class="radio inline pull-right"><input type="radio" id="hideResponse-main" name="responseState-main" value="1" />匿名</label>
+            <label for="publicResponse-main" class="radio inline pull-right"><input type="radio" id="publicResponse-main" name="responseState-main" value="0" checked="checked" />公开</label> 
            </div> 
-          </div> 
+          </div>
           <input type="submit" class="span2 btn btn-success pull-right hide" value="发表评论" /> 
-          <button id="reply" class="span2 btn btn-success pull-right<s:if test="#session.userBean.userName!=null"></s:if><s:else> disabled</s:else>">发表评论</button> 
+          <button id="reply-main" class="span2 btn btn-success pull-right<s:if test="#session.userBean.userName!=null"></s:if><s:else> disabled</s:else>">发表评论</button> 
          </div> 
         </div> 
        </div> 
@@ -300,7 +336,10 @@
   <script src="js/jplist.min.js"></script> 
   <script>
   $(function(){
-  	/** 拉取评论  **/
+	/** 初始化生成验证码 **/
+    createCode("inputValidateImg");
+    
+  	/** 拉取评论  **
   	$.ajax({
   		type: "POST",
         url: "showMsgs",
@@ -325,73 +364,173 @@
           //alert("抱歉，获取评论出错了。");
         },
         }); //ajax 已得到评论信息
-        //**/
-     /** 评论回复 **/
-     $("body").on("click",".media-body a",function(){
-      $(".evaluations .evaluation-response").slideUp("slow").remove();
-      $(".media-body > a").slideDown();
-      $(this).hide();
-      var img = 'img/defaultImg.png',
-       	  respName = <s:if test="#session.userBean.userName!=null"><s:property value="#session.userBean.userName"/></s:if><s:else>"******"</s:else>,
-       	  respStr = '<div class="media evaluation-response hide"><div class="pull-left"><img class="media-object" src="'+img+'" /><div class="evaluationName">'+respName+'</div></div>';
-      respStr +='<div class="media-body"><div class="inputRadios pull-right"><textarea id="inputResponse"></textarea><div class="radios pull-right"><label for="publicResponse1" class="radio inline"><input type="radio" id="publicResponse1" name="responseState1" value="0" checked="checked"/>公开</label><label for="hideResponse1"class="radio inline"><input type="radio" id="hideResponse1" name="responseState1" value="1"/>匿名</label></div></div><button class="btn pull-right" id="cancle">取消</button><button id="addReply" class="span2 btn btn-success pull-right"">发表评论</button><input type="submit" class="span2 btn btn-success pull-right hide" value="发表评论"/> </div></div>';
-      if( $(this).parents(".media-body").length == 2){
-        $(this).parent().parent().parent().append(respStr).end().parent().find(".evaluation-response").slideDown();
+        **/
+     /** 点击我要补充下，滑出回复框 **/
+     function appendTextarea (target,img,name,id,parentName) { //添加“我要补充下”回复框
+      var respStr = '<li class="evaluation-response-li hide"><div class="media evaluation-response"><div class="pull-left"><img class="media-object" src="'+img+'" /><div class="evaluationName" id="evaluationName-temp" data-userid="'+id+'">'+name+'</div></div><div class="media-body"><div class="inputRadios pull-right"><textarea id="inputResponse-temp" <s:if test="#session.userBean.userName!=null"></s:if><s:else>disabled="disabled" readonly="readonly"</s:else> > <s:if test="#session.userBean.userName!=null"> 【回复 '+parentName+' 】：</s:if><s:else>请先登录。</s:else> </textarea><div class="radios"><div class="validateCode-main pull-left">验证码&nbsp;:<input type="text" class="input-small" id="inputValidateCodeTemp" name="inputValidateCodeTemp" placeholder="验证码" required="required" /><span id="inputValidateImgTemp" class="code" onclick="createCode(\'inputValidateImgTemp\')"></span><span class="code-changeLink" onclick="createCode(\'inputValidateImgTemp\')"> 换一张</span></div><label for="hideResponse-temp" class="radio inline pull-right"><input type="radio" id="hideResponse-temp" name="responseState-temp" value="1"/>匿名</label><label for="publicResponse-temp" class="radio inline pull-right"><input type="radio" id="publicResponse-temp" name="responseState-temp" value="0" checked="checked"/>公开</label></div></div><button class="btn pull-right" id="cancle-temp">取消</button><button id="reply-temp" class="span2 btn btn-success pull-right<s:if test="#session.userBean.userName!=null"></s:if><s:else> disabled</s:else>">发表评论</button><input type="submit" class="span2 btn btn-success pull-right hide" value="发表评论"/> </div></div></li>';
+      target.append(respStr);
+      createCode("inputValidateImgTemp");
+     }
+     function focusLast ( target,head,last ) {//聚焦到输入框的最后。
+      //target是当前对象，例如文本域对象
+      //head是起始位置，last是终点位置
+      var head = parseInt(head, 10), last = parseInt(last, 10);
+      var l = target.value.length;
+      if(l){
+        //如果非数值，则表示从起始位置选择到结束位置
+        if(!head){
+          head = 0; 
+        }
+        if(!last){
+          last = l; 
+        }
+        //如果值超过长度，则就是当前对象值的长度
+        if(head > l){
+          head = l; 
+        }
+        if(last > l){
+          last = l; 
+        }
+        //如果为负值，则与长度值相加
+        if(head < 0){
+          head = l + head;
+        }
+        if(last < 0){
+          last = l + last;  
+        }
+        if(target.createTextRange){//IE浏览器
+          var range = target.createTextRange();         
+          range.moveStart("character",-l);              
+          range.moveEnd("character",-l);
+          range.moveStart("character", head);
+          range.moveEnd("character",last);
+          range.select();
+        }else{
+          target.setSelectionRange(head, last);
+          target.focus();
+        }
       }
-      else{
-      $(this).parent().append(respStr).end().parent().find(".evaluation-response").slideDown();
-    }
+     }
+     $("body").on("click",".evaluation-tool > .evaluation-tool-a",function(){ //仅对一层评论的“我要回复下使用”
+      var target = $(this).parent().parent(),//目标为evaluation-tool-reply
+          parentName = $.trim(target.parent().parent().find(".author > .evaluationName").text()), //trim()去除前后空格 .evalution > .author > .evaluationName
+          img = <s:if test="#session.userBean.userName!=null"><s:property value="#session.userBean.userIcon"/></s:if><s:else>'img/defaultImg.png'</s:else>,
+          id = <s:if test="#session.userBean.userName!=null"><s:property value="#session.userBean.userId"/></s:if><s:else>0</s:else>,
+          name = <s:if test="#session.userBean.userName!=null"><s:property value="#session.userBean.userName"/></s:if><s:else>'<a href="login.jsp" >请登录</a>'</s:else>;
+
+      if( $(".evaluations .evaluation-response-li").length==0){ //判断是否存在.evaluation-response
+            appendTextarea (target,img,name,id,parentName);
+            $(".evaluations .evaluation-response-li").slideDown();
+            focusLast(document.getElementById("inputResponse-temp"),30,30);
+          }else if(target.find(".evaluation-response-li").length==1){
+            $("#inputResponse-temp").text("【回复 "+parentName+" 】：");
+            focusLast(document.getElementById("inputResponse-temp"),30,30);
+          }else{
+            $(".evaluations .evaluation-response-li").slideUp("slow",function(){
+              $(".evaluations .evaluation-response-li").remove();
+              appendTextarea (target,img,name,id,parentName);
+              $(".evaluations .evaluation-response-li").slideDown();
+              focusLast(document.getElementById("inputResponse-temp"),30,30);
+            });
+          }
     return false;
      });
+
+     $("body").on("click",".media-body > .evaluation-tool-a",function(){ //仅对二层评论的“我要回复下使用”
+      var target = $(this).parent().parent(),//目标为evaluation
+          parentName = $.trim(target.find(".evaluationName").text()), //trim()去除前后空格 .evalution .evaluationName
+          img = <s:if test="#session.userBean.userName!=null"><s:property value="#session.userBean.userIcon"/></s:if><s:else>'img/defaultImg.png'</s:else>,
+          id = <s:if test="#session.userBean.userName!=null"><s:property value="#session.userBean.userId"/></s:if><s:else>0</s:else>,
+          name = <s:if test="#session.userBean.userName!=null"><s:property value="#session.userBean.userName"/></s:if><s:else>'<a href="login.jsp" >请登录</a>'</s:else>;
+
+          if( $(".evaluations .evaluation-response-li").length==0){ //判断是否存在.evaluation-response
+            appendTextarea (target.parent().parent(),img,name,id,parentName);
+            $(".evaluations .evaluation-response-li").slideDown();
+            focusLast(document.getElementById("inputResponse-temp"),30,30);
+          }else if(target.parent().parent().find(".evaluation-response-li").length==1){
+            $("#inputResponse-temp").text("【回复 "+parentName+" 】：");
+            focusLast(document.getElementById("inputResponse-temp"),30,30);
+          }else{
+            $(".evaluations .evaluation-response-li").slideUp("slow",function(){
+              $(".evaluations .evaluation-response-li").remove();
+              appendTextarea (target,img,name,id,parentName);
+              $(".evaluations .evaluation-response-li").slideDown();
+              focusLast(document.getElementById("inputResponse-temp"),30,30);
+            });
+          }
+      return false;
+     });
     /** 直接发表评论 **/
-    $("#reply").click(function(){
+    $("#reply-main").click(function(){
+
+      $(".evaluations .evaluation-response-li").slideUp("slow",function(){
+        $(".evaluations .evaluation-response-li").remove();
+      });//把所有的“我要补充下”的回复框移除
+
       var parentId = 0,
-      userId = $("#myEvaluationName").data("userid"),
-      courtId = 1,
+      	  userId = $("#evaluationName-main").data("userid"),
+      	  courtId = 1,
       	  mesg = $(this).parents().find("textarea").val(),
-          visibale = $('input:radio[name="responseState"]:checked').val(),
+          visibale = $('input:radio[name="responseState-main"]:checked').val(),
           respName = $(this).parent().parent().find(".evaluationName").text(),
           respImgSrc = $(this).parent().parent().find("img").attr("src"),
           respDate = new Date(),
           respTime = respDate.toLocaleString(),          
-          respCode = '<div class="media evaluation"><div class="pull-left"><img class="media-object" src="'+respImgSrc+'" /><div class="evaluationName">'+respName+'</div></div><div class="media-body"><p>'+mesg+'</p><p class="releasetime">'+respTime+'</p><a class="pull-right" href="#myModal">我要补充下</a></div></div>',
-          target = $(".evaluations");
-          if(userId != 0){
-      if(mesg != ""){
-    	sendEvaluation(parentId,userId,courtId,mesg,visibale,respName);
-        target.append(respCode);
-      }
+          respCode = '<div class="media evaluation"><div class="pull-left author"><img class="media-object" src="'+respImgSrc+'" /><div class="evaluationName">'+respName+'</div></div><div class="media-body"><p class="evaluation-authorMain">'+mesg+'</p><p class="releasetime">'+respTime+'</p><ul class="evaluation-tool-reply"><li class="evaluation-tool"><a href="#myModal">我要补充下</a></li></ul></div></div>',
+          target = $(".evaluations"),
+          inputValidateImg = $("#inputValidateImg").text().toUpperCase(),
+          inputValidateCaodeMain = $("#inputValidateCodeMain").val().toUpperCase();
+          
+      if(userId != 0){
+          if(mesg != ""){
+    	    sendEvaluation(parentId,userId,courtId,mesg,visibale,respName);
+            target.append(respCode);
+          }else if( inputValidateImg != inputValidateCaodeMain ){
+        	  alert("请填写正确的验证码。");
+          }
       }else{
-    	  $("#SRDcontent").empty().append('<p style="font-size:16px;color:red;">请先<a href="login.jsp">登录</a>再评论。</p>');
-      	$('#sousaiRemindDialog').modal({backdrop:true,show:true});
+    	  $("#SRDcontent").empty().append('<div class="alert alert-block alert-error fade in"><p style="font-size:16px;color:red;">请先<a href="login.jsp">登录</a>再评论。</p></div>');
+    	  $('#sousaiRemindDialog > .modal-footer > .btn-success').attr("data-dismiss","modal");
+    	  $('#sousaiRemindDialog').modal({backdrop:true,show:true});
       }
     });
     /** 我要补充下 **/
-     $("body").on("click","#addReply",function(){
+     $("body").on("click","#reply-temp",function(){
       var parentId = $(this).parents().parents().find(".evaluationName").data("userId"),
-      userId = $("#myEvaluationName").data("userId"),
+      userId = $("#evaluationName-temp").data("userid"),
       courtId = 1,
       	  visibale = $('input:radio[name="responseState"]:checked').val(),
           respName = $(this).parent().parent().find(".evaluationName").text(),
           respImgSrc = $(this).parent().parent().find("img").attr("src"),
           respDate = new Date(),
           respTime = respDate.toLocaleString(),
-          target = $(this).parent().parent().parent(),
-      	  respCode = '<div class="media evaluation',
-      	  parentMesg = $(this).parent().parent().find("p:first-child").text(),
-      	  mesg = "<p><i>回复："+ parentMesg + "</i></p><p>" + $(this).parents().find("textarea").val() + "</p>";
+          target = $(this).parent().parent().parent().parent(),//.evaluation-tool-reply
+      	  respCode = '<li class="evaluation-reply"><div class="media evaluation',
+      	  //parentMesg = target.parent().parent().find(".pull-left:first-child > .evaluationName").text() +"<i>" + target.parent().find("p:first-child").text() + "</i>", //父评论
+      	  mesg = $(this).parents().find("textarea").val(),
+          inputValidateImg = $("#inputValidateImgTemp").text().toUpperCase(),
+          inputValidateCaodeMain = $("#inputValidateCodeTemp").val().toUpperCase();
 
-      if(target.find(".evaluation").length == 0){
-        respCode += ' evaluation-first';
-      }
-      respCode += '"><div class="pull-left"><img class="media-object" src="'+respImgSrc+'" /><div class="evaluationName">'+respName+'</div></div><div class="media-body"><p>'+mesg+'</p><p class="releasetime">'+respTime+'</p><a class="pull-right" href="#myModal">我要补充下</a></div></div>'
-
-      if(mesg != ""){
+      respCode += '"><div class="pull-left"><img class="media-object" src="'+respImgSrc+'" /><div class="evaluationName">'+respName+'</div></div><div class="media-body"><p class="evaluation-main">'+mesg+'</p><p class="releasetime">'+respTime+'</p><a class="pull-right evaluation-tool-a" href="#myModal">我要补充下</a></div></div></li>';
+      if(userId != 0){
+      //if(mesg != ""){
+    	  
+    	  if( inputValidateImg != inputValidateCaodeMain ){
+        	  alert("请填写正确的验证码。");
+          }else{
     	  sendEvaluation(parentId,userId,courtId,mesg,visibale,respName);
-      	  $(".media-body > a").slideDown();
+      	  $(".evaluation-tool-a").slideDown();
           target.append(respCode);
-          $(".evaluations .evaluation-response").slideUp("slow").remove();
-      }
+          $(".evaluations .evaluation-response-li").slideUp("slow",function(){
+        	  $(".evaluations .evaluation-response-li").remove();
+          });
+          }
+      //}
+      }else{
+    	  $("#SRDcontent").empty().append('<div class="alert alert-block alert-error fade in"><p style="font-size:16px;color:red;">请先<a href="login.jsp">登录</a>再评论。</p></div>');
+    	  $('#sousaiRemindDialog > .modal-footer > .btn-success').attr("data-dismiss","modal");
+    	  $('#sousaiRemindDialog').modal({backdrop:true,show:true,});
+      };
     });
     function sendEvaluation(parentId,userId,courtId,mesg,visibale,userName){ //发送评论到服务器
     	if (visibale==1) {
@@ -417,13 +556,15 @@
         },
         error: function() {
           //alert("抱歉，获取评论出错了。");
-        },
+        }
         }); //ajax 已得到发送评论到服务器
     }
     /** 点击取消 **/
-     $("body").on("click","#cancle",function(){
-      $(".evaluations .evaluation-response").slideUp("slow").remove();
-      $(".media-body a").slideDown();
+     $("body").on("click","#cancle-temp",function(){
+      $(".evaluations .evaluation-response-li").slideUp("slow",function(){
+      $(".evaluations .evaluation-response-li").remove();
+      });
+      $(".evaluation-tool-a").slideDown();
     });
 
     /** 鼠标hover切换图片 **/
@@ -435,10 +576,6 @@
     });
     /****/
 
-    /** 字数限制，溢出省略 **/
-    //$(".evaluationName").wordLimit(9);
-    /****/
-
     /** 列表排序 **/
     $('#courtRecord').jplist({
           itemsBox: '.recordTable',
@@ -446,7 +583,7 @@
           panelPath: '.jplist-panel'
         });
     /****/
-  })
+  });
   </script>  
  </body>
 </html>

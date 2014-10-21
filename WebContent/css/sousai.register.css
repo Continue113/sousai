@@ -21,7 +21,7 @@
     margin-left: 0;
 }
 
-/** 重置最小宽度下form-horizontal的左边距 **/
+/** 閲嶇疆鏈�皬瀹藉害涓媐orm-horizontal鐨勫乏杈硅窛 **/
 @media (max-width: 480px) {
  .register .form-horizontal .control-label {
     float: none;
@@ -38,7 +38,7 @@
 }
 /****/
 
-/** 验证码**/
+/** 楠岃瘉鐮�*/
 .register .form-signin .error {
     color: #fa3d1d;
 }
@@ -75,3 +75,6 @@
     *zoom: 1;
     vertical-align: -10px;
 }
+/** inputValidateImg background picture **/
+/** #inputValidateImg {background-image: url(../img/wallimg.png);} **/
+
