@@ -471,7 +471,7 @@
       	  userId = $("#evaluationName-main").data("userid"),
       	  courtId = 1,
       	  mesg = $(this).parents().find("textarea").val(),
-          visibale = $('input:radio[name="responseState-main"]:checked').val(),
+          visible = $('input:radio[name="responseState-main"]:checked').val(),
           respName = $(this).parent().parent().find(".evaluationName").text(),
           respImgSrc = $(this).parent().parent().find("img").attr("src"),
           respDate = new Date(),
@@ -482,12 +482,14 @@
           inputValidateCaodeMain = $("#inputValidateCodeMain").val().toUpperCase();
           
       if(userId != 0){
+    	  alert("userId != 0");
           if(mesg != ""){
-    	    sendEvaluation(parentId,userId,courtId,mesg,visibale,respName);
+        	  alert("mesg != \"\"");
+    	    sendEvaluation(parentId,userId,courtId,mesg,visible,respName);
             target.append(respCode);
           }else if( inputValidateImg != inputValidateCaodeMain ){
         	  alert("请填写正确的验证码。");
-          }
+          };
       }else{
     	  $("#SRDcontent").empty().append('<div class="alert alert-block alert-error fade in"><p style="font-size:16px;color:red;">请先<a href="login.jsp">登录</a>再评论。</p></div>');
     	  $('#sousaiRemindDialog > .modal-footer > .btn-success').attr("data-dismiss","modal");
@@ -499,7 +501,7 @@
       var parentId = $(this).parents().parents().find(".evaluationName").data("userId"),
       userId = $("#evaluationName-temp").data("userid"),
       courtId = 1,
-      	  visibale = $('input:radio[name="responseState"]:checked').val(),
+      	  visible = $('input:radio[name="responseState"]:checked').val(),
           respName = $(this).parent().parent().find(".evaluationName").text(),
           respImgSrc = $(this).parent().parent().find("img").attr("src"),
           respDate = new Date(),
@@ -514,17 +516,17 @@
       respCode += '"><div class="pull-left"><img class="media-object" src="'+respImgSrc+'" /><div class="evaluationName">'+respName+'</div></div><div class="media-body"><p class="evaluation-main">'+mesg+'</p><p class="releasetime">'+respTime+'</p><a class="pull-right evaluation-tool-a" href="#myModal">我要补充下</a></div></div></li>';
       if(userId != 0){
       //if(mesg != ""){
-    	  
+    	  alert("userId != 0");
     	  if( inputValidateImg != inputValidateCaodeMain ){
         	  alert("请填写正确的验证码。");
           }else{
-    	  sendEvaluation(parentId,userId,courtId,mesg,visibale,respName);
+    	  sendEvaluation(parentId,userId,courtId,mesg,visible,respName);
       	  $(".evaluation-tool-a").slideDown();
           target.append(respCode);
           $(".evaluations .evaluation-response-li").slideUp("slow",function(){
         	  $(".evaluations .evaluation-response-li").remove();
           });
-          }
+          };
       //}
       }else{
     	  $("#SRDcontent").empty().append('<div class="alert alert-block alert-error fade in"><p style="font-size:16px;color:red;">请先<a href="login.jsp">登录</a>再评论。</p></div>');
@@ -532,10 +534,10 @@
     	  $('#sousaiRemindDialog').modal({backdrop:true,show:true,});
       };
     });
-    function sendEvaluation(parentId,userId,courtId,mesg,visibale,userName){ //发送评论到服务器
-    	if (visibale==1) {
+    function sendEvaluation(parentId,userId,courtId,mesg,visible,userName){ //发送评论到服务器
+    	if (visible==1) {
     		userName = null;
-    	};
+    	}; alert("进入sendEvaluation，visible为"+visible+",userName为"+userName+"开始ajax");
       	$.ajax({
   		type: "POST",
         url: "relMsg",
@@ -558,6 +560,7 @@
           //alert("抱歉，获取评论出错了。");
         }
         }); //ajax 已得到发送评论到服务器
+        alert("ajax结束");
     }
     /** 点击取消 **/
      $("body").on("click","#cancle-temp",function(){
