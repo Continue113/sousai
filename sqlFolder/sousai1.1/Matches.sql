@@ -1,16 +1,16 @@
 create table Matches
 (
-ID bigint not null primary key auto_increment,
-name varchar(255) not null,
-type varchar(32) not null,
-begin_time date not null,
-end_time date not null,
-court_ID bigint null,
-rule text null,
-release_time timestamp not null default current_timestamp,
-verify char not null default '0',
-score Text null,
-userId bigint null,
-constraint foreign key(userId) references Users(ID) on delete set null on update cascade,
-constraint foreign key(court_ID) references Courts(ID) on delete set null on update cascade
+Id bigint not null primary key auto_increment,
+Name varchar(255) not null,
+Type varchar(32) not null,
+BeginTime date not null,
+EndTime date not null,
+CourtId bigint null,
+Rule text null,
+ReleaseTime timestamp not null default current_timestamp,
+Verify char not null default '0',
+Score Text null,
+UserId bigint null,
+constraint foreign key(UserId) references User(Id) on delete set null on update cascade,
+constraint foreign key(CourtId) references Court(Id) on delete set null on update cascade
 );

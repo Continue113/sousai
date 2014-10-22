@@ -22,7 +22,7 @@ public class Court implements Serializable
 	private String tel;
 	private String price;
 	private String workTime;
-	private Integer matches;
+	private Integer matchCount;
 	private String intro;
 	private char verify;
 	private Date relDate;
@@ -177,17 +177,17 @@ public class Court implements Serializable
 	}
 
 	/**
-	 * @return the matches
+	 * @return the matchCount
 	 */
-	public Integer getMatches() {
-		return matches;
+	public Integer getMatchCount() {
+		return matchCount;
 	}
 
 	/**
-	 * @param matches the matches to set
+	 * @param matches the matchCount to set
 	 */
-	public void setMatches(Integer matches) {
-		this.matches = matches;
+	public void setMatchCount(Integer matchCount) {
+		this.matchCount = matchCount;
 	}
 
 	/**

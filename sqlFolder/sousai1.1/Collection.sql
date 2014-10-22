@@ -1,9 +1,9 @@
 create table Collection
 (
-ID bigint not null primary key auto_increment,
-match_name varchar(255) null,
-match_date date null,
-match_court varchar(255) null,
-source varchar(255) not null,
-detail_intro text not null
+Id bigint not null primary key auto_increment,
+MatchName varchar(255) null,
+MatchDate date null,
+MatchCourt varchar(255) null,
+Source varchar(255) not null,
+DetailIntro text not null
 );

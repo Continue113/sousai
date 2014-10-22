@@ -13,15 +13,14 @@ Date: 2011-11-15 23:11:11
 -- ----------------------------
 DROP TABLE IF EXISTS `region`;
 CREATE TABLE `region` (
-  `REGION_ID` int NOT NULL,
-  `REGION_CODE` varchar(100) NULL,
-  `REGION_NAME` varchar(100) NOT NULL,
-  `PARENT_ID` int NOT NULL,
-  `REGION_LEVEL` int NOT NULL,
-  `REGION_ORDER` int NOT NULL default 0,
-  `REGION_NAME_EN` varchar(100) NULL,
-  `REGION_SHORTNAME_EN` varchar(10) NULL,
-  PRIMARY KEY (`REGION_ID`)
+  `ID` int NOT NULL primary key,
+  `CODE` varchar(100) NULL,
+  `NAME` varchar(100) NOT NULL,
+  `PARENTID` int NOT NULL,
+  `LEVEL` int NOT NULL,
+  `Order` int NOT NULL default 0,
+  `NAMEEN` varchar(100) NULL,
+  `SHORTNAMEEN` varchar(10) NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -3553,14 +3552,14 @@ INSERT INTO `region` VALUES ('4900', '510802', '利州区', '279', '0', '0', 'Li
 INSERT INTO `region` VALUES ('5000', '511681', '华蓥市', '286', '0', '0', 'Huaying Shi', 'HYC');
 
 
-update region set region_level=1 where parent_id=1;
-update region set region_level=2 where parent_id between 2 and 32;
-update region set region_level=3 where parent_id>32;
+update region set Level=1 where ParentId=1;
+update region set Level=2 where ParentId between 2 and 32;
+update region set Level=3 where ParentId>32;
 
 -- select * from region as r1, region as r2, region as r3 where r2.region_name='县' and r1.parent_id=r2.region_id and r2.parent_id=r3.parent_id and r3.region_name='市辖区';
-update region as r1 join region as r2 join region as r3 set r1.parent_id = r3.region_id where r2.region_name='县' and r1.parent_id=r2.region_id and r2.parent_id=r3.parent_id and r3.region_name='市辖区';
-update region as r1 join region as r2 set r1.region_name = r2.region_name where r1.parent_id=r2.region_id and r1.region_name='市辖区';
-delete from region where region_name='县';
+update region as r1 join region as r2 join region as r3 set r1.ParentId = r3.Id where r2.Name='县' and r1.ParentId=r2.Id and r2.ParentId=r3.ParentId and r3.Name='市辖区';
+update region as r1 join region as r2 set r1.Name = r2.Name where r1.ParentId=r2.Id and r1.Name='市辖区';
+delete from region where name='县';
 
 
 INSERT INTO `region` VALUES ('6000', '710000', '台湾省', '1', '1', '0', 'Taiwan Sheng', 'TW');
@@ -3568,7 +3567,7 @@ INSERT INTO `region` VALUES ('7000', '810000', '香港特别行政区', '1', '1'
 INSERT INTO `region` VALUES ('8000', '820000', '澳门特别行政区', '1', '1', '0', 'Macao', 'Mac');
 
 -- 390个
-insert into region(region_id, region_name, region_level, parent_id) values
+insert into region(id, name, level, ParentId) values
 (45052, '臺北市', 2, 32),
 (45053, '新北市', 2, 32),
 (45054, '臺中市', 2, 32),
@@ -3960,6 +3959,6 @@ insert into region(region_id, region_name, region_level, parent_id) values
 (45440, '莒光鄉', 3, 45073),
 (45441, '東引鄉', 3, 45073);
 
-update region set region_code=region_id where region_id>8000;
-update region set parent_id=6000 where region_id>8000 and parent_id=32;
+update region set Code=Id where Id>8000;
+update region set ParentId=6000 where Id>8000 and ParentId=32;
 -- set foreign_key_checks=1
