@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2014-10-22 20:49:45 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.sousai.domain.Court" table="COURT">
+        <id name="id" type="java.lang.Long">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <property name="name" type="java.lang.String">
+            <column name="NAME" />
+        </property>
+        <property name="courtTypeId" type="java.lang.Integer">
+            <column name="COURTTYPEID" />
+        </property>
+        <property name="matchType" type="java.lang.String">
+            <column name="MATCHTYPE" />
+        </property>
+        <property name="region" type="java.lang.Integer">
+            <column name="REGION" />
+        </property>
+        <property name="addr" type="java.lang.String">
+            <column name="ADDR" />
+        </property>
+        <property name="tableNum" type="java.lang.Integer">
+            <column name="TABLENUM" />
+        </property>
+        <property name="tel" type="java.lang.String">
+            <column name="TEL" />
+        </property>
+        <property name="price" type="java.lang.String">
+            <column name="PRICE" />
+        </property>
+        <property name="workTime" type="java.lang.String">
+            <column name="WORKTIME" />
+        </property>
+        <property name="matchCount" type="java.lang.Integer">
+            <column name="MATCHCOUNT" />
+        </property>
+        <property name="intro" type="java.lang.String">
+            <column name="INTRO" />
+        </property>
+        <property name="verify" type="char">
+            <column name="VERIFY" />
+        </property>
+        <property name="relDate" type="java.sql.Date">
+            <column name="RELDATE" />
+        </property>
+        <property name="modDate" type="java.sql.Date">
+            <column name="MODDATE" />
+        </property>
+        <property name="userId" type="java.lang.Long">
+            <column name="USERID" />
+        </property>
+    </class>
+</hibernate-mapping>
