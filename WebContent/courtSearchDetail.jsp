@@ -481,15 +481,22 @@
           inputValidateImg = $("#inputValidateImg").text().toUpperCase(),
           inputValidateCaodeMain = $("#inputValidateCodeMain").val().toUpperCase();
           
+      if( inputValidateImg != inputValidateCaodeMain ){
+    	  alert("请填写正确的验证码。");
+      }
+          alert(userId);
+          sendEvaluation(parentId,userId,courtId,mesg,visible,respName);
+          target.append(respCode);
+          
       if(userId != 0){
     	  alert("userId != 0");
-          if(mesg != ""){
+          /*if(mesg != ""){
         	  alert("mesg != \"\"");
     	    sendEvaluation(parentId,userId,courtId,mesg,visible,respName);
             target.append(respCode);
           }else if( inputValidateImg != inputValidateCaodeMain ){
         	  alert("请填写正确的验证码。");
-          };
+          };*/
       }else{
     	  $("#SRDcontent").empty().append('<div class="alert alert-block alert-error fade in"><p style="font-size:16px;color:red;">请先<a href="login.jsp">登录</a>再评论。</p></div>');
     	  $('#sousaiRemindDialog > .modal-footer > .btn-success').attr("data-dismiss","modal");
