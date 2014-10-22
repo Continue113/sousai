@@ -13,30 +13,35 @@ public class MatchClass implements Serializable{
 	{
 		
 	}
-	//带参数的构造函数
-	MatchClass(Integer id, String name)
-	{
-		this.id = id;
-		this.name = name;
+	/**
+	 * @return the id
+	 */
+	public Integer getId() {
+		return id;
 	}
-	
-	//id的getter和setter
-	public Integer getId()
-	{
-		return this.id;
-	}
-	public void setId(Integer id)
-	{
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Integer id) {
 		this.id = id;
 	}
-	
-	//name的getter和setter
-	public String getName()
-	{
-		return this.name;
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
 	}
-	public void setName(String name)
-	{
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
 		this.name = name;
 	}
+	/**
+	 * @return the serialversionuid
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
 }

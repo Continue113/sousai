@@ -13,68 +13,74 @@ public class CourtPic implements Serializable
 	private String path;
 	//private Blob pic;
 	private byte[] pic;
-	private Court court;
+	private Long courtId;
 	
 	//默认构造器
 	public CourtPic()
 	{		
 	}
-	
-	//初始化所有参数的构造器
-	//public CourtPic(Long id, String path, Blob pic, Court court)
-	public CourtPic(Long id ,String path, byte[]pic, Court court)
-	{
-		this.id = id;
-		this.path = path;
-		this.pic = pic;
-		this.court = court;
+
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
 	}
-	
-	//id属性的setter和getter
-	public void setId(Long id)
-	{
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
 		this.id = id;
 	}
-	public Long getId()
-	{
-		return this.id;
+
+	/**
+	 * @return the path
+	 */
+	public String getPath() {
+		return path;
 	}
-	
-	//path属性的setter和getter
-	public void setPath(String path)
-	{
+
+	/**
+	 * @param path the path to set
+	 */
+	public void setPath(String path) {
 		this.path = path;
 	}
-	public String getPath()
-	{
-		return this.path;
+
+	/**
+	 * @return the pic
+	 */
+	public byte[] getPic() {
+		return pic;
 	}
-	
-	//pic属性的setter和getter
-	/*public void setPic(Blob pic)
-	{
+
+	/**
+	 * @param pic the pic to set
+	 */
+	public void setPic(byte[] pic) {
 		this.pic = pic;
 	}
-	public Blob getPic()
-	{
-		return this.pic;
-	}*/
-	public void setPic(byte[] pic)
-	{
-		this.pic = pic;
+
+	/**
+	 * @return the courtId
+	 */
+	public Long getCourtId() {
+		return courtId;
 	}
-	public byte[] getPic()
-	{
-		return this.pic;
+
+	/**
+	 * @param courtId the courtId to set
+	 */
+	public void setCourtId(Long courtId) {
+		this.courtId = courtId;
 	}
-	
-	//court属性的setter和getter
-	public void setCourt(Court court)
-	{
-		this.court = court;
+
+	/**
+	 * @return the serialversionuid
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
-	public Court getCourt()
-	{
-		return this.court;
-	}
+
 }

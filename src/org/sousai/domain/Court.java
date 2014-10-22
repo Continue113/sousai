@@ -3,7 +3,6 @@ package org.sousai.domain;
 import org.sousai.domain.*;
 import org.sousai.dao.*;
 
-
 import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -15,9 +14,9 @@ public class Court implements Serializable
 	
 	private Long id;
 	private String name;
-	private CourtType courtType;
+	private Integer courtTypeId;
 	private String matchType;
-	private Region region;
+	private Integer region;
 	private String addr;
 	private Integer tableNum;
 	private String tel;
@@ -28,218 +27,244 @@ public class Court implements Serializable
 	private char verify;
 	private Date relDate;
 	private Date modDate;
-	private Set<CourtPic> courtPic = new HashSet<CourtPic>();
-	private Set<Message> message = new HashSet<Message>();
-	private User user;
+//	private Set<CourtPic> courtPic = new HashSet<CourtPic>();
+//	private Set<Message> message = new HashSet<Message>();
+	private Long userId;
 	
 	//默认构造器
 	public Court()
 	{
 	}
-	//初始化所有参数的构造器
-	public Court(Long id, String name, CourtType courtType, String matchType, Region region
-			, String addr, Integer tableNum, String tel, Set<Message> message
-			, String price, String workTime, Integer matches, String intro, char verify
-			, Date relDate, Date modDate, Set<CourtPic> courtPic, User user)
-	{
-		this.id = id;
-		this.name = name;
-		this.courtType = courtType;
-		this.matchType = matchType;
-		this.region = region;
-		this.addr = addr;
-		this.tableNum = tableNum;
-		this.tel = tel;
-		this.price = price;
-		this.workTime = workTime;
-		this.matches = matches;
-		this.intro = intro;
-		this.verify = verify;
-		this.relDate = relDate;
-		this.modDate = modDate;
-		this.courtPic = courtPic;
-		this.user = user;
-		this.message = message;
+
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
 	}
-	
-	//id属性的setter和getter
-	public void setId(Long id)
-	{
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
 		this.id = id;
 	}
-	public Long getId()
-	{
-		return this.id;
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
 	}
-	
-	//name属性的setter和getter
-	public void setName(String name)
-	{
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
 		this.name = name;
 	}
-	public String getName()
-	{
-		return this.name;
+
+	/**
+	 * @return the courtTypeId
+	 */
+	public Integer getCourtTypeId() {
+		return courtTypeId;
 	}
-	
-	//courtType的setter和getter
-	public void setCourtType(CourtType courtType)
-	{
-		this.courtType = courtType;
+
+	/**
+	 * @param courtTypeId the courtTypeId to set
+	 */
+	public void setCourtTypeId(Integer courtTypeId) {
+		this.courtTypeId = courtTypeId;
 	}
-	public CourtType getCourtType()
-	{
-		return this.courtType;
+
+	/**
+	 * @return the matchType
+	 */
+	public String getMatchType() {
+		return matchType;
 	}
-	
-	//matchType的setter和getter
-	public void setMatchType(String matchType)
-	{
+
+	/**
+	 * @param matchType the matchType to set
+	 */
+	public void setMatchType(String matchType) {
 		this.matchType = matchType;
 	}
-	public String getMatchType()
-	{
-		return this.matchType;
+
+	/**
+	 * @return the region
+	 */
+	public Integer getRegion() {
+		return region;
 	}
-	
-	//region的setter和getter
-	public void setRegion(Region region)
-	{
+
+	/**
+	 * @param region the region to set
+	 */
+	public void setRegion(Integer region) {
 		this.region = region;
 	}
-	public Region getRegion()
-	{
-		return this.region;
+
+	/**
+	 * @return the addr
+	 */
+	public String getAddr() {
+		return addr;
 	}
-	
-	//addr的setter和getter
-	public void setAddr(String addr)
-	{
+
+	/**
+	 * @param addr the addr to set
+	 */
+	public void setAddr(String addr) {
 		this.addr = addr;
 	}
-	public String getAddr()
-	{
-		return this.addr;
-	}
-	
-	//tableNum的setter和getter
-	public void setTableNum(Integer tableNum)
-	{
-		this.tableNum = tableNum;
-	}
-	public Integer getTableNum()
-	{
+
+	/**
+	 * @return the tableNum
+	 */
+	public Integer getTableNum() {
 		return tableNum;
 	}
-	
-	//tel属性的setter和getter
-	public void setTel(String tel)
-	{
+
+	/**
+	 * @param tableNum the tableNum to set
+	 */
+	public void setTableNum(Integer tableNum) {
+		this.tableNum = tableNum;
+	}
+
+	/**
+	 * @return the tel
+	 */
+	public String getTel() {
+		return tel;
+	}
+
+	/**
+	 * @param tel the tel to set
+	 */
+	public void setTel(String tel) {
 		this.tel = tel;
 	}
-	public String getTel()
-	{
-		return this.tel;
-	}
-	
-	//price属性的setter和getter
-	public void setPrice(String price)
-	{
-		this.price = price;
-	}
-	public String getPrice()
-	{
+
+	/**
+	 * @return the price
+	 */
+	public String getPrice() {
 		return price;
 	}
-	
-	//workTime属性的setter和getter
-	public void setWorkTime(String workTime)
-	{
+
+	/**
+	 * @param price the price to set
+	 */
+	public void setPrice(String price) {
+		this.price = price;
+	}
+
+	/**
+	 * @return the workTime
+	 */
+	public String getWorkTime() {
+		return workTime;
+	}
+
+	/**
+	 * @param workTime the workTime to set
+	 */
+	public void setWorkTime(String workTime) {
 		this.workTime = workTime;
 	}
-	public String getWorkTime()
-	{
-		return this.workTime;
+
+	/**
+	 * @return the matches
+	 */
+	public Integer getMatches() {
+		return matches;
 	}
-	
-	//matches属性的setter和getter
-	public void setMatches(Integer matches)
-	{
+
+	/**
+	 * @param matches the matches to set
+	 */
+	public void setMatches(Integer matches) {
 		this.matches = matches;
 	}
-	public Integer getMatches()
-	{
-		return this.matches;
+
+	/**
+	 * @return the intro
+	 */
+	public String getIntro() {
+		return intro;
 	}
-	
-	//intro属性的setter和getter
-	public void setIntro(String intro)
-	{
+
+	/**
+	 * @param intro the intro to set
+	 */
+	public void setIntro(String intro) {
 		this.intro = intro;
 	}
-	public String getIntro()
-	{
-		return this.intro;
+
+	/**
+	 * @return the verify
+	 */
+	public char getVerify() {
+		return verify;
 	}
-	
-	//verify属性的setter和getter
-	public void setVerify(char verify)
-	{
+
+	/**
+	 * @param verify the verify to set
+	 */
+	public void setVerify(char verify) {
 		this.verify = verify;
 	}
-	public char getVerify()
-	{
-		return this.verify;
+
+	/**
+	 * @return the relDate
+	 */
+	public Date getRelDate() {
+		return relDate;
 	}
-	
-	//relDate属性的setter和getter
-	public void setRelDate(Date relDate)
-	{
+
+	/**
+	 * @param relDate the relDate to set
+	 */
+	public void setRelDate(Date relDate) {
 		this.relDate = relDate;
 	}
-	public Date getRelDate()
-	{
-		return this.relDate;
+
+	/**
+	 * @return the modDate
+	 */
+	public Date getModDate() {
+		return modDate;
 	}
-	
-	//modDate属性的setter和getter
-	public void setModDate(Date modDate)
-	{
+
+	/**
+	 * @param modDate the modDate to set
+	 */
+	public void setModDate(Date modDate) {
 		this.modDate = modDate;
 	}
-	public Date getModDate()
-	{
-		return this.modDate;
+
+	/**
+	 * @return the userId
+	 */
+	public Long getUserId() {
+		return userId;
 	}
-	
-	//courtPic属性的setter和getter
-	public void setCourtPic(Set<CourtPic> courtPic)
-	{
-		this.courtPic = courtPic;
+
+	/**
+	 * @param userId the userId to set
+	 */
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
-	public Set<CourtPic> getCourtPic()
-	{
-		return this.courtPic;
-	}
-	
-	//message属性的setter和getter
-	public void setMessage(Set<Message> message)
-	{
-		this.message = message;
-	}
-	public Set<Message> getMessage()
-	{
-		return this.message;
-	}
-	
-	//user属性的setter和getter
-	public void setUser(User user)
-	{
-		this.user = user;
-	}
-	public User getUser()
-	{
-		return user;
+
+	/**
+	 * @return the serialversionuid
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 	
 }

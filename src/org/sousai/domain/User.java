@@ -18,123 +18,110 @@ public class User implements Serializable{
 	private String picId;
 	private Timestamp regTime;
 	private Timestamp lastLogTime;
-	private Set<Court> court = new HashSet<Court>();
 	//锟睫诧拷锟斤拷墓锟斤拷锟斤拷锟�	
 	public User(){
 	}
-	//锟斤拷始锟斤拷全锟斤拷锟斤拷锟皆的癸拷锟斤拷锟斤拷
-	public User(Long id, String name, String pwd, String email,
-			char type, String picId)//, Timestamp regTime, Timestamp lastLogTime)
-	{
-		this.id = id;
-		this.name = name;
-		this.pwd = pwd;
-		this.email = email;
-		this.type = type;
-		this.picId = picId;
-//		this.regTime = regTime;
-//		this.lastLogTime = lastLogTime;
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
 	}
-	
-	//
-	public User(String name, String pwd, String email,	char type, String picId)//, Timestamp regTime, Timestamp lastLogTime)
-	{
-		this.name = name;
-		this.pwd = pwd;
-		this.email = email;
-		this.type = type;
-		this.picId = picId;
-		//this.regTime = regTime;
-		//this.lastLogTime = lastLogTime;
-	}
-	
-	public User(UserBean userBean)
-	{
-		this.id = userBean.getUserId();
-		this.name = userBean.getUserName();
-		this.pwd = userBean.getUserPwd();
-		this.email = userBean.getUserEmail();
-		this.type = userBean.getUserType();
-		this.picId = userBean.getUserPicId();
-		this.regTime = userBean.getUserRegTime();
-		this.lastLogTime = userBean.getUserLastLogTime();
-	}
-	
-	//id锟斤拷锟皆碉拷setter锟斤拷getter锟斤拷锟斤拷
-	public void setId(Long id)
-	{
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
 		this.id = id;
 	}
-	public Long getId()
-	{
-		return this.id;
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
 	}
-	//name锟斤拷锟皆碉拷setter锟斤拷getter锟斤拷锟斤拷
-	public void setName(String name)
-	{
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
 		this.name = name;
 	}
-	public String getName()
-	{
-		return this.name;
+	/**
+	 * @return the pwd
+	 */
+	public String getPwd() {
+		return pwd;
 	}
-	//pwd锟斤拷锟皆碉拷setter锟斤拷getter锟斤拷锟斤拷
-	public void setPwd(String pwd)
-	{
+	/**
+	 * @param pwd the pwd to set
+	 */
+	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
-	public String getPwd()
-	{
-		return this.pwd;
+	/**
+	 * @return the email
+	 */
+	public String getEmail() {
+		return email;
 	}
-	//email锟斤拷锟皆碉拷setter锟斤拷getter锟斤拷锟斤拷
-	public void setEmail(String email)
-	{
+	/**
+	 * @param email the email to set
+	 */
+	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getEmail()
-	{
-		return this.email;
+	/**
+	 * @return the type
+	 */
+	public char getType() {
+		return type;
 	}
-	//type锟斤拷锟皆碉拷setter锟斤拷getter锟斤拷锟斤拷
-	public void setType(char type)
-	{
+	/**
+	 * @param type the type to set
+	 */
+	public void setType(char type) {
 		this.type = type;
 	}
-	public char getType()
-	{
-		return this.type;
+	/**
+	 * @return the picId
+	 */
+	public String getPicId() {
+		return picId;
 	}
-	//picId锟斤拷锟皆碉拷setter锟斤拷getter锟斤拷锟斤拷
-	public String getPicId()
-	{
-		return this.picId;
+	/**
+	 * @param picId the picId to set
+	 */
+	public void setPicId(String picId) {
+		this.picId = picId;
+	}
+	/**
+	 * @return the regTime
+	 */
+	public Timestamp getRegTime() {
+		return regTime;
+	}
+	/**
+	 * @param regTime the regTime to set
+	 */
+	public void setRegTime(Timestamp regTime) {
+		this.regTime = regTime;
+	}
+	/**
+	 * @return the lastLogTime
+	 */
+	public Timestamp getLastLogTime() {
+		return lastLogTime;
+	}
+	/**
+	 * @param lastLogTime the lastLogTime to set
+	 */
+	public void setLastLogTime(Timestamp lastLogTime) {
+		this.lastLogTime = lastLogTime;
+	}
+	/**
+	 * @return the serialversionuid
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 	
-	//regTime锟斤拷锟皆碉拷setter锟斤拷getter锟斤拷锟斤拷
-	public Timestamp getRegTime()
-	{
-		return this.regTime;
-	}
-	
-	//lastLogTime锟斤拷锟皆碉拷setter锟斤拷getter锟斤拷锟斤拷
-	public Timestamp getLastLogTime()
-	{
-		return this.lastLogTime;
-	}
-	
-	//Court属性的setter和getter
-	public void setCourt(Set<Court> court)
-	{
-		this.court = court;
-	}
-	public Set<Court> getCourt()
-	{
-		/*if(this.court != null)
-		{
-			System.out.println("Set size = " + court.size());
-		}*/
-		return this.court;
-	}
-	//锟斤拷写equals()锟斤拷锟斤拷锟斤拷
 }

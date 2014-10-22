@@ -43,84 +43,125 @@ public class Region implements Serializable
 		this.nameEnSt = nameEnSt;
 		this.order = order;
 	}
-	
-	//id属性的setter和getter
-	public void setId(Integer id)
-	{
-		this.id = id;
-	}
-	public Integer getId()
-	{
-		return this.id;
-	}
-	
-	//code属性的setter和getter
-	public void setCode(String code)
-	{
-		this.code = code;
-	}
-	public String getCode()
-	{
-		return this.code;
+
+	/**
+	 * @return the id
+	 */
+	public Integer getId() {
+		return id;
 	}
 
-	//name属性的setter和getter
-	public void setName(String name)
-	{
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the code
+	 */
+	public String getCode() {
+		return code;
+	}
+
+	/**
+	 * @param code the code to set
+	 */
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
 		this.name = name;
 	}
-	public String getName()
-	{
-		return this.name;
+
+	/**
+	 * @return the parentId
+	 */
+	public Integer getParentId() {
+		return parentId;
 	}
-	
-	//parentId属性的setter和getter
-	public void setParentId(Integer parentId)
-	{
+
+	/**
+	 * @param parentId the parentId to set
+	 */
+	public void setParentId(Integer parentId) {
 		this.parentId = parentId;
 	}
-	public Integer getParentId()
-	{
-		return this.parentId;
+
+	/**
+	 * @return the level
+	 */
+	public Integer getLevel() {
+		return level;
 	}
-	
-	//level属性的setter和getter
-	public void setLevel(Integer level)
-	{
+
+	/**
+	 * @param level the level to set
+	 */
+	public void setLevel(Integer level) {
 		this.level = level;
 	}
-	public Integer getLevel()
-	{
-		return this.level;
+
+	/**
+	 * @return the nameEn
+	 */
+	public String getNameEn() {
+		return nameEn;
 	}
-	
-	//nameEn属性的setter和getter
-	public void setNameEn(String nameEn)
-	{
+
+	/**
+	 * @param nameEn the nameEn to set
+	 */
+	public void setNameEn(String nameEn) {
 		this.nameEn = nameEn;
 	}
-	public String getNameEn()
-	{
-		return this.nameEn;
+
+	/**
+	 * @return the nameEnSt
+	 */
+	public String getNameEnSt() {
+		return nameEnSt;
 	}
-	
-	//nameEnSt属性的setter和getter
-	public void setNameEnSt(String nameEnSt)
-	{
+
+	/**
+	 * @param nameEnSt the nameEnSt to set
+	 */
+	public void setNameEnSt(String nameEnSt) {
 		this.nameEnSt = nameEnSt;
 	}
-	public String getNameEnSt()
-	{
-		return this.nameEnSt;
+
+	/**
+	 * @return the order
+	 */
+	public Integer getOrder() {
+		return order;
 	}
-	
-	//order属性的setter和getter
-	public void setOrder(Integer order)
-	{
+
+	/**
+	 * @param order the order to set
+	 */
+	public void setOrder(Integer order) {
 		this.order = order;
 	}
-	public Integer getOrder()
-	{
-		return this.order;
+
+	/**
+	 * @return the serialversionuid
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
+	
+	
 }

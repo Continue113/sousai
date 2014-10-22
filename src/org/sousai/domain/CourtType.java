@@ -11,58 +11,61 @@ public class CourtType implements Serializable
 	private Integer id;
 	private String name;
 	//private Integer matchId;
-	private MatchType matchType;
+	private Integer matchTypeId;
 	
 	//默认构造器
 	CourtType()
 	{
 	}
-	
-	//初始化全部参数的构造器
-	//CourtType(Integer id, String name, Integer matchId)
-	CourtType(Integer id, String name, MatchType matchType)
-	{
-		this.id = id;
-		this.name = name;
-		this.matchType = matchType;
-		//this.matchId = matchId;
+
+	/**
+	 * @return the id
+	 */
+	public Integer getId() {
+		return id;
 	}
 
-	//id属性的setter和getter
-	public void setId(Integer id)
-	{
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Integer getId()
-	{
-		return this.id;
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
 	}
-	
-	//name属性的setter和getter
-	public void setName(String name)
-	{
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
 		this.name = name;
 	}
-	public String getName()
-	{
-		return this.name;
+
+	/**
+	 * @return the matchTypeId
+	 */
+	public Integer getMatchTypeId() {
+		return matchTypeId;
+	}
+
+	/**
+	 * @param matchTypeId the matchTypeId to set
+	 */
+	public void setMatchTypeId(Integer matchTypeId) {
+		this.matchTypeId = matchTypeId;
+	}
+
+	/**
+	 * @return the serialversionuid
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 	
-	//matchId属性的setter和getter
-	/*public void setMatchId(Integer matchId)
-	{
-		this.matchId = matchId;
-	}
-	public Integer getMatchId()
-	{
-		return this.matchId;
-	}*/
-	public void setMatchType(MatchType matchType)
-	{
-		this.matchType = matchType;
-	}
-	public MatchType getMatchType()
-	{
-		return this.matchType;
-	}
+	
 }

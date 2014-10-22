@@ -14,42 +14,55 @@ public class UserPic implements Serializable
 	UserPic()
 	{		
 	}
-	
-	//初始化所有参数的构造器
-	UserPic(Long id, String path, Blob pic)
-	{
+
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
 		this.id = id;
-		this.path = path;
-		this.pic = pic;
 	}
-	
-	//id属性的setter和getter
-	public void setId(Long id)
-	{
-		this.id = id;
+
+	/**
+	 * @return the path
+	 */
+	public String getPath() {
+		return path;
 	}
-	public Long getId()
-	{
-		return this.id;
-	}
-	
-	//path属性的setter和getter
-	public void setPath(String path)
-	{
+
+	/**
+	 * @param path the path to set
+	 */
+	public void setPath(String path) {
 		this.path = path;
 	}
-	public String getPath()
-	{
-		return this.path;
-	}
-	
-	//pic属性的setter和getter
-	public void setPic(Blob pic)
-	{
-		this.pic = pic;
-	}
-	public Blob getPic()
-	{
+
+	/**
+	 * @return the pic
+	 */
+	public Blob getPic() {
 		return pic;
 	}
+
+	/**
+	 * @param pic the pic to set
+	 */
+	public void setPic(Blob pic) {
+		this.pic = pic;
+	}
+
+	/**
+	 * @return the serialversionuid
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
+	
 }

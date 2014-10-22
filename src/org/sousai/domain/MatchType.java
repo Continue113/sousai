@@ -17,41 +17,54 @@ public class MatchType implements Serializable
 	{
 		
 	}
-	//包含所有初始化的构造函数
-	public MatchType(Integer id, String name, Integer mcId)
-	{
+
+	/**
+	 * @return the id
+	 */
+	public Integer getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
 		this.name = name;
+	}
+
+	/**
+	 * @return the mcId
+	 */
+	public Integer getMcId() {
+		return mcId;
+	}
+
+	/**
+	 * @param mcId the mcId to set
+	 */
+	public void setMcId(Integer mcId) {
 		this.mcId = mcId;
 	}
-	
-	//id的setter和getter
-	public void setId(Integer id)
-	{
-		this.id = id;
-	}
-	public Integer getId()
-	{
-		return this.id;
+
+	/**
+	 * @return the serialversionuid
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 	
-	//name的setter和getter
-	public void setName(String name)
-	{
-		this.name = name;
-	}
-	public String getName()
-	{
-		return this.name;
-	}
-	
-	//mcId的setter和getter
-	public void setMcId(Integer mcId)
-	{
-		this.mcId = mcId;
-	}
-	public Integer getMcId()
-	{
-		return this.mcId;
-	}
 }

@@ -4,67 +4,83 @@ import org.sousai.domain.*;
 
 import java.io.Serializable;
 
-public class Ip implements Serializable
-{
+public class Ip implements Serializable {
 	private static final long serialVersionUID = -2917849380030704034L;
-	
+
 	private Long id;
 	private String ips;
 	private Integer num;
-	private User user;
-	
-	//默认构造器
-	Ip()
-	{
+	private Long userId;
+
+	// 默认构造器
+	Ip() {
 	}
-	
-	//初始化所有参数的构造器
-	Ip(Long id, String ips, int num, User user)
-	{
+
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id
+	 *            the id to set
+	 */
+	public void setId(Long id) {
 		this.id = id;
-		this.ips = ips;
-		this.num = num;
-		this.user = user;
 	}
-	
-	//id属性的setter和getter
-	public void setId(Long id)
-	{
-		this.id = id;
+
+	/**
+	 * @return the ips
+	 */
+	public String getIps() {
+		return ips;
 	}
-	public Long getId()
-	{
-		return this.id;
-	}
-	
-	//ips属性的setter和getter
-	public void setIps(String ips)
-	{
+
+	/**
+	 * @param ips
+	 *            the ips to set
+	 */
+	public void setIps(String ips) {
 		this.ips = ips;
 	}
-	public String getIps()
-	{
-		return this.ips;
+
+	/**
+	 * @return the num
+	 */
+	public Integer getNum() {
+		return num;
 	}
-	
-	//num属性的setter和getter
-	public void setNum(Integer num)
-	{
+
+	/**
+	 * @param num
+	 *            the num to set
+	 */
+	public void setNum(Integer num) {
 		this.num = num;
 	}
-	public Integer getNum()
-	{
-		return this.num;
+
+	/**
+	 * @return the userId
+	 */
+	public Long getUserId() {
+		return userId;
 	}
-	
-	//user属性的setter和getter
-	public void setUser(User user)
-	{
-		this.user = user;
+
+	/**
+	 * @param userId
+	 *            the userId to set
+	 */
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
-	public User getUser()
-	{
-		return this.user;
+
+	/**
+	 * @return the serialversionuid
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 }
