@@ -439,7 +439,7 @@
      $("body").on("click",".media-body > .evaluation-tool-a",function(){ //仅对二层评论的“我要回复下使用”
       var target = $(this).parent().parent(),//目标为evaluation
           parentName = $.trim(target.find(".evaluationName").text()), //trim()去除前后空格 .evalution .evaluationName
-          img = <s:if test="#session.userBean.userName!=null"><s:property value="#session.userBean.userIcon"/></s:if><s:else>'img/defaultImg.png'</s:else>,
+          img = 'img/defaultImg.png',//<s:if test="#session.userBean.userName!=null"><s:property value="#session.userBean.userIcon"/></s:if><s:else>'img/defaultImg.png'</s:else>,
           id = <s:if test="#session.userBean.userName!=null"><s:property value="#session.userBean.userId"/></s:if><s:else>0</s:else>,
           name = <s:if test="#session.userBean.userName!=null"><s:property value="#session.userBean.userName"/></s:if><s:else>'<a href="login.jsp" >请登录</a>'</s:else>;
 
