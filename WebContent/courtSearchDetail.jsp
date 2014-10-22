@@ -230,9 +230,7 @@
          <div class="pull-left"> 
            <s:if test="#session.userBean.userName!=null">
            <img class="media-object" src="img/defaultImg.png" /> 
-           <div class="evaluationName" id="evaluationName-main" data-userid='<s:property value="#session.userBean.userId"/>' >
-           <s:property value="#session.userBean.userName"/>
-           </div>
+           <div class="evaluationName" id="evaluationName-main" data-userid='<s:property value="#session.userBean.userId"/>' ><s:property value="#session.userBean.userName"/></div>
            </s:if>
            <s:else>
            <img class="media-object" src="img/defaultImg.png" alt="请登录" /> 
@@ -472,7 +470,7 @@
       	  courtId = 1,
       	  mesg = $(this).parents().find("textarea").val(),
           visible = $('input:radio[name="responseState-main"]:checked').val(),
-          respName = $(this).parent().parent().find(".evaluationName").text(),
+          respName = $.trim($(this).parent().parent().find(".evaluationName").text()),
           respImgSrc = $(this).parent().parent().find("img").attr("src"),
           respDate = new Date(),
           respTime = respDate.toLocaleString(),          
@@ -480,23 +478,19 @@
           target = $(".evaluations"),
           inputValidateImg = $("#inputValidateImg").text().toUpperCase(),
           inputValidateCaodeMain = $("#inputValidateCodeMain").val().toUpperCase();
-          
-      if( inputValidateImg != inputValidateCaodeMain ){
-    	  alert("请填写正确的验证码。");
-      }
-          alert(userId);
-          sendEvaluation(parentId,userId,courtId,mesg,visible,respName);
-          target.append(respCode);
-          
+                    
       if(userId != 0){
-    	  alert("userId != 0");
-          /*if(mesg != ""){
-        	  alert("mesg != \"\"");
-    	    sendEvaluation(parentId,userId,courtId,mesg,visible,respName);
+    	  console.log("userId != 0");
+          if(inputValidateImg != inputValidateCaodeMain){
+            alert("请填写正确的验证码。");console.log("验证码错误");
+          }else if( mesg == "" ){
+            alert("请填写回复内容。");
+          }else{
+            console.log("mesg != \"\"");
+            console.log(parentId+';'+userId+';'+courtId+';'+mesg+';'+visible+';'+respName);
+            sendEvaluation(parentId,userId,courtId,mesg,visible,respName);
             target.append(respCode);
-          }else if( inputValidateImg != inputValidateCaodeMain ){
-        	  alert("请填写正确的验证码。");
-          };*/
+          };
       }else{
     	  $("#SRDcontent").empty().append('<div class="alert alert-block alert-error fade in"><p style="font-size:16px;color:red;">请先<a href="login.jsp">登录</a>再评论。</p></div>');
     	  $('#sousaiRemindDialog > .modal-footer > .btn-success').attr("data-dismiss","modal");
@@ -523,7 +517,7 @@
       respCode += '"><div class="pull-left"><img class="media-object" src="'+respImgSrc+'" /><div class="evaluationName">'+respName+'</div></div><div class="media-body"><p class="evaluation-main">'+mesg+'</p><p class="releasetime">'+respTime+'</p><a class="pull-right evaluation-tool-a" href="#myModal">我要补充下</a></div></div></li>';
       if(userId != 0){
       //if(mesg != ""){
-    	  alert("userId != 0");
+    	  console.log("userId != 0");
     	  if( inputValidateImg != inputValidateCaodeMain ){
         	  alert("请填写正确的验证码。");
           }else{
@@ -544,7 +538,7 @@
     function sendEvaluation(parentId,userId,courtId,mesg,visible,userName){ //发送评论到服务器
     	if (visible==1) {
     		userName = null;
-    	}; alert("进入sendEvaluation，visible为"+visible+",userName为"+userName+"开始ajax");
+    	}; console.log("进入sendEvaluation，visible为"+visible+",userName为"+userName+"开始ajax");
       	$.ajax({
   		type: "POST",
         url: "relMsg",
@@ -564,10 +558,10 @@
         	}
         },
         error: function() {
-          //alert("抱歉，获取评论出错了。");
+          alert("抱歉，获取评论出错了。");
         }
         }); //ajax 已得到发送评论到服务器
-        alert("ajax结束");
+        console.log("ajax结束");
     }
     /** 点击取消 **/
      $("body").on("click","#cancle-temp",function(){
