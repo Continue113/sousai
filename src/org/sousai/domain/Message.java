@@ -12,11 +12,11 @@ public class Message implements Serializable
 	
 	private Long id;
 	private Long parentId;
-	private User user;
-	private Court court;
+	private Integer userId;
+	private Integer courtId;
 	private Timestamp time;
 	private String mesg;
-	private char show;
+	private String userName;
 	
 	//默认构造器
 	Message()
@@ -24,86 +24,122 @@ public class Message implements Serializable
 	}
 	
 	//初始化所有参数的构造器
-	Message(Long id, Long parentId, User user,
-			Court court, Timestamp time, String mesg,
-			char show)
+	Message(Long id, Long parentId, Integer userId,
+			Integer courtId, Timestamp time, String mesg,
+			String userName)
 	{
 		this.id = id;
 		this.parentId = parentId;
-		this.user = user;
-		this.court = court;
+		this.userId = userId;
+		this.courtId = courtId;
 		this.time = time;
 		this.mesg = mesg;
-		this.show = show;
-	}
-	
-	//id属性的setter和getter
-	public void setId(Long id)
-	{
-		this.id = id;
-	}
-	public Long getId()
-	{
-		return this.id;
+		this.userName = userName;
 	}
 
-	//parentId属性的setter和getter
-	public void setParentId(Long parentId)
-	{
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the parentId
+	 */
+	public Long getParentId() {
+		return parentId;
+	}
+
+	/**
+	 * @param parentId the parentId to set
+	 */
+	public void setParentId(Long parentId) {
 		this.parentId = parentId;
 	}
-	public Long getParentId()
-	{
-		return this.parentId;
+
+	/**
+	 * @return the userId
+	 */
+	public Integer getUserId() {
+		return userId;
 	}
-	
-	//user属性的setter和getter
-	public void setUser(User user)
-	{
-		this.user = user;
+
+	/**
+	 * @param userId the userId to set
+	 */
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
-	public User getUser()
-	{
-		return this.user;
+
+	/**
+	 * @return the courtId
+	 */
+	public Integer getCourtId() {
+		return courtId;
 	}
-	
-	//court属性的setter和getter
-	public void setCourt(Court court)
-	{
-		this.court = court;
+
+	/**
+	 * @param courtId the courtId to set
+	 */
+	public void setCourtId(Integer courtId) {
+		this.courtId = courtId;
 	}
-	public Court getCourt()
-	{
-		return this.court;
+
+	/**
+	 * @return the time
+	 */
+	public Timestamp getTime() {
+		return time;
 	}
-	
-	//time属性的setter和getter
-	public void setTime(Timestamp time)
-	{
+
+	/**
+	 * @param time the time to set
+	 */
+	public void setTime(Timestamp time) {
 		this.time = time;
 	}
-	public Timestamp getTime()
-	{
-		return this.time;
+
+	/**
+	 * @return the mesg
+	 */
+	public String getMesg() {
+		return mesg;
 	}
-	
-	//mesg属性的setter和getter
-	public void setMesg(String mesg)
-	{
+
+	/**
+	 * @param mesg the mesg to set
+	 */
+	public void setMesg(String mesg) {
 		this.mesg = mesg;
 	}
-	public String getMesg()
-	{
-		return this.mesg;
+
+	/**
+	 * @return the userName
+	 */
+	public String getUserName() {
+		return userName;
+	}
+
+	/**
+	 * @param userName the userName to set
+	 */
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	/**
+	 * @return the serialversionuid
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 	
-	//show属性的setter和getter
-	public void setShow(char show)
-	{
-		this.show = show;
-	}
-	public char getShow()
-	{
-		return this.show;
-	}
 }

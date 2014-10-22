@@ -421,6 +421,12 @@ public class UserManagerImpl implements UserManager
 	@Override
 	public Long relMessage(Message message) {
 		// TODO Auto-generated method stub
+		try{
+		MyPrint.myPrint(message.getUserName());
 		return mesgDao.save(message);
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
 	}
 }
