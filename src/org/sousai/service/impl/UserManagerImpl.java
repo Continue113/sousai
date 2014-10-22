@@ -101,13 +101,6 @@ public class UserManagerImpl implements UserManager
 			{
 				System.out.println("newUser is null");
 			}
-			else if(user.getCourt() != null)
-			{
-				MyPrint.myPrint("userid " + user.getId());
-				MyPrint.myPrint("court not null!");
-				MyPrint.myPrint(" " + user.getCourt().size());
-				MyPrint.myPrint("court.findByUser = " + courtDao.findByUser(user).size());
-			}
 			return LOGIN_USER;
 		}
 		MyPrint.myPrint("valid fail");

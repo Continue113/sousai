@@ -18,8 +18,20 @@ public class User implements Serializable{
 	private String picId;
 	private Timestamp regTime;
 	private Timestamp lastLogTime;
-	//锟睫诧拷锟斤拷墓锟斤拷锟斤拷锟�	
+	
+	//默认构造函数	
 	public User(){
+	}
+	
+	public User(UserBean userBean){
+		this.id = userBean.getUserId();
+		this.email = userBean.getUserEmail();
+		this.lastLogTime = userBean.getUserLastLogTime();
+		this.name = userBean.getUserName();
+		this.picId = userBean.getUserPicId();
+		this.pwd = userBean.getUserPwd();
+		this.regTime = userBean.getUserRegTime();
+		this.type = userBean.getUserType();
 	}
 	/**
 	 * @return the id

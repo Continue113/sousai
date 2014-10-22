@@ -77,13 +77,10 @@ public class RelCourtAction extends UserBaseAction
 		MyPrint.myPrint("RelCourtAction now");
 		String result;
 		Court tempCourt = getCourt();
-		tempCourt.setCourtType(cmg.findCourtTypeById(getCourtTypeId()));
+		tempCourt.setCourtTypeId(getCourtTypeId());
 		tempCourt.setVerify('0');
 		try{
-			User tempUser = new User((UserBean)ActionContext.getContext().getSession().get("userBean"));
-			MyPrint.myPrint("tempCourt.getVeryfy = "+tempCourt.getVerify());
-			MyPrint.myPrint("tempCourt.getRegion = "+tempCourt.getRegion());
-			tempCourt.setUser(tempUser);
+			tempCourt.setUserId(((UserBean)ActionContext.getContext().getSession().get("userBean")).getUserId());
 			//tempCourt.setUser(new User((UserBean)ActionContext.getContext().getSession().get("userBean")));
 		}
 		catch(Exception e)
@@ -95,7 +92,7 @@ public class RelCourtAction extends UserBaseAction
 		}
 		
 		//上传图片，并将场地信息存入数据库
-		if(umg.saveCourtPic(getImages(), getImgNames(),getCourt().getUser().getId())!="fail"
+		if(umg.saveCourtPic(getImages(), getImgNames(),getCourt().getUserId())!="fail"
 				&& umg.releaseCourt(tempCourt)==1)
 		{
 			result = "success";
