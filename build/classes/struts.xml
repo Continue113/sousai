@@ -30,6 +30,13 @@
 			<result name="success">index.jsp</result>
 			<result name="error">error.jsp</result>
 		</action>
+		
+		<!-- 定义发布比赛的Action -->
+		<action name="relMatch"
+			class="org.sousai.action.RelMatchAction">
+			<result name="success">userCenter-releaseMatch.jsp</result>
+			<result name="fail">error.jsp</result>
+		</action>
 
 		<!-- 定义检查用户名的Action -->
 		<action name="validName"

@@ -37,7 +37,7 @@
 				<!-- 以下用来列出Hibernate映射文件 -->
 				<value>org/sousai/domain/User.hbm.xml</value>
 				<value>org/sousai/domain/Court.hbm.xml</value>
-				<value>org/sousai/domain/CourtPic.hbm.xml</value>
+<!--			<value>org/sousai/domain/CourtPic.hbm.xml</value> -->
 				<value>org/sousai/domain/Message.hbm.xml</value>
 				<value>org/sousai/domain/Region.hbm.xml</value>
 				<value>org/sousai/domain/CourtType.hbm.xml</value>
