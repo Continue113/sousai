@@ -1,2 +1,0 @@
-
-insert into courts(Courts_name,Courts_court_type,Courts_match_type,Courts_match_type,Courts_addr_province,Courts_addr_city,Courts_addr_zone,Courts_detail_addr,Courts_release_date,Courts_modify_date)
