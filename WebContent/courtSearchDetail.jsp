@@ -129,7 +129,7 @@
            <p class="evaluation-authorMain">天津市第五届百年皖酒“杯XXXXXXXXXX</p> 
            <p class="releasetime">2013年12月29日 15:39</p> 
            <ul class="evaluation-tool-reply">
-           <li class="evaluation-tool"><a class="evaluation-tool-a" href="#myModal">我要补充下</a></li>
+           <li class="evaluation-tool"><a class="evaluation-tool-visible" onclick="visibleReply('hide')">隐藏回复</a><a class="evaluation-tool-a" href="#myModal">我要补充下</a></li>
            <li class="evaluation-reply">
             <div class="media evaluation"> 
             <div class="pull-left"> 
@@ -190,7 +190,7 @@
            <p class="evaluation-authorMain">天津市第五届百年皖酒“杯XXXXXXXXXX</p> 
            <p class="releasetime">2013年12月29日 15:39</p> 
            <ul class="evaluation-tool-reply">
-           <li class="evaluation-tool"><a class="evaluation-tool-a" href="#myModal">我要补充下</a></li>
+           <li class="evaluation-tool"><a class="evaluation-tool-visible" onclick="visibleReply('hide')">隐藏回复</a><a class="evaluation-tool-a" href="#myModal">我要补充下</a></li>
            <li class="evaluation-reply">
             <div class="media evaluation"> 
             <div class="pull-left"> 
@@ -350,19 +350,38 @@
         	var evaluations = $(".evaluations"),userName;
             evaluations.empty();
             for (var i = 0; i < rspdata.length; i++) {
+
             	if(rspdata[i].userName == null){ 
             		userName = '******'; //匿名的评论
             	}else{
             		userName = rspdata[i].userName;//公开的评论
             	};
-            		evaluations.append('<div class="media evaluation"><div class="pull-left"><img class="media-object" src="img/defaultImg.png"><div class="evaluationName" data-userId="'+rspdata[i].userId+'">'+userName+'</div></div><div class="media-body"><p>'+rspdata[i].mesg+'</p><p class="releasetime">'+rspdata[i].time+'</p><a class="pull-right" href="#myModal">我要补充下</a></div></div>');
+
+              if(rspdata[i].parentId == 0){
+            		evaluations.append('<div class="media evaluation"><div class="pull-left author"><img class="media-object" src="img/defaultImg.png"><div class="evaluationName" data-userid="'+rspdata[i].userId+'">'+userName+'</div></div><div class="media-body"><p class="evaluation-authorMain">'+rspdata[i].mesg+'</p><p class="releasetime">'+rspdata[i].time+'</p><ul class="evaluation-tool-reply"><li class="evaluation-tool"><a href="#myModal">我要补充下</a></li></ul></div></div>');
+              }else{
+                var tempId= $(".author > .evaluationName").data("userid");
+
+                for(var j = 0; j < tempId.length; j++){ //循环取出每一个tempId中的userid
+                  if (rspdata[i].parentId == tempId[j]){
+                    $(".author > .evaluationName[data-userid='"+rspdata[i].userId+"']").parent().find(".media-body > .evaluation-tool-reply").append('<li class="evaluation-reply"><div class="media evaluation"><div class="pull-left"><img class="media-object" src="img/defaultImg.png" /><div class="evaluationName">'+rspdata[i].userName+'</div></div><div class="media-body"><p class="evaluation-main">'+rspdata[i].mesg+'</p><p class="releasetime">'+rspdata[i].time+'</p><a class="pull-right evaluation-tool-a" href="#myModal">我要补充下</a></div></div></li>');
+                  }
+                }
+              };
+
             }
         },
         error: function() {
           //alert("抱歉，获取评论出错了。");
         },
         }); //ajax 已得到评论信息
-        **/
+        
+     /** 点击隐藏或者显示评论回复   **/
+     function visibleReply(visible){
+        if(visible == "hide"){
+          $(this).().parent().find(".evaluation-reply").slidUp("slow");
+        }
+     }
      /** 点击我要补充下，滑出回复框 **/
      function appendTextarea (target,img,name,id,parentName) { //添加“我要补充下”回复框
       var respStr = '<li class="evaluation-response-li hide"><div class="media evaluation-response"><div class="pull-left"><img class="media-object" src="'+img+'" /><div class="evaluationName" id="evaluationName-temp" data-userid="'+id+'">'+name+'</div></div><div class="media-body"><div class="inputRadios pull-right"><textarea id="inputResponse-temp" <s:if test="#session.userBean.userName!=null"></s:if><s:else>disabled="disabled" readonly="readonly"</s:else> > <s:if test="#session.userBean.userName!=null"> 【回复 '+parentName+' 】：</s:if><s:else>请先登录。</s:else> </textarea><div class="radios"><div class="validateCode-main pull-left">验证码&nbsp;:<input type="text" class="input-small" id="inputValidateCodeTemp" name="inputValidateCodeTemp" placeholder="验证码" required="required" /><span id="inputValidateImgTemp" class="code" onclick="createCode(\'inputValidateImgTemp\')"></span><span class="code-changeLink" onclick="createCode(\'inputValidateImgTemp\')"> 换一张</span></div><label for="hideResponse-temp" class="radio inline pull-right"><input type="radio" id="hideResponse-temp" name="responseState-temp" value="1"/>匿名</label><label for="publicResponse-temp" class="radio inline pull-right"><input type="radio" id="publicResponse-temp" name="responseState-temp" value="0" checked="checked"/>公开</label></div></div><button class="btn pull-right" id="cancle-temp">取消</button><button id="reply-temp" class="span2 btn btn-success pull-right<s:if test="#session.userBean.userName!=null"></s:if><s:else> disabled</s:else>">发表评论</button><input type="submit" class="span2 btn btn-success pull-right hide" value="发表评论"/> </div></div></li>';
@@ -480,16 +499,12 @@
           inputValidateCaodeMain = $("#inputValidateCodeMain").val().toUpperCase();
                     
       if(userId != 0){
-    	  console.log("userId != 0");
           if(inputValidateImg != inputValidateCaodeMain){
             alert("请填写正确的验证码。");console.log("验证码错误");
           }else if( mesg == "" ){
             alert("请填写回复内容。");
           }else{
-            console.log("mesg != \"\"");
-            console.log(parentId+';'+userId+';'+courtId+';'+mesg+';'+visible+';'+respName);
             sendEvaluation(parentId,userId,courtId,mesg,visible,respName);
-            target.append(respCode);
           };
       }else{
     	  $("#SRDcontent").empty().append('<div class="alert alert-block alert-error fade in"><p style="font-size:16px;color:red;">请先<a href="login.jsp">登录</a>再评论。</p></div>');
@@ -517,16 +532,11 @@
       respCode += '"><div class="pull-left"><img class="media-object" src="'+respImgSrc+'" /><div class="evaluationName">'+respName+'</div></div><div class="media-body"><p class="evaluation-main">'+mesg+'</p><p class="releasetime">'+respTime+'</p><a class="pull-right evaluation-tool-a" href="#myModal">我要补充下</a></div></div></li>';
       if(userId != 0){
       //if(mesg != ""){
-    	  console.log("userId != 0");
     	  if( inputValidateImg != inputValidateCaodeMain ){
-        	  alert("请填写正确的验证码。");
+        	  alert("请填写正确的验证码。");console.log("验证码错误");
           }else{
-    	  sendEvaluation(parentId,userId,courtId,mesg,visible,respName);
-      	  $(".evaluation-tool-a").slideDown();
-          target.append(respCode);
-          $(".evaluations .evaluation-response-li").slideUp("slow",function(){
-        	  $(".evaluations .evaluation-response-li").remove();
-          });
+        	  $(".evaluation-tool-a").slideDown();
+    	      sendEvaluation(parentId,userId,courtId,mesg,visible,respName);
           };
       //}
       }else{
@@ -554,11 +564,17 @@
         success: function(rspdata) {
         	console.log(rspdata);
         	if(rspdata == 0){
-        		alert("发表评论失败！");
+        		alert("发表评论失败！");console.log("发表评论失败！服务器返回错误码为0");
+        	}else{
+        		alert("发表评论成功！");console.log("发表评论成功！");
+        		target.append(respCode); //本地添加
+        		$(".evaluations .evaluation-response-li").slideUp("slow",function(){
+              	  $(".evaluations .evaluation-response-li").remove();
+                });
         	}
         },
         error: function() {
-          alert("抱歉，获取评论出错了。");
+          alert("抱歉，发布评论出错了。");console.log("抱歉，发布评论失败！未能发送到服务器。");
         }
         }); //ajax 已得到发送评论到服务器
         console.log("ajax结束");

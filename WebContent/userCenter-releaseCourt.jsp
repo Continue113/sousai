@@ -70,7 +70,7 @@
           <div class="control-group"> 
            <label class="control-label" for="inputCourtName">场地名称：</label> 
            <div class="controls"> 
-            <input class="span5" type="text" id="inputCourtName" name="court.name" placeholder="如：2012年XXXXXXX杯乒乓球季度赛"/> 
+            <input class="span5" type="text" id="inputCourtName" name="court.name" placeholder="如：2012年XXXXXXX杯乒乓球季度赛" required="required" /> 
             <label class="hide error">场地名称不能为空！</label>
            </div> 
           </div> 
@@ -89,9 +89,12 @@
            <label class="control-label" for="selectCourtType">场地类型：</label> 
            <div class="controls"> 
             <!-- 选择场地类型 --> 
-            <select class="selectCourtType" name="courtTypeId"></select> 
+            <select class="selectCourtType" name="courtTypeId">
+              <option value=0>请先选择比赛类型</option>
+            </select> 
             <!-- /选择场地类型 --> 
             <input class="hide" id="inputCourtType" type="text" value=""/>
+            <label class="hide error">场地类型不能为空！</label>
            </div> 
           </div> 
           <div class="control-group"> 
@@ -105,7 +108,7 @@
           <div class="control-group"> 
            <label class="control-label" for="inputCourtAddress">详细地址：</label> 
            <div class="controls"> 
-            <input class="span5" type="text" id="inputCourtAddress" name="court.addr" placeholder="如：某地某桥某号某号楼"/>
+            <input class="span5" type="text" id="inputCourtAddress" name="court.addr" placeholder="如：某地某桥某号某号楼" required="required" />
             <label class="hide error">场地地址不能为空！</label>
            </div> 
           </div> 
@@ -192,7 +195,6 @@
   <!-- 页首导航条 --> 
   <script src="tinymce/jquery.tinymce.min.js"></script> 
   <script src="tinymce/tinymce.min.js"></script> 
-  <script src="uploadify/jquery.uploadify.min.js" type="text/javascript"></script>
   <script>
   $(function(){
     //初始化比赛类型
@@ -298,14 +300,18 @@
 
   //点击确认发布，获取地区，比赛类型，场地类型
   $("#rlsCourt").click(function(){
-    //检测场地名称 场地地址
+    //检测场地名称 场地地址 场地类型
     if($("#inputCourtName").val() == ""){
       $("#inputCourtName").focus().parent().find("label").slideDown();
+      return false;
+    }else if($(".selectCourtType option:selected").attr("value") == 0){
+      $(".selectCourtType").focus().parent().find("label").slideDown();
       return false;
     }else if($("#inputCourtAddress").val() == ""){
       $("#inputCourtAddress").focus().parent().find("label").slideDown();
       return false;
-    }
+    };
+
     //console.log("填写隐藏地区表单");
     //获取地区Code
     if( $(".form-inline > .selectCountry option:selected").attr("value") !=0 ){
@@ -315,10 +321,22 @@
     }else{
       $("#inputRegion").attr("value",$(".form-inline > .selectProvince option:selected").attr("value"));
     }
+    
     //提交表单
-    alert("完成隐藏地区输入框填写,提交表单");
+    console.log("完成隐藏地区输入框填写,提交表单");
     $("#releaseCourtForm").submit();
   });
+  //若已经将error label显示出来，则在点击 #inputCourtName #inputCourtAddress .selectCourtType 时将error label隐藏
+  $("#inputCourtName").click(function(){
+    $(this).parent().find("label").slideUp();
+  });
+  $("#inputCourtAddress").click(function(){
+    $(this).parent().find("label").slideUp();
+  });
+  $(".selectCourtType").change(function(){
+    $(".selectCourtType").parent().find("label").slideUp();
+  });
+
   //tinymce
   tinymce.init({
     mode: 'textareas',
@@ -374,17 +392,17 @@
     },1000);
     trNumb--;
   }
-//记录表格中的上传图片的数量
+  //记录表格中的上传图片的数量
   var trNumb = 1;
   //验证上传图片格式，大小，并在通过后显示图片预览
   function imgValid(obj,id) {
     var files = obj.files,
           img = new Image(), imgname, imgsize, imgsizeKB, imgtype, 
     previewId = "preview" + id,
-     fileList = document.getElementById(previewId),
+     fileList = document.getElementById(previewId), //jquery对象转换为DOM对象
      inputNames = $("#tr"+id+' input[type="text"]'),
      fileName = $("#tr"+id+" .name"),
-     fileSize = $("#tr"+id+" .size"); //jquery对象转换为DOM对象
+     fileSize = $("#tr"+id+" .size"); 
 
     if(obj.files && obj.files[0]){
       //清除上一次的预览图片
@@ -401,6 +419,10 @@
           alert("照片大小为 "+imgsizeKB+"KB,照片太大了，请上传小于200KB的照片.");
         }else if(imgtype != "image/png" && imgtype != "image/gif" && imgtype != "image/jpg" && imgtype != "image/jpeg" ){
           alert("文件格式为 "+imgtype+",请上传png,gif,jpg,jpeg格式的照片.");
+        }else if( trNumb == 2 && imgname == $("#tr1 .name").text() ){ //trNumb为2时，有两个图片栏，检验第一个图片栏与第二个图片栏是否同名
+          alert("图片 "+ imgname +" 名称重复。");
+        }else if( trNumb == 3 && ( imgname == $("#tr1 .name").text() || imgname == $("#tr2 .name").text() ) ){ //trNumb为3时，有三个图片栏，检验第一、第二个图片栏是否与第三个图片栏同名
+          alert("图片 "+ imgname +" 名称重复。");
         }else{
           img.src = this.result;
           //img.width = 100;
