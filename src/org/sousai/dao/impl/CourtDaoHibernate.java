@@ -7,74 +7,64 @@ import org.sousai.domain.*;
 import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-public class CourtDaoHibernate extends HibernateDaoSupport implements CourtDao
-{
+public class CourtDaoHibernate extends HibernateDaoSupport implements CourtDao {
 	@Override
-	public Court get(Long id) 
-	{
+	public Court get(Long id) {
 		// TODO Auto-generated method stub
 		return getHibernateTemplate().get(Court.class, id);
 	}
 
 	@Override
-	public Long save(Court court) 
-	{
+	public Long save(Court court) {
 		// TODO Auto-generated method stub
-		return (Long)getHibernateTemplate().save(court);
+		return (Long) getHibernateTemplate().save(court);
 	}
 
 	@Override
-	public void update(Court court)
-	{
+	public void update(Court court) {
 		// TODO Auto-generated method stub
 		getHibernateTemplate().update(court);
 	}
 
 	@Override
-	public void delete(Court court) 
-	{
+	public void delete(Court court) {
 		// TODO Auto-generated method stub
 		getHibernateTemplate().delete(court);
 	}
 
 	@Override
-	public void delete(Long id)
-	{
+	public void delete(Long id) {
 		// TODO Auto-generated method stub
 		getHibernateTemplate().delete(get(id));
-		
+
 	}
 
 	@Override
-	public List<Court> findAll()
-	{
+	public List<Court> findAll() {
 		// TODO Auto-generated method stub
-		return (List<Court>)getHibernateTemplate().find("from Court");
+		return (List<Court>) getHibernateTemplate().find("from Court");
 	}
 
 	@Override
-	public List<Court> findByUser(User user)
-	{
+	public List<Court> findByUser(User user) {
 		// TODO Auto-generated method stub
-		return (List<Court>)getHibernateTemplate().find("from Court where UserId=?",user.getId());
+		return (List<Court>) getHibernateTemplate().find(
+				"from Court where UserId=?", user.getId());
 	}
 
 	@Override
-	public List<Court> findByCourtType(CourtType courtType)
-	{
+	public List<Court> findByCourtType(CourtType courtType) {
 		// TODO Auto-generated method stub
-		return (List<Court>)getHibernateTemplate().find("from Court where courtType=?",courtType.getId());
+		return (List<Court>) getHibernateTemplate().find(
+				"from Court where courtType=?", courtType.getId());
 	}
 
 	@Override
-	public List<Court> findByMatchType(String matchType)
-	{
+	public List<Court> findByMatchType(String matchType) {
 		// TODO Auto-generated method stub
-		return (List<Court>)getHibernateTemplate().find("from Court where matchType=?", matchType);
+		return (List<Court>) getHibernateTemplate().find(
+				"from Court where matchType=?", matchType);
 	}
-
-	
-
 
 	@Override
 	public List<Court> findByPram(User user, CourtType courtType,
@@ -82,31 +72,33 @@ public class CourtDaoHibernate extends HibernateDaoSupport implements CourtDao
 		// TODO Auto-generated method stub
 		String sql = "from court where";
 		int flag = 0;
-		if(user != null)
-		{
+		if (user != null) {
 			sql += " userId=?";
 			flag += 1;
 		}
-		if(courtType != null)
-		{
+		if (courtType != null) {
 			sql += " courtType=?";
 			flag += 2;
 		}
-		if(matchType != null)
-		{
+		if (matchType != null) {
 			sql += " matchType=?";
 			flag += 4;
 		}
-		if(region != null)
-		{
+		if (region != null) {
 			sql += " region=?";
 			flag += 8;
 		}
-		if(flag == 1)
-		{
-			
+		if (flag == 1) {
+
 		}
 		return null;
+	}
+
+	@Override
+	public List<Court> findByRegionId(Integer regionId) {
+		// TODO Auto-generated method stub
+		return (List<Court>) getHibernateTemplate().find(
+				"from Court where RegionId=?", regionId);
 	}
 
 }

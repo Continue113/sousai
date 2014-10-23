@@ -398,4 +398,10 @@ public class UserManagerImpl implements UserManager {
 			return null;
 		}
 	}
+
+	@Override
+	public List<Court> getCourtInMatchReling(Integer regionId) {
+		// TODO Auto-generated method stub
+		return courtDao.findByRegionId(regionId);
+	}
 }

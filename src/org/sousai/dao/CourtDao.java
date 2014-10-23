@@ -74,5 +74,7 @@ public interface CourtDao
 	 */
 	List<Court> findByPram(User user, CourtType courtType,
 			String matchType, Region region);
+	
+	List<Court>findByRegionId(Integer regionId);
 
 }

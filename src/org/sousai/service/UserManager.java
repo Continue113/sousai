@@ -168,6 +168,8 @@ public interface UserManager
 
 	String uploadUserPic(int flag, File[] images, String[] imgNames, Long UserId);
 	
+	public List<Court>getCourtInMatchReling(Integer regionId);
+	
 	public Long relMatch(Match match);
 	
 }
