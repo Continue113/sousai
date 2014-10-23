@@ -339,7 +339,7 @@
         itemsBox: '.table',
         itemPath: '.tritem',
         panelPath: '.jplist-panel'
-      });
+  });
 
   /** 搜索现有场地 **/
   $("#searchExistedCourt").click(function(){
