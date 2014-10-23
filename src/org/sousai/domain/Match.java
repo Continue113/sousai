@@ -22,6 +22,7 @@ public class Match implements Serializable{
 	private String score;	//可传可不传
 	private Long userId;	//可传可不传
 	
+	
 	//默认构造函数
 	public Match()
 	{
