@@ -134,7 +134,6 @@
             <!-- /选择省市区三级下拉框 --> 
             <a href="#" class="btn btn-success pull-right" id="searchExistedCourt">搜索现有球场</a>
            </div> 
-           <label for="matchRegion" class="matchRegion-error error hide">请至少选择省、市、区中的一个作为比赛地点</label>
           </div> 
           <div class="control-group existCourtsBox"> 
            <table class="table table-striped table-hover"> 
@@ -264,8 +263,7 @@
 		    }); //ajax
 	  });
 	  
-	  /////////////////////////////
-	  
+	  ///////////////////////////
 	  
 	  
   //初始化比赛类型
@@ -309,7 +307,19 @@
   //tgPrt: targetparent 目标父元素
   var tgPrt = $(this).parent();
   if (tgPrt.find(".selectMatchType option:selected").attr("value") == 0) {
-	  //当点击默认选项时什么都不做
+	  //当点击默认选项时将具体比赛类型隐藏并设为默认状态
+	  tgPrt.find(".selectParticularMatchType").hide().empty().append("<option value=0>请选择比赛类型</option>");
+	  //若存在场地类型 则将场地类型设置为默认状态 
+	  if ($(".selectCourtType").length != 0) {
+	  $(".selectCourtType").empty().append("<option value=0>请先选择比赛类型</option>");
+	  }
+	  //若已选择“其他”则改为默认选项
+      if( omtf == 1){
+    	tgPrt.find(".selectParticularMatchType").attr("name","court.matchType");
+        tgPrt.find(".omthide").slideUp();
+        $("#otherMatchType").removeAttr("name");
+        omtf = 0;
+      }
   }else {
     $.ajax({
       type: "POST",
@@ -332,7 +342,7 @@
       },
     }); //ajax 已得到具体比赛类型
     //出现具体比赛类型下拉列表并且不再隐藏
-    tgPrt.find(".selectParticularMatchType").removeClass("hide");
+    tgPrt.find(".selectParticularMatchType").show();
   }
   });
 
@@ -593,17 +603,16 @@
   });
   
   /** 表单验证 **/
+  //为比赛地点中的省添加name属性，然后利用validate插件的min=1验证是否选择了省
+  $(".controls > .selectProvince").attr("name","selectProvince");
+  
   var matchValidator = $("#releaseMatchForm").submit(function() {
     // update underlying textarea before submit validation
     tinyMCE.triggerSave();
   }).validate({
     submitHandler: function(){
       //alert("发布比赛成功");
-      if( $(".selectProvince option:selected").attr("value") == 0 ){
-    	  $(".matchRegion-error").show();
-      }else{
-          $("#releaseMatchForm").submit();
-      }
+      $("#releaseMatchForm").submit();
     },
   ignore: "",
   rules: {
@@ -619,7 +628,10 @@
     },
     "mcId": {
     	min: 1,
-    }
+    },
+    selectProvince: {//为比赛地点中的省添加的name属性
+    	min: 1,
+    },
   },
   messages: {
 	"match.name": {
@@ -635,6 +647,7 @@
     "court.courtTypeId": "",
     "match.type": "",
     "mcId": "",
+    selectProvince: "",
   },
   errorPlacement: function(error, element){
     if(element.parent().hasClass("input-append")){

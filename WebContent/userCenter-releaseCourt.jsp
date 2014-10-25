@@ -71,7 +71,7 @@
            <label class="control-label" for="inputCourtName">场地名称：</label> 
            <div class="controls"> 
             <input class="span5" type="text" id="inputCourtName" name="court.name" placeholder="如：2012年XXXXXXX杯乒乓球季度赛" required="required" /> 
-            <label class="hide error">场地名称不能为空！</label>
+            <label class="hide error">请输入场地名称</label>
            </div> 
           </div> 
           <div class="control-group"> 
@@ -94,7 +94,7 @@
             </select> 
             <!-- /选择场地类型 --> 
             <input class="hide" id="inputCourtType" type="text" value=""/>
-            <label class="hide error">场地类型不能为空！</label>
+            <label class="hide error">请选择场地类型</label>
            </div> 
           </div> 
           <div class="control-group"> 
@@ -109,7 +109,7 @@
            <label class="control-label" for="inputCourtAddress">详细地址：</label> 
            <div class="controls"> 
             <input class="span5" type="text" id="inputCourtAddress" name="court.addr" placeholder="如：某地某桥某号某号楼" required="required" />
-            <label class="hide error">场地地址不能为空！</label>
+            <label class="hide error">请输入场地地址</label>
            </div> 
           </div> 
           <div class="control-group"> 
@@ -217,7 +217,16 @@
   //tgPrt: targetparent 目标父元素
   var tgPrt = $(this).parent();
   if (tgPrt.find(".selectMatchType option:selected").attr("value") == 0) {
-	  //当点击默认选项时什么都不做
+	  //当点击默认选项时将具体比赛类型隐藏并设为默认状态 同时 将场地类型设置为默认状态
+	  tgPrt.find(".selectParticularMatchType").hide().empty().append("<option value=0>请选择比赛类型</option>");
+	  $(".selectCourtType").empty().append("<option value=0>请先选择比赛类型</option>");
+	  //若已选择“其他”则改为默认选项
+      if( omtf == 1){
+    	tgPrt.find(".selectParticularMatchType").attr("name","court.matchType");
+        tgPrt.find(".omthide").slideUp();
+        $("#otherMatchType").removeAttr("name");
+        omtf = 0;
+      }
   }else {
     $.ajax({
       type: "POST",
@@ -240,7 +249,7 @@
       },
     }); //ajax 已得到具体比赛类型
     //出现具体比赛类型下拉列表并且不再隐藏
-    tgPrt.find(".selectParticularMatchType").removeClass("hide");
+    tgPrt.find(".selectParticularMatchType").show();
   }
   });
   
@@ -327,7 +336,7 @@
       $("#inputCourtName").focus().parent().find("label").slideDown();
       return false;
     }else if($(".selectCourtType option:selected").attr("value") == 0){
-      $(".selectCourtType").focus().parent().find("label").slideDown();
+      $(".selectCourtType").focus().addClass("error");//.parent().find("label").slideDown();
       return false;
     }else if($("#inputCourtAddress").val() == ""){
       $("#inputCourtAddress").focus().parent().find("label").slideDown();
@@ -356,7 +365,7 @@
     $(this).parent().find("label").slideUp();
   });
   $(".selectCourtType").change(function(){
-    $(".selectCourtType").parent().find("label").slideUp();
+    $(".selectCourtType").removeClass("error");//.parent().find("label").slideUp(); 暂时未用到label
   });
 
   //tinymce

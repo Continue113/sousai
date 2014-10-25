@@ -70,7 +70,7 @@
        </div> 
        <div class="control-group"> 
         <div class="controls"> 
-         <input class="btn btn-primary btn-success span2" type="button" value="注册" onclick="formsubmit()"/>
+         <input class="btn btn-primary btn-success span2" type="submit" value="注册"/>
         </div> 
        </div> 
       </fieldset> 
@@ -100,7 +100,7 @@
   <!-- 页尾信息 --> 
   <script src="js/jquery.validate.min.js"></script> 
   <script>
-//提交到服务器
+/*/提交到服务器
   function formsubmit(){
   	alert("XXX");
     $.ajax({
@@ -129,7 +129,7 @@
         alert("抱歉，发送数据出错了，请重新输入。");
       }
     });
-  }
+  }*/
     $(function(){
       /** 生成验证码 **/
       createCode("inputValidateImg");
@@ -152,8 +152,8 @@
       },"不相符，请重新输入");
 
       $("#registerForm").validate({
-        /**submitHandler: function(form){
-        	alert("XXX");
+        submitHandler: function(){
+        	alert("通过验证");        	
           $.ajax({
             url: "processReg",
             type: "POST",
@@ -180,7 +180,7 @@
               alert("抱歉，发送数据出错了，请重新输入。");
             },
           });
-        },**/
+        },
     rules: {
       "user.name": {
         minlength: 4,

@@ -32,9 +32,7 @@
       <fieldset> 
        <legend>会员登录</legend> 
        <s:if test="tip!=null"> 
-        <div class="error">
-         您输入的密码和用户名不匹配，请重新输入。
-        </div> 
+        <div class="error">您输入的密码和用户名不匹配，请重新输入。</div> 
         <label for="inputUsername">用户名:</label> 
         <input type="text" class="input-block-level" id="inputUsername" name="user.name" placeholder="用户名" value="<s:property value="tip" />" required="required" /> 
        </s:if> 
@@ -128,7 +126,7 @@
     		//勾选 记住我，更新已存在的cookie或新建一个cookie;
     		var userName = $("#inputUsername").val();
     	    setCookie("sousaiUserName",userName);
-    	    alert("set cookie yet and then submit:"+ getCookie("sousaiUserName"));
+    	    console.log("set cookie yet and then submit:"+ getCookie("sousaiUserName"));
     	    $("#signinBtn").submit();
     	}else {
     		//若没有勾选 记住我，则直接提交
@@ -136,12 +134,12 @@
     	}
     });
     
-    //计入此页面查找已存在的cookie
+    //进入此页面查找已存在的cookie
     if(getCookie("sousaiUserName") != null){
     	$("#inputUsername").val(unescape(getCookie("sousaiUserName")));
 		$("input[value='remember-me']").attr("checked","checked");
 	}else {
-		alert(getCookie("sousaiUserName"));
+		console.log(getCookie("sousaiUserName"));
 		$("#inputUsername").val("");
 	}
 });
