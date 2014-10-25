@@ -116,12 +116,12 @@
            <label class="control-label" for="matchTime">比赛时间：</label> 
            <div class="controls form-inline"> 
             <div class="input-append"> 
-             <input type="text" id="inputMatchTimefrom" name="match.beginTime" placeholder="请选择开始日期" required="required" /> 
+             <input type="text" id="inputMatchTimefrom" name="match.beginTime" placeholder="请选择开始日期" required="required" value=""/> 
              <span class="add-on" data-toggle="tooltip" data-placement="top" title="" data-original-title="点击输入框可以选择开始日期"><i class="icon-calendar"></i></span> 
             </div> 
             <label for="to">—</label> 
             <div class="input-append"> 
-             <input type="text" id="inputMatchTimeto" name="match.endTime" placeholder="请选择结束日期" required="required" /> 
+             <input type="text" id="inputMatchTimeto" name="match.endTime" placeholder="请选择结束日期" required="required" value=""/> 
              <span class="add-on" data-toggle="tooltip" data-placement="top" title="" data-original-title="一天以内结束的比赛，日期为同一天"><i class="icon-calendar"></i></span> 
             </div> 
            </div> 
@@ -148,7 +148,7 @@
              </tr> 
             </thead> 
             <tbody>
-             <tr class="tritem">
+             <tr class="tritem" data-courtid="1">
               <td>TESTING DATA</td> 
               <td>TESTING DATA</td> 
               <td>TESTING DATA</td> 
@@ -156,7 +156,7 @@
               <td>TESTING DATA</td> 
               <td><a href="#">详细</a></td> 
              </tr>
-             <tr class="tritem"> 
+             <tr class="tritem"  data-courtid="2"> 
               <td>奥体中心乒乓球俱乐部</td> 
               <td>袁家岗大公馆立交奥体路185号羽毛球馆</td> 
               <td>体育馆</td> 
@@ -164,7 +164,7 @@
               <td>19次</td> 
               <td><a href="#">详细</a></td> 
              </tr> 
-             <tr class="tritem"> 
+             <tr class="tritem"  data-courtid="3"> 
               <td>奥体中心乒乓球俱乐部</td> 
               <td>袁家岗大公馆立交奥体路185号羽毛球馆</td> 
               <td>体育馆</td> 
@@ -172,7 +172,7 @@
               <td>19次</td> 
               <td><a href="#">详细</a></td> 
              </tr> 
-             <tr class="tritem"> 
+             <tr class="tritem"  data-courtid="4"> 
               <td>奥体中心乒乓球俱乐部</td> 
               <td>袁家岗大公馆立交奥体路185号羽毛球馆</td> 
               <td>体育馆</td> 
@@ -458,6 +458,7 @@
 	      dataType: "json",
 	      success: function(rspdata) {
 	        var existCourtsTbody = $(".existCourtsBox > table > tbody");
+	        $(".jplist-no-results").hide(); //隐藏无结果提醒
 	        existCourtsTbody.empty(); //清空已有场地列表
 	        alert(rspdata);console.log(rspdata);
 	        /** 循环遍历获得的场地信息并加入已有场地列表中 **/
@@ -472,6 +473,12 @@
 	    	        	+ rspdata[i].matchCount + '</td><td><a target="_blank" href="courtLink;courtId=?'
 	    	        	+ rspdata[i].id + '">详细</a></td></tr>'	        			
 	        	);
+	        }
+	        
+	        //若没有相应的结果，给出提醒
+	        if($(".tritem").length == 0){
+	        	alert("在您选择的比赛地点没有搜索到已有场地，请更换比赛地点或在此地点添加新场地。");
+	        	$(".jplist-no-results").show();
 	        }
 	      },
 	      error: function() {
@@ -524,7 +531,7 @@
     $("div.existCourtsBox").slideUp();
 
     //删除已有$("#hideCourtId")中的name属性，将value设置为空 .attr("value","")
-    alert("删除已有$("#hideCourtId")中的name属性");
+    alert("删除已有$(\"#hideCourtId\")中的name属性");
     $("#hideCourtId").removeAttr("name");
 
   }else {//若复选框不是选中的，则滑出已有场地列表并删除添加新场地的表单
@@ -533,7 +540,7 @@
     $("div.inputCourt").remove();
 
     //恢复已有$("#hideCourtId")中的name属性，将value设置为空 .attr("value","")
-    alert("恢复已有$("#hideCourtId")中的name属性");
+    alert("恢复已有$(\"#hideCourtId\")中的name属性");
     $("#hideCourtId").attr("name","match.courtId");
   }
   });
@@ -565,8 +572,8 @@
   }).validate({
     submitHandler: function(){
       alert("发布比赛成功");
-      form.submit();
-      //$("#releaseMatchForm").submit();
+      //form.submit();
+      $("#releaseMatchForm").submit();
     },
   ignore: "",
   rules: {
