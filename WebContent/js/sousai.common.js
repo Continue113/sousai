@@ -70,7 +70,7 @@ $(function() {
   });
 
   /** 三级省市区联动 P:province C:city C:country**/
-  /*初始化省*/
+  /*初始化省*
   function initProvince() {
     $.post("selRegion?region.level=0", null, function(data) {
       var selectProvince = $(".selectProvince");
@@ -80,7 +80,7 @@ $(function() {
       }
     });
   }
-  initProvince();
+  initProvince();*/
   //当选中一个省份后，查询对应的市区名称
   $(".selectProvince").change(function() {
     //tgPrt: targetparent 目标父元素
@@ -99,7 +99,7 @@ $(function() {
         dataType: "json",
         success: function(rspdata) {
           var selectCity = tgPrt.find(".selectCity");
-          selectCity.empty().append("<option value=0>请选择市</option>");
+          selectCity.empty().append("<option value=0 data-regionid=0>请选择市</option>");
           for (var i = 0; i < rspdata.length; i++) {
             selectCity.append("<option value=" + rspdata[i].code + " data-order=\"" + rspdata[i].order + "\" data-regionid=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</option>");
           }
@@ -111,10 +111,10 @@ $(function() {
       tgPrt.find(".selectCity").show();
     } else {
       //当用户没有选择省份的时候，就将市区下拉列表框中原有的“请选择”字样删除。
-      tgPrt.find(".selectCity").hide().empty().append("<option value=0>请选择市</option>");
+      tgPrt.find(".selectCity").hide().empty().append("<option value=0 data-regionid=0>请选择市</option>");
     }
     //当用户进行一次省市县的操作后，再次选择省份的时候，后面的县区里面如果有值就要清空
-    tgPrt.find(".selectCountry").hide().empty().append("<option value=0>请选择区</option>");
+    tgPrt.find(".selectCountry").hide().empty().append("<option value=0 data-regionid=0>请选择区</option>");
   });
 
   //当选中市区名称后，查询对应的县区名称
@@ -134,7 +134,7 @@ $(function() {
         dataType: "json",
         success: function(rspdata) {
           var selectCountry = tgPrt.find(".selectCountry");
-          selectCountry.empty().append("<option value=0>请选择区</option>");
+          selectCountry.empty().append("<option value=0 data-regionid=0>请选择区</option>");
           for (var i = 0; i < rspdata.length; i++) {
             selectCountry.append("<option value=" + rspdata[i].code + " data-order=\"" + rspdata[i].order + "\" data-regionid=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</option>");
           }
@@ -146,7 +146,7 @@ $(function() {
       tgPrt.find(".selectCountry").show();
     } else {
       //当用户没有选择市区的时候，就将县区下拉列表框中原有的“请选择”字样删除。
-      tgPrt.find(".selectCountry").hide().empty().append("<option value=0>请选择区</option>");
+      tgPrt.find(".selectCountry").hide().empty().append("<option value=0 data-regionid=0>请选择区</option>");
     }
   });
   //立即调用初始化省 已经使用硬编码的方式替代初始化省

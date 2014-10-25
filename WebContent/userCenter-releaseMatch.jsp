@@ -405,9 +405,9 @@
 	  //tgPrt: targetparent 目标父元素 ；regionId 默认为零
 	  var tgPrt = $(this).parent(),regionId = 0;
 	  //获取省市区信息
-	  var provinceId = tgPrt.find(".selectProvince option:selected").attr("value"),
-	      cityId = tgPrt.find(".selectCity option:selected").attr("value"), 
-	      countryId = tgPrt.find(".selectCountry option:selected").attr("value");
+	  var provinceId = tgPrt.find(".selectProvince option:selected").attr("data-regionid"),
+	      cityId = tgPrt.find(".selectCity option:selected").attr("data-regionid"), 
+	      countryId = tgPrt.find(".selectCountry option:selected").attr("data-regionid");
 	  if(provinceId == 0){
 		  alert("省，市，区请至少选择一个为比赛区域！");		  
 	  }else {
