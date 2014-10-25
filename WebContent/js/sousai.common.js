@@ -81,7 +81,7 @@ $(function() {
     });
   }*/
   //当选中一个省份后，查询对应的市区名称
-  $(".selectProvince").change(function selCity() {
+  $(".selectProvince").change(function() {
     //tgPrt: targetparent 目标父元素
     var tgPrt = $(this).parent(),
     tgPrtVal = tgPrt.find(".selectProvince option:selected").attr("value");
@@ -97,7 +97,7 @@ $(function() {
         },
         dataType: "json",
         success: function(rspdata) {
-          var selectCity = $(".selectCity");
+          var selectCity = tgPrt.find(".selectCity");
           selectCity.empty().append("<option value=0>请选择市</option>");
           for (var i = 0; i < rspdata.length; i++) {
             selectCity.append("<option value=" + rspdata[i].code + " data-order=\"" + rspdata[i].order + "\" >" + rspdata[i].name + "</option>");
@@ -110,14 +110,14 @@ $(function() {
       tgPrt.find(".selectCity").show();
     } else {
       //当用户没有选择省份的时候，就将市区下拉列表框中原有的“请选择”字样删除。
-      tgPrt.find(".selectCity").hide().empty();
+      tgPrt.find(".selectCity").hide().empty().append("<option value=0>请选择市</option>");
     }
     //当用户进行一次省市县的操作后，再次选择省份的时候，后面的县区里面如果有值就要清空
-    tgPrt.find(".selectCountry").hide().empty();
+    tgPrt.find(".selectCountry").hide().empty().append("<option value=0>请选择区</option>");
   });
 
   //当选中市区名称后，查询对应的县区名称
-  $(".selectCity").change(function selCountry() {
+  $(".selectCity").change(function() {
     //tgPrt: targetparent 目标父元素
     var tgPrt = $(this).parent();
     if (tgPrt.find(".selectCity option:selected").attr("value") != 0) {
@@ -132,7 +132,7 @@ $(function() {
         },
         dataType: "json",
         success: function(rspdata) {
-          var selectCountry = $(".selectCountry");
+          var selectCountry = tgPrt.find(".selectCountry");
           selectCountry.empty().append("<option value=0>请选择区</option>");
           for (var i = 0; i < rspdata.length; i++) {
             selectCountry.append("<option value=" + rspdata[i].code + " data-order=\"" + rspdata[i].order + "\" >" + rspdata[i].name + "</option>");
@@ -145,12 +145,11 @@ $(function() {
       tgPrt.find(".selectCountry").show();
     } else {
       //当用户没有选择市区的时候，就将县区下拉列表框中原有的“请选择”字样删除。
-      tgPrt.find(".selectCountry").hide().empty();
+      tgPrt.find(".selectCountry").hide().empty().append("<option value=0>请选择区</option>");
     }
   });
   //立即调用初始化省 已经使用硬编码的方式替代初始化省
   //initProvince();
-  /****/
 
   /** 高级搜索框级联下拉菜单 
   $(".selectMatchType").change(function() {

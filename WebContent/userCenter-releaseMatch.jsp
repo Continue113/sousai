@@ -90,13 +90,13 @@
         <div class="page-header"> 
          <h4>比赛基本信息</h4> 
         </div> 
-        <form id="releaseMatchForm" class="form-horizontal" action=""> 
+        <form id="releaseMatchForm" class="form-horizontal" action="relMatch" method="post" enctype="multipart/form-data"> 
          <fieldset> 
           <legend>比赛基本信息</legend> 
           <div class="control-group"> 
            <label class="control-label" for="searchKey">比赛名称：</label> 
            <div class="controls"> 
-            <input class="span5" type="text" id="inputMatchTitle" name="inputMatchTitle" placeholder="如：2012年XXXXXXX杯乒乓球季度赛" required="required" /> 
+            <input class="span5" type="text" id="inputMatchTitle" name="match.name" placeholder="如：2012年XXXXXXX杯乒乓球季度赛" required="required" /> 
            </div> 
           </div> 
           <div class="control-group"> 
@@ -105,7 +105,9 @@
             <select class="selectMatchType" name="mcId">
               <option value=0>请选择比赛类型</option>
             </select>
-            <select class="selectParticularMatchType hide" name="court.matchType"></select>
+            <select class="selectParticularMatchType hide" name="match.type">
+              <option value=0>请选择比赛类型</option>
+            </select>
             <label class="omthide hide" class="control-label" for="otherMatchType">请输入类型：</label>
             <input class="omthide hide" id="otherMatchType" type="text" value="" placeholder="请填写比赛类型"/>
            </div> 
@@ -114,12 +116,12 @@
            <label class="control-label" for="matchTime">比赛时间：</label> 
            <div class="controls form-inline"> 
             <div class="input-append"> 
-             <input type="text" id="inputMatchTimefrom" name="inputMatchTimefrom" placeholder="请选择开始日期" required="required" /> 
+             <input type="text" id="inputMatchTimefrom" name="match.beginTime" placeholder="请选择开始日期" required="required" /> 
              <span class="add-on" data-toggle="tooltip" data-placement="top" title="" data-original-title="点击输入框可以选择开始日期"><i class="icon-calendar"></i></span> 
             </div> 
             <label for="to">—</label> 
             <div class="input-append"> 
-             <input type="text" id="inputMatchTimeto" name="inputMatchTimeto" placeholder="请选择结束日期" required="required" /> 
+             <input type="text" id="inputMatchTimeto" name="match.endTime" placeholder="请选择结束日期" required="required" /> 
              <span class="add-on" data-toggle="tooltip" data-placement="top" title="" data-original-title="一天以内结束的比赛，日期为同一天"><i class="icon-calendar"></i></span> 
             </div> 
            </div> 
@@ -200,16 +202,16 @@
           </div> 
           <div class="control-group"> 
            <div class="releaseCourtBox"> 
-            <label class="checkbox"><input type="checkbox" id="newCourtCheckbox" name="matchState_all" />添加新场地&nbsp;&nbsp;(重庆-沙坪坝区)</label> 
+            <label class="checkbox"><input type="checkbox" id="newCourtCheckbox" name="matchState_all" />添加新场地&nbsp;&nbsp;(<span id="newCourtRegion"><span class="newCourtProvince">请选择省</span>-<span class="newCourtCity">请选择市</span>-<span class="newCourtCountry">请选择区</span></span>)</label> 
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="inputMatchRules">比赛规程：</label> 
           </div> 
-          <textarea id="inputMatchRules" name="inputMatchRules" required="required"></textarea> 
+          <textarea id="inputMatchRules" name="match.rule" required="required"></textarea> 
           <div class="control-group"> 
            <div class="controls"> 
-            <button type="submit" class="btn btn-success pull-right">确定发布</button>
+            <button type="button" class="btn btn-success pull-right" id="rlsMatch">确定发布</button>
             <button type="reset" class="btn pull-right" id="resetMatchForm">重置</button>
             <button type="button" class="btn pull-right" name="preView">预览</button> 
            </div> 
@@ -254,8 +256,26 @@
   //立即初始化比赛类型
   initMatchType();
   
+  //选择比赛地点时，修改下方添加新场地的区域
+  $("#releaseMatchForm .controls > .selectProvince").change(function(){
+	  var tgPrt = $(this).parent();
+	  $("#newCourtRegion > .newCourtProvince").text( tgPrt.find(".selectProvince option:selected").text() );
+	  $("#newCourtRegion > .newCourtCity").text( tgPrt.find(".selectCity option:selected").text() );
+	  $("#newCourtRegion > .newCourtCountry").text( tgPrt.find(".selectCountry option:selected").text() );
+  });
+  $("#releaseMatchForm .controls > .selectCity").change(function(){
+	  var tgPrt = $(this).parent();
+	  $("#newCourtRegion > .newCourtCity").text( tgPrt.find(".selectCity option:selected").text() );
+	  $("#newCourtRegion > .newCourtCountry").text( tgPrt.find(".selectCountry option:selected").text() );
+  });
+  $("#releaseMatchForm .controls > .selectCountry").change(function(){
+	  var tgPrt = $(this).parent();
+	  $("#newCourtRegion > .newCourtCountry").text( tgPrt.find(".selectCountry option:selected").text() );
+  });
+		  
+		  
   //点击大类比赛类型获得具体比赛类型
-  $(".selectMatchType").change(function selParticularMatchType() {
+  $(".selectMatchType").change(function() {
   //tgPrt: targetparent 目标父元素
   var tgPrt = $(this).parent();
   if (tgPrt.find(".selectMatchType option:selected").attr("value") == 0) {
@@ -273,7 +293,7 @@
         var sctParMatchType = $(".selectParticularMatchType");
         sctParMatchType.empty().append("<option value=0>请选择比赛类型</option>");
         for (var i = 0; i < rspdata.length; i++) {
-          sctParMatchType.append("<option value=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</  option>");
+          sctParMatchType.append("<option value=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</option>");
         }
         sctParMatchType.append("<option value=-1>其他</option>"); //每一个大类比赛类型的“其他”选项
       },
@@ -286,9 +306,9 @@
   }
   });
 
-    //点击比赛类型获取相应场地类型
+  //点击比赛类型 选择其他出现输入框 或者 当场地类型存在时获取相应场地类型
   var omtf = 0;//other match type flag ；0表示默认，1表示已经选过“其他”选项
-  $(".selectParticularMatchType").change(function selMatchType() {
+  $(".selectParticularMatchType").change(function() {
     //tgPrt: targetparent 目标父元素
     var tgPrt = $(this).parent();
     if (tgPrt.find(".selectParticularMatchType option:selected").attr("value") == -1 && omtf == 0){
@@ -299,6 +319,18 @@
       //添加输入框的name属性，并改变omtf
       $("#otherMatchType").attr("name","court.matchType");
       omtf = 1;
+    }else if (tgPrt.find(".selectParticularMatchType option:selected").attr("value") == 0) {
+      //存在场地类型的下拉列表时 当用户选择具体比赛类型为默认选项时的时候，就将场地类型下拉列表框中原有的“请选择”字样删除。
+      if ($(".selectCourtType").length != 0) {
+        $(".selectCourtType").empty().append("<option value=0>请先选择比赛类型</option>");
+      };
+      //若已选择“其他”则改为默认选项
+      if( omtf == 1){
+        $(this).attr("name","court.matchType");
+        tgPrt.find(".omthide").slideUp();
+        $("#otherMatchType").removeAttr("name");
+        omtf = 0;
+      }
     }else {
       //若已选择“其他”则改为默认选项
       if( omtf == 1){
@@ -307,7 +339,36 @@
         $("#otherMatchType").removeAttr("name");
         omtf = 0;
       }
+      //存在场地类型的下拉列表时 当用户选择具体比赛类型时，同时获取相应场地类型
+      if ($(".selectCourtType").length != 0) {
+        console.log("获得场地类型");
+        $.ajax({
+          type: "POST",
+          url: "showCT",
+          contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+          data: {
+            "matchId": tgPrt.find(".selectParticularMatchType option:selected").attr("value"),
+          },
+          dataType: "json",
+          success: function(rspdata) {
+            var sctCourtType = $(".selectCourtType");
+            sctCourtType.empty().append("<option value=0>请选择场地类型</option>");
+            for (var i = 0; i < rspdata.length; i++) {
+              sctCourtType.append("<option value=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</option>");
+            }
+          },
+          error: function() {
+            alert("抱歉，获取场地类型出错了。");
+          },
+        }); //ajax 已得到场地类型
+      }
     }
+  });
+
+
+  //点击确认发布，获取地区，比赛类型，场地类型
+  $("#rlsMatch").click(function(){
+    $("#releaseMatchForm").submit();
   });
 
   /** 日期选择器 **/
@@ -325,14 +386,12 @@
       $( "#matchTimefrom" ).datepicker( "option", "maxDate", selectedDate );
     }
   });
-  /** /日期选择器 **/
 
   /** 选中表格某行 **/
   $("tbody>tr").click(function(){
     $("tr").removeClass("active");
     $(this).addClass("active");
   });
-  /****/
 
   /** 列表排序 **/
   $('.existCourtsBox').jplist({
@@ -343,18 +402,28 @@
 
   /** 搜索现有场地 **/
   $("#searchExistedCourt").click(function(){
-	  //tgPrt: targetparent 目标父元素
-	  var tgPrt = $(this).parent();
+	  //tgPrt: targetparent 目标父元素 ；regionId 默认为零
+	  var tgPrt = $(this).parent(),regionId = 0;
 	  //获取省市区信息
-	  var province = tgPrt.find(".selectProvince option:selected").text(),
-	      city = tgPrt.find(".selectCity option:selected").text(), 
-	      country = tgPrt.find(".selectCountry option:selected").text();
-	  if(province == "请选择省"){
-		  alert("请至少选择一个比赛地点！");		  
+	  var provinceId = tgPrt.find(".selectProvince option:selected").attr("value"),
+	      cityId = tgPrt.find(".selectCity option:selected").attr("value"), 
+	      countryId = tgPrt.find(".selectCountry option:selected").attr("value");
+	  if(provinceId == 0){
+		  alert("省，市，区请至少选择一个为比赛区域！");		  
 	  }else {
+		  
+		  if(cityId == 0 && countryId == 0){ //若市，区都为零，则说明只有省
+			  regionId = provinceId;
+		  }else if(cityId != 0 && countryId == 0){ //若省、市不为零，但区为零，则说明最深选中为市
+			  regionId = cityId;
+		  }else if(cityId != 0 && countryId != 0){ //若省，市，区都不为零，则说明最深选中为区
+			  regionId = countryId;
+		  }
+	  
 	  //alert(province + city + country);  //得到省市区信息
+	  	
 	  /*
-	  *测试
+	  *测试数据
 	  *
 	  var rspdatainame = '球场漫长名称萨达都是俺的阿斯顿爱戴阿斯顿爱戴',
 	  rspdataiaddress = '详细地址萨达萨达阿锁打打打阿斯顿阿锁打阿飞暗示法阿飞啊方法飞萨芬十分阿飞啊'+province +city +country,
@@ -376,16 +445,18 @@
 	  //ajax 获取已有场地信息列表
 	  $.ajax({
 	      type: "POST",
-	      url: "showMT",
+	      url: "getCourtM",
 	      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 	      data: {
-	        "mcId": tgPrt.find(".selectMatchType option:selected").attr("value"),
+	        "regionId": regionId,
 	      },
 	      dataType: "json",
 	      success: function(rspdata) {
 	        var existCourtsTbody = $(".existCourtsBox > table > tbody");
 	        existCourtsTbody.empty(); //清空已有场地列表
-	        for (var i = 0; i < rspdata.length; i++) {	        		   
+	        alert(rspdata);console.log(rspdata);
+	        /**
+	        for (var i = 0; i < rspdata.length; i++) {
 	        	existCourtsTbody.append(
 	        			'<tr class="tritem"><td>'
 	    	        	+ rspdata[i].name + '</td><td>'
@@ -395,7 +466,7 @@
 	    	        	+ rspdata[i].matchnumber + '</td><td><a target="_blank" href="'
 	    	        	+ rspdata[i].href + '">详细</a></td></tr>'	        			
 	        	);
-	        }
+	        }**/
 	      },
 	      error: function() {
 	        alert("抱歉，获取已有场地信息出错了。");
@@ -407,7 +478,7 @@
     if($("#newCourtCheckbox").is(":checked")){
       $("div.inputCourt").slideUp();
       $("div.inputCourt").remove();
-      $("#newCourtCheckbox").attr("checked",false);
+      $("#newCourtCheckbox").attr("checked",false);//将添加新场地的复选框设置为非选中状态
     }
     }
   });
@@ -417,19 +488,41 @@
   });
 
   $("#newCourtCheckbox").click(function () {
-    if($(this).is(":checked")){
-      var inputCourtStr = '<div class="inputCourt hide"><div class="control-group"><label class="control-label" for="courtName">场地名称：</label><div class="controls"><input type="text" id="courtName" name="inputCourtName" placeholder="如：2012年XXXXXXX杯乒乓球季度赛" class="span5 add-on" data-toggle="tooltip" data-placement="top" title="" data-original-title="限定30个字符以下" required="required"/></div></div><div class="control-group"><label class="control-label" for="courtAddress">详细地址：</label><div class="controls"><input type="text" id="courtAddress" name="inputCourtAddress" placeholder="如：某某桥某某路XXXXXXX杯乒乓球季度赛某楼" class="span5 add-on" data-toggle="tooltip" data-placement="top" title="" data-original-title="限定30个字符以下" required="required"/></div></div><div class="control-group"><label class="control-label" for="courtType">场地类型：</label><div class="controls"><select name="selectCourtType"><option value="0">请选择场地类型</option><option value="courtType-inner">室内</option><option value="courtType-outer">室外</option><option value="courtType-zq">体育局</option><option value="courtType-pp">俱乐部</option><option value="courtType-lq">社区</option><option value="courtType-zq">单位</option><option value="courtType-zq">学校</option><option value="courtType-pp">临时</option><option value="courtType-lq">公共</option><option value="courtType-zq">其他</option></select></div></div></div>';
+    if($(this).is(":checked")){ //若添加新场地的复选框 是选中状态时则生成添加新场地的表单
+      var inputCourtStr = '<div class="inputCourt hide"><div class="control-group"><label class="control-label" for="courtName">场地名称：</label><div class="controls"><input type="text" id="courtName" name="court.name" placeholder="如：2012年XXXXXXX杯乒乓球季度赛" class="span5 add-on" data-toggle="tooltip" data-placement="top" title="" data-original-title="限定30个字符以下" required="required"/></div></div><div class="control-group"><label class="control-label" for="courtAddress">详细地址：</label><div class="controls"><input type="text" id="courtAddress" name="court.addr" placeholder="如：某某桥某某路XXXXXXX杯乒乓球季度赛某楼" class="span5 add-on" data-toggle="tooltip" data-placement="top" title="" data-original-title="限定30个字符以下" required="required"/></div></div><div class="control-group"><label class="control-label" for="courtType">场地类型：</label><div class="controls"><select class="selectCourtType" name="courtTypeId"><option value="0">请先选择比赛类型</option></select></div></div></div>';
     $(inputCourtStr).insertAfter($(this).parent());
+    //根据已选的比赛类型获取场地类型
+    if($(".selectParticularMatchType option:selected").attr("value") != 0){
+    $.ajax({
+        type: "POST",
+        url: "showCT",
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        data: {
+          "matchId": $(".selectParticularMatchType option:selected").attr("value"),
+        },
+        dataType: "json",
+        success: function(rspdata) {
+          var sctCourtType = $(".selectCourtType");
+          sctCourtType.empty().append("<option value=0>请选择场地类型</option>");
+          for (var i = 0; i < rspdata.length; i++) {
+            sctCourtType.append("<option value=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</  option>");
+          }
+        },
+        error: function() {
+          alert("抱歉，获取场地类型出错了。");
+        },
+      }); //ajax 已得到场地类型
+    }
+
     $("div.inputCourt").slideDown();
     $("div.existCourtsBox").slideUp();
-  }
-  else {
+  }else {//若复选框不是选中的，则滑出已有场地列表并删除添加新场地的表单
     $("div.existCourtsBox").slideDown();
     $("div.inputCourt").slideUp();
     $("div.inputCourt").remove();
   }
   });
-  /****/    
+
   /** tinymce **/
   tinymce.init({
     mode: 'textareas',

@@ -379,8 +379,8 @@
      /** 点击隐藏或者显示评论回复   **/
      function visibleReply(visible){
         if(visible == "hide"){
-          $(this).().parent().find(".evaluation-reply").slidUp("slow");
-        }
+          $(this).parent().find(".evaluation-reply").slidUp("slow");
+        };
      }
      /** 点击我要补充下，滑出回复框 **/
      function appendTextarea (target,img,name,id,parentName) { //添加“我要补充下”回复框
@@ -510,7 +510,7 @@
     	  $("#SRDcontent").empty().append('<div class="alert alert-block alert-error fade in"><p style="font-size:16px;color:red;">请先<a href="login.jsp">登录</a>再评论。</p></div>');
     	  $('#sousaiRemindDialog > .modal-footer > .btn-success').attr("data-dismiss","modal");
     	  $('#sousaiRemindDialog').modal({backdrop:true,show:true});
-      }
+      };
     });
     /** 我要补充下 **/
      $("body").on("click","#reply-temp",function(){
@@ -571,7 +571,7 @@
         		$(".evaluations .evaluation-response-li").slideUp("slow",function(){
               	  $(".evaluations .evaluation-response-li").remove();
                 });
-        	}
+        	};
         },
         error: function() {
           alert("抱歉，发布评论出错了。");console.log("抱歉，发布评论失败！未能发送到服务器。");

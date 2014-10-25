@@ -213,7 +213,7 @@
   initMatchType();
   
   //点击大类比赛类型获得具体比赛类型
-  $(".selectMatchType").change(function selParticularMatchType() {
+  $(".selectMatchType").change(function() {
   //tgPrt: targetparent 目标父元素
   var tgPrt = $(this).parent();
   if (tgPrt.find(".selectMatchType option:selected").attr("value") == 0) {
@@ -244,9 +244,9 @@
   }
   });
   
-  //点击比赛类型获取相应场地类型
+  //点击比赛类型获取相应场地类型 或者 选择其他出现输入框
   var omtf = 0;//other match type flag ；0表示默认，1表示已经选过“其他”选项
-  $(".selectParticularMatchType").change(function selMatchType() {
+  $(".selectParticularMatchType").change(function() {
     //tgPrt: targetparent 目标父元素
     var tgPrt = $(this).parent();
     if (tgPrt.find(".selectParticularMatchType option:selected").attr("value") == -1 && omtf == 0){
@@ -258,8 +258,8 @@
       $("#otherMatchType").attr("name","court.matchType");
       omtf = 1;
     }else if (tgPrt.find(".selectParticularMatchType option:selected").attr("value") == 0) {
-      //当用户没有选择场地类型的时候，就将场地类型下拉列表框中原有的“请选择”字样删除。
-      tgPrt.find(".selectCourtType").empty();
+      //当用户选择具体比赛类型为默认选项时的时候，就将场地类型下拉列表框中原有的“请选择”字样删除。
+      $(".selectCourtType").empty().append("<option value=0>请先选择比赛类型</option>");
       //若已选择“其他”则改为默认选项
       if( omtf == 1){
         $(this).attr("name","court.matchType");
@@ -275,7 +275,7 @@
         $("#otherMatchType").removeAttr("name");
         omtf = 0;
       }
-      console.log("获得比赛类型");
+      console.log("获得场地类型");
       $.ajax({
         type: "POST",
         url: "showCT",
