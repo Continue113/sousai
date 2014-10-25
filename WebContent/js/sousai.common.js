@@ -70,16 +70,17 @@ $(function() {
   });
 
   /** 三级省市区联动 P:province C:city C:country**/
-  /*初始化省
+  /*初始化省*/
   function initProvince() {
     $.post("selRegion?region.level=0", null, function(data) {
       var selectProvince = $(".selectProvince");
       selectProvince.empty().append("<option value=0>请选择省</option>");
       for (var i = 0; i < data.length; i++) {
-        selectProvince.append("<option value=" + data[i].code + " data-order=\"" + data[i].order + "\" >" + data[i].name + "</option>");
+        selectProvince.append("<option value=" + data[i].code + " data-order=\"" + data[i].order + "\" data-regionid=\"" + data[i].id + "\" >" + data[i].name + "</option>");
       }
     });
-  }*/
+  }
+  initProvince();
   //当选中一个省份后，查询对应的市区名称
   $(".selectProvince").change(function() {
     //tgPrt: targetparent 目标父元素
@@ -100,7 +101,7 @@ $(function() {
           var selectCity = tgPrt.find(".selectCity");
           selectCity.empty().append("<option value=0>请选择市</option>");
           for (var i = 0; i < rspdata.length; i++) {
-            selectCity.append("<option value=" + rspdata[i].code + " data-order=\"" + rspdata[i].order + "\" >" + rspdata[i].name + "</option>");
+            selectCity.append("<option value=" + rspdata[i].code + " data-order=\"" + rspdata[i].order + "\" data-regionid=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</option>");
           }
         },
         error: function() {
@@ -135,7 +136,7 @@ $(function() {
           var selectCountry = tgPrt.find(".selectCountry");
           selectCountry.empty().append("<option value=0>请选择区</option>");
           for (var i = 0; i < rspdata.length; i++) {
-            selectCountry.append("<option value=" + rspdata[i].code + " data-order=\"" + rspdata[i].order + "\" >" + rspdata[i].name + "</option>");
+            selectCountry.append("<option value=" + rspdata[i].code + " data-order=\"" + rspdata[i].order + "\" data-regionid=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</option>");
           }
         },
         error: function() {
