@@ -123,6 +123,7 @@
 
       $("#registerForm").validate({
         submitHandler: function(form){
+        	alert("XXX");
           $.ajax({
             url: "processReg",
             type: "POST",
