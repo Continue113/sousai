@@ -122,7 +122,7 @@
       },"不相符，请重新输入");
 
       $("#registerForm").validate({
-        submitHandler: function (){
+        submitHandler: function(){
           $.ajax({
             url: "processReg",
             type: "POST",
