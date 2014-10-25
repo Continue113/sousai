@@ -70,7 +70,7 @@
        </div> 
        <div class="control-group"> 
         <div class="controls"> 
-         <button class="btn btn-primary btn-success span2" type="submit" onclick="validateCode();">注册</button> 
+         <button class="btn btn-primary btn-success span2" type="submit">注册</button> 
         </div> 
        </div> 
       </fieldset> 
@@ -117,7 +117,7 @@
           return true;
         }
         else{
-          createCode();
+          createCode("inputValidateImg");
           return false;
         }
       },"不相符，请重新输入");
@@ -139,7 +139,7 @@
               console.log("dialoged!");
               //5秒后跳转至首页
               window.setTimeout("window.location='index.jsp'",5000);
-              var resetbtn = confirm("注册成功，将在5秒后跳转至首页。点击确定跳转至首页。");
+              var resetbtn = confirm("注册成功，点击确定直接跳转至首页，点击取消将在5秒后跳转至首页。");
               if (resetbtn == true){
                 location.href = "index.jsp";
               }
@@ -160,7 +160,7 @@
       "user.pwd": {
         minlength: 6
       },
-      inputUserPassword2: {
+      inputPassword2: {
         minlength: 6,
         equalTo: "#inputUserPassword"
       },
