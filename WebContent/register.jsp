@@ -101,13 +101,12 @@
   <script src="js/jquery.validate.min.js"></script> 
   <script>    
     $(function(){
+      /** 生成验证码 **/
       createCode("inputValidateImg");
-      /** /生成验证码 **/
 
       /** 工具提示 **/
       $("#inputUsername").tooltip();
       $("#inputUserPassword").tooltip();
-      /** /工具提示**/
 
       /** 表单验证代码 **/
       //添加验证 验证码方法
@@ -123,7 +122,7 @@
       },"不相符，请重新输入");
 
       $("#registerForm").validate({
-        submitHandler: function validateCode(){
+        submitHandler: function (){
           $.ajax({
             url: "processReg",
             type: "POST",
