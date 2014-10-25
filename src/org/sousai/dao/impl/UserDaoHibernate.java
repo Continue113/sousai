@@ -30,8 +30,13 @@ public class UserDaoHibernate extends HibernateDaoSupport
 		// TODO Auto-generated method stub
 		//System.out.println("save now turn to getHibernateTemplate().save "+user.getId()+"   "+ user.getName()+"   "+user.getPwd()+"   ");
 		MyPrint.myPrint(""+user.getId()+"name"+user.getName()+"pwd"+user.getPwd()+"Email"+user.getEmail()+"type"+user.getType());
+		try{
 		return Long.parseLong(getHibernateTemplate()
 				.save(user).toString());
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
 		/*String test;
 		try{
 			test = getHibernateTemplate().save(user).toString();

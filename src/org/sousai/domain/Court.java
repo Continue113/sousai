@@ -1,12 +1,8 @@
 package org.sousai.domain;
 
-import org.sousai.domain.*;
-import org.sousai.dao.*;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.sql.Timestamp;
-import java.util.*;
 
 public class Court implements Serializable
 {
