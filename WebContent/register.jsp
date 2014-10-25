@@ -70,7 +70,7 @@
        </div> 
        <div class="control-group"> 
         <div class="controls"> 
-         <button class="btn btn-primary btn-success span2" type="submit">注册</button> 
+         <button class="btn btn-primary btn-success span2" type="submit" onclick="validateCode();">注册</button> 
         </div> 
        </div> 
       </fieldset> 
@@ -123,7 +123,7 @@
       },"不相符，请重新输入");
 
       $("#registerForm").validate({
-        submitHandler: function(){
+        submitHandler: function validateCode(){
           $.ajax({
             url: "processReg",
             type: "POST",
@@ -199,7 +199,6 @@
       },
     }
   });
-/** /表单验证代码 **/
 
 })
 
