@@ -99,7 +99,37 @@
   <s:include value="footer.jsp" />
   <!-- 页尾信息 --> 
   <script src="js/jquery.validate.min.js"></script> 
-  <script>    
+  <script>
+//提交到服务器
+  function formsubmit(){
+  	alert("XXX");
+    $.ajax({
+      url: "processReg",
+      type: "POST",
+      dataType: "json",
+      data: {
+        "user.name": $("#inputUsername").val(),
+        "user.pwd": $("#inputUserPassword").val(),
+        "user.email": $("#inputUserEmail").val(),
+      },
+      success: function(resdata){
+      	console.log(resdata);
+        //$('#sousaiRemindDialog').modal({backdrop:static});
+        console.log("dialoged!");
+        //5秒后跳转至首页
+        window.setTimeout("window.location='index.jsp'",5000);
+        var resetbtn = confirm("注册成功，点击确定直接跳转至首页，点击取消将在5秒后跳转至首页。");
+        if (resetbtn == true){
+          location.href = "index.jsp";
+        }
+        console.log("location.hrefed!");
+      },
+      error: function(jqXHR,textStatus,errorThrown){
+      	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+        alert("抱歉，发送数据出错了，请重新输入。");
+      }
+    });
+  }
     $(function(){
       /** 生成验证码 **/
       createCode("inputValidateImg");
@@ -109,37 +139,6 @@
       $("#inputUserPassword").tooltip();
 
       /** 表单验证代码 **/
-      //提交到服务器
-      function formsubmit(){
-      	alert("XXX");
-        $.ajax({
-          url: "processReg",
-          type: "POST",
-          dataType: "json",
-          data: {
-            "user.name": $("#inputUsername").val(),
-            "user.pwd": $("#inputUserPassword").val(),
-            "user.email": $("#inputUserEmail").val(),
-          },
-          success: function(resdata){
-          	console.log(resdata);
-            //$('#sousaiRemindDialog').modal({backdrop:static});
-            console.log("dialoged!");
-            //5秒后跳转至首页
-            window.setTimeout("window.location='index.jsp'",5000);
-            var resetbtn = confirm("注册成功，点击确定直接跳转至首页，点击取消将在5秒后跳转至首页。");
-            if (resetbtn == true){
-              location.href = "index.jsp";
-            }
-            console.log("location.hrefed!");
-          },
-          error: function(jqXHR,textStatus,errorThrown){
-          	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-            alert("抱歉，发送数据出错了，请重新输入。");
-          }
-        });
-      }
-      
       //添加验证 验证码方法
       $.validator.addMethod("isEqual",function(value,element,param){
         var target = $(param);
