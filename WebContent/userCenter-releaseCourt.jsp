@@ -89,7 +89,7 @@
            <label class="control-label" for="selectCourtType">场地类型：</label> 
            <div class="controls"> 
             <!-- 选择场地类型 --> 
-            <select class="selectCourtType" name="courtTypeId">
+            <select class="selectCourtType" name="court.courtTypeId">
               <option value=0>请先选择比赛类型</option>
             </select> 
             <!-- /选择场地类型 --> 
@@ -315,11 +315,11 @@
     //console.log("填写隐藏地区表单");
     //获取地区Code
     if( $(".form-inline > .selectCountry option:selected").attr("value") !=0 ){
-      $("#inputRegion").attr("value",$(".form-inline > .selectCountry option:selected").attr("value"));alert($("#inputRegion").attr("value"));
+      $("#inputRegion").attr("value",$(".form-inline > .selectCountry option:selected").attr("value"));alert($("#inputRegion").attr("value")+$("#inputRegion").attr("name"));
     }else if( $(".form-inline > .selectCity option:selected").attr("value") !=0 ){
-      $("#inputRegion").attr("value",$(".form-inline > .selectCity option:selected").attr("value"));alert($("#inputRegion").attr("value"));
+      $("#inputRegion").attr("value",$(".form-inline > .selectCity option:selected").attr("value"));alert($("#inputRegion").attr("value")+$("#inputRegion").attr("name"));
     }else{
-      $("#inputRegion").attr("value",$(".form-inline > .selectProvince option:selected").attr("value"));alert($("#inputRegion").attr("value"));
+      $("#inputRegion").attr("value",$(".form-inline > .selectProvince option:selected").attr("value"));alert($("#inputRegion").attr("value")+$("#inputRegion").attr("name"));
     }
     
     //提交表单
