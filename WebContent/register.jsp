@@ -70,7 +70,7 @@
        </div> 
        <div class="control-group"> 
         <div class="controls"> 
-         <button class="btn btn-primary btn-success span2" type="submit" onclick="validateCode();">注册</button> 
+         <button class="btn btn-primary btn-success span2" type="submit">注册</button> 
         </div> 
        </div> 
       </fieldset> 
