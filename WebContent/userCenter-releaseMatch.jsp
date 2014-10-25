@@ -295,7 +295,7 @@
         for (var i = 0; i < rspdata.length; i++) {
           sctParMatchType.append("<option value=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</option>");
         }
-        sctParMatchType.append("<option value=-1>其他</option>"); //每一个大类比赛类型的“其他”选项
+        sctParMatchType.append("<option value=1>其他</option>"); //每一个大类比赛类型的“其他”选项
       },
       error: function() {
         alert("抱歉，获取比赛类型出错了。");
@@ -311,7 +311,7 @@
   $(".selectParticularMatchType").change(function() {
     //tgPrt: targetparent 目标父元素
     var tgPrt = $(this).parent();
-    if (tgPrt.find(".selectParticularMatchType option:selected").attr("value") == -1 && omtf == 0){
+    if (tgPrt.find(".selectParticularMatchType option:selected").attr("value") == 1 && omtf == 0){
       //移除name属性，即不会使用select内容提交
       $(this).removeAttr("name");
       //当用户选择其他的时候，弹出隐藏的label和input
@@ -319,6 +319,28 @@
       //添加输入框的name属性，并改变omtf
       $("#otherMatchType").attr("name","court.matchType");
       omtf = 1;
+
+      console.log("获得场地类型");
+        $.ajax({
+          type: "POST",
+          url: "showCT",
+          contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+          data: {
+            "matchId": tgPrt.find(".selectParticularMatchType option:selected").attr("value"),
+          },
+          dataType: "json",
+          success: function(rspdata) {
+            var sctCourtType = $(".selectCourtType");
+            sctCourtType.empty().append("<option value=0>请选择场地类型</option>");
+            for (var i = 0; i < rspdata.length; i++) {
+              sctCourtType.append("<option value=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</option>");
+            }
+          },
+          error: function() {
+            alert("抱歉，获取场地类型出错了。");
+          },
+        }); //ajax 已得到场地类型
+        
     }else if (tgPrt.find(".selectParticularMatchType option:selected").attr("value") == 0) {
       //存在场地类型的下拉列表时 当用户选择具体比赛类型为默认选项时的时候，就将场地类型下拉列表框中原有的“请选择”字样删除。
       if ($(".selectCourtType").length != 0) {
