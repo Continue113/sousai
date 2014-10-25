@@ -102,7 +102,7 @@
            <div class="controls form-inline"> 
             <s:include value="selectPCC.jsp" />
             <!-- /选择省市区三级下拉框 --> 
-            <input class="hide" id="inputRegion" type="text" name="regionId" value=""/>
+            <input class="hide" id="inputRegion" type="text" name="court.regionId" value=""/>
            </div> 
           </div> 
           <div class="control-group"> 
