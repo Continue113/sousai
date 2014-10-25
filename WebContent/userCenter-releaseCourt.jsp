@@ -102,7 +102,7 @@
            <div class="controls form-inline"> 
             <s:include value="selectPCC.jsp" />
             <!-- /选择省市区三级下拉框 --> 
-            <input class="hide" id="inputRegion" type="text" name="region" value=""/>
+            <input class="hide" id="inputRegion" type="text" name="regionId" value=""/>
            </div> 
           </div> 
           <div class="control-group"> 
@@ -315,11 +315,11 @@
     //console.log("填写隐藏地区表单");
     //获取地区Code
     if( $(".form-inline > .selectCountry option:selected").attr("value") !=0 ){
-      $("#inputRegion").attr("value",$(".form-inline > .selectCountry option:selected").attr("value"));
+      $("#inputRegion").attr("value",$(".form-inline > .selectCountry option:selected").attr("value"));alert($("#inputRegion").attr("value"));
     }else if( $(".form-inline > .selectCity option:selected").attr("value") !=0 ){
-      $("#inputRegion").attr("value",$(".form-inline > .selectCity option:selected").attr("value"));
+      $("#inputRegion").attr("value",$(".form-inline > .selectCity option:selected").attr("value"));alert($("#inputRegion").attr("value"));
     }else{
-      $("#inputRegion").attr("value",$(".form-inline > .selectProvince option:selected").attr("value"));
+      $("#inputRegion").attr("value",$(".form-inline > .selectProvince option:selected").attr("value"));alert($("#inputRegion").attr("value"));
     }
     
     //提交表单
