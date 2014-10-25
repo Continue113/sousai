@@ -128,12 +128,13 @@
            <div class="controls controls-error"></div> 
           </div> 
           <div class="control-group"> 
-           <label class="control-label" for="matchPlace">比赛地点：</label> 
+           <label class="control-label" for="matchRegion">比赛地点：</label> 
            <div class="controls form-inline"> 
             <s:include value="selectPCC.jsp" />
             <!-- /选择省市区三级下拉框 --> 
-            <a href="#" class="btn btn-success pull-right" id="searchExistedCourt">搜索现有球场</a> 
+            <a href="#" class="btn btn-success pull-right" id="searchExistedCourt">搜索现有球场</a>
            </div> 
+           <label for="matchRegion" class="matchRegion-error error hide">请至少选择省、市、区中的一个作为比赛地点</label>
           </div> 
           <div class="control-group existCourtsBox"> 
            <table class="table table-striped table-hover"> 
@@ -216,6 +217,7 @@
             <button type="button" class="btn btn-success pull-right" id="rlsMatch">确定发布</button>
             <button type="reset" class="btn pull-right" id="resetMatchForm">重置</button>
             <button type="button" class="btn pull-right" name="preView">预览</button> 
+            <button type="button" class="btn pull-right" id="sendCourtId">发送courtId获得courtBean</button> 
            </div> 
           </div> 
          </fieldset> 
@@ -243,6 +245,29 @@
   <script src="js/jplist.min.js"></script> 
   <script>
   $(function () {
+	  //sendCourtId
+	  $("#sendCourtId").click(function(){
+		  $.ajax({
+		      type: "POST",
+		      url: "getCourtD",
+		      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		      data: {
+		        "id": 2,
+		      },
+		      dataType: "json",
+		      success: function(rspdata) {
+		        alert(rspdata);console.log(rspdata);
+		      },
+		      error: function() {
+		        alert("出错了。");
+		      },
+		    }); //ajax
+	  });
+	  
+	  /////////////////////////////
+	  
+	  
+	  
   //初始化比赛类型
   function initMatchType(){
     //console.log("调用初始化比赛类型");
@@ -260,6 +285,9 @@
   
   //选择比赛地点时，修改下方添加新场地的区域
   $("#releaseMatchForm .controls > .selectProvince").change(function(){
+	  //当未选择省就提交表单时，出现提示，当选择省时隐藏未选择省的错误提示
+	  $(".matchRegion-error").hide();
+	  
 	  var tgPrt = $(this).parent();
 	  $("#newCourtRegion > .newCourtProvince").text( tgPrt.find(".selectProvince option:selected").text() );
 	  $("#newCourtRegion > .newCourtCity").text( tgPrt.find(".selectCity option:selected").text() );
@@ -412,7 +440,7 @@
   });
 
   /** 选中表格某行 **/
-  $("tbody>tr").click(function(){
+  $("tbody>tr").on('click',function(event){
     $("tr").removeClass("active");
     $(this).addClass("active");
     $("#hideCourtId").attr("value",$(this).attr("data-courtid"));
@@ -531,7 +559,6 @@
     $("div.existCourtsBox").slideUp();
 
     //删除已有$("#hideCourtId")中的name属性，将value设置为空 .attr("value","")
-    alert("删除已有$(\"#hideCourtId\")中的name属性");
     $("#hideCourtId").removeAttr("name");
 
   }else {//若复选框不是选中的，则滑出已有场地列表并删除添加新场地的表单
@@ -540,7 +567,6 @@
     $("div.inputCourt").remove();
 
     //恢复已有$("#hideCourtId")中的name属性，将value设置为空 .attr("value","")
-    alert("恢复已有$(\"#hideCourtId\")中的name属性");
     $("#hideCourtId").attr("name","match.courtId");
   }
   });
@@ -565,37 +591,50 @@
     $("#" + editor.id).valid();
   }
   });
+  
   /** 表单验证 **/
   var matchValidator = $("#releaseMatchForm").submit(function() {
     // update underlying textarea before submit validation
     tinyMCE.triggerSave();
   }).validate({
     submitHandler: function(){
-      alert("发布比赛成功");
-      //form.submit();
-      $("#releaseMatchForm").submit();
+      //alert("发布比赛成功");
+      if( $(".selectProvince option:selected").attr("value") == 0 ){
+    	  $(".matchRegion-error").show();
+      }else{
+          $("#releaseMatchForm").submit();
+      }
     },
   ignore: "",
   rules: {
-    inputMatchTitle: {
+    "match.name": {
       minlength: 6,
       maxlength: 30
+    },
+    "court.courtTypeId": {
+    	min: 1,
+    },
+    "match.type": {
+    	min: 1,
+    },
+    "mcId": {
+    	min: 1,
     }
   },
   messages: {
-    inputMatchTitle: {
+	"match.name": {
       required: "请输入比赛名称",
       minlength: "比赛名称至少6个字符",
       maxlength: "比赛名称至多30个字符"
     },
-    inputMatchRules: "请输入比赛规程",
-    inputCourtName: "请输入场地名称",
-    inputCourtAddress: "请输入场地地址",
-    selectMatchType: "请选择一种比赛类型",
-    selectCourtType: "请选择一种场地类型",
-    inputMatchTimefrom: "请选择开始日期",
-    inputMatchTimeto: "请选择结束日期",
-    inputMatchRules: "请填写比赛规程"
+    "match.rule": "请输入比赛规程",
+    "court.name": "请输入场地名称",
+    "court.addr": "请输入场地地址",
+    "match.beginTime": "请选择开始日期",
+    "match.endTime": "请选择结束日期",
+    "court.courtTypeId": "",
+    "match.type": "",
+    "mcId": "",
   },
   errorPlacement: function(error, element){
     if(element.parent().hasClass("input-append")){
