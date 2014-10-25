@@ -70,7 +70,7 @@
        </div> 
        <div class="control-group"> 
         <div class="controls"> 
-         <button class="btn btn-primary btn-success span2" type="submit">注册</button> 
+         <input class="btn btn-primary btn-success span2" type="submit" value="注册"/>
         </div> 
        </div> 
       </fieldset> 
@@ -122,7 +122,7 @@
       },"不相符，请重新输入");
 
       $("#registerForm").validate({
-        submitHandler: function(){
+        submitHandler: function(form){
           $.ajax({
             url: "processReg",
             type: "POST",
