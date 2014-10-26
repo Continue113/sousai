@@ -76,6 +76,7 @@ $(function() {
           url: "selRegion",
           contentType: "application/x-www-form-urlencoded; charset=UTF-8",
           data: {
+            "region.level": 2,
             "region.name": cName,
             "region.code": cCode,
             "region.order": order,
@@ -200,6 +201,7 @@ $(function() {
         url: "selRegion",
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         data: {
+          "region.level": 2,
           "region.code": tgPrt.find(".selectCity option:selected").attr("value"),
           "region.order": tgPrt.find(".selectCity option:selected").attr("data-order")
         },
