@@ -129,7 +129,7 @@
            <p class="evaluation-authorMain">天津市第五届百年皖酒“杯XXXXXXXXXX</p> 
            <p class="releasetime">2013年12月29日 15:39</p> 
            <ul class="evaluation-tool-reply">
-           <li class="evaluation-tool"><a class="evaluation-tool-visible" onclick="visibleReply('hide')">隐藏回复</a><a class="evaluation-tool-a" href="#myModal">我要补充下</a></li>
+           <li class="evaluation-tool"><a class="evaluation-tool-visible" href="javascript:void(0);">隐藏回复</a>&nbsp;&nbsp;<a class="evaluation-tool-a" href="#myModal">我要补充下</a></li>
            <li class="evaluation-reply">
             <div class="media evaluation"> 
             <div class="pull-left"> 
@@ -178,6 +178,22 @@
            </ul>
           </div> 
          </div> 
+         
+         <div class="media evaluation"> 
+          <div class="pull-left author"> 
+           <img class="media-object" src="img/defaultImg.png" /> 
+           <div class="evaluationName">
+             KINGLION 
+           </div> 
+          </div> 
+          <div class="media-body"> 
+           <p class="evaluation-authorMain">天津市第五届百年皖酒“杯XXXXXXXXXX</p> 
+           <p class="releasetime">2013年12月29日 15:39</p> 
+           <ul class="evaluation-tool-reply">
+           <li class="evaluation-tool"><a class="evaluation-tool-visible" href="javascript:void(0);">无回复</a>&nbsp;&nbsp;<a class="evaluation-tool-a" href="#myModal">我要补充下</a></li>
+           </ul>
+          </div> 
+         </div>
 
          <div class="media evaluation"> 
           <div class="pull-left author"> 
@@ -190,7 +206,7 @@
            <p class="evaluation-authorMain">天津市第五届百年皖酒“杯XXXXXXXXXX</p> 
            <p class="releasetime">2013年12月29日 15:39</p> 
            <ul class="evaluation-tool-reply">
-           <li class="evaluation-tool"><a class="evaluation-tool-visible" onclick="visibleReply('hide')">隐藏回复</a><a class="evaluation-tool-a" href="#myModal">我要补充下</a></li>
+           <li class="evaluation-tool"><a class="evaluation-tool-visible" href="javascript:void(0);">隐藏回复</a>&nbsp;&nbsp;<a class="evaluation-tool-a" href="#myModal">我要补充下</a></li>
            <li class="evaluation-reply">
             <div class="media evaluation"> 
             <div class="pull-left"> 
@@ -376,13 +392,18 @@
         },
         }); //ajax 已得到评论信息
         
-     /** 点击隐藏或者显示评论回复   **/
-     function visibleReply(visible){
-        if(visible == "hide"){
-          $(this).parent().find(".evaluation-reply").slidUp("slow");
-        };
-     }
-     /** 点击我要补充下，滑出回复框 **/
+        
+     /** 点击隐藏回复 和 显示回复  **/
+     $("body").on("click",".evaluation-tool-visible",function(){
+    	 console.log($(this).text());
+    	 if( $(this).text() == "隐藏回复" ){
+    		 $(this).text("显示回复").parent().parent().find(".evaluation-reply").slideUp("slow");
+    	 }else if( $(this).text() == "显示回复" ){
+    		 $(this).text("隐藏回复").parent().parent().find(".evaluation-reply").slideDown("slow");
+    	 }
+     });
+        
+     /** 点击我要补充下，滑出回复框  **/
      function appendTextarea (target,img,name,id,parentName) { //添加“我要补充下”回复框
       var respStr = '<li class="evaluation-response-li hide"><div class="media evaluation-response"><div class="pull-left"><img class="media-object" src="'+img+'" /><div class="evaluationName" id="evaluationName-temp" data-userid="'+id+'">'+name+'</div></div><div class="media-body"><div class="inputRadios pull-right"><textarea id="inputResponse-temp" <s:if test="#session.userBean.userName!=null"></s:if><s:else>disabled="disabled" readonly="readonly"</s:else> > <s:if test="#session.userBean.userName!=null"> 【回复 '+parentName+' 】：</s:if><s:else>请先登录。</s:else> </textarea><div class="radios"><div class="validateCode-main pull-left">验证码&nbsp;:<input type="text" class="input-small" id="inputValidateCodeTemp" name="inputValidateCodeTemp" placeholder="验证码" required="required" /><span id="inputValidateImgTemp" class="code" onclick="createCode(\'inputValidateImgTemp\')"></span><span class="code-changeLink" onclick="createCode(\'inputValidateImgTemp\')"> 换一张</span></div><label for="hideResponse-temp" class="radio inline pull-right"><input type="radio" id="hideResponse-temp" name="responseState-temp" value="1"/>匿名</label><label for="publicResponse-temp" class="radio inline pull-right"><input type="radio" id="publicResponse-temp" name="responseState-temp" value="0" checked="checked"/>公开</label></div></div><button class="btn pull-right" id="cancle-temp">取消</button><button id="reply-temp" class="span2 btn btn-success pull-right<s:if test="#session.userBean.userName!=null"></s:if><s:else> disabled</s:else>">发表评论</button><input type="submit" class="span2 btn btn-success pull-right hide" value="发表评论"/> </div></div></li>';
       target.append(respStr);
@@ -479,7 +500,6 @@
      });
     /** 直接发表评论 **/
     $("#reply-main").click(function(){
-
       $(".evaluations .evaluation-response-li").slideUp("slow",function(){
         $(".evaluations .evaluation-response-li").remove();
       });//把所有的“我要补充下”的回复框移除
@@ -493,7 +513,7 @@
           respImgSrc = $(this).parent().parent().find("img").attr("src"),
           respDate = new Date(),
           respTime = respDate.toLocaleString(),          
-          respCode = '<div class="media evaluation"><div class="pull-left author"><img class="media-object" src="'+respImgSrc+'" /><div class="evaluationName">'+respName+'</div></div><div class="media-body"><p class="evaluation-authorMain">'+mesg+'</p><p class="releasetime">'+respTime+'</p><ul class="evaluation-tool-reply"><li class="evaluation-tool"><a href="#myModal">我要补充下</a></li></ul></div></div>',
+          respCode = '<div class="media evaluation"><div class="pull-left author"><img class="media-object" src="'+respImgSrc+'" /><div class="evaluationName">'+respName+'</div></div><div class="media-body"><p class="evaluation-authorMain">'+mesg+'</p><p class="releasetime">'+respTime+'</p><ul class="evaluation-tool-reply"><li class="evaluation-tool"><a class="evaluation-tool-visible" href="javascript:void(0);">隐藏回复</a>&nbsp;&nbsp;<a class="evaluation-tool-a" href="#myModal">我要补充下</a></li></ul></div></div>',
           target = $(".evaluations"),
           inputValidateImg = $("#inputValidateImg").text().toUpperCase(),
           inputValidateCaodeMain = $("#inputValidateCodeMain").val().toUpperCase();
@@ -594,7 +614,6 @@
       var imgSrc = $(this).find("img").attr("src");
       $(".courtImg-big > img").attr("src",imgSrc);
     });
-    /****/
 
     /** 列表排序 **/
     $('#courtRecord').jplist({
@@ -602,7 +621,6 @@
           itemPath: '.tbl-item',
           panelPath: '.jplist-panel'
         });
-    /****/
   });
   </script>  
  </body>

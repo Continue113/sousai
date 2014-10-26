@@ -90,7 +90,7 @@
         <div class="page-header"> 
          <h4>比赛基本信息</h4> 
         </div> 
-        <form id="releaseMatchForm" class="form-horizontal" action="relMatch" method="post"> 
+        <form id="releaseMatchForm" class="form-horizontal" action="relMatch" method="post" enctype="multipart/form-data"> 
          <fieldset> 
           <legend>比赛基本信息</legend> 
           <div class="control-group"> 
@@ -216,7 +216,6 @@
             <button type="button" class="btn btn-success pull-right" id="rlsMatch">确定发布</button>
             <button type="reset" class="btn pull-right" id="resetMatchForm">重置</button>
             <button type="button" class="btn pull-right" name="preView">预览</button> 
-            <button type="button" class="btn pull-right" id="sendCourtId">发送courtId获得courtBean</button> 
            </div> 
           </div> 
          </fieldset> 
@@ -244,28 +243,6 @@
   <script src="js/jplist.min.js"></script> 
   <script>
   $(function () {
-	  //sendCourtId
-	  $("#sendCourtId").click(function(){
-		  $.ajax({
-		      type: "POST",
-		      url: "getCourtD",
-		      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-		      data: {
-		        "id": 2,
-		      },
-		      dataType: "json",
-		      success: function(rspdata) {
-		        alert(rspdata);console.log(rspdata);
-		      },
-		      error: function() {
-		        alert("出错了。");
-		      },
-		    }); //ajax
-	  });
-	  
-	  ///////////////////////////
-	  
-	  
   //初始化比赛类型
   function initMatchType(){
     //console.log("调用初始化比赛类型");
@@ -515,7 +492,7 @@
 	        
 	        //若没有相应的结果，给出提醒
 	        if($(".tritem").length == 0){
-	        	alert("在您选择的比赛地点没有搜索到已有场地，请更换比赛地点或在此地点添加新场地。");
+	        	console.log("在您选择的比赛地点没有搜索到已有场地，请更换比赛地点或在此地点添加新场地。");
 	        	$(".jplist-no-results").show();
 	        }
 	      },

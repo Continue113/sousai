@@ -102,7 +102,8 @@
            <div class="controls form-inline"> 
             <s:include value="selectPCC.jsp" />
             <!-- /选择省市区三级下拉框 --> 
-            <input class="hide" id="inputRegion" type="text" name="court.regionId" value=""/>
+            <input class="hide" id="inputRegionId" type="text" name="court.regionId" value=""/>
+            <input class="hide" id="inputRegion" type="text" name="court.region" value=""/>
            </div> 
           </div> 
           <div class="control-group"> 
@@ -115,7 +116,7 @@
           <div class="control-group"> 
            <label class="control-label" for="inputCourtTables">赛场数：</label> 
            <div class="controls"> 
-            <input class="span5" type="text" id="inputCourtTables" name="court.tableNum" placeholder="如：12 或 1 " /> 
+            <input class="span5" type="number" id="inputCourtTables" name="court.tableNum" placeholder="如：12 或 1 " min="1" /> 
            </div> 
           </div> 
           <div class="control-group"> 
@@ -343,16 +344,18 @@
       return false;
     };
 
-    //console.log("填写隐藏地区表单");
-    //获取地区Code
+    console.log("填写隐藏地区表单");
+    //获取地区region和regionId
     if( $(".form-inline > .selectCountry option:selected").attr("value") !=0 ){
-      $("#inputRegion").attr("value",$(".form-inline > .selectCountry option:selected").attr("data-regionid"));//alert($("#inputRegion").attr("value")+$("#inputRegion").attr("name"));
+      $("#inputRegionId").attr("value",$(".form-inline > .selectCountry option:selected").attr("data-regionid"));//alert($("#inputRegion").attr("value")+$("#inputRegion").attr("name"));
+      $("#inputRegion").attr("value", $(".form-inline > .selectProvince option:selected").text() + "-" + $(".form-inline > .selectCity option:selected").text() + "-" + $(".form-inline > .selectCountry option:selected").text() );
     }else if( $(".form-inline > .selectCity option:selected").attr("value") !=0 ){
-      $("#inputRegion").attr("value",$(".form-inline > .selectCity option:selected").attr("data-regionid"));//alert($("#inputRegion").attr("value")+$("#inputRegion").attr("name"));
+      $("#inputRegionId").attr("value",$(".form-inline > .selectCity option:selected").attr("data-regionid"));//alert($("#inputRegion").attr("value")+$("#inputRegion").attr("name"));
+      $("#inputRegion").attr("value", $(".form-inline > .selectProvince option:selected").text() + "-" + $(".form-inline > .selectCity option:selected").text() );
     }else{
-      $("#inputRegion").attr("value",$(".form-inline > .selectProvince option:selected").attr("data-regionid"));//alert($("#inputRegion").attr("value")+$("#inputRegion").attr("name"));
+      $("#inputRegionId").attr("value",$(".form-inline > .selectProvince option:selected").attr("data-regionid"));//alert($("#inputRegion").attr("value")+$("#inputRegion").attr("name"));
+      $("#inputRegion").attr("value", $(".form-inline > .selectProvince option:selected").text() );
     }
-    
     //提交表单
     console.log("完成隐藏地区输入框填写,提交表单");
     $("#releaseCourtForm").submit();

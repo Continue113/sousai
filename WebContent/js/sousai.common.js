@@ -3,35 +3,102 @@ $(function() {
 	$("img[src='img/logo.png']").click(function(){
 		window.location.href="index.jsp";
 		});
-	
+
+	  //若存在session中的已选城市，则使用此城市，否则使用新浪IP获得所在城市地点 
+	  if( $(".sessionCity").length != 1 ){
+	  //通过调用新浪IP地址库接口查询用户当前所在国家、省份、城市、运营商信息
+	  $.getScript('http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js', function() {
+	    //   $(".country").html(remote_ip_info.country);
+	    //  $(".province").html(remote_ip_info.province);
+	    $("#city").html(remote_ip_info.city);
+	    //   $(".isp").html(remote_ip_info.isp);
+	  });
+	  }
+
   /** 切换城市 **/
   $("#changeCityBtn").click(function() {
     $(this).parents("p").hide();
     $(this).parent().parent().find(".hdcity-hide").fadeIn();
   });
+  
+  //navbar中 专用的查询函数 当选中一个省份后，查询对应的市区名称
+  $(".selectSessionProvince").change(function() {
+    //tgPrt: targetparent 目标父元素
+    var tgPrt = $(this).parent(),
+    pCode = tgPrt.find(".selectSessionProvince option:selected").attr("value"),
+    pName = tgPrt.find(".selectSessionProvince option:selected").text(),
+    order = tgPrt.find(".selectSessionProvince option:selected").attr("data-order");
+    
+    if (pCode != 0 && pCode != 810000 && pCode != 820000 ) {
+      $.ajax({
+        type: "POST",
+        url: "selRegion",
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        data: {
+          "region.level": 1,
+          "region.name": pName,
+          "region.code": pCode,
+          "region.order": order,
+        },
+        dataType: "json",
+        success: function(rspdata) {
+          var selectCity = tgPrt.find(".selectSessionCity");
+          selectCity.empty().append("<option value=0 data-regionid=0>请选择市</option>");
+          for (var i = 0; i < rspdata.length; i++) {
+            selectCity.append("<option value=" + rspdata[i].code + " data-order=\"" + rspdata[i].order + "\" data-regionid=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</option>");
+          }
+        },
+        error: function() {
+          alert("抱歉，获取市区出错了。ajax错误。");
+        },
+      }); //ajax 已得到城市
+      tgPrt.find(".selectSessionCity").show();
+    } else {
+      //当用户没有选择省份的时候，就将市区下拉列表框中原有的“请选择”字样删除。
+      tgPrt.find(".selectSessionCity").hide().empty().append("<option value=0 data-regionid=0>请选择市</option>");
+    }
+  });
 
   $("#ensureCityBtn").click(function() {
     //tgPrt: targetparent 目标父元素
-    var tgPrt = $(this).parent();
-    if (tgPrt.find(".selectCity option:selected").attr("value") != "0") {
-      var city = $(this).parent().find(".selectCity option:selected").text();
-      tgPrt.parent().find("p > #city").text(city);
+    var tgPrt = $(this).parent(),
+    pName = tgPrt.find(".selectSessionProvince option:selected").text(),
+    pId = tgPrt.find(".selectSessionProvince option:selected").attr("data-regionid"),
+    cName = tgPrt.find(".selectSessionCity option:selected").text(),
+    cId = tgPrt.find(".selectSessionCity option:selected").attr("data-regionid"),
+    cCode = tgPrt.find(".selectSessionCity option:selected").attr("value"),
+    order = tgPrt.find(".selectSessionCity option:selected").attr("data-order");
+    if (cCode != 0) {
+      //将选择的城市发送到服务器端
+      $.ajax({
+          type: "POST",
+          url: "selRegion",
+          contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+          data: {
+            "region.level": 2,
+            "region.name": cName,
+            "region.code": cCode,
+            "region.order": order,
+          },
+          dataType: "json",
+          success: function(rspdata) {
+        	  if(rspdata == 0){
+        	      $("#city").text(city).attr("data-sessionregion","{'pName':'"+pName+"','pId':'"+pId+"','cName':'"+cName+"','cId':'"+cId+"','code':'"+cCode+"'}");
+        	  }else{
+                  alert("抱歉，获取市区出错了。代码不为0。");
+        	  }
+          },
+          error: function() {
+            alert("抱歉，获取市区出错了。ajax错误。");
+          },
+        }); //ajax 已发送
     }
     tgPrt.hide();
     tgPrt.parent().find("p").fadeIn();
   });
-
+  	
   /** 工具提示 **/
   $(".add-on").tooltip();
-
-  //通过调用新浪IP地址库接口查询用户当前所在国家、省份、城市、运营商信息
-  $.getScript('http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js', function() {
-    //   $(".country").html(remote_ip_info.country);
-    //  $(".province").html(remote_ip_info.province);
-    $("#city").html(remote_ip_info.city);
-    //   $(".isp").html(remote_ip_info.isp);
-  });
-
   /** 搜索栏选择分类 **/
   $(".add-selectType").click(function() {
     $('#myModal').modal({
@@ -45,7 +112,6 @@ $(function() {
   });
 
   /** 添加本地收藏 **/
-
   function AddFavorite(sURL, sTitle) {
     try {
       window.external.addFavorite(sURL, sTitle);
