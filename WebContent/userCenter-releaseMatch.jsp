@@ -427,8 +427,7 @@
   });
 
   /** 选中表格某行 **/
-  $(".tritem").on('click',function(event){
-    alert("选中了某个tr");
+  $("tbody").on("click",".tritem",function(event){
     $("tr").removeClass("active");
     $(this).addClass("active");
     $("#hideCourtId").attr("value",$(this).attr("data-courtid"));
@@ -490,7 +489,6 @@
 	    	        	+ rspdata[i].id + '">详细</a></td></tr>'	        			
 	        	);
 	        }
-	        
 	        //若没有相应的结果，给出提醒
 	        if($(".tritem").length == 0){
 	        	console.log("在您选择的比赛地点没有搜索到已有场地，请更换比赛地点或在此地点添加新场地。");
