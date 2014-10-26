@@ -41,7 +41,7 @@ public class UploadUserPicAction extends UserBaseAction {
 	public String execute() throws Exception
 	{
 		MyPrint.myPrint("in uploadUserPic");
-		Long userId = ((UserBean)ActionContext.getContext().getSession().get("userBean")).getUserId();
+		Integer userId = ((UserBean)ActionContext.getContext().getSession().get("userBean")).getUserId();
 		String result = umg.saveUserPic(getImage(), "head." + getImgType(), userId);
 		result += "/head." + getImgType();
 		MyPrint.myPrint(result);

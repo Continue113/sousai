@@ -90,17 +90,17 @@ public interface UserManager
 	 */
 	public int uploadPic(int pic, Object po) throws Exception;
 	
-	public String uploadPic(int flag, File[] images, String[] imgNames, Long userId);
+	public String uploadPic(int flag, File[] images, String[] imgNames, Integer userId);
 	
 	public InputStream getPic(Long courtId);
 	
 	/**
 	 * 更新Session中用户，比赛，场地信息
 	 * @param key "userBean"、"courtBean"、"matchBean"中德一个，表明需要更新的信息
-	 * @param id 在数据库中德标识
+	 * @param integer 在数据库中德标识
 	 * @return 1成功   0失败
 	 */
-	public int updateInfo(String key, Long id);
+	public int updateInfo(String key, Integer integer);
 	
 	/**
 	 * 用户发布场地
@@ -123,7 +123,7 @@ public interface UserManager
 	 * @param userId 用户标识名
 	 * @return "fail"失败    若成功，则返回路径名
 	 */
-	public String saveUserPic(File images, String imgNames, Long userId);
+	public String saveUserPic(File images, String imgNames, Integer userId);
 	
 	/**
 	 * 将场地图片存入服务器中
@@ -132,7 +132,7 @@ public interface UserManager
 	 * @param userId 用户表示名
 	 * @return "fail"失败    若成功，则返回路径名
 	 */
-	public String saveCourtPic(File[] images, String[] imgNames, Long userId);
+	public String saveCourtPic(File[] images, String[] imgNames, Integer userId);
 	
 	/**
 	 * 发布评论或回复
@@ -168,8 +168,19 @@ public interface UserManager
 
 	String uploadUserPic(int flag, File[] images, String[] imgNames, Long UserId);
 	
-	public List<Court>getCourtInMatchReling(Integer regionId);
+	public List<CourtBean>getCourtInMatchReling(Integer regionId);
 	
 	public Long relMatch(Match match);
+	/**
+	 * 在查找比赛的时候，通过工作日、比赛状态、地区进行初步筛选
+	 * @param dayOfWeek
+	 * @param state
+	 * @param regionId
+	 * @return
+	 */
+	public List<Match>getMatchByParms(int[] dayOfWeek, int state, int regionId);
 	
+	public List<CourtBean> getCourtByUserId(Integer userId);
+	
+	public CourtBean getByCourtId(Integer id);
 }

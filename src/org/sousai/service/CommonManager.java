@@ -74,4 +74,10 @@ public interface CommonManager
 	 * @throws Exception 
 	 */
 	public List<MatchClass> findAllMatchClassEpt(Integer id) throws Exception;
+	/**
+	 * 查询想要查找的比赛类型，如乒乓球
+	 * @param typeName	球类名称
+	 * @return
+	 */
+	public List<Match> findMatchByMatchTypeName(String typeName);
 }

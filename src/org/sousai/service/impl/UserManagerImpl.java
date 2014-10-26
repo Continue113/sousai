@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -185,7 +186,7 @@ public class UserManagerImpl implements UserManager {
 
 	@Override
 	public String uploadPic(int flag, File[] images, String[] imgNames,
-			Long UserId) {
+			Integer UserId) {
 		// TODO Auto-generated method stub
 		MyPrint.myPrint("in uploadPicAction");
 		if (images != null && imgNames != null) {
@@ -252,7 +253,7 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public int updateInfo(String key, Long id) {
+	public int updateInfo(String key, Integer id) {
 		// TODO Auto-generated method stub
 		ActionContext ctx = ActionContext.getContext();
 		// 更新用户信息
@@ -306,7 +307,7 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public String saveUserPic(File images, String imgNames, Long userId) {
+	public String saveUserPic(File images, String imgNames, Integer userId) {
 		// TODO Auto-generated method stub
 		File tempImgs[] = { images };
 		String tempImgNames[] = { imgNames };
@@ -315,7 +316,7 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public String saveCourtPic(File[] images, String[] imgNames, Long userId) {
+	public String saveCourtPic(File[] images, String[] imgNames, Integer userId) {
 		// TODO Auto-generated method stub
 		return uploadPic(COURT_PIC, images, imgNames, userId);
 
@@ -400,8 +401,25 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public List<Court> getCourtInMatchReling(Integer regionId) {
+	public List<CourtBean> getCourtInMatchReling(Integer regionId) {
 		// TODO Auto-generated method stub
 		return courtDao.findByRegionId(regionId);
+	}
+
+	@Override
+	public List<Match> getMatchByParms(int[] dayOfWeek, int state, int regionId) {
+		return (List<Match>) matchDao.findByParms(dayOfWeek, state, new Date(), regionId);
+	}
+
+	@Override
+	public List<CourtBean> getCourtByUserId(Integer userId) {
+		// TODO Auto-generated method stub
+		return (List<CourtBean>) courtDao.findByUserId(userId);
+	}
+
+	@Override
+	public CourtBean getByCourtId(Integer id) {
+		// TODO Auto-generated method stub
+		return courtDao.get(id);
 	}
 }

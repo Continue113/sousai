@@ -10,7 +10,7 @@ import java.util.*;
 public class User implements Serializable{
 	private static final long serialVersionUID = 48L;
 	//锟斤拷锟斤拷
-	private Long id;
+	private Integer id;
 	private String name;
 	private String pwd;
 	private String email;
@@ -36,13 +36,13 @@ public class User implements Serializable{
 	/**
 	 * @return the id
 	 */
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	/**

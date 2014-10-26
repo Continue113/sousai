@@ -17,7 +17,7 @@ import org.sousai.domain.User;
 public class UserBean implements Serializable 
 {
 	private static final long serialVersionUID = -5031624436228209839L;
-	private Long userId;
+	private Integer userId;
 	private String userName;
 	private String userPwd;
 	private String userEmail;
@@ -32,7 +32,7 @@ public class UserBean implements Serializable
 	}
 	
 	//��ʼ���������ԵĹ�����
-	public UserBean(Long userId, String userName, String userPwd,
+	public UserBean(Integer userId, String userName, String userPwd,
 			String userEmail, char userType, String userPicId,
 			Timestamp userRegTime, Timestamp userLastLogTime)
 	{
@@ -46,7 +46,7 @@ public class UserBean implements Serializable
 		this.setUserType(userType);
 	}
 	
-	public UserBean(Long userId, String userName, String userPwd,
+	public UserBean(Integer userId, String userName, String userPwd,
 			String userEmail, char userType)
 	{
 		this.setUserId(userId);
@@ -68,11 +68,11 @@ public class UserBean implements Serializable
 		this.userType = user.getType();
 	}
 	//userId ��setter��getter
-	public void setUserId(long userId)
+	public void setUserId(int userId)
 	{
 		this.userId = userId;
 	}
-	public Long getUserId()
+	public Integer getUserId()
 	{
 		return this.userId;
 	}

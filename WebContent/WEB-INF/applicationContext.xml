@@ -18,7 +18,7 @@
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close"
 		p:driverClass="com.mysql.jdbc.Driver"
-		p:jdbcUrl="jdbc:mysql://localhost:3306/sousai?zeroDateTimeBehavior=convertToNull"
+		p:jdbcUrl="jdbc:mysql://localhost:3306/SOUSAI?zeroDateTimeBehavior=convertToNull"
 		p:user="root"
 		p:password="root"
 		p:maxPoolSize="2"
@@ -71,10 +71,11 @@
 	<!-- 配置Hibernate的局部事务管理器，使用HibernateTransactionManager类 -->
 	<!-- 该类实现PlatformTransactionManager接口，是针对Hibernate的特定实现-->
 	<!-- 并注入SessionFactory的引用 -->
-	<bean id="transactionManager" class=
-		"org.springframework.orm.hibernate3.HibernateTransactionManager"
+	<bean id="transactionManager"
+		class=	"org.springframework.orm.hibernate3.HibernateTransactionManager"
 		p:sessionFactory-ref="sessionFactory"/>
-
+	
+	
 	<!-- 配置事务增强处理Bean,指定事务管理器 -->
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<!-- 用于配置详细的事务语义 -->
@@ -85,7 +86,17 @@
 			<tx:method name="*"/>
 		</tx:attributes>
 	</tx:advice>
+	
 
+	<aop:config>
+	<!-- 		配置一个切入点，匹配empManager和mgrManager
+			两个Bean的所有方法的执行 -->
+		<aop:pointcut id="leePointcut"
+			expression="bean(userManager)||bean(commonManager)"/>
+<!--		指定在leePointcut切入点应用txAdvice事务增强处理 --> 
+		<aop:advisor advice-ref="txAdvice" 
+			pointcut-ref="leePointcut"/>
+	</aop:config>
 	<!-- 定义业务逻辑组件模板 -->
 	<!-- 为之注入DAO组件 -->
 	<bean id="managerTemplate" abstract="true" lazy-init="true"

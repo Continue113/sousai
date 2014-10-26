@@ -19,7 +19,7 @@ import java.util.List;
 public class UserDaoHibernate extends HibernateDaoSupport
 		implements UserDao
 {
-	public User get(Long id)
+	public User get(Integer id)
 	{
 		return getHibernateTemplate()
 				.get(User.class, id);
@@ -70,7 +70,7 @@ public class UserDaoHibernate extends HibernateDaoSupport
 	}
 
 	@Override
-	public void delete(Long id) {
+	public void delete(Integer id) {
 		// TODO Auto-generated method stub
 		getHibernateTemplate().delete(get(id));
 		
@@ -94,4 +94,5 @@ public class UserDaoHibernate extends HibernateDaoSupport
 		}
 		return null;
 	}
+
 }

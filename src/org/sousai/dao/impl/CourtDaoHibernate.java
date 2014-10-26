@@ -4,71 +4,113 @@ import java.util.List;
 
 import org.sousai.dao.CourtDao;
 import org.sousai.domain.*;
+import org.sousai.tools.MyPrint;
+import org.sousai.vo.CourtBean;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 public class CourtDaoHibernate extends HibernateDaoSupport implements CourtDao {
+	private String selectCourtBeanField = "select c.ID,c.NAME,c.COURTTYPEID,ct.NAME,c.MATCHTYPE,"
+			+ "c.REGIONID,c.REGION,c.ADDR,c.TABLENUM,c.TEL,"
+			+ "c.MATCHCOUNT,c.PRICE,c.WORKTIME,c.INTRO,c.VERIFY,"
+			+ "c.RELDATE,c.MODDATE,c.USERID,u.NAME "
+			+ "from COURT c, COURTTYPE ct, USER u "
+			+ "where c.COURTTYPEID=ct.ID and c.USERID=u.ID ";
+	private String selectCourtBean = "select new org.sousai.vo.CourtBean(c.id,c.name,"
+			+ "c.courtTypeId,ct.name,c.matchType,"
+			+ "c.regionId,c.region,c.addr,"
+			+ "c.tableNum,c.tel,c.matchCount,"
+			+ "c.price,c.workTime,c.intro,"
+			+ "c.verify,c.relDate,c.modDate,"
+			+ "c.userId,u.name) "
+			+ "from Court c, CourtType ct, User u "
+			+ "where c.courtTypeId=ct.id and c.userId=u.id ";
+	
 	@Override
-	public Court get(Long id) {
-		// TODO Auto-generated method stub
-		return getHibernateTemplate().get(Court.class, id);
+	public CourtBean get(Integer id) {
+		// return getHibernateTemplate().get(Court.class, id);
+		try {
+			Session session = getHibernateTemplate().getSessionFactory()
+					.getCurrentSession();
+			MyPrint.myPrint("getSession() SUCCeSS");
+			String hql = selectCourtBean;
+			hql += " and c.id=?";
+			MyPrint.myPrint(hql);
+			Query q = session.createQuery(hql);
+			q.setInteger(0, id);
+			return ((List<CourtBean>) q.list()).get(0);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
-	public Long save(Court court) {
-		// TODO Auto-generated method stub
-		return (Long) getHibernateTemplate().save(court);
+	public Integer save(Court court) {
+		return (Integer) getHibernateTemplate().save(court);
 	}
 
 	@Override
 	public void update(Court court) {
-		// TODO Auto-generated method stub
 		getHibernateTemplate().update(court);
 	}
 
 	@Override
 	public void delete(Court court) {
-		// TODO Auto-generated method stub
 		getHibernateTemplate().delete(court);
 	}
 
 	@Override
-	public void delete(Long id) {
-		// TODO Auto-generated method stub
+	public void delete(Integer id) {
 		getHibernateTemplate().delete(get(id));
-
 	}
 
 	@Override
-	public List<Court> findAll() {
-		// TODO Auto-generated method stub
-		return (List<Court>) getHibernateTemplate().find("from Court");
+	public List<CourtBean> findAll() {
+		Session session = getHibernateTemplate().getSessionFactory()
+				.openSession();
+		String hql = selectCourtBeanField;
+		return (List<CourtBean>)session.createQuery(hql).list();
 	}
 
 	@Override
-	public List<Court> findByUser(User user) {
-		// TODO Auto-generated method stub
-		return (List<Court>) getHibernateTemplate().find(
-				"from Court where UserId=?", user.getId());
+	public List<CourtBean> findByUser(User user) {
+		Session session = getHibernateTemplate().getSessionFactory()
+				.getCurrentSession();
+		StringBuffer hql = new StringBuffer(selectCourtBeanField);
+		hql.append("and USERID=?");
+		Query q = session.createQuery(hql.toString());
+		q.setInteger(0, user.getId().intValue());
+		return (List<CourtBean>)q.list();
 	}
 
 	@Override
-	public List<Court> findByCourtType(CourtType courtType) {
-		// TODO Auto-generated method stub
-		return (List<Court>) getHibernateTemplate().find(
-				"from Court where courtType=?", courtType.getId());
+	public List<CourtBean> findByCourtType(CourtType courtType) {
+		Session session = getHibernateTemplate().getSessionFactory()
+				.getCurrentSession();
+		StringBuffer hql = new StringBuffer(selectCourtBeanField);
+		hql.append("and COURTTYPEID=?");
+		Query q = session.createQuery(hql.toString());
+		q.setInteger(0, courtType.getId().intValue());
+		return (List<CourtBean>)q.list();
 	}
 
 	@Override
-	public List<Court> findByMatchType(String matchType) {
-		// TODO Auto-generated method stub
-		return (List<Court>) getHibernateTemplate().find(
-				"from Court where matchType=?", matchType);
+	public List<CourtBean> findByMatchType(String matchType) {
+		Session session = getHibernateTemplate().getSessionFactory()
+				.getCurrentSession();
+		StringBuffer hql = new StringBuffer(selectCourtBeanField);
+		hql.append("and MATCHTYPE=?");
+		Query q = session.createQuery(hql.toString());
+		q.setString(0, matchType);
+		return (List<CourtBean>)q.list();
 	}
 
 	@Override
-	public List<Court> findByPram(User user, CourtType courtType,
-			String matchType, Region region) {
+	public List<CourtBean> findByPram(User user, CourtType courtType, String matchType,
+			Region region) {
 		// TODO Auto-generated method stub
 		String sql = "from court where";
 		int flag = 0;
@@ -95,10 +137,25 @@ public class CourtDaoHibernate extends HibernateDaoSupport implements CourtDao {
 	}
 
 	@Override
-	public List<Court> findByRegionId(Integer regionId) {
-		// TODO Auto-generated method stub
-		return (List<Court>) getHibernateTemplate().find(
-				"from Court where RegionId=?", regionId);
+	public List<CourtBean> findByRegionId(Integer regionId) {
+		Session session = getHibernateTemplate().getSessionFactory()
+				.getCurrentSession();
+		StringBuffer hql = new StringBuffer(selectCourtBeanField);
+		hql.append("and REGIONID=?");
+		Query q = session.createQuery(hql.toString());
+		q.setInteger(0, regionId);
+		return (List<CourtBean>)q.list();
+	}
+
+	@Override
+	public List<CourtBean> findByUserId(Integer userId) {
+		Session session = getHibernateTemplate().getSessionFactory()
+				.getCurrentSession();
+		StringBuffer hql = new StringBuffer(selectCourtBeanField);
+		hql.append("and USERID=?");
+		Query q = session.createQuery(hql.toString());
+		q.setInteger(0, userId);
+		return (List<CourtBean>)q.list();
 	}
 
 }

@@ -105,8 +105,19 @@
 		<action name="getCourtM"
 			class="org.sousai.action.GetCourtInMatchRelingAction">
 		</action>
-	</package>
 
+		<!-- 筛选比赛的action -->
+		<action name="scrMatch"
+			class="org.sousai.action.ScreenMatchAction">
+		</action>
+		
+		<!-- 通过场地id获取场地详细信息的action -->
+		<action name="getCourtD"
+			class="org.sousai.action.GetCourtDetailAction">
+		</action>
+	</package>
+	
+	
 <!--	<package name="ajax" extends="json-default">
 		<action name="uploadPic"
 			class="org.sousai.action.UploadPicAction">

@@ -8,11 +8,12 @@ public class Court implements Serializable
 {
 	private static final long serialVersionUID = -2860243248501180283L;
 	
-	private Long id;
+	private Integer id;
 	private String name;
 	private Integer courtTypeId;
 	private String matchType;
 	private Integer regionId;
+	private String region;
 	private String addr;
 	private Integer tableNum;
 	private String tel;
@@ -25,8 +26,7 @@ public class Court implements Serializable
 	private Date modDate;
 //	private Set<CourtPic> courtPic = new HashSet<CourtPic>();
 //	private Set<Message> message = new HashSet<Message>();
-	private Long userId;
-	
+	private Integer userId;
 	//默认构造器
 	public Court()
 	{
@@ -35,14 +35,14 @@ public class Court implements Serializable
 	/**
 	 * @return the id
 	 */
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -100,6 +100,20 @@ public class Court implements Serializable
 	 */
 	public void setRegionId(Integer regionId) {
 		this.regionId = regionId;
+	}
+
+	/**
+	 * @return the region
+	 */
+	public String getRegion() {
+		return region;
+	}
+
+	/**
+	 * @param region the region to set
+	 */
+	public void setRegion(String region) {
+		this.region = region;
 	}
 
 	/**
@@ -245,14 +259,14 @@ public class Court implements Serializable
 	/**
 	 * @return the userId
 	 */
-	public Long getUserId() {
+	public Integer getUserId() {
 		return userId;
 	}
 
 	/**
 	 * @param userId the userId to set
 	 */
-	public void setUserId(Long userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 

@@ -4,7 +4,7 @@
 <!-- Generated 2014-10-22 20:49:45 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="org.sousai.domain.Match" table="MATCHES">
-        <id name="id" type="java.lang.Long">
+        <id name="id" type="java.lang.Integer">
             <column name="ID" />
             <generator class="identity" />
         </id>
@@ -20,7 +20,7 @@
         <property name="endTime" type="java.sql.Date">
             <column name="ENDTIME" />
         </property>
-        <property name="courtId" type="java.lang.Long">
+        <property name="courtId" type="java.lang.Integer">
             <column name="COURTID" />
         </property>
         <property name="rule" type="java.lang.String">
@@ -35,7 +35,7 @@
         <property name="score" type="java.lang.String">
             <column name="SCORE" />
         </property>
-        <property name="userId" type="java.lang.Long">
+        <property name="userId" type="java.lang.Integer">
             <column name="USERID" />
         </property>
     </class>

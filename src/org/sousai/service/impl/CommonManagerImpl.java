@@ -2,10 +2,7 @@ package org.sousai.service.impl;
 
 import java.util.List;
 
-import org.sousai.domain.CourtType;
-import org.sousai.domain.MatchClass;
-import org.sousai.domain.MatchType;
-import org.sousai.domain.Region;
+import org.sousai.domain.*;
 import org.sousai.service.CommonManager;
 import org.sousai.tools.MyPrint;
 import org.sousai.dao.*;
@@ -123,6 +120,12 @@ public class CommonManagerImpl implements CommonManager {
 		// TODO Auto-generated method stub
 		MyPrint.myPrint("in findAllMatchClassEpt");
 		return matchClassDao.findAllExcept(id);
+	}
+
+	@Override
+	public List<Match> findMatchByMatchTypeName(String typeName) {
+		// TODO Auto-generated method stub
+		return matchDao.findByMatchTypeName(typeName);
 	}
 
 }

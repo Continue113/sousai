@@ -7,38 +7,44 @@ import org.sousai.domain.*;
 
 public interface MatchDao {
 
-	Match get(Long id);
-	
+	Match get(Integer id);
+
 	Long save(Match match);
-	
+
 	void update(Match match);
-	
+
 	void delete(Match match);
-	
-	void delete(Long id);
-	
+
+	void delete(Integer id);
+
 	List<Match> findAll();
-	
+
 	List<Match> findByUser(User user);
-	
+
 	List<Match> findByUserId(Integer userId);
-	
+
 	List<Match> findByMatchType(MatchType matchType);
-	
-	List<Match> findByMatchTypeId(String matchTypeName);
-	
+
+	List<Match> findByMatchTypeName(String matchTypeName);
+
 	List<Match> findByMatchClass(MatchClass matchClass);
-	
+
 	List<Match> findByMatchClassId(Integer matchClassId);
-	
+
 	List<Match> findByMarkingUserId(Integer userId);
+
 	/**
-	 * 
-	 * @param dayOfWeek		1为周日,2为周一，…，7为周六	
-	 * @param state		0为
-	 * @param date	比赛开始时间？
-	 * @param regionId	地点id
-	 * @return
+	 * 根据可选参数，从数据库返回比赛。
+	 * @param dayOfWeek
+	 *            其中的int元素1为周日，2为周一，…，7为周六。若不使用此参数可传递null
+	 * @param state
+	 *            0为报名中，1为比赛中，2为已结束。若不使用此参数，传递-1
+	 * @param date
+	 *            此处应传递当前日期。若state为-1，此处为null
+	 * @param regionId
+	 *            地点id。若不使用此参数，传递-1
+	 * @return		符合参数要求的所有比赛
 	 */
-	List<Match> findByParms(int[] dayOfWeek, int state, Date date, Integer regionId);
+	List<Match> findByParms(int[] dayOfWeek, int state, Date date,
+			Integer regionId);
 }

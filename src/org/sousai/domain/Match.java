@@ -6,40 +6,39 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Timestamp;
 
-public class Match implements Serializable{
+public class Match implements Serializable {
 
 	private static final long serialVersionUID = -2347973669337577325L;
-	
-	private Long id;	//数据库自添加，不用传递给后台
-	private String name;	
+
+	private Integer id; // 数据库自添加，不用传递给后台
+	private String name;
 	private String type;
 	private Date beginTime;
 	private Date endTime;
-	private Long courtId;	//可传可不传
-	private String rule;	//可传可不传
+	private Integer courtId; // 可传可不传
+	private String rule; // 可传可不传
 	private Timestamp relTime;
 	private char verify;
-	private String score;	//可传可不传
-	private Long userId;	//可传可不传
-	
-	
-	//默认构造函数
-	public Match()
-	{
-		
+	private String score; // 可传可不传
+	private Integer userId; // 可传可不传
+
+	// 默认构造函数
+	public Match() {
+
 	}
 
 	/**
 	 * @return the id
 	 */
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -51,7 +50,8 @@ public class Match implements Serializable{
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -65,7 +65,8 @@ public class Match implements Serializable{
 	}
 
 	/**
-	 * @param type the type to set
+	 * @param type
+	 *            the type to set
 	 */
 	public void setType(String type) {
 		this.type = type;
@@ -79,7 +80,8 @@ public class Match implements Serializable{
 	}
 
 	/**
-	 * @param beginTime the beginTime to set
+	 * @param beginTime
+	 *            the beginTime to set
 	 */
 	public void setBeginTime(Date beginTime) {
 		this.beginTime = beginTime;
@@ -93,7 +95,8 @@ public class Match implements Serializable{
 	}
 
 	/**
-	 * @param endTime the endTime to set
+	 * @param endTime
+	 *            the endTime to set
 	 */
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
@@ -102,14 +105,15 @@ public class Match implements Serializable{
 	/**
 	 * @return the courtId
 	 */
-	public Long getCourtId() {
+	public Integer getCourtId() {
 		return courtId;
 	}
 
 	/**
-	 * @param courtId the courtId to set
+	 * @param courtId
+	 *            the courtId to set
 	 */
-	public void setCourtId(Long courtId) {
+	public void setCourtId(Integer courtId) {
 		this.courtId = courtId;
 	}
 
@@ -121,7 +125,8 @@ public class Match implements Serializable{
 	}
 
 	/**
-	 * @param rule the rule to set
+	 * @param rule
+	 *            the rule to set
 	 */
 	public void setRule(String rule) {
 		this.rule = rule;
@@ -135,7 +140,8 @@ public class Match implements Serializable{
 	}
 
 	/**
-	 * @param relTime the relTime to set
+	 * @param relTime
+	 *            the relTime to set
 	 */
 	public void setRelTime(Timestamp relTime) {
 		this.relTime = relTime;
@@ -149,7 +155,8 @@ public class Match implements Serializable{
 	}
 
 	/**
-	 * @param verify the verify to set
+	 * @param verify
+	 *            the verify to set
 	 */
 	public void setVerify(char verify) {
 		this.verify = verify;
@@ -163,7 +170,8 @@ public class Match implements Serializable{
 	}
 
 	/**
-	 * @param score the score to set
+	 * @param score
+	 *            the score to set
 	 */
 	public void setScore(String score) {
 		this.score = score;
@@ -172,14 +180,15 @@ public class Match implements Serializable{
 	/**
 	 * @return the userId
 	 */
-	public Long getUserId() {
+	public Integer getUserId() {
 		return userId;
 	}
 
 	/**
-	 * @param userId the userId to set
+	 * @param userId
+	 *            the userId to set
 	 */
-	public void setUserId(Long userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 
@@ -189,5 +198,5 @@ public class Match implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+
 }

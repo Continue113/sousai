@@ -10,7 +10,7 @@ public interface UserDao {
 	 * @param id
 	 * @return ָ����ʶ���Զ�Ӧ��Userʵ��
 	 */
-	User get(Long id);
+	User get(Integer id);
 	
 	/**
 	 * �־û�ָ����Userʵ�� 
@@ -35,7 +35,7 @@ public interface UserDao {
 	 * ��ݱ�ʾ����ɾ��Userʵ��
 	 * @param id ��Ҫ��ɾ���Userʵ��ı�ʶ����ֵ
 	 */
-	void delete(Long id);
+	void delete(Integer id);
 	
 	/**
 	 * ��ѯȫ����Userʵ��

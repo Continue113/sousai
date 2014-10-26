@@ -7,124 +7,104 @@ import java.io.Serializable;
 public class RegionBean implements Serializable
 {
 	private static final long serialVersionUID = -8689960148505070757L;
-	private Integer id;
-	private String code;
-	private String name;
-	private Integer parentId;
-	private Integer level;
-	private String nameEn;
-	private String nameEnSt;
-	private Integer order;
+	private Integer pId;	//省id
+	private Integer cId;	//市id
+	private String code;	//地区码
+	private String pName;	//省名
+	private String cName;	//市名
 	
 	//默认构造器
-	RegionBean()
+	public RegionBean()
 	{
 	}
-	
-	//初始化所有参数的构造器
-	RegionBean(Integer id, String code, String name, Integer parentId,
-			Integer level, String nameEn, String nameEnSt, Integer order)
-	{
-		this.id = id;
-		this.code =code;
-		this.name = name;
-		this.parentId = parentId;
-		this.level = level;
-		this.nameEn = nameEn;
-		this.nameEnSt = nameEnSt;
-		this.order = order;
+
+	public RegionBean(Integer pId, Integer cId, String code, String pName,
+			String cName) {
+		super();
+		this.pId = pId;
+		this.cId = cId;
+		this.code = code;
+		this.pName = pName;
+		this.cName = cName;
 	}
-	
-	//由Region转化为RegionBean
-	RegionBean(Region region)
-	{
-		this.id = region.getId();
-		this.code = region.getCode();
-		this.name = region.getName();
-		this.parentId = region.getParentId();
-		this.level = region.getLevel();
-		this.nameEn = region.getNameEn();
-		this.nameEnSt = region.getNameEnSt();
-		this.order = region.getOrder();
+
+
+	/**
+	 * @return the pId
+	 */
+	public Integer getpId() {
+		return pId;
 	}
-	
-	//id属性的setter和getter
-	public void setId(Integer id)
-	{
-		this.id = id;
+
+	/**
+	 * @param pId the pId to set
+	 */
+	public void setpId(Integer pId) {
+		this.pId = pId;
 	}
-	public Integer getId()
-	{
-		return this.id;
+
+	/**
+	 * @return the cId
+	 */
+	public Integer getcId() {
+		return cId;
 	}
-	
-	//code属性的setter和getter
-	public void setCode(String code)
-	{
+
+	/**
+	 * @param cId the cId to set
+	 */
+	public void setcId(Integer cId) {
+		this.cId = cId;
+	}
+
+	/**
+	 * @return the code
+	 */
+	public String getCode() {
+		return code;
+	}
+
+	/**
+	 * @param code the code to set
+	 */
+	public void setCode(String code) {
 		this.code = code;
 	}
-	public String getCode()
-	{
-		return this.code;
+
+	/**
+	 * @return the pName
+	 */
+	public String getpName() {
+		return pName;
 	}
 
-	//name属性的setter和getter
-	public void setName(String name)
-	{
-		this.name = name;
-	}
-	public String getName()
-	{
-		return this.name;
-	}
-	
-	//parentId属性的setter和getter
-	public void setParentId(Integer parentId)
-	{
-		this.parentId = parentId;
-	}
-	public Integer getParentId()
-	{
-		return this.parentId;
-	}
-	
-	//level属性的setter和getter
-	public void setLevel(Integer level)
-	{
-		this.level = level;
-	}
-	public Integer getLevel()
-	{
-		return this.level;
-	}
-	
-	//nameEn属性的setter和getter
-	public void setNameEn(String nameEn)
-	{
-		this.nameEn = nameEn;
-	}
-	public String getNameEn()
-	{
-		return this.nameEn;
-	}
-	
-	//nameEnSt属性的setter和getter
-	public void setNameEnSt(String nameEnSt)
-	{
-		this.nameEnSt = nameEnSt;
-	}
-	public String getNameEnSt()
-	{
-		return this.nameEnSt;
+	/**
+	 * @param pName the pName to set
+	 */
+	public void setpName(String pName) {
+		this.pName = pName;
 	}
 
-	//order属性的setter和getter
-	public void setOrder(Integer order)
-	{
-		this.order = order;
+	/**
+	 * @return the cName
+	 */
+	public String getcName() {
+		return cName;
 	}
-	public Integer getOrder()
-	{
-		return this.order;
+
+	/**
+	 * @param cName the cName to set
+	 */
+	public void setcName(String cName) {
+		this.cName = cName;
 	}
+
+	/**
+	 * @return the serialversionuid
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
+	
 }
