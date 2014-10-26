@@ -213,7 +213,7 @@
           <input type="text" class="hide" id="hideUserId" value="<s:property value="#session.userBean.userId"/>" name="match.userId" />
           <div class="control-group"> 
            <div class="controls"> 
-            <button type="button" class="btn btn-success pull-right" id="rlsMatch">确定发布</button>
+            <button type="submit" class="btn btn-success pull-right" id="rlsMatch">确定发布</button>
             <button type="reset" class="btn pull-right" id="resetMatchForm">重置</button>
             <button type="button" class="btn pull-right" name="preView">预览</button> 
            </div> 
@@ -475,7 +475,7 @@
 	        var existCourtsTbody = $(".existCourtsBox > table > tbody");
 	        $(".jplist-no-results").hide(); //隐藏无结果提醒
 	        existCourtsTbody.empty(); //清空已有场地列表
-	        alert(rspdata);console.log(rspdata);
+	        console.log(rspdata);//alert(rspdata);
 	        /** 循环遍历获得的场地信息并加入已有场地列表中 **/
 	        for (var i = 0; i < rspdata.length; i++) {
 	        	existCourtsTbody.append(
