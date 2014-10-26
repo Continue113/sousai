@@ -21,7 +21,7 @@ $(function() {
     $(this).parent().parent().find(".hdcity-hide").fadeIn();
   });
   
-  //navbar中 专用的查询函数 当选中一个省份后，查询对应的市区名称
+  /*//navbar中 专用的查询函数 当选中一个省份后，查询对应的市区名称
   $(".selectSessionProvince").change(function() {
     //tgPrt: targetparent 目标父元素
     var tgPrt = $(this).parent(),
@@ -58,7 +58,7 @@ $(function() {
       //当用户没有选择省份的时候，就将市区下拉列表框中原有的“请选择”字样删除。
       tgPrt.find(".selectSessionCity").hide().empty().append("<option value=0 data-regionid=0>请选择市</option>");
     }
-  });
+  });*/
 
   $("#ensureCityBtn").click(function() {
     //tgPrt: targetparent 目标父元素
@@ -76,10 +76,14 @@ $(function() {
           url: "selRegion",
           contentType: "application/x-www-form-urlencoded; charset=UTF-8",
           data: {
-            "region.level": 2,
             "region.name": cName,
             "region.code": cCode,
             "region.order": order,
+            "regionBean.pName": pName,
+            "regionBean.pId": pId,
+            "regionBean.cName": cName,
+            "regionBean.cId": cId,
+            "regionBean.code": cCode,
             "isNavBar": true
           },
           dataType: "json",
@@ -196,7 +200,6 @@ $(function() {
         url: "selRegion",
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         data: {
-          "region.level": 2,
           "region.code": tgPrt.find(".selectCity option:selected").attr("value"),
           "region.order": tgPrt.find(".selectCity option:selected").attr("data-order")
         },
