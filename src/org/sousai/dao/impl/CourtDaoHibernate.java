@@ -12,12 +12,12 @@ import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 public class CourtDaoHibernate extends HibernateDaoSupport implements CourtDao {
-	private String selectCourtBeanField = "select c.ID,c.NAME,c.COURTTYPEID,ct.NAME,c.MATCHTYPE,"
-			+ "c.REGIONID,c.REGION,c.ADDR,c.TABLENUM,c.TEL,"
-			+ "c.MATCHCOUNT,c.PRICE,c.WORKTIME,c.INTRO,c.VERIFY,"
-			+ "c.RELDATE,c.MODDATE,c.USERID,u.NAME "
-			+ "from COURT c, COURTTYPE ct, USER u "
-			+ "where c.COURTTYPEID=ct.ID and c.USERID=u.ID ";
+//	private String selectCourtBean = "select c.ID,c.NAME,c.COURTTYPEID,ct.NAME,c.MATCHTYPE,"
+//			+ "c.REGIONID,c.REGION,c.ADDR,c.TABLENUM,c.TEL,"
+//			+ "c.MATCHCOUNT,c.PRICE,c.WORKTIME,c.INTRO,c.VERIFY,"
+//			+ "c.RELDATE,c.MODDATE,c.USERID,u.NAME "
+//			+ "from COURT c, COURTTYPE ct, USER u "
+//			+ "where c.COURTTYPEID=ct.ID and c.USERID=u.ID ";
 	private String selectCourtBean = "select new org.sousai.vo.CourtBean(c.id,c.name,"
 			+ "c.courtTypeId,ct.name,c.matchType,"
 			+ "c.regionId,c.region,c.addr,"
@@ -40,7 +40,7 @@ public class CourtDaoHibernate extends HibernateDaoSupport implements CourtDao {
 			MyPrint.myPrint(hql);
 			Query q = session.createQuery(hql);
 			q.setInteger(0, id);
-			return ((List<CourtBean>) q.list()).get(0);
+			return extracted(q).get(0);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -71,18 +71,25 @@ public class CourtDaoHibernate extends HibernateDaoSupport implements CourtDao {
 	public List<CourtBean> findAll() {
 		Session session = getHibernateTemplate().getSessionFactory()
 				.openSession();
-		String hql = selectCourtBeanField;
-		return (List<CourtBean>)session.createQuery(hql).list();
+		String hql = selectCourtBean;
+		Query q = session.createQuery(hql);
+		return extracted(q);
 	}
+
 
 	@Override
 	public List<CourtBean> findByUser(User user) {
 		Session session = getHibernateTemplate().getSessionFactory()
 				.getCurrentSession();
-		StringBuffer hql = new StringBuffer(selectCourtBeanField);
+		StringBuffer hql = new StringBuffer(selectCourtBean);
 		hql.append("and USERID=?");
 		Query q = session.createQuery(hql.toString());
 		q.setInteger(0, user.getId().intValue());
+		return extracted(q);
+	}
+
+	@SuppressWarnings("unchecked")
+	private List<CourtBean> extracted(Query q) {
 		return (List<CourtBean>)q.list();
 	}
 
@@ -90,22 +97,22 @@ public class CourtDaoHibernate extends HibernateDaoSupport implements CourtDao {
 	public List<CourtBean> findByCourtType(CourtType courtType) {
 		Session session = getHibernateTemplate().getSessionFactory()
 				.getCurrentSession();
-		StringBuffer hql = new StringBuffer(selectCourtBeanField);
+		StringBuffer hql = new StringBuffer(selectCourtBean);
 		hql.append("and COURTTYPEID=?");
 		Query q = session.createQuery(hql.toString());
 		q.setInteger(0, courtType.getId().intValue());
-		return (List<CourtBean>)q.list();
+		return extracted(q);
 	}
 
 	@Override
 	public List<CourtBean> findByMatchType(String matchType) {
 		Session session = getHibernateTemplate().getSessionFactory()
 				.getCurrentSession();
-		StringBuffer hql = new StringBuffer(selectCourtBeanField);
+		StringBuffer hql = new StringBuffer(selectCourtBean);
 		hql.append("and MATCHTYPE=?");
 		Query q = session.createQuery(hql.toString());
 		q.setString(0, matchType);
-		return (List<CourtBean>)q.list();
+		return extracted(q);
 	}
 
 	@Override
@@ -140,22 +147,22 @@ public class CourtDaoHibernate extends HibernateDaoSupport implements CourtDao {
 	public List<CourtBean> findByRegionId(Integer regionId) {
 		Session session = getHibernateTemplate().getSessionFactory()
 				.getCurrentSession();
-		StringBuffer hql = new StringBuffer(selectCourtBeanField);
+		StringBuffer hql = new StringBuffer(selectCourtBean);
 		hql.append("and REGIONID=?");
 		Query q = session.createQuery(hql.toString());
 		q.setInteger(0, regionId);
-		return (List<CourtBean>)q.list();
+		return extracted(q);
 	}
 
 	@Override
 	public List<CourtBean> findByUserId(Integer userId) {
 		Session session = getHibernateTemplate().getSessionFactory()
 				.getCurrentSession();
-		StringBuffer hql = new StringBuffer(selectCourtBeanField);
+		StringBuffer hql = new StringBuffer(selectCourtBean);
 		hql.append("and USERID=?");
 		Query q = session.createQuery(hql.toString());
 		q.setInteger(0, userId);
-		return (List<CourtBean>)q.list();
+		return extracted(q);
 	}
 
 }

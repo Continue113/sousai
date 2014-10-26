@@ -2,6 +2,7 @@ package org.sousai.dao.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.sousai.dao.MatchDao;
 import org.sousai.domain.Court;
@@ -47,7 +48,8 @@ public class MatchDaoHibernate extends HibernateDaoSupport implements MatchDao {
 	@Override
 	public List<Match> findAll() {
 		// TODO Auto-generated method stub
-		return (List<Match>) getHibernateTemplate().find("from Match");
+		List<Match> list = (List<Match>) getHibernateTemplate().find("from Match");
+		return list;
 	}
 
 	@Override
@@ -147,5 +149,11 @@ public class MatchDaoHibernate extends HibernateDaoSupport implements MatchDao {
 		else
 			// 所有参数都使用
 			return getHibernateTemplate().find(hql, date, regionId);
+	}
+
+	@Override
+	public Map<String, Integer> getEachMatchCount(Integer userId) {
+		String hql = "select type,count(*) from Match m where userId=? group by type";
+		return null;
 	}
 }

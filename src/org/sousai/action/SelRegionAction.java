@@ -27,8 +27,8 @@ public class SelRegionAction extends UserBaseAction {
 	private static final long serialVersionUID = 8955065723895264050L;
 	private Region region;
 	private List<Region> regions;
-	private boolean isNavBar = false; // 是否是导航条上的选择地区，如果是，需要存到Session
-	private RegionBean regionBean = null;
+	private boolean isNavBar; // 是否是导航条上的选择地区，如果是，需要存到Session
+	private RegionBean regionBean;
 	// private Integer level;
 
 	private String PROV_SUCCESS = "prov_success";
@@ -62,7 +62,7 @@ public class SelRegionAction extends UserBaseAction {
 	/**
 	 * @return the isNavBar
 	 */
-	public boolean isNavBar() {
+	public boolean getIsNavBar() {
 		return isNavBar;
 	}
 
@@ -70,8 +70,22 @@ public class SelRegionAction extends UserBaseAction {
 	 * @param isNavBar
 	 *            the isNavBar to set
 	 */
-	public void setNavBar(boolean isNavBar) {
+	public void setIsNavBar(boolean isNavBar) {
 		this.isNavBar = isNavBar;
+	}
+
+	/**
+	 * @return the regionBean
+	 */
+	public RegionBean getRegionBean() {
+		return regionBean;
+	}
+
+	/**
+	 * @param regionBean the regionBean to set
+	 */
+	public void setRegionBean(RegionBean regionBean) {
+		this.regionBean = regionBean;
 	}
 
 	/**
@@ -110,12 +124,13 @@ public class SelRegionAction extends UserBaseAction {
 		else if (level == 1) {
 			System.out.println(tempRegion.getName() + " "
 					+ tempRegion.getOrder());
-			if (isNavBar) {
-				regionBean = new RegionBean();
-				// 确定navBar不使用新浪的，而使用自己的接口之后，还需要设定pId
-				regionBean.setpName(tempRegion.getName());
-				regionBean.setCode(tempRegion.getName());
-			}
+
+			// if (isNavBar) { // 确定navBar不使用新浪的，而使用自己的接口之后，还需要设定pId
+			// regionBean = new RegionBean();
+			// regionBean.setpName(tempRegion.getName());
+			// regionBean.setCode(tempRegion.getName());
+			// }
+
 			List<Region> cities = cmg.getCity(tempRegion.getCode(),
 					tempRegion.getOrder());
 			if (cities != null && cities.size() != 0) {
@@ -128,22 +143,37 @@ public class SelRegionAction extends UserBaseAction {
 		}
 		// 查询区级地区
 		else if (level == 2) {
+			MyPrint.myPrint("in level=2,isNamVar = " + isNavBar);
+			MyPrint.myPrint("regionBean = " + regionBean);
 			if (isNavBar) {
 				try {
-					if (regionBean != null) { // 选省->选市，这种情况下需要将regionBean的pName，cName等设定好之后再一起放到session
-						regionBean.setcName(tempRegion.getName());
-						regionBean.setcId(tempRegion.getId());
-						regionBean.setCode(tempRegion.getCode());
-						ActionContext.getContext()
-								.put("regionBean", regionBean);
+					if (regionBean != null) {
+						if (ActionContext.getContext().getSession()
+								.get("regionBean") != null) {
+							RegionBean tRegionBean = (RegionBean) ActionContext
+									.getContext().getSession()
+									.get("regionBean");
+							tRegionBean.setCId(regionBean.getCId());
+							MyPrint.myPrint("regionBean.getPName() = "+regionBean.getCName());
+							tRegionBean.setCName(regionBean.getCName());
+							tRegionBean.setCode(regionBean.getCode());
+							tRegionBean.setPId(regionBean.getPId());
+							MyPrint.myPrint("regionBean.getPName() = "+regionBean.getPName());
+							tRegionBean.setPName(regionBean.getPName());
+							MyPrint.myPrint("session.get(\"regionBean\").getcName() = " 
+							+ ((RegionBean) ActionContext.getContext().getSession().get("regionBean")).getCName() );
+						}
+						// 选省->选市，这种情况下需要将regionBean的pName，cName等设定好之后再一起放到session
+						else {
+							MyPrint.myPrint("regionBean.getPName() = "+regionBean.getCName());
+							MyPrint.myPrint("regionBean.getPName() = "+regionBean.getPName());
+							ActionContext.getContext().getSession()
+									.put("regionBean", regionBean);
+							MyPrint.myPrint("session.get(\"regionBean\").getcName() = " 
+									+ ((RegionBean) ActionContext.getContext().getSession().get("regionBean")).getCName() );
+						}
 						JSONUtils.toJson(ServletActionContext.getResponse(),
 								SUCCESS);
-					} else if (ActionContext.getContext().get("regionBean") != null) { // 这种情况下，只修改市的相应属性
-						regionBean = (RegionBean) ActionContext.getContext()
-								.get("regionBean");
-						regionBean.setcName(tempRegion.getName());
-						regionBean.setcId(tempRegion.getId());
-						regionBean.setCode(tempRegion.getCode());
 					} else
 						JSONUtils.toJson(ServletActionContext.getResponse(),
 								FAIL);

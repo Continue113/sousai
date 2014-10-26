@@ -32,28 +32,28 @@ public class RegionBean implements Serializable
 	/**
 	 * @return the pId
 	 */
-	public Integer getpId() {
+	public Integer getPId() {
 		return pId;
 	}
 
 	/**
 	 * @param pId the pId to set
 	 */
-	public void setpId(Integer pId) {
+	public void setPId(Integer pId) {
 		this.pId = pId;
 	}
 
 	/**
 	 * @return the cId
 	 */
-	public Integer getcId() {
+	public Integer getCId() {
 		return cId;
 	}
 
 	/**
 	 * @param cId the cId to set
 	 */
-	public void setcId(Integer cId) {
+	public void setCId(Integer cId) {
 		this.cId = cId;
 	}
 
@@ -74,28 +74,28 @@ public class RegionBean implements Serializable
 	/**
 	 * @return the pName
 	 */
-	public String getpName() {
+	public String getPName() {
 		return pName;
 	}
 
 	/**
 	 * @param pName the pName to set
 	 */
-	public void setpName(String pName) {
+	public void setPName(String pName) {
 		this.pName = pName;
 	}
 
 	/**
 	 * @return the cName
 	 */
-	public String getcName() {
+	public String getCName() {
 		return cName;
 	}
 
 	/**
 	 * @param cName the cName to set
 	 */
-	public void setcName(String cName) {
+	public void setCName(String cName) {
 		this.cName = cName;
 	}
 

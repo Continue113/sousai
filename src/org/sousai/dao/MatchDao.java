@@ -2,6 +2,7 @@ package org.sousai.dao;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.sousai.domain.*;
 
@@ -47,4 +48,6 @@ public interface MatchDao {
 	 */
 	List<Match> findByParms(int[] dayOfWeek, int state, Date date,
 			Integer regionId);
+	
+	Map<String, Integer> getEachMatchCount(Integer userId);
 }

@@ -115,6 +115,10 @@
 		<action name="getCourtD"
 			class="org.sousai.action.GetCourtDetailAction">
 		</action>
+		<!-- 发布比赛的action -->
+		<action name="relMatch"
+			class="org.sousai.action.RelMatchAction">
+		</action>
 	</package>
 	
 	

@@ -2,6 +2,7 @@ package org.sousai.action;
 
 import org.sousai.action.base.UserBaseAction;
 import org.sousai.domain.Match;
+import org.sousai.tools.MyPrint;
 
 public class RelMatchAction extends UserBaseAction {
 
@@ -32,14 +33,15 @@ public class RelMatchAction extends UserBaseAction {
 	}
 
 	public String execute() throws Exception {
+		MyPrint.myPrint("in RelMatchAction");
 		if (getMatch() != null) {
 			if (umg.relMatch(match) == 1) {
-				return "success";
+				return "SUCCESS";
 			} else {
-				return "false";
+				return "FAIL";
 			}
 		}
-		return "false";
+		return "FAIL";
 	}
 
 }
