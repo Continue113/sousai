@@ -152,8 +152,8 @@
       },"不相符，请重新输入");
 
       $("#registerForm").validate({
-        submitHandler: function(){
-        	alert("通过验证");        	
+        submitHandler: function(form){
+        	console.log("通过验证");
           $.ajax({
             url: "processReg",
             type: "POST",

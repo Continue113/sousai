@@ -405,10 +405,10 @@
   });
 
 
-  //点击确认发布，获取地区，比赛类型，场地类型
+  /*//点击确认发布，获取地区，比赛类型，场地类型
   $("#rlsMatch").click(function(){
     $("#releaseMatchForm").submit();
-  });
+  });*/
 
   /** 日期选择器 **/
   $( "#inputMatchTimefrom" ).datepicker({
@@ -586,9 +586,10 @@
     // update underlying textarea before submit validation
     tinyMCE.triggerSave();
   }).validate({
-    submitHandler: function(){
-      //alert("发布比赛成功");
-      $("#releaseMatchForm").submit();
+    submitHandler: function(form){
+      console.log("发布比赛成功");
+      console.log("发布比赛已完成");
+      form.submit(); //没有这一句表单不会提交
     },
   ignore: "",
   rules: {
