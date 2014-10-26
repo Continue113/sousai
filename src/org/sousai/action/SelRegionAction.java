@@ -28,6 +28,7 @@ public class SelRegionAction extends UserBaseAction {
 	private Region region;
 	private List<Region> regions;
 	private boolean isNavBar = false; // 是否是导航条上的选择地区，如果是，需要存到Session
+	private RegionBean regionBean = null;
 	// private Integer level;
 
 	private String PROV_SUCCESS = "prov_success";
@@ -36,7 +37,8 @@ public class SelRegionAction extends UserBaseAction {
 	private String CITY_FAIL = "city_fail";
 	private String ZONE_SUCCESS = "zone_success";
 	private String ZONE_FAIL = "zone_fail";
-
+	private int SUCCESS = 0;
+	private int FAIL = 1;
 	private String LEVEL_ERROR = "level_error";
 
 	// region属性的setter和getter
@@ -109,12 +111,10 @@ public class SelRegionAction extends UserBaseAction {
 			System.out.println(tempRegion.getName() + " "
 					+ tempRegion.getOrder());
 			if (isNavBar) {
-				RegionBean regionBean = new RegionBean();
-				
-				//确定navBar不使用新浪的，而使用自己的接口之后，还需要设定pId
+				regionBean = new RegionBean();
+				// 确定navBar不使用新浪的，而使用自己的接口之后，还需要设定pId
 				regionBean.setpName(tempRegion.getName());
 				regionBean.setCode(tempRegion.getName());
-				ActionContext.getContext().put("regionBean", regionBean);
 			}
 			List<Region> cities = cmg.getCity(tempRegion.getCode(),
 					tempRegion.getOrder());
@@ -130,18 +130,28 @@ public class SelRegionAction extends UserBaseAction {
 		else if (level == 2) {
 			if (isNavBar) {
 				try {
-					RegionBean regionBean = (RegionBean) ActionContext
-							.getContext().get("RegionBean");
-					if (regionBean != null) {
+					if (regionBean != null) { // 选省->选市，这种情况下需要将regionBean的pName，cName等设定好之后再一起放到session
 						regionBean.setcName(tempRegion.getName());
 						regionBean.setcId(tempRegion.getId());
 						regionBean.setCode(tempRegion.getCode());
-						return "SUCCESS";
-					}
+						ActionContext.getContext()
+								.put("regionBean", regionBean);
+						JSONUtils.toJson(ServletActionContext.getResponse(),
+								SUCCESS);
+					} else if (ActionContext.getContext().get("regionBean") != null) { // 这种情况下，只修改市的相应属性
+						regionBean = (RegionBean) ActionContext.getContext()
+								.get("regionBean");
+						regionBean.setcName(tempRegion.getName());
+						regionBean.setcId(tempRegion.getId());
+						regionBean.setCode(tempRegion.getCode());
+					} else
+						JSONUtils.toJson(ServletActionContext.getResponse(),
+								FAIL);
 				} catch (Exception e) {
 					e.printStackTrace();
-					return "FAIL";
+					JSONUtils.toJson(ServletActionContext.getResponse(), FAIL);
 				}
+				return null;
 			}
 			List<Region> zones = cmg.getZone(tempRegion.getCode(),
 					tempRegion.getOrder());
