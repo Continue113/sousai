@@ -39,6 +39,7 @@ $(function() {
           "region.name": pName,
           "region.code": pCode,
           "region.order": order,
+          "isNavBar": true
         },
         dataType: "json",
         success: function(rspdata) {
@@ -79,6 +80,7 @@ $(function() {
             "region.name": cName,
             "region.code": cCode,
             "region.order": order,
+            "isNavBar": true
           },
           dataType: "json",
           success: function(rspdata) {
