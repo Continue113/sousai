@@ -90,7 +90,7 @@ $(function() {
           success: function(rspdata) {
         	  if(rspdata == 0){
                   alert("接受的数据为："+rspdata);console.log(rspdata);
-        	      $("#city").text(city).attr("data-sessionregion","{'pName':'"+pName+"','pId':'"+pId+"','cName':'"+cName+"','cId':'"+cId+"','code':'"+cCode+"'}");
+        	      $("#city").text(cName).attr("data-sessionregion","{'pName':'"+pName+"','pId':'"+pId+"','cName':'"+cName+"','cId':'"+cId+"','code':'"+cCode+"'}");
         	  }else{
                   alert("抱歉，获取市区出错了。代码不为0。"+rspdata);console.log(rspdata);
         	  }
