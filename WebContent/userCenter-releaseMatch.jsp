@@ -427,7 +427,8 @@
   });
 
   /** 选中表格某行 **/
-  $("tbody>tr").on('click',function(event){
+  $("tbody > tr").on('click',function(event){
+    alert("选中了某个tr");
     $("tr").removeClass("active");
     $(this).addClass("active");
     $("#hideCourtId").attr("value",$(this).attr("data-courtid"));
