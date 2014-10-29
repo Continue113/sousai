@@ -353,7 +353,7 @@
 	/** 初始化生成验证码 **/
     createCode("inputValidateImg");
     
-  	/** 拉取评论  **
+  	/** 拉取评论  **/
   	$.ajax({
   		type: "POST",
         url: "showMsgs",
@@ -524,7 +524,7 @@
           }else if( mesg == "" ){
             alert("请填写回复内容。");
           }else{
-            sendEvaluation(parentId,userId,courtId,mesg,visible,respName);
+            sendEvaluation(parentId,userId,courtId,mesg,visible,respName,target);
           };
       }else{
     	  $("#SRDcontent").empty().append('<div class="alert alert-block alert-error fade in"><p style="font-size:16px;color:red;">请先<a href="login.jsp">登录</a>再评论。</p></div>');
@@ -556,7 +556,7 @@
         	  alert("请填写正确的验证码。");console.log("验证码错误");
           }else{
         	  $(".evaluation-tool-a").slideDown();
-    	      sendEvaluation(parentId,userId,courtId,mesg,visible,respName);
+    	      sendEvaluation(parentId,userId,courtId,mesg,visible,respName,target);
           };
       //}
       }else{
@@ -565,7 +565,7 @@
     	  $('#sousaiRemindDialog').modal({backdrop:true,show:true,});
       };
     });
-    function sendEvaluation(parentId,userId,courtId,mesg,visible,userName){ //发送评论到服务器
+    function sendEvaluation(parentId,userId,courtId,mesg,visible,userName,target){ //发送评论到服务器
     	if (visible==1) {
     		userName = null;
     	}; console.log("进入sendEvaluation，visible为"+visible+",userName为"+userName+"开始ajax");

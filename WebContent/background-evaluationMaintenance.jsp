@@ -147,7 +147,7 @@
       target.empty(); //清空tbody
       for (var i = 0; i < data.length; i++) {
     	  string = '<tr class="evaluation">'
-          +'<td class="evaluation-content form-inline" data-parentId="'+ data[i].parentId +'"><input type="checkbox" id="'+ data[i].id +'" /><label for="'+ data[i].mesg +'">'+ +'</label></td>' 
+          +'<td class="evaluation-content form-inline" data-parentId="'+ data[i].parentId +'"><input type="checkbox" id="'+ data[i].id +'" /><label for="'+ data[i].id +'">'+ data[i].mesg +'</label></td>' 
           +'<td class="court-name" data-courtId="'+ data[i].courtId +'">'+ data[i].courtName +'</td>'
           +'<td class="releaseTime">'+ data[i].time +'</td>'
           +'<td class="releaseUser" data-userId="'+ data[i].userId +'">'+ data[i].userName +'</td></tr>';
