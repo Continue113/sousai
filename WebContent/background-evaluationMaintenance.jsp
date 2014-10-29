@@ -80,9 +80,7 @@
        </div> 
        <!-- /jplist-panel --> 
        <table class="table table-striped table-hover evaluationTable"> 
-        <caption>
-         评论维护
-        </caption> 
+        <caption>评论维护 </caption> 
         <thead>
          <tr>
           <th>评论内容</th>
@@ -142,6 +140,21 @@
   <script src="js/sousai.common.js"></script> 
   <script>
   $(function(){
+	//ajax接受所有的评论
+	$.post("getAllMassage", null, function(data) {
+      alert(data);console.log(data);
+      var target = $("tbody"),string; //tbody
+      target.empty(); //清空tbody
+      for (var i = 0; i < data.length; i++) {
+    	  string = '<tr class="evaluation">'
+          +'<td class="evaluation-content form-inline" data-parentId="'+ data[i].parentId +'"><input type="checkbox" id="'+ data[i].id +'" /><label for="'+ data[i].mesg +'">'+ +'</label></td>' 
+          +'<td class="court-name" data-courtId="'+ data[i].courtId +'">'+ data[i].courtName +'</td>'
+          +'<td class="releaseTime">'+ data[i].time +'</td>'
+          +'<td class="releaseUser" data-userId="'+ data[i].userId +'">'+ data[i].userName +'</td></tr>';
+          
+    	  target.append(string);
+      }
+    });
     //列表排序
     $('#evaluationMaintenance').jplist({
           itemsBox: '.evaluationTable',

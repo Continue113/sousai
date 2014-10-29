@@ -281,22 +281,11 @@ function userCenterRemind(){
         type: "POST",
         url: "cntEachMatch",
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-        /*data: {
-          "region.level": 2,
-          "region.code": tgPrt.find(".selectCity option:selected").attr("value"),
-          "region.order": tgPrt.find(".selectCity option:selected").attr("data-order")
-        },*/
         dataType: "json",
         success: function(rspdata) {
             alert(rspdata);
             console.log(rspdata);
             targetBreadcrumb.empty().append("<li>比赛信息:</li>");
-            var obj = { one: 1, two: 2, three: 3, four: 4, five: 5 };
-        	$.each( obj, function( key, value ) {
-        		  console.log( key + ": " + value );
-        		  targetBreadcrumb.append('<li><a href="#">'+key+'<span>('+value+')</span></a></li>');
-        		  targetBreadcrumb.append('<li>{ one: 1, two: 2, three: 3, four: 4, five: 5 }</li>');
-        		  });
         	$.each( rspdata, function( key, value ) {
       		  console.log( key + ": " + value );
       		  targetBreadcrumb.append('<li><a href="#">'+key+'<span>('+value+')</span></a></li>');
