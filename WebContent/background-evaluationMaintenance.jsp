@@ -141,7 +141,7 @@
   <script>
   $(function(){
 	//ajax接受所有的评论
-	$.post("getAllMassage", null, function(data) {
+	$.post("getAllMessage", null, function(data) {
       alert(data);console.log(data);
       var target = $("tbody"),string; //tbody
       target.empty(); //清空tbody
