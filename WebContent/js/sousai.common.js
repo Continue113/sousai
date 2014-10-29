@@ -274,3 +274,31 @@ function createCode(inputValidateId) { //创建验证码，inputValidateId为验
         checkCode.innerHTML = code;
     }
 }
+
+function userCenterRemind(){
+	var targetBreadcrumb = $(".userCenter-remind > .breadcrumb");
+	$.ajax({
+        type: "POST",
+        url: "cntEachMatch",
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        /*data: {
+          "region.level": 2,
+          "region.code": tgPrt.find(".selectCity option:selected").attr("value"),
+          "region.order": tgPrt.find(".selectCity option:selected").attr("data-order")
+        },*/
+        dataType: "json",
+        success: function(rspdata) {
+            alert(rspdata);
+            console.log(rspdata);
+            targetBreadcrumb.empty().append("<li>比赛信息:</li>");
+        	$.each( rspdata, function( key, value ) {
+        		  console.log( key + ": " + value );
+        		  targetBreadcrumb.append('<li><a href="#">'+key+'<span>('+value+')</span></a></li>');
+        		  });
+        },
+        error: function() {
+          alert("抱歉，获取比赛信息出错了。");
+          console.log("抱歉，获取比赛信息出错了。");
+        },
+      }); //ajax 已得到发布的比赛信息
+}

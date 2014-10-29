@@ -258,6 +258,9 @@
   //立即初始化比赛类型
   initMatchType();
   
+  //获得已有比赛信息
+  userCenterRemind();
+  
   //选择比赛地点时，修改下方添加新场地的区域
   $("#releaseMatchForm .controls > .selectProvince").change(function(){
 	  //当未选择省就提交表单时，出现提示，当选择省时隐藏未选择省的错误提示
