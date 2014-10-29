@@ -33,6 +33,8 @@
 	<bean id="ctDao"
 		class="org.sousai.dao.impl.CourtTypeDaoHibernate"
 		parent="daoTemplate"/>
-		
+	<bean id="matchDao"
+		class="org.sousai.dao.impl.MatchDaoHibernate"
+		parent="daoTemplate"/>
 
 </beans>

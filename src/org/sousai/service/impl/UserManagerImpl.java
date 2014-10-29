@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
@@ -390,7 +391,7 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public Long relMatch(Match match) {
+	public Integer relMatch(Match match) {
 		// TODO Auto-generated method stub
 		try {
 			return matchDao.save(match);
@@ -402,7 +403,6 @@ public class UserManagerImpl implements UserManager {
 
 	@Override
 	public List<CourtBean> getCourtInMatchReling(Integer regionId) {
-		// TODO Auto-generated method stub
 		return courtDao.findByRegionId(regionId);
 	}
 
@@ -413,13 +413,16 @@ public class UserManagerImpl implements UserManager {
 
 	@Override
 	public List<CourtBean> getCourtByUserId(Integer userId) {
-		// TODO Auto-generated method stub
 		return (List<CourtBean>) courtDao.findByUserId(userId);
 	}
 
 	@Override
 	public CourtBean getByCourtId(Integer id) {
-		// TODO Auto-generated method stub
 		return courtDao.get(id);
+	}
+
+	@Override
+	public Map<String, Integer> countEachMatchByUserId(Integer userId) {
+		return matchDao.getEachMatchCount(userId);
 	}
 }

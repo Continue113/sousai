@@ -10,7 +10,7 @@ public interface MatchDao {
 
 	Match get(Integer id);
 
-	Long save(Match match);
+	Integer save(Match match);
 
 	void update(Match match);
 
@@ -48,6 +48,10 @@ public interface MatchDao {
 	 */
 	List<Match> findByParms(int[] dayOfWeek, int state, Date date,
 			Integer regionId);
-	
+	/**
+	 * 统计用户发布的每种比赛的数量
+	 * @param userId	用户标识
+	 * @return
+	 */
 	Map<String, Integer> getEachMatchCount(Integer userId);
 }

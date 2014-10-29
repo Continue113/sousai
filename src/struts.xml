@@ -115,10 +115,17 @@
 		<action name="getCourtD"
 			class="org.sousai.action.GetCourtDetailAction">
 		</action>
-		<!-- 发布比赛的action -->
-		<action name="relMatch"
-			class="org.sousai.action.RelMatchAction">
+		
+		<!-- 统计用户发布的各类比赛数量的action -->
+		<action name="cntEachMatch"
+			class="org.sousai.action.CountEachMatchTypeAction">
 		</action>
+		
+		<!-- 查看所有评论的action -->
+		<action name="getAllMesg"
+			class="org.sousai.action.GetAllMessageAction">
+		</action>
+		
 	</package>
 	
 	

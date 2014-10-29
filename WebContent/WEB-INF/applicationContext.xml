@@ -92,7 +92,7 @@
 	<!-- 		配置一个切入点，匹配empManager和mgrManager
 			两个Bean的所有方法的执行 -->
 		<aop:pointcut id="leePointcut"
-			expression="bean(userManager)||bean(commonManager)"/>
+			expression="bean(userManager)||bean(commonManager)||bean(adminManager)"/>
 <!--		指定在leePointcut切入点应用txAdvice事务增强处理 --> 
 		<aop:advisor advice-ref="txAdvice" 
 			pointcut-ref="leePointcut"/>
@@ -107,16 +107,20 @@
 		p:regionDao-ref="regionDao"
 		p:matchClassDao-ref="mcDao"
 		p:matchTypeDao-ref="mtDao"
-		p:courtTypeDao-ref="ctDao"/>
+		p:courtTypeDao-ref="ctDao"
+		p:matchDao-ref="matchDao"/>
 		
 <!-- 	p:matchClassDao-ref="mcDao" -->
 		
-<!-- 定义两个业务逻辑组件，继承业务逻辑组件的模板 -->
+<!-- 定义三个业务逻辑组件，继承业务逻辑组件的模板 -->
 	<bean id="userManager"
 		class="org.sousai.service.impl.UserManagerImpl"
 		parent="managerTemplate"/>
 	<bean id="commonManager"
 		class="org.sousai.service.impl.CommonManagerImpl"
+		parent="managerTemplate"/>
+	<bean id="adminManager"
+		class="org.sousai.service.impl.AdminManagerImpl"
 		parent="managerTemplate"/>
 
 </beans>

@@ -7,7 +7,8 @@ import org.sousai.tools.MyPrint;
 public class RelMatchAction extends UserBaseAction {
 
 	private static final long serialVersionUID = -509217384709788196L;
-
+	private static final String SUCCESS = "success";
+	private static final String FAIL = "fail";
 	private Match match;
 
 	/**
@@ -34,14 +35,15 @@ public class RelMatchAction extends UserBaseAction {
 
 	public String execute() throws Exception {
 		MyPrint.myPrint("in RelMatchAction");
-		if (getMatch() != null) {
-			if (umg.relMatch(match) == 1) {
-				return "SUCCESS";
-			} else {
-				return "FAIL";
+		try {
+			MyPrint.myPrint("t = ");
+			if (getMatch() != null && umg.relMatch(match) != 0) {
+				return SUCCESS;
 			}
+			return FAIL;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return FAIL;
 		}
-		return "FAIL";
 	}
-
 }

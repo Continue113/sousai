@@ -170,7 +170,7 @@ public interface UserManager
 	
 	public List<CourtBean>getCourtInMatchReling(Integer regionId);
 	
-	public Long relMatch(Match match);
+	public Integer relMatch(Match match);
 	/**
 	 * 在查找比赛的时候，通过工作日、比赛状态、地区进行初步筛选
 	 * @param dayOfWeek
@@ -181,6 +181,12 @@ public interface UserManager
 	public List<Match>getMatchByParms(int[] dayOfWeek, int state, int regionId);
 	
 	public List<CourtBean> getCourtByUserId(Integer userId);
-	
+	/**
+	 * 通过场地id，获取场地信息
+	 * @param id	
+	 * @return
+	 */
 	public CourtBean getByCourtId(Integer id);
+	
+	public Map<String,Integer> countEachMatchByUserId(Integer userId);
 }

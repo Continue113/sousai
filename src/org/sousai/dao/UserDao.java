@@ -3,6 +3,7 @@ package org.sousai.dao;
 import java.util.*;
 
 import org.sousai.domain.*;
+import org.sousai.vo.UserBean;
 
 public interface UserDao {
 	/**

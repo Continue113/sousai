@@ -7,10 +7,10 @@ import java.io.Serializable;
 public class Ip implements Serializable {
 	private static final long serialVersionUID = -2917849380030704034L;
 
-	private Long id;
+	private Integer id;
 	private String ips;
 	private Integer num;
-	private Long userId;
+	private Integer userId;
 
 	// 默认构造器
 	Ip() {
@@ -19,7 +19,7 @@ public class Ip implements Serializable {
 	/**
 	 * @return the id
 	 */
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
@@ -27,7 +27,7 @@ public class Ip implements Serializable {
 	 * @param id
 	 *            the id to set
 	 */
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -64,7 +64,7 @@ public class Ip implements Serializable {
 	/**
 	 * @return the userId
 	 */
-	public Long getUserId() {
+	public Integer getUserId() {
 		return userId;
 	}
 
@@ -72,7 +72,7 @@ public class Ip implements Serializable {
 	 * @param userId
 	 *            the userId to set
 	 */
-	public void setUserId(Long userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 

@@ -3,6 +3,7 @@ package org.sousai.dao;
 import java.util.*;
 
 import org.sousai.domain.*;
+import org.sousai.vo.MessageBean;
 
 public interface MesgDao
 {
@@ -59,5 +60,9 @@ public interface MesgDao
 	 */
 	List<Message> getByParentId(Long parentId);
 	
-	
+	/**
+	 * 获取所有评论及回复
+	 * @return	所有评论回复
+	 */
+	List<MessageBean> findAll();
 }
