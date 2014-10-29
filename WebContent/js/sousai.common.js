@@ -291,10 +291,16 @@ function userCenterRemind(){
             alert(rspdata);
             console.log(rspdata);
             targetBreadcrumb.empty().append("<li>比赛信息:</li>");
-        	$.each( rspdata, function( key, value ) {
+            var obj = { one: 1, two: 2, three: 3, four: 4, five: 5 };
+        	$.each( obj, function( key, value ) {
         		  console.log( key + ": " + value );
         		  targetBreadcrumb.append('<li><a href="#">'+key+'<span>('+value+')</span></a></li>');
+        		  targetBreadcrumb.append('<li>{ one: 1, two: 2, three: 3, four: 4, five: 5 }</li>');
         		  });
+        	$.each( rspdata, function( key, value ) {
+      		  console.log( key + ": " + value );
+      		  targetBreadcrumb.append('<li><a href="#">'+key+'<span>('+value+')</span></a></li>');
+      		  });
         },
         error: function() {
           alert("抱歉，获取比赛信息出错了。");
