@@ -377,9 +377,18 @@
               if(rspdata[i].parentId == null){
             		evaluations.append('<div class="media evaluation" data-id="'+ rspdata[i].id +'"><div class="pull-left author"><img class="media-object" src="img/defaultImg.png"><div class="evaluationName" data-userid="'+rspdata[i].userId+'">'+userName+'</div></div><div class="media-body"><p class="evaluation-authorMain">'+rspdata[i].mesg+'</p><p class="releasetime">'+rspdata[i].time+'</p><ul class="evaluation-tool-reply"><li class="evaluation-tool"><a class="evaluation-tool-a" href="#myModal">我要补充下</a></li></ul></div></div>');
               }else{
-            	  console.log(rspdata[i].parentId);
             	  console.log("parentId != null");
-                var tempId= $(".evaluation").attr("data-id");
+            	  console.log(rspdata[i].parentId + " /- parentId / mesg:/ " +rspdata[i].mesg);
+            	  //采用each迭代每一个拥有data-id的 evaluation
+            	  $( ".evaluation[data-id]" ).each(function (i) {
+            		  if ( $(this).data("id") == rspdata[i].parentId ) {
+            			  console.log("$(this).data(\"id\") : "+$(this).data("id"));
+            			  //this.style.color = "blue";
+            			  $(this).find(".media-body > .evaluation-tool-reply").append('<li class="evaluation-reply"><div class="media evaluation"><div class="pull-left"><img class="media-object" src="img/defaultImg.png" /><div class="evaluationName">'+rspdata[i].userName+'</div></div><div class="media-body"><p class="evaluation-main">'+rspdata[i].mesg+'</p><p class="releasetime">'+rspdata[i].time+'</p><a class="pull-right evaluation-tool-a" href="#myModal">我要补充下</a></div></div></li>').find(".evaluation-tool").text('<a class="evaluation-tool-visible" href="javascript:void(0);">隐藏回复</a>&nbsp;&nbsp;<a class="evaluation-tool-a" href="#myModal">我要补充下</a>');
+                      }
+            		  });
+            	  
+                /*var tempId= $(".evaluation").attr("data-id");
           	  	console.log("tempId"+tempId);
 
                 for(var j = 0; j < tempId.length; j++){ //循环取出每一个tempId中的id
@@ -389,7 +398,7 @@
                 	  console.log("$(.evaluation)"+ $(".evaluation[data-id='"+ tempId[j] +"']") );
                     $(".evaluation[data-id='"+ tempId[j] +"']").find(".media-body > .evaluation-tool-reply").append('<li class="evaluation-reply"><div class="media evaluation"><div class="pull-left"><img class="media-object" src="img/defaultImg.png" /><div class="evaluationName">'+rspdata[i].userName+'</div></div><div class="media-body"><p class="evaluation-main">'+rspdata[i].mesg+'</p><p class="releasetime">'+rspdata[i].time+'</p><a class="pull-right evaluation-tool-a" href="#myModal">我要补充下</a></div></div></li>').find(".evaluation-tool").text('<a class="evaluation-tool-visible" href="javascript:void(0);">隐藏回复</a>&nbsp;&nbsp;<a class="evaluation-tool-a" href="#myModal">我要补充下</a>');
                   }
-                }
+                }*/
               };
 
             }
