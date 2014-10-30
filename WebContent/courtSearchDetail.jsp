@@ -504,8 +504,8 @@
         $(".evaluations .evaluation-response-li").remove();
       });//把所有的“我要补充下”的回复框移除
 
-      var parentId = 0,
-      	  rootId = 0,
+      var parentId = null, //直接评论 parentId 和rootId 都为null
+      	  rootId = null,
       	  userId = $("#evaluationName-main").data("userid"),
       	  courtId = 1,
       	  mesg = $(this).parents().find("textarea").val(),
