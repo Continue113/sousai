@@ -105,11 +105,11 @@
             <select class="selectMatchType" name="mcId">
               <option value=0>请选择比赛类型</option>
             </select>
-            <select class="selectParticularMatchType hide" name="match.type">
+            <select class="selectParticularMatchType hide">
               <option value=0>请选择比赛类型</option>
             </select>
             <label class="omthide hide" class="control-label" for="otherMatchType">请输入类型：</label>
-            <input class="omthide hide" id="otherMatchType" type="text" value="" placeholder="请填写比赛类型"/>
+            <input class="omthide hide" id="otherMatchType" type="text" value="" placeholder="请填写比赛类型" name="match.type"/>
            </div> 
           </div> 
           <div class="control-group"> 
@@ -295,9 +295,9 @@
 	  }
 	  //若已选择“其他”则改为默认选项
       if( omtf == 1){
-    	tgPrt.find(".selectParticularMatchType").attr("name","court.matchType");
+    	//tgPrt.find(".selectParticularMatchType").attr("name","match.type");
         tgPrt.find(".omthide").slideUp();
-        $("#otherMatchType").removeAttr("name");
+        //$("#otherMatchType").removeAttr("name");
         omtf = 0;
       }
   }else {
@@ -333,11 +333,11 @@
     var tgPrt = $(this).parent();
     if (tgPrt.find(".selectParticularMatchType option:selected").attr("value") == 1 && omtf == 0){
       //移除name属性，即不会使用select内容提交
-      $(this).removeAttr("name");
+      //$(this).removeAttr("name");
       //当用户选择其他的时候，弹出隐藏的label和input
       tgPrt.find(".omthide").slideDown();
       //添加输入框的name属性，并改变omtf
-      $("#otherMatchType").attr("name","court.matchType");
+      //$("#otherMatchType").attr("name","match.type");
       omtf = 1;
 
       console.log("获得场地类型");
@@ -368,17 +368,19 @@
       };
       //若已选择“其他”则改为默认选项
       if( omtf == 1){
-        $(this).attr("name","court.matchType");
+        //$(this).attr("name","match.type");
         tgPrt.find(".omthide").slideUp();
-        $("#otherMatchType").removeAttr("name");
+        //$("#otherMatchType").removeAttr("name");
         omtf = 0;
       }
+      //将otherMatchType中填入已选的具体类型设置为空
+      $("#otherMatchType").attr("value", "");
     }else {
       //若已选择“其他”则改为默认选项
       if( omtf == 1){
-        $(this).attr("name","court.matchType");
+        //$(this).attr("name","match.type");
         tgPrt.find(".omthide").slideUp();
-        $("#otherMatchType").removeAttr("name");
+        //$("#otherMatchType").removeAttr("name");
         omtf = 0;
       }
       //存在场地类型的下拉列表时 当用户选择具体比赛类型时，同时获取相应场地类型
@@ -404,14 +406,10 @@
           },
         }); //ajax 已得到场地类型
       }
+      //将otherMatchType中填入已选的具体类型
+      $("#otherMatchType").attr("value", tgPrt.find(".selectParticularMatchType option:selected").text() );
     }
   });
-
-
-  /*//点击确认发布，获取地区，比赛类型，场地类型
-  $("#rlsMatch").click(function(){
-    $("#releaseMatchForm").submit();
-  });*/
 
   /** 日期选择器 **/
   $( "#inputMatchTimefrom" ).datepicker({
