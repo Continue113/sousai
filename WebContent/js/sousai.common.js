@@ -283,13 +283,17 @@ function userCenterRemind(){
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         dataType: "json",
         success: function(rspdata) {
-            alert(rspdata);
-            console.log(rspdata);
+            alert("已有比赛信息："+rspdata);
+            console.log("已有比赛信息："+rspdata);
             targetBreadcrumb.empty().append("<li>比赛信息:</li>");
         	$.each( rspdata, function( key, value ) {
       		  console.log( key + ": " + value );
       		  targetBreadcrumb.append('<li><a href="#">'+key+'<span>('+value+')</span></a></li>');
       		  });
+        	//若没有比赛信息则提示 没有比赛信息 即，没有span
+        	if( targetBreadcrumb.find("span").length == 0 ){
+        		targetBreadcrumb.append('<li><a href="userCenter-releaseMatch.jsp"> 无比赛信息，请发布比赛</a></li>');
+        	}
         },
         error: function() {
           alert("抱歉，获取比赛信息出错了。");
