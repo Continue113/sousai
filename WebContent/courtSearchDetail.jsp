@@ -380,25 +380,13 @@
             	  console.log("parentId != null");
             	  console.log(rspdata[i].parentId + " /- parentId / mesg:/ " +rspdata[i].mesg);
             	  //采用each迭代每一个拥有data-id的 evaluation
-            	  $( ".evaluation[data-id]" ).each(function (i) {
+            	  $( ".evaluation" ).each(function (j) {
+            		  //alert( $(this).data("id") );
             		  if ( $(this).data("id") == rspdata[i].parentId ) {
             			  console.log("$(this).data(\"id\") : "+$(this).data("id"));
-            			  //this.style.color = "blue";
-            			  $(this).find(".media-body > .evaluation-tool-reply").append('<li class="evaluation-reply"><div class="media evaluation"><div class="pull-left"><img class="media-object" src="img/defaultImg.png" /><div class="evaluationName">'+rspdata[i].userName+'</div></div><div class="media-body"><p class="evaluation-main">'+rspdata[i].mesg+'</p><p class="releasetime">'+rspdata[i].time+'</p><a class="pull-right evaluation-tool-a" href="#myModal">我要补充下</a></div></div></li>').find(".evaluation-tool").text('<a class="evaluation-tool-visible" href="javascript:void(0);">隐藏回复</a>&nbsp;&nbsp;<a class="evaluation-tool-a" href="#myModal">我要补充下</a>');
+            			  $(this).find(".media-body > .evaluation-tool-reply").append('<li class="evaluation-reply"><div class="media evaluation"><div class="pull-left"><img class="media-object" src="img/defaultImg.png" /><div class="evaluationName">'+rspdata[i].userName+'</div></div><div class="media-body"><p class="evaluation-main">'+rspdata[i].mesg+'</p><p class="releasetime">'+rspdata[i].time+'</p><a class="pull-right evaluation-tool-a" href="#myModal">我要补充下</a></div></div></li>').find(".evaluation-tool").prepend('<a class="evaluation-tool-visible" href="javascript:void(0);">隐藏回复</a>&nbsp;&nbsp;');
                       }
-            		  });
-            	  
-                /*var tempId= $(".evaluation").attr("data-id");
-          	  	console.log("tempId"+tempId);
-
-                for(var j = 0; j < tempId.length; j++){ //循环取出每一个tempId中的id
-                	console.log("进入第二个for寻汗，tempId 的j循环");console.log("rspdata[i].parentId"+rspdata[i].parentId);console.log("tempId[j]"+tempId[j]);
-                  if (rspdata[i].parentId == tempId[j]){
-                	  console.log("tempId[j]"+tempId[j]);
-                	  console.log("$(.evaluation)"+ $(".evaluation[data-id='"+ tempId[j] +"']") );
-                    $(".evaluation[data-id='"+ tempId[j] +"']").find(".media-body > .evaluation-tool-reply").append('<li class="evaluation-reply"><div class="media evaluation"><div class="pull-left"><img class="media-object" src="img/defaultImg.png" /><div class="evaluationName">'+rspdata[i].userName+'</div></div><div class="media-body"><p class="evaluation-main">'+rspdata[i].mesg+'</p><p class="releasetime">'+rspdata[i].time+'</p><a class="pull-right evaluation-tool-a" href="#myModal">我要补充下</a></div></div></li>').find(".evaluation-tool").text('<a class="evaluation-tool-visible" href="javascript:void(0);">隐藏回复</a>&nbsp;&nbsp;<a class="evaluation-tool-a" href="#myModal">我要补充下</a>');
-                  }
-                }*/
+            	  });
               };
 
             }
@@ -407,14 +395,6 @@
         	console.log("抱歉，获取评论出错了。");//alert("抱歉，获取评论出错了。");
         },
         }); //ajax 已得到评论信息
-        
-        $('.evaluation[data-id]').one('click', function(){
-        	alert("XXX");
-        	$( ".evaluation[data-id]" ).each(function (i) {
-            	$(this).text("XXXXX");
-            });
-        });
-         
         
      /** 点击隐藏回复 和 显示回复  **/
      $("body").on("click",".evaluation-tool-visible",function(){
