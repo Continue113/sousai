@@ -363,6 +363,7 @@
         },
         dataType: "json",
         success: function(rspdata) {
+        	console.log(rspdata);
         	var evaluations = $(".evaluations"),userName;
             evaluations.empty();
             for (var i = 0; i < rspdata.length; i++) {
