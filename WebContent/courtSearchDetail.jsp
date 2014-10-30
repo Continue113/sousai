@@ -372,15 +372,15 @@
             	}else{
             		userName = rspdata[i].userName;//公开的评论
             	};
-
-              if(rspdata[i].parentId == 0){
-            		evaluations.append('<div class="media evaluation"><div class="pull-left author"><img class="media-object" src="img/defaultImg.png"><div class="evaluationName" data-userid="'+rspdata[i].userId+'">'+userName+'</div></div><div class="media-body"><p class="evaluation-authorMain">'+rspdata[i].mesg+'</p><p class="releasetime">'+rspdata[i].time+'</p><ul class="evaluation-tool-reply"><li class="evaluation-tool"><a class="evaluation-tool-a" href="#myModal">我要补充下</a></li></ul></div></div>');
+			  //区分是评论还是评论的回复
+              if(rspdata[i].parentId == null){
+            		evaluations.append('<div class="media evaluation" data-id="'+ rspdata[i].id +'"><div class="pull-left author"><img class="media-object" src="img/defaultImg.png"><div class="evaluationName" data-userid="'+rspdata[i].userId+'">'+userName+'</div></div><div class="media-body"><p class="evaluation-authorMain">'+rspdata[i].mesg+'</p><p class="releasetime">'+rspdata[i].time+'</p><ul class="evaluation-tool-reply"><li class="evaluation-tool"><a class="evaluation-tool-a" href="#myModal">我要补充下</a></li></ul></div></div>');
               }else{
-                var tempId= $(".author > .evaluationName").data("userid");
+                var tempId= $(".evaluation").data("id");
 
-                for(var j = 0; j < tempId.length; j++){ //循环取出每一个tempId中的userid
+                for(var j = 0; j < tempId.length; j++){ //循环取出每一个tempId中的id
                   if (rspdata[i].parentId == tempId[j]){
-                    $(".author > .evaluationName[data-userid='"+rspdata[i].userId+"']").parent().find(".media-body > .evaluation-tool-reply").append('<li class="evaluation-reply"><div class="media evaluation"><div class="pull-left"><img class="media-object" src="img/defaultImg.png" /><div class="evaluationName">'+rspdata[i].userName+'</div></div><div class="media-body"><p class="evaluation-main">'+rspdata[i].mesg+'</p><p class="releasetime">'+rspdata[i].time+'</p><a class="pull-right evaluation-tool-a" href="#myModal">我要补充下</a></div></div></li>');
+                    $(".evaluation[data-id='"+ tempId[j] +"']").find(".media-body > .evaluation-tool-reply").append('<li class="evaluation-reply"><div class="media evaluation"><div class="pull-left"><img class="media-object" src="img/defaultImg.png" /><div class="evaluationName">'+rspdata[i].userName+'</div></div><div class="media-body"><p class="evaluation-main">'+rspdata[i].mesg+'</p><p class="releasetime">'+rspdata[i].time+'</p><a class="pull-right evaluation-tool-a" href="#myModal">我要补充下</a></div></div></li>').find(".evaluation-tool").text('<a class="evaluation-tool-visible" href="javascript:void(0);">隐藏回复</a>&nbsp;&nbsp;<a class="evaluation-tool-a" href="#myModal">我要补充下</a>');
                   }
                 }
               };
@@ -388,7 +388,7 @@
             }
         },
         error: function() {
-          //alert("抱歉，获取评论出错了。");
+        	console.log("抱歉，获取评论出错了。");//alert("抱歉，获取评论出错了。");
         },
         }); //ajax 已得到评论信息
         
@@ -505,6 +505,7 @@
       });//把所有的“我要补充下”的回复框移除
 
       var parentId = 0,
+      	  rootId = 0,
       	  userId = $("#evaluationName-main").data("userid"),
       	  courtId = 1,
       	  mesg = $(this).parents().find("textarea").val(),
@@ -524,7 +525,7 @@
           }else if( mesg == "" ){
             alert("请填写回复内容。");
           }else{
-            sendEvaluation(parentId,userId,courtId,mesg,visible,respName,target,respCode);
+            sendEvaluation(parentId,rootId,userId,courtId,mesg,visible,respName,target,respCode);
           };
       }else{
     	  $("#SRDcontent").empty().append('<div class="alert alert-block alert-error fade in"><p style="font-size:16px;color:red;">请先<a href="login.jsp">登录</a>再评论。</p></div>');
@@ -534,7 +535,8 @@
     });
     /** 我要补充下 **/
      $("body").on("click","#reply-temp",function(){
-      var parentId = $(this).parents().parents().find(".evaluationName").data("userId"),
+      var parentId = $(this).parent().parent().parent().parent().parent().parent().data("id"), //evaluation > data-id
+      rootId = parentId,
       userId = $("#evaluationName-temp").data("userid"),
       courtId = 1,
       	  visible = $('input:radio[name="responseState"]:checked').val(),
@@ -556,7 +558,7 @@
         	  alert("请填写正确的验证码。");console.log("验证码错误");
           }else{
         	  $(".evaluation-tool-a").slideDown();
-    	      sendEvaluation(parentId,userId,courtId,mesg,visible,respName,target,respCode);
+    	      sendEvaluation(parentId,rootId,userId,courtId,mesg,visible,respName,target,respCode);
           };
       //}
       }else{
@@ -565,21 +567,26 @@
     	  $('#sousaiRemindDialog').modal({backdrop:true,show:true,});
       };
     });
-    function sendEvaluation(parentId,userId,courtId,mesg,visible,userName,target,respCode){ //发送评论到服务器
+    
+    //发送评论到服务器的函数
+    function sendEvaluation(parentId,rootId,userId,courtId,mesg,visible,userName,target,respCode){
     	if (visible==1) {
     		userName = null;
-    	}; console.log("进入sendEvaluation，visible为"+visible+",userName为"+userName+"开始ajax");
+    	};
+    
+    	console.log("进入sendEvaluation，visible为"+visible+",userName为"+userName+"开始ajax");
       	$.ajax({
   		type: "POST",
         url: "relMsg",
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         data: {
-          "message.parentId": parentId,  //若为评论，则为0；若为回复则为所回复评论的id
-          "message.userId": userId, //发表评论或回复的用户id
-          "message.courtId": courtId, //评论或回复所在的场地id
-          "message.mesg": mesg, //评论或回复的具体内容
-          "message.userName": userName, //是否匿名,默认为公开为0有userName，若匿名为1则为******
-        },
+        	"message.parentId": parentId,  //若为评论，则为0；若为回复则为所回复评论的id
+      	    "message.rootId": rootId,  //通parentId
+      	    "message.userId": userId, //发表评论或回复的用户id
+      	    "message.courtId": courtId, //评论或回复所在的场地id
+      	    "message.mesg": mesg, //评论或回复的具体内容
+      	    "message.userName": userName, //是否匿名,默认为公开为0有userName，若匿名为1则为******
+      	    },
         dataType: "json",
         success: function(rspdata) {
         	console.log(rspdata);
