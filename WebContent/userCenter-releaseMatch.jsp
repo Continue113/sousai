@@ -587,11 +587,11 @@
     // update underlying textarea before submit validation
     tinyMCE.triggerSave();
   }).validate({
-    submitHandler: function(form){
+    /*submitHandler: function(form){
       console.log("发布比赛成功");
       console.log("发布比赛已完成");
       form.submit(); //没有这一句表单不会提交
-    },
+    },*/
   ignore: "",
   rules: {
     "match.name": {
