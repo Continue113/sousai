@@ -570,8 +570,26 @@
     
     //发送评论到服务器的函数
     function sendEvaluation(parentId,rootId,userId,courtId,mesg,visible,userName,target,respCode){
-    	if (visible==1) {
-    		userName = null;
+    	var data;
+    	if (visible==1) { //匿名则不发送userName
+    		//userName = null;
+    		data = {
+    	        	"message.parentId": parentId,  //若为评论，则为0；若为回复则为所回复评论的id
+    	      	    "message.rootId": rootId,  //通parentId
+    	      	    "message.userId": userId, //发表评论或回复的用户id
+    	      	    "message.courtId": courtId, //评论或回复所在的场地id
+    	      	    "message.mesg": mesg, //评论或回复的具体内容
+    	      	    //"message.userName": userName, //是否匿名,默认为公开为0有userName，若匿名为1则为******
+    	      	    };
+    	}else {
+    		data = {
+            	"message.parentId": parentId,  //若为评论，则为0；若为回复则为所回复评论的id
+          	    "message.rootId": rootId,  //通parentId
+          	    "message.userId": userId, //发表评论或回复的用户id
+          	    "message.courtId": courtId, //评论或回复所在的场地id
+          	    "message.mesg": mesg, //评论或回复的具体内容
+          	    "message.userName": userName, //是否匿名,默认为公开为0有userName，若匿名为1则为******
+          	    };
     	};
     
     	console.log("进入sendEvaluation，visible为"+visible+",userName为"+userName+"开始ajax");
@@ -579,14 +597,7 @@
   		type: "POST",
         url: "relMsg",
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-        data: {
-        	"message.parentId": parentId,  //若为评论，则为0；若为回复则为所回复评论的id
-      	    "message.rootId": rootId,  //通parentId
-      	    "message.userId": userId, //发表评论或回复的用户id
-      	    "message.courtId": courtId, //评论或回复所在的场地id
-      	    "message.mesg": mesg, //评论或回复的具体内容
-      	    "message.userName": userName, //是否匿名,默认为公开为0有userName，若匿名为1则为******
-      	    },
+        data: data,
         dataType: "json",
         success: function(rspdata) {
         	console.log(rspdata);
@@ -598,6 +609,9 @@
         		$(".evaluations .evaluation-response-li").slideUp("slow",function(){
               	  $(".evaluations .evaluation-response-li").remove();
                 });
+        		console.log("2s后刷新本页，刷新开始");
+        		//5秒后跳转至首页
+                window.setTimeout("window.location='courtSearchDetail.jsp'",2000);
         	};
         },
         error: function() {
