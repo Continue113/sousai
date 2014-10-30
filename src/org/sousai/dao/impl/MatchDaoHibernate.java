@@ -61,14 +61,14 @@ public class MatchDaoHibernate extends HibernateDaoSupport implements MatchDao {
 	public List<Match> findByUser(User user) {
 		// TODO Auto-generated method stub
 		return (List<Match>) getHibernateTemplate().find(
-				"from Matches where UserId=?", user.getId());
+				"from Match where UserId=?", user.getId());
 	}
 
 	@Override
 	public List<Match> findByUserId(Integer userId) {
 		// TODO Auto-generated method stub
 		return (List<Match>) getHibernateTemplate().find(
-				"from Matches where UserId=?");
+				"from Match where UserId=?");
 
 	}
 
@@ -76,14 +76,14 @@ public class MatchDaoHibernate extends HibernateDaoSupport implements MatchDao {
 	public List<Match> findByMatchType(MatchType matchType) {
 		// TODO Auto-generated method stub
 		return (List<Match>) getHibernateTemplate().find(
-				"from Matches where Type=?", matchType.getName());
+				"from Match where Type=?", matchType.getName());
 	}
 
 	@Override
 	public List<Match> findByMatchTypeName(String matchTypeName) {
 		// TODO Auto-generated method stub
 		return (List<Match>) getHibernateTemplate().find(
-				"from Matches where Type=?", matchTypeName);
+				"from Match where Type=?", matchTypeName);
 	}
 
 	@Override
@@ -102,7 +102,7 @@ public class MatchDaoHibernate extends HibernateDaoSupport implements MatchDao {
 	@Override
 	public List<Match> findByMarkingUserId(Integer userId) {
 		return (List<Match>) getHibernateTemplate()
-				.find("from Matches m, UserMark um where um.UserId=? and m.id=um.MatchId",
+				.find("from Match m, UserMark um where um.UserId=? and m.id=um.MatchId",
 						userId);
 	}
 
@@ -111,7 +111,7 @@ public class MatchDaoHibernate extends HibernateDaoSupport implements MatchDao {
 	public List<Match> findByParms(int[] dayOfWeek, int state, Date date,
 			Integer regionId) {
 		// return (List<Match>);
-		String hql = "from Matches where ";
+		String hql = "from Match where ";
 
 		boolean flag = false; // 标记是否有参数使用
 		if (dayOfWeek != null && dayOfWeek.length != 0) {

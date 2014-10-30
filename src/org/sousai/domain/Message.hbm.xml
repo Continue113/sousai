@@ -3,7 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 2014-10-22 20:23:43 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
-    <class name="org.sousai.domain.Message" table="MESSAGES">
+    <class name="org.sousai.domain.Message" table="MESSAGE">
         <id name="id" type="java.lang.Long">
             <column name="ID" />
             <generator class="identity" />
@@ -11,20 +11,23 @@
         <property name="parentId" type="java.lang.Long">
             <column name="PARENTID" />
         </property>
+        <property name="rootId" type="java.lang.Long">
+            <column name="ROOTID" />
+        </property>
         <property name="userId" type="java.lang.Integer">
-            <column name="USER_ID" />
+            <column name="USERID" />
         </property>
         <property name="courtId" type="java.lang.Integer">
-            <column name="COURT_ID" />
+            <column name="COURTID" />
         </property>
-        <property name="time" type="java.sql.Timestamp">
+        <property name="time" type="java.sql.Date">
             <column name="TIME" />
         </property>
         <property name="mesg" type="java.lang.String">
             <column name="MESG" />
         </property>
         <property name="userName" type="java.lang.String">
-            <column name="USER_NAME" />
+            <column name="USERNAME" />
         </property>
     </class>
 </hibernate-mapping>

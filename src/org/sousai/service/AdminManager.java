@@ -11,4 +11,9 @@ public interface AdminManager {
 	 * @return
 	 */
 	public List<MessageBean> getAllMessage();
+	/**
+	 * 获取所有场地
+	 * @return
+	 */
+	public List<CourtBean> getAllCourt();
 }

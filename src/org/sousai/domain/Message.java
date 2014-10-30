@@ -1,9 +1,7 @@
 package org.sousai.domain;
 
-import org.sousai.domain.*;
 
-import java.util.*;
-import java.sql.Timestamp;
+import java.util.Date;
 import java.io.Serializable;
 
 public class Message implements Serializable
@@ -12,9 +10,10 @@ public class Message implements Serializable
 	
 	private Long id;
 	private Long parentId;
+	private Long rootId;
 	private Integer userId;
 	private Integer courtId;
-	private Timestamp time;
+	private Date time;
 	private String mesg;
 	private String userName;
 	
@@ -24,12 +23,13 @@ public class Message implements Serializable
 	}
 	
 	//初始化所有参数的构造器
-	Message(Long id, Long parentId, Integer userId,
-			Integer courtId, Timestamp time, String mesg,
+	Message(Long id, Long parentId, Long rootId, Integer userId,
+			Integer courtId, Date time, String mesg,
 			String userName)
 	{
 		this.id = id;
 		this.parentId = parentId;
+		this.rootId = rootId;
 		this.userId = userId;
 		this.courtId = courtId;
 		this.time = time;
@@ -66,6 +66,20 @@ public class Message implements Serializable
 	}
 
 	/**
+	 * @return the rootId
+	 */
+	public Long getRootId() {
+		return rootId;
+	}
+
+	/**
+	 * @param rootId the rootId to set
+	 */
+	public void setRootId(Long rootId) {
+		this.rootId = rootId;
+	}
+
+	/**
 	 * @return the userId
 	 */
 	public Integer getUserId() {
@@ -96,14 +110,14 @@ public class Message implements Serializable
 	/**
 	 * @return the time
 	 */
-	public Timestamp getTime() {
+	public Date getTime() {
 		return time;
 	}
 
 	/**
 	 * @param time the time to set
 	 */
-	public void setTime(Timestamp time) {
+	public void setTime(Date time) {
 		this.time = time;
 	}
 

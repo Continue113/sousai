@@ -168,7 +168,7 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public InputStream getPic(Long courtId) {
+	public InputStream getPic(Integer courtId) {
 		// TODO Auto-generated method stub
 		// courtDao.get(courtId).get
 		return null;
@@ -331,7 +331,7 @@ public class UserManagerImpl implements UserManager {
 
 	@Override
 	public String uploadUserPic(int flag, File[] images, String[] imgNames,
-			Long UserId) {
+			Integer UserId) {
 		// TODO Auto-generated method stub
 		MyPrint.myPrint("in uploadPicAction");
 		if (images != null && imgNames != null) {
@@ -373,7 +373,7 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public List<Message> getMessages(Long courtId) {
+	public List<Message> getMessages(Integer courtId) {
 		// TODO Auto-generated method stub
 		return mesgDao.getByCourtId(courtId);
 	}

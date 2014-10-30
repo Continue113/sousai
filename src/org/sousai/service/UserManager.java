@@ -92,7 +92,7 @@ public interface UserManager
 	
 	public String uploadPic(int flag, File[] images, String[] imgNames, Integer userId);
 	
-	public InputStream getPic(Long courtId);
+	public InputStream getPic(Integer courtId);
 	
 	/**
 	 * 更新Session中用户，比赛，场地信息
@@ -164,9 +164,9 @@ public interface UserManager
 	 * @param courtId
 	 * @return 指定场地的所有评论及回复
 	 */
-	public List<Message> getMessages(Long courtId);
+	public List<Message> getMessages(Integer courtId);
 
-	String uploadUserPic(int flag, File[] images, String[] imgNames, Long UserId);
+	String uploadUserPic(int flag, File[] images, String[] imgNames, Integer UserId);
 	
 	public List<CourtBean>getCourtInMatchReling(Integer regionId);
 	

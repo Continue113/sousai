@@ -13,7 +13,7 @@ public class ShowMessagesAction extends UserBaseAction {
 	//所有评论
 	private List<Message> messages;
 	//场地id
-	private Long courtId;
+	private Integer courtId;
 	
 	//messages的setter和getter
 	public void setMessages(List<Message> messages)
@@ -26,11 +26,11 @@ public class ShowMessagesAction extends UserBaseAction {
 	}
 	
 	//courtId的setter和getter
-	public void setCourtId(Long courtId)
+	public void setCourtId(Integer courtId)
 	{
 		this.courtId = courtId;
 	}
-	public Long getCourtId()
+	public Integer getCourtId()
 	{
 		return this.courtId;
 	}

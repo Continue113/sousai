@@ -1,27 +1,33 @@
 package org.sousai.vo;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 public class MessageBean {
 	private Long id;
 	private Long parentId;
+	private Long rootId;
 	private Integer userId;
 	private Integer courtId;
-	private Timestamp time;
+	private Date time;
+	private String mesg;
 	private String userName;
 	private String courtName;
 	
-	public MessageBean(Long id, Long parentId, Integer userId, Integer courtId,
-			Timestamp time, String userName, String courtName) {
+	
+	public MessageBean(Long id, Long parentId, Long rootId, Integer userId, Integer courtId,
+			Date time, String mesg, String userName, String courtName) {
 		super();
 		this.id = id;
 		this.parentId = parentId;
+		this.rootId = rootId;
 		this.userId = userId;
 		this.courtId = courtId;
 		this.time = time;
+		this.mesg = mesg;
 		this.userName = userName;
 		this.courtName = courtName;
 	}
+	
 	/**
 	 * @return the id
 	 */
@@ -46,6 +52,22 @@ public class MessageBean {
 	public void setParentId(Long parentId) {
 		this.parentId = parentId;
 	}
+	
+	
+	/**
+	 * @return the rootId
+	 */
+	public Long getRootId() {
+		return rootId;
+	}
+
+	/**
+	 * @param rootId the rootId to set
+	 */
+	public void setRootId(Long rootId) {
+		this.rootId = rootId;
+	}
+
 	/**
 	 * @return the userId
 	 */
@@ -73,14 +95,28 @@ public class MessageBean {
 	/**
 	 * @return the time
 	 */
-	public Timestamp getTime() {
+	public Date getTime() {
 		return time;
 	}
 	/**
 	 * @param time the time to set
 	 */
-	public void setTime(Timestamp time) {
+	public void setTime(Date time) {
 		this.time = time;
+	}
+	
+	
+	/**
+	 * @return the mesg
+	 */
+	public String getMesg() {
+		return mesg;
+	}
+	/**
+	 * @param mesg the mesg to set
+	 */
+	public void setMesg(String mesg) {
+		this.mesg = mesg;
 	}
 	/**
 	 * @return the userName

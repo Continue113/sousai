@@ -3,6 +3,7 @@ package org.sousai.service.impl;
 import java.util.List;
 
 import org.sousai.service.AdminManager;
+import org.sousai.vo.CourtBean;
 import org.sousai.vo.MessageBean;
 import org.sousai.dao.*;
 
@@ -65,6 +66,12 @@ public class AdminManagerImpl implements AdminManager{
 	@Override
 	public List<MessageBean> getAllMessage() {
 		return mesgDao.findAll();
+	}
+
+	@Override
+	public List<CourtBean> getAllCourt() {
+		// TODO Auto-generated method stub
+		return courtDao.findAll();
 	}
 
 }

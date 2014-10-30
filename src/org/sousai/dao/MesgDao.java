@@ -44,14 +44,14 @@ public interface MesgDao
 	 * @param userId 用户id标识属性
 	 * @return 对应用户的所有留言
 	 */
-	List<Message> getByUserId(Long userId);
+	List<Message> getByUserId(Integer userId);
 	
 	/**
 	 * 获取指定场地的所有留言
 	 * @param courtId 场地id标识属性
 	 * @return 对应场地中的所有留言
 	 */
-	List<Message> getByCourtId(Long courtId);
+	List<Message> getByCourtId(Integer courtId);
 	
 	/**
 	 * 获取指定评论的所有回复
