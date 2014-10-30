@@ -374,7 +374,7 @@
             	};
 
               if(rspdata[i].parentId == 0){
-            		evaluations.append('<div class="media evaluation"><div class="pull-left author"><img class="media-object" src="img/defaultImg.png"><div class="evaluationName" data-userid="'+rspdata[i].userId+'">'+userName+'</div></div><div class="media-body"><p class="evaluation-authorMain">'+rspdata[i].mesg+'</p><p class="releasetime">'+rspdata[i].time+'</p><ul class="evaluation-tool-reply"><li class="evaluation-tool"><a href="#myModal">我要补充下</a></li></ul></div></div>');
+            		evaluations.append('<div class="media evaluation"><div class="pull-left author"><img class="media-object" src="img/defaultImg.png"><div class="evaluationName" data-userid="'+rspdata[i].userId+'">'+userName+'</div></div><div class="media-body"><p class="evaluation-authorMain">'+rspdata[i].mesg+'</p><p class="releasetime">'+rspdata[i].time+'</p><ul class="evaluation-tool-reply"><li class="evaluation-tool"><a class="evaluation-tool-a" href="#myModal">我要补充下</a></li></ul></div></div>');
               }else{
                 var tempId= $(".author > .evaluationName").data("userid");
 
