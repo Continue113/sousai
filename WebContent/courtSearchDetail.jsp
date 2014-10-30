@@ -408,6 +408,13 @@
         },
         }); //ajax 已得到评论信息
         
+        $('.evaluation[data-id]').one('click', function(){
+        	alert("XXX");
+        	$( ".evaluation[data-id]" ).each(function (i) {
+            	$(this).text("XXXXX");
+            });
+        });
+         
         
      /** 点击隐藏回复 和 显示回复  **/
      $("body").on("click",".evaluation-tool-visible",function(){
