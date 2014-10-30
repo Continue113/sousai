@@ -425,4 +425,9 @@ public class UserManagerImpl implements UserManager {
 	public Map<String, Integer> countEachMatchByUserId(Integer userId) {
 		return matchDao.getEachMatchCount(userId);
 	}
+
+	@Override
+	public List<Match> getUsersFavorMatch(Integer userId) {
+		return (List<Match>)matchDao.findByMarkingUserId(userId);
+	}
 }

@@ -23,6 +23,7 @@ public class RelMessageAction extends UserBaseAction {
 	public String execute() throws Exception
 	{
 		MyPrint.myPrint("in RelMessageAction!");
+		MyPrint.myPrint("userName = " +message.getUserName());
 		JSONUtils.toJson(ServletActionContext.getResponse(), umg.relMessage(getMessage()));
 		return null;
 	}

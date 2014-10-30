@@ -42,7 +42,7 @@ public interface UserDao {
 	 * ��ѯȫ����Userʵ��
 	 * @return ��ݿ���ȫ����Userʵ��
 	 */
-	List<User> findAll();
+	List<UserBean> findAll();
 	
 	/**
 	 * ��ѯ�û��������ƥ���Userʵ��

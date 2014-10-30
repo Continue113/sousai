@@ -16,4 +16,7 @@ public interface AdminManager {
 	 * @return
 	 */
 	public List<CourtBean> getAllCourt();
+	
+	public List<Match> getAllMatch();
+	public List<UserBean> getAllUser();
 }

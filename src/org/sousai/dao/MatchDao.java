@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.sousai.domain.*;
+import org.sousai.vo.MatchBean;
 
 public interface MatchDao {
 

@@ -19,6 +19,7 @@ public class MesgDaoHibernate extends HibernateDaoSupport implements MesgDao {
 	@Override
 	public Long save(Message message) {
 		MyPrint.myPrint("userId = "+message.getUserId());
+		MyPrint.myPrint("userName = " +message.getUserName());
 		return (Long)getHibernateTemplate().save(message);
 	}
 

@@ -4,8 +4,11 @@ import java.util.List;
 
 import org.sousai.service.AdminManager;
 import org.sousai.vo.CourtBean;
+import org.sousai.vo.MatchBean;
 import org.sousai.vo.MessageBean;
+import org.sousai.vo.UserBean;
 import org.sousai.dao.*;
+import org.sousai.domain.Match;
 
 public class AdminManagerImpl implements AdminManager{
 
@@ -74,4 +77,11 @@ public class AdminManagerImpl implements AdminManager{
 		return courtDao.findAll();
 	}
 
+	public List<Match> getAllMatch(){
+		return matchDao.findAll();
+	}
+	
+	public List<UserBean> getAllUser(){
+		return userDao.findAll();
+	}
 }

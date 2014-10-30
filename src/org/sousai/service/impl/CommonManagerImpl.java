@@ -5,6 +5,7 @@ import java.util.List;
 import org.sousai.domain.*;
 import org.sousai.service.CommonManager;
 import org.sousai.tools.MyPrint;
+import org.sousai.vo.MatchBean;
 import org.sousai.dao.*;
 
 public class CommonManagerImpl implements CommonManager {
