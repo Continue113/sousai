@@ -379,10 +379,11 @@
               }else{
             	  console.log(rspdata[i].parentId);
             	  console.log("parentId != null");
-                var tempId= $(".evaluation").data("id");
+                var tempId= $(".evaluation").attr("data-id");
           	  	console.log(tempId);
 
                 for(var j = 0; j < tempId.length; j++){ //循环取出每一个tempId中的id
+                	console.log("进入第二个for寻汗，tempId 的j循环");
                   if (rspdata[i].parentId == tempId[j]){
                 	  console.log(tempId[j]);
                 	  console.log( $(".evaluation[data-id='"+ tempId[j] +"']") );
