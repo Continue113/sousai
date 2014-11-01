@@ -142,6 +142,23 @@
   <script src="js/sousai.common.js"></script> 
   <script>
   $(function(){
+	//ajax接收所有比赛
+		$.post("getAllMatch", null, function(data) {
+	      alert(data);console.log(data);
+	      var target = $("tbody"),string; //tbody
+	      target.empty(); //清空tbody
+	      for (var i = 0; i < data.length; i++) {
+	    	  string = '<tr class="match">'
+	          +'<td class="match-title form-inline"><input type="checkbox" id="'+ data[i].id +'" /><label for="'+ data[i].id +'">'+ data[i].name +'</label></td>' 
+	          +'<td class="match-time">'+ data[i].beginTime +' - '+ data[i].endTime +'</td>'
+	          +'<td class="match-court">courtId: '+ data[i].courtId +'</td>'
+	          +'<td class="releaseTime">'+ data[i].relTime +'</td>'
+	          +'<td class="releaseUser">userId: '+ data[i].userId +'</td>'
+	          +'<td class="oprate"><a href="#" class="btn btn-mini pull-right">查看编辑</a></td>';
+	          
+	    	  target.append(string);
+	      }
+	    });
     //列表排序
     $('#matchMaintenance').jplist({
           itemsBox: '.matchTable',

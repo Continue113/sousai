@@ -105,7 +105,7 @@
             <select class="selectMatchType" name="mcId">
               <option value=0>请选择比赛类型</option>
             </select>
-            <select class="selectParticularMatchType hide">
+            <select class="selectParticularMatchType hide" name="matchTypeId">
               <option value=0>请选择比赛类型</option>
             </select>
             <label class="omthide hide" class="control-label" for="otherMatchType">请输入类型：</label>
@@ -213,7 +213,7 @@
           <input type="text" class="hide" id="hideUserId" value="<s:property value="#session.userBean.userId"/>" name="match.userId" />
           <div class="control-group"> 
            <div class="controls"> 
-            <button type="submit" class="btn btn-success pull-right" id="rlsMatch">确定发布</button>
+            <input type="submit" class="btn btn-success pull-right" id="rlsMatch" value="确定发布"/>
             <button type="reset" class="btn pull-right" id="resetMatchForm">重置</button>
             <button type="button" class="btn pull-right" name="preView">预览</button> 
            </div> 
@@ -300,7 +300,11 @@
         //$("#otherMatchType").removeAttr("name");
         omtf = 0;
       }
+      //将otherMatchType中填入已选的具体类型设置为空 val为空，同时value为空
+      $("#otherMatchType").val("");
   }else {
+      //将otherMatchType中填入已选的具体类型设置为空 val为空，同时value为空
+      $("#otherMatchType").val("");
     $.ajax({
       type: "POST",
       url: "showMT",
@@ -332,6 +336,8 @@
     //tgPrt: targetparent 目标父元素
     var tgPrt = $(this).parent();
     if (tgPrt.find(".selectParticularMatchType option:selected").attr("value") == 1 && omtf == 0){
+        //将otherMatchType中填入已选的具体类型设置为空
+        $("#otherMatchType").val("");
       //移除name属性，即不会使用select内容提交
       //$(this).removeAttr("name");
       //当用户选择其他的时候，弹出隐藏的label和input
@@ -374,7 +380,7 @@
         omtf = 0;
       }
       //将otherMatchType中填入已选的具体类型设置为空
-      $("#otherMatchType").attr("value", "");
+      $("#otherMatchType").val("");
     }else {
       //若已选择“其他”则改为默认选项
       if( omtf == 1){
@@ -407,7 +413,7 @@
         }); //ajax 已得到场地类型
       }
       //将otherMatchType中填入已选的具体类型
-      $("#otherMatchType").attr("value", tgPrt.find(".selectParticularMatchType option:selected").text() );
+      $("#otherMatchType").val( tgPrt.find(".selectParticularMatchType option:selected").text() );
     }
   });
 
@@ -587,12 +593,11 @@
     // update underlying textarea before submit validation
     tinyMCE.triggerSave();
   }).validate({
-    /*submitHandler: function(form){
+    submitHandler: function(form){
       console.log("发布比赛成功");
       console.log("发布比赛已完成");
       form.submit(); //没有这一句表单不会提交
-    },*/
-  ignore: "",
+    },
   rules: {
     "match.name": {
       minlength: 6,
@@ -601,10 +606,10 @@
     "court.courtTypeId": {
     	min: 1,
     },
-    "match.type": {
+    matchTypeId: {
     	min: 1,
     },
-    "mcId": {
+    mcId: {
     	min: 1,
     },
     selectProvince: {//为比赛地点中的省添加的name属性
@@ -623,8 +628,8 @@
     "match.beginTime": "请选择开始日期",
     "match.endTime": "请选择结束日期",
     "court.courtTypeId": "",
-    "match.type": "",
-    "mcId": "",
+    matchTypeId: "",
+    mcId: "",
     selectProvince: "",
   },
   errorPlacement: function(error, element){

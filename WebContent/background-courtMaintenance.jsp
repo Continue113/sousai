@@ -149,6 +149,23 @@
   <script src="js/sousai.common.js"></script> 
   <script>
   $(function(){
+	  //ajax接收所有的场地
+		$.post("getAllCourt", null, function(data) {
+	      alert(data);console.log(data);
+	      var target = $("tbody"),string; //tbody
+	      target.empty(); //清空tbody
+	      for (var i = 0; i < data.length; i++) {
+	    	  string = '<tr class="court">'
+	          +'<td class="court-name form-inline"><input type="checkbox" id="'+ data[i].id +'" /><label for="'+ data[i].id +'">'+ data[i].name +'</label></td>' 
+	          +'<td class="match-type">'+ data[i].matchType +'</td>'
+	          +'<td class="court-address">'+ data[i].addr +'</td>'
+	          +'<td class="releaseTime">'+ data[i].relDate +'</td>'
+	          +'<td class="releaseUser">'+ data[i].userName +'</td>'
+	          +'<td class="oprate"><a href="#" class="btn btn-mini pull-right">查看编辑</a></td>';
+	          
+	    	  target.append(string);
+	      }
+	    });
     //列表排序
     $('#courtMaintenance').jplist({
           itemsBox: '.courtTable',

@@ -354,6 +354,7 @@
     createCode("inputValidateImg");
     
   	/** 拉取评论  **/
+  	function ajaxAllEvaluation(){
   	$.ajax({
   		type: "POST",
         url: "showMsgs",
@@ -395,6 +396,9 @@
         	console.log("抱歉，获取评论出错了。");//alert("抱歉，获取评论出错了。");
         },
         }); //ajax 已得到评论信息
+  	}
+  	//立即获取所有评论
+  	ajaxAllEvaluation();
         
      /** 点击隐藏回复 和 显示回复  **/
      $("body").on("click",".evaluation-tool-visible",function(){
@@ -610,13 +614,15 @@
         		alert("发表评论失败！");console.log("发表评论失败！服务器返回错误码为0");
         	}else{
         		alert("发表评论成功！");console.log("发表评论成功！");
-        		target.append(respCode); //本地添加
+        		/*target.append(respCode); //本地添加
         		$(".evaluations .evaluation-response-li").slideUp("slow",function(){
               	  $(".evaluations .evaluation-response-li").remove();
                 });
-        		console.log("2s后刷新本页，刷新开始");
+        		console.log("2s后刷新本页，刷新开始");*/
         		//5秒后跳转至首页
-                window.setTimeout("window.location='courtSearchDetail.jsp'",2000);
+                //window.setTimeout("window.location='courtSearchDetail.jsp'",2000);
+        		//立即刷新获取所有评论
+        		ajaxAllEvaluation();
         	};
         },
         error: function() {
