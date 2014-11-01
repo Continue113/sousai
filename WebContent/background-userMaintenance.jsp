@@ -159,26 +159,31 @@
   <script src="js/sousai.common.js"></script> 
   <script>
   $(function(){
-	/*ajax接受所有的评论
+	//ajax接受所有的用户
 		$.post("getAllUser", null, function(data) {
 	      alert(data);console.log(data);
 	      var target = $("tbody"),string; //tbody
 	      target.empty(); //清空tbody
 	      for (var i = 0; i < data.length; i++) {
-	    	  string = '<tr class="evaluation">'
-	          +'<td class="evaluation-content form-inline" data-parentId="'+ data[i].parentId +'"><input type="checkbox" id="'+ data[i].id +'" /><label for="'+ data[i].id +'">'+ data[i].mesg +'</label></td>' 
-	          +'<td class="court-name" data-courtId="'+ data[i].courtId +'">'+ data[i].courtName +'</td>'
-	          +'<td class="releaseTime">'+ data[i].time +'</td>'
-	          +'<td class="releaseUser" data-userId="'+ data[i].userId +'">'+ data[i].userName +'</td></tr>';
-	          
-	    	  target.append(string);
+	    	  string = '<tr class="user">'
+	    		  +'<td class="user-userName form-inline"><input type="checkbox" id="'+ data[i].id +'" /><label for="'+ data[i].id +'">'+ data[i].name +'</label></td>',
+	    		  +'<td class="user-registerTime">'+ data[i].regTime +'</td>', 
+	    		  +'<td class="user-lastLoginTime">'+ data[i].lastLogTime +'</td>', 
+	    		  +'<td class="user-matchNumber">'+ data[i].matchNumber +'</td>', 
+	    		  +'<td class="user-courtNumber">'+ data[i].courtNumber +'</td>', 
+	    		  +'<td class="user-loginNumber">'+ data[i].loginNumber +'</td>', 
+	    		  +'<td class="user-email">'+ data[i].email +'</td>', 
+	    		  +'<td class="user-IP">'+ data[i].IP +'<span>&nbsp;'+ data[i].city +'</span></td>', 
+	    		  +'<td class="oprate"><a href="#" class="btn btn-mini pull-right">查看编辑</a></td></tr>';
+	    		  
+	    	  target.append(string);	          
 	      }
-	    });*/
+	    });
     //列表排序
     $('#userMaintenance').jplist({
           itemsBox: '.userTable',
           itemPath: '.user',
-          panelPath: '.jplist-panel',
+          panelPath: '.jplist-panel',/*
           dataSource: {
               type: 'server',
               server: {
@@ -197,7 +202,7 @@
                      alert("error"+statuses);console.log(statuses);
                  }
               }
-            }
+            }*/
         });
     //管理员界面表格列字数限制，溢出省略
     $(".user-email").wordLimit(16);

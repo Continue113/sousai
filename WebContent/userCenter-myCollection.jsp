@@ -230,6 +230,22 @@
   <script src="js/jplist.min.js"></script> 
   <script>
     $(function () {
+    	//ajax接收所有的收藏
+    	$.post("getUserFavM", null, function(data) {
+          alert(data);console.log(data);
+          /*var target = $("tbody"),string; //tbody
+          target.empty(); //清空tbody
+          for (var i = 0; i < data.length; i++) {
+        	  string = '<tr class="evaluation">'
+              +'<td class="evaluation-content form-inline" data-parentId="'+ data[i].parentId +'"><input type="checkbox" id="'+ data[i].id +'" /><label for="'+ data[i].id +'">'+ data[i].mesg +'</label></td>' 
+              +'<td class="court-name" data-courtId="'+ data[i].courtId +'">'+ data[i].courtName +'</td>'
+              +'<td class="releaseTime">'+ data[i].time +'</td>'
+              +'<td class="releaseUser" data-userId="'+ data[i].userId +'">'+ data[i].userName +'</td></tr>';
+              
+        	  target.append(string);
+          }*/
+        });
+    	
       //鼠标滑过场地列表
     $("div.matchBox").hover(function(){
       $(this).addClass("box-active");
@@ -258,7 +274,6 @@
             sortflag=1;
         }
     });
-    /****/
-    })
+    });
 </script>
 </body></html>

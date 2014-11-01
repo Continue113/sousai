@@ -151,9 +151,9 @@
 	    	  string = '<tr class="match">'
 	          +'<td class="match-title form-inline"><input type="checkbox" id="'+ data[i].id +'" /><label for="'+ data[i].id +'">'+ data[i].name +'</label></td>' 
 	          +'<td class="match-time">'+ data[i].beginTime +' - '+ data[i].endTime +'</td>'
-	          +'<td class="match-court">courtId: '+ data[i].courtId +'</td>'
+	          +'<td class="match-court">'+ data[i].courtName +'</td>'
 	          +'<td class="releaseTime">'+ data[i].relTime +'</td>'
-	          +'<td class="releaseUser">userId: '+ data[i].userId +'</td>'
+	          +'<td class="releaseUser">'+ data[i].userName +'</td>'
 	          +'<td class="oprate"><a href="#" class="btn btn-mini pull-right">查看编辑</a></td>';
 	          
 	    	  target.append(string);
