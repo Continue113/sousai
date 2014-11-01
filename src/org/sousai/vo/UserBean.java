@@ -2,20 +2,22 @@ package org.sousai.vo;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Date;
 
 import org.sousai.domain.User;
 
 /**
- * Description:
- * <br/> UserBean is a VO of the object in table users
+ * Description: <br/>
+ * UserBean is a VO of the object in table users
  * 
- * <br/>Copyright (C), 2014-2024, Myic
+ * <br/>
+ * Copyright (C), 2014-2024, Myic
+ * 
  * @author Myic myic211@gmail.com
  * @version 1.0
  *
  */
-public class UserBean implements Serializable 
-{
+public class UserBean implements Serializable {
 	private static final long serialVersionUID = -5031624436228209839L;
 	private Integer userId;
 	private String userName;
@@ -23,19 +25,17 @@ public class UserBean implements Serializable
 	private String userEmail;
 	private char userType;
 	private String userPicId;
-	private Timestamp userRegTime;
-	private Timestamp userLastLogTime;
-	
-	//Ĭ�Ϲ�����
-	public UserBean()
-	{
+	private Date userRegTime;
+	private Date userLastLogTime;
+
+	// Ĭ�Ϲ�����
+	public UserBean() {
 	}
-	
-	//��ʼ���������ԵĹ�����
+
+	// ��ʼ���������ԵĹ�����
 	public UserBean(Integer userId, String userName, String userPwd,
 			String userEmail, char userType, String userPicId,
-			Timestamp userRegTime, Timestamp userLastLogTime)
-	{
+			Timestamp userRegTime, Timestamp userLastLogTime) {
 		this.setUserId(userId);
 		this.setUserName(userName);
 		this.setUserPwd(userPwd);
@@ -43,21 +43,29 @@ public class UserBean implements Serializable
 		this.setUserType(userType);
 		this.setUserPicId(userPicId);
 		this.setUserRegTime(userRegTime);
-		this.setUserType(userType);
+		this.setUserLastLogTime(userLastLogTime);
 	}
-	
+
 	public UserBean(Integer userId, String userName, String userPwd,
-			String userEmail, char userType)
-	{
+			String userEmail, char userType) {
 		this.setUserId(userId);
 		this.setUserName(userName);
 		this.setUserPwd(userPwd);
 		this.setUserEmail(userEmail);
 		this.setUserType(userType);
 	}
-	
-	public UserBean(User user)
-	{
+
+	public UserBean(Integer userId, String userName, String userEmail,
+			char userType, Date userRegTime, Date userLastLogTime) {
+		this.userId = userId;
+		this.userName = userName;
+		this.userLastLogTime = userLastLogTime;
+		this.userEmail = userEmail;
+		this.userType = userType;
+		this.userRegTime = userRegTime;
+	}
+
+	public UserBean(User user) {
 		this.userId = user.getId();
 		this.userName = user.getName();
 		this.userEmail = user.getEmail();
@@ -67,83 +75,76 @@ public class UserBean implements Serializable
 		this.userRegTime = user.getRegTime();
 		this.userType = user.getType();
 	}
-	//userId ��setter��getter
-	public void setUserId(int userId)
-	{
+
+	// userId ��setter��getter
+	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-	public Integer getUserId()
-	{
+
+	public Integer getUserId() {
 		return this.userId;
 	}
-	
-	//userName ��setter��getter
-	public void setUserName(String userName)
-	{
+
+	// userName ��setter��getter
+	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	public String getUserName()
-	{
+
+	public String getUserName() {
 		return this.userName;
 	}
-	
-	//userPwd ��setter��getter
-	public void setUserPwd(String userPwd)
-	{
+
+	// userPwd ��setter��getter
+	public void setUserPwd(String userPwd) {
 		this.userPwd = userPwd;
 	}
-	public String getUserPwd()
-	{
+
+	public String getUserPwd() {
 		return this.userPwd;
 	}
-	
-	//userEmail ��setter��getter
-	public void setUserEmail(String userEmail)
-	{
+
+	// userEmail ��setter��getter
+	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
 	}
-	public String getUserEmail()
-	{
+
+	public String getUserEmail() {
 		return this.userEmail;
 	}
-	
-	//userType ��setter��getter
-	public void setUserType(char userType)
-	{
+
+	// userType ��setter��getter
+	public void setUserType(char userType) {
 		this.userType = userType;
 	}
-	public char getUserType()
-	{
+
+	public char getUserType() {
 		return this.userType;
 	}
-	
-	//userPicId ��setter��getter
-	public void setUserPicId(String userPicId)
-	{
+
+	// userPicId ��setter��getter
+	public void setUserPicId(String userPicId) {
 		this.userPicId = userPicId;
 	}
-	public String getUserPicId()
-	{
+
+	public String getUserPicId() {
 		return this.userPicId;
 	}
-	
-	//userRegTime ��setter��getter
-	public void setUserRegTime(Timestamp userRegTime)
-	{
+
+	// userRegTime ��setter��getter
+	public void setUserRegTime(Date userRegTime) {
 		this.userRegTime = userRegTime;
 	}
-	public Timestamp getUserRegTime()
-	{
+
+	public Date getUserRegTime() {
 		return this.userRegTime;
 	}
-	
-	//userLastLogTime ��setter��getter
-	public void setUserLastLogTime(Timestamp userLastLogTime)
-	{
+
+	// userLastLogTime ��setter��getter
+	public void setUserLastLogTime(Date userLastLogTime) {
 		this.userLastLogTime = userLastLogTime;
 	}
-	public Timestamp getUserLastLogTime()
-	{
+
+	public Date getUserLastLogTime() {
 		return this.userLastLogTime;
 	}
 }

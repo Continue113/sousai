@@ -59,7 +59,7 @@ public class UserDaoHibernate extends HibernateDaoSupport implements UserDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserBean> findAll() {
-		String hql = "select new UserBean(u.id,u.name,u.email,u.type,u.regTime,u.lastLogTime) "
+		String hql = "select new org.sousai.vo.UserBean(u.id,u.name,u.email,u.type,u.regTime,u.lastLogTime) "
 				+ "from User u";
 		Session session = getHibernateTemplate().getSessionFactory()
 				.getCurrentSession();

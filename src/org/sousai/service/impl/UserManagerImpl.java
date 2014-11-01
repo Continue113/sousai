@@ -407,8 +407,8 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public List<Match> getMatchByParms(int[] dayOfWeek, int state, int regionId) {
-		return (List<Match>) matchDao.findByParms(dayOfWeek, state, new Date(), regionId);
+	public List<MatchBean> getMatchByParms(int[] dayOfWeek, int state, int regionId) {
+		return (List<MatchBean>) matchDao.findByParms(dayOfWeek, state, new Date(), regionId);
 	}
 
 	@Override
@@ -427,7 +427,7 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public List<Match> getUsersFavorMatch(Integer userId) {
-		return (List<Match>)matchDao.findByMarkingUserId(userId);
+	public List<MatchBean> getUsersFavorMatch(Integer userId) {
+		return (List<MatchBean>)matchDao.findByMarkingUserId(userId);
 	}
 }

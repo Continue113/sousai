@@ -19,21 +19,21 @@ public interface MatchDao {
 
 	void delete(Integer id);
 
-	List<Match> findAll();
+	List<MatchBean> findAll();
 
-	List<Match> findByUser(User user);
+	List<MatchBean> findByUser(User user);
 
-	List<Match> findByUserId(Integer userId);
+	List<MatchBean> findByUserId(Integer userId);
 
-	List<Match> findByMatchType(MatchType matchType);
+	List<MatchBean> findByMatchTypeId(Integer matchTypeId);
 
-	List<Match> findByMatchTypeName(String matchTypeName);
+	List<MatchBean> findByMatchTypeName(String matchTypeName);
 
-	List<Match> findByMatchClass(MatchClass matchClass);
+	List<MatchBean> findByMatchClassId(Integer matchClassId);
 
-	List<Match> findByMatchClassId(Integer matchClassId);
+	List<MatchBean> findByMatchClassName(String matchClassName);
 
-	List<Match> findByMarkingUserId(Integer userId);
+	List<MatchBean> findByMarkingUserId(Integer userId);
 
 	/**
 	 * 根据可选参数，从数据库返回比赛。
@@ -47,7 +47,7 @@ public interface MatchDao {
 	 *            地点id。若不使用此参数，传递-1
 	 * @return		符合参数要求的所有比赛
 	 */
-	List<Match> findByParms(int[] dayOfWeek, int state, Date date,
+	List<MatchBean> findByParms(int[] dayOfWeek, int state, Date date,
 			Integer regionId);
 	/**
 	 * 统计用户发布的每种比赛的数量

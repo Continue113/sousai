@@ -124,7 +124,7 @@ public class CommonManagerImpl implements CommonManager {
 	}
 
 	@Override
-	public List<Match> findMatchByMatchTypeName(String typeName) {
+	public List<MatchBean> findMatchByMatchTypeName(String typeName) {
 		// TODO Auto-generated method stub
 		return matchDao.findByMatchTypeName(typeName);
 	}

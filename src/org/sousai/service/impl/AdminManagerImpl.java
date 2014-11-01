@@ -77,7 +77,7 @@ public class AdminManagerImpl implements AdminManager{
 		return courtDao.findAll();
 	}
 
-	public List<Match> getAllMatch(){
+	public List<MatchBean> getAllMatch(){
 		return matchDao.findAll();
 	}
 	

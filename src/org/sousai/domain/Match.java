@@ -3,8 +3,7 @@ package org.sousai.domain;
 import org.sousai.domain.*;
 
 import java.io.Serializable;
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.util.Date;
 
 public class Match implements Serializable {
 
@@ -17,7 +16,7 @@ public class Match implements Serializable {
 	private Date endTime;
 	private Integer courtId; // 可传可不传
 	private String rule; // 可传可不传
-	private Timestamp relTime;
+	private Date relTime;
 	private char verify;
 	private String score; // 可传可不传
 	private Integer userId; // 可传可不传
@@ -135,7 +134,7 @@ public class Match implements Serializable {
 	/**
 	 * @return the relTime
 	 */
-	public Timestamp getRelTime() {
+	public Date getRelTime() {
 		return relTime;
 	}
 
@@ -143,7 +142,7 @@ public class Match implements Serializable {
 	 * @param relTime
 	 *            the relTime to set
 	 */
-	public void setRelTime(Timestamp relTime) {
+	public void setRelTime(Date relTime) {
 		this.relTime = relTime;
 	}
 

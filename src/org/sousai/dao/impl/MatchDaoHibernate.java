@@ -15,9 +15,15 @@ import org.sousai.domain.MatchClass;
 import org.sousai.domain.MatchType;
 import org.sousai.domain.User;
 import org.sousai.tools.MyPrint;
+import org.sousai.vo.MatchBean;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 public class MatchDaoHibernate extends HibernateDaoSupport implements MatchDao {
+
+	private final String selectMatchBean = "select new org.sousai.vo.MatchBean(m.id,m.name,m.type,"
+			+ "m.beginTime,m.endTime,m.courtId,c.name,m.rule,m.relTime,"
+			+ "m.verify,m.score,m.userId,u.name) from Match m, Court c, User u "
+			+ "where m.courtId=c.id and u.id=m.userId ";
 
 	@Override
 	public Match get(Integer id) {
@@ -50,110 +56,152 @@ public class MatchDaoHibernate extends HibernateDaoSupport implements MatchDao {
 	}
 
 	@Override
-	public List<Match> findAll() {
-		// TODO Auto-generated method stub
-		List<Match> list = (List<Match>) getHibernateTemplate().find(
-				"from Match");
-		return list;
+	public List<MatchBean> findAll() {
+		String hql = selectMatchBean;
+		Session session = getHibernateTemplate().getSessionFactory()
+				.getCurrentSession();
+		try {
+			return (List<MatchBean>) session.createQuery(hql).list();
+		} catch (Exception e) {
+			e.printStackTrace();
+			if (e.getCause() != null)
+				e.getCause().printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
-	public List<Match> findByUser(User user) {
-		// TODO Auto-generated method stub
-		return (List<Match>) getHibernateTemplate().find(
-				"from Match where UserId=?", user.getId());
+	public List<MatchBean> findByUser(User user) {
+		String hql = selectMatchBean + "and m.userId=?";
+		Session session = getHibernateTemplate().getSessionFactory()
+				.getCurrentSession();
+		try {
+			return (List<MatchBean>) session.createQuery(hql)
+					.setInteger(0, user.getId()).list();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
-	public List<Match> findByUserId(Integer userId) {
-		// TODO Auto-generated method stub
-		return (List<Match>) getHibernateTemplate().find(
-				"from Match where UserId=?");
+	public List<MatchBean> findByUserId(Integer userId) {
+		String hql = selectMatchBean + "and m.userId=?";
+		Session session = getHibernateTemplate().getSessionFactory()
+				.getCurrentSession();
+		try {
+			return (List<MatchBean>) session.createQuery(hql)
+					.setInteger(0, userId).list();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 
 	}
 
 	@Override
-	public List<Match> findByMatchType(MatchType matchType) {
-		// TODO Auto-generated method stub
-		return (List<Match>) getHibernateTemplate().find(
-				"from Match where Type=?", matchType.getName());
+	public List<MatchBean> findByMatchTypeId(Integer matchTypeId) {
+		return null;
+		// String hql = selectMatchBean + "and m.type=?";
+		// Session session =
+		// getHibernateTemplate().getSessionFactory().getCurrentSession();
+		// try{
+		// return (List<MatchBean>)session.createQuery(hql).setInteger(0,
+		// matchTypeId).list();
+		// }catch(Exception e){
+		// e.printStackTrace();
+		// return null;
+		// }
 	}
 
 	@Override
-	public List<Match> findByMatchTypeName(String matchTypeName) {
+	public List<MatchBean> findByMatchTypeName(String matchTypeName) {
 		// TODO Auto-generated method stub
-		return (List<Match>) getHibernateTemplate().find(
-				"from Match where Type=?", matchTypeName);
+		return null;
+		// return (List<Match>) getHibernateTemplate().find(
+		// "from Match where Type=?", matchTypeName);
 	}
 
 	@Override
-	public List<Match> findByMatchClass(MatchClass matchClass) {
+	public List<MatchBean> findByMatchClassId(Integer matchClassId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Match> findByMatchClassId(Integer matchClassId) {
+	public List<MatchBean> findByMatchClassName(String matchClassName) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Match> findByMarkingUserId(Integer userId) {
-		return (List<Match>) getHibernateTemplate()
-				.find("from Match m, UserMark um where um.UserId=? and m.id=um.MatchId",
-						userId);
+	public List<MatchBean> findByMarkingUserId(Integer userId) {
+		String hql = "select new org.sousai.vo.MatchBean(m.id,m.name,m.type,"
+				+ "m.beginTime,m.endTime,m.courtId,c.name,m.rule,m.relTime,"
+				+ "m.verify,m.score,m.userId,u.name) from Match m, Court c, User u, Usermark um "
+				+ "where m.courtId=c.id and u.id=m.userId and um.UserId=? and m.id=um.matchId";
+		Session session = getHibernateTemplate().getSessionFactory()
+				.getCurrentSession();
+		try {
+			return (List<MatchBean>) session.createQuery(hql)
+					.setInteger(0, userId).list();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Match> findByParms(int[] dayOfWeek, int state, Date date,
+	public List<MatchBean> findByParms(int[] dayOfWeek, int state, Date date,
 			Integer regionId) {
+		return null;
 		// return (List<Match>);
-		String hql = "from Match where ";
-
-		boolean flag = false; // 标记是否有参数使用
-		if (dayOfWeek != null && dayOfWeek.length != 0) {
-			hql += "DAYOFWEEK(BeginTime) in "; // mysql数据库中，通过函数DAYOFWEEK(Field)可知道是周几（1-8），周日是1，周一是2，
-			for (int dow : dayOfWeek) {
-				if (dow < 9 && dow > 0)
-					hql += (dow + " , ");
-				else
-					return null;
-			}
-			flag = true;
-		}
-		if (state != -1 && date != null) {
-			if (flag)
-				hql += "and ";
-			if (state == 0) // 报名中，即比赛开始时间在date之后
-				hql += "BEGINTIME=? ";
-			else if (state == 1) // 比赛中，即date处于比赛开始时间与结束时间之间
-				hql += "BEGINTIME<? and ENDTIME>? ";
-			else if (state == 2) // 已结束，即date在比赛结束之后
-				hql += "ENDTIME<? ";
-			else
-				return null; // 其他情况，报错返回null
-			flag = (!flag ? true : false);
-		}
-		if (regionId != -1)
-			if (flag)
-				hql += "and regionId==?";
-			else
-				hql += "regionId==?";
-		else if (!flag)
-			return null; // 没有参数被使用，报错返回null
-		MyPrint.myPrint(hql);
-		if (state == -1 && regionId == -1) // 只有dayOfWeek被使用
-			return (List<Match>) getHibernateTemplate().find(hql);
-		else if (state == -1) // dayOfWeek和regionId被使用
-			return (List<Match>) getHibernateTemplate().find(hql, regionId);
-		else if (regionId == -1) // dayOfWeek和state及date被使用
-			return (List<Match>) getHibernateTemplate().find(hql, date);
-		else
-			// 所有参数都使用
-			return getHibernateTemplate().find(hql, date, regionId);
+		// String hql = "from Match where ";
+		//
+		// boolean flag = false; // 标记是否有参数使用
+		// if (dayOfWeek != null && dayOfWeek.length != 0) {
+		// hql += "DAYOFWEEK(BeginTime) in "; //
+		// mysql数据库中，通过函数DAYOFWEEK(Field)可知道是周几（1-8），周日是1，周一是2，
+		// for (int dow : dayOfWeek) {
+		// if (dow < 9 && dow > 0)
+		// hql += (dow + " , ");
+		// else
+		// return null;
+		// }
+		// flag = true;
+		// }
+		// if (state != -1 && date != null) {
+		// if (flag)
+		// hql += "and ";
+		// if (state == 0) // 报名中，即比赛开始时间在date之后
+		// hql += "BEGINTIME=? ";
+		// else if (state == 1) // 比赛中，即date处于比赛开始时间与结束时间之间
+		// hql += "BEGINTIME<? and ENDTIME>? ";
+		// else if (state == 2) // 已结束，即date在比赛结束之后
+		// hql += "ENDTIME<? ";
+		// else
+		// return null; // 其他情况，报错返回null
+		// flag = (!flag ? true : false);
+		// }
+		// if (regionId != -1)
+		// if (flag)
+		// hql += "and regionId==?";
+		// else
+		// hql += "regionId==?";
+		// else if (!flag)
+		// return null; // 没有参数被使用，报错返回null
+		// MyPrint.myPrint(hql);
+		// if (state == -1 && regionId == -1) // 只有dayOfWeek被使用
+		// return (List<MatchBean>) getHibernateTemplate().find(hql);
+		// else if (state == -1) // dayOfWeek和regionId被使用
+		// return (List<MatchBean>) getHibernateTemplate().find(hql, regionId);
+		// else if (regionId == -1) // dayOfWeek和state及date被使用
+		// return (List<MatchBean>) getHibernateTemplate().find(hql, date);
+		// else
+		// // 所有参数都使用
+		// return getHibernateTemplate().find(hql, date, regionId);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -166,7 +214,7 @@ public class MatchDaoHibernate extends HibernateDaoSupport implements MatchDao {
 					.getCurrentSession();
 			Query q = session.createQuery(hql);
 			q.setInteger(0, userId);
-			MyPrint.myPrint("userId = " +userId);
+			MyPrint.myPrint("userId = " + userId);
 			for (Object[] ob : (List<Object[]>) q.list()) {
 				rs.put((String) ob[0], Integer.valueOf(ob[1].toString()));
 			}

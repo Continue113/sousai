@@ -178,7 +178,7 @@ public interface UserManager
 	 * @param regionId
 	 * @return
 	 */
-	public List<Match> getMatchByParms(int[] dayOfWeek, int state, int regionId);
+	public List<MatchBean> getMatchByParms(int[] dayOfWeek, int state, int regionId);
 	
 	public List<CourtBean> getCourtByUserId(Integer userId);
 	/**
@@ -190,5 +190,5 @@ public interface UserManager
 	
 	public Map<String,Integer> countEachMatchByUserId(Integer userId);
 	
-	public List<Match> getUsersFavorMatch(Integer userId);
+	public List<MatchBean> getUsersFavorMatch(Integer userId);
 }

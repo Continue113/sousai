@@ -16,8 +16,8 @@ public class User implements Serializable{
 	private String email;
 	private char type;
 	private String picId;
-	private Timestamp regTime;
-	private Timestamp lastLogTime;
+	private Date regTime;
+	private Date lastLogTime;
 	
 	//默认构造函数	
 	public User(){
@@ -108,25 +108,25 @@ public class User implements Serializable{
 	/**
 	 * @return the regTime
 	 */
-	public Timestamp getRegTime() {
+	public Date getRegTime() {
 		return regTime;
 	}
 	/**
 	 * @param regTime the regTime to set
 	 */
-	public void setRegTime(Timestamp regTime) {
+	public void setRegTime(Date regTime) {
 		this.regTime = regTime;
 	}
 	/**
 	 * @return the lastLogTime
 	 */
-	public Timestamp getLastLogTime() {
+	public Date getLastLogTime() {
 		return lastLogTime;
 	}
 	/**
 	 * @param lastLogTime the lastLogTime to set
 	 */
-	public void setLastLogTime(Timestamp lastLogTime) {
+	public void setLastLogTime(Date lastLogTime) {
 		this.lastLogTime = lastLogTime;
 	}
 	/**
