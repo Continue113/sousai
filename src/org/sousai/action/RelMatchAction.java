@@ -9,7 +9,10 @@ public class RelMatchAction extends UserBaseAction {
 	private static final long serialVersionUID = -509217384709788196L;
 	private static final String SUCCESS = "success";
 	private static final String FAIL = "fail";
+	private static final String EXEED_COUNT = "EXEED";
 	private Match match;
+
+	private static final int maxCourtCount = 5;
 
 	/**
 	 * @return the match
@@ -37,10 +40,13 @@ public class RelMatchAction extends UserBaseAction {
 		MyPrint.myPrint("in RelMatchAction");
 		try {
 			MyPrint.myPrint("t = ");
-			if (getMatch() != null && umg.relMatch(match) != 0) {
-				return SUCCESS;
+			if (umg.isExeed(maxCourtCount)) {
+				if (getMatch() != null && umg.relMatch(match) != 0) {
+					return SUCCESS;
+				}
+				return FAIL;
 			}
-			return FAIL;
+			return EXEED_COUNT;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return FAIL;

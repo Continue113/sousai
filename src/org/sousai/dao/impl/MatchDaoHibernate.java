@@ -27,31 +27,26 @@ public class MatchDaoHibernate extends HibernateDaoSupport implements MatchDao {
 
 	@Override
 	public Match get(Integer id) {
-		// TODO Auto-generated method stub
 		return getHibernateTemplate().get(Match.class, id);
 	}
 
 	@Override
 	public Integer save(Match match) {
-		// TODO Auto-generated method stub
 		return (Integer) getHibernateTemplate().save(match);
 	}
 
 	@Override
 	public void update(Match match) {
-		// TODO Auto-generated method stub
 		getHibernateTemplate().update(match);
 	}
 
 	@Override
 	public void delete(Match match) {
-		// TODO Auto-generated method stub
 		getHibernateTemplate().delete(match);
 	}
 
 	@Override
 	public void delete(Integer id) {
-		// TODO Auto-generated method stub
 		getHibernateTemplate().delete(get(id));
 	}
 
@@ -116,7 +111,6 @@ public class MatchDaoHibernate extends HibernateDaoSupport implements MatchDao {
 
 	@Override
 	public List<MatchBean> findByMatchTypeName(String matchTypeName) {
-		// TODO Auto-generated method stub
 		return null;
 		// return (List<Match>) getHibernateTemplate().find(
 		// "from Match where Type=?", matchTypeName);
@@ -124,13 +118,11 @@ public class MatchDaoHibernate extends HibernateDaoSupport implements MatchDao {
 
 	@Override
 	public List<MatchBean> findByMatchClassId(Integer matchClassId) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<MatchBean> findByMatchClassName(String matchClassName) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -222,6 +214,18 @@ public class MatchDaoHibernate extends HibernateDaoSupport implements MatchDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
+		}
+	}
+
+	@Override
+	public int countRelMatchPerDay() {
+		try{
+			String hql = "select count(*) from Match where date(relTime)=curdate()";
+			Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
+			return session.createQuery(hql).executeUpdate();
+		}catch (Exception e){
+			e.printStackTrace();
+			return -1;
 		}
 	}
 }

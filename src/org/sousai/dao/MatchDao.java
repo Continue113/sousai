@@ -9,6 +9,8 @@ import org.sousai.vo.MatchBean;
 
 public interface MatchDao {
 
+	public static final int EXCEED_QUOTA  = -1;
+	
 	Match get(Integer id);
 
 	Integer save(Match match);
@@ -49,10 +51,16 @@ public interface MatchDao {
 	 */
 	List<MatchBean> findByParms(int[] dayOfWeek, int state, Date date,
 			Integer regionId);
+	
 	/**
 	 * 统计用户发布的每种比赛的数量
 	 * @param userId	用户标识
 	 * @return
 	 */
 	Map<String, Integer> getEachMatchCount(Integer userId);
+	
+	/**
+	 * 
+	 */
+	int countRelMatchPerDay();
 }

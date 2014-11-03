@@ -9,6 +9,7 @@ MyPrint.myPrint("dir=" + dir);
 String savePath = "./files/userHeads/";  //保存图片路径 可以修改
 MyPrint.myPrint("savePath=" + savePath);
 String _savePath = dir + savePath;
+// String _savePath = "/home/myic/workspace/";
 MyPrint.myPrint("_savePath=" + _savePath);
 long savePicName = new Date().getTime();
 
@@ -17,15 +18,10 @@ String filename162 = _savePath + savePicName + "_162.jpg";  //保存162
 String filename48 = _savePath + savePicName + "_48.jpg";  //保存48
 String filename20 = _savePath + savePicName + "_20.jpg";  //保存20
 
-
-
 String pic=request.getParameter("pic");
 String pic1=request.getParameter("pic1");
 String pic2=request.getParameter("pic2");
 String pic3=request.getParameter("pic3");
-
-
-
 if(!pic.equals("")&&pic!=null){
 	//原图
 	File file = new File(file_src);
@@ -33,10 +29,12 @@ if(!pic.equals("")&&pic!=null){
 	fout = new FileOutputStream(file);
 	fout.write(new BASE64Decoder().decodeBuffer(pic));
 	fout.close();
+}else{
+	MyPrint.myPrint("pic = " +null);
 }
 
-//图1
 File file1 = new File(filename162);
+MyPrint.myPrint(""+file1.isFile());
 FileOutputStream fout1 = null;
 fout1 = new FileOutputStream(file1);
 fout1.write(new BASE64Decoder().decodeBuffer(pic1));

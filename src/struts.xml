@@ -73,7 +73,7 @@
 		<!-- 发布场地的action -->
 		<action name="relCourt"
 			class="org.sousai.action.RelCourtAction">
-			<result>main.jsp</result>
+			<result>userCenter-releaseCourt.jsp</result>
 		</action>
 		
 		<!-- 获取所有比赛大类的action -->

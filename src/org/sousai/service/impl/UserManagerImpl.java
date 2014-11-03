@@ -85,7 +85,6 @@ public class UserManagerImpl implements UserManager {
 
 	@Override
 	public int validLogin(User user) {
-		// TODO Auto-generated method stub
 		System.out.println("validLogin Now!!!");
 		if (userDao.findByNameAndPass(user).size() >= 1) {
 			MyPrint.myPrint("valid success");
@@ -102,7 +101,6 @@ public class UserManagerImpl implements UserManager {
 
 	@Override
 	public UserBean getByName(String name) {
-		// TODO Auto-generated method stub
 		MyPrint.myPrint("getByName now turn to transform");
 		User user = userDao.findByName(name);
 		if (user != null) {
@@ -114,7 +112,6 @@ public class UserManagerImpl implements UserManager {
 
 	@Override
 	public UserBean transform(User user) {
-		// TODO Auto-generated method stub
 		MyPrint.myPrint("transform now");
 		// System.out.println(""+user.getName());
 		/*
@@ -134,7 +131,6 @@ public class UserManagerImpl implements UserManager {
 
 	@Override
 	public int register(User user) {
-		// TODO Auto-generated method stub
 		MyPrint.myPrint("register now turn to userDao.save");
 		if (userDao.save(user) != null) {
 			return REG_SUCCESS;
@@ -144,7 +140,6 @@ public class UserManagerImpl implements UserManager {
 
 	@Override
 	public int validName(String name) {
-		// TODO Auto-generated method stub
 		// System.out.println("validName now!");
 		if (userDao.findByName(name) == null) {
 			// System.out.println("validName unuse");
@@ -156,7 +151,6 @@ public class UserManagerImpl implements UserManager {
 
 	@Override
 	public int uploadPic(int pic, Object po) throws Exception {
-		// TODO Auto-generated method stub
 		if (pic == USER_PIC) {
 			return pic;
 		} else if (pic == COURT_PIC) {
@@ -169,14 +163,12 @@ public class UserManagerImpl implements UserManager {
 
 	@Override
 	public InputStream getPic(Integer courtId) {
-		// TODO Auto-generated method stub
 		// courtDao.get(courtId).get
 		return null;
 	}
 
 	@Override
 	public int updateUser(User user) {
-		// TODO Auto-generated method stub
 		try {
 			userDao.update(user);
 		} catch (Exception e) {
@@ -188,14 +180,12 @@ public class UserManagerImpl implements UserManager {
 	@Override
 	public String uploadPic(int flag, File[] images, String[] imgNames,
 			Integer UserId) {
-		// TODO Auto-generated method stub
 		MyPrint.myPrint("in uploadPicAction");
 		if (images != null && imgNames != null) {
 			MyPrint.myPrint("images not null!");
 			try {
 				ServletActionContext.getRequest().setCharacterEncoding("UTF-8");
 			} catch (UnsupportedEncodingException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 				return "fail";
 			}
@@ -217,7 +207,6 @@ public class UserManagerImpl implements UserManager {
 				try {
 					FileUtils.copyFile(images[0], savefile);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 					return "fail";
 				}
@@ -239,7 +228,6 @@ public class UserManagerImpl implements UserManager {
 					try {
 						FileUtils.copyFile(images[i], savefile);
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 						return "fail";
 					}
@@ -255,7 +243,6 @@ public class UserManagerImpl implements UserManager {
 
 	@Override
 	public int updateInfo(String key, Integer id) {
-		// TODO Auto-generated method stub
 		ActionContext ctx = ActionContext.getContext();
 		// 更新用户信息
 		if (key == "userBean") {
@@ -273,7 +260,6 @@ public class UserManagerImpl implements UserManager {
 
 	@Override
 	public int releaseCourt(Court court) {
-		// TODO Auto-generated method stub
 		if (courtDao.save(court) != null) {
 			return 1;
 		}
@@ -309,7 +295,6 @@ public class UserManagerImpl implements UserManager {
 
 	@Override
 	public String saveUserPic(File images, String imgNames, Integer userId) {
-		// TODO Auto-generated method stub
 		File tempImgs[] = { images };
 		String tempImgNames[] = { imgNames };
 		return uploadPic(USER_PIC, tempImgs, tempImgNames, userId);
@@ -318,28 +303,24 @@ public class UserManagerImpl implements UserManager {
 
 	@Override
 	public String saveCourtPic(File[] images, String[] imgNames, Integer userId) {
-		// TODO Auto-generated method stub
 		return uploadPic(COURT_PIC, images, imgNames, userId);
 
 	}
 
 	@Override
 	public String uploadPicByStream(File resImage) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String uploadUserPic(int flag, File[] images, String[] imgNames,
 			Integer UserId) {
-		// TODO Auto-generated method stub
 		MyPrint.myPrint("in uploadPicAction");
 		if (images != null && imgNames != null) {
 			MyPrint.myPrint("images not null!");
 			try {
 				ServletActionContext.getRequest().setCharacterEncoding("UTF-8");
 			} catch (UnsupportedEncodingException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 				return "fail";
 			}
@@ -361,7 +342,6 @@ public class UserManagerImpl implements UserManager {
 				try {
 					FileUtils.copyFile(images[0], savefile);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 					return "fail";
 				}
@@ -374,13 +354,11 @@ public class UserManagerImpl implements UserManager {
 
 	@Override
 	public List<Message> getMessages(Integer courtId) {
-		// TODO Auto-generated method stub
 		return mesgDao.getByCourtId(courtId);
 	}
 
 	@Override
 	public Long relMessage(Message message) {
-		// TODO Auto-generated method stub
 		try {
 			MyPrint.myPrint(message.getUserName());
 			return mesgDao.save(message);
@@ -392,7 +370,6 @@ public class UserManagerImpl implements UserManager {
 
 	@Override
 	public Integer relMatch(Match match) {
-		// TODO Auto-generated method stub
 		try {
 			return matchDao.save(match);
 		} catch (Exception e) {
@@ -429,5 +406,10 @@ public class UserManagerImpl implements UserManager {
 	@Override
 	public List<MatchBean> getUsersFavorMatch(Integer userId) {
 		return (List<MatchBean>)matchDao.findByMarkingUserId(userId);
+	}
+
+	@Override
+	public boolean isExeed(int maxCount) {
+		return matchDao.countRelMatchPerDay() < maxCount;
 	}
 }
