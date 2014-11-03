@@ -411,6 +411,6 @@ public class UserManagerImpl implements UserManager {
 
 	@Override
 	public boolean isExeed(int maxCount) {
-		return matchDao.countRelMatchPerDay() < maxCount;
+		return matchDao.countRelMatchPerDay() > maxCount;
 	}
 }

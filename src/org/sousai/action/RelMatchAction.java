@@ -40,7 +40,7 @@ public class RelMatchAction extends UserBaseAction {
 		MyPrint.myPrint("in RelMatchAction");
 		try {
 			MyPrint.myPrint("t = ");
-			if (umg.isExeed(maxCourtCount)) {
+			if (!umg.isExeed(maxCourtCount)) {
 				if (getMatch() != null && umg.relMatch(match) != 0) {
 					return SUCCESS;
 				}

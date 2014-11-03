@@ -222,7 +222,8 @@ public class MatchDaoHibernate extends HibernateDaoSupport implements MatchDao {
 		try{
 			String hql = "select count(*) from Match where date(relTime)=curdate()";
 			Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
-			return session.createQuery(hql).executeUpdate();
+			MyPrint.myPrint(String.valueOf(session.createQuery(hql).uniqueResult()));
+			return Integer.valueOf(session.createQuery(hql).uniqueResult().toString()).intValue();
 		}catch (Exception e){
 			e.printStackTrace();
 			return -1;
