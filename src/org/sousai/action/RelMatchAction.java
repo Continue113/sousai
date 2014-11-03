@@ -9,7 +9,7 @@ public class RelMatchAction extends UserBaseAction {
 	private static final long serialVersionUID = -509217384709788196L;
 	private static final String SUCCESS = "success";
 	private static final String FAIL = "fail";
-	private static final String EXEED_COUNT = "EXEED";
+	private static final String EXEED_COUNT = "exeed";
 	private Match match;
 
 	private static final int maxCourtCount = 5;

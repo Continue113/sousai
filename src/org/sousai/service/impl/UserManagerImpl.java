@@ -25,6 +25,7 @@ import com.sun.jimi.core.Jimi;
 import com.sun.jimi.core.JimiException;
 import com.sun.jimi.core.JimiReader;
 
+
 /**
  * Description: <br/>
  * implements the userManager interface
@@ -36,6 +37,7 @@ import com.sun.jimi.core.JimiReader;
  * @version 1.0
  *
  */
+
 public class UserManagerImpl implements UserManager {
 	private UserDao userDao;
 	private CourtDao courtDao;
@@ -85,7 +87,6 @@ public class UserManagerImpl implements UserManager {
 
 	@Override
 	public int validLogin(User user) {
-		System.out.println("validLogin Now!!!");
 		if (userDao.findByNameAndPass(user).size() >= 1) {
 			MyPrint.myPrint("valid success");
 			MyPrint.myPrint("test set");
