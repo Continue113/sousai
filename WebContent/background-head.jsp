@@ -5,7 +5,7 @@
    <div class="navbar-inner"> 
     <div class="pull-left"> 
      <ul class="breadcrumb">
-      <li>您好，<span id="userId">TESTKING</span>！ <a href="#">退出</a></li>
+      <li>您好，<span id="userId"><s:property value="#session.userBean.userName"/></span></a>！ <a href="processLogout">退出</a></li>      
      </ul> 
     </div> 
    </div> 

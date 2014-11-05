@@ -40,7 +40,7 @@
     /** 搜索现有场地按钮 **/
     #searchExistedCourt{margin-top: 5px;}
   }
-  </style> 
+  </style>
  </head> 
  <body class="userCenter"> 
   <s:include value="navbar.jsp" />
@@ -61,7 +61,7 @@
      <div class="navbar"> 
       <div class="navbar-inner"> 
        <ul class="nav"> 
-        <li class="active"><a href="#">我的搜赛网</a></li> 
+        <li class="active"><a href="javascript:void(0)">我的搜赛网</a></li> 
        </ul> 
       </div> 
      </div> 
@@ -79,10 +79,10 @@
       <div class="userCenter-remind"> 
        <ul class="breadcrumb"> 
         <li>比赛信息:</li> 
-        <li><a href="#">乒乓球<span>(5)</span></a></li> 
-        <li><a href="#">羽毛球<span>(5)</span></a></li> 
-        <li><a href="#">保宁球<span>(5)</span></a></li> 
-        <li><a href="#">网球<span>(5)</span></a></li> 
+        <li><a href="javascript:void(0)">乒乓球<span>(5)</span></a></li> 
+        <li><a href="javascript:void(0)">羽毛球<span>(5)</span></a></li> 
+        <li><a href="javascript:void(0)">保宁球<span>(5)</span></a></li> 
+        <li><a href="javascript:void(0)">网球<span>(5)</span></a></li> 
        </ul> 
       </div> 
       <div class="tab-content"> 
@@ -132,7 +132,7 @@
            <div class="controls form-inline"> 
             <s:include value="selectPCC.jsp" />
             <!-- /选择省市区三级下拉框 --> 
-            <a href="#" class="btn btn-success pull-right" id="searchExistedCourt">搜索现有球场</a>
+            <a href="javascript:void(0)" class="btn btn-success pull-right" id="searchExistedCourt">搜索现有球场</a>
            </div> 
           </div> 
           <div class="control-group existCourtsBox"> 
@@ -154,7 +154,7 @@
               <td>TESTING DATA</td> 
               <td>TESTING DATA</td> 
               <td>TESTING DATA</td> 
-              <td><a href="#">详细</a></td> 
+              <td><a href="javascript:void(0)">详细</a></td> 
              </tr>
              <tr class="tritem"  data-courtid="2"> 
               <td>奥体中心乒乓球俱乐部</td> 
@@ -162,7 +162,7 @@
               <td>体育馆</td> 
               <td>15-30</td> 
               <td>19次</td> 
-              <td><a href="#">详细</a></td> 
+              <td><a href="javascript:void(0)">详细</a></td> 
              </tr> 
              <tr class="tritem"  data-courtid="3"> 
               <td>奥体中心乒乓球俱乐部</td> 
@@ -170,7 +170,7 @@
               <td>体育馆</td> 
               <td>15-30</td> 
               <td>19次</td> 
-              <td><a href="#">详细</a></td> 
+              <td><a href="javascript:void(0)">详细</a></td> 
              </tr> 
              <tr class="tritem"  data-courtid="4"> 
               <td>奥体中心乒乓球俱乐部</td> 
@@ -178,7 +178,7 @@
               <td>体育馆</td> 
               <td>15-30</td> 
               <td>19次</td> 
-              <td><a href="#">详细</a></td> 
+              <td><a href="javascript:void(0)">详细</a></td> 
              </tr> 
             </tbody> 
            </table> 
@@ -213,7 +213,7 @@
           <input type="text" class="hide" id="hideUserId" value="<s:property value="#session.userBean.userId"/>" name="match.userId" />
           <div class="control-group"> 
            <div class="controls"> 
-            <input type="submit" class="btn btn-success pull-right" id="rlsMatch" value="确定发布"/>
+            <button type="submit" class="btn btn-success pull-right" id="rlsMatch">确定发布</button>
             <button type="reset" class="btn pull-right" id="resetMatchForm">重置</button>
             <button type="button" class="btn pull-right" name="preView">预览</button> 
            </div> 
@@ -243,18 +243,6 @@
   <script src="js/jplist.min.js"></script> 
   <script>
   $(function () {
-  //初始化比赛类型
-  function initMatchType(){
-    //console.log("调用初始化比赛类型");
-    $.post("showMC", null, function(data) {
-      //alert("回调内容为:"+data);//id name 
-      var type = $(".selectMatchType");
-      for (var i = 0; i < data.length; i++) {
-        type.append("<option value=\"" + data[i].id + "\">" + data[i].name + "</option>");
-      }
-    });
-  }
-
   //立即初始化比赛类型
   initMatchType();
   
@@ -417,7 +405,7 @@
     }
   });
 
-  /** 日期选择器 **/
+  //日期选择器
   $( "#inputMatchTimefrom" ).datepicker({
     defaultDate: "+1w",
     changeMonth: true,
@@ -433,21 +421,21 @@
     }
   });
 
-  /** 选中表格某行 **/
+  //选中表格某行
   $("tbody").on("click",".tritem",function(event){
     $("tr").removeClass("active");
     $(this).addClass("active");
     $("#hideCourtId").attr("value",$(this).attr("data-courtid"));
   });
 
-  /** 列表排序 **/
+  //列表排序 
   $('.existCourtsBox').jplist({
         itemsBox: '.table',
         itemPath: '.tritem',
         panelPath: '.jplist-panel'
   });
 
-  /** 搜索现有场地 **/
+  //搜索现有场地
   $("#searchExistedCourt").click(function(){
 	  //tgPrt: targetparent 目标父元素 ；regionId 默认为零
 	  var tgPrt = $(this).parent(),regionId = 0;
@@ -516,7 +504,7 @@
     }
     }
   });
-  /** 添加新场地 **/
+  //添加新场地
   $("#newCourtBtn").click(function () {
     $("#newCourtCheckbox").click();
   });
@@ -564,7 +552,7 @@
   }
   });
 
-  /** tinymce **/
+  //tinymce
   tinymce.init({
     mode: 'textareas',
     language :'zh_CN',
@@ -585,7 +573,7 @@
   }
   });
   
-  /** 表单验证 **/
+  //表单验证 
   //为比赛地点中的省添加name属性，然后利用validate插件的min=1验证是否选择了省
   $(".controls > .selectProvince").attr("name","selectProvince");
   
@@ -659,7 +647,7 @@
     }
   };
 
-  /** 清空比赛表单 **/
+  //清空比赛表单
   $("#resetMatchForm").click(function(){
     matchValidator.resetForm();
   });

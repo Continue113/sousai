@@ -33,7 +33,7 @@
      <div class="navbar">
       <div class="navbar-inner"> 
        <ul class="nav"> 
-        <li class="active"><a href="#">我的搜赛网</a></li>
+        <li class="active"><a href="javascript:void(0)">我的搜赛网</a></li>
        </ul>
       </div>
      </div> 
@@ -54,7 +54,7 @@
         <!-- 迭代所有已收藏的比赛的比赛数量 -->
         <s:iterator var="match" value="#response.matchlist" status="statu">
         <s:if test="%{#response.matchlist.length !== 0}">
-          <li><a href="#"><s:property value="#match.matchType"/><span>(<s:property value="#match.matchTypeNumber"/>)</span></a></li>
+          <li><a href="javascript:void(0)"><s:property value="#match.matchType"/><span>(<s:property value="#match.matchTypeNumber"/>)</span></a></li>
         </s:if>
         <s:else>
           <li>还没有收藏比赛</li>
@@ -168,7 +168,7 @@
 
           <div class="matchBox"><div class="matchBox-all"> 
            <div class="matchBox-title">
-            <a href="#">一北京东城区草根杯乒乓球比赛</a>
+            <a href="javascript:void(0)">一北京东城区草根杯乒乓球比赛</a>
             <span class="pull-right">发布时间：<span class="matchBox-releaseTime">2013-10-10</span></span>
            </div>
            <div class="hidden">
@@ -187,30 +187,15 @@
               2013-10-20
               <p>星期日</p>
              </div></li> 
-            <li class="matchBox-court "><a href="#">一北京东城区北京大学体育乓</a></li> 
+            <li class="matchBox-court "><a href="javascript:void(0)">一北京东城区北京大学体育乓</a></li> 
             <li class="matchBox-state ">报名中</li> 
-            <li class="matchBox-info "><a href="#">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
-            <li class="matchBox-btns "><a href="#" class="btn btn-mini">查看详细</a></li> 
+            <li class="matchBox-info "><a href="javascript:void(0)">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
+            <li class="matchBox-btns "><a href="javascript:void(0)" class="btn btn-mini">查看详细</a></li> 
            </ul> 
           </div>
-          </div> 
-
+          </div>
          </div>
-         <!-- /matchBoxs --> 
-         <div class="jplist-no-results jplist-hidden">
-          <p>暂时没有结果哟！</p>
-         </div>
-         <div class="jplist-ios-button">
-          展开分页
-         </div>
-         <!-- panel 用在分页 --> 
-         <div class="jplist-panel"> 
-          <!-- pagination --> 
-          <div class="jplist-pagination" data-control-type="pagination" data-control-name="paging" data-control-action="paging" data-items-per-page="5"> 
-           <!-- default items per page (if no "items per page" dropdown on the page) --> 
-          </div> 
-         </div>
-         <!-- /jplist-panel --> 
+         <!-- /matchBoxs -->
         </div> 
        </div>
        <!-- /myCollection --> 

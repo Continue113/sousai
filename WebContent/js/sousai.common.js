@@ -1,11 +1,7 @@
 $(function() {
-  /** 点击LOGO跳转至首页 **/
-	$("img[src='img/logo.png']").click(function(){
-		window.location.href="index.jsp";
-		});
 
-	  //若存在session中的已选城市，则使用此城市，否则使用新浪IP获得所在城市地点 
-	  if( $(".sessionCity").length != 1 ){
+  //若存在session中的已选城市，则使用此城市，否则使用新浪IP获得所在城市地点 
+  /*if( $(".sessionCity").length != 1 ){
 	  //通过调用新浪IP地址库接口查询用户当前所在国家、省份、城市、运营商信息
 	  $.getScript('http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js', function() {
 	    //   $(".country").html(remote_ip_info.country);
@@ -13,9 +9,9 @@ $(function() {
 	    $("#city").html(remote_ip_info.city);
 	    //   $(".isp").html(remote_ip_info.isp);
 	  });
-	  }
+   }*/
 
-  /** 切换城市 **/
+  //切换城市
   $("#changeCityBtn").click(function() {
     $(this).parents("p").hide();
     $(this).parent().parent().find(".hdcity-hide").fadeIn();
@@ -104,9 +100,9 @@ $(function() {
     tgPrt.parent().find("p").fadeIn();
   });
   	
-  /** 工具提示 **/
+  //工具提示
   $(".add-on").tooltip();
-  /** 搜索栏选择分类 **/
+  //搜索栏选择分类
   $(".add-selectType").click(function() {
     $('#myModal').modal({
       backdrop: false,
@@ -118,7 +114,7 @@ $(function() {
     $('#myModal').modal("hide");
   });
 
-  /** 添加本地收藏 **/
+  //添加本地收藏
   function AddFavorite(sURL, sTitle) {
     try {
       window.external.addFavorite(sURL, sTitle);
@@ -142,7 +138,7 @@ $(function() {
     return false; //设置a标签的href失效
   });
 
-  /** 三级省市区联动 P:province C:city C:country**/
+  //三级省市区联动 P:province C:city C:country
   /*初始化省*
   function initProvince() {
     $.post("selRegion?region.level=0", null, function(data) {
@@ -232,13 +228,12 @@ $(function() {
     $(this).parent().find("select.hide").hide(); //隐藏所有子下拉菜单
     $(this).parent().find("." + datafor).show(); //显示选择的子下拉菜单
   });**/
-  /** 管理员界面搜索框级联下拉菜单 **/
+  //管理员界面搜索框级联下拉菜单
   $(".selectFilter").change(function() {
     var dataforFilter = $(this).parent().find(".selectFilter option:selected").attr("data-forFilter");
     console.log(dataforFilter);
     $(this).parent().find("input[type='text']").attr("data-path", dataforFilter); //设置输入框筛选路径
   });
-
   //jplist-panel 中选择省市区自动输入搜索框
   $(".jplist-panel > select.span2").change(function () {
     var dataforFilter = $(this).parent().find(".selectProvince option:selected");
@@ -253,10 +248,10 @@ $(function() {
     }
   });
   
-
 });
 
-function createCode(inputValidateId) { //创建验证码，inputValidateId为验证码标签 ID
+//创建验证码，inputValidateId为验证码标签 ID
+function createCode(inputValidateId) {
     var code = "";
     var codeLength = 4; //验证码的长度
     var checkCode = document.getElementById(inputValidateId);
@@ -275,6 +270,7 @@ function createCode(inputValidateId) { //创建验证码，inputValidateId为验
     }
 }
 
+//userCenter页面顶端的统计比赛信息
 function userCenterRemind(){
 	var targetBreadcrumb = $(".userCenter-remind > .breadcrumb");
 	$.ajax({
@@ -300,4 +296,16 @@ function userCenterRemind(){
           console.log("抱歉，获取比赛信息出错了。");
         },
       }); //ajax 已得到发布的比赛信息
+}
+
+//初始化比赛类型
+function initMatchType(){
+  //console.log("调用初始化比赛类型");
+  $.post("showMC", null, function(data) {
+    //alert("回调内容为:"+data);//id name 
+    var type = $(".selectMatchType");
+    for (var i = 0; i < data.length; i++) {
+      type.append("<option value=\"" + data[i].id + "\">" + data[i].name + "</option>");
+    }
+  });
 }

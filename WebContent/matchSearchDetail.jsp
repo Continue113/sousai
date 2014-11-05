@@ -29,16 +29,14 @@
    </div> 
    <div class="row"> 
     <div class="span8 offset2"> 
-     <div class="text-center adFirst">
-       这里是ad.no1 
-     </div> 
+     <div class="text-center adFirst">这里是ad.no1</div> 
      <div class="matchSearch-remind"> 
       <p><i class="icon-th-list"></i>&nbsp;比赛详情&nbsp;</p> 
      </div> 
      <div class="matchShortInfo"> 
-      <a href="#" class="btn btn-mini pull-right">收藏比赛</a> 
-      <a href="#" class="btn btn-mini pull-right">修改比赛</a> 
-      <a href="#" class="btn btn-mini pull-right">录入成绩</a> 
+      <a href="javascript:void(0)" class="btn btn-mini pull-right">收藏比赛</a> 
+      <a href="javascript:void(0)" class="btn btn-mini pull-right">修改比赛</a> 
+      <a href="javascript:void(0)" class="btn btn-mini pull-right">录入成绩</a> 
       <table> 
        <thead> 
         <tr> 
@@ -85,9 +83,7 @@
      </div> 
     </div> 
     <div class="span1"> 
-     <div class="text-center adSecond">
-       这里是ad.no2 
-     </div> 
+     <div class="text-center adSecond">这里是ad.no2</div> 
     </div> 
    </div> 
    <div class="ftpush"> 

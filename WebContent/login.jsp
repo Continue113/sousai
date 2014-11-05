@@ -19,7 +19,7 @@
   <div class="container"> 
    <div class="row"> 
     <div class="span5 offset2"> 
-     <img src="img/logo.png" /> 
+     <a class="logoBack" href="index.jsp" title="回到首页"><img src="img/logo.png" alt="搜赛网"/></a> 
      <span class="logotext">用户登录</span> 
     </div> 
    </div> 
@@ -40,7 +40,7 @@
         <label for="inputUsername">用户名:</label> 
         <input type="text" class="input-block-level" id="inputUsername" name="user.name" placeholder="用户名" value="" required="required" /> 
        </s:else> 
-       <label for="inputPassword">密码:<a href="#">忘记密码?</a></label> 
+       <label for="inputPassword">密码:<a href="javascript:void(0)">忘记密码?</a></label> 
        <input type="password" class="input-block-level" id="inputPassword" name="user.pwd" placeholder="密码" required="required" /> 
        <label class="checkbox"> <input type="checkbox" value="remember-me" />记住我</label> 
        <input class="btn btn-success" type="submit" id="signinBtn" value="登&nbsp;&nbsp;录" /> 
@@ -64,7 +64,7 @@
   <script src="js/jquery.validate.min.js"></script> 
   <script>
   $(function(){
-    /** 表单验证代码 **/
+    //表单验证代码
     $("#formlogin").validate({
     rules: {
       "user.name": {
@@ -88,7 +88,7 @@
     }
     });
     
-    /** 记住我：仅记住用户名**/
+    //记住我：仅记住用户名
     $("input[value='remember-me']").click(function(){
     	if($("input[value='remember-me']").is(":checked")){
     	}else {

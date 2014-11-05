@@ -22,14 +22,12 @@
    <div class="hdpush"></div> 
    <div class="row"> 
     <div class="span5 offset1"> 
-     <img src="img/logo.png" /> 
+     <a class="logoBack" href="index.jsp" title="回到首页"><img src="img/logo.png" alt="搜赛网"/></a>
      <span class="logotext">账户注册</span> 
     </div> 
    </div> 
    <div class="row"> 
-    <div class="span10 offset1 register-heading">
-      填写账户信息 
-    </div> 
+    <div class="span10 offset1 register-heading">填写账户信息 </div> 
    </div> 
    <div class="row"> 
     <div class="span4 offset1"> 
@@ -100,36 +98,6 @@
   <!-- 页尾信息 --> 
   <script src="js/jquery.validate.min.js"></script> 
   <script>
-/*/提交到服务器
-  function formsubmit(){
-  	alert("XXX");
-    $.ajax({
-      url: "processReg",
-      type: "POST",
-      dataType: "json",
-      data: {
-        "user.name": $("#inputUsername").val(),
-        "user.pwd": $("#inputUserPassword").val(),
-        "user.email": $("#inputUserEmail").val(),
-      },
-      success: function(resdata){
-      	console.log(resdata);
-        //$('#sousaiRemindDialog').modal({backdrop:static});
-        console.log("dialoged!");
-        //5秒后跳转至首页
-        window.setTimeout("window.location='index.jsp'",5000);
-        var resetbtn = confirm("注册成功，点击确定直接跳转至首页，点击取消将在5秒后跳转至首页。");
-        if (resetbtn == true){
-          location.href = "index.jsp";
-        }
-        console.log("location.hrefed!");
-      },
-      error: function(jqXHR,textStatus,errorThrown){
-      	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-        alert("抱歉，发送数据出错了，请重新输入。");
-      }
-    });
-  }*/
     $(function(){
       /** 生成验证码 **/
       createCode("inputValidateImg");

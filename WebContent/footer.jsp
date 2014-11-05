@@ -8,6 +8,7 @@
     <span><a href="courtSearch.jsp">courtSearch.jsp </a><a href="courtSearchDetail.jsp">courtSearchDetail.jsp </a><a href="previewCourtSearchDetail.jsp">previewCourtSearchDetail.jsp </a></span>
     <span><a href="matchSearch.jsp">matchSearch.jsp </a><a href="matchSearchDetail.jsp">matchSearchDetail.jsp </a></span>
     <span><a href="userCenter-editUser.jsp">userCenter-editUser.jsp </a><a href="background-collections.jsp">background-collections.jsp </a></span>
+    <span><a href="login.jspbackground-login.jsp">background-login.jsp</a></span>
     </div> 
   </div><!-- /footer -->
 

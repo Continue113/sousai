@@ -23,16 +23,14 @@
    <div class="hdpush"></div> 
    <div class="row"> 
     <div class="span2 offset2"> 
-     <img src="img/logo.png" /> 
+     <a class="logoBack" href="index.jsp" title="回到首页"><img src="img/logo.png" alt="搜赛网"/></a> 
     </div> 
     <s:include value="searchbox.jsp" />
     <!-- 搜索框 --> 
    </div> 
    <div class="row"> 
     <div class="span8 offset2"> 
-     <div class="text-center adFirst">
-       这里是ad.no1 
-     </div> 
+     <div class="text-center adFirst">这里是ad.no1</div> 
      <div class="search-remind"> 
       <p><i class="icon-th-list"></i>&nbsp;找到相关场地&nbsp;<span>1230</span>&nbsp;场</p> 
      </div> 
@@ -44,7 +42,7 @@
          <label class="control-label" for="searchKey">关&nbsp;&nbsp;键&nbsp;&nbsp;词：</label> 
          <div class="controls"> 
           <input type="text" id="searchKey" placeholder="请输入搜索关键词" /> 
-          <a href="#" class="btn btn-small pull-right">转换到比赛搜索界面</a> 
+          <a href="javascript:void(0)" class="btn btn-small pull-right">转换到比赛搜索界面</a> 
          </div> 
         </div> 
         <div class="control-group"> 
@@ -174,8 +172,8 @@
          <!-- data --> 
          <div class="courtBox-block"> 
           <div class="courtBox-title"> 
-           <a href="#">1成都1873乒乓球馆</a> 
-           <a href="#" class="btn btn-mini pull-right">查看详细</a> 
+           <a href="javascript:void(0)">1成都1873乒乓球馆</a> 
+           <a href="javascript:void(0)" class="btn btn-mini pull-right">查看详细</a> 
           </div> 
           <ul class="breadcrumb"> 
            <li class="courtBox-address">一北京东城区北京大学体育乓一北京东城区北京大学体育乓</li> 
@@ -193,8 +191,8 @@
          <!-- data --> 
          <div class="courtBox-block"> 
           <div class="courtBox-title"> 
-           <a href="#">2成都1873乒乓球馆</a> 
-           <a href="#" class="btn btn-mini pull-right">查看详细</a> 
+           <a href="javascript:void(0)">2成都1873乒乓球馆</a> 
+           <a href="javascript:void(0)" class="btn btn-mini pull-right">查看详细</a> 
           </div> 
           <ul class="breadcrumb"> 
            <li class="courtBox-address">一北京东城区北京大学体育乓一北京东城区北京大学体育乓</li> 
@@ -212,8 +210,8 @@
          <!-- data --> 
          <div class="courtBox-block"> 
           <div class="courtBox-title"> 
-           <a href="#">4成都1873乒乓球馆</a> 
-           <a href="#" class="btn btn-mini pull-right">查看详细</a> 
+           <a href="javascript:void(0)">4成都1873乒乓球馆</a> 
+           <a href="javascript:void(0)" class="btn btn-mini pull-right">查看详细</a> 
           </div> 
           <ul class="breadcrumb"> 
            <li class="courtBox-address">一北京东城区北京大学体育乓一北京东城区北京大学体育乓</li> 
@@ -231,8 +229,8 @@
          <!-- data --> 
          <div class="courtBox-block"> 
           <div class="courtBox-title"> 
-           <a href="#">5成都1873乒乓球馆</a> 
-           <a href="#" class="btn btn-mini pull-right">查看详细</a> 
+           <a href="javascript:void(0)">5成都1873乒乓球馆</a> 
+           <a href="javascript:void(0)" class="btn btn-mini pull-right">查看详细</a> 
           </div> 
           <ul class="breadcrumb"> 
            <li class="courtBox-address">一北京东城区北京大学体育乓一北京东城区北京大学体育乓</li> 
@@ -250,8 +248,8 @@
          <!-- data --> 
          <div class="courtBox-block"> 
           <div class="courtBox-title"> 
-           <a href="#">6成都1873乒乓球馆</a> 
-           <a href="#" class="btn btn-mini pull-right">查看详细</a> 
+           <a href="javascript:void(0)">6成都1873乒乓球馆</a> 
+           <a href="javascript:void(0)" class="btn btn-mini pull-right">查看详细</a> 
           </div> 
           <ul class="breadcrumb"> 
            <li class="courtBox-address">一北京东城区北京大学体育乓一北京东城区北京大学体育乓</li> 
@@ -269,8 +267,8 @@
          <!-- data --> 
          <div class="courtBox-block"> 
           <div class="courtBox-title"> 
-           <a href="#">7成都1873乒乓球馆</a> 
-           <a href="#" class="btn btn-mini pull-right">查看详细</a> 
+           <a href="javascript:void(0)">7成都1873乒乓球馆</a> 
+           <a href="javascript:void(0)" class="btn btn-mini pull-right">查看详细</a> 
           </div> 
           <ul class="breadcrumb"> 
            <li class="courtBox-address">一北京东城区北京大学体育乓一北京东城区北京大学体育乓</li> 
@@ -288,8 +286,8 @@
          <!-- data --> 
          <div class="courtBox-block"> 
           <div class="courtBox-title"> 
-           <a href="#">8成都1873乒乓球馆</a> 
-           <a href="#" class="btn btn-mini pull-right">查看详细</a> 
+           <a href="javascript:void(0)">8成都1873乒乓球馆</a> 
+           <a href="javascript:void(0)" class="btn btn-mini pull-right">查看详细</a> 
           </div> 
           <ul class="breadcrumb"> 
            <li class="courtBox-address">一北京东城区北京大学体育乓一北京东城区北京大学体育乓</li> 
@@ -307,8 +305,8 @@
          <!-- data --> 
          <div class="courtBox-block"> 
           <div class="courtBox-title"> 
-           <a href="#">9成都1873乒乓球馆</a> 
-           <a href="#" class="btn btn-mini pull-right">查看详细</a> 
+           <a href="javascript:void(0)">9成都1873乒乓球馆</a> 
+           <a href="javascript:void(0)" class="btn btn-mini pull-right">查看详细</a> 
           </div> 
           <ul class="breadcrumb"> 
            <li class="courtBox-address">一北京东城区北京大学体育乓一北京东城区北京大学体育乓</li> 
@@ -326,8 +324,8 @@
          <!-- data --> 
          <div class="courtBox-block"> 
           <div class="courtBox-title"> 
-           <a href="#">10成都1873乒乓球馆</a> 
-           <a href="#" class="btn btn-mini pull-right">查看详细</a> 
+           <a href="javascript:void(0)">10成都1873乒乓球馆</a> 
+           <a href="javascript:void(0)" class="btn btn-mini pull-right">查看详细</a> 
           </div> 
           <ul class="breadcrumb"> 
            <li class="courtBox-address">一北京东城区北京大学体育乓一北京东城区北京大学体育乓</li> 
@@ -345,8 +343,8 @@
          <!-- data --> 
          <div class="courtBox-block"> 
           <div class="courtBox-title"> 
-           <a href="#">11成都1873乒乓球馆</a> 
-           <a href="#" class="btn btn-mini pull-right">查看详细</a> 
+           <a href="javascript:void(0)">11成都1873乒乓球馆</a> 
+           <a href="javascript:void(0)" class="btn btn-mini pull-right">查看详细</a> 
           </div> 
           <ul class="breadcrumb"> 
            <li class="courtBox-address">一北京东城区北京大学体育乓一北京东城区北京大学体育乓</li> 
@@ -364,8 +362,8 @@
          <!-- data --> 
          <div class="courtBox-block"> 
           <div class="courtBox-title"> 
-           <a href="#">12成都1873乒乓球馆</a> 
-           <a href="#" class="btn btn-mini pull-right">查看详细</a> 
+           <a href="javascript:void(0)">12成都1873乒乓球馆</a> 
+           <a href="javascript:void(0)" class="btn btn-mini pull-right">查看详细</a> 
           </div> 
           <ul class="breadcrumb"> 
            <li class="courtBox-address">一北京东城区北京大学体育乓一北京东城区北京大学体育乓</li> 
@@ -383,8 +381,8 @@
          <!-- data --> 
          <div class="courtBox-block"> 
           <div class="courtBox-title"> 
-           <a href="#">13成都1873乒乓球馆</a> 
-           <a href="#" class="btn btn-mini pull-right">查看详细</a> 
+           <a href="javascript:void(0)">13成都1873乒乓球馆</a> 
+           <a href="javascript:void(0)" class="btn btn-mini pull-right">查看详细</a> 
           </div> 
           <ul class="breadcrumb"> 
            <li class="courtBox-address">一北京东城区北京大学体育乓一北京东城区北京大学体育乓</li> 
@@ -395,21 +393,7 @@
          </div> 
         </div> 
        </div> 
-       <!-- /courtBoxs --> 
-       <div class="jplist-no-results jplist-hidden"> 
-        <p>暂时没有结果哟！</p> 
-        <div class="jplist-ios-button">
-          展开分页 
-        </div> 
-       </div> 
-       <!-- panel --> 
-       <div class="jplist-panel"> 
-        <!-- pagination --> 
-        <div class="jplist-pagination" data-control-type="pagination" data-control-name="paging" data-control-action="paging" data-items-per-page="5"> 
-         <!-- default items per page (if no "items per page" dropdown on the page) --> 
-        </div> 
-       </div> 
-       <!-- /jplist-panel --> 
+       <!-- /courtBoxs -->
       </div> 
       <!-- /courts --> 
      </div> 
@@ -417,9 +401,7 @@
     </div> 
     <!-- /span8 offset2 --> 
     <div class="span1"> 
-     <div class="text-center adSecond">
-       这里是ad.no2 
-     </div> 
+     <div class="text-center adSecond">这里是ad.no2</div> 
     </div> 
    </div> 
    <!-- /row --> 
@@ -433,27 +415,25 @@
   <script src="js/jplist.min.js"></script> 
   <script>
   $(function(){
-    /** 鼠标hover matchbox **/
+    //鼠标hover matchbox
     $("div.courtBox").hover(function(){
       $(this).addClass("box-active");
     },function(){
       $(this).removeClass("box-active");
     });
-    /****/
 
-    /** 字数限制，溢出省略 **/
+    //字数限制，溢出省略 
     $(".courtBox-address").wordLimit(20);
     $(".courtBox-evaluation p").wordLimit();
-    /****/
 
-    /** 列表排序 **/
+    //列表排序
     $('#courtsList').jplist({
           itemsBox: '.courtBoxs',
           itemPath: '.courtBox',
           panelPath: '.jplist-panel'
         });
 
-    /** 重复点击下拉列表改变排序 **/
+    //重复点击下拉列表改变排序 
     var sortflag=1;
     $("div[data-control-action='sort'] li").click(function(){
       if(sortflag==1){

@@ -22,7 +22,7 @@
    <div class="hdpush"></div> 
    <div class="row"> 
     <div class="span2 offset1"> 
-     <img src="img/logo.png" /> 
+     <a class="logoBack" href="index.jsp" title="回到首页"><img src="img/logo.png" alt="搜赛网"/></a> 
     </div> 
     <s:include value="searchbox.jsp" />
     <!-- 搜索框 --> 
@@ -31,7 +31,7 @@
     <!--scmn:shortcutmain mchnb:matchnumber dsc:描述--> 
     <div class="span8 offset2 breadcrumb-fff"> 
      <ul class="breadcrumb"> 
-      <li class="m-sc"> <a class="blk" target="_blank" href="#"> <img alt="乒乓球" src="img/pingpong-grey.png" class="u-pic" /> 
+      <li class="m-sc"> <a class="blk" target="_blank" href="javascript:void(0)"> <img alt="乒乓球" src="img/pingpong-grey.png" class="u-pic" /> 
         <div class="m-dsc"> 
          <span class="u-tt">乒乓球</span> 
          <span class="u-dsc">比赛&nbsp;&nbsp;<span class="u-mchnb">32</span>&nbsp;&nbsp;场</span> 
@@ -39,7 +39,7 @@
         <div class="u-label">
           进入比赛列表页面 
         </div> </a> </li> 
-      <li class="m-sc"> <a class="blk" target="_blank" href="#"> <img alt="乒乓球" src="img/defaultIcon.png" class="u-pic" /> 
+      <li class="m-sc"> <a class="blk" target="_blank" href="javascript:void(0)"> <img alt="乒乓球" src="img/defaultIcon.png" class="u-pic" /> 
         <div class="m-dsc"> 
          <span class="u-tt">开发中</span> 
          <span class="u-dsc">coming soon</span> 
@@ -47,7 +47,7 @@
         <div class="u-label">
           进入比赛列表页面 
         </div> </a> </li> 
-      <li class="m-sc"> <a class="blk" target="_blank" href="#"> <img alt="乒乓球" src="img/defaultIcon.png" class="u-pic" /> 
+      <li class="m-sc"> <a class="blk" target="_blank" href="javascript:void(0)"> <img alt="乒乓球" src="img/defaultIcon.png" class="u-pic" /> 
         <div class="m-dsc"> 
          <span class="u-tt">开发中</span> 
          <span class="u-dsc">coming soon</span> 
@@ -55,7 +55,7 @@
         <div class="u-label">
           进入比赛列表页面 
         </div> </a> </li> 
-      <li class="m-sc"> <a class="blk" target="_blank" href="#"> <img alt="乒乓球" src="img/defaultIcon.png" class="u-pic" /> 
+      <li class="m-sc"> <a class="blk" target="_blank" href="javascript:void(0)"> <img alt="乒乓球" src="img/defaultIcon.png" class="u-pic" /> 
         <div class="m-dsc"> 
          <span class="u-tt">开发中</span> 
          <span class="u-dsc">coming soon</span> 
@@ -63,7 +63,7 @@
         <div class="u-label">
           进入比赛列表页面 
         </div> </a> </li> 
-      <li class="m-sc"> <a class="blk" target="_blank" href="#"> <img alt="乒乓球" src="img/defaultIcon.png" class="u-pic" /> 
+      <li class="m-sc"> <a class="blk" target="_blank" href="javascript:void(0)"> <img alt="乒乓球" src="img/defaultIcon.png" class="u-pic" /> 
         <div class="m-dsc"> 
          <span class="u-tt">开发中</span> 
          <span class="u-dsc">coming soon</span> 
@@ -71,7 +71,7 @@
         <div class="u-label">
           进入比赛列表页面 
         </div> </a> </li> 
-      <li class="m-sc"> <a class="blk" target="_blank" href="#"> <img alt="乒乓球" src="img/defaultIcon.png" class="u-pic" /> 
+      <li class="m-sc"> <a class="blk" target="_blank" href="javascript:void(0)"> <img alt="乒乓球" src="img/defaultIcon.png" class="u-pic" /> 
         <div class="m-dsc"> 
          <span class="u-tt">开发中</span> 
          <span class="u-dsc">coming soon</span> 
@@ -79,7 +79,7 @@
         <div class="u-label">
           进入比赛列表页面 
         </div> </a> </li> 
-      <li class="m-sc"> <a class="blk" target="_blank" href="#"> <img alt="乒乓球" src="img/defaultIcon.png" class="u-pic" /> 
+      <li class="m-sc"> <a class="blk" target="_blank" href="javascript:void(0)"> <img alt="乒乓球" src="img/defaultIcon.png" class="u-pic" /> 
         <div class="m-dsc"> 
          <span class="u-tt">开发中</span> 
          <span class="u-dsc">coming soon</span> 
@@ -87,7 +87,7 @@
         <div class="u-label">
           进入比赛列表页面 
         </div> </a> </li> 
-      <li class="m-sc"> <a class="blk" target="_blank" href="#"> <img alt="乒乓球" src="img/defaultIcon.png" class="u-pic" /> 
+      <li class="m-sc"> <a class="blk" target="_blank" href="javascript:void(0)"> <img alt="乒乓球" src="img/defaultIcon.png" class="u-pic" /> 
         <div class="m-dsc"> 
          <span class="u-tt">开发中</span> 
          <span class="u-dsc">coming soon</span> 
@@ -95,7 +95,7 @@
         <div class="u-label">
           进入比赛列表页面 
         </div> </a> </li> 
-      <li class="m-sc"> <a class="blk" target="_blank" href="#"> <img alt="乒乓球" src="img/defaultIcon.png" class="u-pic" /> 
+      <li class="m-sc"> <a class="blk" target="_blank" href="javascript:void(0)"> <img alt="乒乓球" src="img/defaultIcon.png" class="u-pic" /> 
         <div class="m-dsc"> 
          <span class="u-tt">开发中</span> 
          <span class="u-dsc">coming soon</span> 
@@ -103,7 +103,7 @@
         <div class="u-label">
           进入比赛列表页面 
         </div> </a> </li> 
-      <li class="m-sc"> <a class="blk" target="_blank" href="#"> <img alt="乒乓球" src="img/defaultIcon.png" class="u-pic" /> 
+      <li class="m-sc"> <a class="blk" target="_blank" href="javascript:void(0)"> <img alt="乒乓球" src="img/defaultIcon.png" class="u-pic" /> 
         <div class="m-dsc"> 
          <span class="u-tt">开发中</span> 
          <span class="u-dsc">coming soon</span> 
@@ -111,7 +111,7 @@
         <div class="u-label">
           进入比赛列表页面 
         </div> </a> </li> 
-      <li class="m-sc"> <a class="blk" target="_blank" href="#"> <img alt="乒乓球" src="img/defaultIcon.png" class="u-pic" /> 
+      <li class="m-sc"> <a class="blk" target="_blank" href="javascript:void(0)"> <img alt="乒乓球" src="img/defaultIcon.png" class="u-pic" /> 
         <div class="m-dsc"> 
          <span class="u-tt">开发中</span> 
          <span class="u-dsc">coming soon</span> 
@@ -119,7 +119,7 @@
         <div class="u-label">
           进入比赛列表页面 
         </div> </a> </li> 
-      <li class="m-sc"> <a class="blk" target="_blank" href="#"> <img alt="乒乓球" src="img/defaultIcon.png" class="u-pic" /> 
+      <li class="m-sc"> <a class="blk" target="_blank" href="javascript:void(0)"> <img alt="乒乓球" src="img/defaultIcon.png" class="u-pic" /> 
         <div class="m-dsc"> 
          <span class="u-tt">开发中</span> 
          <span class="u-dsc">coming soon</span> 
@@ -137,7 +137,7 @@
   <!-- 页尾信息 --> 
   <script>
   $(function(){
-    /** 首页快捷图标 **/
+    //首页快捷图标 
     $(".m-sc").hover(function(){
       $(this).find("div[class=u-label]").slideDown();
       var imgurl = $(this).find("img").attr("src");
@@ -151,7 +151,7 @@
         $(this).find("img").attr("src",imgurl.split(".")[0]+"-grey.png");
       };
     });
-  })
+  });
   </script>  
  </body>
 </html>

@@ -31,21 +31,19 @@
    </div> 
    <div class="row"> 
     <div class="span8 offset2"> 
-     <div class="text-center adFirst">
-       这里是ad.no1 
-     </div> 
+     <div class="text-center adFirst">这里是ad.no1</div> 
      <div class="search-remind"> 
       <p><i class="icon-th-list"></i>&nbsp;找到相关比赛&nbsp;<span>1230</span>&nbsp;场</p> 
      </div> 
      <div class="searchbox-ad"> 
-      <form class="form-horizontal" action="" method=""> 
+      <form class="form-horizontal"> 
        <fieldset> 
         <legend>比赛搜索</legend> 
         <div class="control-group"> 
          <label class="control-label" for="searchKey">关&nbsp;&nbsp;键&nbsp;&nbsp;词：</label> 
          <div class="controls"> 
           <input type="text" id="searchKey" placeholder="请输入搜索关键词" /> 
-          <a href="#" class="btn btn-small pull-right">转换到场地搜索界面</a> 
+          <a href="javascript:void(0)" class="btn btn-small pull-right">转换到场地搜索界面</a> 
          </div> 
         </div> 
         <div class="control-group"> 
@@ -139,7 +137,7 @@
        <div class="matchBox">
         <div class="matchBox-all"> 
          <div class="matchBox-title"> 
-          <a href="#">一北京东城区草根杯乒乓球比赛</a> 
+          <a href="javascript:void(0)">一北京东城区草根杯乒乓球比赛</a> 
           <span class="pull-right">发布时间：<span class="matchBox-releaseTime">2013-10-10</span></span> 
          </div> 
          <div class="hidden"> 
@@ -158,17 +156,17 @@
              2013-10-20 
             <p>星期日</p> 
            </div></li> 
-          <li class="matchBox-court "><a href="#">一北京东城区北京大学体育乓</a></li> 
+          <li class="matchBox-court "><a href="javascript:void(0)">一北京东城区北京大学体育乓</a></li> 
           <li class="matchBox-state ">报名中</li> 
-          <li class="matchBox-info "><a href="#">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
-          <li class="matchBox-btns "><a href="#" class="btn btn-mini">收藏比赛</a><a href="#" class="btn btn-mini">查看详细</a></li> 
+          <li class="matchBox-info "><a href="javascript:void(0)">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
+          <li class="matchBox-btns "><a href="javascript:void(0)" class="btn btn-mini">收藏比赛</a><a href="javascript:void(0)" class="btn btn-mini">查看详细</a></li> 
          </ul> 
         </div>
        </div> 
        <div class="matchBox">
         <div class="matchBox-all"> 
          <div class="matchBox-title"> 
-          <a href="#">三北京东城区草根杯乒乓球比赛</a> 
+          <a href="javascript:void(0)">三北京东城区草根杯乒乓球比赛</a> 
           <span class="pull-right">发布时间：<span class="matchBox-releaseTime">2013-10-17</span></span> 
          </div> 
          <div class="hidden"> 
@@ -187,17 +185,17 @@
              2013-10-20 
             <p>星期日</p> 
            </div></li> 
-          <li class="matchBox-court "><a href="#">二北京东城区北京大学体育馆草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
+          <li class="matchBox-court "><a href="javascript:void(0)">二北京东城区北京大学体育馆草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
           <li class="matchBox-state ">已结束</li> 
-          <li class="matchBox-info "><a href="#">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
-          <li class="matchBox-btns "><a href="#" class="btn btn-mini">收藏比赛</a><a href="#" class="btn btn-mini">查看详细</a></li> 
+          <li class="matchBox-info "><a href="javascript:void(0)">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
+          <li class="matchBox-btns "><a href="javascript:void(0)" class="btn btn-mini">收藏比赛</a><a href="javascript:void(0)" class="btn btn-mini">查看详细</a></li> 
          </ul> 
         </div> 
        </div> 
        <div class="matchBox">
         <div class="matchBox-all"> 
          <div class="matchBox-title"> 
-          <a href="#">二北京东城区草根杯乒乓球比赛</a> 
+          <a href="javascript:void(0)">二北京东城区草根杯乒乓球比赛</a> 
           <span class="pull-right">发布时间：<span class="matchBox-releaseTime">2013-10-16</span></span> 
          </div> 
          <div class="hidden"> 
@@ -216,17 +214,17 @@
              2013-10-20 
             <p>星期日</p> 
            </div></li> 
-          <li class="matchBox-court "><a href="#">二北京东城区北京大学体育馆草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
+          <li class="matchBox-court "><a href="javascript:void(0)">二北京东城区北京大学体育馆草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
           <li class="matchBox-state ">报名中</li> 
-          <li class="matchBox-info "><a href="#">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
-          <li class="matchBox-btns "><a href="#" class="btn btn-mini">收藏比赛</a><a href="#" class="btn btn-mini">查看详细</a></li> 
+          <li class="matchBox-info "><a href="javascript:void(0)">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
+          <li class="matchBox-btns "><a href="javascript:void(0)" class="btn btn-mini">收藏比赛</a><a href="javascript:void(0)" class="btn btn-mini">查看详细</a></li> 
          </ul> 
         </div> 
        </div> 
        <div class="matchBox"> 
         <div class="matchBox-all"> 
          <div class="matchBox-title"> 
-          <a href="#">九北京东城区草根杯乒乓球比赛</a> 
+          <a href="javascript:void(0)">九北京东城区草根杯乒乓球比赛</a> 
           <span class="pull-right">发布时间：<span class="matchBox-releaseTime">2013-10-17</span></span> 
          </div> 
          <div class="hidden"> 
@@ -245,17 +243,17 @@
              2013-10-20 
             <p>星期日</p> 
            </div></li> 
-          <li class="matchBox-court "><a href="#">二北京东城区北京大学体育馆草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
+          <li class="matchBox-court "><a href="javascript:void(0)">二北京东城区北京大学体育馆草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
           <li class="matchBox-state ">比赛中</li> 
-          <li class="matchBox-info "><a href="#">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
-          <li class="matchBox-btns "><a href="#" class="btn btn-mini">收藏比赛</a><a href="#" class="btn btn-mini">查看详细</a></li> 
+          <li class="matchBox-info "><a href="javascript:void(0)">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
+          <li class="matchBox-btns "><a href="javascript:void(0)" class="btn btn-mini">收藏比赛</a><a href="javascript:void(0)" class="btn btn-mini">查看详细</a></li> 
          </ul> 
         </div> 
        </div> 
        <div class="matchBox"> 
         <div class="matchBox-all"> 
          <div class="matchBox-title"> 
-          <a href="#">二北京东城区草根杯乒乓球比赛</a> 
+          <a href="javascript:void(0)">二北京东城区草根杯乒乓球比赛</a> 
           <span class="pull-right">发布时间：<span class="matchBox-releaseTime">2013-10-15</span></span> 
          </div> 
          <div class="hidden"> 
@@ -274,17 +272,17 @@
              2013-10-20 
             <p>星期日</p> 
            </div></li> 
-          <li class="matchBox-court "><a href="#">二北京东城区北京大学体育馆草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
+          <li class="matchBox-court "><a href="javascript:void(0)">二北京东城区北京大学体育馆草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
           <li class="matchBox-state ">比赛中</li> 
-          <li class="matchBox-info "><a href="#">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
-          <li class="matchBox-btns "><a href="#" class="btn btn-mini">收藏比赛</a><a href="#" class="btn btn-mini">查看详细</a></li> 
+          <li class="matchBox-info "><a href="javascript:void(0)">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
+          <li class="matchBox-btns "><a href="javascript:void(0)" class="btn btn-mini">收藏比赛</a><a href="javascript:void(0)" class="btn btn-mini">查看详细</a></li> 
          </ul> 
         </div> 
        </div> 
        <div class="matchBox"> 
         <div class="matchBox-all"> 
          <div class="matchBox-title"> 
-          <a href="#">五北京东城区草根杯乒乓球比赛</a> 
+          <a href="javascript:void(0)">五北京东城区草根杯乒乓球比赛</a> 
           <span class="pull-right">发布时间：<span class="matchBox-releaseTime">2013-10-7</span></span> 
          </div> 
          <div class="hidden"> 
@@ -303,17 +301,17 @@
              2013-10-20 
             <p>星期日</p> 
            </div></li> 
-          <li class="matchBox-court "><a href="#">二北京东城区北京大学体育馆草根杯乒乓球比赛北京东城区草根杯乒乓球&gt;</a></li> 
+          <li class="matchBox-court "><a href="javascript:void(0)">二北京东城区北京大学体育馆草根杯乒乓球比赛北京东城区草根杯乒乓球&gt;</a></li> 
           <li class="matchBox-state ">报名中</li> 
-          <li class="matchBox-info "><a href="#">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
-          <li class="matchBox-btns "><a href="#" class="btn btn-mini">收藏比赛</a><a href="#" class="btn btn-mini">查看详细</a></li> 
+          <li class="matchBox-info "><a href="javascript:void(0)">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
+          <li class="matchBox-btns "><a href="javascript:void(0)" class="btn btn-mini">收藏比赛</a><a href="javascript:void(0)" class="btn btn-mini">查看详细</a></li> 
          </ul> 
         </div> 
        </div> 
        <div class="matchBox"> 
         <div class="matchBox-all"> 
          <div class="matchBox-title"> 
-          <a href="#">二北京东城区草根杯乒乓球比赛</a> 
+          <a href="javascript:void(0)">二北京东城区草根杯乒乓球比赛</a> 
           <span class="pull-right">发布时间：<span class="matchBox-releaseTime">2013-10-30</span></span> 
          </div> 
          <div class="hidden"> 
@@ -332,10 +330,10 @@
              2013-10-20 
             <p>星期日</p> 
            </div></li> 
-          <li class="matchBox-court "><a href="#">二北京东城区北京大学体育馆草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
+          <li class="matchBox-court "><a href="javascript:void(0)">二北京东城区北京大学体育馆草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
           <li class="matchBox-state ">报名中</li> 
-          <li class="matchBox-info "><a href="#">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
-          <li class="matchBox-btns "><a href="#" class="btn btn-mini">收藏比赛</a><a href="#" class="btn btn-mini">查看详细</a></li> 
+          <li class="matchBox-info "><a href="javascript:void(0)">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
+          <li class="matchBox-btns "><a href="javascript:void(0)" class="btn btn-mini">收藏比赛</a><a href="javascript:void(0)" class="btn btn-mini">查看详细</a></li> 
          </ul> 
         </div>
        </div> 
@@ -378,7 +376,7 @@
   <script src="js/jplist.min.js"></script> 
   <script>
   $(function(){
-     /** 日期选择器 **/
+     //日期选择器
      $( "#matchTimefrom" ).datepicker({
       defaultDate: "+1w",
       changeMonth: true,
@@ -393,28 +391,25 @@
         $( "#matchTimefrom" ).datepicker( "option", "maxDate", selectedDate );
       }
     });
-    /** /日期选择器 **/
 
-    /** 鼠标滑过比赛列表 **/
+    //鼠标滑过比赛列表
     $("div.matchBox").hover(function(){
       $(this).addClass("box-active");
     },function(){
       $(this).removeClass("box-active");
     });
-    /****/
 
-    /** 字数限制，溢出省略 **/
+    //字数限制，溢出省略
     $(".matchBox-field").wordLimit(20);
     $(".matchBox-info > a").wordLimit(28);
-    /****/
 
-    /** 列表排序 **/
+    //列表排序 
     $('#matchsList').jplist({
           itemsBox: '.matchBoxs',
           itemPath: '.matchBox',
           panelPath: '.jplist-panel'
         });
-    /** 重复点击下拉列表改变排序 **/
+    //重复点击下拉列表改变排序
     var sortflag=1;
     $("div[data-control-action='sort'] li").click(function(){
       if(sortflag==1){
@@ -427,7 +422,7 @@
             sortflag=1;
         }
     });
-  })
+  });
   </script>  
  </body>
 </html>

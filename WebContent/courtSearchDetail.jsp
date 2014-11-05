@@ -24,20 +24,16 @@
    <div class="hdpush"></div> 
    <div class="row"> 
     <div class="span2 offset2"> 
-     <img src="img/logo.png" /> 
+     <a class="logoBack" href="index.jsp" title="回到首页"><img src="img/logo.png" alt="搜赛网"/></a> 
     </div> 
     <s:include value="searchbox.jsp" />
     <!-- 搜索框 --> 
    </div> 
    <div class="row"> 
     <div class="span8 offset2"> 
-     <div class="text-center adFirst">
-       这里是ad.no1 
-     </div> 
+     <div class="text-center adFirst">这里是ad.no1</div> 
      <div class="courtShortInfo"> 
-      <div class="title">
-        成都11879乒乓球馆 
-       <span>特色1</span> 
+      <div class="title">成都11879乒乓球馆<span>特色1</span> 
        <span>特色1</span> 
        <span>特色1</span> 
       </div> 
@@ -264,7 +260,6 @@
             <label for="publicResponse-main" class="radio inline pull-right"><input type="radio" id="publicResponse-main" name="responseState-main" value="0" checked="checked" />公开</label> 
            </div> 
           </div>
-          <input type="submit" class="span2 btn btn-success pull-right hide" value="发表评论" /> 
           <button id="reply-main" class="span2 btn btn-success pull-right<s:if test="#session.userBean.userName!=null"></s:if><s:else> disabled</s:else>">发表评论</button> 
          </div> 
         </div> 
@@ -281,46 +276,46 @@
          </thead> 
          <tbody> 
           <tr class="tbl-item"> 
-           <td><a href="#">2014年成都乒乓球大赛</a></td> 
+           <td><a href="javascript:void(0)">2014年成都乒乓球大赛</a></td> 
            <td>2014年1月23日</td> 
            <td>进行中</td> 
            <td>暂无</td> 
           </tr> 
           <tr class="tbl-item"> 
-           <td><a href="#">2014年成都乒乓球大赛</a></td> 
+           <td><a href="javascript:void(0)">2014年成都乒乓球大赛</a></td> 
            <td>2014年1月23日</td> 
            <td>进行中</td> 
            <td>暂无</td> 
           </tr> 
           <tr class="tbl-item"> 
-           <td><a href="#">2014年成都乒乓球大赛</a></td> 
+           <td><a href="javascript:void(0)">2014年成都乒乓球大赛</a></td> 
            <td>2014年1月23日</td> 
            <td>已结束</td> 
-           <td><a href="#">查看</a></td> 
+           <td><a href="javascript:void(0)">查看</a></td> 
           </tr> 
           <tr class="tbl-item"> 
-           <td><a href="#">2014年成都乒乓球大赛</a></td> 
+           <td><a href="javascript:void(0)">2014年成都乒乓球大赛</a></td> 
            <td>2014年1月23日</td> 
            <td>已结束</td> 
-           <td><a href="#">查看</a></td> 
+           <td><a href="javascript:void(0)">查看</a></td> 
           </tr> 
           <tr class="tbl-item"> 
-           <td><a href="#">2014年成都乒乓球大赛</a></td> 
+           <td><a href="javascript:void(0)">2014年成都乒乓球大赛</a></td> 
            <td>2014年1月23日</td> 
            <td>已结束</td> 
-           <td><a href="#">查看</a></td> 
+           <td><a href="javascript:void(0)">查看</a></td> 
           </tr> 
           <tr class="tbl-item"> 
-           <td><a href="#">2014年成都乒乓球大赛</a></td> 
+           <td><a href="javascript:void(0)">2014年成都乒乓球大赛</a></td> 
            <td>2014年1月23日</td> 
            <td>已结束</td> 
-           <td><a href="#">查看</a></td> 
+           <td><a href="javascript:void(0)">查看</a></td> 
           </tr> 
           <tr class="tbl-item"> 
-           <td><a href="#">2014年成都乒乓球大赛</a></td> 
+           <td><a href="javascript:void(0)">2014年成都乒乓球大赛</a></td> 
            <td>2014年1月23日</td> 
            <td>已结束</td> 
-           <td><a href="#">查看</a></td> 
+           <td><a href="javascript:void(0)">查看</a></td> 
           </tr> 
          </tbody> 
         </table> 
@@ -350,10 +345,10 @@
   <script src="js/jplist.min.js"></script> 
   <script>
   $(function(){
-	/** 初始化生成验证码 **/
+	//初始化生成验证码
     createCode("inputValidateImg");
     
-  	/** 拉取评论  **/
+  	//拉取评论
   	function ajaxAllEvaluation(){
   	$.ajax({
   		type: "POST",
@@ -400,7 +395,7 @@
   	//立即获取所有评论
   	ajaxAllEvaluation();
         
-     /** 点击隐藏回复 和 显示回复  **/
+     //点击隐藏回复 和 显示回复
      $("body").on("click",".evaluation-tool-visible",function(){
     	 console.log($(this).text());
     	 if( $(this).text() == "隐藏回复" ){
@@ -410,7 +405,7 @@
     	 }
      });
         
-     /** 点击我要补充下，滑出回复框  **/
+     //点击我要补充下，滑出回复框
      function appendTextarea (target,img,name,id,parentName) { //添加“我要补充下”回复框
       var respStr = '<li class="evaluation-response-li hide"><div class="media evaluation-response"><div class="pull-left"><img class="media-object" src="'+img+'" /><div class="evaluationName" id="evaluationName-temp" data-userid="'+id+'">'+name+'</div></div><div class="media-body"><div class="inputRadios pull-right"><textarea id="inputResponse-temp" <s:if test="#session.userBean.userName!=null"></s:if><s:else>disabled="disabled" readonly="readonly"</s:else> > <s:if test="#session.userBean.userName!=null"> 【回复 '+parentName+' 】：</s:if><s:else>请先登录。</s:else> </textarea><div class="radios"><div class="validateCode-main pull-left">验证码&nbsp;:<input type="text" class="input-small" id="inputValidateCodeTemp" name="inputValidateCodeTemp" placeholder="验证码" required="required" /><span id="inputValidateImgTemp" class="code" onclick="createCode(\'inputValidateImgTemp\')"></span><span class="code-changeLink" onclick="createCode(\'inputValidateImgTemp\')"> 换一张</span></div><label for="hideResponse-temp" class="radio inline pull-right"><input type="radio" id="hideResponse-temp" name="responseState-temp" value="1"/>匿名</label><label for="publicResponse-temp" class="radio inline pull-right"><input type="radio" id="publicResponse-temp" name="responseState-temp" value="0" checked="checked"/>公开</label></div></div><button class="btn pull-right" id="cancle-temp">取消</button><button id="reply-temp" class="span2 btn btn-success pull-right<s:if test="#session.userBean.userName!=null"></s:if><s:else> disabled</s:else>">发表评论</button><input type="submit" class="span2 btn btn-success pull-right hide" value="发表评论"/> </div></div></li>';
       target.append(respStr);
@@ -505,7 +500,7 @@
           }
       return false;
      });
-    /** 直接发表评论 **/
+    //直接发表评论
     $("#reply-main").click(function(){
       $(".evaluations .evaluation-response-li").slideUp("slow",function(){
         $(".evaluations .evaluation-response-li").remove();
@@ -540,7 +535,7 @@
     	  $('#sousaiRemindDialog').modal({backdrop:true,show:true});
       };
     });
-    /** 我要补充下 **/
+    //我要补充下 
      $("body").on("click","#reply-temp",function(){
       var parentId = $(this).parent().parent().parent().parent().parent().parent().data("id"), //evaluation > data-id
       rootId = parentId,
@@ -612,8 +607,19 @@
         	console.log(rspdata);
         	if(rspdata == 0){
         		alert("发表评论失败！");console.log("发表评论失败！服务器返回错误码为0");
+        		//重置主发布框的内容。
+        		$("#inputResponse-main").val("");
+        		$("#inputValidateCodeMain").val("");
+        		$("#publicResponse-main").click();
+        		createCode("inputValidateImg");
         	}else{
         		alert("发表评论成功！");console.log("发表评论成功！");
+        		//重置主发布框的内容。
+        		$("#inputResponse-main").val("");
+        		$("#inputValidateCodeMain").val("");
+        		$("#publicResponse-main").click();
+        		createCode("inputValidateImg");
+        		
         		/*target.append(respCode); //本地添加
         		$(".evaluations .evaluation-response-li").slideUp("slow",function(){
               	  $(".evaluations .evaluation-response-li").remove();
@@ -631,7 +637,7 @@
         }); //ajax 已得到发送评论到服务器
         console.log("ajax结束");
     }
-    /** 点击取消 **/
+    //点击取消
      $("body").on("click","#cancle-temp",function(){
       $(".evaluations .evaluation-response-li").slideUp("slow",function(){
       $(".evaluations .evaluation-response-li").remove();
@@ -639,7 +645,7 @@
       $(".evaluation-tool-a").slideDown();
     });
 
-    /** 鼠标hover切换图片 **/
+    //鼠标hover切换图片
     $(".courtImg-small li").click(function(){
       $(this).parent().find("li").removeClass("active");
       $(this).addClass("active");
@@ -647,7 +653,7 @@
       $(".courtImg-big > img").attr("src",imgSrc);
     });
 
-    /** 列表排序 **/
+    //列表排序
     $('#courtRecord').jplist({
           itemsBox: '.recordTable',
           itemPath: '.tbl-item',

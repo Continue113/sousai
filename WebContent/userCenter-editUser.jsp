@@ -49,7 +49,7 @@
  <div class="hdpush"></div> 
  <div class="row"> 
   <div class="span4"> 
-   <img src="img/logo.png" />
+   <a class="logoBack" href="index.jsp" title="回到首页"><img src="img/logo.png" alt="搜赛网"/></a>
    <span class="logotext">我的搜赛</span> 
   </div> 
   <s:include value="searchbox.jsp" /><!-- 搜索框 -->
@@ -60,7 +60,7 @@
      <div class="navbar">
       <div class="navbar-inner"> 
        <ul class="nav"> 
-        <li class="active"><a href="#">我的搜赛网</a></li>
+        <li class="active"><a href="javascript:void(0)">我的搜赛网</a></li>
        </ul>
       </div>
      </div> 
@@ -78,10 +78,10 @@
       <div class="userCenter-remind">
        <ul class="breadcrumb"> 
         <li>比赛信息:</li> 
-        <li><a href="#">乒乓球<span>(5)</span></a></li> 
-        <li><a href="#">羽毛球<span>(5)</span></a></li> 
-        <li><a href="#">保宁球<span>(5)</span></a></li> 
-        <li><a href="#">网球<span>(5)</span></a></li> 
+        <li><a href="javascript:void(0)">乒乓球<span>(5)</span></a></li> 
+        <li><a href="javascript:void(0)">羽毛球<span>(5)</span></a></li> 
+        <li><a href="javascript:void(0)">保宁球<span>(5)</span></a></li> 
+        <li><a href="javascript:void(0)">网球<span>(5)</span></a></li> 
        </ul>
       </div> 
       <div class="tab-content">
@@ -205,16 +205,15 @@
   <script src="js/jquery.validate.min.js"></script>
 <script>
 $(function () {
-    /** editUser鼠标点击选择头像 **/
+    //editUser鼠标点击选择头像
     $("#systemIcons li").click(function(){
       $(this).parent().find("li").removeClass("active");
       $(this).addClass("active");
       var imgSrc = $(this).find("img").attr("src");
       $(".crtUserIcon > img").attr("src",imgSrc);
     });
-    /****/
 
-    /** 编辑账户验证 **/
+    //编辑账户验证 
     //添加验证旧密码方法
     $.validator.addMethod("isPwd",function(value,element,param){
       if(value === param || value == ""){
@@ -293,7 +292,7 @@ $(function () {
       }
     }
   });
-  /** 取消编辑账户 **/
+  //取消编辑账户
   $("#resetEditUserForm").click(function(){
     var resetbtn = confirm("确定重置吗？");
     if (resetbtn == true){
@@ -312,7 +311,7 @@ $(function () {
   $("#cancle").click(function(){
     $(".files .hide").fadeOut();
   });*/
-})
+});
 /*
 function ajaxFileUpload() {
   $(".files .name").ajaxStart(function(){
@@ -385,7 +384,7 @@ function imgValid(file){
   }
 }
 */
-/** flash上传头像 **/
+//flash上传头像 
 function uploadevent(status,picUrl,callbackdata){
 	console.log(picUrl); //后端存储图片
 	console.log(callbackdata);

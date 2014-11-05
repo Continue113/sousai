@@ -6,7 +6,7 @@
      <ul class="breadcrumb"> 
       <li><a href="#" id="collectLink">收藏网站</a> <span class="divider">|</span></li> 
       <li><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=822547462&site=qq&menu=yes">在线联系</a> <span class="divider">|</span></li>
-      <s:if test="#session.userBean.userName!=null">  
+      <s:if test="#session.userBean.userName!=null">
       <li>您好，<a tabindex="-1" href="userCenter-editUser.jsp"><span id="userId"><s:property value="#session.userBean.userName"/></span></a>！ <a href="processLogout">退出</a> <span class="divider">|</span></li> 
       <li class="dropdown"> <a class="dropdown-hover" href="javascript:void(0);">我的比赛<b class="caret"></b></a> 
        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu"> 
@@ -30,7 +30,7 @@
      <p>[<span id="city" class="sessionCity" data-sessionregion="{'pName':'<s:property value="#session.regionBean.pName"/>','pId':'<s:property value="#session.regionBean.pId"/>','cName':'<s:property value="#session.regionBean.cName"/>','cId':'<s:property value="#session.regionBean.cId"/>','code':'<s:property value="#session.regionBean.code"/>',}" ><s:property value="#session.regionBean.cName"/></span>]<a href="#" id="changeCityBtn">切换</a></p>
      </s:if>
      <s:else>
-     <p>[<span id="city"></span>]是你所在的城市吗？<a href="javascript:void(0);" id="changeCityBtn">切换</a></p>
+     <p>[<span id="city" data-sessionregion="{'pName':'北京市','pId':'2','cName':'北京市','cId':'33','code':'110100'}">北京市</span>]是你所在的城市吗？<a href="javascript:void(0);" id="changeCityBtn">切换</a></p>
      </s:else> 
      <div class="form-inline hdcity-hide">
       <select class="selectSessionProvince span2">

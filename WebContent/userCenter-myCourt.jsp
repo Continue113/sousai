@@ -33,7 +33,7 @@
      <div class="navbar">
       <div class="navbar-inner"> 
        <ul class="nav"> 
-        <li class="active"><a href="#">我的搜赛网</a></li>
+        <li class="active"><a href="javascript:void(0)">我的搜赛网</a></li>
        </ul>
       </div>
      </div> 
@@ -54,7 +54,7 @@
         <!-- 迭代所有已发布的场地的场地数量 -->
         <s:iterator var="court" value="#response.courtlist" status="statu">
         <s:if test="%{#response.courtlist.length !== 0}">
-          <li><a href="#"><s:property value="#court.courtType"/><span>(<s:property value="#court.courtTypeNumber"/>)</span></a></li>
+          <li><a href="javascript:void(0)"><s:property value="#court.courtType"/><span>(<s:property value="#court.courtTypeNumber"/>)</span></a></li>
         </s:if>
         <s:else>
           <li>还没有发布场地</li>
@@ -175,8 +175,8 @@
            <!-- data --> 
            <div class="courtBox-block"> 
             <div class="courtBox-title">
-             <a href="#">1成都1873乒乓球馆</a>
-             <a href="#" class="btn btn-mini pull-right">查看详细</a><a href="#" class="btn btn-mini pull-right">编辑场地</a>
+             <a href="javascript:void(0)">1成都1873乒乓球馆</a>
+             <a href="javascript:void(0)" class="btn btn-mini pull-right">查看详细</a><a href="javascript:void(0)" class="btn btn-mini pull-right">编辑场地</a>
             </div> 
             <ul class="breadcrumb"> 
              <li class="courtBox-address">一北京东城区北京大学体育乓一北京东城区北京大学体育乓</li> 
@@ -250,7 +250,6 @@
             sortflag=1;
         }
     });
-    /****/
-    })
+    });
 </script>
 </body></html>

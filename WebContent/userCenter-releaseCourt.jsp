@@ -37,7 +37,7 @@
      <div class="navbar"> 
       <div class="navbar-inner"> 
        <ul class="nav"> 
-        <li class="active"><a href="#">我的搜赛网</a></li> 
+        <li class="active"><a href="javascript:void(0)">我的搜赛网</a></li> 
        </ul> 
       </div> 
      </div> 
@@ -55,10 +55,10 @@
       <div class="userCenter-remind"> 
        <ul class="breadcrumb"> 
         <li>比赛信息:</li> 
-        <li><a href="#">乒乓球<span>(5)</span></a></li> 
-        <li><a href="#">羽毛球<span>(5)</span></a></li> 
-        <li><a href="#">保宁球<span>(5)</span></a></li> 
-        <li><a href="#">网球<span>(5)</span></a></li> 
+        <li><a href="javascript:void(0)">乒乓球<span>(5)</span></a></li> 
+        <li><a href="javascript:void(0)">羽毛球<span>(5)</span></a></li> 
+        <li><a href="javascript:void(0)">保宁球<span>(5)</span></a></li> 
+        <li><a href="javascript:void(0)">网球<span>(5)</span></a></li> 
        </ul> 
       </div> 
       <div class="tab-content"> 
@@ -198,18 +198,6 @@
   <script src="tinymce/tinymce.min.js"></script> 
   <script>
   $(function(){
-    //初始化比赛类型
-  function initMatchType(){
-    //console.log("调用初始化比赛类型");
-    $.post("showMC", null, function(data) {
-      //alert("回调内容为:"+data);//id name 
-      var type = $(".selectMatchType");
-      for (var i = 0; i < data.length; i++) {
-        type.append("<option value=\"" + data[i].id + "\">" + data[i].name + "</option>");
-      }
-    });
-  }
-
   //立即初始化比赛类型
   initMatchType();
   
@@ -390,7 +378,26 @@
       $("#" + editor.id).valid();
     }
   });
- 
+  //添加选项
+  $(".plus").click(function(){
+    if(trNumb == 3){
+      alert("抱歉，每个场地最多只可以上传3张图片！");
+    }else{
+      trNumb++;
+      $(".files").append('<tr class="hide" id="tr'+trNumb+'"><td><span class="btn fileinput-button"  onclick="selectPic('+trNumb+')"><i class="icon-plus"></i><span>选择图片</span></span><input class="hide fileImage" id="fileImage'+trNumb+'" type="file" name="images" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this,'+trNumb+')"/><input class="hide fileImageNames" type="text" name="imgNames" value=""/></td><td><span class="preview" id="preview'+trNumb+'"></span></td><td><span class="name"></span></td><td><span class="size"></span></td><td><span class="btn cancel" onclick="deleteTr('+trNumb+')"><i class="icon-ban-circle"></i>取消</span></td></tr>');
+      $("#tr"+trNumb).fadeIn();
+    }
+  });
+  //全部取消
+  $(".allCancel").on('click',function(event){
+    //表格行隐藏并清空所有的输入框，文件名称，文件大小
+    $(".files > tr").fadeOut();
+    setTimeout(function(){
+      $(".files > tr").remove();
+    },1000);
+    trNumb = 0;
+  });
+
   //场地预览
   //function courtPreview(){
     //定义变量名 场地名称 比赛类型（大类、类型） 场地类型 场地区域（省、市、区） 详细地址 赛场数 联系电话 价格 开放时间 场地图片 
@@ -414,6 +421,7 @@
   //}
 
   });
+
   //选择图片
   function selectPic(id){
     $("#fileImage"+id).trigger('click');
@@ -482,25 +490,6 @@
   }
   // OLD pic upload js
   
-  //添加选项
-  $(".plus").click(function(){
-    if(trNumb == 3){
-      alert("抱歉，每个场地最多只可以上传3张图片！");
-    }else{
-      trNumb++;
-      $(".files").append('<tr class="hide" id="tr'+trNumb+'"><td><span class="btn fileinput-button"  onclick="selectPic('+trNumb+')"><i class="icon-plus"></i><span>选择图片</span></span><input class="hide fileImage" id="fileImage'+trNumb+'" type="file" name="images" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this,'+trNumb+')"/><input class="hide fileImageNames" type="text" name="imgNames" value=""/></td><td><span class="preview" id="preview'+trNumb+'"></span></td><td><span class="name"></span></td><td><span class="size"></span></td><td><span class="btn cancel" onclick="deleteTr('+trNumb+')"><i class="icon-ban-circle"></i>取消</span></td></tr>');
-      $("#tr"+trNumb).fadeIn();
-    }
-  });
-  //全部取消
-  $(".allCancel").on('click',function(event){
-    //表格行隐藏并清空所有的输入框，文件名称，文件大小
-    $(".files > tr").fadeOut();
-    setTimeout(function(){
-      $(".files > tr").remove();
-    },1000);
-    trNumb = 0;
-  });
   </script>
  </body>
 </html>
