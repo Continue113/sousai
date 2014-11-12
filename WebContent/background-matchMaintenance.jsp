@@ -257,9 +257,9 @@
 	      });
 	      target.empty(); //清空tbody
     	  target.html(template(data));
+    	  //字数限制，溢出省略
+    	  $("td").wordLimit();
 	    });
-    //字数限制，溢出省略
-    $("td").wordLimit();
     //点击编辑比赛隐藏List列表同时显示编辑比赛
     $("tbody").on("click",".match-oprate > a",function(event){
     	$(".matchList").slideUp();

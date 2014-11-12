@@ -10,21 +10,37 @@
   <link href="css/smoothness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" /> 
   <link href="css/bootstrap.min.css" rel="stylesheet" /> 
   <link href="css/bootstrap-responsive.css" rel="stylesheet" /> 
-  <link href="css/jplist.min.css" rel="stylesheet" /> 
-  <link href="css/sousai.common.css" rel="stylesheet" /> 
-  <link href="css/sousai.matchSearch.css" rel="stylesheet" /> 
+  <!--<link href="css/jplist.min.css" rel="stylesheet" /> -->
+  <link href="css/sousai.common.css" rel="stylesheet" />
   <!--[if lte IE 8]>
   <link href="css/sousai.IE8.css" rel="stylesheet" /> 
   <![endif]-->
+  <style type="text/css">
+  .matchState > .controls > .checkbox{padding-top: 5px;}
+/** 比赛列表 **/
+.matchBoxs{border: 1px solid #ccc;margin: 10px 0;float: left;padding: 10px;}
+.matchBox .matchBox-all{float: left;}
+.matchBox .matchBox-title{background-color: #f5f5f5;border: 1px solid #ccc;border-bottom: 0;padding:2px 5px;}
+.matchBox ul{padding: 0;background-color: #fff;border: 1px solid #ccc;-webkit-border-radius: 0;
+  -moz-border-radius: 0;border-radius: 0;}
+.matchBox ul > li{padding-left:5px;vertical-align: middle;text-align: center;border-left: 1px solid #ccc;}
+.matchBox .matchBox-time{width: 185px;border-left: 0;}
+.matchBox .matchBox-time > div{float:left;}
+.matchBox .matchBox-time > div.line{height: 50px;line-height:50px;}
+.matchBox .matchBox-court{width: 180px;}
+.matchBox .matchBox-state{width: 50px;color: #ff040f;}
+.matchBox .matchBox-info{width: 220px;}
+.matchBox .matchBox-btns{width: 60px;padding-right: 5px;}
+  </style>
  </head> 
- <body class="matchSearch"> 
+ <body class="matchSearch">
   <s:include value="navbar.jsp" />
   <!-- 页首导航条 --> 
   <div class="container"> 
    <div class="hdpush"></div> 
    <div class="row"> 
     <div class="span2 offset2"> 
-     <img src="img/logo.png" /> 
+     <a class="logoBack" href="index.jsp" title="回到首页"><img src="img/logo.png" alt="搜赛网"/></a> 
     </div> 
     <s:include value="searchbox.jsp" />
     <!-- 搜索框 --> 
@@ -43,7 +59,7 @@
          <label class="control-label" for="searchKey">关&nbsp;&nbsp;键&nbsp;&nbsp;词：</label> 
          <div class="controls"> 
           <input type="text" id="searchKey" placeholder="请输入搜索关键词" /> 
-          <a href="javascript:void(0)" class="btn btn-small pull-right">转换到场地搜索界面</a> 
+          <a href="courtSearch.jsp" class="btn btn-small pull-right">转换到场地搜索界面</a> 
          </div> 
         </div> 
         <div class="control-group"> 
@@ -91,276 +107,16 @@
      </div> 
      <!-- /searchbox-ad --> 
      <div class="matchs" id="matchsList"> 
-      <!-- ios button: show/hide panel 能在小于一定的宽度的情况下隐藏面板 --> 
-      <div class="jplist-ios-button">
-        展开面板 
-      </div> 
       <!-- panel --> 
-      <div class="jplist-panel jplist-panel-top"> 
-       <div class="jplist-drop-down" data-control-type="drop-down" data-control-name="sort" data-control-action="sort" data-datetime-format="{year}-{month}-{day}"> 
-        <ul> 
-         <li><span data-path="default" data-default="true">排序方式</span></li> 
-         <li><span data-path=".matchBox-releaseTime" data-order="asc" data-type="datetime">发布时间</span><i class="icon-arrow-up"></i></li> 
-         <li><span data-path=".matchBox-matchTime" data-order="asc" data-type="datetime">比赛时间</span><i class="icon-arrow-up"></i></li> 
-         <li><span data-path=".matchBox-title" data-order="asc" data-type="text">比赛名称</span><i class="icon-arrow-up"></i></li> 
-         <li><span data-path=".matchBox-state" data-order="asc" data-type="text">比赛状态</span><i class="icon-arrow-up"></i></li> 
-        </ul> 
-       </div> 
-       <!-- 选择省市区三级下拉框 -->
-       <s:include value="selectPCC.jsp" />
-       <!-- js本地关键字查找 --> 
-       <div class="text-filter-box input-append"> 
-        <input data-path=".matchBox-all" type="text" value="" placeholder="请输入关键字" data-control-type="textbox" data-control-name="desc-filter" data-control-action="filter" /> 
-        <span class="add-on"><i class="icon-search"></i></span> 
-       </div> 
-       <!-- 复选框查找比赛状态 --> 
-       <div class="jplist-group" data-control-type="checkbox-text-filter" data-control-action="filter" data-control-name="matchBox-state" data-path=".matchBox-state" data-logic="or"> 
-        <input value="报名中" id="applying" type="checkbox" /> 
-        <label for="applying">报名中</label> 
-        <input value="比赛中" id="playing" type="checkbox" /> 
-        <label for="playing">比赛中</label> 
-        <input value="已结束" id="played" type="checkbox" /> 
-        <label for="played">已结束</label> 
-       </div> 
-       <!-- 复选框查找比赛星期 --> 
-       <div class="jplist-group" data-control-type="checkbox-text-filter" data-control-action="filter" data-control-name="matchBox-time" data-path=".matchBox-time" data-logic="or"> 
-        <input value="工作日" id="workday" type="checkbox" /> 
-        <label for="workday">工作日</label> 
-        <input value="星期六" id="saturday" type="checkbox" /> 
-        <label for="saturday">星期六</label> 
-        <input value="星期日" id="sunday" type="checkbox" /> 
-        <label for="sunday">星期日</label> 
-       </div> 
-      </div> 
-      <!-- /panel --> 
-      <div class="matchBoxs"> 
-       <div class="matchBox">
-        <div class="matchBox-all"> 
-         <div class="matchBox-title"> 
-          <a href="javascript:void(0)">一北京东城区草根杯乒乓球比赛</a> 
-          <span class="pull-right">发布时间：<span class="matchBox-releaseTime">2013-10-10</span></span> 
-         </div> 
-         <div class="hidden"> 
-          <span class="matchBox-type-pp">乒乓球</span> 
-         </div> 
-         <ul class="breadcrumb"> 
-          <li class="matchBox-time"> 
-           <div class="matchBox-matchTime">
-             2013-10-17 
-            <p>星期五</p> 
-           </div> 
-           <div class="line">
-             &nbsp;-&nbsp; 
-           </div> 
-           <div>
-             2013-10-20 
-            <p>星期日</p> 
-           </div></li> 
-          <li class="matchBox-court "><a href="javascript:void(0)">一北京东城区北京大学体育乓</a></li> 
-          <li class="matchBox-state ">报名中</li> 
-          <li class="matchBox-info "><a href="javascript:void(0)">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
-          <li class="matchBox-btns "><a href="javascript:void(0)" class="btn btn-mini">收藏比赛</a><a href="javascript:void(0)" class="btn btn-mini">查看详细</a></li> 
-         </ul> 
-        </div>
-       </div> 
-       <div class="matchBox">
-        <div class="matchBox-all"> 
-         <div class="matchBox-title"> 
-          <a href="javascript:void(0)">三北京东城区草根杯乒乓球比赛</a> 
-          <span class="pull-right">发布时间：<span class="matchBox-releaseTime">2013-10-17</span></span> 
-         </div> 
-         <div class="hidden"> 
-          <span class="matchBox-type-zq">足球</span> 
-         </div> 
-         <ul class="breadcrumb"> 
-          <li class="matchBox-time"> 
-           <div class="matchBox-matchTime">
-             2013-10-10 
-            <p>星期五</p> 
-           </div> 
-           <div class="line">
-             &nbsp;-&nbsp; 
-           </div> 
-           <div>
-             2013-10-20 
-            <p>星期日</p> 
-           </div></li> 
-          <li class="matchBox-court "><a href="javascript:void(0)">二北京东城区北京大学体育馆草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
-          <li class="matchBox-state ">已结束</li> 
-          <li class="matchBox-info "><a href="javascript:void(0)">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
-          <li class="matchBox-btns "><a href="javascript:void(0)" class="btn btn-mini">收藏比赛</a><a href="javascript:void(0)" class="btn btn-mini">查看详细</a></li> 
-         </ul> 
-        </div> 
-       </div> 
-       <div class="matchBox">
-        <div class="matchBox-all"> 
-         <div class="matchBox-title"> 
-          <a href="javascript:void(0)">二北京东城区草根杯乒乓球比赛</a> 
-          <span class="pull-right">发布时间：<span class="matchBox-releaseTime">2013-10-16</span></span> 
-         </div> 
-         <div class="hidden"> 
-          <span class="matchBox-type-lq">蓝球</span> 
-         </div> 
-         <ul class="breadcrumb"> 
-          <li class="matchBox-time"> 
-           <div class="matchBox-matchTime">
-             2013-10-19 
-            <p>星期五</p> 
-           </div> 
-           <div class="line">
-             &nbsp;-&nbsp; 
-           </div> 
-           <div>
-             2013-10-20 
-            <p>星期日</p> 
-           </div></li> 
-          <li class="matchBox-court "><a href="javascript:void(0)">二北京东城区北京大学体育馆草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
-          <li class="matchBox-state ">报名中</li> 
-          <li class="matchBox-info "><a href="javascript:void(0)">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
-          <li class="matchBox-btns "><a href="javascript:void(0)" class="btn btn-mini">收藏比赛</a><a href="javascript:void(0)" class="btn btn-mini">查看详细</a></li> 
-         </ul> 
-        </div> 
-       </div> 
-       <div class="matchBox"> 
-        <div class="matchBox-all"> 
-         <div class="matchBox-title"> 
-          <a href="javascript:void(0)">九北京东城区草根杯乒乓球比赛</a> 
-          <span class="pull-right">发布时间：<span class="matchBox-releaseTime">2013-10-17</span></span> 
-         </div> 
-         <div class="hidden"> 
-          <span class="matchBox-type-pp">乒乓球</span> 
-         </div> 
-         <ul class="breadcrumb"> 
-          <li class="matchBox-time"> 
-           <div class="matchBox-matchTime">
-             2013-10-24 
-            <p>星期五</p> 
-           </div> 
-           <div class="line">
-             &nbsp;-&nbsp; 
-           </div> 
-           <div>
-             2013-10-20 
-            <p>星期日</p> 
-           </div></li> 
-          <li class="matchBox-court "><a href="javascript:void(0)">二北京东城区北京大学体育馆草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
-          <li class="matchBox-state ">比赛中</li> 
-          <li class="matchBox-info "><a href="javascript:void(0)">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
-          <li class="matchBox-btns "><a href="javascript:void(0)" class="btn btn-mini">收藏比赛</a><a href="javascript:void(0)" class="btn btn-mini">查看详细</a></li> 
-         </ul> 
-        </div> 
-       </div> 
-       <div class="matchBox"> 
-        <div class="matchBox-all"> 
-         <div class="matchBox-title"> 
-          <a href="javascript:void(0)">二北京东城区草根杯乒乓球比赛</a> 
-          <span class="pull-right">发布时间：<span class="matchBox-releaseTime">2013-10-15</span></span> 
-         </div> 
-         <div class="hidden"> 
-          <span class="matchBox-type-zq">足球</span> 
-         </div> 
-         <ul class="breadcrumb"> 
-          <li class="matchBox-time"> 
-           <div class="matchBox-matchTime">
-             2013-10-18 
-            <p>星期五</p> 
-           </div> 
-           <div class="line">
-             &nbsp;-&nbsp; 
-           </div> 
-           <div>
-             2013-10-20 
-            <p>星期日</p> 
-           </div></li> 
-          <li class="matchBox-court "><a href="javascript:void(0)">二北京东城区北京大学体育馆草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
-          <li class="matchBox-state ">比赛中</li> 
-          <li class="matchBox-info "><a href="javascript:void(0)">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
-          <li class="matchBox-btns "><a href="javascript:void(0)" class="btn btn-mini">收藏比赛</a><a href="javascript:void(0)" class="btn btn-mini">查看详细</a></li> 
-         </ul> 
-        </div> 
-       </div> 
-       <div class="matchBox"> 
-        <div class="matchBox-all"> 
-         <div class="matchBox-title"> 
-          <a href="javascript:void(0)">五北京东城区草根杯乒乓球比赛</a> 
-          <span class="pull-right">发布时间：<span class="matchBox-releaseTime">2013-10-7</span></span> 
-         </div> 
-         <div class="hidden"> 
-          <span class="matchBox-type-lq">蓝球</span> 
-         </div> 
-         <ul class="breadcrumb"> 
-          <li class="matchBox-time"> 
-           <div class="matchBox-matchTime">
-             2013-10-18 
-            <p>星期五</p> 
-           </div> 
-           <div class="line">
-             &nbsp;-&nbsp; 
-           </div> 
-           <div>
-             2013-10-20 
-            <p>星期日</p> 
-           </div></li> 
-          <li class="matchBox-court "><a href="javascript:void(0)">二北京东城区北京大学体育馆草根杯乒乓球比赛北京东城区草根杯乒乓球&gt;</a></li> 
-          <li class="matchBox-state ">报名中</li> 
-          <li class="matchBox-info "><a href="javascript:void(0)">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
-          <li class="matchBox-btns "><a href="javascript:void(0)" class="btn btn-mini">收藏比赛</a><a href="javascript:void(0)" class="btn btn-mini">查看详细</a></li> 
-         </ul> 
-        </div> 
-       </div> 
-       <div class="matchBox"> 
-        <div class="matchBox-all"> 
-         <div class="matchBox-title"> 
-          <a href="javascript:void(0)">二北京东城区草根杯乒乓球比赛</a> 
-          <span class="pull-right">发布时间：<span class="matchBox-releaseTime">2013-10-30</span></span> 
-         </div> 
-         <div class="hidden"> 
-          <span class="matchBox-type-pp">乒乓球</span> 
-         </div> 
-         <ul class="breadcrumb"> 
-          <li class="matchBox-time"> 
-           <div class="matchBox-matchTime">
-             2013-10-1 
-            <p>星期五</p> 
-           </div> 
-           <div class="line">
-             &nbsp;-&nbsp; 
-           </div> 
-           <div>
-             2013-10-20 
-            <p>星期日</p> 
-           </div></li> 
-          <li class="matchBox-court "><a href="javascript:void(0)">二北京东城区北京大学体育馆草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
-          <li class="matchBox-state ">报名中</li> 
-          <li class="matchBox-info "><a href="javascript:void(0)">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
-          <li class="matchBox-btns "><a href="javascript:void(0)" class="btn btn-mini">收藏比赛</a><a href="javascript:void(0)" class="btn btn-mini">查看详细</a></li> 
-         </ul> 
-        </div>
-       </div> 
-      </div> 
-      <!-- /matchBoxs --> 
-      <div class="jplist-no-results jplist-hidden"> 
-       <p>暂时没有结果哟！</p> 
-      </div> 
-      <div class="jplist-ios-button">
-        展开分页 
-      </div> 
-      <!-- panel 用在分页 --> 
-      <div class="jplist-panel"> 
-       <!-- pagination --> 
-       <div class="jplist-pagination" data-control-type="pagination" data-control-name="paging" data-control-action="paging" data-items-per-page="5"> 
-        <!-- default items per page (if no "items per page" dropdown on the page) --> 
-       </div> 
-      </div> 
-      <!-- /jplist-panel --> 
+      <div class="panel-top"></div>
+      <div class="matchBoxs"></div> 
+      <!-- /matchBoxs -->
      </div> 
      <!-- /matchs --> 
     </div> 
     <!-- /span8 offset2 --> 
     <div class="span1"> 
-     <div class="text-center adSecond">
-       这里是ad.no2 
-     </div> 
+     <div class="text-center adSecond">这里是ad.no2</div> 
     </div> 
    </div> 
    <!-- /row --> 
@@ -370,12 +126,60 @@
   <!-- /container --> 
   <s:include value="footer.jsp" />
   <!-- 页尾信息 --> 
+  <script src="js/handlebars-v2.0.0.js"></script>
   <script src="js/jquery-ui-1.10.4.custom.min.js"></script> 
   <script src="js/jquery.ui.datepicker-zh-CN.js"></script> 
   <script src="js/jquery.wordLimit.js"></script> 
-  <script src="js/jplist.min.js"></script> 
+  <!-- <script src="js/jplist.min.js"></script> -->
+  <!-- handlebars template -->
+  <script id="match-template" type="text/x-handlebars-template">
+    {{#each this}}
+
+       <div class="matchBox"  data-info="{{data this}}>
+        <div class="matchBox-all"> 
+         <div class="matchBox-title"> 
+          <a href="javascript:void(0)">{{name}}</a> 
+          <span class="pull-right">发布时间：<span class="matchBox-releaseTime">{{relTime}}</span></span> 
+         </div>
+         <ul class="breadcrumb"> 
+          <li class="matchBox-time"> 
+           <div class="matchBox-beginTime">{{beginTime}}<p>星期五</p></div> 
+           <div class="line">&nbsp;-&nbsp;</div> 
+           <div class="matchBox-endTime">{{endTime}}<p>星期日</p></div>
+		  </li>
+          <li class="matchBox-court "><a href="javascript:void(0)">{{courtName}}</a></li> 
+          <li class="matchBox-state ">报名中</li> 
+          <li class="matchBox-info "><a href="javascript:void(0)">{{{rule}}}</a></li> 
+          <li class="matchBox-btns "><a href="javascript:void(0)" class="btn btn-mini">收藏比赛</a><a href="javascript:void(0)" class="btn btn-mini">查看详细</a></li> 
+         </ul> 
+        </div>
+       </div> 
+                            
+    {{/each}}
+  </script>
   <script>
   $(function(){
+		//ajax接收所有比赛
+		$.post("getAllMatch", null, function(data) {
+		      console.log(data);//alert(data);
+		      var target = $(".matchBoxs"),template = Handlebars.compile($('#match-template').html());
+		      Handlebars.registerHelper("data",function(v){
+		    	  //将当前对象转化为字符串，保存在data-info中
+		    	  console.log(v);
+		    	  var v1 = JSON.stringify(v);
+		    	  //console.log("v1:"+v1);
+		    	  return v1;
+		      });
+		      target.empty(); //清空tbody
+	    	  target.html(template(data));
+	    	    //字数限制，溢出省略
+	    	    $(".matchBox-court").wordLimit(20);
+	    	    $(".matchBox-info > a").wordLimit(28);
+		    });
+
+    	    //字数限制，溢出省略
+    	    $(".matchBox-court").wordLimit(13);
+    	    $(".matchBox-info > a").wordLimit(28);
      //日期选择器
      $( "#matchTimefrom" ).datepicker({
       defaultDate: "+1w",
@@ -391,36 +195,10 @@
         $( "#matchTimefrom" ).datepicker( "option", "maxDate", selectedDate );
       }
     });
-
-    //鼠标滑过比赛列表
-    $("div.matchBox").hover(function(){
-      $(this).addClass("box-active");
-    },function(){
-      $(this).removeClass("box-active");
-    });
-
-    //字数限制，溢出省略
-    $(".matchBox-field").wordLimit(20);
-    $(".matchBox-info > a").wordLimit(28);
-
-    //列表排序 
-    $('#matchsList').jplist({
-          itemsBox: '.matchBoxs',
-          itemPath: '.matchBox',
-          panelPath: '.jplist-panel'
-        });
-    //重复点击下拉列表改变排序
-    var sortflag=1;
-    $("div[data-control-action='sort'] li").click(function(){
-      if(sortflag==1){
-            //执行方法;
-            $(this).find("span").attr("data-order","desc").end().find("i").removeClass("icon-arrow-up").addClass("icon-arrow-down");
-            sortflag=0;
-        }else{
-            //执行方法;
-            $(this).find("span").attr("data-order","asc").end().find("i").removeClass("icon-arrow-down").addClass("icon-arrow-up");
-            sortflag=1;
-        }
+    //鼠标hover matchbox
+    $(".matchBoxs ").on('mouseenter','div.matchBox',function(){
+    	      $('div.matchBox').removeClass("box-active");
+    	      $(this).addClass("box-active");
     });
   });
   </script>  

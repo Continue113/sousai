@@ -242,28 +242,6 @@
       },"不相符，请重新输入");
 
       $("#editUserForm").validate({
-        submitHandler: function(form){
-        	console.log("通过验证");
-          /*$.ajax({
-            url: "processReg",
-            type: "POST",
-            dataType: "json",
-            data: {
-              "user.name": $("#inputUsername").val(),
-              "user.pwd": $("#inputUserPassword").val(),
-              "user.email": $("#inputUserEmail").val(),
-            },
-            success: function(resdata){
-            	console.log(resdata);
-              //$('#sousaiRemindDialog').modal({backdrop:static});
-              console.log("dialoged!");              
-            },
-            error: function(jqXHR,textStatus,errorThrown){
-            	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-              alert("抱歉，发送数据出错了，请重新输入。");
-            },
-          });*/
-        },
     rules: {
       "user.name": {
         minlength: 4,
@@ -293,7 +271,36 @@
         email: "请输入有效的邮箱"
       },
     }
-  });    
+  });
+    //验证添加用户
+    $( "button.saveAdd" ).click(function() {
+		if( $("#editUserForm").valid() ){
+			console.log("通过验证");
+	          /*$.ajax({
+	            url: "processReg",
+	            type: "POST",
+	            dataType: "json",
+	            data: {
+	              "user.name": $("#inputUsername").val(),
+	              "user.pwd": $("#inputUserPassword").val(),
+	              "user.email": $("#inputUserEmail").val(),
+	            },
+	            success: function(resdata){
+	            	console.log(resdata);
+	              //$('#sousaiRemindDialog').modal({backdrop:static});
+	              console.log("dialoged!");              
+	            },
+	            error: function(jqXHR,textStatus,errorThrown){
+	            	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+	              alert("抱歉，发送数据出错了，请重新输入。");
+	            },
+	          });*/
+			
+		}else{
+			alert( "Valid: " + $("#editUserForm").valid() );
+			
+		}
+	});
 
     //***************************************************************************************
     // 编辑用户的js代码，关于验证用户信息是否合法，同场注册页面。   *********************** END *******************

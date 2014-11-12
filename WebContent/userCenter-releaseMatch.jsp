@@ -9,8 +9,7 @@
   <meta name="author" content="KING@CQU" /> 
   <link href="css/smoothness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" /> 
   <link href="css/bootstrap.min.css" rel="stylesheet" /> 
-  <link href="css/bootstrap-responsive.css" rel="stylesheet" /> 
-  <link href="css/jplist.min.css" rel="stylesheet" /> 
+  <link href="css/bootstrap-responsive.css" rel="stylesheet" />
   <link href="css/sousai.common.css" rel="stylesheet" /> 
   <link href="css/sousai.userCenter.css" rel="stylesheet" /> 
   <!--[if lte IE 8]>
@@ -77,13 +76,7 @@
      </div> 
      <div class="span8"> 
       <div class="userCenter-remind"> 
-       <ul class="breadcrumb"> 
-        <li>比赛信息:</li> 
-        <li><a href="javascript:void(0)">乒乓球<span>(5)</span></a></li> 
-        <li><a href="javascript:void(0)">羽毛球<span>(5)</span></a></li> 
-        <li><a href="javascript:void(0)">保宁球<span>(5)</span></a></li> 
-        <li><a href="javascript:void(0)">网球<span>(5)</span></a></li> 
-       </ul> 
+       <ul class="breadcrumb"><li>比赛信息:</li></ul> 
       </div> 
       <div class="tab-content"> 
        <div id="releaseMatch" class="tab-pane active"> 
@@ -147,58 +140,12 @@
               <th>详细</th> 
              </tr> 
             </thead> 
-            <tbody>
-             <tr class="tritem" data-courtid="1">
-              <td>TESTING DATA</td> 
-              <td>TESTING DATA</td> 
-              <td>TESTING DATA</td> 
-              <td>TESTING DATA</td> 
-              <td>TESTING DATA</td> 
-              <td><a href="javascript:void(0)">详细</a></td> 
-             </tr>
-             <tr class="tritem"  data-courtid="2"> 
-              <td>奥体中心乒乓球俱乐部</td> 
-              <td>袁家岗大公馆立交奥体路185号羽毛球馆</td> 
-              <td>体育馆</td> 
-              <td>15-30</td> 
-              <td>19次</td> 
-              <td><a href="javascript:void(0)">详细</a></td> 
-             </tr> 
-             <tr class="tritem"  data-courtid="3"> 
-              <td>奥体中心乒乓球俱乐部</td> 
-              <td>袁家岗大公馆立交奥体路185号羽毛球馆</td> 
-              <td>体育馆</td> 
-              <td>15-30</td> 
-              <td>19次</td> 
-              <td><a href="javascript:void(0)">详细</a></td> 
-             </tr> 
-             <tr class="tritem"  data-courtid="4"> 
-              <td>奥体中心乒乓球俱乐部</td> 
-              <td>袁家岗大公馆立交奥体路185号羽毛球馆</td> 
-              <td>体育馆</td> 
-              <td>15-30</td> 
-              <td>19次</td> 
-              <td><a href="javascript:void(0)">详细</a></td> 
-             </tr> 
-            </tbody> 
-           </table> 
-           <div class="jplist-no-results jplist-hidden"> 
-            <p>暂时没有结果哟！</p> 
-           </div> 
-           <div class="jplist-ios-button">
-             展开分页 
-           </div> 
-           <!-- panel 用在分页 --> 
-           <div class="jplist-panel"> 
-            <!-- pagination --> 
-            <div class="jplist-pagination" data-control-type="pagination" data-control-name="paging" data-control-action="paging" data-items-per-page="10"> 
-             <!-- default items per page (if no "items per page" dropdown on the page) --> 
-            </div> 
-            <div class="text-center"> 
+            <tbody></tbody> 
+           </table>
+           <div class="no-results hide"><p class="text-warning text-center">暂时没有结果哟！</p></div>
+            <div class="text-center">
              <button class="btn" type="button" id="newCourtBtn">没有我要的场地，我要添加新场地</button> 
-            </div> 
-           </div> 
-           <!-- /jplist-panel --> 
+            </div>
           </div> 
           <div class="control-group"> 
            <div class="releaseCourtBox"> 
@@ -237,10 +184,25 @@
   <!-- 页首导航条 --> 
   <script src="js/jquery-ui-1.10.4.custom.min.js"></script> 
   <script src="js/jquery.ui.datepicker-zh-CN.js"></script> 
+  <script src="js/handlebars-v2.0.0.js"></script>
   <script src="tinymce/jquery.tinymce.min.js"></script> 
   <script src="tinymce/tinymce.min.js"></script> 
-  <script src="js/jquery.validate.min.js"></script> 
-  <script src="js/jplist.min.js"></script> 
+  <script src="js/jquery.validate.min.js"></script>
+  <!-- handlebars template -->
+  <script id="existCourts-template" type="text/x-handlebars-template">
+    {{#each this}}
+
+		    <tr class="tritem"  data-info="{{data this}} data-courtid="{{id}}">
+				<td>{{name}}</td>
+				<td>{{addr}}</td>
+				<td>{{courtTypeId}}</td>
+				<td>{{tableNum}}</td>
+				<td>{{matchCount}}</td>
+				<td><a target="_blank" href="courtLink;courtId=?{{id}}">详细</a></td>
+			</tr>
+
+    {{/each}}
+  </script>
   <script>
   $(function () {
   //立即初始化比赛类型
@@ -428,13 +390,6 @@
     $("#hideCourtId").attr("value",$(this).attr("data-courtid"));
   });
 
-  //列表排序 
-  $('.existCourtsBox').jplist({
-        itemsBox: '.table',
-        itemPath: '.tritem',
-        panelPath: '.jplist-panel'
-  });
-
   //搜索现有场地
   $("#searchExistedCourt").click(function(){
 	  //tgPrt: targetparent 目标父元素 ；regionId 默认为零
@@ -466,28 +421,23 @@
 	        "regionId": regionId,
 	      },
 	      dataType: "json",
-	      success: function(rspdata) {
-	        var existCourtsTbody = $(".existCourtsBox > table > tbody");
-	        $(".jplist-no-results").hide(); //隐藏无结果提醒
-	        existCourtsTbody.empty(); //清空已有场地列表
-	        console.log(rspdata);//alert(rspdata);
-	        /** 循环遍历获得的场地信息并加入已有场地列表中 **/
-	        for (var i = 0; i < rspdata.length; i++) {
-	        	existCourtsTbody.append(
-	        			'<tr class="tritem" data-courtid="'
-                  + rspdata[i].id+'"><td>'
-	    	        	+ rspdata[i].name + '</td><td>'
-	    	        	+ rspdata[i].addr + '</td><td>'
-	    	        	+ rspdata[i].courtTypeId + '</td><td>'
-	    	        	+ rspdata[i].tableNum + '</td><td>'
-	    	        	+ rspdata[i].matchCount + '</td><td><a target="_blank" href="courtLink;courtId=?'
-	    	        	+ rspdata[i].id + '">详细</a></td></tr>'	        			
-	        	);
-	        }
+	      success: function(data) {
+	        var target = $(".existCourtsBox > table > tbody"),template = Handlebars.compile($('#existCourts-template').html());
+	        $(".no-results").hide(); //隐藏无结果提醒
+		    console.log(data);//alert(data);
+	        Handlebars.registerHelper("data",function(v){
+	          //将当前对象转化为字符串，保存在data-info中
+	          console.log(v);
+	          var v1 = JSON.stringify(v);
+	          //console.log("v1:"+v1);
+	          return v1;
+	        });
+	        target.empty(); //清空tbody
+	        target.html(template(data));
 	        //若没有相应的结果，给出提醒
 	        if($(".tritem").length == 0){
 	        	console.log("在您选择的比赛地点没有搜索到已有场地，请更换比赛地点或在此地点添加新场地。");
-	        	$(".jplist-no-results").show();
+	        	$(".no-results").show();
 	        }
 	      },
 	      error: function() {

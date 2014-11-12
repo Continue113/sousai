@@ -258,7 +258,7 @@ content: '';
   background-repeat: repeat-x;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffcccccc', endColorstr='#ffdddddd', GradientType=0);
 }
-/****************************/
+/** /链接颜色为绿色 **/
 .btn-success {
   color: #fcffff;
   text-shadow: #fff;
@@ -294,77 +294,8 @@ content: '';
 .btn-success.active {
   background-color: #abcf20 \9;
 }
-/** /链接颜色为绿色 **/
 
-/** 比赛列表 **/
-.matchBoxs{border: 1px solid #ccc;margin: 10px 0;float: left;padding: 10px;}
-.matchBox .matchBox-all{float: left;}
-.matchBox .matchBox-title{background-color: #f5f5f5;border: 1px solid #ccc;border-bottom: 0;padding:2px 5px;}
-.matchBox ul{padding: 0;background-color: #fff;border: 1px solid #ccc;-webkit-border-radius: 0;
-  -moz-border-radius: 0;border-radius: 0;}
-.matchBox ul > li{padding-left:5px;vertical-align: middle;text-align: center;border-left: 1px solid #ccc;}
-.matchBox .matchBox-time{width: 166px;border-left: 0;}
-.matchBox .matchBox-time > div{float:left;}
-.matchBox .matchBox-time > div.line{height: 50px;line-height:50px;}
-.matchBox .matchBox-address{width: 180px;}
-.matchBox .matchBox-state{width: 50px;color: #ff040f;}
-.matchBox .matchBox-info{width: 220px;}
-.matchBox .matchBox-btns{width: 85px;}
-
-/** 场地列表 **/
-.courtBoxs{border: 1px solid #ccc;margin: 10px 0;float: left;padding-bottom: 20px;}
-.courtBox{margin: 10px 0 0 10px;float: left;}
-.courtBox .courtBox-img{float:left;border: 1px solid #ccc;}
-.courtBox .courtBox-img img{width: 110px;height: 85px;}
-.courtBox .courtBox-block{float: right;margin-left: 10px;}
-.courtBox .courtBox-block p{margin-bottom: 0;font-size: 12px;}
-.courtBox .courtBox-block .courtBox-title{background-color: #f5f5f5;border: 1px solid #ccc;border-bottom: 0;padding:2px 5px;}
-.courtBox .courtBox-block .courtBox-title .btn-mini{line-height: 16px;}
-.courtBox .courtBox-block ul{clear:both;padding: 0;margin-bottom: 0;background-color: #fff;border: 1px solid #ccc;-webkit-border-radius: 0;
-  -moz-border-radius: 0;border-radius: 0;}
-.courtBox .courtBox-block ul > li{padding-left:5px;vertical-align: middle;text-align: center;border-left: 1px solid #ccc;}
-.courtBox .courtBox-block .courtBox-address{width:200px;border-left: 0;}
-.courtBox .courtBox-block .courtBox-info{width:110px;}
-.courtBox .courtBox-block .courtBox-record{width:80px;}
-.courtBox .courtBox-block .courtBox-evaluation{width:200px;}
-
-/** 列表滑过标题和外框变色 **/
+/** 比赛列表和场地列表滑过标题和外框变色 **/
 div.box-active div.matchBox-title , div.box-active > div.courtBox-block > div.courtBox-title {border: 1px solid #51a351;border-bottom: 0;color: #000;font-weight: bold;}
 div.matchBox-title a:first-child, div.box-active div.matchBox-title a:first-child, div.courtBox-block > div.courtBox-title a:first-child, div.box-active > div.courtBox-block > div.courtBox-title a:first-child{color: #000;}
 div.box-active ul.breadcrumb, div.box-active > div.courtBox-block > ul.breadcrumb{border: 1px solid #51a351;}
-
-/** 筛选无结果 **/
-.jplist-no-results{float: left;
-width: 100%;text-align: center;margin-top: 20px;}
-/** 下拉列表右边距 **/
-.jplist-drop-down ul li span{
-  margin-right: 10px;
-}
-/** 下拉菜单分割线 **/
-.jplist-drop-down ul li.divider {
-height: 1px;
-margin: 3px 1px;
-overflow: hidden;
-background-color: #e5e5e5;
-border-bottom: 1px solid #ffffff;
-}
-/** 选择下拉框 **/
-select.span2{width: 150px;}
-/** jplist-panel下的选择地区下拉菜单 **/
-.jplist-panel > select.span2 {
-height: 30px;
-box-shadow: 0 0 1px #fff;
-background: #fff;
--webkit-box-sizing: border-box;
--moz-box-sizing: border-box;
--ms-box-sizing: border-box;
--o-box-sizing: border-box;
-box-sizing: border-box;
-border: 1px solid #dbdbdb;
-border-radius: 3px;
-text-shadow: 1px 1px 1px #fff;
-color: #27252a;
-float: left;
-margin: 10px 10px 0 0;
-padding: 5px;
-}

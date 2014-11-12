@@ -16,6 +16,79 @@
   <!--[if lte IE 8]>
   <link href="css/sousai.IE8.css" rel="stylesheet" /> 
   <![endif]-->
+  <style type="text/css">
+  .courtSearchDetail .courtShortInfo .title{font-weight: bold;font-size: 14px;color: #000;margin: 10px 0;}
+.courtSearchDetail .courtShortInfo .title span{margin-left: 10px;}
+.courtSearchDetail .courtShortInfo .courtImgs{margin-left: 0;}
+.courtSearchDetail .courtShortInfo .courtImg-big{width:270px;height: 200px;border:1px solid #ccc;}
+.courtSearchDetail .courtShortInfo .courtImg-big img{width:270px;height: 200px;}
+
+.courtSearchDetail .courtShortInfo .courtImg-small > .breadcrumb{background-color: #fff;padding: 8px 0px;}
+.courtSearchDetail .courtShortInfo .courtImg-small > .breadcrumb > li{margin: 0 4px 0 0;border: 1px solid #fff;}
+.courtSearchDetail .courtShortInfo .courtImg-small > .breadcrumb > li.firstImg{margin-left: 2px;}
+.courtSearchDetail .courtShortInfo .courtImg-small > .breadcrumb > li.lastImg{margin-right: 0;}
+.courtSearchDetail .courtShortInfo .courtImg-small > .breadcrumb > li.active {border: 1px solid #51a351;}
+.courtSearchDetail .courtShortInfo .courtImg-small img{width: 45px;height: 45px;}
+.courtSearchDetail .courtShortInfo  table{font-size: 12px;}
+.courtSearchDetail .courtShortInfo  table .td2{width: 280px;}
+
+/** nav-tabs **/
+.courtSearchDetail .courtSearchDetail-content{margin-left: 0;}
+.courtSearchDetail .courtDetailMenu{border-bottom: 1px solid #ccc;}
+
+.courtSearchDetail .courtDetailMenu > .active > a {
+    border-top: 2px solid #62c462;
+    border-left: 0;
+    border-right: 0;
+    font-weight: normal;
+    color: #000;
+    background-color: #f5f5f5;
+    border-bottom-color: transparent;
+}
+
+.courtSearchDetail .courtDetailMenu > li > a:hover,
+.courtSearchDetail .courtDetailMenu > li > a:focus,
+.courtSearchDetail .courtDetailMenu > .active > a:hover,
+.courtSearchDetail .courtDetailMenu > .active > a:focus {
+  font-weight: normal;
+  color: #000;
+  background-color: #f5f5f5;
+}
+
+/** 场地评价列表 **/
+.evaluation{border-bottom: 2px solid #ccc;}
+.evaluation .evaluationName{width: 70px;}
+.evaluation .pull-left{margin-left:20px;padding: 0 5px;text-align: center;width: 70px;}
+.evaluation img{width: 50px;height: 50px;margin-left:auto;margin-right:auto;}
+.evaluation .media-body .releasetime{font-size: 12px;color: #ccc;}
+/** 发表评价 **/
+.evaluation-response img{width: 100px;height: 100px;margin-left:auto;margin-right:auto;}
+.evaluation-response .evaluationName{text-align: center;}
+.evaluation-response .inputRadios{border: 1px solid #ccc;background-color: #ddd;}
+.evaluation-response textarea{height: 100px;min-height: 100px;width: 644px;min-width: 644px;max-width: 644px;margin-bottom: 0;}
+.evaluation-response .radios{margin:5px;}
+.evaluation-response input[type="submit"],.evaluation-response button{margin: 10px 0 10px 10px;}
+/** 我要补充下 **/
+.evaluation .evaluation{border-bottom: 0;border-top: 1px solid #ccc;padding-top: 10px;}
+.evaluation .evaluation-response img{width: 50px;height: 50px;margin-left:auto;margin-right:auto;}
+.evaluation .evaluation-response textarea{height: 60px;min-height: 60px;width: 546px;min-width: 546px;max-width: 546px;margin-bottom: 0;padding: 0;}
+
+/** 比赛记录table **/
+.recordTable{width: 100%;text-align: center;}
+.recordTable tr{border-bottom: 1px solid #ccc;}
+.recordTable th:first-child, .recordTable tr>td:first-child{padding-left:10px;text-align: left;}
+
+.evaluation-tool-reply .evaluation-tool{text-align: right;}
+.evaluation-tool-reply{margin: 0 0 10px 0;}
+
+.validateCode-main input[type="text"]{margin-bottom: 0;}
+.validateCode-main span{margin: 0 10px;}
+.validateCode-main .code {background: url(img/code-bg.png);font-family: Arial;font-style: italic;color: blue;font-size: 20px;border: 0;padding: 2px 3px;letter-spacing: 3px;font-weight: bolder;float: left;cursor: pointer;width: 70px;height: 30px;line-height: 30px;text-align: center;vertical-align: middle;}
+.validateCode-main .code-changeLink:hover,.validateCode-main .code-changeLink:focus {color: #797979;text-decoration: underline;cursor: pointer;}
+
+.radios .radio {float: right;}
+.radios .pull-left{margin-left: 0;padding: 0;text-align: left;width: auto;}
+  </style>
  </head> 
  <body class="courtSearchDetail"> 
   <s:include value="navbar.jsp" />

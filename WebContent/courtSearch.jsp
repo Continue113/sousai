@@ -9,12 +9,33 @@
   <meta name="author" content="KING@CQU" /> 
   <link href="css/bootstrap.min.css" rel="stylesheet" /> 
   <link href="css/bootstrap-responsive.css" rel="stylesheet" /> 
-  <link href="css/jplist.min.css" rel="stylesheet" /> 
+  <!-- <link href="css/jplist.min.css" rel="stylesheet" /> -->
   <link href="css/sousai.common.css" rel="stylesheet" /> 
   <link href="css/sousai.courtSearch.css" rel="stylesheet" /> 
   <!--[if lte IE 8]>
   <link href="css/sousai.IE8.css" rel="stylesheet" /> 
   <![endif]-->
+    <style type="text/css">
+.courtSearch .matchSearch-remind {margin-top:5px;}
+.courtSearch .matchSearch-remind i{vertical-align: -1px;}
+.courtSearch .matchSearch-remind span{color:#62c462;font-weight: bold;}
+/** 场地列表 **/
+.courtBoxs{border: 1px solid #ccc;margin: 10px 0;float: left;padding-bottom: 20px;}
+.courtBox{margin: 10px 0 0 10px;float: left;}
+.courtBox .courtBox-img{float:left;border: 1px solid #ccc;}
+.courtBox .courtBox-img img{width: 110px;height: 85px;}
+.courtBox .courtBox-block{float: right;margin-left: 10px;}
+.courtBox .courtBox-block p{margin-bottom: 0;font-size: 12px;}
+.courtBox .courtBox-block .courtBox-title{background-color: #f5f5f5;border: 1px solid #ccc;border-bottom: 0;padding:2px 5px;}
+.courtBox .courtBox-block .courtBox-title .btn-mini{line-height: 16px;}
+.courtBox .courtBox-block ul{clear:both;padding: 0;margin-bottom: 0;background-color: #fff;border: 1px solid #ccc;-webkit-border-radius: 0;
+  -moz-border-radius: 0;border-radius: 0;}
+.courtBox .courtBox-block ul > li{padding-left:5px;vertical-align: middle;text-align: center;border-left: 1px solid #ccc;}
+.courtBox .courtBox-block .courtBox-address{width:200px;border-left: 0;}
+.courtBox .courtBox-block .courtBox-info{width:110px;}
+.courtBox .courtBox-block .courtBox-record{width:80px;}
+.courtBox .courtBox-block .courtBox-evaluation{width:200px;}
+  </style>
  </head> 
  <body class="courtSearch"> 
   <s:include value="navbar.jsp" />
@@ -32,17 +53,17 @@
     <div class="span8 offset2"> 
      <div class="text-center adFirst">这里是ad.no1</div> 
      <div class="search-remind"> 
-      <p><i class="icon-th-list"></i>&nbsp;找到相关场地&nbsp;<span>1230</span>&nbsp;场</p> 
+      <p><i class="icon-th-list"></i>&nbsp;找到相关场地&nbsp;<span>1230</span>&nbsp;个</p> 
      </div> 
      <div class="searchbox-ad"> 
-      <form class="form-horizontal" action="" method=""> 
+      <form class="form-horizontal" action="" method="post"> 
        <fieldset> 
         <legend>场地搜索</legend> 
         <div class="control-group"> 
          <label class="control-label" for="searchKey">关&nbsp;&nbsp;键&nbsp;&nbsp;词：</label> 
          <div class="controls"> 
           <input type="text" id="searchKey" placeholder="请输入搜索关键词" /> 
-          <a href="javascript:void(0)" class="btn btn-small pull-right">转换到比赛搜索界面</a> 
+          <a href="matchSearch.jsp" class="btn btn-small pull-right">转换到比赛搜索界面</a> 
          </div> 
         </div> 
         <div class="control-group"> 
@@ -73,326 +94,10 @@
      </div> 
      <!-- /searchbox-ad --> 
      <div id="myCourt" class="tab-pane "> 
-      <div class="courts" id="courtsList"> 
-       <!-- ios button: show/hide panel 能在小于一定的宽度的情况下隐藏面板 --> 
-       <div class="jplist-ios-button">
-         展开面板 
-       </div> 
+      <div class="courts" id="courtsList">
        <!-- panel --> 
-       <div class="jplist-panel jplist-panel-top"> 
-        <div class="jplist-drop-down" data-control-type="drop-down" data-control-name="sort" data-control-action="sort" data-datetime-format="{year}-{month}-{day}"> 
-         <ul> 
-            <li><span data-path="default">排序方式</span></li>
-            <li><span data-path=".courtBox-releaseTime" data-order="asc" data-type="datetime" data-default="true">发布时间</span><i class="icon-arrow-up"></i></li> 
-            <li><span data-path=".courtBox-recordNumb" data-order="asc" data-type="number">比赛次数</span><i class="icon-arrow-up"></i></li> 
-            <li><span data-path=".courtBox-title" data-order="asc" data-type="text">场地名称</span><i class="icon-arrow-up"></i></li> 
-            <li><span data-path=".courtBox-info" data-order="asc" data-type="text">场地类型</span><i class="icon-arrow-up"></i></li> 
-            <li><span data-path=".courtBox-address" data-order="asc" data-type="number">详细地址</span><i class="icon-arrow-up"></i></li> 
-         </ul> 
-        </div> 
-        <!-- jplist分类筛选级联下拉菜单 
-        <div class="jplist-drop-down matchType-filter" data-control-type="drop-down" data-control-name="matchType-filter" data-control-action="filter"> 
-         <ul> 
-          <li><span data-path="default">比赛类型</span></li> 
-          <li><span data-path=".courtBox-matchType-xql" data-forcn="matchType-filter-xql">小球类</span></li> 
-          <li><span data-path=".courtBox-matchType-dql" data-forcn="matchType-filter-dql">大球类</span></li> 
-          <li><span data-path=".courtBox-matchType-qpl" data-forcn="matchType-filter-qpl">棋牌类</span></li> 
-          <li><span data-path=".courtBox-matchType-wyl" data-forcn="matchType-filter-wyl">文艺类</span></li> 
-          <li><span data-path=".courtBox-matchType-qt" data-forcn="matchType-filter-qt">其他</span></li> 
-         </ul> 
-        </div> 
-        <div class="jplist-drop-down matchType-filter-xql hide" data-control-type="drop-down" data-control-name="matchType-filter-xql" data-control-action="filter"> 
-         <ul> 
-          <li><span data-path="default">请选择小球类型</span></li> 
-          <li class="divider"></li> 
-          <li><span class="pull-right" data-path=".courtBox-courtType-zq">乒乓球</span></li> 
-          <li><span class="pull-right" data-path=".courtBox-courtType-pp">羽毛球</span></li> 
-          <li><span class="pull-right" data-path=".courtBox-courtType-lq">网球</span></li> 
-          <li><span class="pull-right" data-path=".courtBox-courtType-zq">台球</span></li> 
-         </ul> 
-        </div> 
-        <div class="jplist-drop-down matchType-filter-dql hide" data-control-type="drop-down" data-control-name="matchType-filter-dql" data-control-action="filter"> 
-         <ul> 
-          <li><span data-path="default">请选择大球类型</span></li> 
-          <li class="divider"></li> 
-          <li><span class="pull-right" data-path=".courtBox-courtType-zq">篮球</span></li> 
-          <li><span class="pull-right" data-path=".courtBox-courtType-pp">足球</span></li> 
-          <li><span class="pull-right" data-path=".courtBox-courtType-lq">排球</span></li> 
-         </ul> 
-        </div> 
-        <div class="jplist-drop-down matchType-filter-qpl hide" data-control-type="drop-down" data-control-name="matchType-filter-qpl" data-control-action="filter"> 
-         <ul> 
-          <li><span data-path="default">请选择棋牌类型</span></li> 
-          <li class="divider"></li> 
-          <li><span class="pull-right" data-path=".courtBox-courtType-zq">麻将</span></li> 
-          <li><span class="pull-right" data-path=".courtBox-courtType-pp">围棋</span></li> 
-          <li><span class="pull-right" data-path=".courtBox-courtType-lq">象棋</span></li> 
-          <li><span class="pull-right" data-path=".courtBox-courtType-zq">扑克牌</span></li> 
-         </ul> 
-        </div> 
-        <div class="jplist-drop-down matchType-filter-wyl hide" data-control-type="drop-down" data-control-name="matchType-filter-wyl" data-control-action="filter"> 
-         <ul> 
-          <li><span data-path="default">请选择文艺类型</span></li> 
-          <li class="divider"></li> 
-          <li><span class="pull-right" data-path=".courtBox-courtType-zq">街舞</span></li> 
-         </ul> 
-        </div> 
-         /jplist分类筛选级联下拉菜单 --> 
-        <div class="jplist-drop-down" data-control-type="drop-down" data-control-name="courtType-filter" data-control-action="filter"> 
-         <ul> 
-          <li><span data-path="default">场地类型</span></li> 
-          <li><span data-path=".courtBox-courtType-inner">室内</span></li> 
-          <li><span data-path=".courtBox-courtType-outer">室外</span></li> 
-          <li class="divider"></li> 
-          <li><span class="pull-right" data-path=".courtBox-courtType-zq">体育局</span></li> 
-          <li><span class="pull-right" data-path=".courtBox-courtType-pp">俱乐部</span></li> 
-          <li><span class="pull-right" data-path=".courtBox-courtType-lq">社区</span></li> 
-          <li><span class="pull-right" data-path=".courtBox-courtType-zq">单位</span></li> 
-          <li><span class="pull-right" data-path=".courtBox-courtType-zq">学校</span></li> 
-          <li><span class="pull-right" data-path=".courtBox-courtType-pp">临时</span></li> 
-          <li><span class="pull-right" data-path=".courtBox-courtType-lq">公共</span></li> 
-          <li><span class="pull-right" data-path=".courtBox-courtType-zq">其他</span></li> 
-         </ul> 
-        </div> 
-        <!-- 选择省市区三级下拉框 -->
-        <s:include value="selectPCC.jsp" />
-        <!-- js本地关键字查找 --> 
-        <div class="text-filter-box input-append"> 
-         <input data-path=".courtBox-block" type="text" value="" placeholder="请输入关键字" data-control-type="textbox" data-control-name="desc-filter" data-control-action="filter" /> 
-         <span class="add-on"><i class="icon-search"></i></span> 
-        </div> 
-       </div> 
-       <!-- /jplist-panel --> 
-       <div class="courtBoxs"> 
-        <div class="courtBox"> 
-         <!-- img --> 
-         <div class="courtBox-img"> 
-          <img src="img/defaultImg.png" alt="" title="" /> 
-         </div> 
-         <!-- data --> 
-         <div class="courtBox-block"> 
-          <div class="courtBox-title"> 
-           <a href="javascript:void(0)">1成都1873乒乓球馆</a> 
-           <a href="javascript:void(0)" class="btn btn-mini pull-right">查看详细</a> 
-          </div> 
-          <ul class="breadcrumb"> 
-           <li class="courtBox-address">一北京东城区北京大学体育乓一北京东城区北京大学体育乓</li> 
-           <li class="courtBox-info "> <p>室内球馆（收费）</p> <p>赛场<span class="courtBox-infoNumb">1</span>个</p> <p>12345678</p> </li> 
-           <li class="courtBox-record ">曾举办比赛<p><span class="courtBox-recordNumb">1</span>次</p></li> 
-           <li class="courtBox-evaluation "><p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p> <p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p> <p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p></li> 
-          </ul> 
-         </div> 
-        </div> 
-        <div class="courtBox"> 
-         <!-- img --> 
-         <div class="courtBox-img"> 
-          <img src="img/defaultImg.png" alt="" title="" /> 
-         </div> 
-         <!-- data --> 
-         <div class="courtBox-block"> 
-          <div class="courtBox-title"> 
-           <a href="javascript:void(0)">2成都1873乒乓球馆</a> 
-           <a href="javascript:void(0)" class="btn btn-mini pull-right">查看详细</a> 
-          </div> 
-          <ul class="breadcrumb"> 
-           <li class="courtBox-address">一北京东城区北京大学体育乓一北京东城区北京大学体育乓</li> 
-           <li class="courtBox-info "> <p>室内球馆（收费）</p> <p>赛场<span class="courtBox-infoNumb">2</span>个</p> <p>12345678</p> </li> 
-           <li class="courtBox-record ">曾举办比赛<p><span class="courtBox-recordNumb">2</span>次</p></li> 
-           <li class="courtBox-evaluation "><p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p> <p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p> <p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p></li> 
-          </ul> 
-         </div> 
-        </div> 
-        <div class="courtBox"> 
-         <!-- img --> 
-         <div class="courtBox-img"> 
-          <img src="img/defaultImg.png" alt="" title="" /> 
-         </div> 
-         <!-- data --> 
-         <div class="courtBox-block"> 
-          <div class="courtBox-title"> 
-           <a href="javascript:void(0)">4成都1873乒乓球馆</a> 
-           <a href="javascript:void(0)" class="btn btn-mini pull-right">查看详细</a> 
-          </div> 
-          <ul class="breadcrumb"> 
-           <li class="courtBox-address">一北京东城区北京大学体育乓一北京东城区北京大学体育乓</li> 
-           <li class="courtBox-info "> <p>室内球馆（收费）</p> <p>赛场<span class="courtBox-infoNumb">10</span>个</p> <p>12345678</p> </li> 
-           <li class="courtBox-record ">曾举办比赛<p><span class="courtBox-recordNumb">20</span>次</p></li> 
-           <li class="courtBox-evaluation "><p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p> <p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p> <p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p></li> 
-          </ul> 
-         </div> 
-        </div> 
-        <div class="courtBox"> 
-         <!-- img --> 
-         <div class="courtBox-img"> 
-          <img src="img/defaultImg.png" alt="" title="" /> 
-         </div> 
-         <!-- data --> 
-         <div class="courtBox-block"> 
-          <div class="courtBox-title"> 
-           <a href="javascript:void(0)">5成都1873乒乓球馆</a> 
-           <a href="javascript:void(0)" class="btn btn-mini pull-right">查看详细</a> 
-          </div> 
-          <ul class="breadcrumb"> 
-           <li class="courtBox-address">一北京东城区北京大学体育乓一北京东城区北京大学体育乓</li> 
-           <li class="courtBox-info "> <p>室内球馆（收费）</p> <p>赛场<span class="courtBox-infoNumb">10</span>个</p> <p>12345678</p> </li> 
-           <li class="courtBox-record ">曾举办比赛<p><span class="courtBox-recordNumb">30</span>次</p></li> 
-           <li class="courtBox-evaluation "><p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p> <p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p> <p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p></li> 
-          </ul> 
-         </div> 
-        </div> 
-        <div class="courtBox"> 
-         <!-- img --> 
-         <div class="courtBox-img"> 
-          <img src="img/defaultImg.png" alt="" title="" /> 
-         </div> 
-         <!-- data --> 
-         <div class="courtBox-block"> 
-          <div class="courtBox-title"> 
-           <a href="javascript:void(0)">6成都1873乒乓球馆</a> 
-           <a href="javascript:void(0)" class="btn btn-mini pull-right">查看详细</a> 
-          </div> 
-          <ul class="breadcrumb"> 
-           <li class="courtBox-address">一北京东城区北京大学体育乓一北京东城区北京大学体育乓</li> 
-           <li class="courtBox-info "> <p>室内球馆（收费）</p> <p>赛场<span class="courtBox-infoNumb">20</span>个</p> <p>12345678</p> </li> 
-           <li class="courtBox-record ">曾举办比赛<p><span class="courtBox-recordNumb">20</span>次</p></li> 
-           <li class="courtBox-evaluation "><p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p> <p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p> <p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p></li> 
-          </ul> 
-         </div> 
-        </div> 
-        <div class="courtBox"> 
-         <!-- img --> 
-         <div class="courtBox-img"> 
-          <img src="img/defaultImg.png" alt="" title="" /> 
-         </div> 
-         <!-- data --> 
-         <div class="courtBox-block"> 
-          <div class="courtBox-title"> 
-           <a href="javascript:void(0)">7成都1873乒乓球馆</a> 
-           <a href="javascript:void(0)" class="btn btn-mini pull-right">查看详细</a> 
-          </div> 
-          <ul class="breadcrumb"> 
-           <li class="courtBox-address">一北京东城区北京大学体育乓一北京东城区北京大学体育乓</li> 
-           <li class="courtBox-info "> <p>室内球馆（收费）</p> <p>赛场<span class="courtBox-infoNumb">10</span>个</p> <p>12345678</p> </li> 
-           <li class="courtBox-record ">曾举办比赛<p><span class="courtBox-recordNumb">20</span>次</p></li> 
-           <li class="courtBox-evaluation "><p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p> <p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p> <p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p></li> 
-          </ul> 
-         </div> 
-        </div> 
-        <div class="courtBox"> 
-         <!-- img --> 
-         <div class="courtBox-img"> 
-          <img src="img/defaultImg.png" alt="" title="" /> 
-         </div> 
-         <!-- data --> 
-         <div class="courtBox-block"> 
-          <div class="courtBox-title"> 
-           <a href="javascript:void(0)">8成都1873乒乓球馆</a> 
-           <a href="javascript:void(0)" class="btn btn-mini pull-right">查看详细</a> 
-          </div> 
-          <ul class="breadcrumb"> 
-           <li class="courtBox-address">一北京东城区北京大学体育乓一北京东城区北京大学体育乓</li> 
-           <li class="courtBox-info "> <p>室内球馆（收费）</p> <p>赛场<span class="courtBox-infoNumb">40</span>个</p> <p>12345678</p> </li> 
-           <li class="courtBox-record ">曾举办比赛<p><span class="courtBox-recordNumb">18</span>次</p></li> 
-           <li class="courtBox-evaluation "><p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p> <p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p> <p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p></li> 
-          </ul> 
-         </div> 
-        </div> 
-        <div class="courtBox"> 
-         <!-- img --> 
-         <div class="courtBox-img"> 
-          <img src="img/defaultImg.png" alt="" title="" /> 
-         </div> 
-         <!-- data --> 
-         <div class="courtBox-block"> 
-          <div class="courtBox-title"> 
-           <a href="javascript:void(0)">9成都1873乒乓球馆</a> 
-           <a href="javascript:void(0)" class="btn btn-mini pull-right">查看详细</a> 
-          </div> 
-          <ul class="breadcrumb"> 
-           <li class="courtBox-address">一北京东城区北京大学体育乓一北京东城区北京大学体育乓</li> 
-           <li class="courtBox-info "> <p>室内球馆（收费）</p> <p>赛场<span class="courtBox-infoNumb">11</span>个</p> <p>12345678</p> </li> 
-           <li class="courtBox-record ">曾举办比赛<p><span class="courtBox-recordNumb">10</span>次</p></li> 
-           <li class="courtBox-evaluation "><p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p> <p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p> <p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p></li> 
-          </ul> 
-         </div> 
-        </div> 
-        <div class="courtBox"> 
-         <!-- img --> 
-         <div class="courtBox-img"> 
-          <img src="img/defaultImg.png" alt="" title="" /> 
-         </div> 
-         <!-- data --> 
-         <div class="courtBox-block"> 
-          <div class="courtBox-title"> 
-           <a href="javascript:void(0)">10成都1873乒乓球馆</a> 
-           <a href="javascript:void(0)" class="btn btn-mini pull-right">查看详细</a> 
-          </div> 
-          <ul class="breadcrumb"> 
-           <li class="courtBox-address">一北京东城区北京大学体育乓一北京东城区北京大学体育乓</li> 
-           <li class="courtBox-info "> <p>室内球馆（收费）</p> <p>赛场<span class="courtBox-infoNumb">15</span>个</p> <p>12345678</p> </li> 
-           <li class="courtBox-record ">曾举办比赛<p><span class="courtBox-recordNumb">24</span>次</p></li> 
-           <li class="courtBox-evaluation "><p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p> <p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p> <p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p></li> 
-          </ul> 
-         </div> 
-        </div> 
-        <div class="courtBox"> 
-         <!-- img --> 
-         <div class="courtBox-img"> 
-          <img src="img/defaultImg.png" alt="" title="" /> 
-         </div> 
-         <!-- data --> 
-         <div class="courtBox-block"> 
-          <div class="courtBox-title"> 
-           <a href="javascript:void(0)">11成都1873乒乓球馆</a> 
-           <a href="javascript:void(0)" class="btn btn-mini pull-right">查看详细</a> 
-          </div> 
-          <ul class="breadcrumb"> 
-           <li class="courtBox-address">一北京东城区北京大学体育乓一北京东城区北京大学体育乓</li> 
-           <li class="courtBox-info "> <p>室内球馆（收费）</p> <p>赛场<span class="courtBox-infoNumb">10</span>个</p> <p>12345678</p> </li> 
-           <li class="courtBox-record ">曾举办比赛<p><span class="courtBox-recordNumb">20</span>次</p></li> 
-           <li class="courtBox-evaluation "><p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p> <p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p> <p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p></li> 
-          </ul> 
-         </div> 
-        </div> 
-        <div class="courtBox"> 
-         <!-- img --> 
-         <div class="courtBox-img"> 
-          <img src="img/defaultImg.png" alt="" title="" /> 
-         </div> 
-         <!-- data --> 
-         <div class="courtBox-block"> 
-          <div class="courtBox-title"> 
-           <a href="javascript:void(0)">12成都1873乒乓球馆</a> 
-           <a href="javascript:void(0)" class="btn btn-mini pull-right">查看详细</a> 
-          </div> 
-          <ul class="breadcrumb"> 
-           <li class="courtBox-address">一北京东城区北京大学体育乓一北京东城区北京大学体育乓</li> 
-           <li class="courtBox-info "> <p>室内球馆（收费）</p> <p>赛场<span class="courtBox-infoNumb">16</span>个</p> <p>12345678</p> </li> 
-           <li class="courtBox-record ">曾举办比赛<p><span class="courtBox-recordNumb">9</span>次</p></li> 
-           <li class="courtBox-evaluation "><p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p> <p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p> <p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p></li> 
-          </ul> 
-         </div> 
-        </div> 
-        <div class="courtBox"> 
-         <!-- img --> 
-         <div class="courtBox-img"> 
-          <img src="img/defaultImg.png" alt="" title="" /> 
-         </div> 
-         <!-- data --> 
-         <div class="courtBox-block"> 
-          <div class="courtBox-title"> 
-           <a href="javascript:void(0)">13成都1873乒乓球馆</a> 
-           <a href="javascript:void(0)" class="btn btn-mini pull-right">查看详细</a> 
-          </div> 
-          <ul class="breadcrumb"> 
-           <li class="courtBox-address">一北京东城区北京大学体育乓一北京东城区北京大学体育乓</li> 
-           <li class="courtBox-info "> <p>室内球馆（收费）</p> <p>赛场<span class="courtBox-infoNumb">10</span>个</p> <p>12345678</p> </li> 
-           <li class="courtBox-record ">曾举办比赛<p><span class="courtBox-recordNumb">5</span>次</p></li> 
-           <li class="courtBox-evaluation "><p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p> <p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p> <p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p></li> 
-          </ul> 
-         </div> 
-        </div> 
-       </div> 
+       <div class="panel-top"><button id="tempbutton" class="btn btn-small">button</button></div>
+       <div class="courtBoxs"></div> 
        <!-- /courtBoxs -->
       </div> 
       <!-- /courts --> 
@@ -411,50 +116,68 @@
   <!-- /container --> 
   <s:include value="footer.jsp" />
   <!-- 页尾信息 --> 
+  <script src="js/handlebars-v2.0.0.js"></script>
   <script src="js/jquery.wordLimit.js"></script> 
-  <script src="js/jplist.min.js"></script> 
+  <!--<script src="js/jplist.min.js"></script> -->
+  <!-- handlebars template -->
+  <script id="court-template" type="text/x-handlebars-template">
+    {{#each this}}
+                        
+        <div class="courtBox"  data-info="{{data this}}> 
+         <!-- img --> 
+         <div class="courtBox-img"> 
+          <img src="img/defaultImg.png" alt="" title="" /> 
+         </div> 
+         <!-- data --> 
+         <div class="courtBox-block"> 
+          <div class="courtBox-title"> 
+           <a href="{{id}}">{{name}}</a> 
+           <a href="{{id}}" class="btn btn-mini pull-right">查看详细</a> 
+          </div> 
+          <ul class="breadcrumb"> 
+           <li class="courtBox-address">{{addr}}</li> 
+           <li class="courtBox-info "> <p>室内球馆（收费）</p> <p>赛场<span class="courtBox-infoNumb">1</span>个</p> <p>12345678</p> </li> 
+           <li class="courtBox-record ">曾举办比赛<p><span class="courtBox-recordNumb">1</span>次</p></li> 
+           <li class="courtBox-evaluation "><p><span>2013-10-10</span>:<span>但行代价昂贵你空间啊好烦你撒谎吃饭了空间啊干那</span></p> <p><span>2013-10-10</span>:<span>撒了你刚才发K 524545呵呵发那个给UI HM</span></p> <p><span>2013-10-10</span>:<span>4256605JKHGCFYUSDA是都还没后 俺哥啊 俺哥爱戴啊</span></p></li> 
+          </ul> 
+         </div> 
+        </div>
+                            
+    {{/each}}
+  </script>
   <script>
   $(function(){
-    //鼠标hover matchbox
-    $("div.courtBox").hover(function(){
-      $(this).addClass("box-active");
-    },function(){
-      $(this).removeClass("box-active");
-    });
 
-    //字数限制，溢出省略 
-    $(".courtBox-address").wordLimit(20);
-    $(".courtBox-evaluation p").wordLimit();
-
-    //列表排序
-    $('#courtsList').jplist({
-          itemsBox: '.courtBoxs',
-          itemPath: '.courtBox',
-          panelPath: '.jplist-panel'
+	  //ajax接收所有的场地
+		$.post("getAllCourt", null, function(data) {
+	      console.log(data);//alert(data);
+        var target = $(".courtBoxs"),template = Handlebars.compile($('#court-template').html());
+        Handlebars.registerHelper("data",function(v){
+          //将当前对象转化为字符串，保存在data-info中
+          console.log(v);
+          var v1 = JSON.stringify(v);
+          //console.log("v1:"+v1);
+          return v1;
         });
+        target.empty(); //清空tbody
+        target.html(template(data));
+        //字数限制，溢出省略 
+        $(".courtBox-address").wordLimit(20);
+	    $(".courtBox-evaluation p").wordLimit();
+	    });
+	  //tempbutton
+	  $("#tempbutton").click(function(){
+		  $(".courtBoxs").append('<div class="courtBox"><!-- img --><div class="courtBox-img"><img src="img/defaultImg.png" alt="" title="" /></div><!-- data --> <div class="courtBox-block"><div class="courtBox-title"><a href="javascript:void(0)">6成都1873乒乓球馆</a> <a href="javascript:void(0)" class="btn btn-mini pull-right">查看详细</a></div><ul class="breadcrumb"> <li class="courtBox-address">gjfsfjkdsahfjksahfkjasghmahgkjsnhgsajghnasgbhkjaghnaghan;gh一北京东城区北京大学体育乓一北京东城区北京大学体育乓</li><li class="courtBox-info "> <p>室内球馆（收费）</p> <p>赛场<span class="courtBox-infoNumb">20</span>个</p> <p>12345678</p> </li> <li class="courtBox-record ">曾举办比赛<p><span class="courtBox-recordNumb">20</span>次</p></li> <li class="courtBox-evaluation "><p><span>2013-10-10</span>:<span>dhgnahg;ajgldahgnkjldhgvmkahgl;aga,khjksm;a,jhkjal;hj,aXXXXXXXXXXXXXXXXXXXXXXXXXX</span></p> <p><span>2013-10-10</span>:<span>54df4ah2 a4h5v4ga6524va654h2a654hbhXXXXXXXXXXXXXXXXXXXXXXXXXX</span></p> <p><span>2013-10-10</span>:<span>asjngfas gsaldmhgasglca,s;kdgjva,;gjh; ahg ajkgbnhj aghmjah gakhg XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p></li> </ul> </div> </div>');
 
-    //重复点击下拉列表改变排序 
-    var sortflag=1;
-    $("div[data-control-action='sort'] li").click(function(){
-      if(sortflag==1){
-            //执行方法;
-            $(this).find("span").attr("data-order","desc").end().find("i").removeClass("icon-arrow-up").addClass("icon-arrow-down");
-            sortflag=0;
-        }else{
-            //执行方法;
-            $(this).find("span").attr("data-order","asc").end().find("i").removeClass("icon-arrow-down").addClass("icon-arrow-up");
-            sortflag=1;
-        }
+		    $(".courtBox-address").wordLimit(20);
+		    $(".courtBox-evaluation p").wordLimit();
+	  });
+    //鼠标hover matchbox
+    $(".courtBoxs ").on('mouseenter','div.courtBox',function(){
+    	      $('div.courtBox').removeClass("box-active");
+    	      $(this).addClass("box-active");
     });
-    /** jplist分类筛选级联下拉菜单 **
-    $(".matchType-filter ul>li").click(function(){
-              var datafor = $(this).find("span").data('forcn');
-              var targetParent = $(this).parent().parent().parent();
-              $(targetParent).find("div.hide").hide();
-              $(targetParent).find("."+datafor).show();
-            });
-    */
-  })
+  });
   </script>  
  </body>
 </html>

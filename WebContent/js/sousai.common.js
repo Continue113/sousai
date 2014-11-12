@@ -85,7 +85,7 @@ $(function() {
           dataType: "json",
           success: function(rspdata) {
         	  if(rspdata == 0){
-                  alert("接受的数据为："+rspdata);console.log(rspdata);
+        		  console.log(rspdata);
         	      $("#city").text(cName).attr("data-sessionregion","{'pName':'"+pName+"','pId':'"+pId+"','cName':'"+cName+"','cId':'"+cId+"','code':'"+cCode+"'}");
         	  }else{
                   alert("抱歉，获取市区出错了。代码不为0。"+rspdata);console.log(rspdata);
@@ -284,16 +284,16 @@ function userCenterRemind(){
             targetBreadcrumb.empty().append("<li>比赛信息:</li>");
         	$.each( rspdata, function( key, value ) {
       		  console.log( key + ": " + value );
-      		  targetBreadcrumb.append('<li><a href="#">'+key+'<span>('+value+')</span></a></li>');
+      		  targetBreadcrumb.append('<li><a href="userCenter-myMatch.jsp" title="去查看比赛">'+key+'<span>('+value+')</span></a></li>');
       		  });
         	//若没有比赛信息则提示 没有比赛信息 即，没有span
         	if( targetBreadcrumb.find("span").length == 0 ){
-        		targetBreadcrumb.append('<li><a href="userCenter-releaseMatch.jsp"> 无比赛信息，请发布比赛</a></li>');
+        		targetBreadcrumb.append('<li><a href="userCenter-releaseMatch.jsp" title="去发布比赛"> 无比赛信息，请发布比赛</a></li>');
         	}
         },
         error: function() {
           alert("抱歉，获取比赛信息出错了。");
-          console.log("抱歉，获取比赛信息出错了。");
+          console.log("userCenterRemind 抱歉，获取比赛信息出错了。");
         },
       }); //ajax 已得到发布的比赛信息
 }

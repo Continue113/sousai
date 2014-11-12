@@ -14,6 +14,43 @@
   <!--[if lte IE 8]>
   <link href="css/sousai.IE8.css" rel="stylesheet" /> 
   <![endif]-->
+  <style type="text/css">
+  .matchSearchDetail .matchSearch-remind {margin-top:5px;}
+.matchSearchDetail .matchSearch-remind i{vertical-align: -1px;}
+.matchSearchDetail .matchSearch-remind span{color:#62c462;font-weight: bold;}
+
+.matchSearchDetail .matchShortInfo{font-size: 14px;padding: 5px;border: 1px solid #ccc;border-top: 3px solid #abcf20;background-color: #f5f5f5;}
+.matchSearchDetail .matchShortInfo th{text-align: left;}
+
+.matchSearchDetail .matchContent{border: 1px solid #cccccc;margin-top: 10px;}
+.matchSearchDetail .matchContent > .matchScore{border-bottom: 1px solid #cccccc;
+  *border: 0;padding: 5px 15px;}
+.matchSearchDetail .matchContent > .matchScore > .title{text-align: center;font-weight: bold;}
+.matchSearchDetail .matchContent > .title{
+/** 鎸夐挳鏍峰紡**/
+  background-color: #f5f5f5;
+  background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
+  background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);
+  border-color: #e6e6e6 #e6e6e6 #bfbfbf;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  *background-color: #e6e6e6;
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  border: 1px solid #cccccc;
+  *border: 0;
+  border-bottom-color: #b3b3b3;
+  text-align: center;
+  padding: 5px 0;
+  font-weight: bold;
+  margin-top:5px;
+}
+.matchSearchDetail .matchContent > .match{padding: 5px 15px;}
+  </style>
  </head> 
  <body class="matchSearchDetail"> 
   <s:include value="navbar.jsp" />
@@ -66,20 +103,11 @@
      </div> 
      <div class="matchContent"> 
       <div class="matchScore"> 
-       <div class="title">
-         比赛成绩 
-       </div> 
-       <div class="matchScoreContent">
-         比赛进程（状态）是报名中，则不显示比赛成绩这栏。XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX这个页面是在新的窗口打开，添加“修改”和“录入成绩”的按钮，可以修改“比赛规程”和“基本比赛信息”，按钮根据比赛状态（进程），改变按钮出现的情况。根据是否是发布者，出现录入成绩和修改比赛按钮 
-       </div> 
+       <div class="title">比赛成绩 </div> 
+       <div class="matchScoreContent"> 比赛进程（状态）是报名中，则不显示比赛成绩这栏。XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX这个页面是在新的窗口打开，添加“修改”和“录入成绩”的按钮，可以修改“比赛规程”和“基本比赛信息”，按钮根据比赛状态（进程），改变按钮出现的情况。根据是否是发布者，出现录入成绩和修改比赛按钮 </div> 
       </div> 
-      <div class="title">
-        天津市第五届百年皖酒“杯 
-       <span>比赛规程</span> 
-      </div> 
-      <div class="match"> 
-       <p>天津市第五届百年皖酒“杯XXXXXXXXXX</p> 
-      </div> 
+      <div class="title">天津市第五届百年皖酒“杯 <span>比赛规程</span></div> 
+      <div class="match"><p>天津市第五届百年皖酒“杯XXXXXXXXXX</p></div> 
      </div> 
     </div> 
     <div class="span1"> 
