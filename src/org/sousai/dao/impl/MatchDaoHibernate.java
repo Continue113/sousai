@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.sousai.dao.MatchDao;
@@ -50,6 +51,7 @@ public class MatchDaoHibernate extends HibernateDaoSupport implements MatchDao {
 		getHibernateTemplate().delete(get(id));
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<MatchBean> findAll() {
 		String hql = selectMatchBean;
@@ -65,6 +67,7 @@ public class MatchDaoHibernate extends HibernateDaoSupport implements MatchDao {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<MatchBean> findByUser(User user) {
 		String hql = selectMatchBean + "and m.userId=?";
@@ -79,6 +82,7 @@ public class MatchDaoHibernate extends HibernateDaoSupport implements MatchDao {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<MatchBean> findByUserId(Integer userId) {
 		String hql = selectMatchBean + "and m.userId=?";
@@ -144,7 +148,6 @@ public class MatchDaoHibernate extends HibernateDaoSupport implements MatchDao {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<MatchBean> findByParms(int[] dayOfWeek, int state, Date date,
 			Integer regionId) {
@@ -218,15 +221,38 @@ public class MatchDaoHibernate extends HibernateDaoSupport implements MatchDao {
 	}
 
 	@Override
-	public int countRelMatchPerDay() {
-		try{
-			String hql = "select count(*) from Match where date(relTime)=curdate()";
-			Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
-			MyPrint.myPrint(String.valueOf(session.createQuery(hql).uniqueResult()));
-			return Integer.valueOf(session.createQuery(hql).uniqueResult().toString()).intValue();
-		}catch (Exception e){
+	public int countRelMatchPerDay(Integer userId) {
+		int value = -1;
+		try {
+			String hql = "select count(*) from Match where date(relTime)=curdate() and userId=?";
+			Session session = getHibernateTemplate().getSessionFactory()
+					.getCurrentSession();
+			MyPrint.myPrint(String.valueOf(session.createQuery(hql)
+					.uniqueResult()));
+			Query q = session.createQuery(hql);
+			q.setInteger(0, userId);
+			value = Integer.valueOf(q.uniqueResult().toString()).intValue();
+		} catch (Exception e) {
 			e.printStackTrace();
 			return -1;
 		}
+		return value;
+	}
+
+	@Override
+	public int deleteMatches(Integer[] matchIds) {
+		int value = -1;
+		String strHql = "delete from Match where id in (:ids)";
+		try {
+			Session session = getHibernateTemplate().getSessionFactory()
+					.getCurrentSession();
+			Query q = session.createQuery(strHql);
+			q.setParameterList("ids", matchIds);
+			value = q.executeUpdate();
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
+		return value;
+
 	}
 }

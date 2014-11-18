@@ -31,6 +31,10 @@ public class RelCourtAction extends UserBaseAction
 //private Integer courtTypeId;
 	private File[] images;
 	private String[] imgNames;
+	public final static int MAX_COURT_COUNT = 5;
+	public final static String SUCCESS = "success";
+	public final static String FAIL = "fail";
+	
 	
 	//court的setter和getter
 	public void setCourt(Court court)
@@ -65,21 +69,25 @@ public class RelCourtAction extends UserBaseAction
 	
 	public String execute() throws Exception
 	{
+		UserBean userBean = (UserBean)ActionContext.getContext().getSession().get("userBean");
+		if(umg.isExeed(userBean.getUserId(), MAX_COURT_COUNT, 1))
+		{
+			return FAIL;
+		}
 		MyPrint.myPrint("RelCourtAction now");
-		String result;
+		String result = FAIL;
 		Court tempCourt = getCourt();
 //		tempCourt.setCourtTypeId(getCourtTypeId());
 		tempCourt.setVerify('0');
 		MyPrint.myPrint("regionId = " + tempCourt.getRegionId());
 		
 		try{
-			tempCourt.setUserId(((UserBean)ActionContext.getContext().getSession().get("userBean")).getUserId());
+			tempCourt.setUserId(userBean.getUserId());
 			//tempCourt.setUser(new User((UserBean)ActionContext.getContext().getSession().get("userBean")));
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
-			result = "fail";
 			MyPrint.myPrint(result);
 			return result;
 		}
@@ -88,11 +96,7 @@ public class RelCourtAction extends UserBaseAction
 		if(umg.saveCourtPic(getImages(), getImgNames(),getCourt().getUserId())!="fail"
 				&& umg.releaseCourt(tempCourt)==1)
 		{
-			result = "success";
-		}
-		else
-		{
-			result = "fail";
+			result = SUCCESS;
 		}
 		return result;
 	}

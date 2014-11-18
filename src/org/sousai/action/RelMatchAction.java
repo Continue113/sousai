@@ -1,18 +1,20 @@
 package org.sousai.action;
 
 import org.sousai.action.base.UserBaseAction;
+import org.sousai.common.Constant;
 import org.sousai.domain.Match;
 import org.sousai.tools.MyPrint;
+import org.sousai.vo.UserBean;
+
+import com.opensymphony.xwork2.ActionContext;
 
 public class RelMatchAction extends UserBaseAction {
 
 	private static final long serialVersionUID = -509217384709788196L;
-	private static final String SUCCESS = "success";
-	private static final String FAIL = "fail";
 	private static final String EXEED_COUNT = "exeed";
 	private Match match;
 
-	private static final int maxCourtCount = 5;
+	private static final int MAX_MATCH_COUNT = 5;
 
 	/**
 	 * @return the match
@@ -40,16 +42,20 @@ public class RelMatchAction extends UserBaseAction {
 		MyPrint.myPrint("in RelMatchAction");
 		try {
 			MyPrint.myPrint("t = ");
-			if (!umg.isExeed(maxCourtCount)) {
+			UserBean userBean = (UserBean) ActionContext.getContext()
+					.getSession().get("userBean");
+
+			// 是否超过当日发布比赛上限
+			if (!umg.isExeed(userBean.getUserId(), MAX_MATCH_COUNT, 0)) {
 				if (getMatch() != null && umg.relMatch(match) != 0) {
-					return SUCCESS;
+					return Constant.SUCCESS;
 				}
-				return FAIL;
+				return Constant.FAIL;
 			}
 			return EXEED_COUNT;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return FAIL;
+			return Constant.FAIL;
 		}
 	}
 }

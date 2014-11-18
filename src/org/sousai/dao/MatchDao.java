@@ -9,8 +9,8 @@ import org.sousai.vo.MatchBean;
 
 public interface MatchDao {
 
-	public static final int EXCEED_QUOTA  = -1;
-	
+	public static final int EXCEED_QUOTA = -1;
+
 	Match get(Integer id);
 
 	Integer save(Match match);
@@ -39,6 +39,7 @@ public interface MatchDao {
 
 	/**
 	 * 根据可选参数，从数据库返回比赛。
+	 * 
 	 * @param dayOfWeek
 	 *            其中的int元素1为周日，2为周一，…，7为周六。若不使用此参数可传递null
 	 * @param state
@@ -47,20 +48,36 @@ public interface MatchDao {
 	 *            此处应传递当前日期。若state为-1，此处为null
 	 * @param regionId
 	 *            地点id。若不使用此参数，传递-1
-	 * @return		符合参数要求的所有比赛
+	 * @return 符合参数要求的所有比赛
 	 */
 	List<MatchBean> findByParms(int[] dayOfWeek, int state, Date date,
 			Integer regionId);
-	
+
 	/**
 	 * 统计用户发布的每种比赛的数量
-	 * @param userId	用户标识
+	 * 
+	 * @param userId
+	 *            用户标识
 	 * @return
 	 */
 	Map<String, Integer> getEachMatchCount(Integer userId);
-	
+
 	/**
+	 * 统计用户当天发布的比赛数量
 	 * 
+	 * @param userId
+	 *            用户标识
+	 * @return
 	 */
-	int countRelMatchPerDay();
+	int countRelMatchPerDay(Integer userId);
+
+	/**
+	 * 批量删除比赛
+	 * 
+	 * @param matchIds
+	 *            比赛id数组
+	 * 
+	 * @return
+	 */
+	int deleteMatches(Integer[] matchIds);
 }

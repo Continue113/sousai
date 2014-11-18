@@ -194,5 +194,12 @@ public interface UserManager
 	
 	public List<MatchBean> getUsersFavorMatch(Integer userId);
 	
-	public boolean isExeed(int maxCount);
+	/**
+	 * 是否超过每日发布上限
+	 * @param userId	用户标识
+	 * @param maxCount	最大上限
+	 * @param type	0为比赛，1为场地
+	 * @return	
+	 */
+	public boolean isExeed(Integer userId, int maxCount, int type);
 }

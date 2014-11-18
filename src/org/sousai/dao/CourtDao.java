@@ -102,5 +102,19 @@ public interface CourtDao {
 			Region region);
 
 	List<CourtBean> findByRegionId(Integer regionId);
-
+	
+	
+	/**
+	 * 查询用户当天已发布场地数量
+	 * @param userId	用户标识
+	 * @return
+	 */
+	int countRelMatchPerDay(Integer userId);
+	
+	/**
+	 * 批量删除场地
+	 * @param courtIds
+	 * @return
+	 */
+	int deleteCourts(Integer[] courtIds);
 }

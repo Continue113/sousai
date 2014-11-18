@@ -6,6 +6,7 @@ import org.sousai.dao.CourtDao;
 import org.sousai.domain.*;
 import org.sousai.tools.MyPrint;
 import org.sousai.vo.CourtBean;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -119,7 +120,7 @@ public class CourtDaoHibernate extends HibernateDaoSupport implements CourtDao {
 	public List<CourtBean> findByPram(User user, CourtType courtType, String matchType,
 			Region region) {
 		// TODO Auto-generated method stub
-		String sql = "from court where";
+		String sql = "from Court where";
 		int flag = 0;
 		if (user != null) {
 			sql += " userId=?";
@@ -148,7 +149,7 @@ public class CourtDaoHibernate extends HibernateDaoSupport implements CourtDao {
 		Session session = getHibernateTemplate().getSessionFactory()
 				.getCurrentSession();
 		StringBuffer hql = new StringBuffer(selectCourtBean);
-		hql.append("and REGIONID=?");
+		hql.append("and regionId=?");
 		Query q = session.createQuery(hql.toString());
 		q.setInteger(0, regionId);
 		return extracted(q);
@@ -159,10 +160,42 @@ public class CourtDaoHibernate extends HibernateDaoSupport implements CourtDao {
 		Session session = getHibernateTemplate().getSessionFactory()
 				.getCurrentSession();
 		StringBuffer hql = new StringBuffer(selectCourtBean);
-		hql.append("and USERID=?");
+		hql.append("and userId=?");
 		Query q = session.createQuery(hql.toString());
 		q.setInteger(0, userId);
 		return extracted(q);
+	}
+
+	@Override
+	public int countRelMatchPerDay(Integer userId) {
+		int value = -1;
+		try{
+			String hql = "select count(*) from Court where date(relTime)=curdate() and userId=?";
+			Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
+			MyPrint.myPrint(String.valueOf(session.createQuery(hql).uniqueResult()));
+			Query q = session.createQuery(hql);
+			q.setInteger(0, userId);
+			value = Integer.valueOf(q.uniqueResult().toString()).intValue();
+		}catch (Exception e){
+			e.printStackTrace();
+			return -1;
+		}
+		return value;
+	}
+
+	@Override
+	public int deleteCourts(Integer[] courtIds) {
+		int value = -1;
+		String strHql = "delete from Court where id in(:ids)";
+		try{
+		Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
+		Query q = session.createQuery(strHql);
+		q.setParameterList("ids", courtIds);
+		value = q.executeUpdate();
+		}catch(HibernateException e){
+			e.printStackTrace();
+		}
+		return value;
 	}
 
 }

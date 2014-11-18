@@ -25,7 +25,6 @@ import com.sun.jimi.core.Jimi;
 import com.sun.jimi.core.JimiException;
 import com.sun.jimi.core.JimiReader;
 
-
 /**
  * Description: <br/>
  * implements the userManager interface
@@ -385,8 +384,10 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public List<MatchBean> getMatchByParms(int[] dayOfWeek, int state, int regionId) {
-		return (List<MatchBean>) matchDao.findByParms(dayOfWeek, state, new Date(), regionId);
+	public List<MatchBean> getMatchByParms(int[] dayOfWeek, int state,
+			int regionId) {
+		return (List<MatchBean>) matchDao.findByParms(dayOfWeek, state,
+				new Date(), regionId);
 	}
 
 	@Override
@@ -406,11 +407,22 @@ public class UserManagerImpl implements UserManager {
 
 	@Override
 	public List<MatchBean> getUsersFavorMatch(Integer userId) {
-		return (List<MatchBean>)matchDao.findByMarkingUserId(userId);
+		return (List<MatchBean>) matchDao.findByMarkingUserId(userId);
 	}
 
 	@Override
-	public boolean isExeed(int maxCount) {
-		return matchDao.countRelMatchPerDay() > maxCount;
+	public boolean isExeed(Integer userId,int maxCount, int type) {
+		boolean value = true;
+		switch (type) {
+		case 0:
+			value = matchDao.countRelMatchPerDay(userId) > maxCount; 
+			break;
+		case 1:
+			value = matchDao.countRelMatchPerDay(userId) > maxCount;
+			break;
+		default:
+			break;
+		}
+		return value;
 	}
 }

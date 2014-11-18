@@ -8,13 +8,13 @@
 	<constant name="struts.custom.i18n.resources" value="resource"/>
 	<constant name="struts.devMode" value="true"/>
 	<package name="default" extends="struts-default">
-	
+		
 		<!-- 定义全局Result映射 -->
 		<global-results>
 			<!-- 定义login逻辑视图对应的视图资源 -->
 			<result name="login">login.jsp</result>
 		</global-results>
-	
+		
 		<!-- ============================下面是员工角色的Action======================== -->
 		<!-- 定义处理登录系统的Action -->
 		<action name="processLogin"
@@ -23,7 +23,7 @@
 			<result name="error">login.jsp</result>
 			<result name="input">login.jsp</result>
 		</action>
-
+		
 		<!-- 定义处理注册的Action -->
 		<action name="processReg"
 			class="org.sousai.action.RegAction">
@@ -38,7 +38,7 @@
 			<result name="fail">error.jsp</result>
 			<result name="exeed">error.jsp</result>
 		</action>
-
+		
 		<!-- 定义检查用户名的Action -->
 		<action name="validName"
 			class="org.sousai.action.ValidNameAction">
@@ -68,13 +68,15 @@
 		<!-- 同时上传多张场地图片的action -->
 		<action name="uploadCourtPic"
 			class="org.sousai.action.UploadCourtPicAction">
-			<result>main.jsp</result> 
+			<result>main.jsp</result>
 		</action>
 		
 		<!-- 发布场地的action -->
 		<action name="relCourt"
 			class="org.sousai.action.RelCourtAction">
-			<result>userCenter-releaseCourt.jsp</result>
+			<result name="success">userCenter-releaseCourt.jsp</result>
+			<result name="fail">error.jsp</result>
+			<result name="exeed">error.jsp</result>
 		</action>
 		
 		<!-- 获取所有比赛大类的action -->
@@ -103,10 +105,9 @@
 		</action>
 		
 		<!-- 在发布比赛页面获取场地的action -->
-		<action name="getCourtM"
-			class="org.sousai.action.GetCourtInMatchRelingAction">
+		<action name="getCourtM" class="org.sousai.action.GetCourtInMatchRelingAction">
 		</action>
-
+		
 		<!-- 筛选比赛的action -->
 		<action name="scrMatch"
 			class="org.sousai.action.ScreenMatchAction">
@@ -118,8 +119,7 @@
 		</action>
 		
 		<!-- 统计用户发布的各类比赛数量的action -->
-		<action name="cntEachMatch"
-			class="org.sousai.action.CountEachMatchTypeAction">
+		<action name="cntEachMatch" class="org.sousai.action.CountEachMatchTypeAction">
 		</action>
 		
 		<!-- 查看所有评论的action -->
@@ -146,14 +146,24 @@
 		<action name="getUserFavM"
 			class="org.sousai.action.GetUserFavorMatchAction">
 		</action>
+		
+		<!--批量删除比赛-->
+		<action name="deleteCourts"
+			class="org.sousai.action.DeleteCourts">
+			<result name="success">background-courtMaintenance.jsp</result>
+			<result name="fail">error.jsp</result>
+		</action>
+		
+		<!--批量删除场地-->
+		<action name="deleteMatches"
+			class="org.sousai.action.DeleteMatches">
+			<result name="success">background-matchMaintenance.jsp</result>
+			<result name="fail">error.jsp</result>
+		</action>
 	</package>
 	
 	
-<!--	<package name="ajax" extends="json-default">
-		<action name="uploadPic"
-			class="org.sousai.action.UploadPicAction">
-			<result type="json"></result>
-		</action>
-	</package> -->
+	<!-- <package name="ajax" extends="json-default"> <action name="uploadPic" class="org.sousai.action.UploadPicAction">
+		<result type="json"></result> </action> </package> -->
 	
 </struts>

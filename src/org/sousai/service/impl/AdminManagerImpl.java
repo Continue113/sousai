@@ -10,7 +10,7 @@ import org.sousai.vo.UserBean;
 import org.sousai.dao.*;
 import org.sousai.domain.Match;
 
-public class AdminManagerImpl implements AdminManager{
+public class AdminManagerImpl implements AdminManager {
 
 	private UserDao userDao;
 	private CourtDao courtDao;
@@ -21,51 +21,43 @@ public class AdminManagerImpl implements AdminManager{
 	private MatchClassDao matchClassDao;
 	private MatchTypeDao matchTypeDao;
 	private MatchDao matchDao;
-	
-	public void setUserDao(UserDao userDao)
-	{
+
+	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
 	}
-	
-	public void setCourtDao(CourtDao courtDao)
-	{
+
+	public void setCourtDao(CourtDao courtDao) {
 		this.courtDao = courtDao;
 	}
-	
-	public void setCourtPicDao(CourtPicDao courtPicDao)
-	{
+
+	public void setCourtPicDao(CourtPicDao courtPicDao) {
 		this.courtPicDao = courtPicDao;
 	}
-	
-	public void setMesgDao(MesgDao mesgDao)
-	{
+
+	public void setMesgDao(MesgDao mesgDao) {
 		this.mesgDao = mesgDao;
 	}
-	
-	public void setRegionDao(RegionDao regionDao)
-	{
+
+	public void setRegionDao(RegionDao regionDao) {
 		this.regionDao = regionDao;
 	}
-	
-	public void setCourtTypeDao(CourtTypeDao courtTypeDao)
-	{
+
+	public void setCourtTypeDao(CourtTypeDao courtTypeDao) {
 		this.courtTypeDao = courtTypeDao;
 	}
-	
-	public void setMatchClassDao(MatchClassDao matchClassDao)
-	{
+
+	public void setMatchClassDao(MatchClassDao matchClassDao) {
 		this.matchClassDao = matchClassDao;
 	}
-	public void setMatchTypeDao(MatchTypeDao matchTypeDao)
-	{
+
+	public void setMatchTypeDao(MatchTypeDao matchTypeDao) {
 		this.matchTypeDao = matchTypeDao;
 	}
-	
-	public void setMatchDao(MatchDao matchDao)
-	{
+
+	public void setMatchDao(MatchDao matchDao) {
 		this.matchDao = matchDao;
 	}
-	
+
 	@Override
 	public List<MessageBean> getAllMessage() {
 		return mesgDao.findAll();
@@ -77,11 +69,21 @@ public class AdminManagerImpl implements AdminManager{
 		return courtDao.findAll();
 	}
 
-	public List<MatchBean> getAllMatch(){
+	public List<MatchBean> getAllMatch() {
 		return matchDao.findAll();
 	}
-	
-	public List<UserBean> getAllUser(){
+
+	public List<UserBean> getAllUser() {
 		return userDao.findAll();
+	}
+
+	@Override
+	public int deleteCourts(Integer[] courtIds) {
+		return courtDao.deleteCourts(courtIds);
+	}
+
+	@Override
+	public int deleteMatches(Integer[] matchIds) {
+		return matchDao.deleteMatches(matchIds);
 	}
 }
