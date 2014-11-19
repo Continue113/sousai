@@ -8,13 +8,16 @@
   <meta name="description" content="搜赛网-管理员页面-评论维护" /> 
   <meta name="author" content="KING@CQU" /> 
   <link href="css/bootstrap.min.css" rel="stylesheet" /> 
-  <link href="css/bootstrap-responsive.css" rel="stylesheet" /> 
-  <!-- <link href="css/jplist.min.css" rel="stylesheet" /> -->
+  <link href="css/bootstrap-responsive.css" rel="stylesheet" />
   <link href="css/sousai.common.css" rel="stylesheet" /> 
   <link href="css/sousai.background.css" rel="stylesheet" /> 
   <!--[if lte IE 8]>
   <link href="css/sousai.IE8.css" rel="stylesheet" /> 
   <![endif]-->
+  <style type="text/css">
+  /** 排序下拉按钮 **/
+  .panel-top > .btn-group {margin-top: -10px;}
+  </style>
  </head> 
  <body class="background"> 
   <s:include value="background-head.jsp" /> 
@@ -55,11 +58,28 @@
       <div id="evaluationMaintenance"> 
        <!-- panel --> 
        <div class="panel-top">
-       <select class="selectFilter"> <option data-forfilter=".evaluation-content">评论内容</option> <option data-forfilter=".court-name">场地名称</option> <option data-forfilter=".releaseTime">发布时间</option> <option data-forfilter=".releaseUser">发布用户</option> </select>
-        <div class="text-filter-box input-append"> 
-         <input data-path=".court-name" type="text" placeholder="请输入关键字" data-control-type="textbox" data-control-name="match-filter" data-control-action="filter" /> 
-         <select class="selectFilter"> <option data-forfilter=".evaluation-content">评论内容</option> <option data-forfilter=".court-name">场地名称</option> <option data-forfilter=".releaseTime">发布时间</option> <option data-forfilter=".releaseUser">发布用户</option> </select> 
-         <span class="add-on"><i class="icon-search"></i></span> 
+       <div class="btn-group" role="group">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current">排序方式</span><span class="caret"></span></button>
+		<ul class="dropdown-menu" role="menu">
+          <li><a href="javascript:void(0)">评论内容<i class="icon-arrow-up"></i></a></li> 
+          <li><a href="javascript:void(0)">场地名称<i class="icon-arrow-up"></i></a></li> 
+          <li><a href="javascript:void(0)">发布时间<i class="icon-arrow-up"></i></a></li> 
+          <li><a href="javascript:void(0)">发布用户<i class="icon-arrow-up"></i></a></li>
+		</ul>
+	   </div>
+	    <div class="text-filter-box input-append"> 
+         <input type="text" class="span2" placeholder="请输入关键字"/> 
+         <div class="btn-group" role="group">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current">场地名称</span><span class="caret"></span></button>
+		<ul class="dropdown-menu" role="menu">
+			<li><a href="javascript:void(0)">评论内容</a></li>
+			<li><a href="javascript:void(0)">场地名称</a></li>
+			<li><a href="javascript:void(0)">发布时间</a></li>
+			<li><a href="javascript:void(0)">发布用户</a></li>
+		</ul>
+	   	</div>
+	   	<button class="btn" type="button">搜索</button>
+         <!-- <span class="add-on"><i class="icon-search"></i></span> -->
         </div> 
         <div class="btnbar pull-right"> 
          <button type="button" class="btn deleteEvaluation">删除选中</button> 
@@ -77,6 +97,19 @@
         </thead> 
         <tbody></tbody> 
        </table>
+       <div class="panel-bottom">
+       <div id="ajaxState" class="text-center"><span class="hide noresult">无结果</span><span class="hide load"><img src="img/loading.gif" height="20px" width="20px"></img>数据加载中...</span></div>
+       <div class="pagination">
+       <nav>
+       <ul class="pagination">
+       <li class="disabled"><a href="javascript:void(0)"><span aria-hidden="true">&laquo;</span><span class="sr-only"></span></a></li>
+       <li class="active"><a href="javascript:void(0)">1</a></li>
+       <li><a href="javascript:void(0)">2</a></li>
+       <li><a href="javascript:void(0)"><span aria-hidden="true">&raquo;</span><span class="sr-only"></span></a></li>
+       </ul>
+       </nav>
+       </div>
+      </div>
       </div> 
       <!--评论维护 结束--> 
      </div>
@@ -95,8 +128,7 @@
   <script src="js/jquery-1.11.0.min.js"></script> 
   <script src="js/bootstrap.min.js"></script> 
   <script src="js/handlebars-v2.0.0.js"></script>
-  <script src="js/jquery.wordLimit.js"></script> 
-  <!--<script src="js/jplist.min.js"></script>-->
+  <script src="js/jquery.wordLimit.js"></script>
   <script src="js/sousai.common.js"></script>
   <!-- handlebars template -->
   <script id="evaluation-template" type="text/x-handlebars-template">
@@ -115,7 +147,9 @@
   <script>
   $(function(){
 	//ajax接受所有的评论
-	$.post("getAllMesg", null, function(data) {
+		function e(){
+		$("#ajaxState .load").show();console.log("start");
+		$.post("getAllMesg", null, function(data) {
 		  console.log(data);//alert(data);
 	        var target = $(".evaluationTable > tbody"),template = Handlebars.compile($('#evaluation-template').html());
 	        Handlebars.registerHelper("data",function(v){
@@ -127,10 +161,18 @@
 	        });
 	        target.empty(); //清空tbody
 	        target.html(template(data));
-    });
-    //管理员界面表格列字数限制，溢出省略
-    $("td > label").wordLimit();
-    $(".court-name").wordLimit();
+	        $("#ajaxState .load").hide();console.log("stop");
+		    //出错或无结果
+		    //target.empty(); //清空tbody
+		    if(target.find("tr.evaluation").length == 0){
+		    $("#ajaxState .noresult").show();console.log("无结果");
+		    }
+	        //管理员界面表格列字数限制，溢出省略
+	        $("td > label").wordLimit();
+	        $(".court-name").wordLimit();
+	        });
+		}
+	e();
   });
   </script>  
  </body>

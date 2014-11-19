@@ -113,19 +113,7 @@ $(function() {
     $(".add-selectType span").text(val);
     $('#myModal').modal("hide");
   });
-
-  //添加本地收藏
-  function AddFavorite(sURL, sTitle) {
-    try {
-      window.external.addFavorite(sURL, sTitle);
-    } catch (e) {
-      try {
-        window.sidebar.addPanel(sTitle, sURL, "");
-      } catch (e) {
-        //alert("由于浏览器限制，请使用Ctrl+D进行添加");
-      }
-    }
-  }
+  
   $("#collectLink").click(function() {
     var sURL = document.URL;
     var sTitle = $("title").text();
@@ -139,8 +127,8 @@ $(function() {
   });
 
   //三级省市区联动 P:province C:city C:country
-  /*初始化省*
-  function initProvince() {
+  //初始化省
+  /*function initProvince() {
     $.post("selRegion?region.level=0", null, function(data) {
       var selectProvince = $(".selectProvince");
       selectProvince.empty().append("<option value=0>请选择省</option>");
@@ -221,13 +209,13 @@ $(function() {
   //立即调用初始化省 已经使用硬编码的方式替代初始化省
   //initProvince();
 
-  /** 高级搜索框级联下拉菜单 
-  $(".selectMatchType").change(function() {
+  //高级搜索框级联下拉菜单 
+  /*$(".selectMatchType").change(function() {
     var datafor = $(this).parent().find(".selectMatchType option:selected").data('for');
     $(this).parent().find("select.hide").find("option[value=0]").attr("selected", "selected"); //设置所有隐藏下拉菜单选择默认项
     $(this).parent().find("select.hide").hide(); //隐藏所有子下拉菜单
     $(this).parent().find("." + datafor).show(); //显示选择的子下拉菜单
-  });**/
+  });*/
   //管理员界面搜索框级联下拉菜单
   $(".selectFilter").change(function() {
     var dataforFilter = $(this).parent().find(".selectFilter option:selected").attr("data-forFilter");
@@ -235,7 +223,7 @@ $(function() {
     $(this).parent().find("input[type='text']").attr("data-path", dataforFilter); //设置输入框筛选路径
   });
   //jplist-panel 中选择省市区自动输入搜索框
-  $(".jplist-panel > select.span2").change(function () {
+  /*$(".jplist-panel > select.span2").change(function () {
     var dataforFilter = $(this).parent().find(".selectProvince option:selected");
     var inputFilter = $(this).parent().find(".text-filter-box > input:text");
     if(dataforFilter.attr("value") != 0){
@@ -246,9 +234,28 @@ $(function() {
       inputFilter.get(0).value = "";
       inputFilter.keyup();
     }
+  });*/
+
+  //重复点击下拉列表改变排序
+  var sortflag=1;
+  $("div.btn-group li").click(function(){
+  	var tempthis = $(this);
+    if(sortflag==1){
+          tempthis.find("i").removeClass("icon-arrow-up").addClass("icon-arrow-down");
+          sortflag=0;
+      }else{
+          tempthis.find("i").removeClass("icon-arrow-down").addClass("icon-arrow-up");
+          sortflag=1;
+      }
+	tempthis.parent().parent().find("button.dropdown-toggle > span.current").html( tempthis.find("a").html() );
   });
   
 });
+
+/////////////////////////////////////////////////////////////
+////////////////////////   FUNCTION   ///////////////////////
+/////////////////////////////////////////////////////////////
+
 
 //创建验证码，inputValidateId为验证码标签 ID
 function createCode(inputValidateId) {
@@ -296,6 +303,19 @@ function userCenterRemind(){
           console.log("userCenterRemind 抱歉，获取比赛信息出错了。");
         },
       }); //ajax 已得到发布的比赛信息
+}
+
+//添加本地收藏
+function AddFavorite(sURL, sTitle) {
+  try {
+    window.external.addFavorite(sURL, sTitle);
+  } catch (e) {
+    try {
+      window.sidebar.addPanel(sTitle, sURL, "");
+    } catch (e) {
+      //alert("由于浏览器限制，请使用Ctrl+D进行添加");
+    }
+  }
 }
 
 //初始化比赛类型

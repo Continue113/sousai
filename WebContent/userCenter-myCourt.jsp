@@ -9,12 +9,29 @@
   <meta name="author" content="KING@CQU" />
   <link href="css/bootstrap.min.css" rel="stylesheet" /> 
   <link href="css/bootstrap-responsive.css" rel="stylesheet" />
-  <link href="css/jplist.min.css" rel="stylesheet" /> 
   <link href="css/sousai.common.css" rel="stylesheet" />
   <link href="css/sousai.userCenter.css" rel="stylesheet" />
   <!--[if lte IE 8]>
   <link href="css/sousai.IE8.css" rel="stylesheet" /> 
   <![endif]-->
+    <style type="text/css">
+/** 场地列表 **/
+.courtBoxs{border: 1px solid #ccc;margin: 10px 0;float: left;padding-bottom: 20px;}
+.courtBox{margin: 10px 0 0 10px;float: left;}
+.courtBox .courtBox-img{float:left;border: 1px solid #ccc;}
+.courtBox .courtBox-img img{width: 110px;height: 85px;}
+.courtBox .courtBox-block{float: right;margin-left: 10px;}
+.courtBox .courtBox-block p{margin-bottom: 0;font-size: 12px;}
+.courtBox .courtBox-block .courtBox-title{background-color: #f5f5f5;border: 1px solid #ccc;border-bottom: 0;padding:2px 5px;}
+.courtBox .courtBox-block .courtBox-title .btn-mini{line-height: 16px;}
+.courtBox .courtBox-block ul{clear:both;padding: 0;margin-bottom: 0;background-color: #fff;border: 1px solid #ccc;-webkit-border-radius: 0;
+  -moz-border-radius: 0;border-radius: 0;}
+.courtBox .courtBox-block ul > li{padding-left:5px;vertical-align: middle;text-align: center;border-left: 1px solid #ccc;}
+.courtBox .courtBox-block .courtBox-address{width:200px;border-left: 0;}
+.courtBox .courtBox-block .courtBox-info{width:110px;}
+.courtBox .courtBox-block .courtBox-record{width:80px;}
+.courtBox .courtBox-block .courtBox-evaluation{width:200px;}
+  </style>
 </head>
 <body class="userCenter">
 <s:include value="navbar.jsp" /><!-- 页首导航条 -->
@@ -51,123 +68,16 @@
       <div class="userCenter-remind">
        <ul class="breadcrumb"> 
         <li>场地信息:</li> 
-        <!-- 迭代所有已发布的场地的场地数量 -->
-        <s:iterator var="court" value="#response.courtlist" status="statu">
-        <s:if test="%{#response.courtlist.length !== 0}">
-          <li><a href="javascript:void(0)"><s:property value="#court.courtType"/><span>(<s:property value="#court.courtTypeNumber"/>)</span></a></li>
-        </s:if>
-        <s:else>
-          <li>还没有发布场地</li>
-        </s:else>
-        </s:iterator>
-        <!-- /迭代所有已发布的场地的场地数量 -->
+        <li>暂无信息</li>
        </ul>
       </div> 
       <div class="tab-content">
        <div id="myCourt" class="tab-pane active">
-        <div class="courts" id="courtsList"> 
-         <!-- ios button: show/hide panel 能在小于一定的宽度的情况下隐藏面板 --> 
-         <div class="jplist-ios-button">
-          展开面板
-         </div> 
+        <div class="courts" id="courtsList">
          <!-- panel --> 
-         <div class="jplist-panel jplist-panel-top"> 
-          <div class="jplist-drop-down" data-control-type="drop-down" data-control-name="sort" data-control-action="sort" data-datetime-format="{year}-{month}-{day}"> 
-           <ul> 
-            <li><span data-path="default">排序方式</span></li>
-            <li><span data-path=".courtBox-releaseTime" data-order="asc" data-type="datetime" data-default="true">发布时间</span><i class="icon-arrow-up"></i></li> 
-            <li><span data-path=".courtBox-recordNumb" data-order="asc" data-type="number">比赛次数</span><i class="icon-arrow-up"></i></li> 
-            <li><span data-path=".courtBox-title" data-order="asc" data-type="text">场地名称</span><i class="icon-arrow-up"></i></li> 
-            <li><span data-path=".courtBox-info" data-order="asc" data-type="text">场地类型</span><i class="icon-arrow-up"></i></li> 
-            <li><span data-path=".courtBox-address" data-order="asc" data-type="number">详细地址</span><i class="icon-arrow-up"></i></li> 
-           </ul> 
-          </div>
-
-          <!-- 当有发布的场地时才会给出下拉比赛类型菜单和场地类型菜单 -->
-          <s:if test="%{#response.courtlist.length !== 0}">
-          <!-- jplist比赛类型筛选 只有发布的类型 -->
-          <div class="jplist-drop-down matchType-filter" data-control-type="drop-down" data-control-name="matchType-filter" data-control-action="filter"> 
-           <ul> 
-            <li><span data-path="default">比赛类型</span></li> 
-            <!-- 迭代所有已发布的场地的比赛类型 -->
-            <s:iterator var="match" value="#response.matchTypelist" status="statu">
-            <li><span data-path=".courtBox-matchType-<s:property value="#match.matchTypeId"/>"><s:property value="#match.matchType"/></span></li>
-            </s:iterator>
-            <!-- /迭代所有已发布的场地的比赛类型-->
-            <li><span data-path=".courtBox-matchType-qpl" data-forcn="matchType-filter-qpl">篮球</span></li>
-           </ul>
-          </div>
-          <!-- jplist场地类型筛选 只有发布的类型 --> 
-          <div class="jplist-drop-down" data-control-type="drop-down" data-control-name="category-filter10" data-control-action="filter"> 
-           <ul> 
-            <li><span data-path="default">场地类型</span></li>
-            <!-- 迭代所有已发布的场地的场地类型 -->
-            <s:iterator var="court" value="#response.courtTypelist" status="statu">
-            <li><span data-path=".courtBox-courtType-<s:property value="#court.courtTypeId"/>"><s:property value="#court.courtType"/></span></li>
-            </s:iterator>
-            <!-- /迭代所有已发布的场地的场地类型-->
-            <li><span class="pull-right" data-path=".courtBox-courtType-lq">社区</span></li> 
-           </ul>
-          </div>
-          </s:if>
-
-          <!-- 选择省市区三级下拉框 -->
-          <s:include value="selectPCC.jsp" />
-          <!-- js本地关键字查找 --> 
-          <div class="text-filter-box input-append"> 
-           <input data-path=".courtBox-block" type="text" value="" placeholder="请输入关键字" data-control-type="textbox" data-control-name="desc-filter" data-control-action="filter" /> 
-           <span class="add-on"><i class="icon-search"></i></span> 
-          </div> 
-         </div>
-         <!-- /jplist-panel --> 
-         <div class="courtBoxs"> 
-
-          <!-- 迭代court -->
-          <s:iterator var="court" value="#response.courtlist" status="statu">
-          <div class="courtBox"> 
-           <!-- img --> 
-           <div class="courtBox-img">
-            <img src="<s:property value="#court.courtImg1Src"/>" alt="" title="" />
-           </div> 
-           <!-- data --> 
-           <div class="courtBox-block"> 
-            <div class="courtBox-title">
-             <a href="courtSearchDetail.jsp?court.id=<s:property value="#court.courtId"/>"><s:property value="#court.courtTitle"/></a>
-             <a href="courtSearchDetail.jsp?court.id=<s:property value="#court.courtId"/>" class="btn btn-mini pull-right">查看详细</a><a href="userCenter-releaseCourt.jsp?court.id=<s:property value="#court.courtId"/>" class="btn btn-mini pull-right">编辑场地</a>
-            </div> 
-            <ul class="breadcrumb"> 
-             <li class="courtBox-address"><s:property value="#court.courtAddress"/></li> 
-             <li class="courtBox-info ">
-              <p><s:property value="#court.courtType"/></p>
-              <p>赛场
-                <s:if test="%{#court.courtInfoNumb !== 0}">
-                <span class="courtBox-infoNumb"><s:property value="#court.courtInfoNumb"/></span>个
-                </s:if><s:else>
-                  <span class="courtBox-infoNumb">暂无数据</span>
-                </s:else>
-              </p>
-              <p><s:property value="#court.courtTel"/></p>
-             </li> 
-             <li class="courtBox-record ">曾举办比赛<p>
-              <s:if test="%{#court.courtRecordNumb !== 0}">
-              <span class="courtBox-recordNumb"><s:property value="#court.courtRecordNumb"/></span>个
-              </s:if><s:else>
-                <span class="courtBox-recordNumb">暂无数据</span>
-              </s:else>
-            </p></li> 
-             <li class="courtBox-evaluation ">
-              <!-- 迭代前三条评论 -->
-              <p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p>
-              <p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p>
-              <p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p>
-             </li> 
-            </ul> 
-           </div> 
-          </div> 
-          </s:iterator>
-          <!-- /迭代court -->
-
-          <div class="courtBox"> 
+         <div class="panel-top"></div>
+         <div class="courtBoxs">
+          <div class="courtBox">
            <!-- img --> 
            <div class="courtBox-img">
             <img src="img/defaultImg.png" alt="" title="" />
@@ -187,21 +97,7 @@
            </div> 
           </div> 
          </div>
-         <!-- /courtBoxs --> 
-         <div class="jplist-no-results jplist-hidden">
-          <p>暂时没有结果哟！</p>
-         </div>
-         <div class="jplist-ios-button">
-          展开分页
-         </div>
-         <!-- panel --> 
-         <div class="jplist-panel"> 
-          <!-- pagination --> 
-          <div class="jplist-pagination" data-control-type="pagination" data-control-name="paging" data-control-action="paging" data-items-per-page="5"> 
-           <!-- default items per page (if no "items per page" dropdown on the page) --> 
-          </div> 
-         </div>
-         <!-- /jplist-panel --> 
+         <!-- /courtBoxs -->
         </div> 
         <!-- /courts -->
        </div>
@@ -217,39 +113,60 @@
    <div class="ftpush"></div> 
   </div>
   <!-- /container --> 
-  <s:include value="footer.jsp" /><!-- 页首导航条 --> 
+  <s:include value="footer.jsp" />
+  <!-- 页尾信息 --> 
+  <script src="js/handlebars-v2.0.0.js"></script>
   <script src="js/jquery.wordLimit.js"></script>
-  <script src="js/jplist.min.js"></script> 
+  <!-- handlebars template -->
+  <script id="court-template" type="text/x-handlebars-template">
+    {{#each this}}
+                        
+        <div class="courtBox"  data-info="{{data this}}> 
+         <!-- img --> 
+         <div class="courtBox-img"> 
+          <img src="img/defaultImg.png" alt="" title="" /> 
+         </div> 
+         <!-- data --> 
+         <div class="courtBox-block"> 
+          <div class="courtBox-title"> 
+           <a href="{{id}}">{{name}}</a> 
+           <a href="{{id}}" class="btn btn-mini pull-right">查看详细</a> <a href="javascript:void(0)" class="btn btn-mini pull-right">编辑场地</a>
+          </div> 
+          <ul class="breadcrumb"> 
+           <li class="courtBox-address">{{addr}}</li> 
+           <li class="courtBox-info "> <p>室内球馆（收费）</p> <p>赛场<span class="courtBox-infoNumb">1</span>个</p> <p>12345678</p> </li> 
+           <li class="courtBox-record ">曾举办比赛<p><span class="courtBox-recordNumb">1</span>次</p></li> 
+           <li class="courtBox-evaluation "><p><span>2013-10-10</span>:<span>但行代价昂贵你空间啊好烦你撒谎吃饭了空间啊干那</span></p> <p><span>2013-10-10</span>:<span>撒了你刚才发K 524545呵呵发那个给UI HM</span></p> <p><span>2013-10-10</span>:<span>4256605JKHGCFYUSDA是都还没后 俺哥啊 俺哥爱戴啊</span></p></li> 
+          </ul> 
+         </div> 
+        </div>
+                            
+    {{/each}}
+  </script>
   <script>
     $(function () {
-      //鼠标滑过场地列表
-    $("div.courtBox").hover(function(){
-      $(this).addClass("box-active");
-    },function(){
-      $(this).removeClass("box-active");
-    });
-      //字数限制
-    $(".courtBox-address > a").wordLimit(20);
-    $(".courtBox-evaluation p").wordLimit(20);
-    //排序分页
-    $('#courtsList').jplist({
-          itemsBox: '.courtBoxs',
-          itemPath: '.courtBox',
-          panelPath: '.jplist-panel'
-        });
-    //重复点击下拉列表改变排序
-    var sortflag=1;
-    $("div[data-control-action='sort'] li").click(function(){
-      if(sortflag==1){
-            //执行方法;
-            $(this).find("span").attr("data-order","desc").end().find("i").removeClass("icon-arrow-up").addClass("icon-arrow-down");
-            sortflag=0;
-        }else{
-            //执行方法;
-            $(this).find("span").attr("data-order","asc").end().find("i").removeClass("icon-arrow-down").addClass("icon-arrow-up");
-            sortflag=1;
-        }
-    });
+  	  //ajax接收所有的场地
+  		$.post("getAllCourt", null, function(data) {
+  	      console.log(data);//alert(data);
+          var target = $(".courtBoxs"),template = Handlebars.compile($('#court-template').html());
+          Handlebars.registerHelper("data",function(v){
+            //将当前对象转化为字符串，保存在data-info中
+            console.log(v);
+            var v1 = JSON.stringify(v);
+            //console.log("v1:"+v1);
+            return v1;
+          });
+          target.empty(); //清空tbody
+          target.html(template(data));
+          //字数限制，溢出省略 
+          $(".courtBox-address").wordLimit(20);
+  	    $(".courtBox-evaluation p").wordLimit();
+  	    });
+      //鼠标hover matchbox
+      $(".courtBoxs ").on('mouseenter','div.courtBox',function(){
+      	      $('div.courtBox').removeClass("box-active");
+      	      $(this).addClass("box-active");
+      });
     });
 </script>
 </body></html>

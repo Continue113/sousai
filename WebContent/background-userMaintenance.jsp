@@ -8,8 +8,7 @@
   <meta name="description" content="搜赛网-管理员页面-用户维护" /> 
   <meta name="author" content="KING@CQU" /> 
   <link href="css/bootstrap.min.css" rel="stylesheet" /> 
-  <link href="css/bootstrap-responsive.css" rel="stylesheet" /> 
-  <!-- <link href="css/jplist.min.css" rel="stylesheet" /> -->
+  <link href="css/bootstrap-responsive.css" rel="stylesheet" />
   <link href="css/sousai.common.css" rel="stylesheet" /> 
   <link href="css/sousai.background.css" rel="stylesheet" /> 
   <!--[if lte IE 8]>
@@ -19,7 +18,9 @@
   /** 编辑场地 按钮bar  **/
   .editUser > .btnbar {margin-left: 0;}
   /** 编辑场地按钮bar 中的按钮  **/
-  .editUser > .btnbar > .btn {float: right;margin-left: 10px;}  
+  .editUser > .btnbar > .btn {float: right;margin-left: 10px;}
+  /** 排序下拉按钮 **/
+  .panel-top > .btn-group {margin-top: -10px;}
   </style>
  </head> 
  <body class="background"> 
@@ -62,11 +63,30 @@
       <div id="userMaintenance">
        <!-- panel --> 
        <div class="panel-top">
-       <select class="selectFilter"> <option data-forfilter=".user-userName">用户名</option> <option data-forfilter=".user-email">注册邮箱</option> <option data-forfilter=".user-registerTime">注册时间</option> <option data-forfilter=".user-IP">IP地域</option> </select> 
-        <div class="text-filter-box input-append"> 
-         <input data-path=".user-userName" type="text" placeholder="请输入关键字" data-control-type="textbox" data-control-name="match-filter" data-control-action="filter" /> 
-         <select class="selectFilter"> <option data-forfilter=".user-userName">用户名</option> <option data-forfilter=".user-email">注册邮箱</option> <option data-forfilter=".user-registerTime">注册时间</option> <option data-forfilter=".user-IP">IP地域</option> </select> 
-         <span class="add-on"><i class="icon-search"></i></span>
+       <div class="btn-group" role="group">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current">排序方式</span><span class="caret"></span></button>
+		<ul class="dropdown-menu" role="menu">
+          <li><a href="javascript:void(0)">用户名<i class="icon-arrow-up"></i></a></li> 
+          <li><a href="javascript:void(0)">注册邮箱<i class="icon-arrow-up"></i></a></li> 
+          <li><a href="javascript:void(0)">注册时间<i class="icon-arrow-up"></i></a></li> 
+          <li><a href="javascript:void(0)">登录次数<i class="icon-arrow-up"></i></a></li> 
+          <li><a href="javascript:void(0)">比赛发布<i class="icon-arrow-up"></i></a></li> 
+          <li><a href="javascript:void(0)">场地发布<i class="icon-arrow-up"></i></a></li>
+		</ul>
+	   </div>
+	    <div class="text-filter-box input-append"> 
+         <input type="text" class="span2" placeholder="请输入关键字"/> 
+         <div class="btn-group" role="group">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current">用户名</span><span class="caret"></span></button>
+		<ul class="dropdown-menu" role="menu">
+			<li><a href="javascript:void(0)">用户名</a></li>
+			<li><a href="javascript:void(0)">注册邮箱</a></li>
+			<li><a href="javascript:void(0)">注册时间</a></li>
+			<li><a href="javascript:void(0)">IP地域</a></li>
+		</ul>
+	   	</div>
+	   	<button class="btn" type="button">搜索</button>
+         <!-- <span class="add-on"><i class="icon-search"></i></span> -->
         </div> 
         <div class="btnbar pull-right"> 
          <button type="button" class="btn forbidUser">禁用用户</button>
@@ -76,7 +96,6 @@
        <table class="table table-striped table-hover userTable"> 
         <caption>用户维护</caption> 
         <thead>
-         <tr>
           <th>用户名</th>
           <th>注册时间</th>
           <th>最后登录时间</th>
@@ -89,7 +108,20 @@
         </thead> 
         <tbody></tbody> 
        </table>
-      </div> 
+       <div class="panel-bottom">
+       <div id="ajaxState" class="text-center"><span class="hide noresult">无结果</span><span class="hide load"><img src="img/loading.gif" height="20px" width="20px"></img>数据加载中...</span></div>
+       <div class="pagination">
+       <nav>
+       <ul class="pagination">
+       <li class="disabled"><a href="javascript:void(0)"><span aria-hidden="true">&laquo;</span><span class="sr-only"></span></a></li>
+       <li class="active"><a href="javascript:void(0)">1</a></li>
+       <li><a href="javascript:void(0)">2</a></li>
+       <li><a href="javascript:void(0)"><span aria-hidden="true">&raquo;</span><span class="sr-only"></span></a></li>
+       </ul>
+       </nav>
+       </div>
+      </div>
+      </div>
       </div>
       <!--用户维护 结束--> 
       
@@ -151,8 +183,7 @@
   <script src="js/jquery-1.11.0.min.js"></script> 
   <script src="js/bootstrap.min.js"></script> 
   <script src="js/handlebars-v2.0.0.js"></script>
-  <script src="js/jquery.wordLimit.js"></script> 
-  <!-- <script src="js/jplist.min.js"></script>  -->
+  <script src="js/jquery.wordLimit.js"></script>
   <script src="js/jquery.validate.min.js"></script>
   <script src="js/sousai.common.js"></script> 
   <!-- handlebars template -->
@@ -161,7 +192,7 @@
 
 		    <tr class="user" data-info="{{data this}}">
 	    		<td class="user-userName form-inline"><label for="{{userId}}"><input type="checkbox" id="data[i].{{userId}}"/>{{userName}}<label></td>
-        	<td class="user-registerTime">{{regTime}}</td>
+        	<td class="user-registerTime">{{userRegTime}}</td>
         	<td class="user-lastLoginTime">{{lastLogTime}}</td>
         	<td class="user-matchNumber">{{matchNumber}}</td>
         	<td class="user-courtNumber">{{courtNumber}}</td>
@@ -176,7 +207,8 @@
   <script>
   $(function(){
 	//ajax接受所有的用户
-		$.post("getAllUser", null, function(data) {
+		function e(){
+			$.post("getAllUser", null, function(data) {
 	      console.log(data);//alert(data);
         var target = $(".userTable > tbody"),template = Handlebars.compile($('#user-template').html());
         Handlebars.registerHelper("data",function(v){
@@ -188,13 +220,22 @@
         });
         target.empty(); //清空tbody
         target.html(template(data));
+        $("#ajaxState .load").hide();console.log("stop");
+	    //出错或无结果
+	    //target.empty(); //清空tbody
+	    if(target.find("tr.user").length == 0){
+	    $("#ajaxState .noresult").show();console.log("无结果");
+	    }
+        //管理员界面表格列字数限制，溢出省略
+        $(".user-email").wordLimit(16);
 	    });
-    //列表排序
-    
-    //管理员界面表格列字数限制，溢出省略
-    $(".user-email").wordLimit(16);
-    //重复点击下拉列表改变排序
-    
+	}
+	function ajaxAll(){
+		$("#ajaxState .load").show();console.log("start");
+		window.setTimeout(e,5000);
+	}
+	ajaxAll();
+  
     //点击编辑用户隐藏List列表同时显示编辑用户
     $("tbody").on("click",".user-oprate > a",function(event){
         //显示禁用用户和保存修改用户选项，隐藏保存添加，同时根据data-info填补form，

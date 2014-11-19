@@ -58,11 +58,12 @@
      <!-- /background-remind & backgroundMenu --> 
      <div class="span9"> 
       <div class="toolBox"> 
-       <form class="from-inline" id="form1" name="form1" method="post" action=""> 
+       <!-- <form class="from-inline" id="form1">  -->
         <label for="year">请选择年份</label> 
         <select class="span1" name="year" id="year"> <option>2010</option> <option selected="selected">2011</option> </select> 
-        <button class="btn pull-right">显示表格</button> 
-       </form> 
+        <button class="btn pull-right" id="tableTiggler">显示表格</button>
+        <button class="btn pull-right" onclick="GetAjaxChartData()">通过Ajax获取数据</button>
+       <!-- </form> -->
       </div> 
       <div class="hide" id="mainTable"> 
        <table class="table table-bordered table-striped table-condensed table-hover "> 
@@ -226,10 +227,10 @@
   <script src="js/sousai.bg-eCount-optionMap.js"></script> 
   <script src="js/sousai.common.js"></script> 
   <script>
-  $(function(){
+  $(function(){	  
     //重复点击显示/隐藏表格
     var flag = 1;
-    $("#form1 > button").click(function(){
+    $("#tableTiggler").click(function(){
       if(flag==1){
             //执行方法;
             $("#mainTable").slideDown();
@@ -246,7 +247,7 @@
             return false;
         }
     });
-  })
+  });
   </script>  
  </body>
 </html>

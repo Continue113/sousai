@@ -9,8 +9,7 @@
   <meta name="author" content="KING@CQU" /> 
   <link href="css/smoothness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" /> 
   <link href="css/bootstrap.min.css" rel="stylesheet" /> 
-  <link href="css/bootstrap-responsive.css" rel="stylesheet" /> 
-  <!--<link href="css/jplist.min.css" rel="stylesheet" /> -->
+  <link href="css/bootstrap-responsive.css" rel="stylesheet" />
   <link href="css/sousai.common.css" rel="stylesheet" />
   <!--[if lte IE 8]>
   <link href="css/sousai.IE8.css" rel="stylesheet" /> 
@@ -129,8 +128,7 @@
   <script src="js/handlebars-v2.0.0.js"></script>
   <script src="js/jquery-ui-1.10.4.custom.min.js"></script> 
   <script src="js/jquery.ui.datepicker-zh-CN.js"></script> 
-  <script src="js/jquery.wordLimit.js"></script> 
-  <!-- <script src="js/jplist.min.js"></script> -->
+  <script src="js/jquery.wordLimit.js"></script>
   <!-- handlebars template -->
   <script id="match-template" type="text/x-handlebars-template">
     {{#each this}}

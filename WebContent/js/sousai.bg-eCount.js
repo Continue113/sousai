@@ -59,7 +59,7 @@ yearSelector.onchange = function(e) {
   }
   optionMap.legend.data[0] = "总共 " + totle;
   firstTotle = totle;
-}
+};
 
 //选择地图
 function mapSelected(param) {
@@ -102,5 +102,59 @@ window.onload = function() {
       bgChartLine.resize();
       bgChartMap.resize();
     }, 200);
-  }
+  };
+};
+
+///点击按钮获取图表数据采用ajax方式
+function GetAjaxChartData() {
+    //获得图表的options对象
+    var options = bgChartLine.getOption();
+    //图表显示提示信息
+    bgChartLine.showLoading({
+        text: "图表数据正在努力加载..."
+    });
+    //通过Ajax获取数据
+	  function el(){
+	  $.post("getAllUser", null, function(data) {
+		  console.log("getAllUser");
+		  var series = [{
+			    name: '访问量',
+			    type: 'bar',
+			    data: [35, 49, 70, 23, 26, 77, 156, 122, 326, 20, 64, 33, 20]
+			}, {
+			    name: '注册用户',
+			    type: 'bar',
+			    data: [35, 49, 70, 232, 256, 764, 136, 162, 376, 207, 64, 33, 20]
+			}, {
+			    name: '比赛发布（搜赛网）',
+			    type: 'bar',
+			    data: [35, 49, 70, 232, 256, 77, 356, 162, 326, 27, 64, 33, 20]
+			}, {
+			    name: '比赛发布（自然人）',
+			    type: 'bar',
+			    data: [35, 49, 70, 232, 25, 76, 156, 622, 326, 20, 64, 33, 20]
+			}, {
+			    name: '场地发布（搜赛网）',
+			    type: 'bar',
+			    data: [35, 49, 70, 32, 26, 767, 136, 16, 326, 240, 64, 33, 20]
+			}, {
+			    name: '场地发布（自然人）',
+			    type: 'bar',
+			    data: [35, 49, 70, 232, 256, 77, 1356, 1622, 326, 50, 64, 33, 20]
+			}, {
+			    name: '场地评论',
+			    type: 'bar',
+			    data: [35, 59, 90, 26, 287, 707, 156, 182, 487, 188, 60, 23, 20]
+			}];
+		  options.xAxis[0].data = ['累计', data[0].userId, data[1].userId, data[2].userId, data[3].userId, data[0].userName, data[1].userName, data[2].userName, data[3].userName, data[0].userEmail, data[1].userEmail, data[2].userEmail, data[3].userEmail];
+		  options.series = series;
+		  
+		  console.log("options");
+		  bgChartLine.hideLoading();
+		  console.log("hideLoading");
+		  bgChartLine.setOption(options);
+		  console.log("bgChartLine.setOption(options);");
+        });
+	  }
+	  window.setTimeout(el,5000);
 }
