@@ -5,18 +5,20 @@ import org.sousai.common.Constant;
 
 public class DeleteMatches extends UserBaseAction{
 
-	private static final long serialVersionUID = 6677458282634278878L;
-	private Integer[] matchIds;
+	private static final long serialVersionUID = 6677358282634278878L;
+	private String matchIds;
 	/**
 	 * @return the matchIds
 	 */
-	public Integer[] getMatchIds() {
+	public String getMatchIds() {
+//		for(Integer i: matchIds)
+//		System.out.println("i = "+i);
 		return matchIds;
 	}
 	/**
 	 * @param matchIds the matchIds to set
 	 */
-	public void setMatchIds(Integer[] matchIds) {
+	public void setMatchIds(String matchIds) {
 		this.matchIds = matchIds;
 	}
 	/**
@@ -29,12 +31,19 @@ public class DeleteMatches extends UserBaseAction{
 	public String execute () throws Exception{
 		String value = null;
 		try{
-			amg.deleteMatches(getMatchIds());
+			String[] arrayMatchIds = matchIds.split(",");
+			Integer[] iMatchIds = new Integer[arrayMatchIds.length];
+			for(int i=0; i<arrayMatchIds.length; i++){
+				iMatchIds[i] = Integer.valueOf(arrayMatchIds[i]);
+			}
+			int i = amg.deleteMatches(iMatchIds);
+			System.out.println("删除数据："+i+" 条");
 			value = Constant.SUCCESS;
 		}catch(Exception e){
 			e.printStackTrace();
 			value = Constant.FAIL;
 		}
+		System.out.println(value);
 		return value;
 	}
 }

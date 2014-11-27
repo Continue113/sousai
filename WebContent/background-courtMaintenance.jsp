@@ -328,7 +328,7 @@
     	if( n == 0){
     		alert("请先选中比赛");
     	}else{
-    		var courtIds = [];
+    		var courtIds = new Array();
     		$(".court input:checked").each(function(index,element){
     			console.log($(this).attr("id"));
     			courtIds.push($(this).attr("id"));
@@ -339,7 +339,7 @@
               url: "deleteCourts",
               contentType: "application/x-www-form-urlencoded; charset=UTF-8",
               data: {
-                "courtIds": courtIds,
+                "courtIds": courtIds.join(","),
               },
               dataType: "json",
               success: function(rspdata) {

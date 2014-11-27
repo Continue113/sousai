@@ -242,12 +242,15 @@ public class MatchDaoHibernate extends HibernateDaoSupport implements MatchDao {
 	@Override
 	public int deleteMatches(Integer[] matchIds) {
 		int value = -1;
+		System.out.println(matchIds);
 		String strHql = "delete from Match where id in (:ids)";
+//		String strHql = "delete from Match where id in ("+matchIds+")";
 		try {
 			Session session = getHibernateTemplate().getSessionFactory()
 					.getCurrentSession();
 			Query q = session.createQuery(strHql);
 			q.setParameterList("ids", matchIds);
+//			System.out.println(q.getQueryString());
 			value = q.executeUpdate();
 		} catch (HibernateException e) {
 			e.printStackTrace();

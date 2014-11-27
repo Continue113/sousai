@@ -320,18 +320,18 @@
     	if( n == 0){
     		alert("请先选中比赛");
     	}else{
-    		var matchIds = [];
+    		var matchIds = new Array();
     		$(".match input:checked").each(function(index,element){
     			console.log($(this).attr("id"));
         		matchIds.push($(this).attr("id"));
     		});
-    		console.log(matchIds);alert("matchIds:"+matchIds);
+    		console.log(matchIds);alert("matchIds:"+matchIds.join(",,,"));
             $.ajax({
               type: "POST",
               url: "deleteMatches",
               contentType: "application/x-www-form-urlencoded; charset=UTF-8",
               data: {
-                "matchIds": matchIds,
+                "matchIds": matchIds.join(","),
               },
               dataType: "json",
               success: function(rspdata) {

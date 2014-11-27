@@ -37,7 +37,7 @@ public interface AdminManager {
 
 	/**
 	 * 批量删除比赛
-	 * @param courtIds	场地id数组
+	 * @param courtIds	
 	 * @return
 	 */
 	public int deleteCourts(Integer[] courtIds);
@@ -45,7 +45,7 @@ public interface AdminManager {
 	/**
 	 * 批量删除比赛
 	 * 
-	 * @param matchIds	比赛id数组
+	 * @param matchIds	
 	 * @return
 	 */
 	public int deleteMatches(Integer[] matchIds);

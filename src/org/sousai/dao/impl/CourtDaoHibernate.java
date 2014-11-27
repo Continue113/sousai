@@ -9,7 +9,6 @@ import org.sousai.vo.CourtBean;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 public class CourtDaoHibernate extends HibernateDaoSupport implements CourtDao {
