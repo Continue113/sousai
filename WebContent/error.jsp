@@ -15,14 +15,12 @@
 </tr>
 <tr>
 <td height="315">
-<a href="http//www.crazyit.org">
 <s:property value="exception.message"/>
-</a>
 </td>
 </tr>
 <tr>
 <td><div align="center" style="font:large;color:#333333">
-请您先核对输入，如果再次出现该错误，请登录<a href="http//www.crazyit.org">http//www.crazyit.org</a>寻求答案，谢谢。
+出现错误了~~~~~
 </div><br></td>
 </tr>
 </table>
