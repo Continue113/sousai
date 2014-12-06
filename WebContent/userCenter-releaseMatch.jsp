@@ -150,16 +150,18 @@
           <div class="control-group"> 
            <div class="releaseCourtBox"> 
             <label class="checkbox"><input type="checkbox" id="newCourtCheckbox" name="matchState_all" />添加新场地&nbsp;&nbsp;(<span id="newCourtRegion"><span class="newCourtProvince">请选择省</span>-<span class="newCourtCity">请选择市</span>-<span class="newCourtCountry">请选择区</span></span>)</label> 
-           </div> 
+           </div>
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="inputMatchRules">比赛规程：</label> 
           </div> 
           <textarea id="inputMatchRules" name="match.rule" required="required"></textarea> 
           <input type="text" class="hide" id="hideCourtId" value="" name="match.courtId" />
+          <input type="text" class="hide" id="hideIsCourt" value="false" name="isCourt" />
           <input type="text" class="hide" id="hideUserId" value="<s:property value="#session.userBean.userId"/>" name="match.userId" />
-          <div class="control-group"> 
-           <div class="controls"> 
+          <input type="text" class="hide" id="hideNewCourtRegionId" value="0" name="court.regionId"/>
+          <div class="control-group">
+           <div class="controls">
             <button type="submit" class="btn btn-success pull-right" id="rlsMatch">确定发布</button>
             <button type="reset" class="btn pull-right" id="resetMatchForm">重置</button>
             <button type="button" class="btn pull-right" name="preView">预览</button> 
@@ -192,7 +194,7 @@
   <script id="existCourts-template" type="text/x-handlebars-template">
     {{#each this}}
 
-		    <tr class="tritem"  data-info="{{data this}} data-courtid="{{id}}">
+		    <tr class="tritem"  data-info="{{data this}}" data-courtid="{{id}}">
 				<td>{{name}}</td>
 				<td>{{addr}}</td>
 				<td>{{courtTypeId}}</td>
@@ -387,7 +389,10 @@
   $("tbody").on("click",".tritem",function(event){
     $("tr").removeClass("active");
     $(this).addClass("active");
-    $("#hideCourtId").attr("value",$(this).attr("data-courtid"));
+    var matchCourtId = $(this).attr("data-courtid");
+    alert(matchCourtId);
+    $("#hideCourtId").attr("value",matchCourtId);
+    $("#hideIsCourt").attr("value","false");
   });
 
   //搜索现有场地
@@ -411,6 +416,8 @@
 		  }
 	  
 	  //alert(province + city + country);  //得到省市区信息
+	  //设置newCourtRegionId
+      $("#hideNewCourtRegionId").attr("value",regionId);
 	  
 	  //ajax 获取已有场地信息列表
 	  $.ajax({
@@ -491,7 +498,7 @@
 
     //删除已有$("#hideCourtId")中的name属性，将value设置为空 .attr("value","")
     $("#hideCourtId").removeAttr("name");
-
+    $("#hideIsCourt").attr("value","ture");
   }else {//若复选框不是选中的，则滑出已有场地列表并删除添加新场地的表单
     $("div.existCourtsBox").slideDown();
     $("div.inputCourt").slideUp();
@@ -499,6 +506,7 @@
 
     //恢复已有$("#hideCourtId")中的name属性，将value设置为空 .attr("value","")
     $("#hideCourtId").attr("name","match.courtId");
+    $("#hideIsCourt").attr("value","false");
   }
   });
 
@@ -534,7 +542,13 @@
     submitHandler: function(form){
       console.log("发布比赛成功");
       console.log("发布比赛已完成");
-      form.submit(); //没有这一句表单不会提交
+      //检查newCourtRegionId
+     if( $("#hideNewCourtRegionId").attr("value") == 0){
+    	 alert("请先找一找某个比赛地点是否已有您要的场地。");
+    	 return false;
+     }else{
+    	 form.submit(); //没有这一句表单不会提交
+     }
     },
   rules: {
     "match.name": {

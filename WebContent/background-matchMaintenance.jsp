@@ -336,13 +336,12 @@
               dataType: "json",
               success: function(rspdata) {
             	  if( rspdata == "success" ){
-                  	alert("删除成功");
-                      window.setTimeout("window.location='background-matchMaintenance.jsp'",1000); //成功后刷新本页
-          	  }else if( rspdata == "fail" ){
-          		  alert("删除失败");
-          	  }else{
-          		  alert("删除失败，错误代码未知");
-          	  }
+            		  alert("删除成功");
+            	  }else if( rspdata == "fail" ){
+            		  alert("删除失败");
+            	  }else{
+            		  alert("删除失败，错误代码未知");
+            	  }
               },
               error: function() {
                 alert("抱歉，发送信息到服务器出错了。");
