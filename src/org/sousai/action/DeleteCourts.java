@@ -1,15 +1,17 @@
 package org.sousai.action;
 
+import org.apache.struts2.ServletActionContext;
 import org.sousai.action.base.UserBaseAction;
 import org.sousai.common.*;
+import org.sousai.tools.JSONUtils;
 
-public class DeleteCourts extends UserBaseAction{
+public class DeleteCourts extends UserBaseAction {
 
 	private static final long serialVersionUID = -4757523051822498172L;
-	
-	//要删除的场地id数组
+
+	// 要删除的场地id数组
 	private String courtIds;
-	
+
 	/**
 	 * @return the courtIds
 	 */
@@ -18,7 +20,8 @@ public class DeleteCourts extends UserBaseAction{
 	}
 
 	/**
-	 * @param courtIds the courtIds to set
+	 * @param courtIds
+	 *            the courtIds to set
 	 */
 	public void setCourtIds(String courtIds) {
 		this.courtIds = courtIds;
@@ -31,21 +34,22 @@ public class DeleteCourts extends UserBaseAction{
 		return serialVersionUID;
 	}
 
-	public String execute() throws Exception{
+	public String execute() throws Exception {
 		String value = null;
-		try{
+		try {
 			String[] arrayCourtIds = courtIds.split(",");
 			Integer[] iCourtIds = new Integer[arrayCourtIds.length];
-			for(int i=0; i<arrayCourtIds.length; i++){
+			for (int i = 0; i < arrayCourtIds.length; i++) {
 				iCourtIds[i] = Integer.valueOf(arrayCourtIds[i]);
 			}
-		amg.deleteCourts(iCourtIds);
+			amg.deleteCourts(iCourtIds);
 			value = Constant.SUCCESS;
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 			value = Constant.FAIL;
 		}
 		System.out.println(value);
-		return value;
+		JSONUtils.toJson(ServletActionContext.getResponse(), value);
+		return null;
 	}
 }

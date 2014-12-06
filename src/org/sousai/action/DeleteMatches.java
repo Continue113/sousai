@@ -1,7 +1,9 @@
 package org.sousai.action;
 
+import org.apache.struts2.ServletActionContext;
 import org.sousai.action.base.UserBaseAction;
 import org.sousai.common.Constant;
+import org.sousai.tools.JSONUtils;
 
 public class DeleteMatches extends UserBaseAction{
 
@@ -28,6 +30,9 @@ public class DeleteMatches extends UserBaseAction{
 		return serialVersionUID;
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.opensymphony.xwork2.ActionSupport#execute()
+	 */
 	public String execute () throws Exception{
 		String value = null;
 		try{
@@ -44,6 +49,7 @@ public class DeleteMatches extends UserBaseAction{
 			value = Constant.FAIL;
 		}
 		System.out.println(value);
-		return value;
+		JSONUtils.toJson(ServletActionContext.getResponse(), value);
+		return null;
 	}
 }

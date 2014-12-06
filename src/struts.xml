@@ -150,15 +150,11 @@
 		<!--批量删除比赛-->
 		<action name="deleteCourts"
 			class="org.sousai.action.DeleteCourts">
-			<result name="success">background-courtMaintenance.jsp</result>
-			<result name="fail">error.jsp</result>
 		</action>
 		
 		<!--批量删除场地-->
 		<action name="deleteMatches"
 			class="org.sousai.action.DeleteMatches">
-			<result name="success">background-matchMaintenance.jsp</result>
-			<result name="fail">error.jsp</result>
 		</action>
 	</package>
 	
