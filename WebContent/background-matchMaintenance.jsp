@@ -280,7 +280,7 @@
 	//ajax接收所有比赛
 		function e(){
 		$("#ajaxState .load").show();console.log("start");
-		$.post("getAllMatch", null, function(data) {
+		$.post("getAllMatch", {currentPage:1,rows:20}, function(data) {
 	      console.log(data);//alert(data);
 	      var target = $(".matchTable > tbody"),template = Handlebars.compile($('#match-template').html());
 	      Handlebars.registerHelper("data",function(v){
@@ -335,7 +335,14 @@
               },
               dataType: "json",
               success: function(rspdata) {
-              	alert("删除成功");
+            	  if( rspdata == "success" ){
+                  	alert("删除成功");
+                      window.setTimeout("window.location='background-matchMaintenance.jsp'",1000); //成功后刷新本页
+          	  }else if( rspdata == "fail" ){
+          		  alert("删除失败");
+          	  }else{
+          		  alert("删除失败，错误代码未知");
+          	  }
               },
               error: function() {
                 alert("抱歉，发送信息到服务器出错了。");

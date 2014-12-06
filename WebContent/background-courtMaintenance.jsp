@@ -275,7 +275,7 @@
           <td class="court-title"><label for="{{id}}"><input type="checkbox" id="{{id}}"/>{{name}}</label></td> 
           <td class="match-type">{{matchType}}</td> 
           <td class="court-addr">{{addr}}</td> 
-          <td class="court-releaseTime">{{relTime}}</td> 
+          <td class="court-releaseTime">{{relDate}}</td> 
           <td class="court-releaseUser">{{userName}}</td> 
           <td class="court-oprate"><a href="javascript:void(0)" class="btn btn-mini pull-right">查看编辑</a></td> 
          </tr>
@@ -343,13 +343,19 @@
               },
               dataType: "json",
               success: function(rspdata) {
-              	alert("删除成功");
+            	  if( rspdata == "success" ){
+                    	alert("删除成功");
+                        window.setTimeout("window.location='background-courtMaintenance.jsp'",1000); //成功后刷新本页
+            	  }else if( rspdata == "fail" ){
+            		  alert("删除失败");
+            	  }else{
+            		  alert("删除失败，错误代码未知");
+            	  }
               },
               error: function() {
                 alert("抱歉，发送信息到服务器出错了。");
               },
             }); //ajax 已得到具体比赛类型
-
     	}
     });
 
