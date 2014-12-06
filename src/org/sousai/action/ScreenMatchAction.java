@@ -12,6 +12,45 @@ public class ScreenMatchAction extends UserBaseAction {
 	private int[] dayOfWeek;
 	private Integer state;
 	private Integer regionId;
+	private Integer currentPage;
+	private Integer rows;
+
+	/**
+	 * @return the currentPage
+	 */
+	public Integer getCurrentPage() {
+		return currentPage;
+	}
+
+	/**
+	 * @param currentPage
+	 *            the currentPage to set
+	 */
+	public void setCurrentPage(Integer currentPage) {
+		this.currentPage = currentPage;
+	}
+
+	/**
+	 * @return the rows
+	 */
+	public Integer getRows() {
+		return rows;
+	}
+
+	/**
+	 * @param rows
+	 *            the rows to set
+	 */
+	public void setRows(Integer rows) {
+		this.rows = rows;
+	}
+
+	/**
+	 * @return the serialversionuid
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 	/**
 	 * @return the dayOfWeek
@@ -58,17 +97,11 @@ public class ScreenMatchAction extends UserBaseAction {
 		this.regionId = regionId;
 	}
 
-	/**
-	 * @return the serialversionuid
-	 */
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
 
 	public String execute() throws Exception {
 		try {
 			JSONUtils.toJson(ServletActionContext.getResponse(),
-					umg.getMatchByParms(dayOfWeek, state, regionId) != null);
+					umg.getMatchByParms(dayOfWeek, state, regionId, currentPage, rows) != null);
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();

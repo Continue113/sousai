@@ -19,55 +19,47 @@ public class CommonManagerImpl implements CommonManager {
 	private MatchClassDao matchClassDao;
 	private MatchTypeDao matchTypeDao;
 	private MatchDao matchDao;
-	
-	public void setUserDao(UserDao userDao)
-	{
+
+	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
 	}
-	
-	public void setCourtDao(CourtDao courtDao)
-	{
+
+	public void setCourtDao(CourtDao courtDao) {
 		this.courtDao = courtDao;
 	}
-	
-	public void setCourtPicDao(CourtPicDao courtPicDao)
-	{
+
+	public void setCourtPicDao(CourtPicDao courtPicDao) {
 		this.courtPicDao = courtPicDao;
 	}
-	
-	public void setMesgDao(MesgDao mesgDao)
-	{
+
+	public void setMesgDao(MesgDao mesgDao) {
 		this.mesgDao = mesgDao;
 	}
-	
-	public void setRegionDao(RegionDao regionDao)
-	{
+
+	public void setRegionDao(RegionDao regionDao) {
 		this.regionDao = regionDao;
 	}
-	
-	public void setCourtTypeDao(CourtTypeDao courtTypeDao)
-	{
+
+	public void setCourtTypeDao(CourtTypeDao courtTypeDao) {
 		this.courtTypeDao = courtTypeDao;
 	}
-	
-	public void setMatchClassDao(MatchClassDao matchClassDao)
-	{
+
+	public void setMatchClassDao(MatchClassDao matchClassDao) {
 		this.matchClassDao = matchClassDao;
 	}
-	public void setMatchTypeDao(MatchTypeDao matchTypeDao)
-	{
+
+	public void setMatchTypeDao(MatchTypeDao matchTypeDao) {
 		this.matchTypeDao = matchTypeDao;
 	}
-	
-	public void setMatchDao(MatchDao matchDao)
-	{
+
+	public void setMatchDao(MatchDao matchDao) {
 		this.matchDao = matchDao;
 	}
-	
+
 	@Override
 	public List<Region> getProvince() {
 		// TODO Auto-generated method stub
-		//0为数据库中中国的id
+		// 0为数据库中中国的id
 		return regionDao.getSon(1);
 	}
 
@@ -76,7 +68,8 @@ public class CommonManagerImpl implements CommonManager {
 		// TODO Auto-generated method stub
 		MyPrint.myPrint("in");
 		MyPrint.myPrint("cmg.getCity() now");
-		MyPrint.myPrint("provinceCode = "+provinceCode+" /n order = "+ order);
+		MyPrint.myPrint("provinceCode = " + provinceCode + " /n order = "
+				+ order);
 		return regionDao.getSonByCode(provinceCode, order);
 	}
 
@@ -93,7 +86,8 @@ public class CommonManagerImpl implements CommonManager {
 	}
 
 	@Override
-	public List<CourtType> findCourtTypeByMatchTypeId(Integer id) throws Exception {
+	public List<CourtType> findCourtTypeByMatchTypeId(Integer id)
+			throws Exception {
 		// TODO Auto-generated method stub
 		return courtTypeDao.findByMatchTypeId(id);
 	}
@@ -105,7 +99,8 @@ public class CommonManagerImpl implements CommonManager {
 	}
 
 	@Override
-	public List<MatchType> findMatchTypeByMatchClassIdEpt(Integer mcId, Integer id) {
+	public List<MatchType> findMatchTypeByMatchClassIdEpt(Integer mcId,
+			Integer id) {
 		// TODO Auto-generated method stub
 		return matchTypeDao.findAllByMcIdExcept(mcId, id);
 	}
@@ -117,16 +112,17 @@ public class CommonManagerImpl implements CommonManager {
 	}
 
 	@Override
-	public List<MatchClass> findAllMatchClassEpt(Integer id) throws Exception{
+	public List<MatchClass> findAllMatchClassEpt(Integer id) throws Exception {
 		// TODO Auto-generated method stub
 		MyPrint.myPrint("in findAllMatchClassEpt");
 		return matchClassDao.findAllExcept(id);
 	}
 
 	@Override
-	public List<MatchBean> findMatchByMatchTypeName(String typeName) {
+	public List<MatchBean> findMatchByMatchTypeName(String typeName,
+			int currentPage, int rows) {
 		// TODO Auto-generated method stub
-		return matchDao.findByMatchTypeName(typeName);
+		return matchDao.findByMatchTypeName(typeName, currentPage, rows);
 	}
 
 }

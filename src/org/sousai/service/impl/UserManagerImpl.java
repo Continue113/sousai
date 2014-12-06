@@ -385,9 +385,9 @@ public class UserManagerImpl implements UserManager {
 
 	@Override
 	public List<MatchBean> getMatchByParms(int[] dayOfWeek, int state,
-			int regionId) {
+			int regionId, int currentPage, int rows) {
 		return (List<MatchBean>) matchDao.findByParms(dayOfWeek, state,
-				new Date(), regionId);
+				new Date(), regionId, currentPage, rows);
 	}
 
 	@Override
@@ -406,16 +406,18 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public List<MatchBean> getUsersFavorMatch(Integer userId) {
-		return (List<MatchBean>) matchDao.findByMarkingUserId(userId);
+	public List<MatchBean> getUsersFavorMatch(Integer userId, int currentPage,
+			int rows) {
+		return (List<MatchBean>) matchDao.findByMarkingUserId(userId,
+				currentPage, rows);
 	}
 
 	@Override
-	public boolean isExeed(Integer userId,int maxCount, int type) {
+	public boolean isExeed(Integer userId, int maxCount, int type) {
 		boolean value = true;
 		switch (type) {
 		case 0:
-			value = matchDao.countRelMatchPerDay(userId) > maxCount; 
+			value = matchDao.countRelMatchPerDay(userId) > maxCount;
 			break;
 		case 1:
 			value = matchDao.countRelMatchPerDay(userId) > maxCount;

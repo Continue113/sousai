@@ -26,7 +26,7 @@ public interface AdminManager {
 	 * 
 	 * @return
 	 */
-	public List<MatchBean> getAllMatch();
+	public List<MatchBean> getAllMatch(int currentPage, int rows);
 
 	/**
 	 * 获取所有用户

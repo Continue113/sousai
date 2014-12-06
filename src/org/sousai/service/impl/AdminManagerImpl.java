@@ -69,8 +69,8 @@ public class AdminManagerImpl implements AdminManager {
 		return courtDao.findAll();
 	}
 
-	public List<MatchBean> getAllMatch() {
-		return matchDao.findAll();
+	public List<MatchBean> getAllMatch(int currentPage, int rows) {
+		return matchDao.findAll(currentPage, rows);
 	}
 
 	public List<UserBean> getAllUser() {

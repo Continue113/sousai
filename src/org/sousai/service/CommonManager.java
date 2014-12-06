@@ -79,5 +79,5 @@ public interface CommonManager
 	 * @param typeName	球类名称
 	 * @return
 	 */
-	public List<MatchBean> findMatchByMatchTypeName(String typeName);
+	public List<MatchBean> findMatchByMatchTypeName(String typeName,int currentPage, int rows);
 }

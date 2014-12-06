@@ -53,12 +53,14 @@ public class MatchDaoHibernate extends HibernateDaoSupport implements MatchDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<MatchBean> findAll() {
+	public List<MatchBean> findAll(int currentPage, int rows) {
 		String hql = selectMatchBean;
 		Session session = getHibernateTemplate().getSessionFactory()
 				.getCurrentSession();
 		try {
-			return (List<MatchBean>) session.createQuery(hql).list();
+			return (List<MatchBean>) session.createQuery(hql)
+					.setMaxResults(rows)
+					.setFirstResult((currentPage - 1) * rows).list();
 		} catch (Exception e) {
 			e.printStackTrace();
 			if (e.getCause() != null)
@@ -69,13 +71,14 @@ public class MatchDaoHibernate extends HibernateDaoSupport implements MatchDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<MatchBean> findByUser(User user) {
+	public List<MatchBean> findByUser(User user, int currentPage, int rows) {
 		String hql = selectMatchBean + "and m.userId=?";
 		Session session = getHibernateTemplate().getSessionFactory()
 				.getCurrentSession();
 		try {
 			return (List<MatchBean>) session.createQuery(hql)
-					.setInteger(0, user.getId()).list();
+					.setInteger(0, user.getId()).setMaxResults(rows)
+					.setFirstResult((currentPage - 1) * rows).list();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -84,13 +87,15 @@ public class MatchDaoHibernate extends HibernateDaoSupport implements MatchDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<MatchBean> findByUserId(Integer userId) {
+	public List<MatchBean> findByUserId(Integer userId, int currentPage,
+			int rows) {
 		String hql = selectMatchBean + "and m.userId=?";
 		Session session = getHibernateTemplate().getSessionFactory()
 				.getCurrentSession();
 		try {
 			return (List<MatchBean>) session.createQuery(hql)
-					.setInteger(0, userId).list();
+					.setInteger(0, userId).setMaxResults(rows)
+					.setFirstResult((currentPage - 1) * rows).list();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -99,7 +104,8 @@ public class MatchDaoHibernate extends HibernateDaoSupport implements MatchDao {
 	}
 
 	@Override
-	public List<MatchBean> findByMatchTypeId(Integer matchTypeId) {
+	public List<MatchBean> findByMatchTypeId(Integer matchTypeId,
+			int currentPage, int rows) {
 		return null;
 		// String hql = selectMatchBean + "and m.type=?";
 		// Session session =
@@ -114,25 +120,29 @@ public class MatchDaoHibernate extends HibernateDaoSupport implements MatchDao {
 	}
 
 	@Override
-	public List<MatchBean> findByMatchTypeName(String matchTypeName) {
+	public List<MatchBean> findByMatchTypeName(String matchTypeName,
+			int currentPage, int rows) {
 		return null;
 		// return (List<Match>) getHibernateTemplate().find(
 		// "from Match where Type=?", matchTypeName);
 	}
 
 	@Override
-	public List<MatchBean> findByMatchClassId(Integer matchClassId) {
+	public List<MatchBean> findByMatchClassId(Integer matchClassId,
+			int currentPage, int rows) {
 		return null;
 	}
 
 	@Override
-	public List<MatchBean> findByMatchClassName(String matchClassName) {
+	public List<MatchBean> findByMatchClassName(String matchClassName,
+			int currentPage, int rows) {
 		return null;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<MatchBean> findByMarkingUserId(Integer userId) {
+	public List<MatchBean> findByMarkingUserId(Integer userId, int currentPage,
+			int rows) {
 		String hql = "select new org.sousai.vo.MatchBean(m.id,m.name,m.type,"
 				+ "m.beginTime,m.endTime,m.courtId,c.name,m.rule,m.relTime,"
 				+ "m.verify,m.score,m.userId,u.name) from Match m, Court c, User u, Usermark um "
@@ -141,7 +151,8 @@ public class MatchDaoHibernate extends HibernateDaoSupport implements MatchDao {
 				.getCurrentSession();
 		try {
 			return (List<MatchBean>) session.createQuery(hql)
-					.setInteger(0, userId).list();
+					.setInteger(0, userId).setMaxResults(rows)
+					.setFirstResult((currentPage - 1) * rows).list();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -150,7 +161,7 @@ public class MatchDaoHibernate extends HibernateDaoSupport implements MatchDao {
 
 	@Override
 	public List<MatchBean> findByParms(int[] dayOfWeek, int state, Date date,
-			Integer regionId) {
+			Integer regionId, int currentPage, int rows) {
 		return null;
 		// return (List<Match>);
 		// String hql = "from Match where ";
@@ -244,13 +255,13 @@ public class MatchDaoHibernate extends HibernateDaoSupport implements MatchDao {
 		int value = -1;
 		System.out.println(matchIds);
 		String strHql = "delete from Match where id in (:ids)";
-//		String strHql = "delete from Match where id in ("+matchIds+")";
+		// String strHql = "delete from Match where id in ("+matchIds+")";
 		try {
 			Session session = getHibernateTemplate().getSessionFactory()
 					.getCurrentSession();
 			Query q = session.createQuery(strHql);
 			q.setParameterList("ids", matchIds);
-//			System.out.println(q.getQueryString());
+			// System.out.println(q.getQueryString());
 			value = q.executeUpdate();
 		} catch (HibernateException e) {
 			e.printStackTrace();
