@@ -205,37 +205,36 @@
     {{/each}}
   </script>
   <script>
+  //定义函数
+
+	function e(crtPage,rs){
+		$("#ajaxState .load").show();console.log("start");
+		$.post("getAllUser", {currentPage:crtPage,rows:rs},  function(data) {
+    console.log(data);//alert(data);
+  var target = $(".userTable > tbody"),template = Handlebars.compile($('#user-template').html());
+  Handlebars.registerHelper("data",function(v){
+    //将当前对象转化为字符串，保存在data-info中
+    console.log(v);
+    var v1 = JSON.stringify(v);
+    //console.log("v1:"+v1);
+    return v1;
+  });
+  target.empty(); //清空tbody
+  target.html(template(data));
+  $("#ajaxState .load").hide();console.log("stop");
+  //出错或无结果
+  //target.empty(); //清空tbody
+  if(target.find("tr.user").length == 0){
+  $("#ajaxState .noresult").show();console.log("无结果");
+  }
+  //管理员界面表格列字数限制，溢出省略
+  $(".user-email").wordLimit(16);
+  });
+}
+  
   $(function(){
 	//ajax接受所有的用户
-		function e(){
-			$.post("getAllUser", null, function(data) {
-	      console.log(data);//alert(data);
-        var target = $(".userTable > tbody"),template = Handlebars.compile($('#user-template').html());
-        Handlebars.registerHelper("data",function(v){
-          //将当前对象转化为字符串，保存在data-info中
-          console.log(v);
-          var v1 = JSON.stringify(v);
-          //console.log("v1:"+v1);
-          return v1;
-        });
-        target.empty(); //清空tbody
-        target.html(template(data));
-        $("#ajaxState .load").hide();console.log("stop");
-	    //出错或无结果
-	    //target.empty(); //清空tbody
-	    if(target.find("tr.user").length == 0){
-	    $("#ajaxState .noresult").show();console.log("无结果");
-	    }
-        //管理员界面表格列字数限制，溢出省略
-        $(".user-email").wordLimit(16);
-	    });
-	}
-	function ajaxAll(){
-		$("#ajaxState .load").show();console.log("start");
-		window.setTimeout(e,5000);
-	}
-	ajaxAll();
-  
+	e(1,1);  
     //点击编辑用户隐藏List列表同时显示编辑用户
     $("tbody").on("click",".user-oprate > a",function(event){
         //显示禁用用户和保存修改用户选项，隐藏保存添加，同时根据data-info填补form，

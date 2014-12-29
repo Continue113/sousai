@@ -279,6 +279,33 @@
     {{/each}}
   </script>
   <script>
+  //定义函数
+  
+  function e(crtPage,rs){
+  	$("#ajaxState .load").show();console.log("start");
+  	$.post("getAllMatch", {currentPage:crtPage,rows:rs}, function(data) {
+      console.log(data);//alert(data);
+      var target = $(".matchTable > tbody"),template = Handlebars.compile($('#match-template').html());
+      Handlebars.registerHelper("data",function(v){
+    	  //将当前对象转化为字符串，保存在data-info中
+    	  console.log(v);
+    	  var v1 = JSON.stringify(v);
+    	  //console.log("v1:"+v1);
+    	  return v1;
+      });
+      target.empty(); //清空tbody
+  	target.html(template(data));
+      $("#ajaxState .load").hide();console.log("stop");
+      //出错或无结果
+      //target.empty(); //清空tbody
+      if(target.find("tr.match").length == 0){
+      $("#ajaxState .noresult").show();console.log("无结果");
+      }
+      //字数限制，溢出省略
+  	$("td").wordLimit();
+    });
+  }
+  
   $(function(){
 	//ajax接收所有比赛
 	e(1,1);
@@ -293,7 +320,7 @@
 			return false;
 		}else if(crtPage==2){
 			e(crtPage - 1,rs);
-			$("ul.pagination > li.active").text(crtPage - 1);
+			$("ul.pagination > li.active a").text(crtPage - 1);
 			$("ul.pagination > li.prior").addClass("disabled");
 		}else{
 			e(crtPage - 1,rs);
@@ -682,34 +709,7 @@
     // 编辑比赛的js代码，同比赛发布页面。 ***************************** END *****************************
     //***************************************************************************************
     
-    
   });
-  
-
-function e(crtPage,rs){
-	$("#ajaxState .load").show();console.log("start");
-	$.post("getAllMatch", {currentPage:crtPage,rows:rs}, function(data) {
-    console.log(data);//alert(data);
-    var target = $(".matchTable > tbody"),template = Handlebars.compile($('#match-template').html());
-    Handlebars.registerHelper("data",function(v){
-  	  //将当前对象转化为字符串，保存在data-info中
-  	  console.log(v);
-  	  var v1 = JSON.stringify(v);
-  	  //console.log("v1:"+v1);
-  	  return v1;
-    });
-    target.empty(); //清空tbody
-	target.html(template(data));
-    $("#ajaxState .load").hide();console.log("stop");
-    //出错或无结果
-    //target.empty(); //清空tbody
-    if(target.find("tr.match").length == 0){
-    $("#ajaxState .noresult").show();console.log("无结果");
-    }
-    //字数限制，溢出省略
-	$("td").wordLimit();
-  });
-}
   </script>  
  </body>
 </html>

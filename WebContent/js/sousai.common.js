@@ -10,7 +10,29 @@ $(function() {
 	    //   $(".isp").html(remote_ip_info.isp);
 	  });
    }*/
+	
+ //搜索栏模糊搜索
+	function search(crtPage,rs,kv){
 
+	      $.ajax({
+	          type: "POST",
+	          url: "searchMatch",
+	          contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+	          data: {currentPage:crtPage,rows:rs,keyValue:kv},
+	          dataType: "json",
+	          success: function(rspdata) {
+	        	  alert(rspdata);
+	          },
+	          error: function() {
+	            alert("抱歉。ajax错误。");
+	          },
+	        });
+	}
+	  $("#searchbox-match button").click(function() {
+		  var kv = $("#searchbox-match input[type='text']").val();
+		  alert(kv);
+		  search(1,1,kv);
+	      });
   //切换城市
   $("#changeCityBtn").click(function() {
     $(this).parents("p").hide();

@@ -156,8 +156,9 @@
     {{/each}}
   </script>
   <script>
-  $(function(){
-		//ajax接收所有比赛
+  //定义函数
+  
+  function e(crtPage,rs){
 		$.post("getAllMatch", null, function(data) {
 		      console.log(data);//alert(data);
 		      var target = $(".matchBoxs"),template = Handlebars.compile($('#match-template').html());
@@ -174,10 +175,14 @@
 	    	    $(".matchBox-court").wordLimit(20);
 	    	    $(".matchBox-info > a").wordLimit(28);
 		    });
-
-    	    //字数限制，溢出省略
-    	    $(".matchBox-court").wordLimit(13);
-    	    $(".matchBox-info > a").wordLimit(28);
+  }
+  
+  $(function(){
+	//ajax接收所有比赛
+	e(1,1);
+    //字数限制，溢出省略
+    $(".matchBox-court").wordLimit(13);
+    $(".matchBox-info > a").wordLimit(28);
      //日期选择器
      $( "#matchTimefrom" ).datepicker({
       defaultDate: "+1w",

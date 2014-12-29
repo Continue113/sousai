@@ -145,34 +145,37 @@
   </script>
   
   <script>
+  //定义函数
+
+	function e(crtPage,rs){
+	$("#ajaxState .load").show();console.log("start");
+	$.post("getAllMesg", {currentPage:crtPage,rows:rs},  function(data) {
+	  console.log(data);//alert(data);
+      var target = $(".evaluationTable > tbody"),template = Handlebars.compile($('#evaluation-template').html());
+      Handlebars.registerHelper("data",function(v){
+        //将当前对象转化为字符串，保存在data-info中
+        console.log(v);
+        var v1 = JSON.stringify(v);
+        //console.log("v1:"+v1);
+        return v1;
+      });
+      target.empty(); //清空tbody
+      target.html(template(data));
+      $("#ajaxState .load").hide();console.log("stop");
+	    //出错或无结果
+	    //target.empty(); //清空tbody
+	    if(target.find("tr.evaluation").length == 0){
+	    $("#ajaxState .noresult").show();console.log("无结果");
+	    }
+      //管理员界面表格列字数限制，溢出省略
+      $("td > label").wordLimit();
+      $(".court-name").wordLimit();
+      });
+	}
+  
   $(function(){
 	//ajax接受所有的评论
-		function e(){
-		$("#ajaxState .load").show();console.log("start");
-		$.post("getAllMesg", null, function(data) {
-		  console.log(data);//alert(data);
-	        var target = $(".evaluationTable > tbody"),template = Handlebars.compile($('#evaluation-template').html());
-	        Handlebars.registerHelper("data",function(v){
-	          //将当前对象转化为字符串，保存在data-info中
-	          console.log(v);
-	          var v1 = JSON.stringify(v);
-	          //console.log("v1:"+v1);
-	          return v1;
-	        });
-	        target.empty(); //清空tbody
-	        target.html(template(data));
-	        $("#ajaxState .load").hide();console.log("stop");
-		    //出错或无结果
-		    //target.empty(); //清空tbody
-		    if(target.find("tr.evaluation").length == 0){
-		    $("#ajaxState .noresult").show();console.log("无结果");
-		    }
-	        //管理员界面表格列字数限制，溢出省略
-	        $("td > label").wordLimit();
-	        $(".court-name").wordLimit();
-	        });
-		}
-	e();
+	e(1,1);
   });
   </script>  
  </body>

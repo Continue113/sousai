@@ -54,7 +54,7 @@
        <li><h5><a href="javascript:void(0)"><i class="icon-minus"></i>网站统计</a></h5></li> 
        <li><a href="background-regUserCount.jsp"><i class="icon-chevron-down "></i>注册用户</a></li> 
        <li><a href="background-releaseCount.jsp"><i class="icon-chevron-down "></i>发布统计</a></li> 
-       <li><a href="background-visitCount.jsp"><i class="icon-chevron-down "></i>访问量</a></li> 
+       <li><a href="background-visitCount.jsp"><i class="icon-chevron-down "></i>访问量</a></li>
       </ul> 
      </div> 
      <!-- /background-remind & backgroundMenu --> 
@@ -283,9 +283,51 @@
     {{/each}}
   </script>
   <script>
+  //定义函数
+
+	function e(crtPage,rs){
+	  $("#ajaxState .load").show();console.log("start");
+	  //alert("testAl");
+      //rs = $(".selectParticularMatchType option:selected").attr("value");
+    $.ajax({
+      type: "POST",
+      url: "getAllCourt",
+      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+      data: {currentPage:crtPage,rows:rs},
+      dataType: "json",
+      success: function(rspdata) {
+	      console.log(rspdata);//alert(rspdata);
+      var target = $(".courtTable > tbody"),template = Handlebars.compile($('#court-template').html());
+      Handlebars.registerHelper("data",function(v){
+        //将当前对象转化为字符串，保存在data-info中
+        console.log(v);
+        var v1 = JSON.stringify(v);
+        //console.log("v1:"+v1);
+        return v1;
+      });
+      target.empty(); //清空tbody
+      target.html(template(rspdata));
+      $("#ajaxState .load").hide();console.log("stop");
+	    //出错或无结果
+	    //target.empty(); //清空tbody
+	    if(target.find("tr.court").length == 0){
+	    $("#ajaxState .noresult").show();console.log("无结果");
+	    }
+	    //管理员界面表格列字数限制，溢出省略
+	    $("td > label").wordLimit();
+	    $(".court-address").wordLimit();
+	    },
+      error: function() {
+	      $("#ajaxState .noresult").show();console.log("出错了");
+        alert("抱歉，获取场场地列表出错了。");
+      },
+    }); //ajax 已得到场地类型
+}
+  
   $(function(){
 	  //ajax接收所有的场地
-	  e();
+	 e(1,1);
+	  
     //点击编辑比赛隐藏List列表同时显示编辑比赛
     $("tbody").on("click",".court-oprate > a",function(event){
       $(".courtList").slideUp();
@@ -568,66 +610,6 @@
     // 编辑场地的js代码，同场地发布页面。 ***************************** END *****************************
     //***************************************************************************************
     
-		function e(){
-		  $("#ajaxState .load").show();console.log("start");
-	      $.ajax({
-	        type: "POST",
-	        url: "getAllCourt",
-	        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-	        data: null,/* {
-	          "matchId": tgPrt.find(".selectParticularMatchType option:selected").attr("value"),
-	        }, */
-	        dataType: "json",
-	        success: function(rspdata) {
-		      console.log(rspdata);//alert(rspdata);
-	        var target = $(".courtTable > tbody"),template = Handlebars.compile($('#court-template').html());
-	        Handlebars.registerHelper("data",function(v){
-	          //将当前对象转化为字符串，保存在data-info中
-	          console.log(v);
-	          var v1 = JSON.stringify(v);
-	          //console.log("v1:"+v1);
-	          return v1;
-	        });
-	        target.empty(); //清空tbody
-	        target.html(template(rspdata));
-	        $("#ajaxState .load").hide();console.log("stop");
-		    //出错或无结果
-		    //target.empty(); //清空tbody
-		    if(target.find("tr.court").length == 0){
-		    $("#ajaxState .noresult").show();console.log("无结果");
-		    }
-		    //管理员界面表格列字数限制，溢出省略
-		    $("td > label").wordLimit();
-		    $(".court-address").wordLimit();
-		    },
-	        error: function() {
-		      $("#ajaxState .noresult").show();console.log("出错了");
-	          alert("抱歉，获取场场地列表出错了。");
-	        },
-	      }); //ajax 已得到场地类型
-	    /*$.post("getAllCourt", null, function(data) {
-	      console.log(data);//alert(data);
-        var target = $(".courtTable > tbody"),template = Handlebars.compile($('#court-template').html());
-        Handlebars.registerHelper("data",function(v){
-          //将当前对象转化为字符串，保存在data-info中
-          console.log(v);
-          var v1 = JSON.stringify(v);
-          //console.log("v1:"+v1);
-          return v1;
-        });
-        target.empty(); //清空tbody
-        target.html(template(data));
-        $("#ajaxState .load").hide();console.log("stop");
-	    //出错或无结果
-	    //target.empty(); //清空tbody
-	    if(target.find("tr.court").length == 0){
-	    $("#ajaxState .noresult").show();console.log("无结果");
-	    }
-	    //管理员界面表格列字数限制，溢出省略
-	    $("td > label").wordLimit();
-	    $(".court-address").wordLimit();
-	    });*/
-	  }
   </script>  
  </body>
 </html>

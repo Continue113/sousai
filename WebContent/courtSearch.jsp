@@ -169,37 +169,37 @@
     {{/each}}
   </script>
   <script>
+  //定义函数
+
+  function e(crtPage,rs){
+	$("#ajaxState .load").show();console.log("start");
+	$.post("getAllCourt", null, function(data) {
+      console.log(data);//alert(data);
+    var target = $(".courtBoxs"),template = Handlebars.compile($('#court-template').html());
+    Handlebars.registerHelper("data",function(v){
+      //将当前对象转化为字符串，保存在data-info中
+      console.log(v);
+      var v1 = JSON.stringify(v);
+      //console.log("v1:"+v1);
+      return v1;
+    });
+    //清空tbody并填入数据
+    target.html(template(data));
+    $("#ajaxState .load").hide();console.log("stop");
+    //出错或无结果
+    //target.empty(); //清空tbody
+    if(target.find("div.courtBox").length == 0){
+    $("#ajaxState .noresult").show();console.log("无结果");
+    }
+    //字数限制，溢出省略 
+    $(".courtBox-address").wordLimit(20);
+    $(".courtBox-evaluation p").wordLimit();
+    });
+}
+  
   $(function(){
 	  //ajax接收所有的场地
-	  function e(){
-		$.post("getAllCourt", null, function(data) {
-	      console.log(data);//alert(data);
-        var target = $(".courtBoxs"),template = Handlebars.compile($('#court-template').html());
-        Handlebars.registerHelper("data",function(v){
-          //将当前对象转化为字符串，保存在data-info中
-          console.log(v);
-          var v1 = JSON.stringify(v);
-          //console.log("v1:"+v1);
-          return v1;
-        });
-        //清空tbody并填入数据
-        target.html(template(data));
-	    $("#ajaxState .load").hide();console.log("stop");
-	    //出错或无结果
-	    //target.empty(); //清空tbody
-	    if(target.find("div.courtBox").length == 0){
-	    $("#ajaxState .noresult").show();console.log("无结果");
-	    }
-        //字数限制，溢出省略 
-        $(".courtBox-address").wordLimit(20);
-	    $(".courtBox-evaluation p").wordLimit();
-	    });
-	}
-	function ajaxAllUser(){
-		$("#ajaxState .load").show();console.log("start");
-		window.setTimeout(e,5000);
-	}
-	ajaxAllUser();
+	e(1,1);
 	  
     //鼠标hover matchbox
     $(".courtBoxs ").on('mouseenter','div.courtBox',function(){
