@@ -36,8 +36,9 @@ public interface AdminManager {
 	 * 
 	 * @return
 	 */
-	public List<UserBean> getAllUser();
+	public List<UserBean> getAllUser(int currentPage, int rows);
 
+	public int countAllUser();
 	/**
 	 * 批量删除比赛
 	 * @param courtIds	

@@ -68,14 +68,20 @@ public class AdminManagerImpl implements AdminManager {
 		return courtDao.findAll();
 	}
 
+	@Override
 	public List<MatchBean> getAllMatch(int currentPage, int rows) {
 		return matchDao.findAll(currentPage, rows);
 	}
 
-	public List<UserBean> getAllUser() {
-		return userDao.findAll();
+	@Override
+	public List<UserBean> getAllUser(int currentPage, int rows) {
+		return userDao.findPagedAll(currentPage, rows);
 	}
-
+	
+	@Override
+	public int countAllUser(){
+		return userDao.countAllUser();
+	}
 	@Override
 	public int deleteCourts(Integer[] courtIds) {
 		return courtDao.deleteCourts(courtIds);

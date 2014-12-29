@@ -17,7 +17,7 @@ import org.hibernate.HibernateException;
 import java.sql.SQLException;
 import java.util.List;
 
-public class UserDaoHibernate extends HibernateDaoSupport implements UserDao {
+public class UserDaoHibernate extends SqlHelper implements UserDao {
 	public User get(Integer id) {
 		return getHibernateTemplate().get(User.class, id);
 	}
@@ -41,7 +41,6 @@ public class UserDaoHibernate extends HibernateDaoSupport implements UserDao {
 		 * getHibernateTemplate().save(user).toString(); MyPrint.myPrint(test);
 		 * } catch(Exception e) { e.printStackTrace(); } return (long) 000000;
 		 */
-
 	}
 
 	@Override
@@ -96,5 +95,16 @@ public class UserDaoHibernate extends HibernateDaoSupport implements UserDao {
 		}
 		return null;
 	}
+	
+	@Override
+	public int countAllUser(){
+		String strHql = "select count(*) from User";
+		return count(strHql);
+	}
 
+	@Override
+	public List<UserBean> findPagedAll(int currentPage, int rows) {
+		String strHql = "from User";
+		return (List<UserBean>) findPagedModelList_HQL(strHql, currentPage, rows);
+	}
 }

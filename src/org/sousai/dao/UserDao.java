@@ -44,6 +44,7 @@ public interface UserDao {
 	 */
 	List<UserBean> findAll();
 	
+	List<UserBean> findPagedAll(int currentPage, int rows);
 	/**
 	 * ��ѯ�û��������ƥ���Userʵ��
 	 * @param user
@@ -58,6 +59,6 @@ public interface UserDao {
 	 */
 	User findByName(String name);
 	
-
+	int countAllUser();
 
 }
