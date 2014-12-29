@@ -75,7 +75,7 @@ public class SqlHelper extends HibernateDaoSupport {
 		try {
 			Session session = getHibernateTemplate().getSessionFactory()
 					.getCurrentSession();
-			value = (Integer) session.createQuery(strHql).uniqueResult();
+			value = ((Long) session.createQuery(strHql).uniqueResult()).intValue();
 
 		} catch (Exception e) {
 			e.printStackTrace();
