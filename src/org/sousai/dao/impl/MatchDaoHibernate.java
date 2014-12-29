@@ -4,22 +4,17 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.sousai.dao.MatchDao;
-import org.sousai.domain.Court;
 import org.sousai.domain.Match;
-import org.sousai.domain.MatchClass;
-import org.sousai.domain.MatchType;
 import org.sousai.domain.User;
 import org.sousai.tools.MyPrint;
 import org.sousai.vo.MatchBean;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-public class MatchDaoHibernate extends HibernateDaoSupport implements MatchDao {
+public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 
 	private final String selectMatchBean = "select new org.sousai.vo.MatchBean(m.id,m.name,m.type,"
 			+ "m.beginTime,m.endTime,m.courtId,c.name,m.rule,m.relTime,"
@@ -238,8 +233,6 @@ public class MatchDaoHibernate extends HibernateDaoSupport implements MatchDao {
 			String hql = "select count(*) from Match where date(relTime)=curdate() and userId=?";
 			Session session = getHibernateTemplate().getSessionFactory()
 					.getCurrentSession();
-			MyPrint.myPrint(String.valueOf(session.createQuery(hql)
-					.uniqueResult()));
 			Query q = session.createQuery(hql);
 			q.setInteger(0, userId);
 			value = Integer.valueOf(q.uniqueResult().toString()).intValue();
@@ -268,5 +261,42 @@ public class MatchDaoHibernate extends HibernateDaoSupport implements MatchDao {
 		}
 		return value;
 
+	}
+
+	private List<MatchBean> getModelList_HQL(String strHql) {
+		return (List<MatchBean>) findModelList_HQL(strHql);
+	}
+
+	private List<MatchBean> getPagedModelList_HQL(String strHql,
+			int currentPage, int pageSize) {
+		return (List<MatchBean>) findPagedModelList_HQL(strHql, currentPage,
+				pageSize);
+	}
+
+	private List<MatchBean> getModelList_SQL(String strSql) {
+		return (List<MatchBean>) findModelList_SQL(strSql, getClass());
+	}
+
+	private List<MatchBean> getPagedModelList_SQL(String strSql,
+			int currentPage, int pageSize) {
+		return (List<MatchBean>) findPagedModelList_SQL(strSql, currentPage,
+				pageSize, getClass());
+	}
+
+	@Override
+	public List<MatchBean> findByKeyValue(String keyValue) {
+		keyValue = " %" + keyValue + "% ";
+		String strHql = String.format(
+				"from Match where name like %1$s or rule like %1$s", keyValue);
+		return getModelList_HQL(strHql);
+	}
+
+	@Override
+	public List<MatchBean> findPagedByKeyValue(String keyValue,
+			int currentPage, int pageSize) {
+		keyValue = " %" + keyValue + "% ";
+		String strHql = String.format(
+				"from Match where name like %1$s or rule like %1$s", keyValue);
+		return getPagedModelList_HQL(strHql, currentPage, pageSize);
 	}
 }

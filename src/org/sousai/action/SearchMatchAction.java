@@ -5,18 +5,29 @@ import java.util.List;
 import org.apache.struts2.ServletActionContext;
 import org.sousai.action.base.UserBaseAction;
 import org.sousai.tools.JSONUtils;
-import org.sousai.tools.MyPrint;
 import org.sousai.vo.MatchBean;
 
-public class GetAllMatchAction extends UserBaseAction {
+public class SearchMatchAction extends UserBaseAction {
+
+	private static final long serialVersionUID = -3698280263257955734L;
+	Integer currentPage;
+	Integer pageSize;
+	String keyValue;
 
 	/**
-	 * 
+	 * @return the keyValue
 	 */
-	private static final long serialVersionUID = 7127750467955814690L;
+	public String getKeyValue() {
+		return keyValue;
+	}
 
-	private Integer currentPage;
-	private Integer rows;
+	/**
+	 * @param keyValue
+	 *            the keyValue to set
+	 */
+	public void setKeyValue(String keyValue) {
+		this.keyValue = keyValue;
+	}
 
 	/**
 	 * @return the currentPage
@@ -34,18 +45,18 @@ public class GetAllMatchAction extends UserBaseAction {
 	}
 
 	/**
-	 * @return the rows
+	 * @return the pageSize
 	 */
-	public Integer getRows() {
-		return rows;
+	public Integer getPageSize() {
+		return pageSize;
 	}
 
 	/**
-	 * @param rows
-	 *            the rows to set
+	 * @param pageSize
+	 *            the pageSize to set
 	 */
-	public void setRows(Integer rows) {
-		this.rows = rows;
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
 	}
 
 	/**
@@ -57,18 +68,15 @@ public class GetAllMatchAction extends UserBaseAction {
 
 	public String execute() throws Exception {
 		try {
-			System.out.println("amg = " + amg.toString());
-			System.out.println("currentPage = " + currentPage);
-			System.out.println("rows = " + rows);
 			if (currentPage == null) {
 				currentPage = 1;
 			}
-			if (rows == null) {
-				rows = 25;
+			if (pageSize == null) {
+				pageSize = 25;
 			}
-			List<MatchBean> list = amg.getAllMatch(currentPage, rows);
+			List<MatchBean> list = umg.getByKeyValue(keyValue, currentPage,
+					pageSize);
 			if (list != null) {
-				MyPrint.myPrint("list.size()=" + list.size());
 				JSONUtils.toJson(ServletActionContext.getResponse(), list);
 			} else {
 				JSONUtils.toJson(ServletActionContext.getResponse(), "fail");

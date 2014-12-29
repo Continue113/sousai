@@ -27,6 +27,7 @@ public class UserBean implements Serializable {
 	private String userPicId;
 	private Date userRegTime;
 	private Date userLastLogTime;
+	private Integer userLastRegionId;
 
 	// Ĭ�Ϲ�����
 	public UserBean() {
@@ -35,7 +36,7 @@ public class UserBean implements Serializable {
 	// ��ʼ���������ԵĹ�����
 	public UserBean(Integer userId, String userName, String userPwd,
 			String userEmail, char userType, String userPicId,
-			Timestamp userRegTime, Timestamp userLastLogTime) {
+			Timestamp userRegTime, Timestamp userLastLogTime, Integer userLastRegionId) {
 		this.setUserId(userId);
 		this.setUserName(userName);
 		this.setUserPwd(userPwd);
@@ -44,6 +45,7 @@ public class UserBean implements Serializable {
 		this.setUserPicId(userPicId);
 		this.setUserRegTime(userRegTime);
 		this.setUserLastLogTime(userLastLogTime);
+		this.setUserLastRegionId(userLastRegionId);
 	}
 
 	public UserBean(Integer userId, String userName, String userPwd,
@@ -147,4 +149,34 @@ public class UserBean implements Serializable {
 	public Date getUserLastLogTime() {
 		return this.userLastLogTime;
 	}
+
+	/**
+	 * @return the userLastRegionId
+	 */
+	public Integer getUserLastRegionId() {
+		return userLastRegionId;
+	}
+
+	/**
+	 * @param userLastRegionId the userLastRegionId to set
+	 */
+	public void setUserLastRegionId(Integer userLastRegionId) {
+		this.userLastRegionId = userLastRegionId;
+	}
+
+	/**
+	 * @return the serialversionuid
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	/**
+	 * @param userId the userId to set
+	 */
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+	
+	
 }

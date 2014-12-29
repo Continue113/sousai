@@ -169,9 +169,8 @@ public class CourtDaoHibernate extends HibernateDaoSupport implements CourtDao {
 	public int countRelMatchPerDay(Integer userId) {
 		int value = -1;
 		try{
-			String hql = "select count(*) from Court where date(relTime)=curdate() and userId=?";
+			String hql = "select count(*) from Court where date(relDate)=curdate() and userId=?";
 			Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
-			MyPrint.myPrint(String.valueOf(session.createQuery(hql).uniqueResult()));
 			Query q = session.createQuery(hql);
 			q.setInteger(0, userId);
 			value = Integer.valueOf(q.uniqueResult().toString()).intValue();

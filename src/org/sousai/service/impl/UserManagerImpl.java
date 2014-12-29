@@ -420,11 +420,17 @@ public class UserManagerImpl implements UserManager {
 			value = matchDao.countRelMatchPerDay(userId) > maxCount;
 			break;
 		case 1:
-			value = matchDao.countRelMatchPerDay(userId) > maxCount;
+			value = courtDao.countRelMatchPerDay(userId) > maxCount;
 			break;
 		default:
 			break;
 		}
 		return value;
+	}
+
+	@Override
+	public List<MatchBean> getByKeyValue(String keyValue, int currentPage,
+			int pageSize) {
+		return matchDao.findPagedByKeyValue(keyValue, currentPage, pageSize);
 	}
 }

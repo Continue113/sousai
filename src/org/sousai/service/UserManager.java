@@ -202,4 +202,6 @@ public interface UserManager
 	 * @return	
 	 */
 	public boolean isExeed(Integer userId, int maxCount, int type);
+	
+	public List<MatchBean> getByKeyValue(String keyValue, int currentPage, int pageSize);
 }

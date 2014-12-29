@@ -6,7 +6,7 @@ import org.sousai.action.base.*;
 import org.sousai.domain.*;
 import org.sousai.tools.*;
 import org.sousai.vo.RegionBean;
-
+import org.sousai.vo.UserBean;
 import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -82,7 +82,8 @@ public class SelRegionAction extends UserBaseAction {
 	}
 
 	/**
-	 * @param regionBean the regionBean to set
+	 * @param regionBean
+	 *            the regionBean to set
 	 */
 	public void setRegionBean(RegionBean regionBean) {
 		this.regionBean = regionBean;
@@ -154,23 +155,31 @@ public class SelRegionAction extends UserBaseAction {
 									.getContext().getSession()
 									.get("regionBean");
 							tRegionBean.setCId(regionBean.getCId());
-							MyPrint.myPrint("regionBean.getPName() = "+regionBean.getCName());
+							MyPrint.myPrint("regionBean.getCName() = "
+									+ regionBean.getCName());
 							tRegionBean.setCName(regionBean.getCName());
 							tRegionBean.setCode(regionBean.getCode());
 							tRegionBean.setPId(regionBean.getPId());
-							MyPrint.myPrint("regionBean.getPName() = "+regionBean.getPName());
+							MyPrint.myPrint("regionBean.getPName() = "
+									+ regionBean.getPName());
 							tRegionBean.setPName(regionBean.getPName());
-							MyPrint.myPrint("session.get(\"regionBean\").getcName() = " 
-							+ ((RegionBean) ActionContext.getContext().getSession().get("regionBean")).getCName() );
+							MyPrint.myPrint("session.get(\"regionBean\").getcName() = "
+									+ ((RegionBean) ActionContext.getContext()
+											.getSession().get("regionBean"))
+											.getCName());
 						}
 						// 选省->选市，这种情况下需要将regionBean的pName，cName等设定好之后再一起放到session
 						else {
-							MyPrint.myPrint("regionBean.getPName() = "+regionBean.getCName());
-							MyPrint.myPrint("regionBean.getPName() = "+regionBean.getPName());
+							MyPrint.myPrint("regionBean.getPName() = "
+									+ regionBean.getCName());
+							MyPrint.myPrint("regionBean.getPName() = "
+									+ regionBean.getPName());
 							ActionContext.getContext().getSession()
 									.put("regionBean", regionBean);
-							MyPrint.myPrint("session.get(\"regionBean\").getcName() = " 
-									+ ((RegionBean) ActionContext.getContext().getSession().get("regionBean")).getCName() );
+							MyPrint.myPrint("session.get(\"regionBean\").getcName() = "
+									+ ((RegionBean) ActionContext.getContext()
+											.getSession().get("regionBean"))
+											.getCName());
 						}
 						JSONUtils.toJson(ServletActionContext.getResponse(),
 								SUCCESS);
@@ -180,6 +189,17 @@ public class SelRegionAction extends UserBaseAction {
 				} catch (Exception e) {
 					e.printStackTrace();
 					JSONUtils.toJson(ServletActionContext.getResponse(), FAIL);
+				}
+				UserBean userBean = (UserBean) ActionContext.getContext()
+						.getSession().get("userBean");
+				if (userBean != null) {
+					User user = new User(userBean);
+					user.setLastRegionId(((RegionBean) ActionContext
+							.getContext().getSession().get("regionBean"))
+							.getCId());
+					umg.updateUser(user);
+				} else {
+					MyPrint.myPrint("userBean = " + userBean);
 				}
 				return null;
 			}

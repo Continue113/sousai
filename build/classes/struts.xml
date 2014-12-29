@@ -156,6 +156,11 @@
 		<action name="deleteMatches"
 			class="org.sousai.action.DeleteMatches">
 		</action>
+	
+		<!--搜寻比赛-->		
+		<action name="searchMatch" 
+			class="org.sousai.action.SearchMatchAction">
+		</action>
 	</package>
 	
 	

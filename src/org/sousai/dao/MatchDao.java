@@ -80,4 +80,14 @@ public interface MatchDao {
 	 * @return
 	 */
 	int deleteMatches(Integer[] matchIds);
+	
+	/**
+	 * 模糊匹配某个字段
+	 * @param keyValue
+	 * @return
+	 */
+	List<MatchBean> findByKeyValue(String keyValue);
+
+	List<MatchBean> findPagedByKeyValue(String keyValue, int currentPage,
+			int pageSize);
 }

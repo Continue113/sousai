@@ -18,6 +18,7 @@ public class User implements Serializable{
 	private String picId;
 	private Date regTime;
 	private Date lastLogTime;
+	private Integer lastRegionId;
 	
 	//默认构造函数	
 	public User(){
@@ -32,6 +33,7 @@ public class User implements Serializable{
 		this.pwd = userBean.getUserPwd();
 		this.regTime = userBean.getUserRegTime();
 		this.type = userBean.getUserType();
+		this.lastRegionId = userBean.getUserLastRegionId();
 	}
 	/**
 	 * @return the id
@@ -129,6 +131,21 @@ public class User implements Serializable{
 	public void setLastLogTime(Date lastLogTime) {
 		this.lastLogTime = lastLogTime;
 	}
+	
+	/**
+	 * @return the lastRegionId
+	 */
+	public Integer getLastRegionId() {
+		return lastRegionId;
+	}
+
+	/**
+	 * @param lastRegionId the lastRegionId to set
+	 */
+	public void setLastRegionId(Integer lastRegionId) {
+		this.lastRegionId = lastRegionId;
+	}
+
 	/**
 	 * @return the serialversionuid
 	 */
