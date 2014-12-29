@@ -48,8 +48,9 @@ public interface CourtDao {
 	 * 获取所有场地
 	 * 
 	 * @return 所有场地
+	 * @throws Exception 
 	 */
-	List<CourtBean> findAll();
+	List<CourtBean> findAll() throws Exception;
 
 	/**
 	 * 根据用户,获取用户所发布的所有场地
@@ -117,4 +118,10 @@ public interface CourtDao {
 	 * @return
 	 */
 	int deleteCourts(Integer[] courtIds);
+	
+	/**
+	 * 查询总比赛数
+	 * @return
+	 */
+	int countMatch();
 }

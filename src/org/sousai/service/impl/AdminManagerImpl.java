@@ -64,8 +64,7 @@ public class AdminManagerImpl implements AdminManager {
 	}
 
 	@Override
-	public List<CourtBean> getAllCourt() {
-		// TODO Auto-generated method stub
+	public List<CourtBean> getAllCourt() throws Exception {
 		return courtDao.findAll();
 	}
 
@@ -86,5 +85,15 @@ public class AdminManagerImpl implements AdminManager {
 	public int deleteMatches(Integer[] matchIds) {
 		System.out.println(matchIds);
 		return matchDao.deleteMatches(matchIds);
+	}
+
+	@Override
+	public int countAllCourt() throws Exception {
+		return courtDao.countMatch();
+	}
+
+	@Override
+	public int countAllMatch() throws Exception {
+		return matchDao.countMatch();
 	}
 }

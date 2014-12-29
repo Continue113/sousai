@@ -18,9 +18,11 @@ public interface AdminManager {
 	 * 获取所有场地
 	 * 
 	 * @return
+	 * @throws Exception 
 	 */
-	public List<CourtBean> getAllCourt();
-
+	public List<CourtBean> getAllCourt() throws Exception;
+	
+	public int countAllCourt() throws Exception;
 	/**
 	 * 获取所有比赛
 	 * 
@@ -28,6 +30,7 @@ public interface AdminManager {
 	 */
 	public List<MatchBean> getAllMatch(int currentPage, int rows);
 
+	public int countAllMatch() throws Exception;
 	/**
 	 * 获取所有用户
 	 * 

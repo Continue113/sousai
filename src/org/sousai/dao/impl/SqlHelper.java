@@ -12,7 +12,7 @@ public class SqlHelper extends HibernateDaoSupport {
 	public List<?> findModelList_HQL(String strHql) {
 		List<?> list = null;
 		try {
-			Session session = new Configuration().buildSessionFactory()
+			Session session = getHibernateTemplate().getSessionFactory()
 					.getCurrentSession();
 			Query q = session.createQuery(strHql);
 			list = q.list();
@@ -26,7 +26,10 @@ public class SqlHelper extends HibernateDaoSupport {
 			int pageSize) {
 		List<?> list = null;
 		try {
-			Session session = new Configuration().buildSessionFactory()
+			// Session session = new
+			// Configuration().configure().buildSessionFactory()
+			// .getCurrentSession();
+			Session session = getHibernateTemplate().getSessionFactory()
 					.getCurrentSession();
 			Query q = session.createQuery(strHql);
 			q.setMaxResults(pageSize);
@@ -42,7 +45,7 @@ public class SqlHelper extends HibernateDaoSupport {
 			int pageSize, Class<?> c) {
 		List<?> list = null;
 		try {
-			Session session = new Configuration().buildSessionFactory()
+			Session session = getHibernateTemplate().getSessionFactory()
 					.getCurrentSession();
 			Query q = session.createSQLQuery(strSql).addEntity(c);
 			q.setMaxResults(pageSize);
@@ -57,7 +60,7 @@ public class SqlHelper extends HibernateDaoSupport {
 	public List<?> findModelList_SQL(String strSql, Class<?> c) {
 		List<?> list = null;
 		try {
-			Session session = new Configuration().buildSessionFactory()
+			Session session = getHibernateTemplate().getSessionFactory()
 					.getCurrentSession();
 			Query q = session.createSQLQuery(strSql).addEntity(c);
 			list = q.list();
@@ -65,5 +68,18 @@ public class SqlHelper extends HibernateDaoSupport {
 			e.printStackTrace();
 		}
 		return list;
+	}
+
+	public int count(String strHql) {
+		int value = -1;
+		try {
+			Session session = getHibernateTemplate().getSessionFactory()
+					.getCurrentSession();
+			value = (Integer) session.createQuery(strHql).uniqueResult();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return value;
 	}
 }

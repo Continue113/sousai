@@ -11,7 +11,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-public class CourtDaoHibernate extends HibernateDaoSupport implements CourtDao {
+public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 //	private String selectCourtBean = "select c.ID,c.NAME,c.COURTTYPEID,ct.NAME,c.MATCHTYPE,"
 //			+ "c.REGIONID,c.REGION,c.ADDR,c.TABLENUM,c.TEL,"
 //			+ "c.MATCHCOUNT,c.PRICE,c.WORKTIME,c.INTRO,c.VERIFY,"
@@ -68,14 +68,13 @@ public class CourtDaoHibernate extends HibernateDaoSupport implements CourtDao {
 	}
 
 	@Override
-	public List<CourtBean> findAll() {
+	public List<CourtBean> findAll() throws Exception{
 		Session session = getHibernateTemplate().getSessionFactory()
-				.openSession();
+				.getCurrentSession();
 		String hql = selectCourtBean;
 		Query q = session.createQuery(hql);
 		return extracted(q);
 	}
-
 
 	@Override
 	public List<CourtBean> findByUser(User user) {
@@ -196,4 +195,9 @@ public class CourtDaoHibernate extends HibernateDaoSupport implements CourtDao {
 		return value;
 	}
 
+	@Override
+	public int countMatch() {
+		String strHql = "select count(*) from Court";
+		return count(strHql);
+	}
 }

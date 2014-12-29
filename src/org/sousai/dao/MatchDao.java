@@ -90,4 +90,6 @@ public interface MatchDao {
 
 	List<MatchBean> findPagedByKeyValue(String keyValue, int currentPage,
 			int pageSize);
+
+	int countMatch();
 }

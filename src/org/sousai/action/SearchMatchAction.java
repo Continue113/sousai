@@ -11,7 +11,7 @@ public class SearchMatchAction extends UserBaseAction {
 
 	private static final long serialVersionUID = -3698280263257955734L;
 	Integer currentPage;
-	Integer pageSize;
+	Integer rows;
 	String keyValue;
 
 	/**
@@ -45,18 +45,18 @@ public class SearchMatchAction extends UserBaseAction {
 	}
 
 	/**
-	 * @return the pageSize
+	 * @return the rows
 	 */
-	public Integer getPageSize() {
-		return pageSize;
+	public Integer getRows() {
+		return rows;
 	}
 
 	/**
-	 * @param pageSize
-	 *            the pageSize to set
+	 * @param rows
+	 *            the rows to set
 	 */
-	public void setPageSize(Integer pageSize) {
-		this.pageSize = pageSize;
+	public void setRows(Integer rows) {
+		this.rows = rows;
 	}
 
 	/**
@@ -71,11 +71,11 @@ public class SearchMatchAction extends UserBaseAction {
 			if (currentPage == null) {
 				currentPage = 1;
 			}
-			if (pageSize == null) {
-				pageSize = 25;
+			if (rows == null) {
+				rows = 25;
 			}
 			List<MatchBean> list = umg.getByKeyValue(keyValue, currentPage,
-					pageSize);
+					rows);
 			if (list != null) {
 				JSONUtils.toJson(ServletActionContext.getResponse(), list);
 			} else {

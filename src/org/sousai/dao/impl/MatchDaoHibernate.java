@@ -285,7 +285,7 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 
 	@Override
 	public List<MatchBean> findByKeyValue(String keyValue) {
-		keyValue = " %" + keyValue + "% ";
+		keyValue = " '%" + keyValue + "%' ";
 		String strHql = String.format(
 				"from Match where name like %1$s or rule like %1$s", keyValue);
 		return getModelList_HQL(strHql);
@@ -294,9 +294,15 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 	@Override
 	public List<MatchBean> findPagedByKeyValue(String keyValue,
 			int currentPage, int pageSize) {
-		keyValue = " %" + keyValue + "% ";
+		keyValue = " '%" + keyValue + "%' ";
 		String strHql = String.format(
 				"from Match where name like %1$s or rule like %1$s", keyValue);
 		return getPagedModelList_HQL(strHql, currentPage, pageSize);
+	}
+	
+	@Override
+	public int countMatch(){
+		String strHql = "select count(*) from Match";
+		return count(strHql);
 	}
 }

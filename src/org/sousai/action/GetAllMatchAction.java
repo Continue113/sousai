@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.struts2.ServletActionContext;
 import org.sousai.action.base.UserBaseAction;
+import org.sousai.domain.FrontMessage;
 import org.sousai.tools.JSONUtils;
 import org.sousai.tools.MyPrint;
 import org.sousai.vo.MatchBean;
@@ -67,9 +68,11 @@ public class GetAllMatchAction extends UserBaseAction {
 				rows = 25;
 			}
 			List<MatchBean> list = amg.getAllMatch(currentPage, rows);
+			int count = amg.countAllMatch();
+			FrontMessage msg = new FrontMessage(list, count);
 			if (list != null) {
 				MyPrint.myPrint("list.size()=" + list.size());
-				JSONUtils.toJson(ServletActionContext.getResponse(), list);
+				JSONUtils.toJson(ServletActionContext.getResponse(), msg);
 			} else {
 				JSONUtils.toJson(ServletActionContext.getResponse(), "fail");
 			}
