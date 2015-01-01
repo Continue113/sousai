@@ -268,7 +268,8 @@
     {{/each}}
   </script>
   <script>
-  //定义函数
+  //定义函数和全局变量
+  var pageCurrentPage = 1, pageRows = 25;
   //获取数据
   function e(crtPage,rs){
   	$("#ajaxState .load").show();console.log("start");
