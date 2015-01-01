@@ -275,7 +275,7 @@ $(function() {
   //点击切换当前页数显式的条数
 	$("select.selectRows").change(function(){
 		var rs = $("select.selectRows option:selected").val(),
-		crtPage = parseInt($("ul.pagination > li.active").text()) || 1; //若当前页数为空则默认为第一页
+		crtPage = 1; //每次点击改变条数都从第一页开始；parseInt($("ul.pagination > li.active").text()) || 1; //若当前页数为空则默认为第一页
 		e(crtPage,rs);
 	});
   
