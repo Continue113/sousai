@@ -27,7 +27,27 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 			+ "c.userId,u.name) "
 			+ "from Court c, CourtType ct, User u "
 			+ "where c.courtTypeId=ct.id and c.userId=u.id ";
+	private SqlHelper sqlHelper;
 	
+	public CourtDaoHibernate() {
+		super();
+		sqlHelper = new SqlHelper();
+	}
+
+	/**
+	 * @return the sqlHelper
+	 */
+	public SqlHelper getSqlHelper() {
+		return sqlHelper;
+	}
+
+	/**
+	 * @param sqlHelper the sqlHelper to set
+	 */
+	public void setSqlHelper(SqlHelper sqlHelper) {
+		this.sqlHelper = sqlHelper;
+	}
+
 	@Override
 	public CourtBean get(Integer id) {
 		// return getHibernateTemplate().get(Court.class, id);
@@ -68,12 +88,12 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 	}
 
 	@Override
-	public List<CourtBean> findAll() throws Exception{
+	public List<CourtBean> findAll(Integer currentPage, Integer rows) throws Exception{
 		Session session = getHibernateTemplate().getSessionFactory()
 				.getCurrentSession();
 		String hql = selectCourtBean;
 		Query q = session.createQuery(hql);
-		return extracted(q);
+		return extracted(q, currentPage, rows);
 	}
 
 	@Override
@@ -90,6 +110,9 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 	@SuppressWarnings("unchecked")
 	private List<CourtBean> extracted(Query q) {
 		return (List<CourtBean>)q.list();
+	}
+	private List<CourtBean> extracted(Query q, Integer currentPage, Integer rows) {
+		return (List<CourtBean>)sqlHelper.findPagedModelList_HQL(q, currentPage, rows);
 	}
 
 	@Override

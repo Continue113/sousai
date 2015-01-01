@@ -46,11 +46,13 @@ public interface CourtDao {
 
 	/**
 	 * 获取所有场地
+	 * @param rows 
+	 * @param currentPage 
 	 * 
 	 * @return 所有场地
 	 * @throws Exception 
 	 */
-	List<CourtBean> findAll() throws Exception;
+	List<CourtBean> findAll(Integer currentPage, Integer rows) throws Exception;
 
 	/**
 	 * 根据用户,获取用户所发布的所有场地

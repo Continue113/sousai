@@ -64,7 +64,7 @@ public class GetAllCourtAction extends UserBaseAction {
 				rows = 25;
 			}
 			MyPrint.myPrint("rows="+rows);
-			List<CourtBean> list = amg.getAllCourt();
+			List<CourtBean> list = amg.getAllCourt(currentPage, rows);
 			int count = amg.countAllCourt();
 			FrontMessage msg = new FrontMessage(list, count);
 			if (list != null) {

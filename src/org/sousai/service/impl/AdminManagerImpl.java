@@ -64,8 +64,8 @@ public class AdminManagerImpl implements AdminManager {
 	}
 
 	@Override
-	public List<CourtBean> getAllCourt() throws Exception {
-		return courtDao.findAll();
+	public List<CourtBean> getAllCourt(Integer currentPage, Integer rows) throws Exception {
+		return courtDao.findAll(currentPage, rows);
 	}
 
 	@Override

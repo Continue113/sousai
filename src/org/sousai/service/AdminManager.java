@@ -16,11 +16,13 @@ public interface AdminManager {
 
 	/**
 	 * 获取所有场地
+	 * @param rows 
+	 * @param currentPage 
 	 * 
 	 * @return
 	 * @throws Exception 
 	 */
-	public List<CourtBean> getAllCourt() throws Exception;
+	public List<CourtBean> getAllCourt(Integer currentPage, Integer rows) throws Exception;
 	
 	public int countAllCourt() throws Exception;
 	/**

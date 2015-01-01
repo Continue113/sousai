@@ -40,6 +40,22 @@ public class SqlHelper extends HibernateDaoSupport {
 		}
 		return list;
 	}
+	
+	public List<?> findPagedModelList_HQL(Query q, int currentPage,
+			int pageSize) {
+		List<?> list = null;
+		try {
+			// Session session = new
+			// Configuration().configure().buildSessionFactory()
+			// .getCurrentSession();
+			q.setMaxResults(pageSize);
+			q.setFirstResult((currentPage - 1) * pageSize);
+			list = q.list();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 
 	public List<?> findPagedModelList_SQL(String strSql, int currentPage,
 			int pageSize, Class<?> c) {
