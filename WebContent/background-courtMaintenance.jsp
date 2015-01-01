@@ -89,6 +89,7 @@
 	   	<button class="btn" type="button">搜索</button>
          <!-- <span class="add-on"><i class="icon-search"></i></span> -->
         </div> 
+        <select class="select selectRows span1"><option value=10>10条/页</option><option value=2>2条/页</option><option value=5>5条/页</option></select>
         <div class="btnbar pull-right"> 
          <button type="button" class="btn deleteCourt">删除选中</button>
          <button type="button" class="btn passCourt">发布选中</button> 
@@ -109,16 +110,7 @@
        </table>
        <div class="panel-bottom">
        <div id="ajaxState" class="text-center"><span class="hide noresult">无结果</span><span class="hide load"><img src="img/loading.gif" height="20px" width="20px"></img>数据加载中...</span></div>
-       <div class="pagination">
-       <nav>
-       <ul class="pagination">
-       <li class="disabled"><a href="javascript:void(0)"><span aria-hidden="true">&laquo;</span><span class="sr-only"></span></a></li>
-       <li class="active"><a href="javascript:void(0)">1</a></li>
-       <li><a href="javascript:void(0)">2</a></li>
-       <li><a href="javascript:void(0)"><span aria-hidden="true">&raquo;</span><span class="sr-only"></span></a></li>
-       </ul>
-       </nav>
-       </div>
+       <div class="pagination"><nav><ul class="pagination"></ul></nav></div>
       </div>       
       </div> 
       </div>
@@ -286,17 +278,15 @@
   //定义函数
 
 	function e(crtPage,rs){
-	  $("#ajaxState .load").show();console.log("start");
-	  //alert("testAl");
-      //rs = $(".selectParticularMatchType option:selected").attr("value");
+	  $("#ajaxState .load").show();console.log("start");console.log(crtPage+",,,"+rs);
     $.ajax({
       type: "POST",
       url: "getAllCourt",
       contentType: "application/x-www-form-urlencoded; charset=UTF-8",
       data: {currentPage:crtPage,rows:rs},
       dataType: "json",
-      success: function(rspdata) {
-	      console.log(rspdata);//alert(rspdata);
+      success: function(data) {
+	      console.log(data);//alert(rspdata);
       var target = $(".courtTable > tbody"),template = Handlebars.compile($('#court-template').html());
       Handlebars.registerHelper("data",function(v){
         //将当前对象转化为字符串，保存在data-info中
@@ -306,7 +296,7 @@
         return v1;
       });
       target.empty(); //清空tbody
-      target.html(template(rspdata));
+      target.html(template(data.body));
       $("#ajaxState .load").hide();console.log("stop");
 	    //出错或无结果
 	    //target.empty(); //清空tbody
@@ -316,18 +306,18 @@
 	    //管理员界面表格列字数限制，溢出省略
 	    $("td > label").wordLimit();
 	    $(".court-address").wordLimit();
+	      pages(data.count,crtPage,rs);
 	    },
       error: function() {
 	      $("#ajaxState .noresult").show();console.log("出错了");
-        alert("抱歉，获取场场地列表出错了。");
+          alert("抱歉，ajax出错了。");
       },
-    }); //ajax 已得到场地类型
+    });
 }
   
   $(function(){
-	  //ajax接收所有的场地
+	 //ajax接收所有的场地
 	 e(1,1);
-	  
     //点击编辑比赛隐藏List列表同时显示编辑比赛
     $("tbody").on("click",".court-oprate > a",function(event){
       $(".courtList").slideUp();

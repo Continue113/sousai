@@ -21,7 +21,7 @@ $(function() {
 	          data: {currentPage:crtPage,rows:rs,keyValue:kv},
 	          dataType: "json",
 	          success: function(rspdata) {
-	        	  alert(rspdata);
+	        	  alert(rspdata);console.log(rspdata.count);console.log(rspdata);
 	          },
 	          error: function() {
 	            alert("抱歉。ajax错误。");
@@ -272,6 +272,14 @@ $(function() {
 	tempthis.parent().parent().find("button.dropdown-toggle > span.current").html( tempthis.find("a").html() );
   });
   
+  //点击切换当前页数显式的条数
+	$("select.selectRows").change(function(){
+		var rs = $("select.selectRows option:selected").val(),
+		crtPage = parseInt($("ul.pagination > li.active").text());
+		//tgtprt = $("ul.pagination > li.next").parent(),
+		e(crtPage,rs);
+	});
+  
 });
 
 /////////////////////////////////////////////////////////////
@@ -351,3 +359,52 @@ function initMatchType(){
     }
   });
 }
+
+
+//根据当前的没页的条数和总的条数计算总页数
+function pages(count,crtPage,rs){
+	  var pages = Math.ceil(count/rs), target=$("ul.pagination");console.log(pages);
+	  if((!pages)||(pages == 1)){
+		  return false;
+	  }
+	  target.empty().append('<li class="prior"><a href="javascript:prior()"><span aria-hidden="true">«</span><span class="sr-only"></span></a></li><li class="active"><a href="javascript:void(0)">'+crtPage+'</a></li>');
+	  if((pages > 1)&&(crtPage < pages)&&(crtPage+1 != pages)) {
+	  	target.append('<li><a href="javascript:void(0)">...</a></li><li><a href="javascript:e('+pages+','+rs+')">'+pages+'</a></li>');
+	  }else if(crtPage+1 == pages){
+		target.append('<li><a href="javascript:e('+pages+','+rs+')">'+pages+'</a></li>');
+	  }
+	  if(crtPage != pages){
+	  target.append('<li class="next"><a href="javascript:next()"><span aria-hidden="true">»</span><span class="sr-only"></span></a></li>');
+	  }
+}
+	//点击页码
+	//$("ul.pagination > li.prior").click(
+	function prior(){
+		var tgrget = $("ul.pagination"),
+		rs = $("select.selectRows option:selected").val(),
+		crtPage = tgrget.find("li.active").text();
+		alert(rs +'  '+ crtPage);
+		if(crtPage==1){
+			alert('已经到最顶了');
+			return false;
+		}else if(crtPage==2){
+			e(crtPage - 1,rs);
+			tgrget.find("li.active a").text(crtPage - 1);
+			tgrget.find("li.prior").addClass("disabled");
+		}else{
+			e(crtPage - 1,rs);
+			tgrget.find("li.active a ").text(crtPage - 1);
+			tgrget.find("li.prior").removeClass("disabled");
+		}
+	}
+	//$("ul.pagination > li.next").click(
+	function next(){
+		var tgrget = $("ul.pagination").parent(),
+		rs = $("select.selectRows option:selected").val(),
+		crtPage = parseInt(tgrget.find("li.active").text());
+		alert(rs +'  '+ crtPage);
+		e(crtPage + 1,rs);
+		tgrget.find("li.active a ").text(crtPage+1);
+		tgrget.find("li.prior").removeClass("disabled");
+	}
+	

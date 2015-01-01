@@ -8,8 +8,7 @@
   <meta name="description" content="搜赛网-管理员页面-全部采集" /> 
   <meta name="author" content="KING@CQU" /> 
   <link href="css/bootstrap.min.css" rel="stylesheet" /> 
-  <link href="css/bootstrap-responsive.css" rel="stylesheet" /> 
-  <link href="css/jplist.min.css" rel="stylesheet" /> 
+  <link href="css/bootstrap-responsive.css" rel="stylesheet" />
   <link href="css/sousai.common.css" rel="stylesheet" /> 
   <link href="css/sousai.background.css" rel="stylesheet" /> 
   <!--[if lte IE 8]>
@@ -17,7 +16,9 @@
   <![endif]-->
   <style>
   .table .match-from > a:first-child {width: 200px;}
-  </style> 
+  /** 排序下拉按钮 **/
+  .panel-top > .btn-group {margin-top: -10px;}
+  </style>
  </head> 
  <body class="background"> 
   <s:include value="background-head.jsp" /> 
@@ -25,7 +26,7 @@
   <div class="container"> 
    <div class="row"> 
     <div class="span4"> 
-     <img src="img/logo.png" /> 
+     <a class="logoBack" href="index.jsp" title="回到首页"><img src="img/logo.png" alt="搜赛网"/></a>
      <span class="logotext">管理员页面</span> 
     </div>
    </div> 
@@ -56,37 +57,39 @@
      <div class="span9"> 
       <!--全部采集主体开始--> 
       <div id="collectionLists"> 
-       <!-- ios button: show/hide panel 能在小于一定的宽度的情况下隐藏面板 --> 
-       <div class="jplist-ios-button">
-         展开面板 
-       </div> 
        <!-- panel --> 
-       <div class="jplist-panel jplist-panel-top"> 
-        <div class="jplist-drop-down" data-control-type="drop-down" data-control-name="sort" data-control-action="sort" data-datetime-format="{year}-{month}-{day}"> 
-         <ul> 
-          <li><span data-path="default" data-default="true">排序方式</span></li> 
-          <li><span data-path=".match-time" data-order="asc" data-type="datetime">比赛时间</span><i class="icon-arrow-up"></i></li> 
-          <li><span data-path=".match-title" data-order="asc" data-type="text">比赛名称</span><i class="icon-arrow-up"></i></li> 
-          <li><span data-path=".court-name" data-order="asc" data-type="text">比赛场地</span><i class="icon-arrow-up"></i></li> 
-          <li><span data-path=".match-from" data-order="asc" data-type="text">来源网址</span><i class="icon-arrow-up"></i></li> 
-         </ul> 
+       <div class="panel-top">
+       <div class="btn-group" role="group">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current">排序方式</span><span class="caret"></span></button>
+		<ul class="dropdown-menu" role="menu">
+          <li><a href="javascript:void(0)">比赛名称<i class="icon-arrow-up"></i></a></li> 
+          <li><a href="javascript:void(0)">比赛时间<i class="icon-arrow-up"></i></a></li> 
+          <li><a href="javascript:void(0)">比赛场地<i class="icon-arrow-up"></i></a></li> 
+          <li><a href="javascript:void(0)">网站来源<i class="icon-arrow-up"></i></a></li>
+		</ul>
+	   </div>
+	    <div class="text-filter-box input-append"> 
+         <input type="text" class="span2" placeholder="请输入关键字"/> 
+         <div class="btn-group" role="group">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current">比赛名称</span><span class="caret"></span></button>
+		<ul class="dropdown-menu" role="menu">
+			<li><a href="javascript:void(0)">比赛名称</a></li>
+			<li><a href="javascript:void(0)">比赛时间</a></li>
+			<li><a href="javascript:void(0)">比赛场地</a></li>
+			<li><a href="javascript:void(0)">网站来源</a></li>
+		</ul>
+	   	</div>
+	   	<button class="btn" type="button">搜索</button>
+         <!-- <span class="add-on"><i class="icon-search"></i></span> -->
         </div> 
-        <!-- filter by description --> 
-        <div class="text-filter-box input-append"> 
-         <input data-path=".match-title" type="text" placeholder="请输入关键字" data-control-type="textbox" data-control-name="match-filter" data-control-action="filter" /> 
-         <select class="selectFilter"> <option data-forfilter=".match-title">比赛名称</option> <option data-forfilter=".match-time">比赛时间</option> <option data-forfilter=".court-name">比赛场地</option> <option data-forfilter=".match-from">来源网址</option> </select> 
-         <span class="add-on"><i class="icon-search"></i></span> 
-        </div> 
+        <select class="select selectRows span1"><option value=10>10条/页</option><option value=2>2条/页</option><option value=5>5条/页</option></select>
         <div class="btnbar pull-right"> 
-         <button>删除选中</button>
-         <button>发布选中</button> 
+         <button type="button" class="btn deleteMatch">删除选中</button>
+         <button type="button" class="btn passMatch">发布选中</button> 
         </div> 
-       </div> 
-       <!-- /jplist-panel --> 
+       </div>
        <table class="table table-striped table-hover collectionsTable"> 
-        <caption>
-         全部采集
-        </caption> 
+        <caption>全部采集</caption> 
         <thead>
          <tr>
           <th>比赛名称</th>
@@ -112,20 +115,10 @@
          </tr> 
         </tbody> 
        </table> 
-       <div class="jplist-no-results jplist-hidden"> 
-        <p>暂时没有结果哟！</p> 
-       </div> 
-       <div class="jplist-ios-button">
-         展开分页 
-       </div> 
-       <!-- panel --> 
-       <div class="jplist-panel"> 
-        <!-- pagination --> 
-        <div class="jplist-pagination" data-control-type="pagination" data-control-name="paging" data-control-action="paging" data-items-per-page="10"> 
-         <!-- default items per page (if no "items per page" dropdown on the page) --> 
-        </div> 
-       </div> 
-       <!-- /jplist-panel --> 
+       <div class="panel-bottom">
+       <div id="ajaxState" class="text-center"><span class="hide noresult">无结果</span><span class="hide load"><img src="img/loading.gif" height="20px" width="20px"></img>数据加载中...</span></div>
+       <div class="pagination"><nav><ul class="pagination"></ul></nav></div>
+      </div>
       </div> 
       <!--全部采集主体结束--> 
      </div>
@@ -143,34 +136,14 @@
   <![endif]--> 
   <script src="js/jquery-1.11.0.min.js"></script> 
   <script src="js/bootstrap.min.js"></script> 
-  <script src="js/jquery.wordLimit.js"></script> 
-  <script src="js/jplist.min.js"></script> 
+  <script src="js/jquery.wordLimit.js"></script>
   <script src="js/sousai.common.js"></script> 
   <script>
   $(function(){
-    //列表排序
-    $('#collectionLists').jplist({
-          itemsBox: '.collectionsTable',
-          itemPath: '.match',
-          panelPath: '.jplist-panel'
-        });
     //字数限制，溢出省略
     $("td > label").wordLimit();
     $(".court-name").wordLimit();
     $(".match-from > a").wordLimit(25);
-    //重复点击下拉列表改变排序
-    var sortflag=1;
-    $("div[data-control-action='sort'] li").click(function(){
-      if(sortflag==1){
-            //执行方法;
-            $(this).find("span").attr("data-order","desc").end().find("i").removeClass("icon-arrow-up").addClass("icon-arrow-down");
-            sortflag=0;
-        }else{
-            //执行方法;
-            $(this).find("span").attr("data-order","asc").end().find("i").removeClass("icon-arrow-down").addClass("icon-arrow-up");
-            sortflag=1;
-        }
-    });
   })
   </script>  
  </body>

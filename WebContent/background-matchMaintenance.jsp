@@ -113,10 +113,7 @@
 	   	<button class="btn" type="button">搜索</button>
          <!-- <span class="add-on"><i class="icon-search"></i></span> -->
         </div> 
-        <select class="select selectRows">
-              <option value=1>1条/页</option>
-              <option value=30>30条/页</option><option value=40>40条/页</option>
-        </select>
+        <select class="select selectRows span1"><option value=10>10条/页</option><option value=2>2条/页</option><option value=5>5条/页</option></select>
         <div class="btnbar pull-right"> 
          <button type="button" class="btn deleteMatch">删除选中</button>
          <button type="button" class="btn passMatch">发布选中</button> 
@@ -138,15 +135,7 @@
        </table>
        <div class="panel-bottom">
        <div id="ajaxState" class="text-center"><span class="hide noresult">无结果</span><span class="hide load"><img src="img/loading.gif" height="20px" width="20px"></img>数据加载中...</span></div>
-       <div class="pagination">
-       <nav>
-       <ul class="pagination">
-       <li class="disabled prior"><a href="javascript:void(0)"><span aria-hidden="true">&laquo;</span><span class="sr-only"></span></a></li>
-       <li class="active"><a href="javascript:void(0)">1</a></li>
-       <li class="next"><a href="javascript:void(0)"><span aria-hidden="true">&raquo;</span><span class="sr-only"></span></a></li>
-       </ul>
-       </nav>
-       </div>
+       <div class="pagination"><nav><ul class="pagination"></ul></nav></div>
       </div>
        </div>
       <!--比赛维护 结束-->
@@ -280,63 +269,45 @@
   </script>
   <script>
   //定义函数
-  
+  //获取数据
   function e(crtPage,rs){
   	$("#ajaxState .load").show();console.log("start");
-  	$.post("getAllMatch", {currentPage:crtPage,rows:rs}, function(data) {
-      console.log(data);//alert(data);
-      var target = $(".matchTable > tbody"),template = Handlebars.compile($('#match-template').html());
-      Handlebars.registerHelper("data",function(v){
-    	  //将当前对象转化为字符串，保存在data-info中
-    	  console.log(v);
-    	  var v1 = JSON.stringify(v);
-    	  //console.log("v1:"+v1);
-    	  return v1;
-      });
-      target.empty(); //清空tbody
-  	target.html(template(data));
-      $("#ajaxState .load").hide();console.log("stop");
-      //出错或无结果
-      //target.empty(); //清空tbody
-      if(target.find("tr.match").length == 0){
-      $("#ajaxState .noresult").show();console.log("无结果");
-      }
-      //字数限制，溢出省略
-  	$("td").wordLimit();
+    $.ajax({
+      type: "POST",
+      url: "getAllMatch",
+      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+      data: {currentPage:crtPage,rows:rs},
+      dataType: "json",
+      success: function(data) {
+	      var target = $(".matchTable > tbody"),template = Handlebars.compile($('#match-template').html());
+	      Handlebars.registerHelper("data",function(v){
+	    	  //将当前对象转化为字符串，保存在data-info中
+	    	  console.log(v);
+	    	  var v1 = JSON.stringify(v);
+	    	  //console.log("v1:"+v1);
+	    	  return v1;
+	      });
+	      target.empty(); //清空tbody
+	  	  target.html(template(data.body));
+	      $("#ajaxState .load").hide();console.log("stop");
+	      //出错或无结果
+	      //target.empty(); //清空tbody
+	      if(target.find("tr.match").length == 0){
+	      $("#ajaxState .noresult").show();console.log("无结果");
+	      }
+	      //字数限制，溢出省略
+	  	  $("td").wordLimit();
+	      pages(data.count,crtPage,rs);
+	    },
+      error: function() {
+	      $("#ajaxState .noresult").show();console.log("出错了");
+          alert("抱歉，ajax出错了。");
+      },
     });
   }
-  
   $(function(){
 	//ajax接收所有比赛
-	e(1,1);
-	//点击页码
-	$("ul.pagination > li.prior").click(function(){
-		var tgtprt = $(this).parent(),
-		rs = $("select.selectRows option:selected").val(),
-		crtPage = $("ul.pagination > li.active").text();
-		alert(rs +'  '+ crtPage);
-		if(crtPage==1){
-			alert('已经到最顶了');
-			return false;
-		}else if(crtPage==2){
-			e(crtPage - 1,rs);
-			$("ul.pagination > li.active a").text(crtPage - 1);
-			$("ul.pagination > li.prior").addClass("disabled");
-		}else{
-			e(crtPage - 1,rs);
-			$("ul.pagination > li.active a ").text(crtPage - 1);
-			$("ul.pagination > li.prior").removeClass("disabled");
-		}
-	});
-	$("ul.pagination > li.next").click(function(){
-		var tgtprt = $(this).parent(),
-		rs = $("select.selectRows option:selected").val(),
-		crtPage = parseInt($("ul.pagination > li.active").text());
-		alert(rs +'  '+ crtPage);
-		e(crtPage + 1,rs);
-		$("ul.pagination > li.active a ").text(crtPage+1);
-		$("ul.pagination > li.prior").removeClass("disabled");
-	});
+	e(1,25);
     //点击编辑比赛隐藏List列表同时显示编辑比赛
     $("tbody").on("click",".match-oprate > a",function(event){
     	$(".matchList").slideUp();
