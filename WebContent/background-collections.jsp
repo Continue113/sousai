@@ -137,13 +137,64 @@
   <script src="js/jquery-1.11.0.min.js"></script> 
   <script src="js/bootstrap.min.js"></script> 
   <script src="js/jquery.wordLimit.js"></script>
-  <script src="js/sousai.common.js"></script> 
+  <script src="js/handlebars-v2.0.0.js"></script>
+  <script src="js/sousai.common.js"></script>
+  <!-- handlebars template -->
+  <script id="Collections-template" type="text/x-handlebars-template">
+    {{#each this}}
+                        
+        <tr class="match" data-info="{{data this}}"> 
+          <td class="match-title"><label for="{{id}}"><input type="checkbox" id="{{id}}"/>{{name}}</label></td> 
+          <td class="match-time">{{beginTime}} - {{endTime}}</td> 
+          <td class="match-court">{{courtName}}</td>
+          <td class="match-from"><a href="#">{{source}}</a></td> 
+          <td class="match-oprate"><a href="javascript:void(0)" class="btn btn-mini pull-right">查看编辑</a></td> 
+         </tr>
+                            
+    {{/each}}
+  </script>
   <script>
+  //定义函数
+  function e(crtPage,rs){
+  	$("#ajaxState .load").show();console.log("start");
+    $.ajax({
+      type: "POST",
+      url: "getAllCollection",
+      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+      data: {currentPage:crtPage,rows:rs},
+      dataType: "json",
+      success: function(data) {
+	      var target = $(".collectionsTable > tbody"),template = Handlebars.compile($('#collections-template').html());
+	      Handlebars.registerHelper("data",function(v){
+	    	  //将当前对象转化为字符串，保存在data-info中
+	    	  console.log(v);
+	    	  var v1 = JSON.stringify(v);
+	    	  //console.log("v1:"+v1);
+	    	  return v1;
+	      });
+	      target.empty(); //清空tbody
+	  	  target.html(template(data.body));
+	      $("#ajaxState .load").hide();console.log("stop");
+	      //出错或无结果
+	      //target.empty(); //清空tbody
+	      if(target.find("tr.match").length == 0){
+	      $("#ajaxState .noresult").show();console.log("无结果");
+	      }
+	      //字数限制，溢出省略
+	      $("td > label").wordLimit();
+	      $(".court-name").wordLimit();
+	      $(".match-from > a").wordLimit(25);
+	      pages(data.count,crtPage,rs);
+	    },
+      error: function() {
+	      $("#ajaxState .noresult").show();console.log("出错了");
+          alert("抱歉，ajax出错了。");
+      },
+    });
+  }
   $(function(){
-    //字数限制，溢出省略
-    $("td > label").wordLimit();
-    $(".court-name").wordLimit();
-    $(".match-from > a").wordLimit(25);
+	//ajax接收所有采集
+	//e(1,25);
   })
   </script>  
  </body>

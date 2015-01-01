@@ -182,13 +182,13 @@
     {{#each this}}
 
 		    <tr class="user" data-info="{{data this}}">
-	    		<td class="user-userName form-inline"><label for="{{userId}}"><input type="checkbox" id="data[i].{{userId}}"/>{{userName}}<label></td>
-        	<td class="user-registerTime">{{userRegTime}}</td>
+	    		<td class="user-userName form-inline"><label for="{{id}}"><input type="checkbox" id="data[i].{{id}}"/>{{name}}<label></td>
+        	<td class="user-registerTime">{{regTime}}</td>
         	<td class="user-lastLoginTime">{{lastLogTime}}</td>
         	<td class="user-matchNumber">{{matchNumber}}</td>
         	<td class="user-courtNumber">{{courtNumber}}</td>
         	<td class="user-loginNumber">{{loginNumber}}</td>
-        	<td class="user-email">{{userEmail}}</td>
+        	<td class="user-email">{{email}}</td>
         	<td class="user-IP">{{IP}}<span>&nbsp;{{city}}</span></td>
 	    		<td class="user-oprate"><a href="javascript:void(0)" class="btn btn-mini pull-right">编辑用户</a></td>
         </tr>	    		  
@@ -197,7 +197,6 @@
   </script>
   <script>
   //定义函数
-
 	function e(crtPage,rs){
 		$("#ajaxState .load").show();console.log("start");
 	    $.ajax({
@@ -216,7 +215,7 @@
 	        	    return v1;
 	        	  });
 	        	  target.empty(); //清空tbody
-	        	  target.html(template(data/*.body*/));
+	        	  target.html(template(data.body));
 	        	  $("#ajaxState .load").hide();console.log("stop");
 	        	  //出错或无结果
 	        	  //target.empty(); //清空tbody
@@ -231,31 +230,7 @@
 	  	      $("#ajaxState .noresult").show();console.log("出错了");
 	          alert("抱歉，ajax出错了。");
 	        },
-	      });/*
-	    
-		$.post("getAllUser", {currentPage:crtPage,rows:rs},  function(data) {
-    console.log(data);//alert(data);
-  var target = $(".userTable > tbody"),template = Handlebars.compile($('#user-template').html());
-  Handlebars.registerHelper("data",function(v){
-    //将当前对象转化为字符串，保存在data-info中
-    console.log(v);
-    var v1 = JSON.stringify(v);
-    //console.log("v1:"+v1);
-    return v1;
-  });
-  target.empty(); //清空tbody
-  target.html(template(data.body));
-  $("#ajaxState .load").hide();console.log("stop");
-  //出错或无结果
-  //target.empty(); //清空tbody
-  if(target.find("tr.user").length == 0){
-  $("#ajaxState .noresult").show();console.log("无结果");
-  }
-  //管理员界面表格列字数限制，溢出省略
-  $(".user-email").wordLimit(16);
-  pages(data.count,crtPage,rs);
-  });
-	*/
+	      });
 }
   
   $(function(){
@@ -267,10 +242,15 @@
         $(".editUser .forbidUser").show();
         $(".editUser .saveUser").show();
         $(".editUser .saveAdd").hide();
-      var datainfo = $(this).parent().parent().attr("data-info");
+      var datainfo = $(this).parent().parent().attr("data-info"), target=$(".editUser");
       console.log(datainfo);
+      //解析datainfo中的信息
+      var data = eval('(' + datainfo + ')');
+      $("#userName").val(data.name);
+      $("#userPassword").val(data.pwd);
+      $("#userEmail").val(data.email);
       $(".userList").slideUp();
-      $(".editUser").slideDown();
+      target.slideDown();
     });
     //点击返回用户列表
     $(".backList").click(function(){

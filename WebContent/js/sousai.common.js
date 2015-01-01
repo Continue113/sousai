@@ -362,11 +362,12 @@ function initMatchType(){
 
 //根据当前的没页的条数和总的条数计算总页数
 function pages(count,crtPage,rs){
-	  var pages = Math.ceil(count/rs), target=$("ul.pagination");console.log(pages);
-	  if((!pages)||(pages == 1)){
+	  var pages = Math.ceil(count/rs) || 1, target=$("ul.pagination");console.log(pages); //若当前页数为空则默认为第一页
+	  target.empty();
+	  if(pages == 1){
 		  return false;
 	  }
-	  target.empty().append('<li class="prior"><a href="javascript:prior()"><span aria-hidden="true">«</span><span class="sr-only"></span></a></li><li class="active"><a href="javascript:void(0)">'+crtPage+'</a></li>');
+	  target.append('<li class="prior"><a href="javascript:prior()"><span aria-hidden="true">«</span><span class="sr-only"></span></a></li><li class="active"><a href="javascript:void(0)">'+crtPage+'</a></li>');
 	  if((pages > 1)&&(crtPage < pages)&&(crtPage+1 != pages)) {
 	  	target.append('<li><a href="javascript:void(0)">...</a></li><li><a href="javascript:e('+pages+','+rs+')">'+pages+'</a></li>');
 	  }else if(crtPage+1 == pages){
