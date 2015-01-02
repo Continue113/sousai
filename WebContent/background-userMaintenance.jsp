@@ -428,6 +428,7 @@ messages: {
         type: "POST",
         dataType: 'json',
         data: {
+        	"action": 2,
         	"user.id":dataid,
             "user.name": dataname,
             "user.pwd": datapwd,

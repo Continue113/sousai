@@ -236,7 +236,7 @@ $(function () {
         if($("#inputUserNewPassword").val() == "" || $("#inputUserEmail").val() == '<s:property value="#session.userBean.userEmail" />'){
           return false;
         }else{
-          var sendurl = 'updateUserInfo?user.id=<s:property value="#session.userBean.userId" />';
+          var sendurl = 'updateUserInfo?action=1&user.id=<s:property value="#session.userBean.userId" />';
           if($("#inputUserNewPassword").val() !== "" )
             sendurl += "&user.pwd="+$("#inputUserNewPassword").val();
           if($("#inputUserEmail").val() !== "" )

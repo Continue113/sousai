@@ -147,7 +147,7 @@
       <!--编辑比赛 开始-->
       <div class="editMatch hide">
         <div class="btnbar row"> 
-         <button type="button" class="btn passMatch ">审核通过</button> 
+         <button type="button" class="btn passMatch ">发布比赛</button> 
          <button type="button" class="btn saveMatch ">保存修改</button>
          <button type="button" class="btn deleteMatch ">删除比赛</button>
          <button type="button" class="btn backList ">返回列表</button>
@@ -505,7 +505,7 @@
                 });
         */
     	}else{
-    		alert("填写信息不符合验证，请重新填写。")
+    		alert("填写信息不符合验证，请重新填写。");
     	}
     });
     //发布比赛 编辑界面
@@ -874,17 +874,6 @@
       // update underlying textarea before submit validation
       tinyMCE.triggerSave();
     }).validate({
-      submitHandler: function(form){
-        console.log("发布比赛成功");
-        console.log("发布比赛已完成");
-        //检查newCourtRegionId
-       if( $("#hideNewCourtRegionId").attr("value") == 0){
-      	 alert("请先找一找某个比赛地点是否已有您要的场地。");
-      	 return false;
-       }else{
-      	 form.submit(); //没有这一句表单不会提交
-       }
-      },
     rules: {
       "match.name": {
         minlength: 6,
@@ -905,7 +894,7 @@
     },
     messages: {
   	"match.name": {
-        required: "请输入比赛名称",
+        //required: "请输入比赛名称",
         minlength: "比赛名称至少6个字符",
         maxlength: "比赛名称至多30个字符"
       },
