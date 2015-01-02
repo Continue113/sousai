@@ -81,6 +81,7 @@ public class LoginAction extends UserBaseAction
 			ctx.getSession().put(WebConstant.LEVEL
 				, WebConstant.USER_LEVEL);*/
 			ctx.getSession().put("userBean", getUserInfo());
+			System.out.println(getUserInfo().getUserRegTime());
 			return USER_RESULT;
 		}
 		//��¼���Ϊ����

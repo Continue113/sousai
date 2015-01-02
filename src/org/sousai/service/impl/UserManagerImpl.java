@@ -119,8 +119,9 @@ public class UserManagerImpl implements UserManager {
 		 * user.getEmail(), user.getType(), user.getPicId(), user.getRegTime(),
 		 * user.getLastLogTime());
 		 */
-		return new UserBean(user.getId(), user.getName(), user.getPwd(),
-				user.getEmail(), user.getType());
+//		return new UserBean(user.getId(), user.getName(), user.getPwd(),
+//				user.getEmail(), user.getType());
+		return new UserBean(user);
 		/*
 		 * UserBean userBean = new UserBean(user.getId(), user.getName(),
 		 * user.getPwd(), user.getEmail(), user.getType(), user.getPicId(),

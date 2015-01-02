@@ -1,20 +1,12 @@
 package org.sousai.dao.impl;
 
-import java.util.*;
 
 import org.sousai.domain.*;
 import org.sousai.dao.*;
 import org.sousai.tools.MyPrint;
 import org.sousai.vo.UserBean;
-import org.springframework.orm.hibernate3.HibernateTemplate;
-import org.springframework.orm.hibernate3.HibernateCallback;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-import org.hibernate.SessionFactory;
 import org.hibernate.Session;
-import org.hibernate.Query;
-import org.hibernate.HibernateException;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class UserDaoHibernate extends SqlHelper implements UserDao {
@@ -24,7 +16,6 @@ public class UserDaoHibernate extends SqlHelper implements UserDao {
 
 	@Override
 	public Long save(User user) {
-		// TODO Auto-generated method stub
 		// System.out.println("save now turn to getHibernateTemplate().save "+user.getId()+"   "+
 		// user.getName()+"   "+user.getPwd()+"   ");
 		MyPrint.myPrint("" + user.getId() + "name" + user.getName() + "pwd"
@@ -44,14 +35,16 @@ public class UserDaoHibernate extends SqlHelper implements UserDao {
 	}
 
 	@Override
-	public void update(User user) {
-		// TODO Auto-generated method stub
+	public void update(User user){
+		try{
 		getHibernateTemplate().update(user);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void delete(User user) {
-		// TODO Auto-generated method stub
 		getHibernateTemplate().delete(user);
 	}
 
@@ -72,14 +65,12 @@ public class UserDaoHibernate extends SqlHelper implements UserDao {
 
 	@Override
 	public void delete(Integer id) {
-		// TODO Auto-generated method stub
 		getHibernateTemplate().delete(get(id));
 
 	}
 
 	@Override
 	public List<User> findByNameAndPass(User user) {
-		// TODO Auto-generated method stub
 		return (List<User>) getHibernateTemplate().find(
 				"from User u where u.name=? and u.pwd=?", user.getName(),
 				user.getPwd());
@@ -87,7 +78,6 @@ public class UserDaoHibernate extends SqlHelper implements UserDao {
 
 	@Override
 	public User findByName(String name) {
-		// TODO Auto-generated method stub
 		List<User> user = (List<User>) getHibernateTemplate().find(
 				"from User u where u.name=?", name);
 		if (user != null && user.size() > 0) {

@@ -76,6 +76,7 @@ public class UserBean implements Serializable {
 		this.userPwd = user.getPwd();
 		this.userRegTime = user.getRegTime();
 		this.userType = user.getType();
+		this.userLastRegionId = user.getLastRegionId();
 	}
 
 	// userId ��setter��getter

@@ -22,7 +22,7 @@ public class MyValidation
 	
 	public static boolean validateEmail(String email)
 	{
-		if(email.length() > 32)
+		if(email.length() > MAX_EMAIL_LENGTH)
 		{
 			return false;
 		}

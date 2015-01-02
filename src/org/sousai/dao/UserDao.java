@@ -23,6 +23,7 @@ public interface UserDao {
 	/**
 	 * �޸�ָ����Userʵ��
 	 * @param user ��Ҫ���޸ĵ�Userʵ��
+	 * @throws Exception 
 	 */
 	void update(User user);
 	
