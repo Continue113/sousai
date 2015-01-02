@@ -166,7 +166,13 @@
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="matchType">比赛类型：</label> 
-           <div class="controls"> 
+           <div class="controls">
+            <div class="input-append">、
+            <input class="span5" type="text" id="inputMatchType"  disabled/>
+            <button class="btn" type="button" id="editMatchType">修改</button>
+            </div>
+           </div>
+           <div class="controls  form-inline hide" id="matchTypeControls">
             <select class="selectMatchType" name="mcId">
               <option value=0>请选择比赛类型</option>
             </select>
@@ -175,8 +181,8 @@
             </select>
             <label class="omthide hide" class="control-label" for="otherMatchType">请输入类型：</label>
             <input class="omthide hide" id="otherMatchType" type="text" value="" placeholder="请填写比赛类型" name="match.type"/>
-           </div> 
-          </div> 
+           </div>
+          </div>
           <div class="control-group"> 
            <label class="control-label" for="matchTime">比赛时间：</label> 
            <div class="controls form-inline"> 
@@ -194,13 +200,21 @@
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="matchRegion">比赛地点：</label> 
-           <div class="controls form-inline"> 
+           <div class="controls">
+           <div class="input-append">、
+            <input class="span5" type="text" id="inputMatchCourt"  disabled/>
+            <button class="btn" type="button" id="editMatchCourt">修改</button>
+            </div>
+            </div>
+          </div>
+           <div class="control-group hide matchAdressControls"> 
+           <div class="controls form-inline">
             <s:include value="selectPCC.jsp" />
             <!-- /选择省市区三级下拉框 --> 
             <a href="javascript:void(0)" class="btn btn-success pull-right" id="searchExistedCourt">搜索现有球场</a>
-           </div> 
-          </div> 
-          <div class="control-group existCourtsBox"> 
+            </div>
+            </div>
+          <div class="control-group existCourtsBox hide matchAdressControls"> 
            <table class="table table-striped table-hover"> 
             <thead> 
              <tr> 
@@ -218,7 +232,7 @@
              <button class="btn" type="button" id="newCourtBtn">没有我要的场地，我要添加新场地</button> 
             </div>
           </div> 
-          <div class="control-group"> 
+          <div class="control-group hide matchAdressControls"> 
            <div class="releaseCourtBox"> 
             <label class="checkbox"><input type="checkbox" id="newCourtCheckbox" name="matchState_all" />添加新场地&nbsp;&nbsp;(<span id="newCourtRegion"><span class="newCourtProvince">请选择省</span>-<span class="newCourtCity">请选择市</span>-<span class="newCourtCountry">请选择区</span></span>)</label> 
            </div> 
@@ -251,6 +265,7 @@
   <script src="tinymce/tinymce.min.js"></script> 
   <script src="js/jquery.wordLimit.js"></script>
   <script src="js/handlebars-v2.0.0.js"></script>
+  <script src="js/jquery.validate.min.js"></script>
   <script src="js/sousai.common.js"></script>
   <!-- handlebars template -->
   <script id="match-template" type="text/x-handlebars-template">
@@ -266,6 +281,10 @@
          </tr>
                             
     {{/each}}
+  </script>
+  <script id="matchtype-template" type="text/x-handlebars-template">
+  </script>
+  <script id="matchcourt-template" type="text/x-handlebars-template">
   </script>
   <script>
   //定义函数
@@ -309,6 +328,20 @@
 	e(1,25);
     //点击编辑比赛隐藏List列表同时显示编辑比赛
     $("tbody").on("click",".match-oprate > a",function(event){
+        var datainfo = $(this).parent().parent().attr("data-info");
+        console.log(datainfo);
+        //解析datainfo中的信息
+        var data = eval('(' + datainfo + ')');
+        $("#inputMatchTitle").val(data.name).attr("data-id",data.id).attr("data-userid",data.userid);
+        $("#inputMatchType").val(data.type);
+        $("#inputMatchTimefrom").val(data.beginTime);
+        $("#inputMatchTimeto").val(data.endTime);
+        $("#inputMatchCourt").val(data.courtName).attr("data-courtid",data.courtId);
+        $("#inputMatchRules").append(data.rule);
+        tinymce.activeEditor.setContent(data.rule);
+        //立即初始化比赛类型
+        initMatchType();
+        
     	$(".matchList").slideUp();
     	$(".editMatch").slideDown();
   	});
@@ -317,8 +350,8 @@
     	$(".matchList").slideDown();
     	$(".editMatch").slideUp();
     });
-    //点击删除比赛
-    $(".deleteMatch").click(function(){
+    //点击删除比赛 列表界面
+    $("#matchMaintenance .deleteMatch").click(function(){
     	var checked = $(".match input:checked"),n = checked.length;
     	//若为选中则提示
     	if( n == 0){
@@ -350,13 +383,174 @@
               error: function() {
                 alert("抱歉，发送信息到服务器出错了。");
               },
-            }); //ajax 已得到具体比赛类型
+            });
+    	}
+    });
+    //点击发布比赛 列表界面
+    $("#matchMaintenance .passMatch").click(function(){
+    	var checked = $(".match input:checked"),n = checked.length;
+    	//若为选中则提示
+    	if( n == 0){
+    		alert("请先选中比赛");
+    	}else{
+    		var matchIds = new Array();
+    		$(".match input:checked").each(function(index,element){
+    			console.log($(this).attr("id"));
+        		matchIds.push($(this).attr("id"));
+    		});
+    		console.log(matchIds);alert("matchIds:"+matchIds.join(",,,"));
+            $.ajax({
+              type: "POST",
+              url: "passMatches",
+              contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+              data: {
+                "matchIds": matchIds.join(","),
+              },
+              dataType: "json",
+              success: function(rspdata) {
+            	  if( rspdata == "success" ){
+            		  alert("发布成功");
+            	  }else if( rspdata == "fail" ){
+            		  alert("发布失败");
+            	  }else{
+            		  alert("发布失败，错误代码未知");
+            	  }
+              },
+              error: function() {
+                alert("抱歉，发送信息到服务器出错了。");
+              },
+            });
     	}
     });
 
     //***************************************************************************************
     // 编辑比赛的js代码，同比赛发布页面。 ***************************** BEGIN ***************************
     //***************************************************************************************
+    //删除比赛 编辑界面
+    $(".editMatch .deleteMatch").click(function (){
+                $.ajax({
+                  type: "POST",
+                  url: "deleteMatches",
+                  contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                  data: {
+                    "matchIds": $("#inputMatchTitle").attr("data-id"),
+                  },
+                  dataType: "json",
+                  success: function(rspdata) {
+                	  if( rspdata == "success" ){
+                		  alert("删除成功");
+                	  }else if( rspdata == "fail" ){
+                		  alert("删除失败");
+                	  }else{
+                		  alert("删除失败，错误代码未知");
+                	  }
+                  },
+                  error: function() {
+                    alert("抱歉，发送信息到服务器出错了。");
+                  },
+                });
+    });
+    //点击保存修改
+    $(".editMatch .saveMatch").click(function (){
+
+    	
+    	var id = $("#inputMatchTitle").attr("data-id"),
+    	title = $("#inputMatchTitle").val(),
+        type = $("#inputMatchType").val(),
+        begintime = $("#inputMatchTimefrom").val(),
+        endtime = $("#inputMatchTimeto").val(),
+        court = $("#inputMatchCourt").val(),
+        courtid = $("#inputMatchCourt").attr("data-courtid"),
+        courtaddr = $("#inputMatchCourt").attr("data-courtdata"),
+        userid = $("#inputMatchTitle").attr("data-userid"),
+    	iscourt = $("#inputMatchCourt").attr("data-iscourt"),
+        rule = tinymce.activeEditor.getContent();
+    	
+    	console.log(id+", "+title+", "+type+", "+begintime+", "+endtime+", "+court+", "+courtid+", "+courtaddr+", "+userid+", "+iscourt+", "+rule);
+    	
+    	
+    	if( $("#editMatchForm").valid() === true ){
+    		console.log("验证通过");
+        /*        $.ajax({
+                  type: "POST",
+                  url: "updateMatch",
+                  contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                  data: {
+                	  		"match.id": id,
+                			"match.name": title,
+                		    "match.rule": rule,
+                		    "match.beginTime": begintime,
+                		    "match.endTime": endtime,
+                		    "match.courtId": matchcourtid,
+                		    "match.userId": userid,
+                		    "court.name": court,
+                		    "court.addr": courtaddr,
+                		    "court.regionId": "",
+                		    "court.courtTypeId": "",
+                		    "isCourt": iscourt,
+                		  },
+                  dataType: "json",
+                  success: function(rspdata) {
+                	  if( rspdata == "success" ){
+                		  alert("保存成功");
+                	  }else if( rspdata == "fail" ){
+                		  alert("保存失败");
+                	  }else{
+                		  alert("保存失败，错误代码未知");
+                	  }
+                  },
+                  error: function() {
+                    alert("抱歉，发送信息到服务器出错了。");
+                  },
+                });
+        */
+    	}else{
+    		alert("填写信息不符合验证，请重新填写。")
+    	}
+    });
+    //发布比赛 编辑界面
+    $(".editMatch .passMatch").click(function (){
+                $.ajax({
+                  type: "POST",
+                  url: "passMatches",
+                  contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                  data: {
+                    "matchIds": $("#inputMatchTitle").attr("data-id"),
+                  },
+                  dataType: "json",
+                  success: function(rspdata) {
+                	  if( rspdata == "success" ){
+                		  alert("发布成功");
+                	  }else if( rspdata == "fail" ){
+                		  alert("发布失败");
+                	  }else{
+                		  alert("发布失败，错误代码未知");
+                	  }
+                  },
+                  error: function() {
+                    alert("抱歉，发送信息到服务器出错了。");
+                  },
+                });
+    });
+    //点击修改比赛类型
+    $("#editMatchType").click(function (){
+    	if($(this).text() == "修改"){
+    		$("#matchTypeControls").slideDown();
+    		$(this).text("取消修改");
+    	}else{
+    		$("#matchTypeControls").slideUp();
+    		$(this).text("修改");
+    	}
+    });
+    $("#editMatchAdress").click(function (){
+    	if($(this).text() == "修改"){
+    		$(".matchAdressControls").slideDown();
+    		$(this).text("取消修改");
+    	}else{
+    		$(".matchAdressControls").slideUp();
+    		$(this).text("修改");
+    	}
+    });
     
     //选择比赛地点时，修改下方添加新场地的区域
     $("#editMatchForm .controls > .selectProvince").change(function(){
@@ -672,6 +866,67 @@
     onchange_callback: function(editor) {
       tinyMCE.triggerSave();
       $("#" + editor.id).valid();
+    }
+    });
+    
+
+    var matchValidator = $("#releaseMatchForm").submit(function() {
+      // update underlying textarea before submit validation
+      tinyMCE.triggerSave();
+    }).validate({
+      submitHandler: function(form){
+        console.log("发布比赛成功");
+        console.log("发布比赛已完成");
+        //检查newCourtRegionId
+       if( $("#hideNewCourtRegionId").attr("value") == 0){
+      	 alert("请先找一找某个比赛地点是否已有您要的场地。");
+      	 return false;
+       }else{
+      	 form.submit(); //没有这一句表单不会提交
+       }
+      },
+    rules: {
+      "match.name": {
+        minlength: 6,
+        maxlength: 30
+      },
+      "court.courtTypeId": {
+      	min: 1,
+      },
+      matchTypeId: {
+      	min: 1,
+      },
+      mcId: {
+      	min: 1,
+      },
+      selectProvince: {//为比赛地点中的省添加的name属性
+      	min: 1,
+      },
+    },
+    messages: {
+  	"match.name": {
+        required: "请输入比赛名称",
+        minlength: "比赛名称至少6个字符",
+        maxlength: "比赛名称至多30个字符"
+      },
+      "match.rule": "请输入比赛规程",
+      "court.name": "请输入场地名称",
+      "court.addr": "请输入场地地址",
+      "match.beginTime": "请选择开始日期",
+      "match.endTime": "请选择结束日期",
+      "court.courtTypeId": "",
+      matchTypeId: "",
+      mcId: "",
+      selectProvince: "",
+    },
+    errorPlacement: function(error, element){
+      if(element.parent().hasClass("input-append")){
+        error.appendTo($(".controls-error"));
+      }
+      else if (element.is("textarea")) {
+          error.insertAfter($("label[for='inputMatchRules']"));
+        }
+        else error.insertAfter(element);
     }
     });
 

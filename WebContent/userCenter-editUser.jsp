@@ -233,7 +233,7 @@ $(function () {
     var editUserValidator = $("#editUserForm").validate({
       submitHandler: function(){
         //定义发送至服务器的数据，旧密码未验证通过的情况下，不发送填写的新密码
-        if($("#inputUserNewPassword").val() == "" && $("#inputUserEmail").val() == '<s:property value="#session.userBean.userEmail" />'){
+        if($("#inputUserNewPassword").val() == "" || $("#inputUserEmail").val() == '<s:property value="#session.userBean.userEmail" />'){
           return false;
         }else{
           var sendurl = 'updateUserInfo?user.id=<s:property value="#session.userBean.userId" />';
@@ -260,35 +260,43 @@ $(function () {
       rules: {
       inputUserPassword: {
         minlength: 6,
+        maxlength: 16,
         isPwd: '<s:property value="#session.userBean.userPwd"/>'
       },
       "user.pwd": {
         minlength: 6,
+        maxlength: 16,
         isPass: true
       },
       inputUserNewPassword2: {
         minlength: 6,
+        maxlength: 16,
         equalTo: "#inputUserNewPassword"
       },
       "user.email": {
-        email: true
+        email: true,
+        maxlength: 32,
       },
     },
     messages: {
       inputUserPassword: {
         minlength: "密码至少6个字符",
+        maxlength: "密码最多16个字符",
         isPwd: "密码错误,请重新输入！"
       },
       "user.pwd": {
         minlength: "密码请设置至少6位",
+        maxlength: "密码最多16个字符",
         isPass: "请先输入旧密码"
       },
       inputUserNewPassword2: {
         minlength: "密码请设置至少6位",
+        maxlength: "密码最多16个字符",
         equalTo: "两次密码输入不相符，请重新输入"
       },
       "user.email": {
-        email: "请输入有效的邮箱"
+        email: "请输入有效的邮箱",
+        maxlength: "邮箱做多32个字符",
       }
     }
   });

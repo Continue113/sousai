@@ -88,7 +88,7 @@
 	   	<button class="btn" type="button">搜索</button>
          <!-- <span class="add-on"><i class="icon-search"></i></span> -->
         </div>   
-        <select class="select selectRows span1"><option value=10>10条/页</option><option value=2>2条/页</option><option value=5>5条/页</option></select>
+        <select class="select selectRows span1"><option value=25>25条/页</option><option value=40>40条/页</option><option value=50>50条/页</option></select>
         <div class="btnbar pull-right"> 
          <button type="button" class="btn forbidUser">禁用用户</button>
          <button type="button" class="btn addUser">添加用户</button> 
@@ -132,28 +132,29 @@
         <div class="page-header row"> 
          <h4>账户基本信息</h4> 
         </div>
-        <form id="editUserForm" class="form-horizontal"> 
-         <fieldset> 
-          <legend>账户基本信息</legend> 
+          <form id="userNameForm" class="form-horizontal">
           <div class="control-group"> 
            <label class="control-label" for="userName">用户名：</label> 
            <div class="controls"> 
             <input class="span3" type="text" id="userName" value="" name="user.name" placeholder="用户名" required="required" /> 
            </div>
           </div>
+          </form>
+          <form id="userPasswordForm" class="form-horizontal">
           <div class="control-group"> 
            <label class="control-label" for="userPassword">密码：</label> 
            <div class="controls"> 
-            <input class="span3" type="text" id="userPassword" value=""  name="user.pwd" placeholder="密码" required="required" /> 
+            <input class="span3" type="text" id="userPassword" value=""  name="user.pwd" placeholder="密码" required="required" />
            </div> 
           </div>
+          </form>
+          <form id="userEmailForm" class="form-horizontal">
           <div class="control-group"> 
            <label class="control-label" for="userEmail">注册邮箱：</label> 
            <div class="controls"> 
             <input class="span3" type="email" id="userEmail" value="" name="user.email" placeholder="电子邮箱" required="required" />
            </div> 
           </div>
-          </fieldset>
           </form>
          </div>
          <!--用户编辑 结束-->
@@ -234,19 +235,19 @@
 }
   
   $(function(){
-	//ajax接受所有的用户
-	e(1,10);  
+	//ajax接受所有的用户 默认为25条每页
+	e(1,25);
     //点击编辑用户隐藏List列表同时显示编辑用户
     $("tbody").on("click",".user-oprate > a",function(event){
+        var datainfo = $(this).parent().parent().attr("data-info"), target=$(".editUser");
         //显示禁用用户和保存修改用户选项，隐藏保存添加，同时根据data-info填补form，
-        $(".editUser .forbidUser").show();
-        $(".editUser .saveUser").show();
-        $(".editUser .saveAdd").hide();
-      var datainfo = $(this).parent().parent().attr("data-info"), target=$(".editUser");
+        target.find(".forbidUser").show();
+        target.find(".saveUser").show();
+        target.find(".saveAdd").hide();
       console.log(datainfo);
       //解析datainfo中的信息
       var data = eval('(' + datainfo + ')');
-      $("#userName").val(data.name);
+      $("#userName").val(data.name).attr("data-id",data.id).attr("data-oldname",data.name);
       $("#userPassword").val(data.pwd);
       $("#userEmail").val(data.email);
       $(".userList").slideUp();
@@ -259,14 +260,16 @@
     });
     //点击添加用户
     $(".addUser").click(function(){
+    	var target=$(".editUser");
       //隐藏 禁用用户和保存修改用户选项，同时清空form，显示保存添加
-      $(".editUser .forbidUser").hide();
-      $(".editUser .saveUser").hide();
+      target.find(".forbidUser").hide();
+      target.find(".saveUser").hide();
       //由于jquery没有专门的重置函数，故使用DOM重置表单
-      $("#editUserForm")[0].reset();
-      $(".editUser .saveAdd").show();
+      $("form")[0].reset();$("form")[1].reset();$("form")[2].reset();
+      
+      target.find(".saveAdd").show();
       $(".userList").slideUp();
-      $(".editUser").slideDown();
+      target.slideDown();
     });
 
 
@@ -274,79 +277,175 @@
     // 编辑用户的js代码，关于验证用户信息是否合法，同场注册页面。   *********************** BEGIN *****************
     //***************************************************************************************
     
-      //表单验证代码
-      //添加验证 验证码方法
-      $.validator.addMethod("isEqual",function(value,element,param){
-        var target = $(param);
-        if(value.toUpperCase() == target.text().toUpperCase()){
-          return true;
-        }
-        else{
-          createCode("inputValidateImg");
-          return false;
-        }
-      },"不相符，请重新输入");
 
-      $("#editUserForm").validate({
-    rules: {
-      "user.name": {
-        minlength: 4,
-        maxlength: 16,
-        remote: "validName",
+        //表单验证代码
+    /*$("#editUserForm").validate({
+      rules: {
+        "user.name": {
+          minlength: 4,
+          maxlength: 16,
+          remote: "validName",
+        },
+        "user.pwd": {
+          minlength: 6
+        },
+        "user.email": {
+          email: true
+        },
       },
-      "user.pwd": {
-        minlength: 6
+      messages: {
+        "user.name": {
+          required: "请输入用户名",
+          minlength: "用户名至少4个字符",
+          maxlength: "用户名最多16个字符",
+          remote: "该用户名已存在，请换个其他的用户名！"
+        },
+        "user.pwd": {
+          required: "请输入密码",
+          minlength: "密码请设置至少6位"
+        },
+        "user.email": {
+          required: "请输入邮箱",
+          email: "请输入有效的邮箱"
+        },
       },
-      "user.email": {
-        email: true
-      },
+    });*/
+
+
+    //表单验证代码
+$("#userNameForm").validate({
+  rules: {
+    "user.name": {
+      minlength: 4,
+      maxlength: 16,
+      remote: "validName",
     },
-    messages: {
-      "user.name": {
-        required: "请输入用户名",
-        minlength: "用户名至少4个字符",
-        maxlength: "用户名最多16个字符",
-        remote: "该用户名已存在，请换个其他的用户名！"
-      },
-      "user.pwd": {
-        required: "请输入密码",
-        minlength: "密码请设置至少6位"
-      },
-      "user.email": {
-        required: "请输入邮箱",
-        email: "请输入有效的邮箱"
-      },
-    }
-  });
+  },
+  messages: {
+    "user.name": {
+      required: "请输入用户名",
+      minlength: "用户名至少4个字符",
+      maxlength: "用户名最多16个字符",
+      remote: "该用户名已存在，请换个其他的用户名！"
+    },
+  },
+});
+
+$("#userPasswordForm").validate({
+  rules: {
+    "user.pwd": {
+      minlength: 6,
+      maxlength: 16,
+    },
+  },
+  messages: {
+    "user.pwd": {
+      required: "请输入密码",
+      minlength: "密码请设置至少6位",
+      maxlength: "密码请设置至多16个字符",
+    },
+  },
+});
+
+
+//表单验证代码
+$("#userEmailForm").validate({
+rules: {
+"user.email": {
+  email: true,
+  maxlength: 32,
+},
+},
+messages: {
+"user.email": {
+  required: "请输入邮箱",
+  email: "请输入有效的邮箱",
+  maxlength: "邮箱做多设置32个字符",
+},
+},
+});
+    
     //验证添加用户
-    $( "button.saveAdd" ).click(function() {
-		if( $("#editUserForm").valid() ){
+    $( "button.saveAdd" ).click(function() {//密码限制问题
+    	var valid = false;
+    	if( $("#userNameForm").valid() && $("#userPasswordForm").valid() && $("#userEmailForm").valid() ){
+    		valid = true;
+    	}
+		if( valid === true ){
 			console.log("通过验证");
-	          /*$.ajax({
+	        var dataname = $("#userName").val(),
+	        datapwd = $("#userPassword").val(),
+	        dataemail = $("#userEmail").val();
+	    	console.log(dataname+datapwd+dataemail);
+	          $.ajax({
 	            url: "processReg",
 	            type: "POST",
 	            dataType: "json",
 	            data: {
-	              "user.name": $("#inputUsername").val(),
-	              "user.pwd": $("#inputUserPassword").val(),
-	              "user.email": $("#inputUserEmail").val(),
+	                "user.name": dataname,
+	                "user.pwd": datapwd,
+	                "user.email": dataemail,
 	            },
-	            success: function(resdata){
-	            	console.log(resdata);
-	              //$('#sousaiRemindDialog').modal({backdrop:static});
-	              console.log("dialoged!");              
+	            success: function(data){
+	            	console.log(data);
+	            	if(data == "success"){
+	            		alert("添加用户成功.");
+		                window.setTimeout("window.location='background-userMaintenance.jsp'",1000);
+	            	}else{
+	            		alert("由于未知错误，添加用户失败。");
+	            	}
 	            },
 	            error: function(jqXHR,textStatus,errorThrown){
 	            	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-	              alert("抱歉，发送数据出错了，请重新输入。");
+	                alert("抱歉，发送数据出错了，请重新输入。");
 	            },
-	          });*/
+	          });
 			
 		}else{
-			alert( "Valid: " + $("#editUserForm").valid() );
-			
+			alert("Valid: 有不符合验证的内容，");
 		}
 	});
+    //保存用户信息
+    $("button.saveUser").click(function (){ //修改用户名错误,修改密码居然是修改到了已经登录的那个 。
+    	//用户名已存在问题：胭脂是否为用户名的问题，若用户名没有修改则设置valid为true；
+		var valid = false,
+		oldname = $("#userName").attr("data-oldname"),
+        dataid = $("#userName").attr("data-id"),
+        dataname = $("#userName").val(),
+        datapwd = $("#userPassword").val(),
+        dataemail = $("#userEmail").val();
+
+    	if( ($("#userNameForm").valid()||(dataname === oldname)) && $("#userPasswordForm").valid() && $("#userEmailForm").valid() ){
+    		valid = true;
+    	}
+		
+		if( valid === true ){
+			console.log("通过验证");
+    	console.log(dataid+" ,"+dataname+" ,"+datapwd+" ,"+dataemail);
+
+        $.ajax({
+        url: "updateUserInfo",
+        type: "POST",
+        dataType: 'json',
+        data: {
+        	"user.id":dataid,
+            "user.name": dataname,
+            "user.pwd": datapwd,
+            "user.email": dataemail,
+          },
+        success: function(rspdata) {
+          window.setTimeout("window.location='background-userMaintenance.jsp'",1000);
+          alert("编辑账户成功,请刷新页面。");
+        },
+        error: function(jqXHR,textStatus,errorThrown){
+        	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+          alert("抱歉，发送数据出错了，请重新输入。");
+        },
+        });
+		}else{
+			alert( "Valid: 有不符合验证的内容，");
+		}
+    });
 
     //***************************************************************************************
     // 编辑用户的js代码，关于验证用户信息是否合法，同场注册页面。   *********************** END *******************
