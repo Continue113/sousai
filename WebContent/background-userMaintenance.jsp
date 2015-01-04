@@ -370,6 +370,7 @@ messages: {
     	var valid = false;
     	if( $("#userNameForm").valid() && $("#userPasswordForm").valid() && $("#userEmailForm").valid() ){
     		valid = true;
+    		$("#userName").parent().find(".error").hide();
     	}
 		if( valid === true ){
 			console.log("通过验证");

@@ -159,11 +159,12 @@
   	$("#ajaxState .load").show();console.log("start");
     $.ajax({
       type: "POST",
-      url: "getAllCollection",
+      url: "backgroundCollections",
       contentType: "application/x-www-form-urlencoded; charset=UTF-8",
       data: {currentPage:crtPage,rows:rs},
       dataType: "json",
       success: function(data) {
+    	  console.log(data);alert(data);
 	      var target = $(".collectionsTable > tbody"),template = Handlebars.compile($('#collections-template').html());
 	      Handlebars.registerHelper("data",function(v){
 	    	  //将当前对象转化为字符串，保存在data-info中

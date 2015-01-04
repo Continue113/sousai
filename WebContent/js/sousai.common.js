@@ -365,6 +365,7 @@ function pages(count,crtPage,rs){
 	  var pages = Math.ceil(count/rs) || 1, target=$("ul.pagination");console.log(pages); //若当前页数为空则默认为第一页
 	  target.empty();
 	  if(pages == 1){
+		  target.append('<li class="active"><a href="javascript:void(0)">1</a></li>');
 		  return false;
 	  }
 	  target.append('<li class="prior"><a href="javascript:prior()"><span aria-hidden="true">«</span><span class="sr-only"></span></a></li><li class="active"><a href="javascript:void(0)">'+crtPage+'</a></li>');
@@ -382,7 +383,7 @@ function pages(count,crtPage,rs){
 	function prior(){
 		var tgrget = $("ul.pagination"),
 		rs = $("select.selectRows option:selected").val(),
-		crtPage = tgrget.find("li.active").text();
+		crtPage = tgrget.find("li.active a").text();
 		alert(rs +'  '+ crtPage);
 		if(crtPage==1){
 			alert('已经到最顶了');
@@ -401,7 +402,7 @@ function pages(count,crtPage,rs){
 	function next(){
 		var tgrget = $("ul.pagination").parent(),
 		rs = $("select.selectRows option:selected").val(),
-		crtPage = parseInt(tgrget.find("li.active").text());
+		crtPage = parseInt(tgrget.find("li.active a").text());
 		alert(rs +'  '+ crtPage);
 		e(crtPage + 1,rs);
 		tgrget.find("li.active a ").text(crtPage+1);
