@@ -140,7 +140,7 @@
   <script src="js/handlebars-v2.0.0.js"></script>
   <script src="js/sousai.common.js"></script>
   <!-- handlebars template -->
-  <script id="Collections-template" type="text/x-handlebars-template">
+  <script id="collections-template" type="text/x-handlebars-template">
     {{#each this}}
                         
         <tr class="match" data-info="{{data this}}"> 
@@ -165,8 +165,6 @@
       dataType: "json",
       success: function(data) {
     	  console.log(data);alert(data);
-    	  var jsondata = eval('(' + data + ')');
-    	  console.log(jsondata);alert(jsondata);
 	      var target = $(".collectionsTable > tbody"),template = Handlebars.compile($('#collections-template').html());
 	      Handlebars.registerHelper("data",function(v){
 	    	  //将当前对象转化为字符串，保存在data-info中
