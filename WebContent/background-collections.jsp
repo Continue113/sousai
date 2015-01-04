@@ -165,6 +165,8 @@
       dataType: "json",
       success: function(data) {
     	  console.log(data);alert(data);
+    	  var jsondata = eval('(' + data + ')');
+    	  console.log(jsondata);alert(jsondata);
 	      var target = $(".collectionsTable > tbody"),template = Handlebars.compile($('#collections-template').html());
 	      Handlebars.registerHelper("data",function(v){
 	    	  //将当前对象转化为字符串，保存在data-info中

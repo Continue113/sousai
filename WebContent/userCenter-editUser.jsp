@@ -233,7 +233,7 @@ $(function () {
     var editUserValidator = $("#editUserForm").validate({
       submitHandler: function(){
         //定义发送至服务器的数据，旧密码未验证通过的情况下，不发送填写的新密码
-        if($("#inputUserNewPassword").val() == "" || $("#inputUserEmail").val() == '<s:property value="#session.userBean.userEmail" />'){
+        if($("#inputUserNewPassword").val() == "" && $("#inputUserEmail").val() == '<s:property value="#session.userBean.userEmail" />'){
           return false;
         }else{
           var sendurl = 'updateUserInfo?action=1&user.id=<s:property value="#session.userBean.userId" />';
