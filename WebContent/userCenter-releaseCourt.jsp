@@ -80,7 +80,8 @@
             <select class="selectMatchType" name="mcId">
               <option value=0>请选择比赛类型</option>
             </select>
-            <select class="selectParticularMatchType hide" name="court.matchType"></select>
+            <select class="selectParticularMatchType hide"></select>
+            <input class="hide" id="particularMatchType" name="court.matchType"/>
             <label class="omthide hide" class="control-label" for="otherMatchType">请输入类型：</label>
             <input class="omthide hide" id="otherMatchType" type="text" value="" placeholder="请填写比赛类型"/>
            </div> 
@@ -169,7 +170,7 @@
           <div class="control-group"> 
            <label class="control-label" for="inputCourtInfo">场地简介：</label> 
           </div> 
-          <textarea id="inputCourtInfo" name="intro"></textarea>
+          <textarea id="inputCourtInfo" name="court.intro"></textarea>
           <div class="control-group"> 
            <div class="controls"> 
             <button type="button" class="btn btn-success pull-right" id="rlsCourt"><span>确定发布</span></button> 
@@ -344,6 +345,7 @@
       $("#inputRegionId").attr("value",$(".form-inline > .selectProvince option:selected").attr("data-regionid"));//alert($("#inputRegion").attr("value")+$("#inputRegion").attr("name"));
       $("#inputRegion").attr("value", $(".form-inline > .selectProvince option:selected").text() );
     }
+    $("#particularMatchType").val($(".selectParticularMatchType option:selected").text());
     //提交表单
     console.log("完成隐藏地区输入框填写,提交表单");
     $("#releaseCourtForm").submit();

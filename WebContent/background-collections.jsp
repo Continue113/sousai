@@ -140,14 +140,14 @@
   <script src="js/handlebars-v2.0.0.js"></script>
   <script src="js/sousai.common.js"></script>
   <!-- handlebars template -->
-  <script id="Collections-template" type="text/x-handlebars-template">
+  <script id="collections-template" type="text/x-handlebars-template">
     {{#each this}}
                         
         <tr class="match" data-info="{{data this}}"> 
           <td class="match-title"><label for="{{id}}"><input type="checkbox" id="{{id}}"/>{{name}}</label></td> 
-          <td class="match-time">{{beginTime}} - {{endTime}}</td> 
-          <td class="match-court">{{courtName}}</td>
-          <td class="match-from"><a href="#">{{source}}</a></td> 
+          <td class="match-time">{{matchStartTime}} - {{matchDeadline}}</td> 
+          <td class="match-court">{{matchAddress}}</td>
+          <td class="match-from"><a href="#">{{url}}</a></td> 
           <td class="match-oprate"><a href="javascript:void(0)" class="btn btn-mini pull-right">查看编辑</a></td> 
          </tr>
                             
@@ -174,7 +174,7 @@
 	    	  return v1;
 	      });
 	      target.empty(); //清空tbody
-	  	  target.html(template(data.body));
+	  	  target.html(template(data));
 	      $("#ajaxState .load").hide();console.log("stop");
 	      //出错或无结果
 	      //target.empty(); //清空tbody
@@ -185,7 +185,7 @@
 	      $("td > label").wordLimit();
 	      $(".court-name").wordLimit();
 	      $(".match-from > a").wordLimit(25);
-	      pages(data.count,crtPage,rs);
+	      //pages(data.count,crtPage,rs);
 	    },
       error: function() {
 	      $("#ajaxState .noresult").show();console.log("出错了");

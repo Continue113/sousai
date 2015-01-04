@@ -352,7 +352,7 @@
         $("#inputCourtPrice").val(data.price);
         $("#inputCourtOpenTime").val(data.workTime);
         //获取已上传的场地图片
-        tinymce.activeEditor.setContent(data.name);
+        tinymce.activeEditor.setContent(data.intro);
         //立即初始化比赛类型
         initMatchType();
         
@@ -485,9 +485,9 @@
     tel = $("#inputCourtTel").val(),
     price = $("#inputCourtPrice").val(),
     worktime = $("#inputCourtOpenTime").val(),
-    rule = tinymce.activeEditor.getContent();
+    intro = tinymce.activeEditor.getContent();
     
-    console.log("name:"+name+", id:"+id+", userid:"+userid+", username:"+username+", "+courttype+", "+courttypeid+", "+matchtype+", "+matchtypeid+", "+region+", "+regionid+", "+addr+", "+tablenum+", "+tel+", "+price+", "+worktime+", "+rule);
+    console.log("name:"+name+", id:"+id+", userid:"+userid+", username:"+username+", "+courttype+", "+courttypeid+", "+matchtype+", "+matchtypeid+", "+region+", "+regionid+", "+addr+", "+tablenum+", "+tel+", "+price+", "+worktime+", "+intro);
 	});
     //点击发布场地 编辑场地界面
     $(".editCourt .passCourt").click(function(){

@@ -161,6 +161,17 @@
 		<action name="searchMatch" 
 			class="org.sousai.action.SearchMatchAction">
 		</action>
+		
+		<!-- 搜索比赛 -->
+		<action name="mainSearch" class="org.sousai.search.MatchSearch"
+			method="list">
+			<!-- <result name="success">/Temp.jsp</result> -->
+		</action>
+
+		<action name="backgroundCollections" class="org.sousai.search.BackgroundCollections"
+			method="loadJson">
+		</action>
+		
 	</package>
 	
 	
