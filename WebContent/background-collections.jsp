@@ -195,8 +195,8 @@
   }
   $(function(){
 	//ajax接收所有采集
-	//e(1,25);
-  })
+	e(1,25);
+  });
   </script>  
  </body>
 </html>
