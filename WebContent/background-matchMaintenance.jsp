@@ -167,7 +167,7 @@
           <div class="control-group"> 
            <label class="control-label" for="matchType">比赛类型：</label> 
            <div class="controls">
-            <div class="input-append">、
+            <div class="input-append">
             <input class="span5" type="text" id="inputMatchType"  disabled/>
             <button class="btn" type="button" id="editMatchType">修改</button>
             </div>
@@ -201,8 +201,8 @@
           <div class="control-group"> 
            <label class="control-label" for="matchRegion">比赛地点：</label> 
            <div class="controls">
-           <div class="input-append">、
-            <input class="span5" type="text" id="inputMatchCourt"  disabled/>
+           <div class="input-append">
+            <input class="span5" type="text" id="inputMatchCourt" data-iscourt="false" disabled/>
             <button class="btn" type="button" id="editMatchCourt">修改</button>
             </div>
             </div>
@@ -332,16 +332,16 @@
         console.log(datainfo);
         //解析datainfo中的信息
         var data = eval('(' + datainfo + ')');
-        $("#inputMatchTitle").val(data.name).attr("data-id",data.id).attr("data-userid",data.userid);
-        $("#inputMatchType").val(data.type);
+        $("#inputMatchTitle").val(data.name).attr("data-id",data.id).attr("data-userid",data.userId);
+        $("#inputMatchType").val(data.type).attr("data-oldtype",data.type);
         $("#inputMatchTimefrom").val(data.beginTime);
         $("#inputMatchTimeto").val(data.endTime);
-        $("#inputMatchCourt").val(data.courtName).attr("data-courtid",data.courtId);
+        $("#inputMatchCourt").val(data.courtName).attr("data-oldcourt",data.courtName).attr("data-courtid",data.courtId);
         $("#inputMatchRules").append(data.rule);
         tinymce.activeEditor.setContent(data.rule);
         //立即初始化比赛类型
         initMatchType();
-        
+                
     	$(".matchList").slideUp();
     	$(".editMatch").slideDown();
   	});
@@ -357,7 +357,9 @@
     	if( n == 0){
     		alert("请先选中比赛");
     	}else{
-    		var matchIds = new Array();
+    		var matchIds = new Array(),
+    		rs = $("select.selectRows option:selected").val(),
+    		crtPage = $("ul.pagination").find("li.active a").text();
     		$(".match input:checked").each(function(index,element){
     			console.log($(this).attr("id"));
         		matchIds.push($(this).attr("id"));
@@ -373,7 +375,8 @@
               dataType: "json",
               success: function(rspdata) {
             	  if( rspdata == "success" ){
-            		  alert("删除成功");
+            		  alert("删除成功");alert(crtPage);
+            		  e(crtPage,rs);//刷新数据
             	  }else if( rspdata == "fail" ){
             		  alert("删除失败");
             	  }else{
@@ -407,10 +410,10 @@
                 "matchIds": matchIds.join(","),
               },
               dataType: "json",
-              success: function(rspdata) {
-            	  if( rspdata == "success" ){
+              success: function(data) {
+            	  if( data == "success" ){
             		  alert("发布成功");
-            	  }else if( rspdata == "fail" ){
+            	  }else if( data == "fail" ){
             		  alert("发布失败");
             	  }else{
             		  alert("发布失败，错误代码未知");
@@ -452,21 +455,20 @@
     });
     //点击保存修改
     $(".editMatch .saveMatch").click(function (){
-
     	
     	var id = $("#inputMatchTitle").attr("data-id"),
+        userid = $("#inputMatchTitle").attr("data-userid"),
     	title = $("#inputMatchTitle").val(),
         type = $("#inputMatchType").val(),
+        typeid = $("#inputMatchType").attr("data-typeid"),
         begintime = $("#inputMatchTimefrom").val(),
         endtime = $("#inputMatchTimeto").val(),
         court = $("#inputMatchCourt").val(),
         courtid = $("#inputMatchCourt").attr("data-courtid"),
-        courtaddr = $("#inputMatchCourt").attr("data-courtdata"),
-        userid = $("#inputMatchTitle").attr("data-userid"),
     	iscourt = $("#inputMatchCourt").attr("data-iscourt"),
         rule = tinymce.activeEditor.getContent();
     	
-    	console.log(id+", "+title+", "+type+", "+begintime+", "+endtime+", "+court+", "+courtid+", "+courtaddr+", "+userid+", "+iscourt+", "+rule);
+    	console.log("id: "+id+",title: "+title+",type: "+type+",typeid: "+typeid+",begintime: "+begintime+",endtime: "+endtime+",court: "+court+",courtid: "+courtid+",userid: "+userid+",iscourt: "+iscourt+",rule: "+rule);
     	
     	
     	if( $("#editMatchForm").valid() === true ){
@@ -510,7 +512,7 @@
     });
     //发布比赛 编辑界面
     $(".editMatch .passMatch").click(function (){
-                $.ajax({
+/*                 $.ajax({
                   type: "POST",
                   url: "passMatches",
                   contentType: "application/x-www-form-urlencoded; charset=UTF-8",
@@ -530,7 +532,7 @@
                   error: function() {
                     alert("抱歉，发送信息到服务器出错了。");
                   },
-                });
+                }); */
     });
     //点击修改比赛类型
     $("#editMatchType").click(function (){
@@ -539,15 +541,20 @@
     		$(this).text("取消修改");
     	}else{
     		$("#matchTypeControls").slideUp();
+    		//重置选择类型的下拉框，同时将原类型还原
+    		$(".selectParticularMatchType").hide().empty().append("<option value=0>请选择比赛类型</option>");
+    		$("#inputMatchType").val($("#inputMatchType").attr("data-oldtype"));
     		$(this).text("修改");
     	}
     });
-    $("#editMatchAdress").click(function (){
+    $("#editMatchCourt").click(function (){
     	if($(this).text() == "修改"){
     		$(".matchAdressControls").slideDown();
     		$(this).text("取消修改");
     	}else{
     		$(".matchAdressControls").slideUp();
+    		//重置选择比赛场地，同时还原类型
+      		$("#inputMatchCourt").val($("#inputMatchCourt").attr("data-oldcourt"));
     		$(this).text("修改");
     	}
     });
@@ -629,12 +636,8 @@
       if (tgPrt.find(".selectParticularMatchType option:selected").attr("value") == 1 && omtf == 0){
           //将otherMatchType中填入已选的具体类型设置为空
           $("#otherMatchType").val("");
-        //移除name属性，即不会使用select内容提交
-        //$(this).removeAttr("name");
         //当用户选择其他的时候，弹出隐藏的label和input
         tgPrt.find(".omthide").slideDown();
-        //添加输入框的name属性，并改变omtf
-        //$("#otherMatchType").attr("name","match.type");
         omtf = 1;
 
         console.log("获得场地类型");
@@ -705,6 +708,9 @@
         }
         //将otherMatchType中填入已选的具体类型
         $("#otherMatchType").val( tgPrt.find(".selectParticularMatchType option:selected").text() );
+        //修改的新类型
+        $("#inputMatchType").val(tgPrt.find(".selectParticularMatchType option:selected").text()).attr("data-typeid",tgPrt.find(".selectParticularMatchType option:selected").attr("value"));
+        alert("设置inputMatchType 的val typeid");
       }
     });
 
@@ -728,7 +734,10 @@
     $("tbody").on("click",".tritem",function(event){
       $("tr").removeClass("active");
       $(this).addClass("active");
-      $("#hideCourtId").attr("value",$(this).attr("data-courtid"));
+      //设置比赛场地
+      $("#inputMatchCourt").val($(this).find("td:eq(0)").text());
+      $("#inputMatchCourt").attr("data-courtid",$(this).attr("data-courtid"));
+      alert("设置inputMatchCourt比赛场地  courtid val");
     });
 
     //搜索现有场地
@@ -868,9 +877,12 @@
       $("#" + editor.id).valid();
     }
     });
-    
+	
+    //表单验证
+    //为比赛地点中的省添加name属性，然后利用validate插件的min=1验证是否选择了省
+    $(".controls > .selectProvince").attr("name","selectProvince");
 
-    var matchValidator = $("#releaseMatchForm").submit(function() {
+    $("#editMatchForm").submit(function() {
       // update underlying textarea before submit validation
       tinyMCE.triggerSave();
     }).validate({
@@ -882,10 +894,10 @@
       "court.courtTypeId": {
       	min: 1,
       },
-      matchTypeId: {
+      matchTypeId: { //比赛详细类型
       	min: 1,
       },
-      mcId: {
+      mcId: {//比赛大类
       	min: 1,
       },
       selectProvince: {//为比赛地点中的省添加的name属性
@@ -894,7 +906,7 @@
     },
     messages: {
   	"match.name": {
-        //required: "请输入比赛名称",
+        required: "请输入比赛名称",
         minlength: "比赛名称至少6个字符",
         maxlength: "比赛名称至多30个字符"
       },
