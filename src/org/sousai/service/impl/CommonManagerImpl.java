@@ -5,6 +5,7 @@ import java.util.List;
 import org.sousai.domain.*;
 import org.sousai.service.CommonManager;
 import org.sousai.tools.MyPrint;
+import org.sousai.vo.CourtBean;
 import org.sousai.vo.MatchBean;
 import org.sousai.dao.*;
 
@@ -123,6 +124,12 @@ public class CommonManagerImpl implements CommonManager {
 			int currentPage, int rows) {
 		// TODO Auto-generated method stub
 		return matchDao.findByMatchTypeName(typeName, currentPage, rows);
+	}
+
+	@Override
+	public List<CourtBean> findPagedAllCourtOrderBy(Integer currentPage,
+			Integer rows, String orderByCol, Boolean isAsc) {
+		return courtDao.findPagedByWhereOrderBy(null, currentPage, rows, orderByCol, isAsc);
 	}
 
 }

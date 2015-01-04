@@ -18,7 +18,37 @@ public class GetAllCourtAction extends UserBaseAction {
 
 	private Integer currentPage;
 	private Integer rows;
+	private String orderByCol;
+	private Boolean isAsc;
 	
+	/**
+	 * @return the orderByCol
+	 */
+	public String getOrderByCol() {
+		return orderByCol;
+	}
+
+	/**
+	 * @param orderByCol the orderByCol to set
+	 */
+	public void setOrderByCol(String orderByCol) {
+		this.orderByCol = orderByCol;
+	}
+
+	/**
+	 * @return the isAsc
+	 */
+	public Boolean getIsAsc() {
+		return isAsc;
+	}
+
+	/**
+	 * @param isAsc the isAsc to set
+	 */
+	public void setIsAsc(Boolean isAsc) {
+		this.isAsc = isAsc;
+	}
+
 	/**
 	 * @return the currentPage
 	 */
@@ -64,7 +94,7 @@ public class GetAllCourtAction extends UserBaseAction {
 				rows = 25;
 			}
 			MyPrint.myPrint("rows="+rows);
-			List<CourtBean> list = amg.getAllCourt(currentPage, rows);
+			List<CourtBean> list = cmg.findPagedAllCourtOrderBy(currentPage, rows, orderByCol, isAsc);
 			int count = amg.countAllCourt();
 			FrontMessage msg = new FrontMessage(list, count);
 			if (list != null) {

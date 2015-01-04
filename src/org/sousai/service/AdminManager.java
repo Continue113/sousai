@@ -40,6 +40,10 @@ public interface AdminManager {
 	 */
 	public List<UserBean> getAllUser(int currentPage, int rows);
 
+	/**
+	 * 获取总用户数量
+	 * @return
+	 */
 	public int countAllUser();
 	/**
 	 * 批量删除比赛

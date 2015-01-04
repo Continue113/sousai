@@ -4,20 +4,21 @@ import java.util.List;
 
 import org.sousai.dao.CourtDao;
 import org.sousai.domain.*;
+import org.sousai.tools.CommonUtils;
 import org.sousai.tools.MyPrint;
 import org.sousai.vo.CourtBean;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 public class CourtDaoHibernate extends SqlHelper implements CourtDao {
-//	private String selectCourtBean = "select c.ID,c.NAME,c.COURTTYPEID,ct.NAME,c.MATCHTYPE,"
-//			+ "c.REGIONID,c.REGION,c.ADDR,c.TABLENUM,c.TEL,"
-//			+ "c.MATCHCOUNT,c.PRICE,c.WORKTIME,c.INTRO,c.VERIFY,"
-//			+ "c.RELDATE,c.MODDATE,c.USERID,u.NAME "
-//			+ "from COURT c, COURTTYPE ct, USER u "
-//			+ "where c.COURTTYPEID=ct.ID and c.USERID=u.ID ";
+	// private String selectCourtBean =
+	// "select c.ID,c.NAME,c.COURTTYPEID,ct.NAME,c.MATCHTYPE,"
+	// + "c.REGIONID,c.REGION,c.ADDR,c.TABLENUM,c.TEL,"
+	// + "c.MATCHCOUNT,c.PRICE,c.WORKTIME,c.INTRO,c.VERIFY,"
+	// + "c.RELDATE,c.MODDATE,c.USERID,u.NAME "
+	// + "from COURT c, COURTTYPE ct, USER u "
+	// + "where c.COURTTYPEID=ct.ID and c.USERID=u.ID ";
 	private String selectCourtBean = "select new org.sousai.vo.CourtBean(c.id,c.name,"
 			+ "c.courtTypeId,ct.name,c.matchType,"
 			+ "c.regionId,c.region,c.addr,"
@@ -28,7 +29,7 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 			+ "from Court c, CourtType ct, User u "
 			+ "where c.courtTypeId=ct.id and c.userId=u.id ";
 	private SqlHelper sqlHelper;
-	
+
 	public CourtDaoHibernate() {
 		super();
 		sqlHelper = new SqlHelper();
@@ -42,7 +43,8 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 	}
 
 	/**
-	 * @param sqlHelper the sqlHelper to set
+	 * @param sqlHelper
+	 *            the sqlHelper to set
 	 */
 	public void setSqlHelper(SqlHelper sqlHelper) {
 		this.sqlHelper = sqlHelper;
@@ -54,7 +56,7 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 		try {
 			Session session = getHibernateTemplate().getSessionFactory()
 					.getCurrentSession();
-			MyPrint.myPrint("getSession() SUCCeSS");
+			MyPrint.myPrint("getSession() SUCCESS");
 			String hql = selectCourtBean;
 			hql += " and c.id=?";
 			MyPrint.myPrint(hql);
@@ -88,10 +90,29 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 	}
 
 	@Override
-	public List<CourtBean> findAll(Integer currentPage, Integer rows) throws Exception{
+	public List<CourtBean> findAll(Integer currentPage, Integer rows)
+			throws Exception {
 		Session session = getHibernateTemplate().getSessionFactory()
 				.getCurrentSession();
 		String hql = selectCourtBean;
+		Query q = session.createQuery(hql);
+		return extracted(q, currentPage, rows);
+	}
+
+	@Override
+	public List<CourtBean> findPagedByWhereOrderBy(String strWhere, Integer currentPage, Integer rows, String orderByCol, Boolean isAsc){
+		Session session = getHibernateTemplate().getSessionFactory()
+				.getCurrentSession();
+		String hql = selectCourtBean;
+		if(!CommonUtils.isNullOrEmpty(strWhere)){
+			hql += strWhere;
+		}
+		if(!CommonUtils.isNullOrEmpty(orderByCol)){
+			hql = String.format("%1$s order by %2$s ", hql, orderByCol);
+			if (!CommonUtils.isNullOrEmpty(isAsc) && isAsc == false) {
+				hql += " DESC ";
+			}
+		}
 		Query q = session.createQuery(hql);
 		return extracted(q, currentPage, rows);
 	}
@@ -109,10 +130,12 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 
 	@SuppressWarnings("unchecked")
 	private List<CourtBean> extracted(Query q) {
-		return (List<CourtBean>)q.list();
+		return (List<CourtBean>) q.list();
 	}
+
 	private List<CourtBean> extracted(Query q, Integer currentPage, Integer rows) {
-		return (List<CourtBean>)sqlHelper.findPagedModelList_HQL(q, currentPage, rows);
+		return (List<CourtBean>) sqlHelper.findPagedModelList_HQL(q,
+				currentPage, rows);
 	}
 
 	@Override
@@ -138,8 +161,8 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 	}
 
 	@Override
-	public List<CourtBean> findByPram(User user, CourtType courtType, String matchType,
-			Region region) {
+	public List<CourtBean> findByPram(User user, CourtType courtType,
+			String matchType, Region region) {
 		// TODO Auto-generated method stub
 		String sql = "from Court where";
 		int flag = 0;
@@ -190,13 +213,14 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 	@Override
 	public int countRelMatchPerDay(Integer userId) {
 		int value = -1;
-		try{
+		try {
 			String hql = "select count(*) from Court where date(relDate)=curdate() and userId=?";
-			Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
+			Session session = getHibernateTemplate().getSessionFactory()
+					.getCurrentSession();
 			Query q = session.createQuery(hql);
 			q.setInteger(0, userId);
 			value = Integer.valueOf(q.uniqueResult().toString()).intValue();
-		}catch (Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 			return -1;
 		}
@@ -207,12 +231,13 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 	public int deleteCourts(Integer[] courtIds) {
 		int value = -1;
 		String strHql = "delete from Court where id in(:ids)";
-		try{
-		Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
-		Query q = session.createQuery(strHql);
-		q.setParameterList("ids", courtIds);
-		value = q.executeUpdate();
-		}catch(HibernateException e){
+		try {
+			Session session = getHibernateTemplate().getSessionFactory()
+					.getCurrentSession();
+			Query q = session.createQuery(strHql);
+			q.setParameterList("ids", courtIds);
+			value = q.executeUpdate();
+		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
 		return value;

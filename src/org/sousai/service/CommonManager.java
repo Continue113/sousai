@@ -80,4 +80,14 @@ public interface CommonManager
 	 * @return
 	 */
 	public List<MatchBean> findMatchByMatchTypeName(String typeName,int currentPage, int rows);
+	
+	/**
+	 * 分页查询所有场地，并排序
+	 * @param currentPage
+	 * @param rows
+	 * @param orderByCol
+	 * @param isAsc
+	 * @return
+	 */
+	public List<CourtBean> findPagedAllCourtOrderBy(Integer currentPage, Integer rows, String orderByCol, Boolean isAsc);
 }

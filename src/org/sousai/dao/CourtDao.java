@@ -126,4 +126,15 @@ public interface CourtDao {
 	 * @return
 	 */
 	int countMatch();
+
+	/**
+	 * 查询符合条件的比赛，并排序
+	 * @param currentPage
+	 * @param rows
+	 * @param orderByCol
+	 * @param isAsc
+	 * @return
+	 */
+	List<CourtBean> findPagedByWhereOrderBy(String strWhere, Integer currentPage, Integer rows,
+			String orderByCol, Boolean isAsc);
 }

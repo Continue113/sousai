@@ -65,7 +65,7 @@ public class AdminManagerImpl implements AdminManager {
 
 	@Override
 	public List<CourtBean> getAllCourt(Integer currentPage, Integer rows) throws Exception {
-		return courtDao.findAll(currentPage, rows);
+		return courtDao.findPagedByWhereOrderBy(null, currentPage, rows, null, null);
 	}
 
 	@Override
