@@ -249,15 +249,17 @@ $(function() {
 	orderbycols = tempthis.find("i").attr("data-orderbycols"), 
 	isasc = tempthis.find("i").attr("data-isasc"),
 	rs = $("select.selectRows option:selected").val(),
-	crtPage = $("ul.pagination > li.active a").text();
+	crtPage = $("ul.pagination > li.active a").text(),
+	sc = $(".text-filter-box button .current").attr("data-strcolumns"),
+	ia = $(".text-filter-box input").val();
   	
     if(sortflag==1){
           tempthis.find("i").removeClass("icon-arrow-up").addClass("icon-arrow-down").attr("data-isasc",false);
-          e(crtPage,rs,orderbycols,isasc);
+          e(crtPage,rs,orderbycols,isasc,sc,ia);
           sortflag=0;
       }else{
           tempthis.find("i").removeClass("icon-arrow-down").addClass("icon-arrow-up").attr("data-isasc",true);
-          e(crtPage,rs,orderbycols,isasc);
+          e(crtPage,rs,orderbycols,isasc,sc,ia);
           sortflag=1;
       }
 	tempthis.parent().parent().find("button.dropdown-toggle > span.current").html( tempthis.find("a").html() );

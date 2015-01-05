@@ -77,13 +77,13 @@
 	    <div class="text-filter-box input-append"> 
          <input type="text" class="span2" placeholder="请输入关键字"/> 
          <div class="btn-group" role="group">
-		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current">场地名称</span><span class="caret"></span></button>
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current" data-strcolumns="name">场地名称</span><span class="caret"></span></button>
 		<ul class="dropdown-menu" role="menu">
-			<li><a href="javascript:void(0)">场地名称</a></li>
-			<li><a href="javascript:void(0)">比赛类型</a></li>
-			<li><a href="javascript:void(0)">场地地址</a></li>
-			<li><a href="javascript:void(0)">发布时间</a></li>
-			<li><a href="javascript:void(0)">发布用户</a></li>
+			<li><a href="javascript:void(0)" data-strcolumns="name">场地名称</a></li>
+			<li><a href="javascript:void(0)" data-strcolumns="matchType">比赛类型</a></li>
+			<li><a href="javascript:void(0)" data-strcolumns="addr">场地地址</a></li>
+			<li><a href="javascript:void(0)" data-strcolumns="relDate">发布时间</a></li>
+			<li><a href="javascript:void(0)" data-strcolumns="userName">发布用户</a></li>
 		</ul>
 	   	</div>
 	   	<button class="btn" type="button">搜索</button>
@@ -295,13 +295,13 @@
   <script>
   //定义函数
 
-	function e(crtPage,rs,obc,ia){
+	function e(crtPage,rs,obc,ia,sc,kv){
 	  $("#ajaxState .load").show();console.log("start");console.log(crtPage+",,,"+rs);
     $.ajax({
       type: "POST",
       url: "getAllCourt",
       contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-      data: {currentPage:crtPage,rows:rs,orderByCols:obc,isAsc:ia},
+      data: {currentPage:crtPage,rows:rs,orderByCols:obc,isAsc:ia,strColumns:sc,keyValue:kv},
       dataType: "json",
       success: function(data) {
 	      console.log(data);//sousaiRemindDialog(rspdata);
@@ -335,7 +335,7 @@
   
   $(function(){
 	 //ajax接收所有的场地 默认为第一页 25条，按name排序，升序
-	 e(1,25,"name",true);
+	 e(1,25,"name",true,"name","");
     //点击编辑比赛隐藏List列表同时显示编辑比赛
     $("tbody").on("click",".court-oprate > a",function(event){
         var datainfo = $(this).parent().parent().attr("data-info");
