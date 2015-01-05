@@ -329,12 +329,6 @@
     		crtPage = $("ul.pagination").find("li.active a").text();
     		$(".match input:checked").each(function(index,element){
     			console.log($(this).attr("id"));
-    			/*if(index == 1){
-        			collectionId = $(this).attr("id");
-    			}
-    			else{
-        			collectionId += $(this).attr("id")+",";
-    			//}*/
         		collectionId.push($(this).attr("id"));
     		});
     		console.log(collectionId.join(","));sousaiRemindDialog("collectionId:"+collectionId.join(","));
@@ -348,11 +342,12 @@
               dataType: "json",
               success: function(rspdata) {
             	  if( rspdata == "success" ){
-            		  alert("删除成功");alert(crtPage);
-            		  sousaiRemindDialog("删除成功");
+            		  //alert("删除成功");alert(crtPage);
+            		  sousaiRemindDialog("删除成功,隐藏删除的采集数据。");
+            		  $(".match input:checked").parent().parent().parent().hide();
             		  //e(crtPage,rs);//刷新数据
-            	  }else if( rspdata == "fail" ){
-            		  alert("删除失败")
+            	  }else if( rspdata == "error" ){
+            		  //alert("删除失败")
             		  sousaiRemindDialog("删除失败");
             	  }else{
             		  sousaiRemindDialog("删除失败，错误代码："+rspdata);
@@ -380,7 +375,7 @@
     		console.log(collectionId);sousaiRemindDialog("collectionId:"+collectionId.join(","));
             $.ajax({
               type: "POST",
-              url: "passCollections",
+              url: "publicCollections",
               contentType: "application/x-www-form-urlencoded; charset=UTF-8",
               data: {
             	  "collectionId": collectionId.join(","),
@@ -388,8 +383,9 @@
               dataType: "json",
               success: function(data) {
             	  if( data == "success" ){
-            		  sousaiRemindDialog("发布成功");
-            	  }else if( data == "fail" ){
+            		  sousaiRemindDialog("发布成功，隐藏发布的采集数据");
+            		  $(".match input:checked").parent().parent().parent().hide();
+            	  }else if( data == "error" ){
             		  sousaiRemindDialog("发布失败");
             	  }else{
             		  sousaiRemindDialog("发布失败，错误代码未知");
@@ -419,7 +415,7 @@
                   success: function(rspdata) {
                 	  if( rspdata == "success" ){
                 		  sousaiRemindDialog("删除成功");
-                	  }else if( rspdata == "fail" ){
+                	  }else if( rspdata == "error" ){
                 		  sousaiRemindDialog("删除失败");
                 	  }else{
                 		  sousaiRemindDialog("删除失败，错误代码未知");
@@ -476,7 +472,7 @@
                 	  if( rspdata == "success" ){
                 		  //alert("保存成功");
                 		  sousaiRemindDialog("保存成功");
-                	  }else if( rspdata == "fail" ){
+                	  }else if( rspdata == "error" ){
                 		  sousaiRemindDialog("保存失败");
                 	  }else{
                 		  sousaiRemindDialog("保存失败，错误代码未知");
@@ -493,9 +489,9 @@
     });
     //发布比赛 编辑界面
     $(".editMatch .passMatch").click(function (){
-/*                 $.ajax({
+                 $.ajax({
                   type: "POST",
-                  url: "passCollections",
+                  url: "publicCollections",
                   contentType: "application/x-www-form-urlencoded; charset=UTF-8",
                   data: {
                     "collectionId": $("#inputMatchTitle").attr("data-id"),
@@ -513,7 +509,7 @@
                   error: function(jqXHR,textStatus,errorThrown){
                     sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
                   },
-                }); */
+                }); 
     });
     //点击修改比赛类型
     $("#editMatchType").click(function (){

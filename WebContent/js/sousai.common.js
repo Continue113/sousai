@@ -272,7 +272,6 @@ $(function() {
 //全局弹出对话框提示操作
 function sousaiRemindDialog(text,successishide){
 	var ishide = successishide || true;
-	alert("sousaiRemindDialog");
     $("#sousaiRemindDialog > .modal-body > #SRDcontent").text(text); //设置弹出框的内容
     if(ishide === true){
         $("#sousaiRemindDialog > .modal-footer > button.btn-success").hide(); //设置弹出框确定按钮
