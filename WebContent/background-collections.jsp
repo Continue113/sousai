@@ -324,20 +324,26 @@
     	if( n == 0){
     		sousaiRemindDialog("请先选中比赛");
     	}else{
-    		var collectionId = new Array(),
+    		var collectionId,// = new Array(),
     		rs = $("select.selectRows option:selected").val(),
     		crtPage = $("ul.pagination").find("li.active a").text();
     		$(".match input:checked").each(function(index,element){
     			console.log($(this).attr("id"));
-        		collectionId.push($(this).attr("id"));
+    			if(index == 1){
+        			collectionId = $(this).attr("id");
+    			}
+    			else{
+        			collectionId = ","+$(this).attr("id");
+    			}
+        		//collectionId.push($(this).attr("id"));
     		});
-    		console.log(collectionId);sousaiRemindDialog("collectionId:"+collectionId.join(","));
+    		console.log(collectionId);sousaiRemindDialog("collectionId:"+collectionId);
             $.ajax({
               type: "POST",
               url: "deleteCollections",
               contentType: "application/x-www-form-urlencoded; charset=UTF-8",
               data: {
-                "collectionId": collectionId.join(","),
+                "collectionId": collectionId//.join(","),
               },
               dataType: "json",
               success: function(rspdata) {
