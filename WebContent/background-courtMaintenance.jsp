@@ -295,13 +295,13 @@
   <script>
   //定义函数
 
-	function e(crtPage,rs){
+	function e(crtPage,rs,obc,ia){
 	  $("#ajaxState .load").show();console.log("start");console.log(crtPage+",,,"+rs);
     $.ajax({
       type: "POST",
       url: "getAllCourt",
       contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-      data: {currentPage:crtPage,rows:rs},
+      data: {currentPage:crtPage,rows:rs,orderByCols:obc,isAsc:ia},
       dataType: "json",
       success: function(data) {
 	      console.log(data);//sousaiRemindDialog(rspdata);
@@ -334,8 +334,8 @@
 }
   
   $(function(){
-	 //ajax接收所有的场地
-	 e(1,25);
+	 //ajax接收所有的场地 默认为第一页 25条，按name排序，升序
+	 e(1,25,"name",true);
     //点击编辑比赛隐藏List列表同时显示编辑比赛
     $("tbody").on("click",".court-oprate > a",function(event){
         var datainfo = $(this).parent().parent().attr("data-info");

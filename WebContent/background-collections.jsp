@@ -343,7 +343,7 @@
               success: function(rspdata) {
             	  if( rspdata == "success" ){
             		  //sousaiRemindDialog("删除成功");sousaiRemindDialog(crtPage);
-            		  sousaiRemindDialog("删除成功,隐藏删除的采集数据。");
+            		  sousaiRemindDialog("删除成功");
             		  $(".match input:checked").parent().parent().parent().hide();
             		  //e(crtPage,rs);//刷新数据
             	  }else if( rspdata == "error" ){
@@ -363,6 +363,46 @@
     //点击发布比赛 列表界面
     $("#collectionLists .passMatch").click(function(){
     	var checked = $(".match input:checked"),n = checked.length;
+    	//若为选中则提示
+    	if( n == 0){
+    		sousaiRemindDialog("请先选中比赛");
+    	}else{
+    		var collectionId = new Array(),
+    		rs = $("select.selectRows option:selected").val(),
+    		crtPage = $("ul.pagination").find("li.active a").text();
+    		$(".match input:checked").each(function(index,element){
+    			console.log($(this).attr("id"));
+        		collectionId.push($(this).attr("id"));
+    		});
+    		console.log(collectionId.join(","));sousaiRemindDialog("collectionId:"+collectionId.join(","));
+            $.ajax({
+              type: "POST",
+              url: "publishCollections",
+              contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+              data: {
+                "collectionId": collectionId.join(","),
+              },
+              dataType: "json",
+              success: function(rspdata) {
+            	  if( rspdata == "success" ){
+            		  //sousaiRemindDialog("删除成功");sousaiRemindDialog(crtPage);
+            		  sousaiRemindDialog("发布成功");
+            		  $(".match input:checked").parent().parent().parent().hide();
+            		  //e(crtPage,rs);//刷新数据
+            	  }else if( rspdata == "error" ){
+            		  //sousaiRemindDialog("删除失败")
+            		  sousaiRemindDialog("发布失败");
+            	  }else{
+            		  sousaiRemindDialog("发布失败，错误代码："+rspdata);
+            	  }
+              },
+              error: function(jqXHR,textStatus,errorThrown){
+            	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+                sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
+              },
+            });
+    	}
+    	/*var checked = $(".match input:checked"),n = checked.length;
     	//若为选中则提示
     	if( n == 0){
     		sousaiRemindDialog("请先选中比赛");
@@ -396,7 +436,7 @@
                 sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
               },
             });
-    	}
+    	}*/
     });
 
     //***************************************************************************************
