@@ -252,7 +252,7 @@
   <script>
   //定义函数
   function e(crtPage,rs){
-  	$("#ajaxState .load").show();console.log("start");sousaiRemindDialog("抱歉，ajax出错了。");
+  	$("#ajaxState .load").show();console.log("start");
     $.ajax({
       type: "POST",
       url: "backgroundCollections",
@@ -286,7 +286,7 @@
       error: function(jqXHR,textStatus,errorThrown){
     	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
 	      $("#ajaxState .noresult").show();console.log("出错了");
-	      sousaiRemindDialog("e:抱歉，ajax出错了。");
+	      sousaiRemindDialog("抱歉，获取数据出错了。");
       },
     });
   }
@@ -355,7 +355,7 @@
               },
               error: function(jqXHR,textStatus,errorThrown){
             	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-                sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
+                sousaiRemindDialog("delete:抱歉，发送信息到服务器出错了。");
               },
             });
     	}
@@ -398,45 +398,10 @@
               },
               error: function(jqXHR,textStatus,errorThrown){
             	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-                sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
+                sousaiRemindDialog("pass:抱歉，发送信息到服务器出错了。");
               },
             });
     	}
-    	/*var checked = $(".match input:checked"),n = checked.length;
-    	//若为选中则提示
-    	if( n == 0){
-    		sousaiRemindDialog("请先选中比赛");
-    	}else{
-    		var collectionId = new Array();
-    		$(".match input:checked").each(function(index,element){
-    			console.log($(this).attr("id"));
-        		collectionId.push($(this).attr("id"));
-    		});
-    		console.log(collectionId);sousaiRemindDialog("collectionId:"+collectionId.join(","));
-            $.ajax({
-              type: "POST",
-              url: "publishCollections",
-              contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-              data: {
-            	  "collectionId": collectionId.join(","),
-              },
-              dataType: "json",
-              success: function(data) {
-            	  if( data == "success" ){
-            		  sousaiRemindDialog("发布成功，隐藏发布的采集数据");
-            		  $(".match input:checked").parent().parent().parent().hide();
-            	  }else if( data == "error" ){
-            		  sousaiRemindDialog("发布失败");
-            	  }else{
-            		  sousaiRemindDialog("发布失败，错误代码未知");
-            	  }
-              },
-              error: function(jqXHR,textStatus,errorThrown){
-            	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-                sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
-              },
-            });
-    	}*/
     });
 
     //***************************************************************************************
@@ -463,7 +428,7 @@
                   },
                   error: function(jqXHR,textStatus,errorThrown){
     	            	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-                	  sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
+                	  sousaiRemindDialog("delete:抱歉，发送信息到服务器出错了。");
                   },
                 });
     });

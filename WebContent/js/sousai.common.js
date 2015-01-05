@@ -244,7 +244,7 @@ $(function() {
 
   //重复点击下拉列表改变排序
   var sortflag=1;
-  $("div.btn-group li").click(function(){
+  $(".sort li").click(function(){
   	var tempthis = $(this),
 	orderbycol = tempthis.find("a").attr("data-orderbycol"), 
 	isasc = tempthis.find("a").attr("data-isasc"),
@@ -253,31 +253,29 @@ $(function() {
 	sc = $(".text-filter-box button .current").attr("data-strcolumns"),
 	kv = $(".text-filter-box input").val();
   	
+	tempthis.parent().parent().find(".current").html(tempthis.find("a").html()).attr("data-orderbycol",orderbycol).attr("data-isasc",isasc);
+  	
     if(sortflag==1){
           tempthis.find("i").removeClass("icon-arrow-up").addClass("icon-arrow-down");
           tempthis.find("a").attr("data-isasc",false);
-          $(".sort button .current").attr("data-orderbycol",orderbycol).attr("data-isasc",isasc);
-      	
-          alert($(".sort button .current").attr("data-orderbycol")+$(".sort button .current").attr("data-isasc"));
         	alert(crtPage+" "+rs+" "+orderbycol+" "+isasc+" "+sc+" "+kv);
-          
           e(crtPage,rs,orderbycol,isasc,sc,kv);
           sortflag=0;
       }else{
           tempthis.find("i").removeClass("icon-arrow-down").addClass("icon-arrow-up").attr("data-isasc",true);
           tempthis.find("a").attr("data-isasc",true);
-          $(".sort button .current").attr("data-orderbycol",orderbycol).attr("data-isasc",isasc);
-          alert($(".sort button .current").attr("data-orderbycol")+$(".sort button .current").attr("data-isasc"));
         	alert(crtPage+" "+rs+" "+orderbycol+" "+isasc+" "+sc+" "+kv);
-          e(crtPage,rs,orderbycol,isasc,sc,ia);
+          e(crtPage,rs,orderbycol,isasc,sc,kv);
           sortflag=1;
       }
-	tempthis.parent().parent().find("button.dropdown-toggle > span.current").html(tempthis.find("a").html()).attr("data-orderbycol",orderbycol).attr("data-isasc",isasc);
   });
-  
+  //点击搜索类别
+  $(".text-filter-box li").click(function(){
+  	var thisa = $(this).find("a"),thisahtml = thisa.html(), sc = thisa.attr("data-strcolumns");
+	$(".text-filter-box .current").html(thisahtml).attr("data-strcolumns",sc);
+  });
   //点击text-filter-box下的搜索按钮
   $("#textFilterBoxSearchButton").click(function(){
-	  
   	var orderbycol = $(".sort button .current").attr("data-orderbycol"), 
 	isasc = $(".sort button .current").attr("data-isasc"),
 	rs = $("select.selectRows option:selected").val(),
@@ -286,7 +284,7 @@ $(function() {
 	kv = $(".text-filter-box input").val();
   	alert(crtPage+" "+rs+" "+orderbycol+" "+isasc+" "+sc+" "+kv);
   	e(crtPage,rs,orderbycol,isasc,sc,kv);
-  })
+  });
   
   //点击切换当前页数显式的条数
 	$("select.selectRows").change(function(){
