@@ -469,7 +469,8 @@
                 		  alert("保存失败，错误代码未知");
                 	  }
                   },
-                  error: function() {
+                  error: function(jqXHR,textStatus,errorThrown){
+  	            	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
                     alert("抱歉，发送信息到服务器出错了。");
                   },
                 });
