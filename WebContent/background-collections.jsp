@@ -425,15 +425,15 @@
     	var id = $("#inputMatchTitle").attr("data-id"),
     	title = $("#inputMatchTitle").val(),
         type = $("#inputMatchType").val(),
-        typeid = $("#inputMatchType").attr("data-typeid"),
+        //typeid = $("#inputMatchType").attr("data-typeid"),
         begintime = $("#inputMatchTimefrom").val(),
         endtime = $("#inputMatchTimeto").val(),
-        court = $("#inputMatchCourt").val(),
-        courtid = $("#inputMatchCourt").attr("data-courtid"),
-    	iscourt = $("#inputMatchCourt").attr("data-iscourt"),
+        courtaddr = $("#inputMatchCourt").val(),
+        //courtid = $("#inputMatchCourt").attr("data-courtid"),
+    	//iscourt = $("#inputMatchCourt").attr("data-iscourt"),
         rule = tinymce.activeEditor.getContent();
     	
-    	console.log("id: "+id+",title: "+title+",type: "+type+",typeid: "+typeid+",begintime: "+begintime+",endtime: "+endtime+",court: "+court+",courtid: "+courtid+",userid: "+userid+",iscourt: "+iscourt+",rule: "+rule);
+    	//console.log("id: "+id+",title: "+title+",type: "+type+",typeid: "+typeid+",begintime: "+begintime+",endtime: "+endtime+",court: "+court+",courtid: "+courtid+",userid: "+userid+",iscourt: "+iscourt+",rule: "+rule);
     	
     	
     	if( $("#editMatchForm").valid() === true ){
@@ -448,7 +448,7 @@
                 		    "matchDate.matchIntroduction": rule,
                 		    "matchDate.matchStartTime": begintime,
                 		    "matchDate.matchDeadline": endtime,
-                		    //"matchDate.courtId": matchcourtid,
+                		    "matchDate.matchType": type,
                 		    //"matchDate.userId": userid,
                 		    //"courtDate.name": court,
                 		    "matchDate.matchAddress": courtaddr,
