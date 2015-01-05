@@ -438,23 +438,23 @@
     	
     	if( $("#editMatchForm").valid() === true ){
     		console.log("验证通过");
-        /*        $.ajax({
+                $.ajax({
                   type: "POST",
-                  url: "updateMatch",
+                  url: "updateMatches",
                   contentType: "application/x-www-form-urlencoded; charset=UTF-8",
                   data: {
-                	  		"match.id": id,
-                			"match.name": title,
-                		    "match.rule": rule,
-                		    "match.beginTime": begintime,
-                		    "match.endTime": endtime,
-                		    "match.courtId": matchcourtid,
-                		    "match.userId": userid,
-                		    "court.name": court,
-                		    "court.addr": courtaddr,
-                		    "court.regionId": "",
-                		    "court.courtTypeId": "",
-                		    "isCourt": iscourt,
+                	  		"matchDate.id": id,
+                			"matchDate.name": title,
+                		    "matchDate.matchIntroduction": rule,
+                		    "matchDate.matchStartTime": begintime,
+                		    "matchDate.matchDeadline": endtime,
+                		    //"matchDate.courtId": matchcourtid,
+                		    //"matchDate.userId": userid,
+                		    //"courtDate.name": court,
+                		    "matchDate.matchAddress": courtaddr,
+                		    //"court.regionId": "",
+                		    //"court.courtTypeId": "",
+                		    //"isCourt": iscourt,
                 		  },
                   dataType: "json",
                   success: function(rspdata) {
@@ -470,7 +470,6 @@
                     alert("抱歉，发送信息到服务器出错了。");
                   },
                 });
-        */
     	}else{
     		alert("填写信息不符合验证，请重新填写。");
     	}

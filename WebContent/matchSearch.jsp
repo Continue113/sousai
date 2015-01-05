@@ -157,7 +157,29 @@
   </script>
   <script>
   //定义函数
-  
+  //搜索栏模糊搜索
+	function search(){
+	    var url = window.location.search;
+	    var loc = url.substring(url.lastIndexOf('=')+1, url.length);
+		var crtPage = 1,rs = 1,kv = loc;
+	    //alert(url.length);
+	    //alert(url.lastIndexOf('='));
+	    //alert(kv);
+	
+	      $.ajax({
+	          type: "POST",
+	          url: "searchMatch",
+	          contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+	          data: {currentPage:crtPage,rows:rs,keyValue:kv},
+	          dataType: "json",
+	          success: function(rspdata) {
+	        	  alert(rspdata);console.log(rspdata.count);console.log(rspdata);
+	          },
+	          error: function() {
+	            alert("抱歉。ajax错误。");
+	          },
+	        });
+	}
   function e(crtPage,rs){
 		$.post("getAllMatch", null, function(data) {
 		      console.log(data);//alert(data);
@@ -180,6 +202,8 @@
   $(function(){
 	//ajax接收所有比赛
 	e(1,1);
+	//搜索栏模糊搜索
+	search();
     //字数限制，溢出省略
     $(".matchBox-court").wordLimit(13);
     $(".matchBox-info > a").wordLimit(28);
