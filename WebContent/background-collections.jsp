@@ -329,9 +329,9 @@
     		crtPage = $("ul.pagination").find("li.active a").text();
     		$(".match input:checked").each(function(index,element){
     			console.log($(this).attr("id"));
-        		matchIds.push($(this).attr("id"));
+        		collectionId.push($(this).attr("id"));
     		});
-    		console.log(matchIds);sousaiRemindDialog("collectionId:"+collectionId.join(","));
+    		console.log(collectionId);sousaiRemindDialog("collectionId:"+collectionId.join(","));
             $.ajax({
               type: "POST",
               url: "deleteCollections",
@@ -368,9 +368,9 @@
     		var collectionId = new Array();
     		$(".match input:checked").each(function(index,element){
     			console.log($(this).attr("id"));
-        		matchIds.push($(this).attr("id"));
+        		collectionId.push($(this).attr("id"));
     		});
-    		console.log(matchIds);sousaiRemindDialog("collectionId:"+collectionId.join(","));
+    		console.log(collectionId);sousaiRemindDialog("collectionId:"+collectionId.join(","));
             $.ajax({
               type: "POST",
               url: "passCollections",
@@ -491,7 +491,7 @@
                   url: "passCollections",
                   contentType: "application/x-www-form-urlencoded; charset=UTF-8",
                   data: {
-                    "matchIds": $("#inputMatchTitle").attr("data-id"),
+                    "collectionId": $("#inputMatchTitle").attr("data-id"),
                   },
                   dataType: "json",
                   success: function(rspdata) {
