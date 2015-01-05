@@ -183,7 +183,7 @@
     {{#each this}}
 
 		    <tr class="user" data-info="{{data this}}">
-	    		<td class="user-userName form-inline"><label for="{{id}}"><input type="checkbox" id="data[i].{{id}}"/>{{name}}<label></td>
+	    		<td class="user-userName form-inline"><label for="{{id}}"><input type="checkbox" id="data[i].{{id}}"/><span>{{name}}</span><label></td>
         	<td class="user-registerTime">{{regTime}}</td>
         	<td class="user-lastLoginTime">{{lastLogTime}}</td>
         	<td class="user-matchNumber">{{matchNumber}}</td>
@@ -224,6 +224,7 @@
 	        	  $("#ajaxState .noresult").show();console.log("无结果");
 	        	  }
 	        	  //管理员界面表格列字数限制，溢出省略
+	        	  $("td > label > span").wordLimit();
 	        	  $(".user-email").wordLimit(16);
 	            pages(data.count,crtPage,rs);
 	  	    },

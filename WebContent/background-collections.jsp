@@ -240,7 +240,7 @@
     {{#each this}}
                         
         <tr class="match" data-info="{{data this}}"> 
-          <td class="match-title"><label for="{{id}}"><input type="checkbox" id="{{id}}"/>{{name}}</label></td> 
+          <td class="match-title"><label for="{{id}}"><input type="checkbox" id="{{id}}"/><span>{{name}}</span></label></td> 
           <td class="match-time">{{matchStartTime}} - {{matchDeadline}}</td> 
           <td class="match-court">{{matchAddress}}</td>
           <td class="match-from"><a href="#">{{url}}</a></td> 
@@ -278,8 +278,8 @@
 	      $("#ajaxState .noresult").show();console.log("无结果");
 	      }
 	      //字数限制，溢出省略
-	      $("td > label").wordLimit();
-	      $(".court-name").wordLimit();
+	      $("td > label > span").wordLimit();
+	      $(".match-court").wordLimit();
 	      $(".match-from > a").wordLimit(25);
 	      //pages(data.count,crtPage,rs);
 	    },
@@ -308,12 +308,12 @@
         //立即初始化比赛类型
         initMatchType();
                 
-    	$(".matchList").slideUp();
+    	$("#collectionLists").slideUp();
     	$(".editMatch").slideDown();
   	});
     //点击返回比赛列表
     $(".backList").click(function(){
-    	$(".matchList").slideDown();
+    	$("#collectionLists").slideDown();
     	$(".editMatch").slideUp();
     });
     //点击删除比赛 列表界面
@@ -423,7 +423,6 @@
     $(".editMatch .saveMatch").click(function (){
     	
     	var id = $("#inputMatchTitle").attr("data-id"),
-        userid = $("#inputMatchTitle").attr("data-userid"),
     	title = $("#inputMatchTitle").val(),
         type = $("#inputMatchType").val(),
         typeid = $("#inputMatchType").attr("data-typeid"),

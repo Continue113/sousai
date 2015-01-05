@@ -282,7 +282,7 @@
     {{#each this}}
                         
         <tr class="court" data-info="{{data this}}"> 
-          <td class="court-title"><label for="{{id}}"><input type="checkbox" id="{{id}}"/>{{name}}</label></td> 
+          <td class="court-title"><label for="{{id}}"><input type="checkbox" id="{{id}}"/><span>{{name}}</span></label></td> 
           <td class="match-type">{{matchType}}</td> 
           <td class="court-addr">{{addr}}</td> 
           <td class="court-releaseTime">{{relDate}}</td> 
@@ -322,8 +322,8 @@
 	    $("#ajaxState .noresult").show();console.log("无结果");
 	    }
 	    //管理员界面表格列字数限制，溢出省略
-	    $("td > label").wordLimit();
-	    $(".court-address").wordLimit();
+	    $("td > label > span").wordLimit();
+	    $(".court-addr").wordLimit();
 	      pages(data.count,crtPage,rs);
 	    },
       error: function() {

@@ -22,6 +22,7 @@ $(function() {
 	          dataType: "json",
 	          success: function(rspdata) {
 	        	  alert(rspdata);console.log(rspdata.count);console.log(rspdata);
+	        	  window.location = "matchSearch.jsp?keyValue="+kv;
 	          },
 	          error: function() {
 	            alert("抱歉。ajax错误。");

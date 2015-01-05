@@ -272,7 +272,7 @@
     {{#each this}}
                         
         <tr class="match" data-info="{{data this}}"> 
-          <td class="match-title"><label for="{{id}}"><input type="checkbox" id="{{id}}"/>{{name}}</label></td> 
+          <td class="match-title"><label for="{{id}}"><input type="checkbox" id="{{id}}"/><span>{{name}}</span></label></td> 
           <td class="match-time">{{beginTime}} - {{endTime}}</td> 
           <td class="match-court">{{courtName}}</td> 
           <td class="match-releaseTime">{{relTime}}</td> 
@@ -314,7 +314,8 @@
 	      $("#ajaxState .noresult").show();console.log("无结果");
 	      }
 	      //字数限制，溢出省略
-	  	  $("td").wordLimit();
+	      $("td > label > span").wordLimit();
+	      $(".match-court").wordLimit();
 	      pages(data.count,crtPage,rs);
 	    },
       error: function() {
