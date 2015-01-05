@@ -329,12 +329,12 @@
     		crtPage = $("ul.pagination").find("li.active a").text();
     		$(".match input:checked").each(function(index,element){
     			console.log($(this).attr("id"));
-    			if(index == 1){
+    			/*if(index == 1){
         			collectionId = $(this).attr("id");
     			}
-    			else{
-        			collectionId += ","+$(this).attr("id");
-    			}
+    			else{*/
+        			collectionId += $(this).attr("id")+",";
+    			//}
         		//collectionId.push($(this).attr("id"));
     		});
     		console.log(collectionId);sousaiRemindDialog("collectionId:"+collectionId);
