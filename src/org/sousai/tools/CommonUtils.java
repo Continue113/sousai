@@ -18,7 +18,7 @@ public class CommonUtils {
 		return value;
 	}
 
-	public static Timestamp ToMysqlTimestamp(Date startTime) {
+	public static Timestamp ToTimestamp(Date startTime) {
 		return new Timestamp(startTime.getTime());
 	}
 
