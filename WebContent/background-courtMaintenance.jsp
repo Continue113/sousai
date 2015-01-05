@@ -67,11 +67,11 @@
        <div class="btn-group" role="group">
 		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current">排序方式</span><span class="caret"></span></button>
 		<ul class="dropdown-menu" role="menu">
-          <li><a href="javascript:void(0)">场地名称<i class="icon-arrow-up"></i></a></li> 
-          <li><a href="javascript:void(0)">比赛类型<i class="icon-arrow-up"></i></a></li> 
-          <li><a href="javascript:void(0)">场地地址<i class="icon-arrow-up"></i></a></li> 
-          <li><a href="javascript:void(0)">发布时间<i class="icon-arrow-up"></i></a></li> 
-          <li><a href="javascript:void(0)">发布用户<i class="icon-arrow-up"></i></a></li>
+          <li><a href="javascript:void(0)">场地名称<i class="icon-arrow-up" data-orderbycols="name" data-isasc="true"></i></a></li> 
+          <li><a href="javascript:void(0)">比赛类型<i class="icon-arrow-up" data-orderbycols="matchType" data-isasc="true"></i></a></li> 
+          <li><a href="javascript:void(0)">场地地址<i class="icon-arrow-up" data-orderbycols="addr" data-isasc="true"></i></a></li> 
+          <li><a href="javascript:void(0)">发布时间<i class="icon-arrow-up" data-orderbycols="relDate" data-isasc="true"></i></a></li> 
+          <li><a href="javascript:void(0)">发布用户<i class="icon-arrow-up" data-orderbycols="userName" data-isasc="true"></i></a></li>
 		</ul>
 	   </div>
 	    <div class="text-filter-box input-append"> 

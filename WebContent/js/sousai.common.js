@@ -245,12 +245,19 @@ $(function() {
   //重复点击下拉列表改变排序
   var sortflag=1;
   $("div.btn-group li").click(function(){
-  	var tempthis = $(this);
+  	var tempthis = $(this),
+	orderbycols = tempthis.find("i").attr("data-orderbycols"), 
+	isasc = tempthis.find("i").attr("data-isasc"),
+	rs = $("select.selectRows option:selected").val(),
+	crtPage = $("ul.pagination > li.active a").text();
+  	
     if(sortflag==1){
-          tempthis.find("i").removeClass("icon-arrow-up").addClass("icon-arrow-down");
+          tempthis.find("i").removeClass("icon-arrow-up").addClass("icon-arrow-down").attr("data-isasc",false);
+          e(crtPage,rs,orderbycols,isasc);
           sortflag=0;
       }else{
-          tempthis.find("i").removeClass("icon-arrow-down").addClass("icon-arrow-up");
+          tempthis.find("i").removeClass("icon-arrow-down").addClass("icon-arrow-up").attr("data-isasc",true);
+          e(crtPage,rs,orderbycols,isasc);
           sortflag=1;
       }
 	tempthis.parent().parent().find("button.dropdown-toggle > span.current").html( tempthis.find("a").html() );
@@ -383,7 +390,7 @@ function pages(count,crtPage,rs){
 		var tgrget = $("ul.pagination"),
 		rs = $("select.selectRows option:selected").val(),
 		crtPage = tgrget.find("li.active a").text();
-		alert(rs +'  '+ crtPage);
+		//alert(rs +'  '+ crtPage);
 		if(crtPage==1){
 			alert('已经到最顶了');
 			return false;
@@ -402,7 +409,7 @@ function pages(count,crtPage,rs){
 		var tgrget = $("ul.pagination").parent(),
 		rs = $("select.selectRows option:selected").val(),
 		crtPage = parseInt(tgrget.find("li.active a").text());
-		alert(rs +'  '+ crtPage);
+		//alert(rs +'  '+ crtPage);
 		e(crtPage + 1,rs);
 		tgrget.find("li.active a ").text(crtPage+1);
 		tgrget.find("li.prior").removeClass("disabled");
