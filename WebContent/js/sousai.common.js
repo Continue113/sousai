@@ -124,7 +124,7 @@ $(function() {
     var sURL = document.URL;
     var sTitle = $("title").text();
     AddFavorite(sURL, sTitle);
-    $("#sousaiRemindDialog > .modal-body > .SRD-content").text("由于浏览器限制，请使用Ctrl+D进行添加"); //设置弹出框的内容
+    $("#sousaiRemindDialog > .modal-body > #SRDcontent").text("由于浏览器限制，请使用Ctrl+D进行添加"); //设置弹出框的内容
     $("#sousaiRemindDialog > .modal-footer > button.btn-success").hide(); //设置弹出框确定按钮
     $("#sousaiRemindDialog").modal({
       backdrop: false,
@@ -269,6 +269,18 @@ $(function() {
 ////////////////////////   FUNCTION   ///////////////////////
 /////////////////////////////////////////////////////////////
 
+//全局弹出对话框提示操作
+function sousaiRemindDialog(text,successishide){
+	ishide = successishide || true;
+    $("#sousaiRemindDialog > .modal-body > #SRDcontent").text(text); //设置弹出框的内容
+    if(ishide === true){
+        $("#sousaiRemindDialog > .modal-footer > button.btn-success").hide(); //设置弹出框确定按钮
+    }
+    $("#sousaiRemindDialog").modal({
+      backdrop: false,
+    });
+    window.setTimeout($("#sousaiRemindDialog").modal("hide"),3000);
+}
 
 //创建验证码，inputValidateId为验证码标签 ID
 function createCode(inputValidateId) {

@@ -109,7 +109,6 @@
       <!-- panel --> 
       <div class="panel-top"></div>
       <div class="matchBoxs"></div>
-      
        <div class="panel-bottom">
        <div id="ajaxState" class="text-center"><span class="hide noresult">无结果</span><span class="hide load"><img src="img/loading.gif" height="20px" width="20px"></img>数据加载中...</span></div>
        <div class="pagination"><nav><ul class="pagination"></ul></nav></div>
