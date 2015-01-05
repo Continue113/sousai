@@ -252,7 +252,7 @@
   <script>
   //定义函数
   function e(crtPage,rs){
-  	$("#ajaxState .load").show();console.log("start");
+  	$("#ajaxState .load").show();console.log("start");sousaiRemindDialog("抱歉，ajax出错了。");
     $.ajax({
       type: "POST",
       url: "backgroundCollections",
@@ -324,7 +324,7 @@
     	if( n == 0){
     		sousaiRemindDialog("请先选中比赛");
     	}else{
-    		var collectionId,// = new Array(),
+    		var collectionId = new Array(),
     		rs = $("select.selectRows option:selected").val(),
     		crtPage = $("ul.pagination").find("li.active a").text();
     		$(".match input:checked").each(function(index,element){
@@ -332,18 +332,18 @@
     			/*if(index == 1){
         			collectionId = $(this).attr("id");
     			}
-    			else{*/
+    			else{
         			collectionId += $(this).attr("id")+",";
-    			//}
-        		//collectionId.push($(this).attr("id"));
+    			//}*/
+        		collectionId.push($(this).attr("id"));
     		});
-    		console.log(collectionId);sousaiRemindDialog("collectionId:"+collectionId);
+    		console.log(collectionId.join(","));sousaiRemindDialog("collectionId:"+collectionId.join(","));
             $.ajax({
               type: "POST",
               url: "deleteCollections",
               contentType: "application/x-www-form-urlencoded; charset=UTF-8",
               data: {
-                "collectionId": collectionId//.join(","),
+                "collectionId": collectionId.join(","),
               },
               dataType: "json",
               success: function(rspdata) {
