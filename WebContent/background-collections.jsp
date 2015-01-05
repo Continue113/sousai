@@ -264,7 +264,7 @@
 	      var target = $(".collectionsTable > tbody"),template = Handlebars.compile($('#collections-template').html());
 	      Handlebars.registerHelper("data",function(v){
 	    	  //将当前对象转化为字符串，保存在data-info中
-	    	  console.log(v);
+	    	  //console.log(v);
 	    	  var v1 = JSON.stringify(v);
 	    	  //console.log("v1:"+v1);
 	    	  return v1;
@@ -286,7 +286,7 @@
       error: function(jqXHR,textStatus,errorThrown){
     	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
 	      $("#ajaxState .noresult").show();console.log("出错了");
-	      sousaiRemindDialog("抱歉，ajax出错了。");
+	      sousaiRemindDialog("e:抱歉，ajax出错了。");
       },
     });
   }
