@@ -162,10 +162,6 @@
 	    var url = window.location.search;
 	    var loc = url.substring(url.lastIndexOf('=')+1, url.length);
 		var crtPage = 1,rs = 1,kv = loc;
-	    //alert(url.length);
-	    //alert(url.lastIndexOf('='));
-	    //alert(kv);
-	
 	      $.ajax({
 	          type: "POST",
 	          url: "searchMatch",
@@ -174,6 +170,21 @@
 	          dataType: "json",
 	          success: function(rspdata) {
 	        	  alert(rspdata);console.log(rspdata.count);console.log(rspdata);
+	        	  
+			      var target = $(".matchBoxs"),template = Handlebars.compile($('#match-template').html());
+			      Handlebars.registerHelper("data",function(v){
+			    	  //将当前对象转化为字符串，保存在data-info中
+			    	  console.log(v);
+			    	  var v1 = JSON.stringify(v);
+			    	  //console.log("v1:"+v1);
+			    	  return v1;
+			      });
+			      target.empty(); //清空tbody
+		    	  target.html(template(rspdata.body));
+		    	    //字数限制，溢出省略
+		    	    $(".matchBox-court").wordLimit(20);
+		    	    $(".matchBox-info > a").wordLimit(28);
+				  pages(rspdata.count,crtPage,rs);
 	          },
 	          error: function() {
 	            alert("抱歉。ajax错误。");
@@ -200,13 +211,8 @@
   }
   
   $(function(){
-	//ajax接收所有比赛
-	e(1,1);
 	//搜索栏模糊搜索
 	search();
-    //字数限制，溢出省略
-    $(".matchBox-court").wordLimit(13);
-    $(".matchBox-info > a").wordLimit(28);
      //日期选择器
      $( "#matchTimefrom" ).datepicker({
       defaultDate: "+1w",

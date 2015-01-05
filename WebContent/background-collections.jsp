@@ -299,7 +299,7 @@
         console.log(datainfo);
         //解析datainfo中的信息
         var data = eval('(' + datainfo + ')');
-        $("#inputMatchTitle").val(data.name).attr("data-id",data.id);
+        $("#inputMatchTitle").val(data.name).attr("data-id",data.id).attr("data-url",data.url);
         $("#inputMatchType").val(data.matchType).attr("data-oldtype",data.matchType);
         $("#inputMatchTimefrom").val(data.matchStartTime);
         $("#inputMatchTimeto").val(data.matchDeadline);
@@ -423,6 +423,7 @@
     $(".editMatch .saveMatch").click(function (){
     	
     	var id = $("#inputMatchTitle").attr("data-id"),
+    	url = $("#inputMatchTitle").attr("data-url"),
     	title = $("#inputMatchTitle").val(),
         type = $("#inputMatchType").val(),
         //typeid = $("#inputMatchType").attr("data-typeid"),
@@ -431,7 +432,7 @@
         courtaddr = $("#inputMatchCourt").val(),
         //courtid = $("#inputMatchCourt").attr("data-courtid"),
     	//iscourt = $("#inputMatchCourt").attr("data-iscourt"),
-        rule = tinymce.activeEditor.getContent();
+        intro = tinymce.activeEditor.getContent();
     	
     	//console.log("id: "+id+",title: "+title+",type: "+type+",typeid: "+typeid+",begintime: "+begintime+",endtime: "+endtime+",court: "+court+",courtid: "+courtid+",userid: "+userid+",iscourt: "+iscourt+",rule: "+rule);
     	
@@ -444,8 +445,9 @@
                   contentType: "application/x-www-form-urlencoded; charset=UTF-8",
                   data: {
                 	  		"matchData.id": id,
+                	  		"matchData.url": url,
                 			"matchData.name": title,
-                		    "matchData.matchIntroduction": rule,
+                		    "matchData.matchIntroduction": intro,
                 		    "matchData.matchStartTime": begintime,
                 		    "matchData.matchDeadline": endtime,
                 		    "matchData.matchType": type,
