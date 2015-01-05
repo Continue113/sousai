@@ -64,14 +64,14 @@
       <div id="courtMaintenance">
        <!-- panel --> 
        <div class="panel-top">
-       <div class="btn-group" role="group">
-		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current">排序方式</span><span class="caret"></span></button>
+       <div class="btn-group sort" role="group">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current" data-orderbycol="name" data-isasc="true">排序方式</span><span class="caret"></span></button>
 		<ul class="dropdown-menu" role="menu">
-          <li><a href="javascript:void(0)">场地名称<i class="icon-arrow-up" data-orderbycols="name" data-isasc="true"></i></a></li> 
-          <li><a href="javascript:void(0)">比赛类型<i class="icon-arrow-up" data-orderbycols="matchType" data-isasc="true"></i></a></li> 
-          <li><a href="javascript:void(0)">场地地址<i class="icon-arrow-up" data-orderbycols="addr" data-isasc="true"></i></a></li> 
-          <li><a href="javascript:void(0)">发布时间<i class="icon-arrow-up" data-orderbycols="relDate" data-isasc="true"></i></a></li> 
-          <li><a href="javascript:void(0)">发布用户<i class="icon-arrow-up" data-orderbycols="userName" data-isasc="true"></i></a></li>
+          <li><a href="javascript:void(0)" data-orderbycols="name" data-isasc="true">场地名称<i class="icon-arrow-up"></i></a></li> 
+          <li><a href="javascript:void(0)" data-orderbycols="matchType" data-isasc="true">比赛类型<i class="icon-arrow-up"></i></a></li> 
+          <li><a href="javascript:void(0)" data-orderbycols="addr" data-isasc="true">场地地址<i class="icon-arrow-up"></i></a></li> 
+          <li><a href="javascript:void(0)" data-orderbycols="relDate" data-isasc="true">发布时间<i class="icon-arrow-up"></i></a></li> 
+          <li><a href="javascript:void(0)" data-orderbycols="userName" data-isasc="true">发布用户<i class="icon-arrow-up"></i></a></li>
 		</ul>
 	   </div>
 	    <div class="text-filter-box input-append"> 
@@ -86,7 +86,7 @@
 			<li><a href="javascript:void(0)" data-strcolumns="userName">发布用户</a></li>
 		</ul>
 	   	</div>
-	   	<button class="btn" type="button">搜索</button>
+	   	<button class="btn" type="button" id="textFilterBoxSearchButton">搜索</button>
          <!-- <span class="add-on"><i class="icon-search"></i></span> -->
         </div> 
         <select class="select selectRows span1"><option value=10>10条/页</option><option value=2>2条/页</option><option value=5>5条/页</option></select>
@@ -301,7 +301,7 @@
       type: "POST",
       url: "getAllCourt",
       contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-      data: {currentPage:crtPage,rows:rs,orderByCols:obc,isAsc:ia,strColumns:sc,keyValue:kv},
+      data: {currentPage:crtPage,rows:rs,orderByCol:obc,isAsc:ia,strColumns:sc,keyValue:kv},
       dataType: "json",
       success: function(data) {
 	      console.log(data);//sousaiRemindDialog(rspdata);
