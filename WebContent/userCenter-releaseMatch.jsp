@@ -274,7 +274,7 @@
         sctParMatchType.append("<option value=1>其他</option>"); //每一个大类比赛类型的“其他”选项
       },
       error: function() {
-        alert("抱歉，获取比赛类型出错了。");
+        sousaiRemindDialog("抱歉，获取比赛类型出错了。");
       },
     }); //ajax 已得到具体比赛类型
     //出现具体比赛类型下拉列表并且不再隐藏
@@ -315,7 +315,7 @@
             }
           },
           error: function() {
-            alert("抱歉，获取场地类型出错了。");
+            sousaiRemindDialog("抱歉，获取场地类型出错了。");
           },
         }); //ajax 已得到场地类型
 
@@ -360,7 +360,7 @@
             }
           },
           error: function() {
-            alert("抱歉，获取场地类型出错了。");
+            sousaiRemindDialog("抱歉，获取场地类型出错了。");
           },
         }); //ajax 已得到场地类型
       }
@@ -390,7 +390,7 @@
     $("tr").removeClass("active");
     $(this).addClass("active");
     var matchCourtId = $(this).attr("data-courtid");
-    alert(matchCourtId);
+    sousaiRemindDialog(matchCourtId);
     $("#hideCourtId").attr("value",matchCourtId);
     $("#hideIsCourt").attr("value","false");
   });
@@ -404,7 +404,7 @@
 	      cityId = tgPrt.find(".selectCity option:selected").attr("data-regionid"), 
 	      countryId = tgPrt.find(".selectCountry option:selected").attr("data-regionid");
 	  if(provinceId == 0){
-		  alert("省，市，区请至少选择一个为比赛区域！");		  
+		  sousaiRemindDialog("省，市，区请至少选择一个为比赛区域！");		  
 	  }else {
 		  
 		  if(cityId == 0 && countryId == 0){ //若市，区都为零，则说明只有省
@@ -415,7 +415,7 @@
 			  regionId = countryId;
 		  }
 	  
-	  //alert(province + city + country);  //得到省市区信息
+	  //sousaiRemindDialog(province + city + country);  //得到省市区信息
 	  //设置newCourtRegionId
       $("#hideNewCourtRegionId").attr("value",regionId);
 	  
@@ -431,7 +431,7 @@
 	      success: function(data) {
 	        var target = $(".existCourtsBox > table > tbody"),template = Handlebars.compile($('#existCourts-template').html());
 	        $(".no-results").hide(); //隐藏无结果提醒
-		    console.log(data);//alert(data);
+		    console.log(data);//sousaiRemindDialog(data);
 	        Handlebars.registerHelper("data",function(v){
 	          //将当前对象转化为字符串，保存在data-info中
 	          console.log(v);
@@ -448,7 +448,7 @@
 	        }
 	      },
 	      error: function() {
-	        alert("抱歉，获取已有场地信息出错了。");
+	        sousaiRemindDialog("抱歉，获取已有场地信息出错了。");
 	      },
 	    }); //ajax 已得到相应地点场地列表
 	  
@@ -488,7 +488,7 @@
           }
         },
         error: function() {
-          alert("抱歉，获取场地类型出错了。");
+          sousaiRemindDialog("抱歉，获取场地类型出错了。");
         },
       }); //ajax 已得到场地类型
     }
@@ -544,7 +544,7 @@
       console.log("发布比赛已完成");
       //检查newCourtRegionId
      if( $("#hideNewCourtRegionId").attr("value") == 0){
-    	 alert("请先找一找某个比赛地点是否已有您要的场地。");
+    	 sousaiRemindDialog("请先找一找某个比赛地点是否已有您要的场地。");
     	 return false;
      }else{
     	 form.submit(); //没有这一句表单不会提交

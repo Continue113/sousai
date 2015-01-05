@@ -320,7 +320,7 @@
 	    },
       error: function() {
 	      $("#ajaxState .noresult").show();console.log("出错了");
-          alert("抱歉，ajax出错了。");
+          sousaiRemindDialog("抱歉，ajax出错了。");
       },
     });
   }
@@ -356,7 +356,7 @@
     	var checked = $(".match input:checked"),n = checked.length;
     	//若为选中则提示
     	if( n == 0){
-    		alert("请先选中比赛");
+    		sousaiRemindDialog("请先选中比赛");
     	}else{
     		var matchIds = new Array(),
     		rs = $("select.selectRows option:selected").val(),
@@ -365,7 +365,7 @@
     			console.log($(this).attr("id"));
         		matchIds.push($(this).attr("id"));
     		});
-    		console.log(matchIds);alert("matchIds:"+matchIds.join(",,,"));
+    		console.log(matchIds);sousaiRemindDialog("matchIds:"+matchIds.join(",,,"));
             $.ajax({
               type: "POST",
               url: "deleteMatches",
@@ -376,16 +376,18 @@
               dataType: "json",
               success: function(rspdata) {
             	  if( rspdata == "success" ){
-            		  alert("删除成功");alert(crtPage);
-            		  e(crtPage,rs);//刷新数据
+            		  //sousaiRemindDialog("删除成功");sousaiRemindDialog(crtPage);
+            		  //e(crtPage,rs);//刷新数据
+            		  sousaiRemindDialog("删除成功");
+            		  $(".match input:checked").parent().parent().parent().hide();
             	  }else if( rspdata == "fail" ){
-            		  alert("删除失败");
+            		  sousaiRemindDialog("删除失败");
             	  }else{
-            		  alert("删除失败，错误代码未知");
+            		  sousaiRemindDialog("删除失败，错误代码未知");
             	  }
               },
               error: function() {
-                alert("抱歉，发送信息到服务器出错了。");
+                sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
               },
             });
     	}
@@ -395,14 +397,14 @@
     	var checked = $(".match input:checked"),n = checked.length;
     	//若为选中则提示
     	if( n == 0){
-    		alert("请先选中比赛");
+    		sousaiRemindDialog("请先选中比赛");
     	}else{
     		var matchIds = new Array();
     		$(".match input:checked").each(function(index,element){
     			console.log($(this).attr("id"));
         		matchIds.push($(this).attr("id"));
     		});
-    		console.log(matchIds);alert("matchIds:"+matchIds.join(",,,"));
+    		console.log(matchIds);sousaiRemindDialog("matchIds:"+matchIds.join(",,,"));
             $.ajax({
               type: "POST",
               url: "passMatches",
@@ -413,15 +415,15 @@
               dataType: "json",
               success: function(data) {
             	  if( data == "success" ){
-            		  alert("发布成功");
+            		  sousaiRemindDialog("发布成功");
             	  }else if( data == "fail" ){
-            		  alert("发布失败");
+            		  sousaiRemindDialog("发布失败");
             	  }else{
-            		  alert("发布失败，错误代码未知");
+            		  sousaiRemindDialog("发布失败，错误代码未知");
             	  }
               },
               error: function() {
-                alert("抱歉，发送信息到服务器出错了。");
+                sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
               },
             });
     	}
@@ -442,15 +444,15 @@
                   dataType: "json",
                   success: function(rspdata) {
                 	  if( rspdata == "success" ){
-                		  alert("删除成功");
+                		  sousaiRemindDialog("删除成功");
                 	  }else if( rspdata == "fail" ){
-                		  alert("删除失败");
+                		  sousaiRemindDialog("删除失败");
                 	  }else{
-                		  alert("删除失败，错误代码未知");
+                		  sousaiRemindDialog("删除失败，错误代码未知");
                 	  }
                   },
                   error: function() {
-                    alert("抱歉，发送信息到服务器出错了。");
+                    sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
                   },
                 });
     });
@@ -495,20 +497,20 @@
                   dataType: "json",
                   success: function(rspdata) {
                 	  if( rspdata == "success" ){
-                		  alert("保存成功");
+                		  sousaiRemindDialog("保存成功");
                 	  }else if( rspdata == "fail" ){
-                		  alert("保存失败");
+                		  sousaiRemindDialog("保存失败");
                 	  }else{
-                		  alert("保存失败，错误代码未知");
+                		  sousaiRemindDialog("保存失败，错误代码未知");
                 	  }
                   },
                   error: function() {
-                    alert("抱歉，发送信息到服务器出错了。");
+                    sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
                   },
                 });
         */
     	}else{
-    		alert("填写信息不符合验证，请重新填写。");
+    		sousaiRemindDialog("填写信息不符合验证，请重新填写。");
     	}
     });
     //发布比赛 编辑界面
@@ -523,15 +525,15 @@
                   dataType: "json",
                   success: function(rspdata) {
                 	  if( rspdata == "success" ){
-                		  alert("发布成功");
+                		  sousaiRemindDialog("发布成功");
                 	  }else if( rspdata == "fail" ){
-                		  alert("发布失败");
+                		  sousaiRemindDialog("发布失败");
                 	  }else{
-                		  alert("发布失败，错误代码未知");
+                		  sousaiRemindDialog("发布失败，错误代码未知");
                 	  }
                   },
                   error: function() {
-                    alert("抱歉，发送信息到服务器出错了。");
+                    sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
                   },
                 }); */
     });
@@ -621,7 +623,7 @@
           sctParMatchType.append("<option value=1>其他</option>"); //每一个大类比赛类型的“其他”选项
         },
         error: function() {
-          alert("抱歉，获取比赛类型出错了。");
+          sousaiRemindDialog("抱歉，获取比赛类型出错了。");
         },
       }); //ajax 已得到具体比赛类型
       //出现具体比赛类型下拉列表并且不再隐藏
@@ -658,7 +660,7 @@
               }
             },
             error: function() {
-              alert("抱歉，获取场地类型出错了。");
+              sousaiRemindDialog("抱歉，获取场地类型出错了。");
             },
           }); //ajax 已得到场地类型
 
@@ -703,7 +705,7 @@
               }
             },
             error: function() {
-              alert("抱歉，获取场地类型出错了。");
+              sousaiRemindDialog("抱歉，获取场地类型出错了。");
             },
           }); //ajax 已得到场地类型
         }
@@ -711,7 +713,7 @@
         $("#otherMatchType").val( tgPrt.find(".selectParticularMatchType option:selected").text() );
         //修改的新类型
         $("#inputMatchType").val(tgPrt.find(".selectParticularMatchType option:selected").text()).attr("data-typeid",tgPrt.find(".selectParticularMatchType option:selected").attr("value"));
-        alert("设置inputMatchType 的val typeid");
+        sousaiRemindDialog("设置inputMatchType 的val typeid");
       }
     });
 
@@ -738,7 +740,7 @@
       //设置比赛场地
       $("#inputMatchCourt").val($(this).find("td:eq(0)").text());
       $("#inputMatchCourt").attr("data-courtid",$(this).attr("data-courtid"));
-      alert("设置inputMatchCourt比赛场地  courtid val");
+      sousaiRemindDialog("设置inputMatchCourt比赛场地  courtid val");
     });
 
     //搜索现有场地
@@ -750,7 +752,7 @@
   	      cityId = tgPrt.find(".selectCity option:selected").attr("data-regionid"), 
   	      countryId = tgPrt.find(".selectCountry option:selected").attr("data-regionid");
   	  if(provinceId == 0){
-  		  alert("省，市，区请至少选择一个为比赛区域！");		  
+  		  sousaiRemindDialog("省，市，区请至少选择一个为比赛区域！");		  
   	  }else {
   		  
   		  if(cityId == 0 && countryId == 0){ //若市，区都为零，则说明只有省
@@ -761,7 +763,7 @@
   			  regionId = countryId;
   		  }
   	  
-  	  //alert(province + city + country);  //得到省市区信息
+  	  //sousaiRemindDialog(province + city + country);  //得到省市区信息
   	  
   	  //ajax 获取已有场地信息列表
   	  $.ajax({
@@ -776,7 +778,7 @@
   	        var existCourtsTbody = $(".existCourtsBox > table > tbody");
   	        $(".jplist-no-results").hide(); //隐藏无结果提醒
   	        existCourtsTbody.empty(); //清空已有场地列表
-  	        console.log(rspdata);//alert(rspdata);
+  	        console.log(rspdata);//sousaiRemindDialog(rspdata);
   	        /** 循环遍历获得的场地信息并加入已有场地列表中 **/
   	        for (var i = 0; i < rspdata.length; i++) {
   	        	existCourtsTbody.append(
@@ -797,7 +799,7 @@
   	        }
   	      },
   	      error: function() {
-  	        alert("抱歉，获取已有场地信息出错了。");
+  	        sousaiRemindDialog("抱歉，获取已有场地信息出错了。");
   	      },
   	    }); //ajax 已得到相应地点场地列表
   	  
@@ -837,7 +839,7 @@
             }
           },
           error: function() {
-            alert("抱歉，获取场地类型出错了。");
+            sousaiRemindDialog("抱歉，获取场地类型出错了。");
           },
         }); //ajax 已得到场地类型
       }

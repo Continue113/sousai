@@ -230,7 +230,7 @@
 	  	    },
 	        error: function() {
 	  	      $("#ajaxState .noresult").show();console.log("出错了");
-	          alert("抱歉，ajax出错了。");
+	          sousaiRemindDialog("抱歉，ajax出错了。");
 	        },
 	      });
 }
@@ -391,20 +391,20 @@ messages: {
 	            success: function(data){
 	            	console.log(data);
 	            	if(data == "success"){
-	            		alert("添加用户成功.");
+	            		sousaiRemindDialog("添加用户成功.");
 		                window.setTimeout("window.location='background-userMaintenance.jsp'",1000);
 	            	}else{
-	            		alert("由于未知错误，添加用户失败。");
+	            		sousaiRemindDialog("由于未知错误，添加用户失败。");
 	            	}
 	            },
 	            error: function(jqXHR,textStatus,errorThrown){
 	            	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-	                alert("抱歉，发送数据出错了，请重新输入。");
+	                sousaiRemindDialog("抱歉，发送数据出错了，请重新输入。");
 	            },
 	          });
 			
 		}else{
-			alert("Valid: 有不符合验证的内容，");
+			sousaiRemindDialog("Valid: 有不符合验证的内容，");
 		}
 	});
     //保存用户信息
@@ -438,15 +438,15 @@ messages: {
           },
         success: function(rspdata) {
           window.setTimeout("window.location='background-userMaintenance.jsp'",1000);
-          alert("编辑账户成功,请刷新页面。");
+          sousaiRemindDialog("编辑账户成功,请刷新页面。");
         },
         error: function(jqXHR,textStatus,errorThrown){
         	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-          alert("抱歉，发送数据出错了，请重新输入。");
+          sousaiRemindDialog("抱歉，发送数据出错了，请重新输入。");
         },
         });
 		}else{
-			alert( "Valid: 有不符合验证的内容，");
+			sousaiRemindDialog( "Valid: 有不符合验证的内容，");
 		}
     });
 

@@ -279,7 +279,10 @@ function sousaiRemindDialog(text,successishide){
     $("#sousaiRemindDialog").modal({
       backdrop: false,
     });
-    window.setTimeout($("#sousaiRemindDialog").modal("hide"),3000);
+    function hide(){
+    	$("#sousaiRemindDialog").modal("hide");
+    }
+    window.setTimeout(hide,3000);
 }
 
 //创建验证码，inputValidateId为验证码标签 ID

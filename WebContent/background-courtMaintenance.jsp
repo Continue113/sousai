@@ -304,7 +304,7 @@
       data: {currentPage:crtPage,rows:rs},
       dataType: "json",
       success: function(data) {
-	      console.log(data);//alert(rspdata);
+	      console.log(data);//sousaiRemindDialog(rspdata);
       var target = $(".courtTable > tbody"),template = Handlebars.compile($('#court-template').html());
       Handlebars.registerHelper("data",function(v){
         //将当前对象转化为字符串，保存在data-info中
@@ -328,7 +328,7 @@
 	    },
       error: function() {
 	      $("#ajaxState .noresult").show();console.log("出错了");
-          alert("抱歉，ajax出错了。");
+          sousaiRemindDialog("抱歉，ajax出错了。");
       },
     });
 }
@@ -369,7 +369,7 @@
     	var checked = $(".court input:checked"),n = checked.length;
     	//若为选中则提示
     	if( n == 0){
-    		alert("请先选中比赛");
+    		sousaiRemindDialog("请先选中比赛");
     	}else{
     		var courtIds = new Array(),
     		rs = $("select.selectRows option:selected").val(),
@@ -378,7 +378,7 @@
     			console.log($(this).attr("id"));
     			courtIds.push($(this).attr("id"));
     		});
-    		console.log(courtIds);alert(courtIds);
+    		console.log(courtIds);sousaiRemindDialog(courtIds);
             $.ajax({
               type: "POST",
               url: "deleteCourts",
@@ -389,16 +389,16 @@
               dataType: "json",
               success: function(rspdata) {
             	  if( rspdata == "success" ){
-            		  alert("删除成功");
+            		  sousaiRemindDialog("删除成功");
                       e(crtPage,rs); //刷新数据 
             	  }else if( rspdata == "fail" ){
-            		  alert("删除失败");
+            		  sousaiRemindDialog("删除失败");
             	  }else{
-            		  alert("删除失败，错误代码未知");
+            		  sousaiRemindDialog("删除失败，错误代码未知");
             	  }
               },
               error: function() {
-                alert("抱歉，发送信息到服务器出错了。");
+                sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
               },
             }); //ajax 已得到具体比赛类型
     	}
@@ -408,14 +408,14 @@
     	/*var checked = $(".court input:checked"),n = checked.length;
     	//若为选中则提示
     	if( n == 0){
-    		alert("请先选中场地");
+    		sousaiRemindDialog("请先选中场地");
     	}else{
     		var courtIds = new Array();
     		$(".court input:checked").each(function(index,element){
     			console.log($(this).attr("id"));
         		courtIds.push($(this).attr("id"));
     		});
-    		console.log(courtIds);alert("courtIds:"+courtIds.join(",,,"));
+    		console.log(courtIds);sousaiRemindDialog("courtIds:"+courtIds.join(",,,"));
             $.ajax({
               type: "POST",
               url: "passCourts",
@@ -426,15 +426,15 @@
               dataType: "json",
               success: function(data) {
             	  if( data == "success" ){
-            		  alert("发布成功");
+            		  sousaiRemindDialog("发布成功");
             	  }else if( data == "fail" ){
-            		  alert("发布失败");
+            		  sousaiRemindDialog("发布失败");
             	  }else{
-            		  alert("发布失败，错误代码未知");
+            		  sousaiRemindDialog("发布失败，错误代码未知");
             	  }
               },
               error: function() {
-                alert("抱歉，发送信息到服务器出错了。");
+                sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
               },
             });
     	}*/
@@ -456,15 +456,15 @@
               dataType: "json",
               success: function(data) {
             	  if( rspdata == "success" ){
-            		  alert("删除成功");
+            		  sousaiRemindDialog("删除成功");
             	  }else if( data == "fail" ){
-            		  alert("删除失败");
+            		  sousaiRemindDialog("删除失败");
             	  }else{
-            		  alert("删除失败，错误代码未知");
+            		  sousaiRemindDialog("删除失败，错误代码未知");
             	  }
               },
               error: function() {
-                alert("抱歉，发送信息到服务器出错了。");
+                sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
               },
             });
     });
@@ -501,15 +501,15 @@
           dataType: "json",
           success: function(data) {
         	  if( rspdata == "success" ){
-        		  alert("删除成功");
+        		  sousaiRemindDialog("删除成功");
         	  }else if( data == "fail" ){
-        		  alert("删除失败");
+        		  sousaiRemindDialog("删除失败");
         	  }else{
-        		  alert("删除失败，错误代码未知");
+        		  sousaiRemindDialog("删除失败，错误代码未知");
         	  }
           },
           error: function() {
-            alert("抱歉，发送信息到服务器出错了。");
+            sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
           },
         });*/
 	});
@@ -547,7 +547,7 @@
     	          }
     	        },
     	        error: function() {
-    	          alert("抱歉，获取场地类型出错了。");
+    	          sousaiRemindDialog("抱歉，获取场地类型出错了。");
     	        },
     	      }); 
     	      
@@ -604,7 +604,7 @@
         sctParMatchType.append("<option value=1>其他</option>"); //每一个大类比赛类型的“其他”选项
       },
       error: function() {
-        alert("抱歉，获取比赛类型出错了。");
+        sousaiRemindDialog("抱歉，获取比赛类型出错了。");
       },
     }); //ajax 已得到具体比赛类型
     //出现具体比赛类型下拉列表并且不再隐藏
@@ -643,7 +643,7 @@
           }
         },
         error: function() {
-          alert("抱歉，获取场地类型出错了。");
+          sousaiRemindDialog("抱歉，获取场地类型出错了。");
         },
       }); //ajax 已得到场地类型
 
@@ -682,18 +682,18 @@
           }
         },
         error: function() {
-          alert("抱歉，获取场地类型出错了。");
+          sousaiRemindDialog("抱歉，获取场地类型出错了。");
         },
       }); //ajax 已得到场地类型
       
       //设置比赛类型
-      alert("设置比赛类型和比赛类型id")
+      sousaiRemindDialog("设置比赛类型和比赛类型id")
       $("#inputMatchType").val($(".selectParticularMatchType option:selected").text()).attr("data-matchtypeid",$(".selectParticularMatchType option:selected").attr("value"));
     }
   });
   
   $(".selectCourtType").change(function() {
-	  alert("设置场地类型id");
+	  sousaiRemindDialog("设置场地类型id");
 	  $("#inputCrtCourtType").val($(".selectCourtType option:selected").text()).attr("data-courttypeid",$(".selectCourtType option:selected").attr("value"));
   });
   
@@ -739,7 +739,7 @@
   //添加选项
   $(".plus").click(function(){
     if(trNumb == 3){
-      alert("抱歉，每个场地最多只可以上传3张图片！");
+      sousaiRemindDialog("抱歉，每个场地最多只可以上传3张图片！");
     }else{
       trNumb++;
       $(".files").append('<tr class="hide" id="tr'+trNumb+'"><td><span class="btn fileinput-button"  onclick="selectPic('+trNumb+')"><i class="icon-plus"></i><span>选择图片</span></span><input class="hide fileImage" id="fileImage'+trNumb+'" type="file" name="images" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this,'+trNumb+')"/><input class="hide fileImageNames" type="text" name="imgNames" value=""/></td><td><span class="preview" id="preview'+trNumb+'"></span></td><td><span class="name"></span></td><td><span class="size"></span></td><td><span class="btn cancel" onclick="deleteTr('+trNumb+')"><i class="icon-ban-circle"></i>取消</span></td></tr>');
@@ -788,19 +788,19 @@
       var reader = new FileReader();
       reader.readAsDataURL(files[0]);
       reader.onload = function(e){
-        //alert(files[0].name + "," +e.total + " bytes");
+        //sousaiRemindDialog(files[0].name + "," +e.total + " bytes");
         imgname = files[0].name;
         imgtype = files[0].type;
         imgsize = e.total;
         imgsizeKB = (imgsize/1024).toFixed(2);
         if(imgsize >= 200*1024) {
-          alert("照片大小为 "+imgsizeKB+"KB,照片太大了，请上传小于200KB的照片.");
+          sousaiRemindDialog("照片大小为 "+imgsizeKB+"KB,照片太大了，请上传小于200KB的照片.");
         }else if(imgtype != "image/png" && imgtype != "image/gif" && imgtype != "image/jpg" && imgtype != "image/jpeg" ){
-          alert("文件格式为 "+imgtype+",请上传png,gif,jpg,jpeg格式的照片.");
+          sousaiRemindDialog("文件格式为 "+imgtype+",请上传png,gif,jpg,jpeg格式的照片.");
         }else if( trNumb == 2 && imgname == $("#tr1 .name").text() ){ //trNumb为2时，有两个图片栏，检验第一个图片栏与第二个图片栏是否同名
-          alert("图片 "+ imgname +" 名称重复。");
+          sousaiRemindDialog("图片 "+ imgname +" 名称重复。");
         }else if( trNumb == 3 && ( imgname == $("#tr1 .name").text() || imgname == $("#tr2 .name").text() ) ){ //trNumb为3时，有三个图片栏，检验第一、第二个图片栏是否与第三个图片栏同名
-          alert("图片 "+ imgname +" 名称重复。");
+          sousaiRemindDialog("图片 "+ imgname +" 名称重复。");
         }else{
           img.src = this.result;
           //img.width = 100;
@@ -817,7 +817,7 @@
       imgname = nfile.substring(nfile.lastIndexOf("\\")+1,nfile.length);//文件名;
       imgtype =fileText.toLowerCase();//转化为统一小写后缀名.jpg等
       if(imgtype != ".png" && imgtype != ".gif" && imgtype != ".jpg" && imgtype != ".jpeg" ){
-          alert("文件格式为 "+imgtype+",请上传png,gif,jpg,jpeg格式的照片.");
+          sousaiRemindDialog("文件格式为 "+imgtype+",请上传png,gif,jpg,jpeg格式的照片.");
       }
       fileName.text(imgname);
       fileSize.text("");

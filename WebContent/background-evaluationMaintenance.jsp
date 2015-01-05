@@ -171,7 +171,7 @@
   	    },
         error: function() {
   	      $("#ajaxState .noresult").show();console.log("出错了");
-          alert("抱歉，ajax出错了。");
+          sousaiRemindDialog("抱歉，ajax出错了。");
         },
       });
 	}

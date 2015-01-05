@@ -174,7 +174,7 @@
 	          data: {currentPage:crtPage,rows:rs,keyValue:kv},
 	          dataType: "json",
 	          success: function(rspdata) {
-	        	  alert(rspdata);console.log(rspdata.count);console.log(rspdata);
+	        	  sousaiRemindDialog(rspdata);console.log(rspdata.count);console.log(rspdata);
 	        	  
 			      var target = $(".matchBoxs"),template = Handlebars.compile($('#match-template').html());
 			      Handlebars.registerHelper("data",function(v){
@@ -199,13 +199,13 @@
 				  //pages(rspdata.count,crtPage,rs);
 	          },
 	          error: function() {
-	            alert("抱歉。ajax错误。");
+	            sousaiRemindDialog("抱歉。ajax错误。");
 	          },
 	        });
 	}
   function e(crtPage,rs){
 		$.post("getAllMatch", null, function(data) {
-		      console.log(data);//alert(data);
+		      console.log(data);//sousaiRemindDialog(data);
 		      var target = $(".matchBoxs"),template = Handlebars.compile($('#match-template').html());
 		      Handlebars.registerHelper("data",function(v){
 		    	  //将当前对象转化为字符串，保存在data-info中

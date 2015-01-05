@@ -147,7 +147,7 @@
     $(function () {
   	  //ajax接收所有的场地
   		$.post("getAllCourt", null, function(data) {
-  	      console.log(data);//alert(data);
+  	      console.log(data);//sousaiRemindDialog(data);
           var target = $(".courtBoxs"),template = Handlebars.compile($('#court-template').html());
           Handlebars.registerHelper("data",function(v){
             //将当前对象转化为字符串，保存在data-info中

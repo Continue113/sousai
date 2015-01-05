@@ -248,10 +248,10 @@ $(function () {
           data: null,
           success: function(rspdata) {
             window.setTimeout("window.location='userCenter-editUser.jsp'",1000);
-            alert("编辑账户成功,请刷新页面。");
+            sousaiRemindDialog("编辑账户成功,请刷新页面。");
           },
           error: function() {
-            alert("抱歉，发送数据出错了，请重新输入。");
+            sousaiRemindDialog("抱歉，发送数据出错了，请重新输入。");
           },
           });
         }
@@ -339,14 +339,14 @@ function ajaxFileUpload() {
       console.log(typeof respdata + "内容为："+respdata);
       var jsondata = eval("("+respdata+")");
       if(jsondata.statusCode == 1){
-        alert("上传头像成功.");
+        sousaiRemindDialog("上传头像成功.");
         var imgURL = $("#imghead").attr("src");
         $(".crtUserIcon > img").attr("src",imgURL);
         $(".cancle").trigger('click');
       }
     },
     error: function(data, status, e) {
-      alert("上传图片出错，请重新上传.");
+      sousaiRemindDialog("上传图片出错，请重新上传.");
       console.log(e);
     }
   });
@@ -366,9 +366,9 @@ function imgValid(file){
     imgtype = file.files[0].type; 
     //console.log(imgtype);
     if(imgsize >= 200*1024) {
-     alert("照片大小为 "+imgsizeKB+"KB,照片太大了，请上传小于200KB的照片.");
+     sousaiRemindDialog("照片大小为 "+imgsizeKB+"KB,照片太大了，请上传小于200KB的照片.");
     }else if(imgtype !== "image/png" && imgtype !== "image/gif" && imgtype !== "image/jpg" &&  imgtype !== "image/jpeg" ){
-     alert("文件格式为 "+imgtype+",请上传png,gif,jpg,jpeg格式的照片.");
+     sousaiRemindDialog("文件格式为 "+imgtype+",请上传png,gif,jpg,jpeg格式的照片.");
     }else{      
      fileName.text(imgname);
      fileSize.text(imgsizeKB+"KB");
@@ -384,7 +384,7 @@ function imgValid(file){
     imgname = nfile.substring(nfile.lastIndexOf("\\")+1,nfile.length);//文件名;
     imgtype =fileText.toLowerCase();//转化为统一小写后缀名.jpg等
     if(imgtype != ".png" && imgtype != ".gif" && imgtype != ".jpg" && imgtype != ".jpeg" ){
-        alert("文件格式为 "+imgtype+",请上传png,gif,jpg,jpeg格式的照片.");
+        sousaiRemindDialog("文件格式为 "+imgtype+",请上传png,gif,jpg,jpeg格式的照片.");
     }
     fileName.text(imgname);
     fileSize.text("");

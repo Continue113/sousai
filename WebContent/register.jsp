@@ -145,7 +145,7 @@
             },
             error: function(jqXHR,textStatus,errorThrown){
             	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-              alert("抱歉，发送数据出错了，请重新输入。");
+              sousaiRemindDialog("抱歉，发送数据出错了，请重新输入。");
             },
           });
         },

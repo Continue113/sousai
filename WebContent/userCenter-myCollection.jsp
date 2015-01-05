@@ -154,7 +154,7 @@
     $(function () {
 		//ajax接收所有比赛
 		$.post("getAllMatch", null, function(data) {
-		      console.log(data);//alert(data);
+		      console.log(data);//sousaiRemindDialog(data);
 		      var target = $(".matchBoxs"),template = Handlebars.compile($('#match-template').html());
 		      Handlebars.registerHelper("data",function(v){
 		    	  //将当前对象转化为字符串，保存在data-info中

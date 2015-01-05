@@ -260,7 +260,7 @@
       data: {currentPage:crtPage,rows:rs},
       dataType: "json",
       success: function(data) {
-    	  //console.log(data);alert(data);
+    	  //console.log(data);sousaiRemindDialog(data);
 	      var target = $(".collectionsTable > tbody"),template = Handlebars.compile($('#collections-template').html());
 	      Handlebars.registerHelper("data",function(v){
 	    	  //将当前对象转化为字符串，保存在data-info中
@@ -342,12 +342,12 @@
               dataType: "json",
               success: function(rspdata) {
             	  if( rspdata == "success" ){
-            		  //alert("删除成功");alert(crtPage);
+            		  //sousaiRemindDialog("删除成功");sousaiRemindDialog(crtPage);
             		  sousaiRemindDialog("删除成功,隐藏删除的采集数据。");
             		  $(".match input:checked").parent().parent().parent().hide();
             		  //e(crtPage,rs);//刷新数据
             	  }else if( rspdata == "error" ){
-            		  //alert("删除失败")
+            		  //sousaiRemindDialog("删除失败")
             		  sousaiRemindDialog("删除失败");
             	  }else{
             		  sousaiRemindDialog("删除失败，错误代码："+rspdata);
@@ -375,7 +375,7 @@
     		console.log(collectionId);sousaiRemindDialog("collectionId:"+collectionId.join(","));
             $.ajax({
               type: "POST",
-              url: "publicCollections",
+              url: "publishCollections",
               contentType: "application/x-www-form-urlencoded; charset=UTF-8",
               data: {
             	  "collectionId": collectionId.join(","),
@@ -468,9 +468,9 @@
                 		  },
                   dataType: "json",
                   success: function(rspdata) {
-                	  //alert(rspdata);console.log(rspdata);
+                	  //sousaiRemindDialog(rspdata);console.log(rspdata);
                 	  if( rspdata == "success" ){
-                		  //alert("保存成功");
+                		  //sousaiRemindDialog("保存成功");
                 		  sousaiRemindDialog("保存成功");
                 	  }else if( rspdata == "error" ){
                 		  sousaiRemindDialog("保存失败");
@@ -491,7 +491,7 @@
     $(".editMatch .passMatch").click(function (){
                  $.ajax({
                   type: "POST",
-                  url: "publicCollections",
+                  url: "publishCollections",
                   contentType: "application/x-www-form-urlencoded; charset=UTF-8",
                   data: {
                     "collectionId": $("#inputMatchTitle").attr("data-id"),
@@ -755,7 +755,7 @@
   	        var existCourtsTbody = $(".existCourtsBox > table > tbody");
   	        $(".jplist-no-results").hide(); //隐藏无结果提醒
   	        existCourtsTbody.empty(); //清空已有场地列表
-  	        console.log(rspdata);//alert(rspdata);
+  	        console.log(rspdata);//sousaiRemindDialog(rspdata);
   	        /** 循环遍历获得的场地信息并加入已有场地列表中 **/
   	        for (var i = 0; i < rspdata.length; i++) {
   	        	existCourtsTbody.append(
