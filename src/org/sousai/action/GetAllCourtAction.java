@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.struts2.ServletActionContext;
 import org.sousai.action.base.UserBaseAction;
+import org.sousai.common.Constant;
 import org.sousai.domain.FrontMessage;
 import org.sousai.tools.JSONUtils;
 import org.sousai.tools.MyPrint;
@@ -11,16 +12,45 @@ import org.sousai.vo.CourtBean;
 
 public class GetAllCourtAction extends UserBaseAction {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -1176111777851902140L;
 
 	private Integer currentPage;
 	private Integer rows;
 	private String orderByCol;
 	private Boolean isAsc;
-	
+	private String strColumns;
+	private String keyValue;
+
+	/**
+	 * @return the keyValue
+	 */
+	public String getKeyValue() {
+		return keyValue;
+	}
+
+	/**
+	 * @param keyValue
+	 *            the keyValue to set
+	 */
+	public void setKeyValue(String keyValue) {
+		this.keyValue = keyValue;
+	}
+
+	/**
+	 * @return the strColumns
+	 */
+	public String getStrColumns() {
+		return strColumns;
+	}
+
+	/**
+	 * @param strColumns
+	 *            the strColumns to set
+	 */
+	public void setStrColumns(String strColumns) {
+		this.strColumns = strColumns;
+	}
+
 	/**
 	 * @return the orderByCol
 	 */
@@ -29,7 +59,8 @@ public class GetAllCourtAction extends UserBaseAction {
 	}
 
 	/**
-	 * @param orderByCol the orderByCol to set
+	 * @param orderByCol
+	 *            the orderByCol to set
 	 */
 	public void setOrderByCol(String orderByCol) {
 		this.orderByCol = orderByCol;
@@ -43,7 +74,8 @@ public class GetAllCourtAction extends UserBaseAction {
 	}
 
 	/**
-	 * @param isAsc the isAsc to set
+	 * @param isAsc
+	 *            the isAsc to set
 	 */
 	public void setIsAsc(Boolean isAsc) {
 		this.isAsc = isAsc;
@@ -57,7 +89,8 @@ public class GetAllCourtAction extends UserBaseAction {
 	}
 
 	/**
-	 * @param currentPage the currentPage to set
+	 * @param currentPage
+	 *            the currentPage to set
 	 */
 	public void setCurrentPage(Integer currentPage) {
 		this.currentPage = currentPage;
@@ -71,7 +104,8 @@ public class GetAllCourtAction extends UserBaseAction {
 	}
 
 	/**
-	 * @param rows the rows to set
+	 * @param rows
+	 *            the rows to set
 	 */
 	public void setRows(Integer rows) {
 		this.rows = rows;
@@ -93,18 +127,27 @@ public class GetAllCourtAction extends UserBaseAction {
 			if (rows == null) {
 				rows = 25;
 			}
-			MyPrint.myPrint("rows="+rows);
-			List<CourtBean> list = cmg.findPagedAllCourtOrderBy(currentPage, rows, orderByCol, isAsc);
+			MyPrint.myPrint("rows=" + rows);
+			MyPrint.myPrint("orderByCol=" + orderByCol);
+			MyPrint.myPrint("isAsc=" + isAsc);
+			MyPrint.myPrint("strColumns=" + strColumns);
+			String[] columns = strColumns.split(",");
+			// List<CourtBean> list = cmg.findPagedAllCourtOrderBy(currentPage,
+			// rows, orderByCol, isAsc);
+			List<CourtBean> list = amg.findPagedByKeyValueOrderBy(columns,
+					keyValue, currentPage, rows, orderByCol, isAsc);
 			int count = amg.countAllCourt();
 			FrontMessage msg = new FrontMessage(list, count);
 			if (list != null) {
 				JSONUtils.toJson(ServletActionContext.getResponse(), msg);
 			} else {
-				JSONUtils.toJson(ServletActionContext.getResponse(), "fail");
+				JSONUtils.toJson(ServletActionContext.getResponse(),
+						Constant.FAIL);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			JSONUtils.toJson(ServletActionContext.getResponse(), "fail");
+			JSONUtils
+					.toJson(ServletActionContext.getResponse(), Constant.ERROR);
 		}
 		return null;
 	}

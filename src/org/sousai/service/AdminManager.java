@@ -59,4 +59,19 @@ public interface AdminManager {
 	 * @return
 	 */
 	public int deleteMatches(Integer[] matchIds);
+	
+	/**
+	 * 根据keyValue在columns中模糊查询符合条件的场地，并排序分页
+	 * @param columns
+	 * @param keyValue
+	 * @param currentPage
+	 * @param rows
+	 * @param orderByCol
+	 * @param isAsc
+	 * @return
+	 * @throws Exception
+	 */
+	List<CourtBean> findPagedByKeyValueOrderBy(String[] columns,
+			String keyValue, Integer currentPage, Integer rows,
+			String orderByCol, Boolean isAsc) throws Exception;
 }

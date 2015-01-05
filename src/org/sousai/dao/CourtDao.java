@@ -46,11 +46,12 @@ public interface CourtDao {
 
 	/**
 	 * 获取所有场地
-	 * @param rows 
-	 * @param currentPage 
+	 * 
+	 * @param rows
+	 * @param currentPage
 	 * 
 	 * @return 所有场地
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	List<CourtBean> findAll(Integer currentPage, Integer rows) throws Exception;
 
@@ -101,40 +102,60 @@ public interface CourtDao {
 	 *            地址
 	 * @return
 	 */
-	List<CourtBean> findByPram(User user, CourtType courtType, String matchType,
-			Region region);
+	List<CourtBean> findByPram(User user, CourtType courtType,
+			String matchType, Region region);
 
 	List<CourtBean> findByRegionId(Integer regionId);
-	
-	
+
 	/**
 	 * 查询用户当天已发布场地数量
-	 * @param userId	用户标识
+	 * 
+	 * @param userId
+	 *            用户标识
 	 * @return
 	 */
 	int countRelMatchPerDay(Integer userId);
-	
+
 	/**
 	 * 批量删除场地
+	 * 
 	 * @param courtIds
 	 * @return
 	 */
 	int deleteCourts(Integer[] courtIds);
-	
+
 	/**
 	 * 查询总比赛数
+	 * 
 	 * @return
 	 */
 	int countMatch();
 
 	/**
-	 * 查询符合条件的比赛，并排序
+	 * 查询符合条件的场地，并排序
+	 * 
 	 * @param currentPage
 	 * @param rows
 	 * @param orderByCol
 	 * @param isAsc
 	 * @return
 	 */
-	List<CourtBean> findPagedByWhereOrderBy(String strWhere, Integer currentPage, Integer rows,
-			String orderByCol, Boolean isAsc);
+	List<CourtBean> findPagedByWhereOrderBy(String strWhere,
+			Integer currentPage, Integer rows, String orderByCol, Boolean isAsc);
+
+	/**
+	 * 根据keyValue在columns中模糊查询符合条件的场地，并排序分页
+	 * 
+	 * @param columns
+	 * @param keyValue
+	 * @param currentPage
+	 * @param rows
+	 * @param orderByCol
+	 * @param isAsc
+	 * @return
+	 * @throws Exception 
+	 */
+	List<CourtBean> findPagedByKeyValueOrderBy(String[] columns,
+			String keyValue, Integer currentPage, Integer rows,
+			String orderByCol, Boolean isAsc) throws Exception;
 }

@@ -100,14 +100,15 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 	}
 
 	@Override
-	public List<CourtBean> findPagedByWhereOrderBy(String strWhere, Integer currentPage, Integer rows, String orderByCol, Boolean isAsc){
+	public List<CourtBean> findPagedByWhereOrderBy(String strWhere,
+			Integer currentPage, Integer rows, String orderByCol, Boolean isAsc) {
 		Session session = getHibernateTemplate().getSessionFactory()
 				.getCurrentSession();
 		String hql = selectCourtBean;
-		if(!CommonUtils.isNullOrEmpty(strWhere)){
+		if (!CommonUtils.isNullOrEmpty(strWhere)) {
 			hql += strWhere;
 		}
-		if(!CommonUtils.isNullOrEmpty(orderByCol)){
+		if (!CommonUtils.isNullOrEmpty(orderByCol)) {
 			hql = String.format("%1$s order by %2$s ", hql, orderByCol);
 			if (!CommonUtils.isNullOrEmpty(isAsc) && isAsc == false) {
 				hql += " DESC ";
@@ -247,5 +248,29 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 	public int countMatch() {
 		String strHql = "select count(*) from Court";
 		return count(strHql);
+	}
+
+	@Override
+	public List<CourtBean> findPagedByKeyValueOrderBy(String[] columns,
+			String keyValue, Integer currentPage, Integer rows,
+			String orderByCol, Boolean isAsc) throws Exception {
+		if (!CommonUtils.isNullOrEmpty(keyValue)) {
+			keyValue = " %" + keyValue + "% ";
+			int[] types = new int[columns.length];
+			String[] args = new String[columns.length];
+			for (int i = 0; i < columns.length; i++) {
+				types[i] = 2;
+				args[i] = keyValue;
+				// 加上court 别名c统一
+				columns[i] = " and c." + columns[i];
+			}
+			String strWhere = sqlHelper.Append_String(" and ", types, columns,
+					args);
+			return findPagedByWhereOrderBy(strWhere, currentPage, rows, " c."
+					+ orderByCol, isAsc);
+		} else {
+			return findPagedByWhereOrderBy(null, currentPage, rows, " c."
+					+ orderByCol, isAsc);
+		}
 	}
 }

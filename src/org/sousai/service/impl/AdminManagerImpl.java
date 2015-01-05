@@ -102,4 +102,11 @@ public class AdminManagerImpl implements AdminManager {
 	public int countAllMatch() throws Exception {
 		return matchDao.countMatch();
 	}
+
+	@Override
+	public List<CourtBean> findPagedByKeyValueOrderBy(String[] columns,
+			String keyValue, Integer currentPage, Integer rows,
+			String orderByCol, Boolean isAsc) throws Exception {
+		return courtDao.findPagedByKeyValueOrderBy(columns, keyValue, currentPage, rows, orderByCol, isAsc);
+	}
 }
