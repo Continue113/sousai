@@ -460,6 +460,7 @@
                 		  },
                   dataType: "json",
                   success: function(rspdata) {
+                	  alert(rspdata);console.log(rspdata);
                 	  if( rspdata == "success" ){
                 		  alert("保存成功");
                 	  }else if( rspdata == "fail" ){

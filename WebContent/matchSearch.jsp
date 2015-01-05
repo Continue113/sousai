@@ -108,7 +108,12 @@
      <div class="matchs" id="matchsList"> 
       <!-- panel --> 
       <div class="panel-top"></div>
-      <div class="matchBoxs"></div> 
+      <div class="matchBoxs"></div>
+      
+       <div class="panel-bottom">
+       <div id="ajaxState" class="text-center"><span class="hide noresult">无结果</span><span class="hide load"><img src="img/loading.gif" height="20px" width="20px"></img>数据加载中...</span></div>
+       <div class="pagination"><nav><ul class="pagination"></ul></nav></div>
+      </div>
       <!-- /matchBoxs -->
      </div> 
      <!-- /matchs --> 
@@ -159,6 +164,7 @@
   //定义函数
   //搜索栏模糊搜索
 	function search(){
+	  	$("#ajaxState .load").show();console.log("start");
 	    var url = window.location.search;
 	    var loc = url.substring(url.lastIndexOf('=')+1, url.length);
 		var crtPage = 1,rs = 1,kv = loc;
@@ -179,12 +185,19 @@
 			    	  //console.log("v1:"+v1);
 			    	  return v1;
 			      });
-			      target.empty(); //清空tbody
-		    	  target.html(template(rspdata.body));
+			      target.empty().show(); //清空tbody
+		    	  target.html(template(rspdata));
+			      $("#ajaxState .load").hide();console.log("stop");
+			      //出错或无结果
+			      //target.empty(); //清空tbody
+			      if(target.find("div.matchBox").length == 0){
+			      $("#ajaxState .noresult").show();console.log("无结果");
+			      target.hide();
+			      }
 		    	    //字数限制，溢出省略
 		    	    $(".matchBox-court").wordLimit(20);
 		    	    $(".matchBox-info > a").wordLimit(28);
-				  pages(rspdata.count,crtPage,rs);
+				  //pages(rspdata.count,crtPage,rs);
 	          },
 	          error: function() {
 	            alert("抱歉。ajax错误。");
