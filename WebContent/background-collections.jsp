@@ -333,7 +333,7 @@
         			collectionId = $(this).attr("id");
     			}
     			else{
-        			collectionId = ","+$(this).attr("id");
+        			collectionId += ","+$(this).attr("id");
     			}
         		//collectionId.push($(this).attr("id"));
     		});
@@ -348,10 +348,11 @@
               dataType: "json",
               success: function(rspdata) {
             	  if( rspdata == "success" ){
-            		  //alert("删除成功");alert(crtPage);
+            		  alert("删除成功");alert(crtPage);
             		  sousaiRemindDialog("删除成功");
             		  //e(crtPage,rs);//刷新数据
             	  }else if( rspdata == "fail" ){
+            		  alert("删除失败")
             		  sousaiRemindDialog("删除失败");
             	  }else{
             		  sousaiRemindDialog("删除失败，错误代码："+rspdata);
