@@ -1,6 +1,12 @@
 package org.sousai.search;
 
-public class MatchData {
+import java.io.Serializable;
+
+public class MatchData implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// 比赛基本信息
 	private int id = 0 ;
 	private String url = null; // 比赛信息源地址
@@ -79,6 +85,9 @@ public class MatchData {
 		}
 	}
 
+	public MatchData(){
+	}
+	
 	private MatchData(Builder builder) {
 		id = builder.id ;
 		url = builder.url;
@@ -91,6 +100,42 @@ public class MatchData {
 		matchIntroduction = builder.matchIntroduction;
 	}
 	
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public void setSponsor(String sponsor) {
+		this.sponsor = sponsor;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setMatchType(String matchType) {
+		this.matchType = matchType;
+	}
+
+	public void setMatchAddress(String matchAddress) {
+		this.matchAddress = matchAddress;
+	}
+
+	public void setMatchStartTime(String matchStartTime) {
+		this.matchStartTime = matchStartTime;
+	}
+
+	public void setMatchDeadline(String matchDeadline) {
+		this.matchDeadline = matchDeadline;
+	}
+
+	public void setMatchIntroduction(String matchIntroduction) {
+		this.matchIntroduction = matchIntroduction;
+	}
+
 	public int getId(){
 		return id ;
 	}

@@ -7,7 +7,7 @@
 <struts>
 	<constant name="struts.custom.i18n.resources" value="resource"/>
 	<constant name="struts.devMode" value="true"/>
-	<package name="default" extends="struts-default">
+	<package name="default" extends="struts-default,json-default">
 		
 		<!-- 定义全局Result映射 -->
 		<global-results>
@@ -170,6 +170,19 @@
 
 		<action name="backgroundCollections" class="org.sousai.search.BackgroundCollections"
 			method="loadJson">
+			<result name="success">/</result>
+		</action>
+		
+		<action name="updateCollections" class="org.sousai.search.UpdateCollections" method="updateCollections">
+			<result name="success">/</result>
+		</action>
+		
+		<action name="deleteCollections" class="org.sousai.search.DeleteCollections" method="deleteCollections">
+			<result name="success">/</result>
+		</action>
+		
+		<action name="publishCollections" class="org.sousai.search.PublishCollections" method="publishCollections">
+			<result name="success">/</result>
 		</action>
 		
 	</package>

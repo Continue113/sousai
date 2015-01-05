@@ -5,7 +5,12 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.LinkedList;
+
+import org.sousai.tools.CommonUtils;
 
 public class Jdbc {
 	private Connection conn = null;
@@ -53,9 +58,8 @@ public class Jdbc {
 
 	// 2.删除信息
 	public void delete(int id) {
-		String sql = "delete from student where id = ?";
+		String sql = "delete from matches where id = ?";
 		try {
-			conn = JdbcMySqlUtil.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, id);
 			pstmt.executeUpdate();
@@ -71,9 +75,7 @@ public class Jdbc {
 	}
 
 	// 3.更新信息
-	public void update(int id, String url, String name, String matchType,
-			String matchAddress, String matchStartTime, String matchDeadline,
-			String matchIntroduction) {
+	public void update(MatchData matchData) {
 		/*
 		 * "/home/lei/data"为存储文件的目录,可改为自己的 抓取下来的信息文件,内容分为
 		 * 比赛信息源地址,比赛名称,比赛类型,比赛地点,比赛开始时间,截止日期,比赛简介
@@ -81,14 +83,14 @@ public class Jdbc {
 		String sql = "update matches set url=?,name=?,matchType=?,matchAddress=?,matchStartTime=?,matchDeadline=?,matchIntroduction=? where id = ?";
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, url);
-			pstmt.setString(2, name);
-			pstmt.setString(3, matchType);
-			pstmt.setString(4, matchAddress);
-			pstmt.setString(5, matchStartTime);
-			pstmt.setString(6, matchDeadline);
-			pstmt.setString(7, matchIntroduction);
-			pstmt.setInt(8, id);
+			pstmt.setString(1, matchData.getUrl());
+			pstmt.setString(2, matchData.getName());
+			pstmt.setString(3, matchData.getMatchType());
+			pstmt.setString(4, matchData.getMatchAddress());
+			pstmt.setString(5, matchData.getMatchStartTime());
+			pstmt.setString(6, matchData.getMatchDeadline());
+			pstmt.setString(7, matchData.getMatchIntroduction());
+			pstmt.setInt(8, matchData.getId());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -101,32 +103,15 @@ public class Jdbc {
 		}
 	}
 
-	// 4.查找信息
+	// 4.查找所有信息
 	public LinkedList<MatchData> select() {
-		//StringBuilder jsonMatch = new StringBuilder();
 		LinkedList<MatchData> matchList = new LinkedList<MatchData>();
 		try {
 			String sql = "select * from matches";
 			pstmt = conn.prepareStatement(sql);
 			result = pstmt.executeQuery();
 
-			/*jsonMatch.append("{\"matches\":[");*/
 			while (result.next()) {
-				/*jsonMatch.append("{");
-				jsonMatch.append("\"id\":\"" + result.getInt("id")
-						+ "\",\"url\":\"" + result.getString("url")
-						+ "\",\"name\":\"" + result.getString("name")
-						+ "\",\"matchType\":\"" + result.getString("matchType")
-						+ "\",\"matchAddress\":\""
-						+ result.getString("matchAddress")
-						+ "\",\"matchStartTime\":\""
-						+ result.getString("matchStartTime")
-						+ "\",\"matchDeadline\":\""
-						+ result.getString("matchDeadline")
-						+ "\",\"matchIntroduction\":\""
-						+ result.getString("matchIntroduction"));
-
-				jsonMatch.append("},");*/
 
 				matchList.add(new MatchData.Builder(result.getString("url"),
 						result.getString("name"))
@@ -137,14 +122,15 @@ public class Jdbc {
 						.matchDeadline(result.getString("matchDeadline"))
 						.matchIntroduction(
 								result.getString("matchIntroduction")).build());
-				/*result.getString("name");
-				result.getString("matchType");
-				result.getString("matchAddress");
-				result.getString("matchStartTime");
-				result.getString("matchDeadline");
-				result.getString("matchIntroduction");*/
+				/*
+				 * result.getString("name"); result.getString("matchType");
+				 * result.getString("matchAddress");
+				 * result.getString("matchStartTime");
+				 * result.getString("matchDeadline");
+				 * result.getString("matchIntroduction");
+				 */
 			}
-			//jsonMatch.append("]}");
+			// jsonMatch.append("]}");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -155,6 +141,83 @@ public class Jdbc {
 			}
 		}
 		return matchList;
+	}
+
+	public LinkedList<MatchData> selectFromIds(String ids[]) {
+		LinkedList<MatchData> matchList = new LinkedList<MatchData>();
+		for (int i = 0; i < ids.length; ++i) {
+			try {
+				String sql = "select * from matches where id = ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, Integer.parseInt(ids[i]));
+				result = pstmt.executeQuery();
+
+				while (result.next()) {
+
+					matchList.add(new MatchData.Builder(
+							result.getString("url"), result.getString("name"))
+							.id(result.getInt("id"))
+							.matchType(result.getString("matchType"))
+							.matchAddress(result.getString("matchAddress"))
+							.matchStartTime(result.getString("matchStartTime"))
+							.matchDeadline(result.getString("matchDeadline"))
+							.matchIntroduction(
+									result.getString("matchIntroduction"))
+							.build());
+					/*
+					 * result.getString("name"); result.getString("matchType");
+					 * result.getString("matchAddress");
+					 * result.getString("matchStartTime");
+					 * result.getString("matchDeadline");
+					 * result.getString("matchIntroduction");
+					 */
+				}
+				// jsonMatch.append("]}");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return matchList;
+	}
+	
+	public void publish(MatchData matchData,int userId){
+		//String sql1 = "update MATCHES set USERID=?, NAME=?,TYPE=?,BEGINTIME=?,ENDTIME=?,RULE=? where ID = ?";
+		String sql = "insert into MATCHES(USERID,NAME,TYPE,BEGINTIME,ENDTIME,RULE) values(?,?,?,?,?,?)";
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd") ;
+		Timestamp startTime = null ;
+		Timestamp deadline = null ;
+		try {
+			startTime = CommonUtils.ToTimestamp(sdf.parse(matchData.getMatchStartTime()));
+			deadline = CommonUtils.ToTimestamp(sdf.parse(matchData.getMatchDeadline())) ;
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, userId);
+			pstmt.setString(2, matchData.getName());
+			pstmt.setString(3, matchData.getMatchType());
+			pstmt.setTimestamp(4,startTime);
+			pstmt.setTimestamp(5,deadline );
+			pstmt.setString(6, matchData.getMatchIntroduction());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }
 
