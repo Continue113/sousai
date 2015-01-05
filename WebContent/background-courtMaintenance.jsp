@@ -67,11 +67,11 @@
        <div class="btn-group sort" role="group">
 		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current" data-orderbycol="name" data-isasc="true">排序方式</span><span class="caret"></span></button>
 		<ul class="dropdown-menu" role="menu">
-          <li><a href="javascript:void(0)" data-orderbycols="name" data-isasc="true">场地名称<i class="icon-arrow-up"></i></a></li> 
-          <li><a href="javascript:void(0)" data-orderbycols="matchType" data-isasc="true">比赛类型<i class="icon-arrow-up"></i></a></li> 
-          <li><a href="javascript:void(0)" data-orderbycols="addr" data-isasc="true">场地地址<i class="icon-arrow-up"></i></a></li> 
-          <li><a href="javascript:void(0)" data-orderbycols="relDate" data-isasc="true">发布时间<i class="icon-arrow-up"></i></a></li> 
-          <li><a href="javascript:void(0)" data-orderbycols="userName" data-isasc="true">发布用户<i class="icon-arrow-up"></i></a></li>
+          <li><a href="javascript:void(0)" data-orderbycol="name" data-isasc="true">场地名称<i class="icon-arrow-up"></i></a></li> 
+          <li><a href="javascript:void(0)" data-orderbycol="matchType" data-isasc="true">比赛类型<i class="icon-arrow-up"></i></a></li> 
+          <li><a href="javascript:void(0)" data-orderbycol="addr" data-isasc="true">场地地址<i class="icon-arrow-up"></i></a></li> 
+          <li><a href="javascript:void(0)" data-orderbycol="relDate" data-isasc="true">发布时间<i class="icon-arrow-up"></i></a></li> 
+          <li><a href="javascript:void(0)" data-orderbycol="userName" data-isasc="true">发布用户<i class="icon-arrow-up"></i></a></li>
 		</ul>
 	   </div>
 	    <div class="text-filter-box input-append"> 

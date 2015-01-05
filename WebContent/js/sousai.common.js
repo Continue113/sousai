@@ -251,18 +251,25 @@ $(function() {
 	rs = $("select.selectRows option:selected").val(),
 	crtPage = $("ul.pagination > li.active a").text(),
 	sc = $(".text-filter-box button .current").attr("data-strcolumns"),
-	ia = $(".text-filter-box input").val();
+	kv = $(".text-filter-box input").val();
   	
     if(sortflag==1){
           tempthis.find("i").removeClass("icon-arrow-up").addClass("icon-arrow-down");
           tempthis.find("a").attr("data-isasc",false);
-          aert($(".sort button .current").attr("data-orderbycol")+$(".sort button .current").attr("data-isasc"));
-          e(crtPage,rs,orderbycol,isasc,sc,ia);
+          $(".sort button .current").attr("data-orderbycol",orderbycol).attr("data-isasc",isasc);
+      	
+          alert($(".sort button .current").attr("data-orderbycol")+$(".sort button .current").attr("data-isasc"));
+        	alert(crtPage+" "+rs+" "+orderbycol+" "+isasc+" "+sc+" "+kv);
+          
+          e(crtPage,rs,orderbycol,isasc,sc,kv);
           sortflag=0;
       }else{
           tempthis.find("i").removeClass("icon-arrow-down").addClass("icon-arrow-up").attr("data-isasc",true);
-          aert($(".sort button .current").attr("data-orderbycol")+$(".sort button .current").attr("data-isasc"));
-          e(crtPage,rs,orderbycols,isasc,sc,ia);
+          tempthis.find("a").attr("data-isasc",true);
+          $(".sort button .current").attr("data-orderbycol",orderbycol).attr("data-isasc",isasc);
+          alert($(".sort button .current").attr("data-orderbycol")+$(".sort button .current").attr("data-isasc"));
+        	alert(crtPage+" "+rs+" "+orderbycol+" "+isasc+" "+sc+" "+kv);
+          e(crtPage,rs,orderbycol,isasc,sc,ia);
           sortflag=1;
       }
 	tempthis.parent().parent().find("button.dropdown-toggle > span.current").html(tempthis.find("a").html()).attr("data-orderbycol",orderbycol).attr("data-isasc",isasc);
@@ -276,8 +283,9 @@ $(function() {
 	rs = $("select.selectRows option:selected").val(),
 	crtPage = $("ul.pagination > li.active a").text(),
 	sc = $(".text-filter-box button .current").attr("data-strcolumns"),
-	ia = $(".text-filter-box input").val();
-  	e(crtPage,rs,orderbycol,isasc,sc,ia);
+	kv = $(".text-filter-box input").val();
+  	alert(crtPage+" "+rs+" "+orderbycol+" "+isasc+" "+sc+" "+kv);
+  	e(crtPage,rs,orderbycol,isasc,sc,kv);
   })
   
   //点击切换当前页数显式的条数
