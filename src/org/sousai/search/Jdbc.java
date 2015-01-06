@@ -175,21 +175,17 @@ public class Jdbc {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
 		Timestamp startTime = null;
 		Timestamp deadline = null;
-		System.out.println("hello");
-		System.out.println("hhh" + matchData.getName());
 		try {
 			startTime = CommonUtils.ToTimestamp(sdf.parse(matchData
 					.getMatchStartTime()));
 			deadline = CommonUtils.ToTimestamp(sdf.parse(matchData
 					.getMatchDeadline()));
-			System.out.println(matchData.getName());
 		} catch (ParseException e1) {
 			e1.printStackTrace();
 		}
 
 		try {
 			pstmt = conn.prepareStatement(sql);
-			System.out.println(matchData.getName());
 			pstmt.setInt(1, userId);
 			pstmt.setString(2, matchData.getName());
 			pstmt.setString(3, matchData.getMatchType());
