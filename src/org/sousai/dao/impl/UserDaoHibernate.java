@@ -1,15 +1,24 @@
 package org.sousai.dao.impl;
 
-
 import org.sousai.domain.*;
 import org.sousai.dao.*;
+import org.sousai.tools.CommonUtils;
 import org.sousai.tools.MyPrint;
+import org.sousai.vo.MatchBean;
 import org.sousai.vo.UserBean;
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 import java.util.List;
 
 public class UserDaoHibernate extends SqlHelper implements UserDao {
+	private final String selectUserBean = "select new org.sousai.vo.UserBean(u.id,u.name,u.email,u.type,u.regTime,u.lastLogTime) "
+			+ "from User u";
+
+	public UserDaoHibernate() {
+		super();
+	}
+
 	public User get(Integer id) {
 		return getHibernateTemplate().get(User.class, id);
 	}
@@ -35,10 +44,10 @@ public class UserDaoHibernate extends SqlHelper implements UserDao {
 	}
 
 	@Override
-	public void update(User user){
-		try{
-		getHibernateTemplate().update(user);
-		}catch(Exception e){
+	public void update(User user) {
+		try {
+			getHibernateTemplate().update(user);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -51,8 +60,7 @@ public class UserDaoHibernate extends SqlHelper implements UserDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserBean> findAll() {
-		String hql = "select new org.sousai.vo.UserBean(u.id,u.name,u.email,u.type,u.regTime,u.lastLogTime) "
-				+ "from User u";
+		String hql = selectUserBean;
 		Session session = getHibernateTemplate().getSessionFactory()
 				.getCurrentSession();
 		try {
@@ -85,9 +93,9 @@ public class UserDaoHibernate extends SqlHelper implements UserDao {
 		}
 		return null;
 	}
-	
+
 	@Override
-	public int countAllUser(){
+	public int countAllUser() {
 		String strHql = "select count(*) from User";
 		return count(strHql);
 	}
@@ -95,6 +103,50 @@ public class UserDaoHibernate extends SqlHelper implements UserDao {
 	@Override
 	public List<UserBean> findPagedAll(int currentPage, int rows) {
 		String strHql = "from User";
-		return (List<UserBean>) findPagedModelList_HQL(strHql, currentPage, rows);
+		return (List<UserBean>) findPagedModelList_HQL(strHql, currentPage,
+				rows);
+	}
+	@Override
+	public List<UserBean> findPagedByKeyValueOrderBy(String[] columns,
+			String keyValue, Integer currentPage, Integer rows,
+			String orderByCol, Boolean isAsc) throws Exception {
+		if (!CommonUtils.isNullOrEmpty(keyValue)) {
+			keyValue = " %" + keyValue + "% ";
+			int[] types = new int[columns.length];
+			String[] args = new String[columns.length];
+			for (int i = 0; i < columns.length; i++) {
+				types[i] = 2;
+				args[i] = keyValue;
+				// 加上court 别名c统一
+				columns[i] = " and c." + columns[i];
+			}
+			String strWhere = Append_String(" and ", types, columns,
+					args);
+			return findPagedByWhereOrderBy(strWhere, currentPage, rows, " c."
+					+ orderByCol, isAsc);
+		} else {
+			return findPagedByWhereOrderBy(null, currentPage, rows, " c."
+					+ orderByCol, isAsc);
+		}
+	}
+
+	private List<UserBean> findPagedByWhereOrderBy(String strWhere,
+			Integer currentPage, Integer rows, String orderByCol, Boolean isAsc)
+			throws Exception {
+		Session session = getHibernateTemplate().getSessionFactory()
+				.getCurrentSession();
+		String hql = selectUserBean;
+		if (!CommonUtils.isNullOrEmpty(strWhere)) {
+			hql += strWhere;
+		}
+		if (!CommonUtils.isNullOrEmpty(orderByCol)) {
+			hql = String.format("%1$s order by %2$s ", hql, orderByCol);
+			if (!CommonUtils.isNullOrEmpty(isAsc) && isAsc == false) {
+				hql += " DESC ";
+			}
+		}
+		Query q = session.createQuery(hql);
+		return (List<UserBean>) findPagedModelList_HQL(q,
+				currentPage, rows);
 	}
 }

@@ -14,6 +14,7 @@ public interface AdminManager {
 	 */
 	public List<MessageBean> getAllMessage();
 
+	public int countAllMessage() throws Exception;
 	/**
 	 * 获取所有场地
 	 * @param rows 
@@ -71,7 +72,19 @@ public interface AdminManager {
 	 * @return
 	 * @throws Exception
 	 */
-	List<CourtBean> findPagedByKeyValueOrderBy(String[] columns,
+	List<CourtBean> findPagedCourtByKeyValueOrderBy(String[] columns,
+			String keyValue, Integer currentPage, Integer rows,
+			String orderByCol, Boolean isAsc) throws Exception;
+	
+	List<MatchBean> findPagedMatchByKeyValueOrderBy(String[] columns,
+			String keyValue, Integer currentPage, Integer rows,
+			String orderByCol, Boolean isAsc) throws Exception;
+	
+	List<MessageBean> findPagedMesgByKeyValueOrderBy(String[] columns,
+			String keyValue, Integer currentPage, Integer rows,
+			String orderByCol, Boolean isAsc) throws Exception;
+	
+	List<UserBean> findPagedUserByKeyValueOrderBy(String[] columns,
 			String keyValue, Integer currentPage, Integer rows,
 			String orderByCol, Boolean isAsc) throws Exception;
 }

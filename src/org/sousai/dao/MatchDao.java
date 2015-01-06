@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.sousai.domain.*;
+import org.sousai.vo.CourtBean;
 import org.sousai.vo.MatchBean;
 
 public interface MatchDao {
@@ -92,4 +93,8 @@ public interface MatchDao {
 			int pageSize);
 
 	int countMatch();
+	
+	List<MatchBean> findPagedByKeyValueOrderBy(String[] columns,
+			String keyValue, Integer currentPage, Integer rows,
+			String orderByCol, Boolean isAsc) throws Exception;
 }

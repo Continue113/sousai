@@ -104,9 +104,35 @@ public class AdminManagerImpl implements AdminManager {
 	}
 
 	@Override
-	public List<CourtBean> findPagedByKeyValueOrderBy(String[] columns,
+	public List<CourtBean> findPagedCourtByKeyValueOrderBy(String[] columns,
 			String keyValue, Integer currentPage, Integer rows,
 			String orderByCol, Boolean isAsc) throws Exception {
 		return courtDao.findPagedByKeyValueOrderBy(columns, keyValue, currentPage, rows, orderByCol, isAsc);
+	}
+
+	@Override
+	public List<MatchBean> findPagedMatchByKeyValueOrderBy(String[] columns,
+			String keyValue, Integer currentPage, Integer rows,
+			String orderByCol, Boolean isAsc) throws Exception {
+		return matchDao.findPagedByKeyValueOrderBy(columns, keyValue, currentPage, rows, orderByCol, isAsc);
+	}
+
+	@Override
+	public List<MessageBean> findPagedMesgByKeyValueOrderBy(String[] columns,
+			String keyValue, Integer currentPage, Integer rows,
+			String orderByCol, Boolean isAsc) throws Exception {
+		return mesgDao.findPagedByKeyValueOrderBy(columns, keyValue, currentPage, rows, orderByCol, isAsc);
+	}
+
+	@Override
+	public List<UserBean> findPagedUserByKeyValueOrderBy(String[] columns,
+			String keyValue, Integer currentPage, Integer rows,
+			String orderByCol, Boolean isAsc) throws Exception {
+		return userDao.findPagedByKeyValueOrderBy(columns, keyValue, currentPage, rows, orderByCol, isAsc);
+	}
+
+	@Override
+	public int countAllMessage() throws Exception {
+		return mesgDao.countCourt();
 	}
 }

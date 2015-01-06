@@ -11,7 +11,9 @@ import org.hibernate.Session;
 import org.sousai.dao.MatchDao;
 import org.sousai.domain.Match;
 import org.sousai.domain.User;
+import org.sousai.tools.CommonUtils;
 import org.sousai.tools.MyPrint;
+import org.sousai.vo.CourtBean;
 import org.sousai.vo.MatchBean;
 
 public class MatchDaoHibernate extends SqlHelper implements MatchDao {
@@ -20,6 +22,11 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 			+ "m.beginTime,m.endTime,m.courtId,c.name,m.rule,m.relTime,"
 			+ "m.verify,m.score,m.userId,u.name) from Match m, Court c, User u "
 			+ "where m.courtId=c.id and u.id=m.userId ";
+
+
+	public MatchDaoHibernate() {
+		super();
+	}
 
 	@Override
 	public Match get(Integer id) {
@@ -299,10 +306,54 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 				"from Match where name like %1$s or rule like %1$s", keyValue);
 		return getPagedModelList_HQL(strHql, currentPage, pageSize);
 	}
-	
+
 	@Override
-	public int countMatch(){
+	public int countMatch() {
 		String strHql = "select count(*) from Match";
 		return count(strHql);
+	}
+
+	@Override
+	public List<MatchBean> findPagedByKeyValueOrderBy(String[] columns,
+			String keyValue, Integer currentPage, Integer rows,
+			String orderByCol, Boolean isAsc) throws Exception {
+		if (!CommonUtils.isNullOrEmpty(keyValue)) {
+			keyValue = " %" + keyValue + "% ";
+			int[] types = new int[columns.length];
+			String[] args = new String[columns.length];
+			for (int i = 0; i < columns.length; i++) {
+				types[i] = 2;
+				args[i] = keyValue;
+				// 加上court 别名c统一
+				columns[i] = " and c." + columns[i];
+			}
+			String strWhere = Append_String(" and ", types, columns,
+					args);
+			return findPagedByWhereOrderBy(strWhere, currentPage, rows, " c."
+					+ orderByCol, isAsc);
+		} else {
+			return findPagedByWhereOrderBy(null, currentPage, rows, " c."
+					+ orderByCol, isAsc);
+		}
+	}
+
+	private List<MatchBean> findPagedByWhereOrderBy(String strWhere,
+			Integer currentPage, Integer rows, String orderByCol, Boolean isAsc)
+			throws Exception {
+		Session session = getHibernateTemplate().getSessionFactory()
+				.getCurrentSession();
+		String hql = selectMatchBean;
+		if (!CommonUtils.isNullOrEmpty(strWhere)) {
+			hql += strWhere;
+		}
+		if (!CommonUtils.isNullOrEmpty(orderByCol)) {
+			hql = String.format("%1$s order by %2$s ", hql, orderByCol);
+			if (!CommonUtils.isNullOrEmpty(isAsc) && isAsc == false) {
+				hql += " DESC ";
+			}
+		}
+		Query q = session.createQuery(hql);
+		return (List<MatchBean>) findPagedModelList_HQL(q,
+				currentPage, rows);
 	}
 }

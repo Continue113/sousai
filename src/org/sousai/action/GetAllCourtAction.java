@@ -134,7 +134,7 @@ public class GetAllCourtAction extends UserBaseAction {
 			String[] columns = strColumns.split(",");
 			// List<CourtBean> list = cmg.findPagedAllCourtOrderBy(currentPage,
 			// rows, orderByCol, isAsc);
-			List<CourtBean> list = amg.findPagedByKeyValueOrderBy(columns,
+			List<CourtBean> list = amg.findPagedCourtByKeyValueOrderBy(columns,
 					keyValue, currentPage, rows, orderByCol, isAsc);
 			int count = amg.countAllCourt();
 			FrontMessage msg = new FrontMessage(list, count);

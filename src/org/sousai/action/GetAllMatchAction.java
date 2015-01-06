@@ -18,6 +18,66 @@ public class GetAllMatchAction extends UserBaseAction {
 
 	private Integer currentPage;
 	private Integer rows;
+	private String orderByCol;
+	private Boolean isAsc;
+	private String strColumns;
+	private String keyValue;
+
+	/**
+	 * @return the orderByCol
+	 */
+	public String getOrderByCol() {
+		return orderByCol;
+	}
+
+	/**
+	 * @param orderByCol the orderByCol to set
+	 */
+	public void setOrderByCol(String orderByCol) {
+		this.orderByCol = orderByCol;
+	}
+
+	/**
+	 * @return the isAsc
+	 */
+	public Boolean getIsAsc() {
+		return isAsc;
+	}
+
+	/**
+	 * @param isAsc the isAsc to set
+	 */
+	public void setIsAsc(Boolean isAsc) {
+		this.isAsc = isAsc;
+	}
+
+	/**
+	 * @return the strColumns
+	 */
+	public String getStrColumns() {
+		return strColumns;
+	}
+
+	/**
+	 * @param strColumns the strColumns to set
+	 */
+	public void setStrColumns(String strColumns) {
+		this.strColumns = strColumns;
+	}
+
+	/**
+	 * @return the keyValue
+	 */
+	public String getKeyValue() {
+		return keyValue;
+	}
+
+	/**
+	 * @param keyValue the keyValue to set
+	 */
+	public void setKeyValue(String keyValue) {
+		this.keyValue = keyValue;
+	}
 
 	/**
 	 * @return the currentPage
@@ -67,7 +127,8 @@ public class GetAllMatchAction extends UserBaseAction {
 			if (rows == null) {
 				rows = 25;
 			}
-			List<MatchBean> list = amg.getAllMatch(currentPage, rows);
+			String[] columns = strColumns.split(",");
+			List<MatchBean> list = amg.findPagedMatchByKeyValueOrderBy(columns, keyValue, currentPage, rows, orderByCol, isAsc);
 			int count = amg.countAllMatch();
 			FrontMessage msg = new FrontMessage(list, count);
 			if (list != null) {

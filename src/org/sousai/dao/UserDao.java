@@ -3,6 +3,7 @@ package org.sousai.dao;
 import java.util.*;
 
 import org.sousai.domain.*;
+import org.sousai.vo.CourtBean;
 import org.sousai.vo.UserBean;
 
 public interface UserDao {
@@ -61,5 +62,19 @@ public interface UserDao {
 	User findByName(String name);
 	
 	int countAllUser();
-
+	
+	/**
+	 * 
+	 * @param columns
+	 * @param keyValue
+	 * @param currentPage
+	 * @param rows
+	 * @param orderByCol
+	 * @param isAsc
+	 * @return
+	 * @throws Exception
+	 */
+	List<UserBean> findPagedByKeyValueOrderBy(String[] columns,
+			String keyValue, Integer currentPage, Integer rows,
+			String orderByCol, Boolean isAsc) throws Exception;
 }

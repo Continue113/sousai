@@ -28,26 +28,9 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 			+ "c.userId,u.name) "
 			+ "from Court c, CourtType ct, User u "
 			+ "where c.courtTypeId=ct.id and c.userId=u.id ";
-	private SqlHelper sqlHelper;
 
 	public CourtDaoHibernate() {
 		super();
-		sqlHelper = new SqlHelper();
-	}
-
-	/**
-	 * @return the sqlHelper
-	 */
-	public SqlHelper getSqlHelper() {
-		return sqlHelper;
-	}
-
-	/**
-	 * @param sqlHelper
-	 *            the sqlHelper to set
-	 */
-	public void setSqlHelper(SqlHelper sqlHelper) {
-		this.sqlHelper = sqlHelper;
 	}
 
 	@Override
@@ -135,7 +118,7 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 	}
 
 	private List<CourtBean> extracted(Query q, Integer currentPage, Integer rows) {
-		return (List<CourtBean>) sqlHelper.findPagedModelList_HQL(q,
+		return (List<CourtBean>) findPagedModelList_HQL(q,
 				currentPage, rows);
 	}
 
@@ -264,7 +247,7 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 				// 加上court 别名c统一
 				columns[i] = " and c." + columns[i];
 			}
-			String strWhere = sqlHelper.Append_String(" and ", types, columns,
+			String strWhere = Append_String(" and ", types, columns,
 					args);
 			return findPagedByWhereOrderBy(strWhere, currentPage, rows, " c."
 					+ orderByCol, isAsc);
