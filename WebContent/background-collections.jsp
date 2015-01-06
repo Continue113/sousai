@@ -17,6 +17,10 @@
   <![endif]-->
   <style>
   .table .match-from > a:first-child {width: 200px;}
+  /** 编辑比赛 按钮bar  **/
+  .editMatch > .btnbar {margin-left: 0;}
+  /** 编辑比赛按钮bar 中的按钮  **/
+  .editMatch > .btnbar > .btn {float: right;margin-left: 10px;}  
   /** 排序下拉按钮 **/
   .panel-top > .btn-group {margin-top: -10px;}
   </style>
@@ -60,27 +64,27 @@
       <div id="collectionLists"> 
        <!-- panel --> 
        <div class="panel-top">
-       <div class="btn-group" role="group">
-		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current">排序方式</span><span class="caret"></span></button>
+       <div class="btn-group sort" role="group">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current" data-orderbycol="name" data-isasc="true">排序方式</span><span class="caret"></span></button>
 		<ul class="dropdown-menu" role="menu">
-          <li><a href="javascript:void(0)">比赛名称<i class="icon-arrow-up"></i></a></li> 
-          <li><a href="javascript:void(0)">比赛时间<i class="icon-arrow-up"></i></a></li> 
-          <li><a href="javascript:void(0)">比赛场地<i class="icon-arrow-up"></i></a></li> 
-          <li><a href="javascript:void(0)">网站来源<i class="icon-arrow-up"></i></a></li>
+          <li><a href="javascript:void(0)" data-orderbycol="name" data-isasc="true">比赛名称<i class="icon-arrow-up"></i></a></li> 
+          <li><a href="javascript:void(0)" data-orderbycol="matchStartTime" data-isasc="true">比赛时间<i class="icon-arrow-up"></i></a></li> 
+          <li><a href="javascript:void(0)" data-orderbycol="matchAddress" data-isasc="true">比赛场地<i class="icon-arrow-up"></i></a></li> 
+          <li><a href="javascript:void(0)" data-orderbycol="url" data-isasc="true">网站来源<i class="icon-arrow-up"></i></a></li>
 		</ul>
 	   </div>
 	    <div class="text-filter-box input-append"> 
          <input type="text" class="span2" placeholder="请输入关键字"/> 
          <div class="btn-group" role="group">
-		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current">比赛名称</span><span class="caret"></span></button>
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current" data-strcolumns="name">比赛名称</span><span class="caret"></span></button>
 		<ul class="dropdown-menu" role="menu">
-			<li><a href="javascript:void(0)">比赛名称</a></li>
-			<li><a href="javascript:void(0)">比赛时间</a></li>
-			<li><a href="javascript:void(0)">比赛场地</a></li>
-			<li><a href="javascript:void(0)">网站来源</a></li>
+			<li><a href="javascript:void(0)" data-strcolumns="name">比赛名称</a></li>
+			<li><a href="javascript:void(0)" data-strcolumns="matchStartTime">比赛时间</a></li>
+			<li><a href="javascript:void(0)" data-strcolumns="matchAddress">比赛场地</a></li>
+			<li><a href="javascript:void(0)" data-strcolumns="url">网站来源</a></li>
 		</ul>
 	   	</div>
-	   	<button class="btn" type="button">搜索</button>
+	   	<button class="btn" type="button" id="textFilterBoxSearchButton">搜索</button>
          <!-- <span class="add-on"><i class="icon-search"></i></span> -->
         </div> 
         <select class="select selectRows span1"><option value=10>10条/页</option><option value=2>2条/页</option><option value=5>5条/页</option></select>
@@ -251,13 +255,13 @@
   </script>
   <script>
   //定义函数
-  function e(crtPage,rs){
+  function e(crtPage,rs,obc,ia,sc,kv){
   	$("#ajaxState .load").show();console.log("start");
     $.ajax({
       type: "POST",
       url: "backgroundCollections",
       contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-      data: {currentPage:crtPage,rows:rs},
+      data: {currentPage:crtPage,rows:rs,orderByCol:obc,isAsc:ia,strColumns:sc,keyValue:kv},
       dataType: "json",
       success: function(data) {
     	  //console.log(data);sousaiRemindDialog(data);

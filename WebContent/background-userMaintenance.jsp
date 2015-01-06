@@ -63,29 +63,29 @@
       <div id="userMaintenance">
        <!-- panel --> 
        <div class="panel-top">
-       <div class="btn-group" role="group">
-		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current">排序方式</span><span class="caret"></span></button>
+       <div class="btn-group sort" role="group">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current" data-orderbycol="name" data-isasc="true">排序方式</span><span class="caret"></span></button>
 		<ul class="dropdown-menu" role="menu">
-          <li><a href="javascript:void(0)">用户名<i class="icon-arrow-up"></i></a></li> 
-          <li><a href="javascript:void(0)">注册邮箱<i class="icon-arrow-up"></i></a></li> 
-          <li><a href="javascript:void(0)">注册时间<i class="icon-arrow-up"></i></a></li> 
-          <li><a href="javascript:void(0)">登录次数<i class="icon-arrow-up"></i></a></li> 
-          <li><a href="javascript:void(0)">比赛发布<i class="icon-arrow-up"></i></a></li> 
-          <li><a href="javascript:void(0)">场地发布<i class="icon-arrow-up"></i></a></li>
+          <li><a href="javascript:void(0)" data-orderbycol="name" data-isasc="true">用户名<i class="icon-arrow-up"></i></a></li> 
+          <li><a href="javascript:void(0)" data-orderbycol="email" data-isasc="true">注册邮箱<i class="icon-arrow-up"></i></a></li> 
+          <li><a href="javascript:void(0)" data-orderbycol="regTime" data-isasc="true">注册时间<i class="icon-arrow-up"></i></a></li> 
+          <li><a href="javascript:void(0)" data-orderbycol="loginNumber" data-isasc="true">登录次数<i class="icon-arrow-up"></i></a></li> 
+          <li><a href="javascript:void(0)" data-orderbycol="matchNumber" data-isasc="true">比赛发布<i class="icon-arrow-up"></i></a></li> 
+          <li><a href="javascript:void(0)" data-orderbycol="courtNumber" data-isasc="true">场地发布<i class="icon-arrow-up"></i></a></li>
 		</ul>
 	   </div>
 	    <div class="text-filter-box input-append"> 
          <input type="text" class="span2" placeholder="请输入关键字"/> 
          <div class="btn-group" role="group">
-		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current">用户名</span><span class="caret"></span></button>
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current" data-strcolumns="name">用户名</span><span class="caret"></span></button>
 		<ul class="dropdown-menu" role="menu">
-			<li><a href="javascript:void(0)">用户名</a></li>
-			<li><a href="javascript:void(0)">注册邮箱</a></li>
-			<li><a href="javascript:void(0)">注册时间</a></li>
-			<li><a href="javascript:void(0)">IP地域</a></li>
+			<li><a href="javascript:void(0)" data-strcolumns="name">用户名</a></li>
+			<li><a href="javascript:void(0)" data-strcolumns="email">注册邮箱</a></li>
+			<li><a href="javascript:void(0)" data-strcolumns="regTime">注册时间</a></li>
+			<li><a href="javascript:void(0)" data-strcolumns="IP">常用IP</a></li>
 		</ul>
 	   	</div>
-	   	<button class="btn" type="button">搜索</button>
+	   	<button class="btn" type="button" id="textFilterBoxSearchButton">搜索</button>
          <!-- <span class="add-on"><i class="icon-search"></i></span> -->
         </div>   
         <select class="select selectRows span1"><option value=25>25条/页</option><option value=40>40条/页</option><option value=50>50条/页</option></select>
@@ -198,13 +198,13 @@
   </script>
   <script>
   //定义函数
-	function e(crtPage,rs){
+	function e(crtPage,rs,obc,ia,sc,kv){
 		$("#ajaxState .load").show();console.log("start");
 	    $.ajax({
 	        type: "POST",
 	        url: "getAllUser",
 	        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-	        data: {currentPage:crtPage,rows:rs},
+	        data: {currentPage:crtPage,rows:rs,orderByCol:obc,isAsc:ia,strColumns:sc,keyValue:kv},
 	        dataType: "json",
 	        success: function(data) {
 	        	  var target = $(".userTable > tbody"),template = Handlebars.compile($('#user-template').html());
@@ -237,7 +237,7 @@
   
   $(function(){
 	//ajax接受所有的用户 默认为25条每页
-	e(1,25);
+	e(1,25,"name",true,"name","");
     //点击编辑用户隐藏List列表同时显示编辑用户
     $("tbody").on("click",".user-oprate > a",function(event){
         var datainfo = $(this).parent().parent().attr("data-info"), target=$(".editUser");

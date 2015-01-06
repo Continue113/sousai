@@ -164,9 +164,9 @@
   //搜索栏模糊搜索
 	function search(){
 	  	$("#ajaxState .load").show();console.log("start");
-	    var url = window.location.search;
-	    var loc = url.substring(url.lastIndexOf('=')+1, url.length);
-		var crtPage = 1,rs = 1,kv = loc;
+	    var url = window.location.search,
+	    loc = url.substring(url.lastIndexOf('=')+1, url.length),
+		crtPage = 1,rs = 25,kv = loc;
 	      $.ajax({
 	          type: "POST",
 	          url: "searchMatch",
@@ -202,26 +202,7 @@
 	            sousaiRemindDialog("抱歉。ajax错误。");
 	          },
 	        });
-	}
-  function e(crtPage,rs){
-		$.post("getAllMatch", null, function(data) {
-		      console.log(data);//sousaiRemindDialog(data);
-		      var target = $(".matchBoxs"),template = Handlebars.compile($('#match-template').html());
-		      Handlebars.registerHelper("data",function(v){
-		    	  //将当前对象转化为字符串，保存在data-info中
-		    	  console.log(v);
-		    	  var v1 = JSON.stringify(v);
-		    	  //console.log("v1:"+v1);
-		    	  return v1;
-		      });
-		      target.empty(); //清空tbody
-	    	  target.html(template(data));
-	    	    //字数限制，溢出省略
-	    	    $(".matchBox-court").wordLimit(20);
-	    	    $(".matchBox-info > a").wordLimit(28);
-		    });
-  }
-  
+	}  
   $(function(){
 	//搜索栏模糊搜索
 	search();
