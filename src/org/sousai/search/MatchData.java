@@ -8,9 +8,11 @@ public class MatchData implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	// 比赛基本信息
-	private int id = 0 ;
+	private int id = 0;
 	private String url = null; // 比赛信息源地址
 	private String sponsor = null; // 发起人
+	private int courtId = 0; // 场地id
+	private String publishTime = null; // 比赛发布时间
 	private String name = null; // 比赛名称
 	private String matchType = null; // 比赛类型
 	private String matchAddress = null; // 比赛地点
@@ -22,9 +24,11 @@ public class MatchData implements Serializable {
 
 	public static class Builder {
 		// 比赛基本信息
-		private int id = 0 ;
+		private int id = 0;
 		private String url = null; // 比赛信息源地址
 		private String sponsor = null; // 发起人
+		private int courtId = 0; // 场地id
+		private String publishTime = null; // 比赛发布时间
 		private String name = null; // 比赛名称
 		private String matchType = null; // 比赛类型
 		private String matchAddress = null; // 比赛地点
@@ -38,14 +42,24 @@ public class MatchData implements Serializable {
 			this.url = url;
 			this.name = name;
 		}
-		
-		public Builder id(int id){
-			this.id = id ;
-			return this ;
+
+		public Builder id(int id) {
+			this.id = id;
+			return this;
 		}
 
 		public Builder sponsor(String sponsor) {
 			this.sponsor = sponsor;
+			return this;
+		}
+
+		public Builder courtId(int courtId) {
+			this.courtId = courtId;
+			return this;
+		}
+
+		public Builder publishTime(String publishTime) {
+			this.publishTime = publishTime;
 			return this;
 		}
 
@@ -69,7 +83,6 @@ public class MatchData implements Serializable {
 			return this;
 		}
 
-
 		public Builder matchIntroduction(String matchIntroduction) {
 			this.matchIntroduction = matchIntroduction;
 			return this;
@@ -80,21 +93,23 @@ public class MatchData implements Serializable {
 		}
 	}
 
-	public MatchData(){
+	public MatchData() {
 	}
-	
+
 	private MatchData(Builder builder) {
-		id = builder.id ;
+		id = builder.id;
 		url = builder.url;
 		name = builder.name;
 		sponsor = builder.sponsor;
+		courtId = builder.courtId;
+		publishTime = builder.publishTime;
 		matchType = builder.matchType;
 		matchAddress = builder.matchAddress;
 		matchStartTime = builder.matchStartTime;
 		matchDeadline = builder.matchDeadline;
 		matchIntroduction = builder.matchIntroduction;
 	}
-	
+
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -105,6 +120,22 @@ public class MatchData implements Serializable {
 
 	public void setSponsor(String sponsor) {
 		this.sponsor = sponsor;
+	}
+
+	public int getCourtId() {
+		return courtId;
+	}
+
+	public void setCourtId(int courtId) {
+		this.courtId = courtId;
+	}
+
+	public String getPublishTime() {
+		return publishTime;
+	}
+
+	public void setPublishTime(String publishTime) {
+		this.publishTime = publishTime;
 	}
 
 	public void setName(String name) {
@@ -131,8 +162,8 @@ public class MatchData implements Serializable {
 		this.matchIntroduction = matchIntroduction;
 	}
 
-	public int getId(){
-		return id ;
+	public int getId() {
+		return id;
 	}
 
 	public String getUrl() {
@@ -163,14 +194,16 @@ public class MatchData implements Serializable {
 		return matchDeadline;
 	}
 
-
 	public String getMatchIntroduction() {
 		return matchIntroduction;
 	}
 
+	@Override
 	public String toString() {
-		return url + "\n" + name +"\n" + matchType + "\n"
-				+ matchAddress + "\n" + matchStartTime + "\n" + matchDeadline
-				+ "\n" + matchIntroduction;
+		return "MatchData [id=" + id + ", url=" + url + ", courtId=" + courtId
+				+ ", publishTime=" + publishTime + ", name=" + name
+				+ ", matchType=" + matchType + ", matchStartTime="
+				+ matchStartTime + ", matchDeadline=" + matchDeadline
+				+ ", matchIntroduction=" + matchIntroduction + "]";
 	}
 }

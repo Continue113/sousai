@@ -212,9 +212,12 @@ public class Jdbc {
 			result = pstmt.executeQuery();
 
 			while (result.next()) {
-				// NAME,TYPE,BEGINTIME,ENDTIME,RULE
+				// ID,NAME,TYPE,BEGINTIME,ENDTIME,RULE,RELTIME,COURTID
 				matchList.add(new MatchData.Builder(null, result
-						.getString("NAME")).matchType(result.getString("TYPE"))
+						.getString("NAME")).id(result.getInt("ID"))
+						.courtId(result.getInt("COURTID"))
+						.publishTime(result.getString("RELTIME"))
+						.matchType(result.getString("TYPE"))
 						.matchStartTime(result.getString("BEGINTIME"))
 						.matchDeadline(result.getString("ENDTIME"))
 						.matchIntroduction(result.getString("RULE")).build());
