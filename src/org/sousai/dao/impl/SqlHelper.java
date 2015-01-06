@@ -112,7 +112,7 @@ public class SqlHelper extends HibernateDaoSupport {
 	private String AssembleLikeStatement(String column, String arg)
 			throws Exception {
 		try {
-			return String.format(" %1$s like '%2$s'", column, arg);
+			return String.format(" %1$s binary like '%2$s'", column, arg);
 		} catch (Exception e) {
 			throw e;
 		}
