@@ -122,15 +122,7 @@ public class Jdbc {
 						.matchDeadline(result.getString("matchDeadline"))
 						.matchIntroduction(
 								result.getString("matchIntroduction")).build());
-				/*
-				 * result.getString("name"); result.getString("matchType");
-				 * result.getString("matchAddress");
-				 * result.getString("matchStartTime");
-				 * result.getString("matchDeadline");
-				 * result.getString("matchIntroduction");
-				 */
 			}
-			// jsonMatch.append("]}");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -156,7 +148,6 @@ public class Jdbc {
 
 					matchList.add(new MatchData.Builder(
 							result.getString("url"), result.getString("name"))
-							.id(result.getInt("id"))
 							.matchType(result.getString("matchType"))
 							.matchAddress(result.getString("matchAddress"))
 							.matchStartTime(result.getString("matchStartTime"))
@@ -164,15 +155,8 @@ public class Jdbc {
 							.matchIntroduction(
 									result.getString("matchIntroduction"))
 							.build());
-					/*
-					 * result.getString("name"); result.getString("matchType");
-					 * result.getString("matchAddress");
-					 * result.getString("matchStartTime");
-					 * result.getString("matchDeadline");
-					 * result.getString("matchIntroduction");
-					 */
+
 				}
-				// jsonMatch.append("]}");
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {
@@ -185,27 +169,32 @@ public class Jdbc {
 		}
 		return matchList;
 	}
-	
-	public void publish(MatchData matchData,int userId){
+
+	public void publish(MatchData matchData, int userId) {
 		String sql = "insert into MATCHES(USERID,NAME,TYPE,BEGINTIME,ENDTIME,RULE) values(?,?,?,?,?,?)";
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd") ;
-		Timestamp startTime = null ;
-		Timestamp deadline = null ;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+		Timestamp startTime = null;
+		Timestamp deadline = null;
+		System.out.println("hello");
+		System.out.println("hhh" + matchData.getName());
 		try {
-			startTime = CommonUtils.ToTimestamp(sdf.parse(matchData.getMatchStartTime()));
-			deadline = CommonUtils.ToTimestamp(sdf.parse(matchData.getMatchDeadline())) ;
+			startTime = CommonUtils.ToTimestamp(sdf.parse(matchData
+					.getMatchStartTime()));
+			deadline = CommonUtils.ToTimestamp(sdf.parse(matchData
+					.getMatchDeadline()));
+			System.out.println(matchData.getName());
 		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
+
 		try {
 			pstmt = conn.prepareStatement(sql);
+			System.out.println(matchData.getName());
 			pstmt.setInt(1, userId);
 			pstmt.setString(2, matchData.getName());
 			pstmt.setString(3, matchData.getMatchType());
-			pstmt.setTimestamp(4,startTime);
-			pstmt.setTimestamp(5,deadline );
+			pstmt.setTimestamp(4, startTime);
+			pstmt.setTimestamp(5, deadline);
 			pstmt.setString(6, matchData.getMatchIntroduction());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -217,6 +206,33 @@ public class Jdbc {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public LinkedList<MatchData> selectToday() {
+		LinkedList<MatchData> matchList = new LinkedList<MatchData>();
+		try {
+			String sql = "select * from MATCHES where date(RELTIME) = curdate()";
+			pstmt = conn.prepareStatement(sql);
+			result = pstmt.executeQuery();
+
+			while (result.next()) {
+				// NAME,TYPE,BEGINTIME,ENDTIME,RULE
+				matchList.add(new MatchData.Builder(null, result
+						.getString("NAME")).matchType(result.getString("TYPE"))
+						.matchStartTime(result.getString("BEGINTIME"))
+						.matchDeadline(result.getString("ENDTIME"))
+						.matchIntroduction(result.getString("RULE")).build());
+			}
+		} catch (SQLException e) {
+			System.out.println(e);
+		} finally {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+				System.out.println(e);
+			}
+		}
+		return matchList;
 	}
 }
 
@@ -236,8 +252,6 @@ class JdbcMySqlUtil {
 
 	public static Connection getConnection() throws SQLException {
 		// 2.得到连接
-		// Connection conn =
-		// DriverManager.getConnection("jdbc:mysql://localhost:3306/sousai?user=root&password=root");
 		Connection conn = DriverManager
 				.getConnection(
 						"jdbc:mysql://localhost:3306/SOUSAI?useUnicode=true&characterEncoding=UTF-8",

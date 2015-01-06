@@ -30,7 +30,6 @@ public class MatchData implements Serializable {
 		private String matchAddress = null; // 比赛地点
 		private String matchStartTime = null; // 比赛开始时间
 		private String matchDeadline = null; // 截止日期
-		private String peopleNum = null; // 比赛人数
 
 		// html+css文件内容
 		private String matchIntroduction = null; // 比赛简介
@@ -70,10 +69,6 @@ public class MatchData implements Serializable {
 			return this;
 		}
 
-		public Builder peopleNum(String peopleNum) {
-			this.peopleNum = peopleNum;
-			return this;
-		}
 
 		public Builder matchIntroduction(String matchIntroduction) {
 			this.matchIntroduction = matchIntroduction;
@@ -174,7 +169,7 @@ public class MatchData implements Serializable {
 	}
 
 	public String toString() {
-		return url + "\n" + name + "\n" + sponsor + "\n" + matchType + "\n"
+		return url + "\n" + name +"\n" + matchType + "\n"
 				+ matchAddress + "\n" + matchStartTime + "\n" + matchDeadline
 				+ "\n" + matchIntroduction;
 	}
