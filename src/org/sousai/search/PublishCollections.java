@@ -23,20 +23,21 @@ public class PublishCollections {
 
 	public String publishCollections() {
 		String[] collectionIds = collectionId.split(",");
-		try {
-			LinkedList<MatchData> matchList = new Jdbc().selectFromIds(collectionIds);
-			Jdbc publishJdbc = new Jdbc() ;
-			User tempUser = new User((UserBean) ActionContext.getContext()
-					.getSession().get("userBean"));
-			int userId = tempUser.getId() ;
-			for(int i=0;i<matchList.size();++i){
-				publishJdbc.publish(matchList.get(i),userId);
-			}
-			JSONUtils.toJson(ServletActionContext.getResponse(), Constant.SUCCESS);
-		} catch (Exception e) {
-			JSONUtils.toJson(ServletActionContext.getResponse(), Constant.ERROR);
+		LinkedList<MatchData> matchList = new Jdbc()
+				.selectFromIds(collectionIds);
+		Jdbc publishJdbc = new Jdbc();
+		int userId = 0 ;
+		try{
+		User tempUser = new User((UserBean) ActionContext.getContext()
+				.getSession().get("userBean"));
+		userId = tempUser.getId();
+		}catch(Exception e){
 			System.out.println(e);
 		}
+		for (int i = 0; i < matchList.size(); ++i) {
+			publishJdbc.publish(matchList.get(i), userId);
+		}
+		JSONUtils.toJson(ServletActionContext.getResponse(), Constant.SUCCESS);
 		return null;
 	}
 }
