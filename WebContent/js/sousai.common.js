@@ -258,16 +258,14 @@ $(function() {
     if(sortflag==1){
           tempthis.find("i").removeClass("icon-arrow-up").addClass("icon-arrow-down");
           tempthis.find("a").attr("data-isasc",false);
-        	alert(crtPage+" "+rs+" "+orderbycol+" "+isasc+" "+sc+" "+kv);
-          e(crtPage,rs,orderbycol,isasc,sc,kv);
           sortflag=0;
       }else{
           tempthis.find("i").removeClass("icon-arrow-down").addClass("icon-arrow-up").attr("data-isasc",true);
           tempthis.find("a").attr("data-isasc",true);
-        	alert(crtPage+" "+rs+" "+orderbycol+" "+isasc+" "+sc+" "+kv);
-          e(crtPage,rs,orderbycol,isasc,sc,kv);
           sortflag=1;
       }
+	alert(crtPage+" "+rs+" "+orderbycol+" "+isasc+" "+sc+" "+kv);
+    e(crtPage,rs,orderbycol,isasc,sc,kv);
   });
   //点击搜索类别
   $(".text-filter-box li").click(function(){
@@ -289,8 +287,13 @@ $(function() {
   //点击切换当前页数显式的条数
 	$("select.selectRows").change(function(){
 		var rs = $("select.selectRows option:selected").val(),
-		crtPage = 1; //每次点击改变条数都从第一页开始；parseInt($("ul.pagination > li.active").text()) || 1; //若当前页数为空则默认为第一页
-		e(crtPage,rs);
+		crtPage = 1, //每次点击改变条数都从第一页开始；parseInt($("ul.pagination > li.active").text()) || 1; //若当前页数为空则默认为第一页
+	  	orderbycol = $(".sort button .current").attr("data-orderbycol"), 
+		isasc = $(".sort button .current").attr("data-isasc"),
+		sc = $(".text-filter-box button .current").attr("data-strcolumns"),
+		kv = $(".text-filter-box input").val();
+	  	alert(crtPage+" "+rs+" "+orderbycol+" "+isasc+" "+sc+" "+kv);
+	  	e(crtPage,rs,orderbycol,isasc,sc,kv);
 	});
   
 });
