@@ -187,7 +187,6 @@ public class Jdbc {
 	}
 	
 	public void publish(MatchData matchData,int userId){
-		//String sql1 = "update MATCHES set USERID=?, NAME=?,TYPE=?,BEGINTIME=?,ENDTIME=?,RULE=? where ID = ?";
 		String sql = "insert into MATCHES(USERID,NAME,TYPE,BEGINTIME,ENDTIME,RULE) values(?,?,?,?,?,?)";
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd") ;
 		Timestamp startTime = null ;
