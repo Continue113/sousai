@@ -93,7 +93,7 @@ public class MesgDaoHibernate extends SqlHelper implements MesgDao {
 				types[i] = 2;
 				args[i] = keyValue;
 				if (columns[i].equals("courtName")) {
-					columns[i] = " and c." + columns[i];
+					columns[i] = " and c.name";
 				} else {
 					columns[i] = " and m." + columns[i];
 				}

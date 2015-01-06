@@ -326,9 +326,11 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 			for (int i = 0; i < columns.length; i++) {
 				types[i] = 2;
 				args[i] = keyValue;
-				// 加上 别名 
+				// 加上 别名
 				if (columns[i].equals("userName")) {
 					columns[i] = " and u.name";
+				} else if (columns[i].equals("courtName")) {
+					columns[i] = " and c.name";
 				} else {
 					columns[i] = " and m." + columns[i];
 				}
