@@ -117,15 +117,15 @@ public class UserDaoHibernate extends SqlHelper implements UserDao {
 			for (int i = 0; i < columns.length; i++) {
 				types[i] = 2;
 				args[i] = keyValue;
-				// 加上court 别名c统一
-				columns[i] = " and c." + columns[i];
+				// 加上 别名 统一
+				columns[i] = " and u." + columns[i];
 			}
 			String strWhere = Append_String(" and ", types, columns,
 					args);
-			return findPagedByWhereOrderBy(strWhere, currentPage, rows, " c."
+			return findPagedByWhereOrderBy(strWhere, currentPage, rows, " u."
 					+ orderByCol, isAsc);
 		} else {
-			return findPagedByWhereOrderBy(null, currentPage, rows, " c."
+			return findPagedByWhereOrderBy(null, currentPage, rows, " u."
 					+ orderByCol, isAsc);
 		}
 	}

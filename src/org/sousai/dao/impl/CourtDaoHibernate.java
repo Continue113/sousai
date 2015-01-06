@@ -118,8 +118,7 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 	}
 
 	private List<CourtBean> extracted(Query q, Integer currentPage, Integer rows) {
-		return (List<CourtBean>) findPagedModelList_HQL(q,
-				currentPage, rows);
+		return (List<CourtBean>) findPagedModelList_HQL(q, currentPage, rows);
 	}
 
 	@Override
@@ -245,10 +244,13 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 				types[i] = 2;
 				args[i] = keyValue;
 				// 加上court 别名c统一
-				columns[i] = " and c." + columns[i];
+				if (columns[i].equals("userName")) {
+					columns[i] = " and u.name";
+				} else {
+					columns[i] = " and c." + columns[i];
+				}
 			}
-			String strWhere = Append_String(" and ", types, columns,
-					args);
+			String strWhere = Append_String(" and ", types, columns, args);
 			return findPagedByWhereOrderBy(strWhere, currentPage, rows, " c."
 					+ orderByCol, isAsc);
 		} else {

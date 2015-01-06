@@ -23,7 +23,6 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 			+ "m.verify,m.score,m.userId,u.name) from Match m, Court c, User u "
 			+ "where m.courtId=c.id and u.id=m.userId ";
 
-
 	public MatchDaoHibernate() {
 		super();
 	}
@@ -145,10 +144,13 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 	@Override
 	public List<MatchBean> findByMarkingUserId(Integer userId, int currentPage,
 			int rows) {
-		String hql = "select new org.sousai.vo.MatchBean(m.id,m.name,m.type,"
-				+ "m.beginTime,m.endTime,m.courtId,c.name,m.rule,m.relTime,"
-				+ "m.verify,m.score,m.userId,u.name) from Match m, Court c, User u, Usermark um "
-				+ "where m.courtId=c.id and u.id=m.userId and um.UserId=? and m.id=um.matchId";
+		// String hql = "select new org.sousai.vo.MatchBean(m.id,m.name,m.type,"
+		// + "m.beginTime,m.endTime,m.courtId,c.name,m.rule,m.relTime,"
+		// +
+		// "m.verify,m.score,m.userId,u.name) from Match m, Court c, User u, Usermark um "
+		// +
+		// "where m.courtId=c.id and u.id=m.userId and um.UserId=? and m.id=um.matchId";
+		String hql = selectMatchBean;
 		Session session = getHibernateTemplate().getSessionFactory()
 				.getCurrentSession();
 		try {
@@ -324,15 +326,18 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 			for (int i = 0; i < columns.length; i++) {
 				types[i] = 2;
 				args[i] = keyValue;
-				// 加上court 别名c统一
-				columns[i] = " and c." + columns[i];
+				// 加上 别名 
+				if (columns[i].equals("userName")) {
+					columns[i] = " and u.name";
+				} else {
+					columns[i] = " and m." + columns[i];
+				}
 			}
-			String strWhere = Append_String(" and ", types, columns,
-					args);
-			return findPagedByWhereOrderBy(strWhere, currentPage, rows, " c."
+			String strWhere = Append_String(" and ", types, columns, args);
+			return findPagedByWhereOrderBy(strWhere, currentPage, rows, " m."
 					+ orderByCol, isAsc);
 		} else {
-			return findPagedByWhereOrderBy(null, currentPage, rows, " c."
+			return findPagedByWhereOrderBy(null, currentPage, rows, " m."
 					+ orderByCol, isAsc);
 		}
 	}
@@ -353,7 +358,6 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 			}
 		}
 		Query q = session.createQuery(hql);
-		return (List<MatchBean>) findPagedModelList_HQL(q,
-				currentPage, rows);
+		return (List<MatchBean>) findPagedModelList_HQL(q, currentPage, rows);
 	}
 }

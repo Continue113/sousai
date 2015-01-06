@@ -17,7 +17,6 @@ public class MesgDaoHibernate extends SqlHelper implements MesgDao {
 	private final String selectMesgBean = "select new org.sousai.vo.MessageBean(m.id,m.parentId,m.rootId,m.userId,m.courtId,m.time,m.mesg,m.userName,c.name) "
 			+ "from Message m, Court c where m.courtId=c.id";
 
-
 	public MesgDaoHibernate() {
 		super();
 	}
@@ -93,15 +92,17 @@ public class MesgDaoHibernate extends SqlHelper implements MesgDao {
 			for (int i = 0; i < columns.length; i++) {
 				types[i] = 2;
 				args[i] = keyValue;
-				// 加上court 别名c统一
-				columns[i] = " and c." + columns[i];
+				if (columns[i].equals("courtName")) {
+					columns[i] = " and c." + columns[i];
+				} else {
+					columns[i] = " and m." + columns[i];
+				}
 			}
-			String strWhere = Append_String(" and ", types, columns,
-					args);
-			return findPagedByWhereOrderBy(strWhere, currentPage, rows, " c."
+			String strWhere = Append_String(" and ", types, columns, args);
+			return findPagedByWhereOrderBy(strWhere, currentPage, rows, " m."
 					+ orderByCol, isAsc);
 		} else {
-			return findPagedByWhereOrderBy(null, currentPage, rows, " c."
+			return findPagedByWhereOrderBy(null, currentPage, rows, " m."
 					+ orderByCol, isAsc);
 		}
 	}
@@ -122,8 +123,7 @@ public class MesgDaoHibernate extends SqlHelper implements MesgDao {
 			}
 		}
 		Query q = session.createQuery(hql);
-		return (List<MessageBean>) findPagedModelList_HQL(q,
-				currentPage, rows);
+		return (List<MessageBean>) findPagedModelList_HQL(q, currentPage, rows);
 	}
 
 	@Override
