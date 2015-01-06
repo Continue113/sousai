@@ -242,6 +242,7 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 			String[] args = new String[columns.length];
 			for (int i = 0; i < columns.length; i++) {
 				types[i] = 2;
+				// args[i] = new String(keyValue.getBytes("UTF-8"));
 				args[i] = keyValue;
 				// 列前加上表别名
 				columns[i] = " and " + addPrefixToColumn(columns[i]);
