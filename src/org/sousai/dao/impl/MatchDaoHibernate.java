@@ -327,21 +327,27 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 				types[i] = 2;
 				args[i] = keyValue;
 				// 加上 别名
-				if (columns[i].equals("userName")) {
-					columns[i] = " and u.name";
-				} else if (columns[i].equals("courtName")) {
-					columns[i] = " and c.name";
-				} else {
-					columns[i] = " and m." + columns[i];
-				}
+				columns[i] = " and " + addPrefixToColumn(columns[i]);
 			}
 			String strWhere = Append_String(" and ", types, columns, args);
-			return findPagedByWhereOrderBy(strWhere, currentPage, rows, " m."
-					+ orderByCol, isAsc);
+			return findPagedByWhereOrderBy(strWhere, currentPage, rows,
+					addPrefixToColumn(orderByCol), isAsc);
 		} else {
-			return findPagedByWhereOrderBy(null, currentPage, rows, " m."
-					+ orderByCol, isAsc);
+			return findPagedByWhereOrderBy(null, currentPage, rows,
+					addPrefixToColumn(orderByCol), isAsc);
 		}
+	}
+
+	private String addPrefixToColumn(String column) {
+		String value;
+		if (column.equals("userName")) {
+			value = " u.name";
+		} else if (column.equals("courtName")) {
+			value = " c.name";
+		} else {
+			value = " m." + column;
+		}
+		return value;
 	}
 
 	private List<MatchBean> findPagedByWhereOrderBy(String strWhere,

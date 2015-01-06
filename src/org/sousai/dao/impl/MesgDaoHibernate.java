@@ -81,6 +81,16 @@ public class MesgDaoHibernate extends SqlHelper implements MesgDao {
 
 	}
 
+	private String addPrefixToColumn(String column) {
+		String value;
+		if (column.equals("courtName")) {
+			value = " c.name";
+		} else {
+			value = " m." + column;
+		}
+		return value;
+	}
+
 	@Override
 	public List<MessageBean> findPagedByKeyValueOrderBy(String[] columns,
 			String keyValue, Integer currentPage, Integer rows,
@@ -92,18 +102,14 @@ public class MesgDaoHibernate extends SqlHelper implements MesgDao {
 			for (int i = 0; i < columns.length; i++) {
 				types[i] = 2;
 				args[i] = keyValue;
-				if (columns[i].equals("courtName")) {
-					columns[i] = " and c.name";
-				} else {
-					columns[i] = " and m." + columns[i];
-				}
+				columns[i] = " and" + addPrefixToColumn(columns[i]);
 			}
 			String strWhere = Append_String(" and ", types, columns, args);
-			return findPagedByWhereOrderBy(strWhere, currentPage, rows, " m."
-					+ orderByCol, isAsc);
+			return findPagedByWhereOrderBy(strWhere, currentPage, rows,
+					addPrefixToColumn(orderByCol), isAsc);
 		} else {
-			return findPagedByWhereOrderBy(null, currentPage, rows, " m."
-					+ orderByCol, isAsc);
+			return findPagedByWhereOrderBy(null, currentPage, rows,
+					addPrefixToColumn(orderByCol), isAsc);
 		}
 	}
 

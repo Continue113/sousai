@@ -106,6 +106,7 @@ public class UserDaoHibernate extends SqlHelper implements UserDao {
 		return (List<UserBean>) findPagedModelList_HQL(strHql, currentPage,
 				rows);
 	}
+
 	@Override
 	public List<UserBean> findPagedByKeyValueOrderBy(String[] columns,
 			String keyValue, Integer currentPage, Integer rows,
@@ -118,16 +119,21 @@ public class UserDaoHibernate extends SqlHelper implements UserDao {
 				types[i] = 2;
 				args[i] = keyValue;
 				// 加上 别名 统一
-				columns[i] = " and u." + columns[i];
+				columns[i] = " and" + addPrefixToColumn(columns[i]);
 			}
-			String strWhere = Append_String(" and ", types, columns,
-					args);
-			return findPagedByWhereOrderBy(strWhere, currentPage, rows, " u."
-					+ orderByCol, isAsc);
+			String strWhere = Append_String(" and ", types, columns, args);
+			return findPagedByWhereOrderBy(strWhere, currentPage, rows,
+					addPrefixToColumn(orderByCol), isAsc);
 		} else {
-			return findPagedByWhereOrderBy(null, currentPage, rows, " u."
-					+ orderByCol, isAsc);
+			return findPagedByWhereOrderBy(null, currentPage, rows,
+					addPrefixToColumn(orderByCol), isAsc);
 		}
+	}
+
+	private String addPrefixToColumn(String column) {
+		String value;
+		value = " u." + column;
+		return value;
 	}
 
 	private List<UserBean> findPagedByWhereOrderBy(String strWhere,
@@ -146,7 +152,6 @@ public class UserDaoHibernate extends SqlHelper implements UserDao {
 			}
 		}
 		Query q = session.createQuery(hql);
-		return (List<UserBean>) findPagedModelList_HQL(q,
-				currentPage, rows);
+		return (List<UserBean>) findPagedModelList_HQL(q, currentPage, rows);
 	}
 }

@@ -243,19 +243,25 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 			for (int i = 0; i < columns.length; i++) {
 				types[i] = 2;
 				args[i] = keyValue;
-				// 加上court 别名c统一
-				if (columns[i].equals("userName")) {
-					columns[i] = " and u.name";
-				} else {
-					columns[i] = " and c." + columns[i];
-				}
+				// 列前加上表别名
+				columns[i] = " and " + addPrefixToColumn(columns[i]);
 			}
 			String strWhere = Append_String(" and ", types, columns, args);
-			return findPagedByWhereOrderBy(strWhere, currentPage, rows, " c."
-					+ orderByCol, isAsc);
+			return findPagedByWhereOrderBy(strWhere, currentPage, rows,
+					addPrefixToColumn(orderByCol), isAsc);
 		} else {
-			return findPagedByWhereOrderBy(null, currentPage, rows, " c."
-					+ orderByCol, isAsc);
+			return findPagedByWhereOrderBy(null, currentPage, rows,
+					addPrefixToColumn(orderByCol), isAsc);
 		}
+	}
+
+	private String addPrefixToColumn(String column) {
+		String value;
+		if (column.equals("userName")) {
+			value = " u.name";
+		} else {
+			value = " c." + column;
+		}
+		return value;
 	}
 }
