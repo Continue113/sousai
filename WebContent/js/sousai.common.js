@@ -15,7 +15,7 @@ $(function() {
 	  $("#searchbox-match button").click(function() {
 		  var kv = $("#searchbox-match input[type='text']").val();
 		  alert(kv);
-    	  window.location.href = "matchSearch.jsp?keyValue="+kv;
+    	  window.location.href = "matchSearch.jsp?content="+kv;
 	      });
   //切换城市
   $("#changeCityBtn").click(function() {

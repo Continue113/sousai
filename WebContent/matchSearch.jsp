@@ -169,17 +169,16 @@
 		crtPage = 1,rs = 25,kv = loc;
 	    if(kv==""){
 			//若为空则不访问action，刷新原页面
-			alert("输入搜索关键字问空，"+window.location.herf);
-			window.location.herf = window.location.href;
+			alert("输入搜索关键字问空，"+window.location);
+			window.location.herf = window.location;
 	    	
-	    }
-	    else{
+	    }else{
 	    	
 	      $.ajax({
 	          type: "POST",
 	          url: "mainSearch",
 	          contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-	          data: {currentPage:crtPage,rows:rs,content:kv},
+	          data: {content:kv},
 	          dataType: "json",
 	          success: function(rspdata) {
 	        	  sousaiRemindDialog(rspdata);console.log(rspdata.count);console.log(rspdata);
