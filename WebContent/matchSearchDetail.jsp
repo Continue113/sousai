@@ -79,25 +79,25 @@
        <thead> 
         <tr> 
          <th>比赛名称:</th> 
-         <th>天津市第五届百年皖酒“杯</th> 
+         <th class="thisname">天津市第五届百年皖酒“杯</th> 
         </tr> 
        </thead> 
        <tbody> 
         <tr> 
          <td>比赛时间:</td> 
-         <td>2013年10月18日-2013年10月20日 星期五-星期日</td> 
+         <td class="thistime">2013年10月18日-2013年10月20日 星期五-星期日</td> 
         </tr> 
         <tr> 
          <td>比赛地点:</td> 
-         <td>中国 北京市 东城区 体育中心2号乒乓球桌</td> 
+         <td class="thiscourt">中国 北京市 东城区 体育中心2号乒乓球桌</td> 
         </tr> 
         <tr> 
          <td>发&nbsp;&nbsp;布&nbsp;&nbsp;者:</td> 
-         <td>搜赛网</td> 
+         <td class="thisuser">搜赛网</td> 
         </tr> 
         <tr> 
          <td>发布时间:</td> 
-         <td>2013-5-2</td> 
+         <td class="thisreltime">2013-5-2</td> 
         </tr> 
        </tbody> 
       </table> 
@@ -107,7 +107,7 @@
        <div class="title">比赛成绩 </div> 
        <div class="matchScoreContent"> 比赛进程（状态）是报名中，则不显示比赛成绩这栏。XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX这个页面是在新的窗口打开，添加“修改”和“录入成绩”的按钮，可以修改“比赛规程”和“基本比赛信息”，按钮根据比赛状态（进程），改变按钮出现的情况。根据是否是发布者，出现录入成绩和修改比赛按钮 </div> 
       </div> 
-      <div class="title">天津市第五届百年皖酒“杯 <span>比赛规程</span></div> 
+      <div class="title thisname">天津市第五届百年皖酒“杯 <span>比赛规程</span></div> 
       <div class="match"><p>天津市第五届百年皖酒“杯XXXXXXXXXX</p></div> 
      </div> 
     </div>
@@ -122,60 +122,13 @@
   <!-- /container --> 
   <s:include value="footer.jsp" />
   <!-- 页尾信息 -->
-  <script src="js/handlebars-v2.0.0.js"></script>
-  <!-- handlebars template -->
-  <script id="match-template" type="text/x-handlebars-template">
- {{#each this}}
-<div class="matchShortInfo"> 
-      <a href="javascript:void(0)" class="btn btn-mini pull-right">收藏比赛</a>
-		{{#user userName <s:if test="#session.userBean.userName!=null"><s:property value="#session.userBean.userId"/></s:if><s:else>0</s:else> }}
-      <a href="javascript:void(0)" class="btn btn-mini pull-right">修改比赛</a> 
-      <a href="javascript:void(0)" class="btn btn-mini pull-right">录入成绩</a>
-		{{else}}
-		{{/user}}
-      <table> 
-       <thead> 
-        <tr> 
-         <th>比赛名称:</th> 
-         <th>{{name}}</th> 
-        </tr> 
-       </thead> 
-       <tbody> 
-        <tr> 
-         <td>比赛时间:</td> 
-         <td>{{matchStartTime}}-{{matchDeadline}} 星期五-星期日</td> 
-        </tr> 
-        <tr> 
-         <td>比赛地点:</td> 
-         <td>{{courtId}}</td> 
-        </tr> 
-        <tr> 
-         <td>发&nbsp;&nbsp;布&nbsp;&nbsp;者:</td> 
-         <td>{{userName}}</td> 
-        </tr> 
-        <tr> 
-         <td>发布时间:</td> 
-         <td>{{publishTime}}</td> 
-        </tr> 
-       </tbody> 
-      </table>
-</div>
-<div class="matchContent"> 
-      <div class="matchScore"> 
-       <div class="title">比赛成绩 </div> 
-       <div class="matchScoreContent"> 比赛进程（状态）是报名中，则不显示比赛成绩这栏。XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX这个页面是在新的窗口打开，添加“修改”和“录入成绩”的按钮，可以修改“比赛规程”和“基本比赛信息”，按钮根据比赛状态（进程），改变按钮出现的情况。根据是否是发布者，出现录入成绩和修改比赛按钮 </div> 
-      </div> 
-      <div class="title">{{name}} <span>比赛规程</span></div> 
-      <div class="match">{{{matchIntroduction}}}</div>
-</div>
- {{/each}}
-  </script>
   <script>
   //定义函数
   //搜索栏模糊搜索
 function e(){
 	var url = window.location.search,
-    kv = decodeURI(url.substring(url.lastIndexOf('=')+1, url.length));
+    kv = decodeURI(url.substring(url.lastIndexOf('=')+1, url.length)),
+    target = $("#match");
 	
 	      $.ajax({
 	          type: "POST",
@@ -187,23 +140,14 @@ function e(){
 	        	  console.log(rspdata);
 				  //修改title
 				  $("title").html(rspdata.name+" &middot; 搜赛网");
-			      var target = $("#match"),template = Handlebars.compile($('#match-template').html());
-			    //注册一个比较用户名的Helper,有options参数，块级Helper
-			               Handlebars.registerHelper("user",function(v1,v2,options){
-			                 //判断v1是否比v2大
-			                 if(v1 == v2){
-			                   //继续执行
-			                   return options.fn(this);
-			                 }else{
-			                   //执行else部分
-			                   return options.inverse(this);
-			                 }
-			               });
-			    
-			      target.empty(); //清空tbody
-		    	  target.html(template(rspdata));
+				  target.find(".thisname").text(rspdata.name);
+				  target.find(".thistime").text(rspdata.matchStartTime+"-"+rspdata.matchDeadline+"  星期");
+			      target.find(".thisreltime").text(rspdata.publishTime);
+			      target.find(".thiscourt").text(rspdata.courtId);
+			      target.find(".match").html(rspdata.matchIntroduction);
 	          },
-	          error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+	          error: function(jqXHR,textStatus,errorThrown){
+	        	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
 	            alert("抱歉。ajax错误。");
 	          },
 	        });
