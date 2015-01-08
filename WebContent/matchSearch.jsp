@@ -140,7 +140,7 @@
        <div class="matchBox"  data-info="{{data this}}>
         <div class="matchBox-all"> 
          <div class="matchBox-title"> 
-          <a href="matchDetail?id={{id}}">{{name}}</a> 
+          <a href="matchSearchDetail.jsp?id={{id}}">{{name}}</a> 
           <span class="pull-right">发布时间：<span class="matchBox-releaseTime">{{publishTime}}</span></span> 
          </div>
          <ul class="breadcrumb">
@@ -151,8 +151,8 @@
 		  </li>
           <li class="matchBox-court "><a href="javascript:void(0)">场地ID：{{courtId}}</a></li> 
           <li class="matchBox-state ">报名中</li> 
-          <li class="matchBox-info "><a href="matchDetail?id={{id}}">{{{matchIntroduction}}}</a></li> 
-          <li class="matchBox-btns "><a href="javascript:void(0)" class="btn btn-mini">收藏比赛</a><a href="matchDetail?id={{id}}" class="btn btn-mini">查看详细</a></li> 
+          <li class="matchBox-info "><a href="matchSearchDetail.jsp?id={{id}}">{{{matchIntroduction}}}</a></li> 
+          <li class="matchBox-btns "><a href="javascript:void(0)" class="btn btn-mini">收藏比赛</a><a href="matchSearchDetail.jsp?id={{id}}" class="btn btn-mini">查看详细</a></li> 
          </ul> 
         </div>
        </div> 

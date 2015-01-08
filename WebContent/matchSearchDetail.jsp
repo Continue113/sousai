@@ -128,7 +128,7 @@
  {{#each this}}
 <div class="matchShortInfo"> 
       <a href="javascript:void(0)" class="btn btn-mini pull-right">收藏比赛</a>
-		{{#user userName <s:if test="#session.userBean.userName!=null"><s:property value="#session.userBean.userName"/></s:if><s:else>0</s:else> }}
+		{{#user userName <s:if test="#session.userBean.userName!=null"><s:property value="#session.userBean.userId"/></s:if><s:else>0</s:else> }}
       <a href="javascript:void(0)" class="btn btn-mini pull-right">修改比赛</a> 
       <a href="javascript:void(0)" class="btn btn-mini pull-right">录入成绩</a>
 		{{else}}
@@ -143,11 +143,11 @@
        <tbody> 
         <tr> 
          <td>比赛时间:</td> 
-         <td>{{beginTime}}-{{endTime}} 星期五-星期日</td> 
+         <td>{{matchStartTime}}-{{matchDeadline}} 星期五-星期日</td> 
         </tr> 
         <tr> 
          <td>比赛地点:</td> 
-         <td>{{courtName}}</td> 
+         <td>{{courtId}}</td> 
         </tr> 
         <tr> 
          <td>发&nbsp;&nbsp;布&nbsp;&nbsp;者:</td> 
@@ -155,7 +155,7 @@
         </tr> 
         <tr> 
          <td>发布时间:</td> 
-         <td>{{relTime}}</td> 
+         <td>{{publishTime}}</td> 
         </tr> 
        </tbody> 
       </table>
@@ -166,22 +166,25 @@
        <div class="matchScoreContent"> 比赛进程（状态）是报名中，则不显示比赛成绩这栏。XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX这个页面是在新的窗口打开，添加“修改”和“录入成绩”的按钮，可以修改“比赛规程”和“基本比赛信息”，按钮根据比赛状态（进程），改变按钮出现的情况。根据是否是发布者，出现录入成绩和修改比赛按钮 </div> 
       </div> 
       <div class="title">{{name}} <span>比赛规程</span></div> 
-      <div class="match">{{{rule}}}</div>
+      <div class="match">{{{matchIntroduction}}}</div>
 </div>
  {{/each}}
   </script>
   <script>
   //定义函数
   //搜索栏模糊搜索
-function e(crtPage,rs,obc,ia,sc,kv){
+function e(){
+	var url = window.location.search,
+    kv = decodeURI(url.substring(url.lastIndexOf('=')+1, url.length));
+	
 	      $.ajax({
 	          type: "POST",
-	          url: "getAllMatch",
+	          url: "matchDetail",
 	          contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-	          data: {currentPage:crtPage,rows:rs,orderByCol:obc,isAsc:ia,strColumns:sc,keyValue:kv},
+	          data: {id:kv},
 	          dataType: "json",
 	          success: function(rspdata) {
-	        	  console.log(rspdata);console.log(rspdata.body[0].name);
+	        	  console.log(rspdata);
 				  //修改title
 				  $("title").html(rspdata.body[0].name+" &middot; 搜赛网");
 			      var target = $("#match"),template = Handlebars.compile($('#match-template').html());
@@ -198,7 +201,7 @@ function e(crtPage,rs,obc,ia,sc,kv){
 			               });
 			    
 			      target.empty(); //清空tbody
-		    	  target.html(template(rspdata.body));
+		    	  target.html(template(rspdata));
 	          },
 	          error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
 	            alert("抱歉。ajax错误。");
@@ -207,7 +210,7 @@ function e(crtPage,rs,obc,ia,sc,kv){
 	}  
   $(function(){
 	//搜索栏模糊搜索
-	  e(1,1,"name",true,"name","");
+	  e();
   });
   </script>  
  </body>
