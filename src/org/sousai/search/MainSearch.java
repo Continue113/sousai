@@ -18,7 +18,7 @@ import org.apache.struts2.ServletActionContext;
 import org.sousai.tools.JSONUtils;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
-public class MatchSearch {
+public class MainSearch {
 	private DirectoryReader ireader = null;
 	private Directory directory = null;
 	private String content = null ;

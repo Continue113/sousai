@@ -6,7 +6,6 @@ import org.apache.struts2.ServletActionContext;
 import org.sousai.tools.JSONUtils;
 
 public class BackgroundCollections {
-	private static final long serialVersionUID = 1L;
 	private LinkedList<MatchData> matchesJson;
 	//private String statu = null ;
 
