@@ -166,10 +166,11 @@
 	  	$("#ajaxState .load").show();console.log("start");
 	    var url = window.location.search,
 	    loc = url.substring(url.lastIndexOf('=')+1, url.length),
-		crtPage = 1,rs = 25,kv = loc;
+		crtPage = 1,rs = 25,kv = decodeURI(loc); //loc需解码转换为中文
+	    alert(kv);
 	    if(kv==""){
 			//若为空则不访问action，刷新原页面
-			alert("输入搜索关键字问空，"+window.location);
+			alert("输入搜索关键字问空，");
 			window.location.herf = window.location;
 	    	
 	    }else{
@@ -205,7 +206,8 @@
 		    	    $(".matchBox-info > a").wordLimit(28);
 				  //pages(rspdata.count,crtPage,rs);
 	          },
-	          error: function() {
+	          error: function(jqXHR,textStatus,errorThrown){
+	        	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
 	            sousaiRemindDialog("抱歉。ajax错误。");
 	          },
 	        });
