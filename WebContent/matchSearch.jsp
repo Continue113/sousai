@@ -167,11 +167,19 @@
 	    var url = window.location.search,
 	    loc = url.substring(url.lastIndexOf('=')+1, url.length),
 		crtPage = 1,rs = 25,kv = loc;
+	    if(kv==""){
+			//若为空则不访问action，刷新原页面
+			alert("输入搜索关键字问空，"+window.location.herf);
+			window.location.herf = window.location.href;
+	    	
+	    }
+	    else{
+	    	
 	      $.ajax({
 	          type: "POST",
-	          url: "searchMatch",
+	          url: "mainSearch",
 	          contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-	          data: {currentPage:crtPage,rows:rs,keyValue:kv},
+	          data: {currentPage:crtPage,rows:rs,content:kv},
 	          dataType: "json",
 	          success: function(rspdata) {
 	        	  sousaiRemindDialog(rspdata);console.log(rspdata.count);console.log(rspdata);
@@ -202,6 +210,7 @@
 	            sousaiRemindDialog("抱歉。ajax错误。");
 	          },
 	        });
+	    }
 	}  
   $(function(){
 	//搜索栏模糊搜索

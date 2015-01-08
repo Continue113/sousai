@@ -183,13 +183,13 @@
     {{#each this}}
 
 		    <tr class="user" data-info="{{data this}}">
-	    		<td class="user-userName form-inline"><label for="{{id}}"><input type="checkbox" id="data[i].{{id}}"/><span>{{name}}</span><label></td>
-        	<td class="user-registerTime">{{regTime}}</td>
+	    		<td class="user-userName form-inline"><label for="{{id}}"><input type="checkbox" id="{{userId}}"/><span>{{userName}}</span><label></td>
+        	<td class="user-registerTime">{{userRegTime}}</td>
         	<td class="user-lastLoginTime">{{lastLogTime}}</td>
         	<td class="user-matchNumber">{{matchNumber}}</td>
         	<td class="user-courtNumber">{{courtNumber}}</td>
         	<td class="user-loginNumber">{{loginNumber}}</td>
-        	<td class="user-email">{{email}}</td>
+        	<td class="user-email">{{userEmail}}</td>
         	<td class="user-IP">{{IP}}<span>&nbsp;{{city}}</span></td>
 	    		<td class="user-oprate"><a href="javascript:void(0)" class="btn btn-mini pull-right">编辑用户</a></td>
         </tr>	    		  
@@ -207,6 +207,7 @@
 	        data: {currentPage:crtPage,rows:rs,orderByCol:obc,isAsc:ia,strColumns:sc,keyValue:kv},
 	        dataType: "json",
 	        success: function(data) {
+	        	console.log(data);
 	        	  var target = $(".userTable > tbody"),template = Handlebars.compile($('#user-template').html());
 	        	  Handlebars.registerHelper("data",function(v){
 	        	    //将当前对象转化为字符串，保存在data-info中
@@ -248,9 +249,9 @@
       console.log(datainfo);
       //解析datainfo中的信息
       var data = eval('(' + datainfo + ')');
-      $("#userName").val(data.name).attr("data-id",data.id).attr("data-oldname",data.name);
-      $("#userPassword").val(data.pwd);
-      $("#userEmail").val(data.email);
+      $("#userName").val(data.userName).attr("data-id",data.userId).attr("data-oldname",data.userName);
+      $("#userPassword").val(data.userPwd);
+      $("#userEmail").val(data.userEmail);
       $(".userList").slideUp();
       target.slideDown();
     });

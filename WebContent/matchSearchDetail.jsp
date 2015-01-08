@@ -125,10 +125,14 @@
   <script src="js/handlebars-v2.0.0.js"></script>
   <!-- handlebars template -->
   <script id="match-template" type="text/x-handlebars-template">
-
-      <a href="javascript:void(0)" class="btn btn-mini pull-right">收藏比赛</a> 
+ {{#each this}}
+<div class="matchShortInfo"> 
+      <a href="javascript:void(0)" class="btn btn-mini pull-right">收藏比赛</a>
+		{{#user userName <s:if test="#session.userBean.userName!=null"><s:property value="#session.userBean.userName"/></s:if><s:else>0</s:else> }}
       <a href="javascript:void(0)" class="btn btn-mini pull-right">修改比赛</a> 
-      <a href="javascript:void(0)" class="btn btn-mini pull-right">录入成绩</a> 
+      <a href="javascript:void(0)" class="btn btn-mini pull-right">录入成绩</a>
+		{{else}}
+		{{/user}}
       <table> 
        <thead> 
         <tr> 
@@ -155,30 +159,46 @@
         </tr> 
        </tbody> 
       </table>
+</div>
+<div class="matchContent"> 
       <div class="matchScore"> 
        <div class="title">比赛成绩 </div> 
        <div class="matchScoreContent"> 比赛进程（状态）是报名中，则不显示比赛成绩这栏。XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX这个页面是在新的窗口打开，添加“修改”和“录入成绩”的按钮，可以修改“比赛规程”和“基本比赛信息”，按钮根据比赛状态（进程），改变按钮出现的情况。根据是否是发布者，出现录入成绩和修改比赛按钮 </div> 
       </div> 
       <div class="title">{{name}} <span>比赛规程</span></div> 
-      <div class="match">{{rule}}</div>
-
+      <div class="match">{{{rule}}}</div>
+</div>
+ {{/each}}
   </script>
   <script>
   //定义函数
   //搜索栏模糊搜索
-	function search(){
+function e(crtPage,rs,obc,ia,sc,kv){
 	      $.ajax({
 	          type: "POST",
-	          url: "searchMatch",
+	          url: "getAllMatch",
 	          contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-	          data: {currentPage:1,rows:1,keyValue:""},
+	          data: {currentPage:crtPage,rows:rs,orderByCol:obc,isAsc:ia,strColumns:sc,keyValue:kv},
 	          dataType: "json",
 	          success: function(rspdata) {
-	        	  console.log(rspdata.count);console.log(rspdata);
-
+	        	  console.log(rspdata);console.log(rspdata.body[0].name);
+				  //修改title
+				  $("title").html(rspdata.body[0].name+" &middot; 搜赛网");
 			      var target = $("#match"),template = Handlebars.compile($('#match-template').html());
-			      target.empty().show(); //清空tbody
-		    	  target.html(template(rspdata));
+			    //注册一个比较用户名的Helper,有options参数，块级Helper
+			               Handlebars.registerHelper("user",function(v1,v2,options){
+			                 //判断v1是否比v2大
+			                 if(v1 == v2){
+			                   //继续执行
+			                   return options.fn(this);
+			                 }else{
+			                   //执行else部分
+			                   return options.inverse(this);
+			                 }
+			               });
+			    
+			      target.empty(); //清空tbody
+		    	  target.html(template(rspdata.body));
 	          },
 	          error: function() {
 	            alert("抱歉。ajax错误。");
@@ -187,7 +207,7 @@
 	}  
   $(function(){
 	//搜索栏模糊搜索
-	search();
+	  e(1,1,"name",true,"name","");
   });
   </script>  
  </body>

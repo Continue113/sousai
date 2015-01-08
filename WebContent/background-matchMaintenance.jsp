@@ -282,10 +282,6 @@
                             
     {{/each}}
   </script>
-  <script id="matchtype-template" type="text/x-handlebars-template">
-  </script>
-  <script id="matchcourt-template" type="text/x-handlebars-template">
-  </script>
   <script>
   //定义函数
   function e(crtPage,rs,obc,ia,sc,kv){
@@ -338,7 +334,6 @@
         $("#inputMatchTimefrom").val(data.beginTime);
         $("#inputMatchTimeto").val(data.endTime);
         $("#inputMatchCourt").val(data.courtName).attr("data-oldcourt",data.courtName).attr("data-courtid",data.courtId);
-        $("#inputMatchRules").append(data.rule);
         tinymce.activeEditor.setContent(data.rule);
         //立即初始化比赛类型
         initMatchType();

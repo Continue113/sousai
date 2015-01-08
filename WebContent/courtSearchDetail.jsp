@@ -10,7 +10,6 @@
   <link href="css/smoothness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" /> 
   <link href="css/bootstrap.min.css" rel="stylesheet" /> 
   <link href="css/bootstrap-responsive.css" rel="stylesheet" /> 
-  <link href="css/jplist.min.css" rel="stylesheet" /> 
   <link href="css/sousai.common.css" rel="stylesheet" /> 
   <link href="css/sousai.courtSearchDetail.css" rel="stylesheet" /> 
   <!--[if lte IE 8]>
@@ -126,7 +125,7 @@
       </div> 
       <div class="span5"> 
        <table> 
-        <tbody> 
+        <tbody class="courtTboby"> 
          <tr> 
           <td valign="top">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址：</td> 
           <td class="td2">天津市第五届百年皖酒“杯天津市第五届百年皖酒市第五届百年皖酒“杯天津市第五届百年皖酒“杯</td> 
@@ -414,10 +413,90 @@
   <!-- /container --> 
   <s:include value="footer.jsp" />
   <!-- 页尾信息 --> 
-  <script src="js/jquery.wordLimit.js"></script> 
-  <script src="js/jplist.min.js"></script> 
+  <script src="js/handlebars-v2.0.0.js"></script>
+  <script src="js/jquery.wordLimit.js"></script>
+  
+  <!-- handlebars template -->
+  <script id="court-template" type="text/x-handlebars-template">
+    {{#each this}}
+        
+         <tr data-info="{{data this}}"> 
+          <td valign="top">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址：</td> 
+          <td class="td2">{{addr}}</td> 
+          <td valign="bottom">（2013-10-18更新）</td> 
+         </tr> 
+         <tr> 
+          <td valign="top">场地类型：</td> 
+          <td class="td2">{{courtType}}</td> 
+          <td valign="bottom">（2013-10-18更新）</td> 
+         </tr> 
+         <tr> 
+          <td valign="top">比赛类型：</td> 
+          <td class="td2">{{matchType}}</td> 
+          <td valign="bottom">（2013-10-18更新）</td> 
+         </tr> 
+         <tr> 
+          <td valign="top">球&nbsp;&nbsp;台&nbsp;&nbsp;数：</td> 
+          <td class="td2">{{tableNum}}</td> 
+          <td>（2013-10-18更新）</td> 
+         </tr> 
+         <tr> 
+          <td valign="top">联系电话：</td> 
+          <td class="td2">{{tel}}</td> 
+          <td valign="bottom">（2013-10-18更新）</td> 
+         </tr> 
+         <tr> 
+          <td valign="top">价&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;格：</td> 
+          <td class="td2">{{price}}</td> 
+          <td valign="bottom">（2013-10-18更新）</td> 
+         </tr> 
+         <tr> 
+          <td valign="top">举办比赛：</td> 
+          <td class="td2">12次</td> 
+          <td valign="bottom">（2013-10-18更新）</td> 
+         </tr> 
+         <tr> 
+          <td valign="top">开放时间：</td> 
+          <td class="td2">{{workTime}}</td> 
+          <td valign="bottom">（2013-10-18更新）</td> 
+         </tr>
+
+    {{/each}}
+  </script>
   <script>
+  //定义函数
+
+	function e(crtPage,rs,obc,ia,sc,kv){
+    $.ajax({
+      type: "POST",
+      url: "getAllCourt",
+      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+      data: {currentPage:crtPage,rows:rs,orderByCol:obc,isAsc:ia,strColumns:sc,keyValue:kv},
+      dataType: "json",
+      success: function(data) {
+	      console.log(data);//sousaiRemindDialog(rspdata);
+      var target = $(".courtTboby"),template = Handlebars.compile($('#court-template').html());
+      Handlebars.registerHelper("data",function(v){
+        //将当前对象转化为字符串，保存在data-info中
+        console.log(v);
+        var v1 = JSON.stringify(v);
+        //console.log("v1:"+v1);
+        return v1;
+      });
+      target.empty(); //清空tbody
+      target.html(template(data.body));
+      $("title").html(data.body[0].name+" &middot; 搜赛网");
+      $(".title").html(data.body[0].name+"<span>特点</span>");
+      $("#courtContent").html(data.body[0].intro);
+	    },
+      error: function() {
+          sousaiRemindDialog("抱歉，ajax出错了。");
+      },
+    });
+}
   $(function(){
+	  
+	e(1,1,"name",true,"name","");
 	//初始化生成验证码
     createCode("inputValidateImg");
     
@@ -725,13 +804,6 @@
       var imgSrc = $(this).find("img").attr("src");
       $(".courtImg-big > img").attr("src",imgSrc);
     });
-
-    //列表排序
-    $('#courtRecord').jplist({
-          itemsBox: '.recordTable',
-          itemPath: '.tbl-item',
-          panelPath: '.jplist-panel',
-        });
   });
   </script>  
  </body>
