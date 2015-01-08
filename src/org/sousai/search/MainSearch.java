@@ -15,6 +15,7 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
 import org.apache.struts2.ServletActionContext;
+import org.sousai.domain.FrontMessage;
 import org.sousai.tools.JSONUtils;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
@@ -22,13 +23,16 @@ public class MainSearch {
 	private DirectoryReader ireader = null;
 	private Directory directory = null;
 	private String content = null ;
-	private LinkedList<MatchData> matchesJson;
+	private LinkedList<MatchData> matches = new LinkedList<MatchData>();
+	private FrontMessage matchesJson = null ;
+	private Integer currentPage;
+	private Integer rows;
 	
-	public LinkedList<MatchData> getMatchesJson() {
+	public FrontMessage getMatchesJson() {
 		return matchesJson;
 	}
 
-	public void setMatchesJson(LinkedList<MatchData> matchesJson) {
+	public void setMatchesJson(FrontMessage matchesJson) {
 		this.matchesJson = matchesJson;
 	}
 
@@ -38,6 +42,22 @@ public class MainSearch {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public Integer getCurrentPage() {
+		return currentPage;
+	}
+
+	public void setCurrentPage(Integer currentPage) {
+		this.currentPage = currentPage;
+	}
+
+	public Integer getRows() {
+		return rows;
+	}
+
+	public void setRows(Integer rows) {
+		this.rows = rows;
 	}
 
 	public LinkedList<MatchData> indexSearch(Analyzer analyzer, File indexFile,
@@ -81,7 +101,7 @@ public class MainSearch {
 
 			// 由于文章数过多的时候会下面的循环会耗费太多时间，而且搜索时，一般前几页才有用，所以这里只取前20页即200篇文章
 			int docNum = hits.length;
-			System.out.println(docNum);
+			//System.out.println(docNum);
 			if (docNum > 200)
 				docNum = 198;
 			Document hitDoc = null;
@@ -98,7 +118,7 @@ public class MainSearch {
 				matchDeadline = hitDoc.get(multiFields[6]);
 				matchIntroduction = hitDoc.get(multiFields[7]);
 
-				System.out.println(name);
+				//System.out.println(name);
 				
 				matchList.add(new MatchData.Builder(null, name).id(id)
 						.courtId(courtId).publishTime(publishTime)
@@ -124,7 +144,15 @@ public class MainSearch {
 	}
 	
 	public String mainSearch(){
-		matchesJson = matchSearch(content,"/home/lei/data") ;
+		if(currentPage==null)
+			currentPage=1 ;
+		if(rows==null)
+			rows = 25 ;
+		LinkedList<MatchData> listAll = matchSearch(content,"/home/lei/data") ;
+		for(int i=(currentPage-1)*rows;i<((currentPage-1)*rows+25)&&i<listAll.size();i++){
+			matches.add(listAll.get(i)) ;
+		}
+		matchesJson = new FrontMessage(matches,matches.size()) ;
 		JSONUtils.toJson(ServletActionContext.getResponse(), matchesJson);
 		return null ;
 	}

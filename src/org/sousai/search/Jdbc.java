@@ -188,7 +188,6 @@ public class Jdbc {
 						.matchStartTime(result.getString("BEGINTIME"))
 						.matchDeadline(result.getString("ENDTIME"))
 						.matchIntroduction(result.getString("RULE")).build();
-
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
