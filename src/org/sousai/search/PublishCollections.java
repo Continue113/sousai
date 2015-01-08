@@ -26,12 +26,12 @@ public class PublishCollections {
 		LinkedList<MatchData> matchList = new Jdbc()
 				.selectFromIds(collectionIds);
 		Jdbc publishJdbc = new Jdbc();
-		int userId = 0 ;
-		try{
-		User tempUser = new User((UserBean) ActionContext.getContext()
-				.getSession().get("userBean"));
-		userId = tempUser.getId();
-		}catch(Exception e){
+		int userId = 0;
+		try {
+			User tempUser = new User((UserBean) ActionContext.getContext()
+					.getSession().get("userBean"));
+			userId = tempUser.getId();
+		} catch (Exception e) {
 			System.out.println(e);
 		}
 		for (int i = 0; i < matchList.size(); ++i) {

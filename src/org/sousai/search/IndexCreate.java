@@ -108,4 +108,5 @@ public class IndexCreate {
 			saveIndex("/home/lei/data",matchList.get(i));
 		}
 	}
+	
 }

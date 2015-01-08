@@ -2,9 +2,7 @@ package org.sousai.search;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
@@ -16,11 +14,31 @@ import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
+import org.apache.struts2.ServletActionContext;
+import org.sousai.tools.JSONUtils;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
 public class MatchSearch {
 	private DirectoryReader ireader = null;
 	private Directory directory = null;
+	private String content = null ;
+	private LinkedList<MatchData> matchesJson;
+	
+	public LinkedList<MatchData> getMatchesJson() {
+		return matchesJson;
+	}
+
+	public void setMatchesJson(LinkedList<MatchData> matchesJson) {
+		this.matchesJson = matchesJson;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
 
 	public LinkedList<MatchData> indexSearch(Analyzer analyzer, File indexFile,
 			String keyword) {
@@ -105,6 +123,11 @@ public class MatchSearch {
 		return indexSearch(new IKAnalyzer(true),new File(indexPath),searchContent) ;
 	}
 	
+	public String mainSearch(){
+		matchesJson = matchSearch(content,"/home/lei/data") ;
+		JSONUtils.toJson(ServletActionContext.getResponse(), matchesJson);
+		return null ;
+	}
 	/*public static void main(String[] args) {
 		//new IndexCreate().createIndex();
 		
