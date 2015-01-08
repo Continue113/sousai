@@ -250,7 +250,7 @@ $(function () {
             window.setTimeout("window.location='userCenter-editUser.jsp'",1000);
             sousaiRemindDialog("编辑账户成功,请刷新页面。");
           },
-          error: function() {
+          error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
             sousaiRemindDialog("抱歉，发送数据出错了，请重新输入。");
           },
           });

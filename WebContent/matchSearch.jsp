@@ -140,19 +140,19 @@
        <div class="matchBox"  data-info="{{data this}}>
         <div class="matchBox-all"> 
          <div class="matchBox-title"> 
-          <a href="javascript:void(0)">{{name}}</a> 
-          <span class="pull-right">发布时间：<span class="matchBox-releaseTime">{{relTime}}</span></span> 
+          <a href="matchDetail?id={{id}}">{{name}}</a> 
+          <span class="pull-right">发布时间：<span class="matchBox-releaseTime">{{publishTime}}</span></span> 
          </div>
-         <ul class="breadcrumb"> 
-          <li class="matchBox-time"> 
-           <div class="matchBox-beginTime">{{beginTime}}<p>星期五</p></div> 
+         <ul class="breadcrumb">
+          <li class="matchBox-time">
+           <div class="matchBox-beginTime">{{matchStartTime}}<p>星期五</p></div> 
            <div class="line">&nbsp;-&nbsp;</div> 
-           <div class="matchBox-endTime">{{endTime}}<p>星期日</p></div>
+           <div class="matchBox-endTime">{{matchDeadline}}<p>星期日</p></div>
 		  </li>
-          <li class="matchBox-court "><a href="javascript:void(0)">{{courtName}}</a></li> 
+          <li class="matchBox-court "><a href="javascript:void(0)">场地ID：{{courtId}}</a></li> 
           <li class="matchBox-state ">报名中</li> 
-          <li class="matchBox-info "><a href="javascript:void(0)">{{{rule}}}</a></li> 
-          <li class="matchBox-btns "><a href="javascript:void(0)" class="btn btn-mini">收藏比赛</a><a href="javascript:void(0)" class="btn btn-mini">查看详细</a></li> 
+          <li class="matchBox-info "><a href="matchDetail?id={{id}}">{{{matchIntroduction}}}</a></li> 
+          <li class="matchBox-btns "><a href="javascript:void(0)" class="btn btn-mini">收藏比赛</a><a href="matchDetail?id={{id}}" class="btn btn-mini">查看详细</a></li> 
          </ul> 
         </div>
        </div> 
@@ -162,12 +162,14 @@
   <script>
   //定义函数
   //搜索栏模糊搜索
-	function search(){
-	  	$("#ajaxState .load").show();console.log("start");
+	function e(){
+	  	$("#ajaxState .load").show();
+	  	console.log("start");
+	    //loc需解码转换为中文
 	    var url = window.location.search,
-	    loc = url.substring(url.lastIndexOf('=')+1, url.length),
-		crtPage = 1,rs = 25,kv = decodeURI(loc); //loc需解码转换为中文
-	    alert(kv);
+	    kv = decodeURI(url.substring(url.lastIndexOf('=')+1, url.length)),
+		crtPage = 1,rs = 25;
+	    
 	    if(kv==""){
 			//若为空则不访问action，刷新原页面
 			alert("输入搜索关键字问空，");
@@ -192,13 +194,14 @@
 			    	  //console.log("v1:"+v1);
 			    	  return v1;
 			      });
-			      target.empty().show(); //清空tbody
-		    	  target.html(template(rspdata));
-			      $("#ajaxState .load").hide();console.log("stop");
+			      target.empty().show().html(template(rspdata));
+			      $("#ajaxState .load").hide();
+			      console.log("stop");
 			      //出错或无结果
 			      //target.empty(); //清空tbody
 			      if(target.find("div.matchBox").length == 0){
-			      $("#ajaxState .noresult").show();console.log("无结果");
+			      $("#ajaxState .noresult").show();
+			      console.log("无结果");
 			      target.hide();
 			      }
 		    	    //字数限制，溢出省略
@@ -215,7 +218,7 @@
 	}  
   $(function(){
 	//搜索栏模糊搜索
-	search();
+	e();
      //日期选择器
      $( "#matchTimefrom" ).datepicker({
       defaultDate: "+1w",

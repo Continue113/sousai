@@ -200,7 +200,7 @@ function e(crtPage,rs,obc,ia,sc,kv){
 			      target.empty(); //清空tbody
 		    	  target.html(template(rspdata.body));
 	          },
-	          error: function() {
+	          error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
 	            alert("抱歉。ajax错误。");
 	          },
 	        });

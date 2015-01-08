@@ -218,7 +218,9 @@
 	        	  });
 	        	  target.empty(); //清空tbody
 	        	  target.html(template(data.body));
-	        	  $("#ajaxState .load").hide();console.log("stop");
+	        	  $("#ajaxState .load").hide();
+	    	      $("#ajaxState .noresult").hide();
+	    	      console.log("stop");
 	        	  //出错或无结果
 	        	  //target.empty(); //清空tbody
 	        	  if(target.find("tr.user").length == 0){
@@ -229,7 +231,7 @@
 	        	  $(".user-email").wordLimit(16);
 	            pages(data.count,crtPage,rs);
 	  	    },
-	        error: function() {
+	        error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
 	  	      $("#ajaxState .noresult").show();console.log("出错了");
 	          sousaiRemindDialog("抱歉，ajax出错了。");
 	        },

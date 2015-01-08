@@ -485,7 +485,7 @@
       $(".title").html(data.body[0].name+"<span>特点</span>").attr("data-id",data.body[0].id);
       $("#courtContent").html(data.body[0].intro);
 	    },
-      error: function() {
+      error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
           sousaiRemindDialog("抱歉，ajax出错了。");
       },
     });
@@ -529,7 +529,7 @@
 
   	            }
   	        },
-  	        error: function() {
+  	        error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
   	        	console.log("抱歉，获取评论出错了。");//alert("抱歉，获取评论出错了。");
   	        },
   	        }); //ajax 已得到评论信息
@@ -641,7 +641,7 @@
         		ajaxAllEvaluation();
         	};
         },
-        error: function() {
+        error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
           alert("抱歉，发布评论出错了。");console.log("抱歉，发布评论失败！未能发送到服务器。");
         }
         }); //ajax 已得到发送评论到服务器

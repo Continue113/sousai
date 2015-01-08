@@ -50,7 +50,7 @@ $(function() {
             selectCity.append("<option value=" + rspdata[i].code + " data-order=\"" + rspdata[i].order + "\" data-regionid=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</option>");
           }
         },
-        error: function() {
+        error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
           alert("抱歉，获取市区出错了。ajax错误。");
         },
       }); //ajax 已得到城市
@@ -97,7 +97,7 @@ $(function() {
                   alert("抱歉，获取市区出错了。代码不为0。"+rspdata);console.log(rspdata);
         	  }
           },
-          error: function() {
+          error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
             alert("抱歉，获取市区出错了。ajax错误。");
           },
         }); //ajax 已发送
@@ -167,7 +167,7 @@ $(function() {
             selectCity.append("<option value=" + rspdata[i].code + " data-order=\"" + rspdata[i].order + "\" data-regionid=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</option>");
           }
         },
-        error: function() {
+        error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
           alert("抱歉，获取市区出错了。");
         },
       }); //ajax 已得到城市
@@ -202,7 +202,7 @@ $(function() {
             selectCountry.append("<option value=" + rspdata[i].code + " data-order=\"" + rspdata[i].order + "\" data-regionid=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</option>");
           }
         },
-        error: function() {
+        error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
           alert("抱歉，获取区县出错了。");
         },
       }); //ajax 已得到区县
@@ -359,7 +359,7 @@ function userCenterRemind(){
         		targetBreadcrumb.append('<li><a href="userCenter-releaseMatch.jsp" title="去发布比赛"> 无比赛信息，请发布比赛</a></li>');
         	}
         },
-        error: function() {
+        error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
           alert("抱歉，获取比赛信息出错了。");
           console.log("userCenterRemind 抱歉，获取比赛信息出错了。");
         },

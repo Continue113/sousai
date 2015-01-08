@@ -234,7 +234,7 @@
         }
         sctParMatchType.append("<option value=1>其他</option>"); //每一个大类比赛类型的“其他”选项
       },
-      error: function() {
+      error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
         sousaiRemindDialog("抱歉，获取比赛类型出错了。");
       },
     }); //ajax 已得到具体比赛类型
@@ -273,7 +273,7 @@
             sctCourtType.append("<option value=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</  option>");
           }
         },
-        error: function() {
+        error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
           sousaiRemindDialog("抱歉，获取场地类型出错了。");
         },
       }); //ajax 已得到场地类型
@@ -312,7 +312,7 @@
             sctCourtType.append("<option value=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</  option>");
           }
         },
-        error: function() {
+        error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
           sousaiRemindDialog("抱歉，获取场地类型出错了。");
         },
       }); //ajax 已得到场地类型

@@ -296,7 +296,7 @@
   //定义函数
 
 	function e(crtPage,rs,obc,ia,sc,kv){
-	  $("#ajaxState .load").show();console.log("start");console.log(crtPage+",,,"+rs);
+	  $("#ajaxState .load").show();console.log("start");
     $.ajax({
       type: "POST",
       url: "getAllCourt",
@@ -315,7 +315,9 @@
       });
       target.empty(); //清空tbody
       target.html(template(data.body));
-      $("#ajaxState .load").hide();console.log("stop");
+      $("#ajaxState .load").hide();
+      $("#ajaxState .noresult").hide();
+      console.log("stop");
 	    //出错或无结果
 	    //target.empty(); //清空tbody
 	    if(target.find("tr.court").length == 0){
@@ -326,7 +328,7 @@
 	    $(".court-addr").wordLimit();
 	      pages(data.count,crtPage,rs);
 	    },
-      error: function() {
+      error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
 	      $("#ajaxState .noresult").show();console.log("出错了");
           sousaiRemindDialog("抱歉，ajax出错了。");
       },
@@ -397,7 +399,7 @@
             		  sousaiRemindDialog("删除失败，错误代码未知");
             	  }
               },
-              error: function() {
+              error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
                 sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
               },
             }); //ajax 已得到具体比赛类型
@@ -433,7 +435,7 @@
             		  sousaiRemindDialog("发布失败，错误代码未知");
             	  }
               },
-              error: function() {
+              error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
                 sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
               },
             });
@@ -463,7 +465,7 @@
             		  sousaiRemindDialog("删除失败，错误代码未知");
             	  }
               },
-              error: function() {
+              error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
                 sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
               },
             });
@@ -508,7 +510,7 @@
         		  sousaiRemindDialog("删除失败，错误代码未知");
         	  }
           },
-          error: function() {
+          error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
             sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
           },
         });*/
@@ -546,7 +548,7 @@
     	            sctCourtType.append("<option value=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</  option>");
     	          }
     	        },
-    	        error: function() {
+    	        error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
     	          sousaiRemindDialog("抱歉，获取场地类型出错了。");
     	        },
     	      }); 
@@ -603,7 +605,7 @@
         }
         sctParMatchType.append("<option value=1>其他</option>"); //每一个大类比赛类型的“其他”选项
       },
-      error: function() {
+      error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
         sousaiRemindDialog("抱歉，获取比赛类型出错了。");
       },
     }); //ajax 已得到具体比赛类型
@@ -642,7 +644,7 @@
             sctCourtType.append("<option value=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</  option>");
           }
         },
-        error: function() {
+        error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
           sousaiRemindDialog("抱歉，获取场地类型出错了。");
         },
       }); //ajax 已得到场地类型
@@ -681,7 +683,7 @@
             sctCourtType.append("<option value=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</  option>");
           }
         },
-        error: function() {
+        error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
           sousaiRemindDialog("抱歉，获取场地类型出错了。");
         },
       }); //ajax 已得到场地类型

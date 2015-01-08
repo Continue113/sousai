@@ -287,8 +287,7 @@
 	      $(".match-from > a").wordLimit(25);
 	      //pages(data.count,crtPage,rs);
 	    },
-      error: function(jqXHR,textStatus,errorThrown){
-    	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+      error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
 	      $("#ajaxState .noresult").show();console.log("出错了");
 	      sousaiRemindDialog("抱歉，获取数据出错了。");
       },
