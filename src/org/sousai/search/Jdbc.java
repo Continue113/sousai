@@ -170,6 +170,38 @@ public class Jdbc {
 		return matchList;
 	}
 
+	public MatchData selectFromId(String id) {
+		MatchData matchData = null;
+		try {
+			String sql = "select * from MATCHES where ID = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, Integer.parseInt(id));
+			result = pstmt.executeQuery();
+
+			while (result.next()) {
+
+				matchData = new MatchData.Builder(null,
+						result.getString("NAME")).id(Integer.parseInt(id))
+						.courtId(result.getInt("COURTID"))
+						.publishTime(result.getString("RELTIME"))
+						.matchType(result.getString("TYPE"))
+						.matchStartTime(result.getString("BEGINTIME"))
+						.matchDeadline(result.getString("ENDTIME"))
+						.matchIntroduction(result.getString("RULE")).build();
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return matchData;
+	}
+
 	public void publish(MatchData matchData, int userId) {
 		String sql = "insert into MATCHES(USERID,NAME,TYPE,BEGINTIME,ENDTIME,RULE) values(?,?,?,?,?,?)";
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");

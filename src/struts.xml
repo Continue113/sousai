@@ -162,6 +162,9 @@
 			<result name="success">/</result>
 		</action>
 
+		<action name="matchDetail" class="org.sousai.search.MatchDetail" method="matchDetail">
+			<result name="success">/</result>
+		</action>
 	</package>
 
 
