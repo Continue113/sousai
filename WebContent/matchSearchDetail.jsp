@@ -186,7 +186,7 @@ function e(){
 	          success: function(rspdata) {
 	        	  console.log(rspdata);
 				  //修改title
-				  $("title").html(rspdata.body[0].name+" &middot; 搜赛网");
+				  $("title").html(rspdata.name+" &middot; 搜赛网");
 			      var target = $("#match"),template = Handlebars.compile($('#match-template').html());
 			    //注册一个比较用户名的Helper,有options参数，块级Helper
 			               Handlebars.registerHelper("user",function(v1,v2,options){
