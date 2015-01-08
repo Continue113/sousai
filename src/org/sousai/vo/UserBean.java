@@ -57,10 +57,11 @@ public class UserBean implements Serializable {
 		this.setUserType(userType);
 	}
 
-	public UserBean(Integer userId, String userName, String userEmail,
+	public UserBean(Integer userId, String userName, String userPwd, String userEmail,
 			char userType, Date userRegTime, Date userLastLogTime) {
 		this.userId = userId;
 		this.userName = userName;
+		this.userPwd = userPwd;
 		this.userLastLogTime = userLastLogTime;
 		this.userEmail = userEmail;
 		this.userType = userType;

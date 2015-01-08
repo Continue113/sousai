@@ -12,7 +12,7 @@ import org.hibernate.Session;
 import java.util.List;
 
 public class UserDaoHibernate extends SqlHelper implements UserDao {
-	private final String selectUserBean = "select new org.sousai.vo.UserBean(u.id,u.name,u.email,u.type,u.regTime,u.lastLogTime) "
+	private final String selectUserBean = "select new org.sousai.vo.UserBean(u.id,u.name,u.pwd,u.email,u.type,u.regTime,u.lastLogTime) "
 			+ "from User u";
 
 	public UserDaoHibernate() {

@@ -136,6 +136,7 @@ public class GetAllCourtAction extends UserBaseAction {
 			// rows, orderByCol, isAsc);
 			List<CourtBean> list = amg.findPagedCourtByKeyValueOrderBy(columns,
 					keyValue, currentPage, rows, orderByCol, isAsc);
+			MyPrint.myPrint("Intro="+list.get(0).getIntro());
 			int count = amg.countAllCourt();
 			FrontMessage msg = new FrontMessage(list, count);
 			if (list != null) {
