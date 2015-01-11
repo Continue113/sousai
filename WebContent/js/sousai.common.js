@@ -441,3 +441,25 @@ function pages(count,crtPage,rs){
 		tgrget.find("li.prior").removeClass("disabled");
 	}
 	
+	//用户添加收藏比赛
+	function markMatch(userid,matchid){
+		$.ajax({
+	        type: "POST",
+	        url: "markMatch",
+	        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+	        dataType: "json",
+	        data:{"userMark.userId":userid,"userMark.matchId":matchid},
+	        success: function(rspdata) {
+	            console.log("收藏比赛成功："+rspdata);
+	            if(rspdata=="success"){
+	            	sousaiRemindDialog("收藏比赛成功");
+	            }else{
+	            	sousaiRemindDialog("收藏比赛失败，错误类型为："+rspdata+".请重试");
+	            }
+	        },
+	        error: function(jqXHR,textStatus,errorThrown){
+	          console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+	          sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
+	        },
+	      });
+	}

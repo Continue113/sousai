@@ -519,7 +519,7 @@
   	            	  console.log(rspdata[i].parentId + " /- parentId / mesg:/ " +rspdata[i].mesg);
   	            	  //采用each迭代每一个拥有data-id的 evaluation
   	            	  $( ".evaluation" ).each(function (j) {
-  	            		  //alert( $(this).data("id") );
+  	            		  //sousaiRemindDialog( $(this).data("id") );
   	            		  if ( $(this).data("id") == rspdata[i].parentId ) {
   	            			  console.log("$(this).data(\"id\") : "+$(this).data("id"));
   	            			  $(this).find(".media-body > .evaluation-tool-reply").append('<li class="evaluation-reply"><div class="media evaluation"><div class="pull-left"><img class="media-object" src="img/defaultImg.png" /><div class="evaluationName">'+userName+'</div></div><div class="media-body"><p class="evaluation-main">'+rspdata[i].mesg+'</p><p class="releasetime">'+rspdata[i].time+'</p><a class="pull-right evaluation-tool-a" href="#myModal">我要补充下</a></div></div></li>').find(".evaluation-tool > .evaluation-tool-visible").text('隐藏回复');
@@ -530,7 +530,7 @@
   	            }
   	        },
   	        error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-  	        	console.log("抱歉，获取评论出错了。");//alert("抱歉，获取评论出错了。");
+  	        	console.log("抱歉，获取评论出错了。");//sousaiRemindDialog("抱歉，获取评论出错了。");
   	        },
   	        }); //ajax 已得到评论信息
   	  	}
@@ -616,14 +616,14 @@
         success: function(rspdata) {
         	console.log(rspdata);
         	if(rspdata == 0){
-        		alert("发表评论失败！");console.log("发表评论失败！服务器返回错误码为0");
+        		sousaiRemindDialog("发表评论失败！");console.log("发表评论失败！服务器返回错误码为0");
         		//重置主发布框的内容。
         		$("#inputResponse-main").val("");
         		$("#inputValidateCodeMain").val("");
         		$("#publicResponse-main").click();
         		createCode("inputValidateImg");
         	}else{
-        		alert("发表评论成功！");console.log("发表评论成功！");
+        		sousaiRemindDialog("发表评论成功！");console.log("发表评论成功！");
         		//重置主发布框的内容。
         		$("#inputResponse-main").val("");
         		$("#inputValidateCodeMain").val("");
@@ -642,7 +642,7 @@
         	};
         },
         error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-          alert("抱歉，发布评论出错了。");console.log("抱歉，发布评论失败！未能发送到服务器。");
+          sousaiRemindDialog("抱歉，发布评论出错了。");console.log("抱歉，发布评论失败！未能发送到服务器。");
         }
         }); //ajax 已得到发送评论到服务器
         console.log("ajax结束");
@@ -726,7 +726,7 @@
       var parentId = null, //直接评论 parentId 和rootId 都为null
       	  rootId = null,
       	  userId = $("#evaluationName-main").data("userid"),
-      	  courtId = 1,
+      	  courtId = $(".title").attr("data-id"),
       	  mesg = $(this).parents().find("textarea").val(),
           visible = $('input:radio[name="responseState-main"]:checked').val(),
           respName = $.trim($(this).parent().parent().find(".evaluationName").text()),
@@ -740,9 +740,9 @@
                     
       if(userId != 0){
           if(inputValidateImg != inputValidateCaodeMain){
-            alert("请填写正确的验证码。");console.log("验证码错误");
+            sousaiRemindDialog("请填写正确的验证码。");console.log("验证码错误");
           }else if( mesg == "" ){
-            alert("请填写回复内容。");
+            sousaiRemindDialog("请填写回复内容。");
           }else{
             sendEvaluation(parentId,rootId,userId,courtId,mesg,visible,respName,target,respCode);
           };
@@ -774,7 +774,7 @@
       if(userId != 0){
       //if(mesg != ""){
     	  if( inputValidateImg != inputValidateCaodeMain ){
-        	  alert("请填写正确的验证码。");console.log("验证码错误");
+        	  sousaiRemindDialog("请填写正确的验证码。");console.log("验证码错误");
           }else{
         	  $(".evaluation-tool-a").slideDown();
     	      sendEvaluation(parentId,rootId,userId,courtId,mesg,visible,respName,target,respCode);

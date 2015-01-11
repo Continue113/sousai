@@ -24,6 +24,7 @@ public class RelMessageAction extends UserBaseAction {
 	{
 		MyPrint.myPrint("in RelMessageAction!");
 		MyPrint.myPrint("userName = " +message.getUserName());
+		MyPrint.myPrint("courtId = "+ message.getCourtId());
 		JSONUtils.toJson(ServletActionContext.getResponse(), umg.relMessage(getMessage()));
 		return null;
 	}
