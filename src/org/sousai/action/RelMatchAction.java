@@ -1,9 +1,11 @@
 package org.sousai.action;
 
+import org.apache.struts2.ServletActionContext;
 import org.sousai.action.base.UserBaseAction;
 import org.sousai.common.Constant;
 import org.sousai.domain.Court;
 import org.sousai.domain.Match;
+import org.sousai.tools.JSONUtils;
 import org.sousai.tools.MyPrint;
 import org.sousai.vo.UserBean;
 
@@ -71,27 +73,30 @@ public class RelMatchAction extends UserBaseAction {
 	}
 
 	public String execute() throws Exception {
+		String value;
 		MyPrint.myPrint("in RelMatchAction");
 		try {
 			UserBean userBean = (UserBean) ActionContext.getContext()
 					.getSession().get("userBean");
 
-			isCourt=false;
+			isCourt = false;
 			MyPrint.myPrint("match.getCourtId() = " + match.getCourtId());
 			// 是否超过当日发布比赛上限
 			if (!umg.isExeed(userBean.getUserId(), MAX_MATCH_COUNT, 0)) {
-				if (!isCourt ||( court != null
-						&& umg.releaseCourt(court) != 0)) {
-					if (getMatch() != null && umg.relMatch(match) != 0) {
-						return Constant.SUCCESS;
-					}
+				if (!isCourt || (court != null && umg.releaseCourt(court) != 0)
+						&& getMatch() != null && umg.relMatch(match) != 0) {
+					value = Constant.SUCCESS;
+				} else {
+					value = Constant.FAIL;
 				}
-				return Constant.FAIL;
+			} else {
+				value = EXEED_COUNT;
 			}
-			return EXEED_COUNT;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Constant.FAIL;
+			value = Constant.ERROR;
 		}
+		JSONUtils.toJson(ServletActionContext.getResponse(), value);
+		return null;
 	}
 }
