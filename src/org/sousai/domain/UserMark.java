@@ -62,4 +62,9 @@ public class UserMark implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
+	@Override
+	public String toString(){
+		return String.format("id = %1$s, userId = %2$s, matchId = %3$s", id, userId, matchId);
+	}
 }

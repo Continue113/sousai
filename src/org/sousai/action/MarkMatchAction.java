@@ -5,8 +5,8 @@ import org.sousai.action.base.UserBaseAction;
 import org.sousai.common.Constant;
 import org.sousai.domain.UserMark;
 import org.sousai.tools.JSONUtils;
+import org.sousai.tools.MyPrint;
 
-import com.opensymphony.xwork2.Result;
 
 public class MarkMatchAction extends UserBaseAction{
 
@@ -37,6 +37,7 @@ public class MarkMatchAction extends UserBaseAction{
 	
 	public String execute() throws Exception {
 		String value;
+		MyPrint.myPrint(userMark.toString());
 		if(umg.markMatch(userMark)!=null){
 			value = Constant.SUCCESS;
 		}
