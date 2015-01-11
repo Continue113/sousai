@@ -154,7 +154,6 @@
 			<result name="success">/</result>
 		</action>
 		
-		
 		<action name="mainSearch" class="org.sousai.search.MainSearch" method="mainSearch">
 			<result name="success">/</result>
 		</action>
