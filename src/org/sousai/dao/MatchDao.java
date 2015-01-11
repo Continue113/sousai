@@ -35,9 +35,7 @@ public interface MatchDao {
 	List<MatchBean> findByMatchClassId(Integer matchClassId,int currentPage, int rows);
 
 	List<MatchBean> findByMatchClassName(String matchClassName,int currentPage, int rows);
-
-	List<MatchBean> findByMarkingUserId(Integer userId,int currentPage, int rows);
-
+	
 	/**
 	 * 根据可选参数，从数据库返回比赛。
 	 * 
@@ -97,4 +95,6 @@ public interface MatchDao {
 	List<MatchBean> findPagedByKeyValueOrderBy(String[] columns,
 			String keyValue, Integer currentPage, Integer rows,
 			String orderByCol, Boolean isAsc) throws Exception;
+	
+	
 }

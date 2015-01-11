@@ -47,6 +47,7 @@ public class UserManagerImpl implements UserManager {
 	private MatchClassDao matchClassDao;
 	private MatchTypeDao matchTypeDao;
 	private MatchDao matchDao;
+	private UserMarkDao userMarkDao;
 
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
@@ -82,6 +83,10 @@ public class UserManagerImpl implements UserManager {
 
 	public void setMatchDao(MatchDao matchDao) {
 		this.matchDao = matchDao;
+	}
+	
+	public void setUserMarkDao(UserMarkDao userMarkDao){
+		this.userMarkDao = userMarkDao;
 	}
 
 	@Override
@@ -409,7 +414,7 @@ public class UserManagerImpl implements UserManager {
 	@Override
 	public List<MatchBean> getUsersFavorMatch(Integer userId, int currentPage,
 			int rows) {
-		return (List<MatchBean>) matchDao.findByMarkingUserId(userId,
+		return (List<MatchBean>) userMarkDao.findByMarkingUserId(userId,
 				currentPage, rows);
 	}
 
@@ -433,5 +438,10 @@ public class UserManagerImpl implements UserManager {
 	public List<MatchBean> getByKeyValue(String keyValue, int currentPage,
 			int pageSize) {
 		return matchDao.findPagedByKeyValue(keyValue, currentPage, pageSize);
+	}
+
+	@Override
+	public Long markMatch(UserMark userMark) {
+		return userMarkDao.save(userMark);
 	}
 }

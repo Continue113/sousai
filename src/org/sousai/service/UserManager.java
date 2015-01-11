@@ -3,7 +3,6 @@ package org.sousai.service;
 import org.sousai.domain.*;
 import org.sousai.vo.*;
 
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.*;
 import java.io.File;
@@ -204,4 +203,6 @@ public interface UserManager
 	public boolean isExeed(Integer userId, int maxCount, int type);
 	
 	public List<MatchBean> getByKeyValue(String keyValue, int currentPage, int pageSize);
+	
+	public Long markMatch(UserMark userMark); 
 }

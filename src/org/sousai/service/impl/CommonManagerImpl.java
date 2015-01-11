@@ -20,6 +20,7 @@ public class CommonManagerImpl implements CommonManager {
 	private MatchClassDao matchClassDao;
 	private MatchTypeDao matchTypeDao;
 	private MatchDao matchDao;
+	private UserMarkDao userMarkDao;
 
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;

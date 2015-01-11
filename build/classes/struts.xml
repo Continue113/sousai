@@ -8,13 +8,13 @@
 	<constant name="struts.custom.i18n.resources" value="resource" />
 	<constant name="struts.devMode" value="true" />
 	<package name="default" extends="struts-default,json-default">
-
+		
 		<!-- 定义全局Result映射 -->
 		<global-results>
 			<!-- 定义login逻辑视图对应的视图资源 -->
 			<result name="login">login.jsp</result>
 		</global-results>
-
+		
 		<!-- ============================下面是员工角色的Action======================== -->
 		<!-- 定义处理登录系统的Action -->
 		<action name="processLogin" class="org.sousai.action.LoginAction">
@@ -22,154 +22,153 @@
 			<result name="error">login.jsp</result>
 			<result name="input">login.jsp</result>
 		</action>
-
+		
 		<!-- 定义处理注册的Action -->
 		<action name="processReg" class="org.sousai.action.RegAction">
 			<result name="success">index.jsp</result>
 			<result name="error">error.jsp</result>
 		</action>
-
+		
 		<!-- 定义发布比赛的Action -->
 		<action name="relMatch" class="org.sousai.action.RelMatchAction">
 			<result name="success">userCenter-releaseMatch.jsp</result>
 			<result name="fail">error.jsp</result>
 			<result name="exeed">error.jsp</result>
 		</action>
-
+		
 		<!-- 定义检查用户名的Action -->
 		<action name="validName" class="org.sousai.action.ValidNameAction">
 		</action>
-
+		
 		<!-- 定义选择地区的Action -->
 		<action name="selRegion" class="org.sousai.action.SelRegionAction">
 		</action>
-
+		
 		<!-- 定义注销的Action -->
 		<action name="processLogout" class="org.sousai.action.LogoutAction">
 			<result>index.jsp</result>
 		</action>
-
+		
 		<!-- 更新用户信息的Action -->
 		<action name="updateUserInfo" class="org.sousai.action.UpdateUserAction">
 		</action>
-
+		
 		<!-- 上传用户头像的Action -->
 		<action name="uploadUserPic" class="org.sousai.action.UploadUserPicAction">
 		</action>
-
+		
 		<!-- 同时上传多张场地图片的action -->
 		<action name="uploadCourtPic" class="org.sousai.action.UploadCourtPicAction">
 			<result>main.jsp</result>
 		</action>
-
+		
 		<!-- 发布场地的action -->
 		<action name="relCourt" class="org.sousai.action.RelCourtAction">
 			<result name="success">userCenter-releaseCourt.jsp</result>
 			<result name="fail">error.jsp</result>
 			<result name="exeed">error.jsp</result>
 		</action>
-
+		
 		<!-- 获取所有比赛大类的action -->
 		<action name="showMC" class="org.sousai.action.ShowMatchClassAction">
 		</action>
-
+		
 		<!-- 获取比赛大类下的比赛小类的action -->
 		<action name="showMT" class="org.sousai.action.ShowMatchTypesAction">
 		</action>
-
+		
 		<!-- 获取对应比赛类型的场地类型的action -->
 		<action name="showCT" class="org.sousai.action.ShowCourtTypesAction">
 		</action>
-
+		
 		<!-- 发布评论的action -->
 		<action name="relMsg" class="org.sousai.action.RelMessageAction">
 		</action>
-
+		
 		<!-- 获取指定场地所有评论的action -->
 		<action name="showMsgs" class="org.sousai.action.ShowMessagesAction">
 		</action>
-
+		
 		<!-- 在发布比赛页面获取场地的action -->
 		<action name="getCourtM" class="org.sousai.action.GetCourtInMatchRelingAction">
 		</action>
-
+		
 		<!-- 筛选比赛的action -->
 		<action name="scrMatch" class="org.sousai.action.ScreenMatchAction">
 		</action>
-
+		
 		<!-- 通过场地id获取场地详细信息的action -->
 		<action name="getCourtD" class="org.sousai.action.GetCourtDetailAction">
 		</action>
-
+		
 		<!-- 统计用户发布的各类比赛数量的action -->
 		<action name="cntEachMatch" class="org.sousai.action.CountEachMatchTypeAction">
 		</action>
-
+		
 		<!-- 查看所有评论的action -->
 		<action name="getAllMesg" class="org.sousai.action.GetAllMessageAction">
 		</action>
-
+		
 		<!-- 查看所有场地的action ，返回List<org.sousai.vo.CourtBean> -->
 		<action name="getAllCourt" class="org.sousai.action.GetAllCourtAction">
 		</action>
-
+		
 		<!-- 查看所有比赛的action，返回List<org.sousai.domain.Match> -->
 		<action name="getAllMatch" class="org.sousai.action.GetAllMatchAction">
 		</action>
-
+		
 		<!-- 查看所有用户的action，返回List<org.sousai.domain.UserBean> -->
 		<action name="getAllUser" class="org.sousai.action.GetAllUserAction">
 		</action>
-
+		
 		<!-- 获取用户收藏比赛的action，返回List<org.sousai.domain.Match> -->
 		<action name="getUserFavM" class="org.sousai.action.GetUserFavorMatchAction">
 		</action>
-
+		
 		<!--批量删除比赛 -->
 		<action name="deleteCourts" class="org.sousai.action.DeleteCourts">
 		</action>
-
+		
 		<!--批量删除场地 -->
 		<action name="deleteMatches" class="org.sousai.action.DeleteMatches">
 		</action>
-
+		
 		<!--搜寻比赛 -->
 		<action name="searchMatch" class="org.sousai.action.SearchMatchAction">
 		</action>
-
+		
 		<action name="backgroundCollections" class="org.sousai.search.BackgroundCollections"
 			method="loadJson">
 			<result name="success">/</result>
 		</action>
-
-		<action name="updateCollections" class="org.sousai.search.UpdateCollections"
-			method="updateCollections">
+		
+		<action name="updateCollections" class="org.sousai.search.UpdateCollections" method="updateCollections">
 			<result name="success">/</result>
 		</action>
-
-		<action name="deleteCollections" class="org.sousai.search.DeleteCollections"
-			method="deleteCollections">
+		
+		<action name="deleteCollections" class="org.sousai.search.DeleteCollections" method="deleteCollections">
 			<result name="success">/</result>
 		</action>
-
-		<action name="publishCollections" class="org.sousai.search.PublishCollections"
-			method="publishCollections">
+		
+		<action name="publishCollections" class="org.sousai.search.PublishCollections" method="publishCollections">
 			<result name="success">/</result>
 		</action>
-
-		<action name="mainSearch" class="org.sousai.search.MainSearch"
-			method="mainSearch">
+		
+		
+		<action name="mainSearch" class="org.sousai.search.MainSearch" method="mainSearch">
 			<result name="success">/</result>
 		</action>
-
+		
 		<action name="matchDetail" class="org.sousai.search.MatchDetail" method="matchDetail">
 			<result name="success">/</result>
 		</action>
+		
+		<action name="markMatch" class="org.sousai.action.MarkMatch" >
+		</action>
 	</package>
-
-
-	<!-- <package name="ajax" extends="json-default"> <action name="uploadPic" 
-		class="org.sousai.action.UploadPicAction"> <result type="json"></result> 
-		</action> </package> -->
-
+	
+	
+	<!-- <package name="ajax" extends="json-default"> <action name="uploadPic" class="org.sousai.action.UploadPicAction">
+		<result type="json"></result> </action> </package> -->
+	
 </struts>

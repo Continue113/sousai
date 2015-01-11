@@ -44,6 +44,7 @@
 				<value>org/sousai/domain/Match.hbm.xml</value>
 				<value>org/sousai/domain/MatchClass.hbm.xml</value>
 				<value>org/sousai/domain/MatchType.hbm.xml</value>
+				<value>org/sousai/domain/UserMark.htm.xml</value>
 				<!-- <value>org/crazyit/hrsystem/domain/Attend.hbm.xml</value>
 				<value>org/crazyit/hrsystem/domain/AttendType.hbm.xml</value>
 				<value>org/crazyit/hrsystem/domain/CheckBack.hbm.xml</value>
@@ -108,7 +109,8 @@
 		p:matchClassDao-ref="mcDao"
 		p:matchTypeDao-ref="mtDao"
 		p:courtTypeDao-ref="ctDao"
-		p:matchDao-ref="matchDao"/>
+		p:matchDao-ref="matchDao"
+		p:userMarkDao-ref="userMarkDao"/>
 		
 <!-- 	p:matchClassDao-ref="mcDao" -->
 		

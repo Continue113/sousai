@@ -140,29 +140,6 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 		return null;
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<MatchBean> findByMarkingUserId(Integer userId, int currentPage,
-			int rows) {
-		// String hql = "select new org.sousai.vo.MatchBean(m.id,m.name,m.type,"
-		// + "m.beginTime,m.endTime,m.courtId,c.name,m.rule,m.relTime,"
-		// +
-		// "m.verify,m.score,m.userId,u.name) from Match m, Court c, User u, Usermark um "
-		// +
-		// "where m.courtId=c.id and u.id=m.userId and um.UserId=? and m.id=um.matchId";
-		String hql = selectMatchBean;
-		Session session = getHibernateTemplate().getSessionFactory()
-				.getCurrentSession();
-		try {
-			return (List<MatchBean>) session.createQuery(hql)
-					.setInteger(0, userId).setMaxResults(rows)
-					.setFirstResult((currentPage - 1) * rows).list();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
 	@Override
 	public List<MatchBean> findByParms(int[] dayOfWeek, int state, Date date,
 			Integer regionId, int currentPage, int rows) {

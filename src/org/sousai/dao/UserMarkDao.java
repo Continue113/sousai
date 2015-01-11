@@ -1,16 +1,37 @@
 package org.sousai.dao;
 
-import org.sousai.domain.UserMark;
+import java.util.List;
 
-public interface UserMarkDao {
+import org.sousai.domain.UserMark;
+import org.sousai.vo.MatchBean;
+
+public interface UserMarkDao{
 
 	UserMark get(Integer id);
 	
-	Integer save(UserMark userMark);
+	Long save(UserMark userMark);
 	
 	void update(UserMark userMark);
 	
 	void delete(UserMark userMark);
 	
 	void delete(Integer id);
+	
+	/**
+	 * 用户收藏比赛
+	 * @param userId
+	 * @param matchId
+	 * @return
+	 */
+	Boolean markMatchByUserId(Integer userId, Integer matchId);
+	
+	/**
+	 * 获取用户收藏的比赛
+	 * @param userId
+	 * @param currentPage
+	 * @param rows
+	 * @return
+	 */
+	List<MatchBean> findByMarkingUserId(Integer userId, int currentPage,
+			int rows);
 }
