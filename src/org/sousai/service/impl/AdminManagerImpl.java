@@ -59,6 +59,10 @@ public class AdminManagerImpl implements AdminManager {
 		this.matchDao = matchDao;
 	}
 
+	public void setUserMarkDao(UserMarkDao userMarkDao){
+		this.userMarkDao = userMarkDao;
+	}
+	
 	@Override
 	public List<MessageBean> getAllMessage() {
 		return mesgDao.findAll();

@@ -162,7 +162,7 @@
 			<result name="success">/</result>
 		</action>
 		
-		<action name="markMatch" class="org.sousai.action.MarkMatch" >
+		<action name="markMatch" class="org.sousai.action.MarkMatchAction" >
 		</action>
 	</package>
 	

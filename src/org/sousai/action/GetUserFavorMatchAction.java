@@ -60,6 +60,12 @@ public class GetUserFavorMatchAction extends UserBaseAction {
 
 	public String execute() throws Exception {
 		try {
+			if (currentPage == null) {
+				currentPage = 1;
+			}
+			if (rows == null) {
+				rows = 25;
+			}
 			List<MatchBean> list = null;
 			UserBean userBean = (UserBean) ActionContext.getContext()
 					.getSession().get("userBean");

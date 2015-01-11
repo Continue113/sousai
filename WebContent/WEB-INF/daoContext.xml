@@ -37,7 +37,7 @@
 		class="org.sousai.dao.impl.MatchDaoHibernate"
 		parent="daoTemplate"/>
 	<bean id="userMarkDao"
-		class="org.sousai.dao.impl.userMarkDaoHibernate"
+		class="org.sousai.dao.impl.UserMarkDaoHibernate"
 		parent="daoTemplate"/>
 
 </beans>

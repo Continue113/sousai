@@ -58,6 +58,9 @@ public class CommonManagerImpl implements CommonManager {
 		this.matchDao = matchDao;
 	}
 
+	public void setUserMarkDao(UserMarkDao userMarkDao){
+		this.userMarkDao = userMarkDao;
+	}
 	@Override
 	public List<Region> getProvince() {
 		// TODO Auto-generated method stub
