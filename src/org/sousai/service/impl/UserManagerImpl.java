@@ -441,7 +441,7 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public Long markMatch(UserMark userMark) {
+	public Long markMatch(UserMark userMark) throws Exception{
 		return userMarkDao.save(userMark);
 	}
 }

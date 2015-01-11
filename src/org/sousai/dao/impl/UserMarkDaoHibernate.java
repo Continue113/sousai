@@ -15,8 +15,8 @@ public class UserMarkDaoHibernate extends SqlHelper implements UserMarkDao {
 	}
 
 	@Override
-	public Long save(UserMark userMark) {
-		return (Long) getHibernateTemplate().save(userMark);
+	public Long save(UserMark userMark) throws Exception{
+		return Long.parseLong(getHibernateTemplate().save(userMark).toString());
 	}
 
 	@Override
@@ -46,8 +46,8 @@ public class UserMarkDaoHibernate extends SqlHelper implements UserMarkDao {
 			int rows) {
 		String hql = "select new org.sousai.vo.MatchBean(m.id,m.name,m.type,"
 				+ "m.beginTime,m.endTime,m.courtId,c.name,m.rule,m.relTime,"
-				+ "m.verify,m.score,m.userId,u.name) from Match m, Court c, User u, Usermark um "
-				+ "where m.courtId=c.id and u.id=m.userId and um.UserId=? and m.id=um.matchId";
+				+ "m.verify,m.score,m.userId,u.name) from Match m, Court c, User u, UserMark um "
+				+ "where m.courtId=c.id and u.id=m.userId and um.userId=? and m.id=um.matchId";
 		// String hql = selectMatchBean;
 		Session session = getHibernateTemplate().getSessionFactory()
 				.getCurrentSession();

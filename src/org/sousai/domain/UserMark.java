@@ -11,6 +11,9 @@ public class UserMark implements Serializable {
 	Integer userId;
 	Integer matchId;
 
+	public UserMark(){
+	}
+	
 	/**
 	 * @return the id
 	 */

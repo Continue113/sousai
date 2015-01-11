@@ -204,5 +204,5 @@ public interface UserManager
 	
 	public List<MatchBean> getByKeyValue(String keyValue, int currentPage, int pageSize);
 	
-	public Long markMatch(UserMark userMark); 
+	public Long markMatch(UserMark userMark) throws Exception; 
 }

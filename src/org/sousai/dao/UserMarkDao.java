@@ -9,7 +9,7 @@ public interface UserMarkDao{
 
 	UserMark get(Integer id);
 	
-	Long save(UserMark userMark);
+	Long save(UserMark userMark) throws Exception;
 	
 	void update(UserMark userMark);
 	
