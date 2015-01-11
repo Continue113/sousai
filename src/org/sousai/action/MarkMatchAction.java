@@ -14,6 +14,7 @@ public class MarkMatchAction extends UserBaseAction{
 	
 	private UserMark userMark;
 
+	
 	/**
 	 * @return the userMark
 	 */
