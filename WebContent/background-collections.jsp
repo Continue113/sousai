@@ -275,7 +275,9 @@
 	      });
 	      target.empty(); //清空tbody
 	  	  target.html(template(data));
-	      $("#ajaxState .load").hide();console.log("stop");
+	      $("#ajaxState .load").hide();
+	      $("#ajaxState .noresult").hide();
+	      console.log("stop");
 	      //出错或无结果
 	      //target.empty(); //清空tbody
 	      if(target.find("tr.match").length == 0){

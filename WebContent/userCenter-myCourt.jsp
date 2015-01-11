@@ -98,6 +98,10 @@
           </div> 
          </div>
          <!-- /courtBoxs -->
+         <div class="panel-bottom">
+       		<div id="ajaxState" class="text-center"><span class="hide noresult">无结果</span><span class="hide load"><img src="img/loading.gif" height="20px" width="20px"></img>数据加载中...</span></div>
+       		<div class="pagination"><nav><ul class="pagination"></ul></nav></div>
+      	 </div>
         </div> 
         <!-- /courts -->
        </div>
@@ -146,22 +150,43 @@
   <script>
     $(function () {
   	  //ajax接收所有的场地
-  		$.post("getAllCourt", null, function(data) {
-  	      console.log(data);//sousaiRemindDialog(data);
-          var target = $(".courtBoxs"),template = Handlebars.compile($('#court-template').html());
-          Handlebars.registerHelper("data",function(v){
-            //将当前对象转化为字符串，保存在data-info中
-            console.log(v);
-            var v1 = JSON.stringify(v);
-            //console.log("v1:"+v1);
-            return v1;
-          });
-          target.empty(); //清空tbody
-          target.html(template(data));
-          //字数限制，溢出省略 
-          $(".courtBox-address").wordLimit(20);
-  	    $(".courtBox-evaluation p").wordLimit();
-  	    });
+  	  $("#ajaxState .load").show();console.log("start");
+  	$.ajax({
+        type: "POST",
+        url: "getAllCourt",
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        dataType: "json",
+        data:null,
+        success: function(data) {
+        	console.log(data);//sousaiRemindDialog(data);
+		      var target = $(".courtBoxs"),template = Handlebars.compile($('#court-template').html());
+		      Handlebars.registerHelper("data",function(v){
+		    	  //将当前对象转化为字符串，保存在data-info中
+		    	  console.log(v);
+		    	  var v1 = JSON.stringify(v);
+		    	  //console.log("v1:"+v1);
+		    	  return v1;
+		      });
+		      target.empty().show().html(template(data));
+		      $("#ajaxState .load").hide();
+		      $("#ajaxState .noresult").hide();
+		      console.log("stop");
+		      //出错或无结果
+		      //target.empty(); //清空tbody
+		      if(target.find("div.matchBox").length == 0){
+		      $("#ajaxState .noresult").show();
+		      target.hide();
+		      console.log("无结果");
+		      }
+	    	    //字数限制，溢出省略
+	          $(".courtBox-address").wordLimit(20);
+	    	  $(".courtBox-evaluation p").wordLimit();
+        },
+        error: function(jqXHR,textStatus,errorThrown){
+          console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+          sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
+        },
+      });
       //鼠标hover matchbox
       $(".courtBoxs ").on('mouseenter','div.courtBox',function(){
       	      $('div.courtBox').removeClass("box-active");

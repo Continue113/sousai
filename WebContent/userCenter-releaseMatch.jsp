@@ -79,98 +79,13 @@
        <ul class="breadcrumb"><li>比赛信息:</li></ul> 
       </div> 
       <div class="tab-content"> 
-       <div id="releaseMatch" class="tab-pane active"> 
-        <div class="page-header"> 
-         <h4>比赛基本信息</h4> 
-        </div> 
-        <form id="releaseMatchForm" class="form-horizontal" action="relMatch" method="post" enctype="multipart/form-data"> 
-         <fieldset> 
-          <legend>比赛基本信息</legend> 
-          <div class="control-group"> 
-           <label class="control-label" for="searchKey">比赛名称：</label> 
-           <div class="controls"> 
-            <input class="span5" type="text" id="inputMatchTitle" name="match.name" placeholder="如：2012年XXXXXXX杯乒乓球季度赛" required="required" /> 
-           </div> 
-          </div> 
-          <div class="control-group"> 
-           <label class="control-label" for="matchType">比赛类型：</label> 
-           <div class="controls"> 
-            <select class="selectMatchType" name="mcId">
-              <option value=0>请选择比赛类型</option>
-            </select>
-            <select class="selectParticularMatchType hide" name="matchTypeId">
-              <option value=0>请选择比赛类型</option>
-            </select>
-            <label class="omthide hide" class="control-label" for="otherMatchType">请输入类型：</label>
-            <input class="omthide hide" id="otherMatchType" type="text" value="" placeholder="请填写比赛类型" name="match.type"/>
-           </div> 
-          </div> 
-          <div class="control-group"> 
-           <label class="control-label" for="matchTime">比赛时间：</label> 
-           <div class="controls form-inline"> 
-            <div class="input-append"> 
-             <input type="text" id="inputMatchTimefrom" name="match.beginTime" placeholder="请选择开始日期" required="required" value=""/> 
-             <span class="add-on" data-toggle="tooltip" data-placement="top" title="" data-original-title="点击输入框可以选择开始日期"><i class="icon-calendar"></i></span> 
-            </div> 
-            <label for="to">—</label> 
-            <div class="input-append"> 
-             <input type="text" id="inputMatchTimeto" name="match.endTime" placeholder="请选择结束日期" required="required" value=""/> 
-             <span class="add-on" data-toggle="tooltip" data-placement="top" title="" data-original-title="一天以内结束的比赛，日期为同一天"><i class="icon-calendar"></i></span> 
-            </div> 
-           </div> 
-           <div class="controls controls-error"></div> 
-          </div> 
-          <div class="control-group"> 
-           <label class="control-label" for="matchRegion">比赛地点：</label> 
-           <div class="controls form-inline"> 
-            <s:include value="selectPCC.jsp" />
-            <!-- /选择省市区三级下拉框 --> 
-            <a href="javascript:void(0)" class="btn btn-success pull-right" id="searchExistedCourt">搜索现有球场</a>
-           </div> 
-          </div> 
-          <div class="control-group existCourtsBox"> 
-           <table class="table table-striped table-hover"> 
-            <thead> 
-             <tr> 
-              <th>球场名称</th> 
-              <th>详细地址</th> 
-              <th>类型</th> 
-              <th>球台数</th> 
-              <th>比赛次数</th> 
-              <th>详细</th> 
-             </tr> 
-            </thead> 
-            <tbody></tbody> 
-           </table>
-           <div class="no-results hide"><p class="text-warning text-center">暂时没有结果哟！</p></div>
-            <div class="text-center">
-             <button class="btn" type="button" id="newCourtBtn">没有我要的场地，我要添加新场地</button> 
-            </div>
-          </div> 
-          <div class="control-group"> 
-           <div class="releaseCourtBox"> 
-            <label class="checkbox"><input type="checkbox" id="newCourtCheckbox" name="matchState_all" />添加新场地&nbsp;&nbsp;(<span id="newCourtRegion"><span class="newCourtProvince">请选择省</span>-<span class="newCourtCity">请选择市</span>-<span class="newCourtCountry">请选择区</span></span>)</label> 
-           </div>
-          </div> 
-          <div class="control-group"> 
-           <label class="control-label" for="inputMatchRules">比赛规程：</label> 
-          </div> 
-          <textarea id="inputMatchRules" name="match.rule" required="required"></textarea> 
-          <input type="text" class="hide" id="hideCourtId" value="" name="match.courtId" />
-          <input type="text" class="hide" id="hideIsCourt" value="false" name="isCourt" />
-          <input type="text" class="hide" id="hideUserId" value="<s:property value="#session.userBean.userId"/>" name="match.userId" />
-          <input type="text" class="hide" id="hideNewCourtRegionId" value="0" name="court.regionId"/>
-          <div class="control-group">
-           <div class="controls">
-            <button type="submit" class="btn btn-success pull-right" id="rlsMatch">确定发布</button>
-            <button type="reset" class="btn pull-right" id="resetMatchForm">重置</button>
-            <button type="button" class="btn pull-right" name="preView">预览</button> 
-           </div> 
-          </div> 
-         </fieldset> 
-        </form> 
+       <div id="releaseMatch" class="tab-pane active">
+      <!--编辑比赛 开始-->
+        <s:include value="editMatch.jsp" />
+      <!-- /编辑比赛信息 -->
        </div> 
-       <!-- /releaseMatch --> 
+       <!-- /releaseMatch -->
+      
       </div> 
       <!-- /tab-content --> 
      </div> 
@@ -207,9 +122,10 @@
   </script>
   <script>
   $(function () {
+	  //将editMatch修改为适合发布场地页面
+	  $(".editMatch").show().find(".btnbar").remove().end().find("div.control-group.hide").show().find();
   //立即初始化比赛类型
   initMatchType();
-  
   //获得已有比赛信息
   userCenterRemind();
   

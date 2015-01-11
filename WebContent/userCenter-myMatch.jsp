@@ -15,6 +15,7 @@
   <link href="css/sousai.IE8.css" rel="stylesheet" /> 
   <![endif]-->
   <style type="text/css">
+  
 /** 比赛列表 **/
 .matchBoxs{border: 1px solid #ccc;margin: 10px 0;float: left;padding: 10px;}
 .matchBox .matchBox-all{float: left;}
@@ -29,6 +30,37 @@
 .matchBox .matchBox-state{width: 50px;color: #ff040f;}
 .matchBox .matchBox-info{width: 220px;}
 .matchBox .matchBox-btns{width: 60px;padding-right: 5px;}
+
+  /** 现有场地框 **/
+  .existCourtsBox{border: 3px solid #ddd;
+  -webkit-border-radius: 0 0 6px 6px;
+  -moz-border-radius: 0 0 6px 6px;
+  border-radius: 0 0 6px 6px;}
+  /** 避免验证后无圆角 **/
+  .input-append span.add-on{
+  -webkit-border-radius: 0 4px 4px 0;
+  -moz-border-radius: 0 4px 4px 0;
+  border-radius: 0 4px 4px 0;
+  }
+  /** 现有场地表格 **/
+  .existCourtsBox tr{cursor: pointer;}
+  .existCourtsBox tr.active {
+    font-weight: bold;
+  }
+  /** 添加场地按钮 **/
+  .existCourtsBox > .text-center > .btn {margin-top: 10px;float: none;}
+  /** 编辑比赛 按钮bar  **/
+  .editMatch > .btnbar {margin-left: 0;}
+  /** 编辑比赛按钮bar 中的按钮  **/
+  .editMatch > .btnbar > .btn {float: right;margin-left: 10px;}  
+  /** 最小宽度情况下 **/
+  @media (max-width: 480px) {
+    /** 搜索现有场地按钮 **/
+    #searchExistedCourt{margin-top: 5px;}
+  }
+  /** 排序下拉按钮 **/
+  .panel-top > .btn-group {margin-top: 10px;}
+  
   </style>
 </head>
 <body class="userCenter">
@@ -73,9 +105,21 @@
        <div id="myMatch" class="tab-pane active"> 
         <div class="matchs" id="matchsList">
          <!-- panel --> 
-         <div class="panel-top"></div>
+         <div class="panel-top">
+         <div class="btn-group sort" role="group">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current" data-orderbycol="name" data-isasc="true">排序方式</span><span class="caret"></span></button>
+		<ul class="dropdown-menu" role="menu">
+          <li><a href="javascript:void(0)" data-orderbycol="name" data-isasc="true">比赛名称<i class="icon-arrow-up"></i></a></li> 
+          <li><a href="javascript:void(0)" data-orderbycol="beginTime" data-isasc="true">比赛时间<i class="icon-arrow-up"></i></a></li> 
+          <li><a href="javascript:void(0)" data-orderbycol="courtName" data-isasc="true">比赛场地<i class="icon-arrow-up"></i></a></li> 
+          <li><a href="javascript:void(0)" data-orderbycol="relTime" data-isasc="true">发布时间<i class="icon-arrow-up"></i></a></li> 
+          <li><a href="javascript:void(0)" data-orderbycol="userName" data-isasc="true">发布用户<i class="icon-arrow-up"></i></a></li>
+		</ul>
+	     </div>
+         </div>
          <div class="matchBoxs">           
-          <div class="matchBox"><div class="matchBox-all"> 
+          <div class="matchBox">
+          <div class="matchBox-all"> 
            <div class="matchBox-title">
             <a href="javascript:void(0)">一北京东城区草根杯乒乓球比赛</a>
             <span class="pull-right">发布时间：<span class="matchBox-releaseTime">2013-10-10</span></span>
@@ -101,12 +145,26 @@
             <li class="matchBox-info "><a href="javascript:void(0)">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
             <li class="matchBox-btns "><a href="javascript:void(0)" class="btn btn-mini">修改规程</a><a href="javascript:void(0)" class="btn btn-mini">查看详细</a></li> 
            </ul> 
-          </div></div> 
+          </div>
+          </div> 
          </div>
-         <!-- /matchBoxs --> 
+         <!-- /matchBoxs -->
+         <div class="panel-bottom">
+       		<div id="ajaxState" class="text-center"><span class="hide noresult">您还没有创建比赛</span><span class="hide load"><img src="img/loading.gif" height="20px" width="20px"></img>数据加载中...</span></div>
+       		<div class="pagination"><nav><ul class="pagination"></ul></nav></div>
+      	 </div>
         </div> 
        </div>
-       <!-- /myMatch --> 
+       <!-- /myMatch -->
+      
+      <!-- ****************************************************************************************************************** -->
+      <!-- ****************************************************************************************************************** -->
+      <!-- ****************************************************************************************************************** -->
+             
+       <!--编辑比赛 开始-->
+        <s:include value="editMatch.jsp" />
+       <!-- /编辑比赛信息 -->
+       
       </div>
       <!-- /tab-content --> 
      </div>
@@ -120,10 +178,15 @@
   <!-- /container --> 
   <s:include value="footer.jsp" />
   <!-- 页尾信息 --> 
+  <script src="js/jquery-ui-1.10.4.custom.min.js"></script> 
+  <script src="js/jquery.ui.datepicker-zh-CN.js"></script> 
   <script src="js/handlebars-v2.0.0.js"></script>
   <script src="js/jquery.wordLimit.js"></script>
   <script src="tinymce/jquery.tinymce.min.js"></script> 
   <script src="tinymce/tinymce.min.js"></script>
+  <script src="js/jquery.validate.min.js"></script>
+  <script src="js/sousai.common.js"></script>
+  <script src="js/sousai.editmatch.js"></script>
   <!-- handlebars template -->
   <script id="match-template" type="text/x-handlebars-template">
     {{#each this}}
@@ -151,52 +214,53 @@
     {{/each}}
   </script>
   <script>
+  function e(){
+		$("#ajaxState .load").show();console.log("start");
+	  	$.ajax({
+	        type: "POST",
+	        url: "getAllMatch",
+	        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+	        dataType: "json",
+	        data:null,
+	        success: function(data) {
+	        	console.log(data);//sousaiRemindDialog(data);
+			      var target = $(".matchBoxs"),template = Handlebars.compile($('#match-template').html());
+			      Handlebars.registerHelper("data",function(v){
+			    	  //将当前对象转化为字符串，保存在data-info中
+			    	  console.log(v);
+			    	  var v1 = JSON.stringify(v);
+			    	  //console.log("v1:"+v1);
+			    	  return v1;
+			      });
+			      target.empty().show().html(template(data));
+			      $("#ajaxState .load").hide();
+			      $("#ajaxState .noresult").hide();
+			      console.log("stop");
+			      //出错或无结果
+			      //target.empty(); //清空tbody
+			      if(target.find("div.matchBox").length == 0){
+			      $("#ajaxState .noresult").show();
+			      target.hide();
+			      console.log("无结果");
+			      }
+		    	    //字数限制，溢出省略
+		    	    $(".matchBox-court").wordLimit(20);
+		    	    $(".matchBox-info > a").wordLimit(28);
+	        },
+	        error: function(jqXHR,textStatus,errorThrown){
+	          console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+	          sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
+	        },
+	      });
+  }
     $(function () {
 		//ajax接收所有比赛
-		$.post("getAllMatch", null, function(data) {
-		      console.log(data);//sousaiRemindDialog(data);
-		      var target = $(".matchBoxs"),template = Handlebars.compile($('#match-template').html());
-		      Handlebars.registerHelper("data",function(v){
-		    	  //将当前对象转化为字符串，保存在data-info中
-		    	  console.log(v);
-		    	  var v1 = JSON.stringify(v);
-		    	  //console.log("v1:"+v1);
-		    	  return v1;
-		      });
-		      target.empty(); //清空tbody
-	    	  target.html(template(data));
-	    	    //字数限制，溢出省略
-	    	    $(".matchBox-court").wordLimit(20);
-	    	    $(".matchBox-info > a").wordLimit(28);
-		    });
+ 		//e()
         //鼠标hover matchbox
         $(".matchBoxs ").on('mouseenter','div.matchBox',function(){
         	      $('div.matchBox').removeClass("box-active");
         	      $(this).addClass("box-active");
         });
-      //字数限制，溢出省略
-    $(".matchBox-court").wordLimit(20);
-    $(".matchBox-info > a").wordLimit(28);
-    
-    //tinymce
-    tinymce.init({
-      mode: 'textareas',
-      language :'zh_CN',
-      menubar: false,
-      toolbar_items_size: 'small',
-      plugins: [
-                "advlist autolink autosave"
-        ],
-        height:300,
-    toolbar1: "newdocument bold italic underline | fontsizeselect | bullist numlist",
-    image_advtab: true,
-    // update validation status on change
-    onchange_callback: function(editor) {
-      tinyMCE.triggerSave();
-      $("#" + editor.id).valid();
-    }
-    });
-
     });
 </script>
 </body></html>

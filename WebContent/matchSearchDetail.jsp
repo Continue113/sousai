@@ -72,7 +72,7 @@
      </div>
      <div id="match">
      <div class="matchShortInfo"> 
-      <a href="javascript:void(0)" class="btn btn-mini pull-right" id="markMatch">收藏比赛</a> 
+      <a href="javascript:markMatch(16)" class="btn btn-mini pull-right" id="markMatch">收藏比赛</a> 
       <a href="javascript:void(0)" class="btn btn-mini pull-right" id="modifyMatch">修改比赛</a> 
       <a href="javascript:void(0)" class="btn btn-mini pull-right" id="recordSocre">录入成绩</a> 
       <table> 
@@ -155,17 +155,6 @@ function e(){
   $(function(){
 	//搜索栏模糊搜索
 	  e();
-	//点击收藏比赛
-	$("#markMatch").click(function(){
-		var userid = $("#userId").attr("data-userid")||-1,//设置userid是否存在，若不存在则设置为-1
-		    matchid = 16;//测试设置为16
-		    alert(userid);
-		if(userid === -1){
-			sousaiRemindDialog("收藏失败，请先登录！");
-		}else{
-			markMatch(userid,matchid);
-		}
-	});
   });
   </script>  
  </body>

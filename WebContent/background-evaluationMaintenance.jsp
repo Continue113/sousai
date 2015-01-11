@@ -159,7 +159,7 @@
             target.empty(); //清空tbody
             target.html(template(data.body));
             $("#ajaxState .load").hide();
-  	      $("#ajaxState .noresult").hide();
+  	        $("#ajaxState .noresult").hide();
   	      console.log("stop");
       	    //出错或无结果
       	    //target.empty(); //清空tbody

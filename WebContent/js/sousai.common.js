@@ -442,7 +442,14 @@ function pages(count,crtPage,rs){
 	}
 	
 	//用户添加收藏比赛
-	function markMatch(userid,matchid){
+	function markMatch(matchid){
+		var userid = $("#userId").attr("data-userid")||-1,//设置userid是否存在，若不存在则设置为-1
+			    matchid = 16;//测试设置为16
+			    alert(userid);
+			if(userid === -1){
+				sousaiRemindDialog("收藏失败，请先登录！");
+				return false;
+			}
 		$.ajax({
 	        type: "POST",
 	        url: "markMatch",
