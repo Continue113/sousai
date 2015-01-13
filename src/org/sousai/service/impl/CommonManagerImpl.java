@@ -136,4 +136,11 @@ public class CommonManagerImpl implements CommonManager {
 		return courtDao.findPagedByWhereOrderBy(null, currentPage, rows, orderByCol, isAsc);
 	}
 
+	@Override
+	public List<CourtBean> findPagedByParams(String keyValue, String matchType,
+			Integer courtTypeId, String region, int currentPage, int rows,String orderByCol, Boolean isAsc)
+			throws Exception {
+		return courtDao.findPagedByParams(keyValue, matchType, courtTypeId, region, currentPage, rows,orderByCol,isAsc);
+	}
+
 }

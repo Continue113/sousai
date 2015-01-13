@@ -34,6 +34,7 @@ public class RelCourtAction extends UserBaseAction
 	public final static int MAX_COURT_COUNT = 5;
 	public final static String SUCCESS = "success";
 	public final static String FAIL = "fail";
+	private static final String EXEED_COUNT = "exeed";
 	
 	
 	//court的setter和getter
@@ -72,8 +73,9 @@ public class RelCourtAction extends UserBaseAction
 		UserBean userBean = (UserBean)ActionContext.getContext().getSession().get("userBean");
 		if(umg.isExeed(userBean.getUserId(), MAX_COURT_COUNT, 1))
 		{
-			return FAIL;
+			return EXEED_COUNT;
 		}
+		MyPrint.myPrint(court.toString());
 		MyPrint.myPrint("RelCourtAction now");
 		String result = FAIL;
 		Court tempCourt = getCourt();

@@ -277,4 +277,10 @@ public class Court implements Serializable
 		return serialVersionUID;
 	}
 	
+	public String toString(){
+		return "id="+this.id+",name="+this.name+",courtTypeId="+this.courtTypeId+",matchType="+this.matchType+",regionId="+this.regionId
+				+",region="+this.region+",addr="+this.addr+",tableNum="+this.tableNum+",tel="+this.tel+",price="+this.price+",workTime="+this.workTime
+				+",matchCount="+this.matchCount+",intro="+this.intro+",verify="+this.verify+",relDate="+this.relDate+",modDate="+this.modDate
+				+",userId="+this.userId;
+	}
 }

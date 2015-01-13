@@ -90,4 +90,20 @@ public interface CommonManager
 	 * @return
 	 */
 	public List<CourtBean> findPagedAllCourtOrderBy(Integer currentPage, Integer rows, String orderByCol, Boolean isAsc);
+	
+	/**
+	 * 高级搜索场地
+	 * 
+	 * @param keyValue
+	 * @param matchType
+	 * @param courtTypeId
+	 * @param region
+	 * @param currentPage
+	 * @param rows
+	 * @param orderByCol
+	 * @param isAsc
+	 * @return
+	 * @throws Exception
+	 */
+	public List<CourtBean> findPagedByParams(String keyValue, String matchType, Integer courtTypeId, String region, int currentPage, int rows,String orderByCol, Boolean isAsc) throws Exception;
 }

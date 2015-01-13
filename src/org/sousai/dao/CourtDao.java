@@ -158,4 +158,19 @@ public interface CourtDao {
 	List<CourtBean> findPagedByKeyValueOrderBy(String[] columns,
 			String keyValue, Integer currentPage, Integer rows,
 			String orderByCol, Boolean isAsc) throws Exception;
+	
+	/**
+	 * 用户高级搜索
+	 * @param keyValue
+	 * @param matchType
+	 * @param courtTypeId
+	 * @param region
+	 * @param currentPage
+	 * @param rows
+	 * @param orderByCol
+	 * @param isAsc
+	 * @return
+	 * @throws Exception
+	 */
+	List<CourtBean> findPagedByParams(String keyValue, String matchType, Integer courtTypeId, String region, int currentPage, int rows, String orderByCol,Boolean isAsc) throws Exception;
 }

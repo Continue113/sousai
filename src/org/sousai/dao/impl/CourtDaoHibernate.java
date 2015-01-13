@@ -146,7 +146,6 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 	@Override
 	public List<CourtBean> findByPram(User user, CourtType courtType,
 			String matchType, Region region) {
-		// TODO Auto-generated method stub
 		String sql = "from Court where";
 		int flag = 0;
 		if (user != null) {
@@ -264,5 +263,20 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 			value = " c." + column;
 		}
 		return value;
+	}
+
+	@Override
+	public List<CourtBean> findPagedByParams(String keyValue, String matchType,
+			Integer courtTypeId, String region, int currentPage, int rows, String orderByCol,Boolean isAsc) throws Exception {
+		List<CourtBean> list = null;
+		if(!CommonUtils.isNullOrEmpty(keyValue)){
+			keyValue = " %"+keyValue+"% ";
+		}
+		if(!CommonUtils.isNullOrEmpty(region)){
+			region = " %"+region+"% ";
+		}
+		String strWhere = Append_String(" ", new int[]{2,0,1,2}, new String[]{" and c.name"," and c.matchType"," and c.courtTypeId"," and c.region"}, new Object[]{keyValue, matchType, courtTypeId, region});
+		list = findPagedByWhereOrderBy(strWhere, currentPage, rows, orderByCol, isAsc);
+		return list;
 	}
 }

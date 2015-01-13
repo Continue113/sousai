@@ -161,6 +161,9 @@
 		
 		<action name="markMatch" class="org.sousai.action.MarkMatchAction" >
 		</action>
+		
+		<action name="getCourtByP" class="org.sousai.action.GetCourtByParamsAction">
+		</action>
 	</package>
 	
 	
