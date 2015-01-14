@@ -20,7 +20,7 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 
 	private final String selectMatchBean = "select new org.sousai.vo.MatchBean(m.id,m.name,m.type,"
 			+ "m.beginTime,m.endTime,m.courtId,c.name,m.rule,m.relTime,"
-			+ "m.verify,m.score,m.userId,u.name) from Match m, Court c, User u "
+			+ "m.verify,m.score,m.userId,u.name,c.region) from Match m, Court c, User u "
 			+ "where m.courtId=c.id and u.id=m.userId ";
 
 	public MatchDaoHibernate() {
@@ -344,5 +344,23 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 		}
 		Query q = session.createQuery(hql);
 		return (List<MatchBean>) findPagedModelList_HQL(q, currentPage, rows);
+	}
+
+	@Override
+	public List<MatchBean> findPagedByParams(String keyValue, String matchType,
+			Date beforeBegin, Date between1, Date between2, Date afterEnd,
+			Date beginTime, Date endTime, String region, int currentPage,
+			int rows, String orderByCol, Boolean isAsc) throws Exception {
+		List<MatchBean> list = null;
+		if(!CommonUtils.isNullOrEmpty(keyValue)){
+			keyValue = " %"+keyValue+"% ";
+		}
+		if(!CommonUtils.isNullOrEmpty(region)){
+			region = " %"+region+"% ";
+		}
+		String strWhere = Append_String(" ", new int[]{2,0,7,3,5,7,5,2}, 
+				new String[]{" and m.name ", " and m.type "," and m.beginTime "," and m.beginTime ", " and m.endTime ", " and m.endTime ", " and m.beginTime ", " and m.beginTime ", " and c.region "},
+				new Object[]{keyValue, matchType, CommonUtils.ToTimestamp(beforeBegin), CommonUtils.ToTimestamp(between1),CommonUtils.ToTimestamp(between2), CommonUtils.ToTimestamp(afterEnd), CommonUtils.ToTimestamp(beginTime), CommonUtils.ToTimestamp(endTime), region});
+		return findPagedByWhereOrderBy(strWhere, currentPage, rows, orderByCol, isAsc);
 	}
 }

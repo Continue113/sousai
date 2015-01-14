@@ -157,7 +157,8 @@ public class SqlHelper extends HibernateDaoSupport {
 	 *            确定字段赋值类型 0为加单引号的=，如 column='value'; 1为不加单引号的=，如 column=value;
 	 *            2为like ，如 column like value，value中需有%; 3为between加单引号，如 column
 	 *            between 'value[0]' and 'value[1]'; 4为between不加单引号，如 column
-	 *            between value[0] and value[1];
+	 *            between value[0] and value[1]; 5为column<'value'; 6为column<value; 7为column>'value';
+	 *             8为column>value; 9为column<>'value'; 10为column<>value;
 	 * 
 	 * @param columns
 	 *            字段/属性名称数组 需要手动加'and'、'or'等，对()的处理未完成
@@ -235,6 +236,162 @@ public class SqlHelper extends HibernateDaoSupport {
 					strBuilder.append(" "
 							+ AssembleBetweenStatement(false, columns[i],
 									temp4[0].toString(), temp4[1].toString()));
+					break;
+				case 5:
+					if (CommonUtils.isNullOrEmpty(args[i])) {
+						break;
+					}
+					strBuilder.append(String.format(" %1$s<'%2$s' ", columns[i], args[i]));
+					break;
+				case 6:
+					if (CommonUtils.isNullOrEmpty(args[i])) {
+						break;
+					}
+					strBuilder.append(String.format(" %1$s<%2$s ", columns[i], args[i]));
+					break;
+				case 7:
+					if (CommonUtils.isNullOrEmpty(args[i])) {
+						break;
+					}
+					strBuilder.append(String.format(" %1$s>'%2$s' ", columns[i], args[i]));
+					break;
+				case 8:
+					if (CommonUtils.isNullOrEmpty(args[i])) {
+						break;
+					}
+					strBuilder.append(String.format(" %1$s>%2$s ", columns[i], args[i]));
+					break;
+				case 9:
+					if (CommonUtils.isNullOrEmpty(args[i])) {
+						break;
+					}
+					strBuilder.append(String.format(" %1$s<>'%2$s' ", columns[i], args[i]));
+					break;
+				case 10:
+					if (CommonUtils.isNullOrEmpty(args[i])) {
+						break;
+					}
+					strBuilder.append(String.format(" %1$s<>%2$s ", columns[i], args[i]));
+					break;
+				default:
+					break;
+				}
+			}
+			value = strBuilder.toString();
+			System.out.println(value);
+		} catch (Exception e) {
+			e.printStackTrace();
+			String errorPalce = (new Throwable().getStackTrace()[0]).toString(); // 当前发生异常位置
+			throw new Exception(errorPalce+"参数拼接出错");
+		}
+		return value;
+	}
+	
+	public String Append_StringWithout1(String strRes, int[] types, String[] columns,
+			Object[] args) throws Exception {
+		String value = null;
+		try {
+			if (types.length != columns.length || types.length != args.length) {
+				// 假定抛出自定义异常
+				String errorPalce = (new Throwable().getStackTrace()[0])
+						.toString(); // 当前发生异常位置
+				throw new Exception(errorPalce + "参数拼接中length不对应");
+			}
+			value = strRes;
+			StringBuilder strBuilder = new StringBuilder();
+			strBuilder.append(value + " ");
+			for (int i = 0; i < args.length; i++) {
+				switch (types[i]) {
+				case 0:
+					if (CommonUtils.isNullOrEmpty(args[i])) {
+						break;
+					}
+					String temp0 = (String) args[i];
+					temp0 = temp0.trim();
+					strBuilder.append(String.format(" %s='%s' ", columns[i],
+							temp0));
+					break;
+				case 1:
+					if (CommonUtils.isNullOrEmpty(args[i])) {
+						break;
+					}
+					// String temp1 = (String) args[i];
+					// temp1 = temp1.trim();
+					strBuilder.append(String.format(" %s=%s ", columns[i],
+							args[i]));
+					break;
+				case 2:
+					if (CommonUtils.isNullOrEmpty(args[i])) {
+						break;
+					}
+					String temp2 = (String) args[i];
+					temp2 = temp2.trim();
+					strBuilder.append(" "
+							+ AssembleLikeStatement(columns[i], temp2));
+					break;
+				case 3:
+					if (CommonUtils.isNullOrEmpty(args[i])) {
+						break;
+					}
+					Object[] temp3 = (Object[]) args[i];
+					if (temp3.length != 2) {
+						String errorPalce = (new Throwable().getStackTrace()[0])
+								.toString(); // 当前发生异常位置
+						throw new Exception(errorPalce+"参数拼接中length不正确");
+					}
+					strBuilder.append(" "
+							+ AssembleBetweenStatement(true, columns[i],
+									temp3[0].toString(), temp3[1].toString()));
+					break;
+				case 4:
+					if (CommonUtils.isNullOrEmpty(args[i])) {
+						break;
+					}
+					Object[] temp4 = (Object[]) args[i];
+					if (temp4.length != 2) {
+						String errorPalce = (new Throwable().getStackTrace()[0])
+								.toString(); // 当前发生异常位置
+						throw new Exception(errorPalce+ "参数拼接中length不正确");
+					}
+					strBuilder.append(" "
+							+ AssembleBetweenStatement(false, columns[i],
+									temp4[0].toString(), temp4[1].toString()));
+					break;
+				case 5:
+					if (CommonUtils.isNullOrEmpty(args[i])) {
+						break;
+					}
+					strBuilder.append(String.format(" %1$s<'%2$s' ", columns[i], args[i]));
+					break;
+				case 6:
+					if (CommonUtils.isNullOrEmpty(args[i])) {
+						break;
+					}
+					strBuilder.append(String.format(" %1$s<%2$s ", columns[i], args[i]));
+					break;
+				case 7:
+					if (CommonUtils.isNullOrEmpty(args[i])) {
+						break;
+					}
+					strBuilder.append(String.format(" %1$s>'%2$s' ", columns[i], args[i]));
+					break;
+				case 8:
+					if (CommonUtils.isNullOrEmpty(args[i])) {
+						break;
+					}
+					strBuilder.append(String.format(" %1$s>%2$s ", columns[i], args[i]));
+					break;
+				case 9:
+					if (CommonUtils.isNullOrEmpty(args[i])) {
+						break;
+					}
+					strBuilder.append(String.format(" %1$s<>'%2$s' ", columns[i], args[i]));
+					break;
+				case 10:
+					if (CommonUtils.isNullOrEmpty(args[i])) {
+						break;
+					}
+					strBuilder.append(String.format(" %1$s<>%2$s ", columns[i], args[i]));
 					break;
 				default:
 					break;

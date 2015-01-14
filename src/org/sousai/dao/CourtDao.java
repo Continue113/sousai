@@ -173,4 +173,15 @@ public interface CourtDao {
 	 * @throws Exception
 	 */
 	List<CourtBean> findPagedByParams(String keyValue, String matchType, Integer courtTypeId, String region, int currentPage, int rows, String orderByCol,Boolean isAsc) throws Exception;
+	
+	/**
+	 * 用户高级搜索时，计算符合的总数
+	 * @param keyValue
+	 * @param matchType
+	 * @param courtTypeId
+	 * @param region
+	 * @return
+	 * @throws Exception
+	 */
+	Integer countByParams(String keyValue, String matchType, Integer courtTypeId, String region) throws Exception;
 }

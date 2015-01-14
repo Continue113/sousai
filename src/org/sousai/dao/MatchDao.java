@@ -96,5 +96,24 @@ public interface MatchDao {
 			String keyValue, Integer currentPage, Integer rows,
 			String orderByCol, Boolean isAsc) throws Exception;
 	
+	/**
+	 * 高级搜索比赛
+	 * @param keyValue
+	 * @param matchType
+	 * @param beforeBegin
+	 * @param between
+	 * @param afterEnd
+	 * @param beginTime
+	 * @param endTime
+	 * @param region
+	 * @param currentPage
+	 * @param rows
+	 * @param orderByCol
+	 * @param isAsc
+	 * @return
+	 * @throws Exception
+	 */
+	List<MatchBean> findPagedByParams(String keyValue, String matchType, Date beforeBegin, Date between1, Date betwween2, Date afterEnd,Date beginTime, Date endTime, String region, int currentPage, int rows, String orderByCol,Boolean isAsc) throws Exception;
+	
 	
 }
