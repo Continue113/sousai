@@ -276,7 +276,7 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 			region = " %"+region+"% ";
 		}
 		String strWhere = Append_StringWithout1(" ", new int[]{2,0,1,2}, new String[]{" and c.name"," and c.matchType"," and c.courtTypeId"," and c.region"}, new Object[]{keyValue, matchType, courtTypeId, region});
-		list = findPagedByWhereOrderBy(strWhere, currentPage, rows, orderByCol, isAsc);
+		list = findPagedByWhereOrderBy(strWhere, currentPage, rows, addPrefixToColumn(orderByCol), isAsc);
 		return list;
 	}
 
