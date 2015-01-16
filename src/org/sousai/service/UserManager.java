@@ -105,8 +105,9 @@ public interface UserManager
 	 * 用户发布场地
 	 * @param court 场地信息
 	 * @return 1 成功   0失败
+	 * @throws Exception 
 	 */
-	public int releaseCourt(Court court);
+	public int releaseCourt(Court court) throws Exception;
 	
 	public String uploadPicByStream(File resImage);
 	/**

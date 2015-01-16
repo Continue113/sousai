@@ -20,8 +20,9 @@ public interface CourtDao {
 	 * 
 	 * @param court
 	 * @return 存入数据库后，对应的id
+	 * @throws Exception 
 	 */
-	Integer save(Court court);
+	Integer save(Court court) throws Exception;
 
 	/**
 	 * 修改对应的持久化实例
