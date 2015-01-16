@@ -103,7 +103,7 @@
       </div> 
       <div class="tab-content">
        <div id="myMatch" class="tab-pane active"> 
-        <div class="matchs" id="matchsList">
+        <div class="matchs matchList" id="matchsList">
          <!-- panel --> 
          <div class="panel-top">
          <div class="btn-group sort" role="group">
@@ -185,13 +185,12 @@
   <script src="tinymce/jquery.tinymce.min.js"></script> 
   <script src="tinymce/tinymce.min.js"></script>
   <script src="js/jquery.validate.min.js"></script>
-  <script src="js/sousai.common.js"></script>
   <script src="js/sousai.editmatch.js"></script>
   <!-- handlebars template -->
   <script id="match-template" type="text/x-handlebars-template">
     {{#each this}}
 
-       <div class="matchBox"  data-info="{{data this}}>
+       <div class="matchBox"  data-info="{{data this}}">
         <div class="matchBox-all"> 
          <div class="matchBox-title"> 
           <a href="javascript:void(0)">{{name}}</a> 
@@ -206,22 +205,36 @@
           <li class="matchBox-court "><a href="javascript:void(0)">{{courtName}}</a></li> 
           <li class="matchBox-state ">报名中</li> 
           <li class="matchBox-info "><a href="javascript:void(0)">{{{rule}}}</a></li> 
-          <li class="matchBox-btns "><a href="javascript:void(0)" class="btn btn-mini">修改规程</a><a href="javascript:void(0)" class="btn btn-mini">查看详细</a></li> 
+          <li class="matchBox-btns "><a href="javascript:void(0)" class="btn btn-mini modifyMatch">修改比赛</a><a href="javascript:void(0)" class="btn btn-mini">查看详细</a></li> 
          </ul> 
         </div>
        </div> 
                             
     {{/each}}
   </script>
+  <script id="existCourts-template" type="text/x-handlebars-template">
+    {{#each this}}
+
+		    <tr class="tritem"  data-info="{{data this}}" data-courtid="{{id}}">
+				<td>{{name}}</td>
+				<td>{{addr}}</td>
+				<td>{{courtTypeId}}</td>
+				<td>{{tableNum}}</td>
+				<td>{{matchCount}}</td>
+				<td><a target="_blank" href="courtLink;courtId=?{{id}}">详细</a></td>
+			</tr>
+
+    {{/each}}
+  </script>
   <script>
-  function e(){
+  function e(crtPage,rs,obc,ia,sc,kv){
 		$("#ajaxState .load").show();console.log("start");
 	  	$.ajax({
 	        type: "POST",
 	        url: "getAllMatch",
 	        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 	        dataType: "json",
-	        data:null,
+	        data: {currentPage:crtPage,rows:rs,orderByCol:obc,isAsc:ia,strColumns:sc,keyValue:kv},
 	        success: function(data) {
 	        	console.log(data);//sousaiRemindDialog(data);
 			      var target = $(".matchBoxs"),template = Handlebars.compile($('#match-template').html());
@@ -232,7 +245,7 @@
 			    	  //console.log("v1:"+v1);
 			    	  return v1;
 			      });
-			      target.empty().show().html(template(data));
+			      target.empty().show().html(template(data.body));
 			      $("#ajaxState .load").hide();
 			      $("#ajaxState .noresult").hide();
 			      console.log("stop");
@@ -243,9 +256,11 @@
 			      target.hide();
 			      console.log("无结果");
 			      }
-		    	    //字数限制，溢出省略
-		    	    $(".matchBox-court").wordLimit(20);
-		    	    $(".matchBox-info > a").wordLimit(28);
+		    	  //字数限制，溢出省略
+		    	  $(".matchBox-court").wordLimit(20);
+		    	  $(".matchBox-info > a").wordLimit(28);
+		  	      //根据总数、当前页数、每页行数 分页
+		    	  pages(data.count,crtPage,rs);
 	        },
 	        error: function(jqXHR,textStatus,errorThrown){
 	          console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
@@ -255,12 +270,21 @@
   }
     $(function () {
 		//ajax接收所有比赛
- 		//e()
+		e(1,25,"name",true,"name","");
+    	//点击编辑比赛隐藏List列表同时显示编辑比赛
+    	$(".matchBoxs").on("click",".modifyMatch",function(event){
+        	var datainfo = $(this).parent().parent().parent().parent().attr("data-info");
+        	console.log(datainfo);
+        	setMatchInfo(datainfo);
+    		$(".matchList").slideUp();
+    		$(".editMatch").find("button.passMatch").hide().end().slideDown();
+  		});
         //鼠标hover matchbox
         $(".matchBoxs ").on('mouseenter','div.matchBox',function(){
         	      $('div.matchBox').removeClass("box-active");
         	      $(this).addClass("box-active");
         });
+
     });
 </script>
 </body></html>

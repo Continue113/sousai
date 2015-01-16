@@ -169,7 +169,8 @@
 	    var url = window.location.search,
 	    kv = decodeURI(url.substring(url.lastIndexOf('=')+1, url.length)),
 		crtPage = 1,rs = 25;
-	    
+	    //将kv填入当前的比赛模糊搜索框
+	    $("#searchbox-match input[type='text']").val(kv);
 	    if(kv==""){
 			//若为空则不访问action，刷新原页面
 			alert("输入搜索关键字问空，");

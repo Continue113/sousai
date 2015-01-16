@@ -31,6 +31,13 @@
 .courtBox .courtBox-block .courtBox-info{width:110px;}
 .courtBox .courtBox-block .courtBox-record{width:80px;}
 .courtBox .courtBox-block .courtBox-evaluation{width:200px;}
+
+  /** 编辑场地 按钮bar  **/
+  .editCourt > .btnbar {margin-left: 0;}
+  /** 编辑场地按钮bar 中的按钮  **/
+  .editCourt > .btnbar > .btn {float: right;margin-left: 10px;}  
+  /** 排序下拉按钮 **/
+  .panel-top > .btn-group {margin-top: 10px;}
   </style>
 </head>
 <body class="userCenter">
@@ -73,9 +80,20 @@
       </div> 
       <div class="tab-content">
        <div id="myCourt" class="tab-pane active">
-        <div class="courts" id="courtsList">
+        <div class="courts courtList" id="courtsList">
          <!-- panel --> 
-         <div class="panel-top"></div>
+         <div class="panel-top">
+       <div class="btn-group sort" role="group">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current" data-orderbycol="name" data-isasc="true">排序方式</span><span class="caret"></span></button>
+		<ul class="dropdown-menu" role="menu">
+          <li><a href="javascript:void(0)" data-orderbycol="name" data-isasc="true">场地名称<i class="icon-arrow-up"></i></a></li> 
+          <li><a href="javascript:void(0)" data-orderbycol="matchType" data-isasc="true">比赛类型<i class="icon-arrow-up"></i></a></li> 
+          <li><a href="javascript:void(0)" data-orderbycol="addr" data-isasc="true">场地地址<i class="icon-arrow-up"></i></a></li> 
+          <li><a href="javascript:void(0)" data-orderbycol="relDate" data-isasc="true">发布时间<i class="icon-arrow-up"></i></a></li> 
+          <li><a href="javascript:void(0)" data-orderbycol="userName" data-isasc="true">发布用户<i class="icon-arrow-up"></i></a></li>
+		</ul>
+	   </div>
+	   </div>
          <div class="courtBoxs">
           <div class="courtBox">
            <!-- img --> 
@@ -106,6 +124,15 @@
         <!-- /courts -->
        </div>
        <!-- /myCourt --> 
+             
+      <!-- ****************************************************************************************************************** -->
+      <!-- ****************************************************************************************************************** -->
+      <!-- ****************************************************************************************************************** -->
+             
+       <!--编辑比赛 开始-->
+        <s:include value="editCourt.jsp" />
+       <!-- /编辑比赛信息 -->
+       
       </div>
       <!-- /tab-content --> 
      </div>
@@ -121,11 +148,15 @@
   <!-- 页尾信息 --> 
   <script src="js/handlebars-v2.0.0.js"></script>
   <script src="js/jquery.wordLimit.js"></script>
+  <script src="tinymce/jquery.tinymce.min.js"></script> 
+  <script src="tinymce/tinymce.min.js"></script>
+  <script src="js/jquery.validate.min.js"></script>
+  <script src="js/sousai.editcourt.js"></script>
   <!-- handlebars template -->
   <script id="court-template" type="text/x-handlebars-template">
     {{#each this}}
                         
-        <div class="courtBox"  data-info="{{data this}}> 
+        <div class="courtBox"  data-info="{{data this}}"> 
          <!-- img --> 
          <div class="courtBox-img"> 
           <img src="img/defaultImg.png" alt="" title="" /> 
@@ -134,7 +165,7 @@
          <div class="courtBox-block"> 
           <div class="courtBox-title"> 
            <a href="{{id}}">{{name}}</a> 
-           <a href="{{id}}" class="btn btn-mini pull-right">查看详细</a> <a href="javascript:void(0)" class="btn btn-mini pull-right">编辑场地</a>
+           <a href="{{id}}" class="btn btn-mini pull-right">查看详细</a> <a href="javascript:void(0)" class="btn btn-mini pull-right modifyCourt">编辑场地</a>
           </div> 
           <ul class="breadcrumb"> 
            <li class="courtBox-address">{{addr}}</li> 
@@ -148,15 +179,20 @@
     {{/each}}
   </script>
   <script>
-    $(function () {
+  //定义函数
+  
+  function e(crtPage,rs,obc,ia,sc,kv){
+
   	  //ajax接收所有的场地
-  	  $("#ajaxState .load").show();console.log("start");
+  	  $("#ajaxState .load").show();
+  		$(".courtBoxs").show();
+  		console.log("start");
   	$.ajax({
         type: "POST",
         url: "getAllCourt",
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         dataType: "json",
-        data:null,
+        data:{currentPage:crtPage,rows:rs,orderByCol:obc,isAsc:ia,strColumns:sc,keyValue:kv},
         success: function(data) {
         	console.log(data);//sousaiRemindDialog(data);
 		      var target = $(".courtBoxs"),template = Handlebars.compile($('#court-template').html());
@@ -167,13 +203,13 @@
 		    	  //console.log("v1:"+v1);
 		    	  return v1;
 		      });
-		      target.empty().show().html(template(data));
+		      target.empty().show().html(template(data.body));
 		      $("#ajaxState .load").hide();
 		      $("#ajaxState .noresult").hide();
 		      console.log("stop");
 		      //出错或无结果
 		      //target.empty(); //清空tbody
-		      if(target.find("div.matchBox").length == 0){
+		      if(target.find("div.courtBox").length == 0){
 		      $("#ajaxState .noresult").show();
 		      target.hide();
 		      console.log("无结果");
@@ -181,12 +217,27 @@
 	    	    //字数限制，溢出省略
 	          $(".courtBox-address").wordLimit(20);
 	    	  $(".courtBox-evaluation p").wordLimit();
+	    	  pages(data.count,crtPage,rs);
         },
         error: function(jqXHR,textStatus,errorThrown){
           console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
           sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
         },
       });
+  }
+  
+    $(function () {
+    	//ajax接收所有的场地 默认为第一页 25条，按name排序，升序
+   	 	e(1,25,"name",true,"name","");
+    	
+    	//点击编辑比赛隐藏List列表同时显示编辑比赛
+    	$(".courtBoxs").on("click",".modifyCourt",function(event){
+        	var datainfo = $(this).parent().parent().parent().attr("data-info");
+        	console.log(datainfo);
+        	setCourtInfo(datainfo);
+    		$(".courtList").slideUp();
+    		$(".editCourt").find("button.passCourt").hide().end().slideDown();
+  		});
       //鼠标hover matchbox
       $(".courtBoxs ").on('mouseenter','div.courtBox',function(){
       	      $('div.courtBox').removeClass("box-active");

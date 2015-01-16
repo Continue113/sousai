@@ -14,9 +14,9 @@
          <fieldset> 
           <legend>比赛基本信息</legend> 
           <div class="control-group"> 
-           <label class="control-label" for="searchKey">比赛名称：</label> 
+           <label class="control-label" for="inputMatchTitle">比赛名称：</label> 
            <div class="controls"> 
-            <input class="span5" type="text" id="inputMatchTitle" name="match.name" placeholder="如：2012年XXXXXXX杯乒乓球季度赛" required="required" /> 
+            <input class="span5" type="text" id="inputMatchTitle" name="matchName" placeholder="如：2012年XXXXXXX杯乒乓球季度赛" required="required" /> 
            </div> 
           </div> 
           <div class="control-group"> 
@@ -31,23 +31,22 @@
             <select class="selectMatchType" name="mcId">
               <option value=0>请选择比赛类型</option>
             </select>
-            <select class="selectParticularMatchType hide" name="matchTypeId">
+            <select class="selectParticularMatchType hide" name="matchType">
               <option value=0>请选择比赛类型</option>
             </select>
-            <label class="omthide hide" class="control-label" for="otherMatchType">请输入类型：</label>
-            <input class="omthide hide" id="otherMatchType" type="text" value="" placeholder="请填写比赛类型" name="match.type"/>
-           </div>
+            <label class="omthide hide" class="control-label" for="otherMatchType">请输入类型：<input class="omthide hide" id="otherMatchType" type="text" value="" placeholder="请填写比赛类型" name="otherMatchType" required="required" /></label>
+            </div>
           </div>
           <div class="control-group"> 
            <label class="control-label" for="matchTime">比赛时间：</label> 
            <div class="controls form-inline"> 
             <div class="input-append"> 
-             <input type="text" id="inputMatchTimefrom" name="match.beginTime" placeholder="请选择开始日期" required="required" value=""/> 
+             <input type="text" id="inputMatchTimefrom" name="matchBeginTime" placeholder="请选择开始日期" required="required" class="date"/> 
              <span class="add-on" data-toggle="tooltip" data-placement="top" title="" data-original-title="点击输入框可以选择开始日期"><i class="icon-calendar"></i></span> 
             </div> 
             <label for="to">—</label> 
             <div class="input-append"> 
-             <input type="text" id="inputMatchTimeto" name="match.endTime" placeholder="请选择结束日期" required="required" value=""/> 
+             <input type="text" id="inputMatchTimeto" name="matchEndTime" placeholder="请选择结束日期" required="required" class="date"/> 
              <span class="add-on" data-toggle="tooltip" data-placement="top" title="" data-original-title="一天以内结束的比赛，日期为同一天"><i class="icon-calendar"></i></span> 
             </div> 
            </div> 
@@ -57,7 +56,7 @@
            <label class="control-label" for="matchRegion">比赛地点：</label> 
            <div class="controls">
            <div class="input-append">
-            <input class="span5" type="text" id="inputMatchCourt" data-iscourt="false" disabled/>
+            <input class="span5" type="text" id="inputMatchCourt" name="crtCourtName" placeholder="此项不能自由输入，请先搜索已有场地，后点击已有场地添加到比赛地点" data-iscourt="false" required="required" disabled/>
             <button class="btn" type="button" id="editMatchCourt">修改</button>
             </div>
             </div>
@@ -93,16 +92,16 @@
           </div> 
           <div class="control-group hide matchAdressControls"> 
            <div class="releaseCourtBox"> 
-            <label class="checkbox"><input type="checkbox" id="newCourtCheckbox" name="matchState_all" />添加新场地&nbsp;&nbsp;(<span id="newCourtRegion"><span class="newCourtProvince">请选择省</span>-<span class="newCourtCity">请选择市</span>-<span class="newCourtCountry">请选择区</span></span>)</label> 
+            <label class="checkbox"><input type="checkbox" id="newCourtCheckbox" />添加新场地&nbsp;&nbsp;(<span id="newCourtRegion"><span class="newCourtProvince">请选择省</span>-<span class="newCourtCity">请选择市</span>-<span class="newCourtCountry">请选择区</span></span>)</label> 
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="inputMatchRules">比赛规程：</label> 
           </div> 
-          <textarea id="inputMatchRules" name="match.rule" required="required"></textarea>
+          <textarea id="inputMatchRules" name="matchRule" required="required"></textarea>
           <div class="control-group hide">
            <div class="controls">
-            <button type="button" class="btn btn-success pull-right" id="rlsMatch">确定发布</button>
+            <button type="submit" class="btn btn-success pull-right" id="rlsMatch">确定发布</button>
             <button type="reset" class="btn pull-right" id="resetMatchForm">重置</button>
             <button type="button" class="btn pull-right" name="preView">预览</button> 
            </div> 
