@@ -182,6 +182,20 @@
                             
     {{/each}}
   </script>
+  <script id="existCourts-template" type="text/x-handlebars-template">
+    {{#each this}}
+
+		    <tr class="tritem"  data-info="{{data this}}" data-courtid="{{id}}">
+				<td>{{name}}</td>
+				<td>{{addr}}</td>
+				<td>{{courtTypeId}}</td>
+				<td>{{tableNum}}</td>
+				<td>{{matchCount}}</td>
+				<td><a target="_blank" href="courtLink;courtId=?{{id}}">详细</a></td>
+			</tr>
+
+    {{/each}}
+  </script>
   <script>
   //定义函数
   function e(crtPage,rs,obc,ia,sc,kv){
@@ -193,6 +207,7 @@
       data: {currentPage:crtPage,rows:rs,orderByCol:obc,isAsc:ia,strColumns:sc,keyValue:kv},
       dataType: "json",
       success: function(data) {
+    	  console.log(data);
 	      var target = $(".matchTable > tbody"),template = Handlebars.compile($('#match-template').html());
 	      Handlebars.registerHelper("data",function(v){
 	    	  //将当前对象转化为字符串，保存在data-info中
@@ -216,7 +231,8 @@
 	      $(".match-court").wordLimit();
 	      pages(data.count,crtPage,rs);
 	    },
-      error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+      error: function(jqXHR,textStatus,errorThrown){
+    	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
 	      $("#ajaxState .noresult").show();console.log("出错了");
           sousaiRemindDialog("抱歉，ajax出错了。");
       },
@@ -228,26 +244,16 @@
     //点击编辑比赛隐藏List列表同时显示编辑比赛
     $("tbody").on("click",".match-oprate > a",function(event){
         var datainfo = $(this).parent().parent().attr("data-info");
-        console.log(datainfo);
-        //解析datainfo中的信息
-        var data = eval('(' + datainfo + ')');
-        $("#inputMatchTitle").val(data.name).attr("data-id",data.id).attr("data-userid",data.userId);
-        $("#inputMatchType").val(data.type).attr("data-oldtype",data.type);
-        $("#inputMatchTimefrom").val(data.beginTime);
-        $("#inputMatchTimeto").val(data.endTime);
-        $("#inputMatchCourt").val(data.courtName).attr("data-oldcourt",data.courtName).attr("data-courtid",data.courtId);
-        tinymce.activeEditor.setContent(data.rule);
-        //立即初始化比赛类型
-        initMatchType();
-                
+        setMatchInfo(datainfo);
+        if($("#editMatchType").text() == "取消修改"){
+        	$("#editMatchType").click();
+        }
+        if($("#editMatchCourt").text() == "取消修改"){
+        	$("#editMatchCourt").click();
+        }
     	$(".matchList").slideUp();
     	$(".editMatch").slideDown();
   	});
-    //点击返回比赛列表
-    $(".backList").click(function(){
-    	$(".matchList").slideDown();
-    	$(".editMatch").slideUp();
-    });
     //点击删除比赛 列表界面
     $("#matchMaintenance .deleteMatch").click(function(){
     	var checked = $(".match input:checked"),n = checked.length;
@@ -301,7 +307,7 @@
     			console.log($(this).attr("id"));
         		matchIds.push($(this).attr("id"));
     		});
-    		console.log(matchIds);sousaiRemindDialog("matchIds:"+matchIds.join(",,,"));
+    		console.log(matchIds);
             $.ajax({
               type: "POST",
               url: "passMatches",
@@ -323,135 +329,6 @@
                 sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
               },
             });
-    	}
-    });
-    //删除比赛 编辑界面
-    $(".editMatch .deleteMatch").click(function (){
-                $.ajax({
-                  type: "POST",
-                  url: "deleteMatches",
-                  contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-                  data: {
-                    "matchIds": $("#inputMatchTitle").attr("data-id"),
-                  },
-                  dataType: "json",
-                  success: function(rspdata) {
-                	  if( rspdata == "success" ){
-                		  sousaiRemindDialog("删除成功");
-                	  }else if( rspdata == "fail" ){
-                		  sousaiRemindDialog("删除失败");
-                	  }else{
-                		  sousaiRemindDialog("删除失败，错误代码未知");
-                	  }
-                  },
-                  error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-                    sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
-                  },
-                });
-    });
-    //点击保存修改
-    $(".editMatch .saveMatch").click(function (){
-    	
-    	var id = $("#inputMatchTitle").attr("data-id"),
-        userid = $("#inputMatchTitle").attr("data-userid"),
-    	title = $("#inputMatchTitle").val(),
-        type = $("#inputMatchType").val(),
-        typeid = $("#inputMatchType").attr("data-typeid"),
-        begintime = $("#inputMatchTimefrom").val(),
-        endtime = $("#inputMatchTimeto").val(),
-        court = $("#inputMatchCourt").val(),
-        courtid = $("#inputMatchCourt").attr("data-courtid"),
-    	iscourt = $("#inputMatchCourt").attr("data-iscourt"),
-        rule = tinymce.activeEditor.getContent();
-    	
-    	console.log("id: "+id+",title: "+title+",type: "+type+",typeid: "+typeid+",begintime: "+begintime+",endtime: "+endtime+",court: "+court+",courtid: "+courtid+",userid: "+userid+",iscourt: "+iscourt+",rule: "+rule);
-    	
-    	
-    	if( $("#editMatchForm").valid() === true ){
-    		console.log("验证通过");
-        /*        $.ajax({
-                  type: "POST",
-                  url: "updateMatch",
-                  contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-                  data: {
-                	  		"match.id": id,
-                			"match.name": title,
-                		    "match.rule": rule,
-                		    "match.beginTime": begintime,
-                		    "match.endTime": endtime,
-                		    "match.courtId": matchcourtid,
-                		    "match.userId": userid,
-                		    "court.name": court,
-                		    "court.addr": courtaddr,
-                		    "court.regionId": "",
-                		    "court.courtTypeId": "",
-                		    "isCourt": iscourt,
-                		  },
-                  dataType: "json",
-                  success: function(rspdata) {
-                	  if( rspdata == "success" ){
-                		  sousaiRemindDialog("保存成功");
-                	  }else if( rspdata == "fail" ){
-                		  sousaiRemindDialog("保存失败");
-                	  }else{
-                		  sousaiRemindDialog("保存失败，错误代码未知");
-                	  }
-                  },
-                  error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-                    sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
-                  },
-                });
-        */
-    	}else{
-    		sousaiRemindDialog("填写信息不符合验证，请重新填写。");
-    	}
-    });
-    //发布比赛 编辑界面
-    $(".editMatch .passMatch").click(function (){
-/*                 $.ajax({
-                  type: "POST",
-                  url: "passMatches",
-                  contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-                  data: {
-                    "matchIds": $("#inputMatchTitle").attr("data-id"),
-                  },
-                  dataType: "json",
-                  success: function(rspdata) {
-                	  if( rspdata == "success" ){
-                		  sousaiRemindDialog("发布成功");
-                	  }else if( rspdata == "fail" ){
-                		  sousaiRemindDialog("发布失败");
-                	  }else{
-                		  sousaiRemindDialog("发布失败，错误代码未知");
-                	  }
-                  },
-                  error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-                    sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
-                  },
-                }); */
-    });
-    //点击修改比赛类型
-    $("#editMatchType").click(function (){
-    	if($(this).text() == "修改"){
-    		$("#matchTypeControls").slideDown();
-    		$(this).text("取消修改");
-    	}else{
-    		$("#matchTypeControls").slideUp();
-    		//重置选择类型的下拉框，同时将原类型还原
-    		$(".selectParticularMatchType").hide().empty().append("<option value=0>请选择比赛类型</option>");
-    		$("#inputMatchType").val($("#inputMatchType").attr("data-oldtype"));
-    		$(this).text("修改");
-    	}
-    });
-    $("#editMatchCourt").click(function (){
-    	if($(this).text() == "修改"){
-    		$(".matchAdressControls").slideDown();
-    		$(this).text("取消修改");
-    	}else{
-    		$(".matchAdressControls").slideUp();
-    		//重置选择比赛场地，同时还原类型
-      		$("#inputMatchCourt").val($("#inputMatchCourt").attr("data-oldcourt"));
-    		$(this).text("修改");
     	}
     });
     

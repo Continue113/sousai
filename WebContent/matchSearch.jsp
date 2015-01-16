@@ -169,7 +169,8 @@
 	    var url = window.location.search,
 	    kv = decodeURI(url.substring(url.lastIndexOf('=')+1, url.length)),
 		crtPage = 1,rs = 25;
-	    
+	    //将kv填入当前的比赛模糊搜索框
+	    $("#searchbox-match input[type='text']").val(kv);
 	    if(kv==""){
 			//若为空则不访问action，刷新原页面
 			alert("输入搜索关键字问空，");
@@ -184,8 +185,10 @@
 	          data: {content:kv},
 	          dataType: "json",
 	          success: function(rspdata) {
-	        	  sousaiRemindDialog(rspdata);console.log(rspdata.count);console.log(rspdata);
-	        	  
+	        	  console.log(rspdata.count);
+	        	  console.log(rspdata);
+		       	  //设置搜索结果数量
+		          $(".search-remind span").html(rspdata.count);
 			      var target = $(".matchBoxs"),template = Handlebars.compile($('#match-template').html());
 			      Handlebars.registerHelper("data",function(v){
 			    	  //将当前对象转化为字符串，保存在data-info中
@@ -194,7 +197,7 @@
 			    	  //console.log("v1:"+v1);
 			    	  return v1;
 			      });
-			      target.empty().show().html(template(rspdata));
+			      target.empty().show().html(template(rspdata.body));
 			      $("#ajaxState .load").hide();
 			      console.log("stop");
 			      //出错或无结果
@@ -207,7 +210,7 @@
 		    	    //字数限制，溢出省略
 		    	    $(".matchBox-court").wordLimit(20);
 		    	    $(".matchBox-info > a").wordLimit(28);
-				  //pages(rspdata.count,crtPage,rs);
+				  pages(rspdata.count,crtPage,rs);
 	          },
 	          error: function(jqXHR,textStatus,errorThrown){
 	        	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);

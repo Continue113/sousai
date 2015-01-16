@@ -136,7 +136,7 @@
           <div class="control-group"> 
            <label class="control-label" for="userName">用户名：</label> 
            <div class="controls"> 
-            <input class="span3" type="text" id="userName" value="" name="user.name" placeholder="用户名" required="required" /> 
+            <input class="span3" type="text" id="userName" value="" name="user.name" placeholder="用户名" required="required" disabled/> 
            </div>
           </div>
           </form>
@@ -256,6 +256,8 @@
       $("#userEmail").val(data.userEmail);
       $(".userList").slideUp();
       target.slideDown();
+      //添加用户名输入框的disabled属性      
+      $("#userName").attr("disabled","disabled")
     });
     //点击返回用户列表
     $(".backList").click(function(){
@@ -274,6 +276,8 @@
       target.find(".saveAdd").show();
       $(".userList").slideUp();
       target.slideDown();
+      //取消用户名输入框的disabled属性
+      $("#userName").removeAttr("disabled");
     });
 
 

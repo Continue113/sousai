@@ -12,11 +12,16 @@ $(function() {
    }*/
 	
  //搜索栏模糊搜索
-	  $("#searchbox-match button").click(function() {
+	$("#searchbox-match button").click(function() {
 		  var kv = $("#searchbox-match input[type='text']").val();
 		  alert(kv);
     	  window.location.href = "matchSearch.jsp?content="+kv;
-	      });
+    });
+	$("#searchbox-court button").click(function() {
+		  var kv = $("#searchbox-court input[type='text']").val();
+		  alert(kv);
+  	  window.location.href = "courtSearch.jsp?content="+kv;
+	});
   //切换城市
   $("#changeCityBtn").click(function() {
     $(this).parents("p").hide();
@@ -303,19 +308,26 @@ $(function() {
 /////////////////////////////////////////////////////////////
 
 //全局弹出对话框提示操作
-function sousaiRemindDialog(text,successishide){
-	var ishide = successishide || true;
+function sousaiRemindDialog(text,time,successishide){
+    function hide(){
+    	$("#sousaiRemindDialog").modal("hide");
+    }
+    
     $("#sousaiRemindDialog > .modal-body > #SRDcontent").text(text); //设置弹出框的内容
-    if(ishide === true){
+    if(!successishide){
         $("#sousaiRemindDialog > .modal-footer > button.btn-success").hide(); //设置弹出框确定按钮
     }
     $("#sousaiRemindDialog").modal({
       backdrop: false,
     });
-    function hide(){
-    	$("#sousaiRemindDialog").modal("hide");
-    }
-    window.setTimeout(hide,3000);
+	if(!time){
+		time = 3000; //若时间不存在则设置为3s后自动关闭
+	}
+	if( time == -1){ //若时间设置为-1则表示自动关闭对话框
+		return;
+	}else{
+	    window.setTimeout(hide,time);
+	}
 }
 
 //创建验证码，inputValidateId为验证码标签 ID
@@ -347,7 +359,6 @@ function userCenterRemind(){
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         dataType: "json",
         success: function(rspdata) {
-            alert("已有比赛信息："+rspdata);
             console.log("已有比赛信息："+rspdata);
             targetBreadcrumb.empty().append("<li>比赛信息:</li>");
         	$.each( rspdata, function( key, value ) {
@@ -360,7 +371,7 @@ function userCenterRemind(){
         	}
         },
         error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-          alert("抱歉，获取比赛信息出错了。");
+          sousaiRemindDialog("抱歉，获取比赛信息出错了。");
           console.log("userCenterRemind 抱歉，获取比赛信息出错了。");
         },
       }); //ajax 已得到发布的比赛信息
@@ -390,14 +401,58 @@ function initMatchType(){
     }
   });
 }
-
+//初始化具体的比赛类型
+function initParticularMatchType(matchTypeId){
+	  $.ajax({
+	    type: "POST",
+	    url: "showMT",
+	    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+	    data: {
+	      "mcId": matchTypeId,
+	    },
+	    dataType: "json",
+	    success: function(rspdata) {
+	      var sctParMatchType = $(".selectParticularMatchType");
+	      sctParMatchType.empty().append("<option value=0>请选择比赛类型</option>");
+	      for (var i = 0; i < rspdata.length; i++) {
+	        sctParMatchType.append("<option value=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</  option>");
+	      }
+	      sctParMatchType.append("<option value=1>其他</option>"); //每一个大类比赛类型的“其他”选项
+	    },
+	    error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+	      sousaiRemindDialog("抱歉，获取比赛类型出错了。");
+	    },
+	  });
+}
+//根据具体比赛类型 获得场地类型 只有默认类型
+function initCourtType(particularMatchTypeId){
+    $.ajax({
+      type: "POST",
+      url: "showCT",
+      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+      data: {
+        "matchId": particularMatchTypeId,
+      },
+      dataType: "json",
+      success: function(rspdata) {
+        var sctCourtType = $(".selectCourtType");
+        sctCourtType.empty().append("<option value=0>请选择场地类型</option>");
+        for (var i = 0; i < rspdata.length; i++) {
+          sctCourtType.append("<option value=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</option>");
+        }
+      },
+      error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+        sousaiRemindDialog("抱歉，获取场地类型出错了。");
+      },
+    }); //ajax 已得到场地类型
+}
 
 //根据当前的没页的条数和总的条数计算总页数
 function pages(count,crtPage,rs){
 	  var pages = Math.ceil(count/rs) || 1, target=$("ul.pagination");console.log(pages); //若当前页数为空则默认为第一页
 	  target.empty();
 	  if(pages == 1){
-		  target.append('<li class="active"><a href="javascript:void(0)">1</a></li>');
+		  target.append('<li class="active"><a href="javascript:void(0)">1</a></li>').hide();
 		  return false;
 	  }
 	  target.append('<li class="prior"><a href="javascript:prior()"><span aria-hidden="true">«</span><span class="sr-only"></span></a></li><li class="active"><a href="javascript:void(0)">'+crtPage+'</a></li>');
@@ -469,4 +524,92 @@ function pages(count,crtPage,rs){
 	          sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
 	        },
 	      });
+	}
+	
+
+	function selectMatchType(tempthis){
+		//tgPrt: targetparent 目标父元素
+		var tgPrt = tempthis.parent(),
+		thisvalue = tgPrt.find(".selectMatchType option:selected").attr("value");
+		if (thisvalue == 0) {
+			  //当点击默认选项时将具体比赛类型隐藏并设为默认状态 同时 将场地类型设置为默认状态
+			  tgPrt.find(".selectParticularMatchType").hide().empty().append("<option value=0>请选择比赛类型</option>");
+	      //若存在场地类型 则将场地类型设置为默认状态 
+	      if ($(".selectCourtType").length != 0) {
+	      $(".selectCourtType").empty().append("<option value=0>请先选择比赛类型</option>");
+	      }
+			  //若已选择“其他”则改为默认选项
+		    if( omtf == 1){
+		      tgPrt.find(".omthide").slideUp();
+		      omtf = 0;
+		    }
+	      //将otherMatchType中填入已选的具体类型设置为空 val为空，同时value为空
+	      $("#otherMatchType").val("");
+		}else {
+	        //将otherMatchType中填入已选的具体类型设置为空 val为空，同时value为空
+	        $("#otherMatchType").val("");
+			initParticularMatchType(thisvalue);
+		  //出现具体比赛类型下拉列表并且不再隐藏
+		  tgPrt.find(".selectParticularMatchType").show();
+		}
+	}
+
+	//点击比赛类型 选择其他出现输入框 或者 当场地类型存在时获取相应场地类型
+	var omtf = 0;//other match type flag ；0表示默认，1表示已经选过“其他”选项
+	function selectParticularMatchType(tempthis){
+	  //tgPrt: targetparent 目标父元素
+	  var tgPrt = tempthis.parent(),
+	  thisval = tgPrt.find(".selectParticularMatchType option:selected").text(),
+	  thisvalue = tgPrt.find(".selectParticularMatchType option:selected").attr("value");
+	  
+	  if (thisvalue == 1 && omtf == 0){
+	        //将otherMatchType中填入已选的具体类型设置为空
+	        $("#otherMatchType").val("");
+	    //当用户选择其他的时候，弹出隐藏的label和input
+	    tgPrt.find(".omthide").slideDown();
+	    omtf = 1;
+	      //存在场地类型的下拉列表时 当用户选择具体比赛类型时，同时获取相应场地类型
+	      if ($(".selectCourtType").length != 0) {
+	        console.log("获得场地类型");
+	        initCourtType(thisvalue);
+	      }
+	  }else if (thisvalue == 0) {
+	      //存在场地类型的下拉列表时 当用户选择具体比赛类型为默认选项时的时候，就将场地类型下拉列表框中原有的“请选择”字样删除。
+	      if ($(".selectCourtType").length != 0) {
+	        $(".selectCourtType").empty().append("<option value=0>请先选择比赛类型</option>");
+	      };
+	    //清除inputMatchType的值
+	    $("#inputMatchType").val("").attr("data-matchtypeid","");
+	    //若已选择“其他”则改为默认选项
+	    if( omtf == 1){
+	      tgPrt.find(".omthide").slideUp();
+	      omtf = 0;
+	    }
+	  }else {
+	    //若已选择“其他”则改为默认选项
+	    if( omtf == 1){
+	      tgPrt.find(".omthide").slideUp();
+	      omtf = 0;
+	    }
+	      //存在场地类型的下拉列表时 当用户选择具体比赛类型时，同时获取相应场地类型
+	      if ($(".selectCourtType").length != 0) {
+	        console.log("获得场地类型");
+	        initCourtType(thisvalue);
+	      }
+	      //将otherMatchType中填入已选的具体类型
+	      $("#otherMatchType").val(thisval);
+	      //修改的新类型
+		  $("#inputMatchType").val(thisval).attr("data-matchtypeid",thisvalue);
+	  }
+	}
+
+	//设置场地类型
+	function selectCourtType(tempthis){
+		//tgPrt: targetparent 目标父元素
+		var tgPrt = tempthis.parent();
+		if (tgPrt.find(".selectCourtType option:selected").attr("value") != 0){
+			$("#inputCrtCourtType").val(tgPrt.find(".selectCourtType option:selected").text()).attr("data-courttypeid",tgPrt.find(".selectCourtType option:selected").attr("value"));
+		}else{
+			$("#inputCrtCourtType").val("").attr("data-courttypeid","");
+		}
 	}
