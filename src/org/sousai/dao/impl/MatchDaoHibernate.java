@@ -358,9 +358,11 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 		if(!CommonUtils.isNullOrEmpty(region)){
 			region = " %"+region+"% ";
 		}
+		
+		//比赛状态那里应该为or关系，另外看看是否需要加括号
 		String strWhere = Append_String(" ", new int[]{2,0,7,3,5,7,5,2}, 
-				new String[]{" and m.name ", " and m.type "," and m.beginTime "," and m.beginTime ", " and m.endTime ", " and m.endTime ", " and m.beginTime ", " and m.beginTime ", " and c.region "},
-				new Object[]{keyValue, matchType, CommonUtils.ToTimestamp(beforeBegin), CommonUtils.ToTimestamp(between1),CommonUtils.ToTimestamp(between2), CommonUtils.ToTimestamp(afterEnd), CommonUtils.ToTimestamp(beginTime), CommonUtils.ToTimestamp(endTime), region});
+				new String[]{" and m.name ", " and m.type ", " and m.beginTime ", " and m.beginTime ", " and c.region "," and m.beginTime "," and m.beginTime ", " and m.endTime ", " and m.endTime "},
+				new Object[]{keyValue, matchType, CommonUtils.ToTimestamp(beginTime), CommonUtils.ToTimestamp(endTime), region,CommonUtils.ToTimestamp(beforeBegin), CommonUtils.ToTimestamp(between1),CommonUtils.ToTimestamp(between2), CommonUtils.ToTimestamp(afterEnd)});
 		return findPagedByWhereOrderBy(strWhere, currentPage, rows, orderByCol, isAsc);
 	}
 }

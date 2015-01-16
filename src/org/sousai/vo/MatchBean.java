@@ -20,13 +20,14 @@ public class MatchBean implements Serializable{
 	private String score; // 可传可不传
 	private Integer userId; // 可传可不传
 	private String userName;
+	private String region;
 	
 	
 	
 	public MatchBean(Integer id, String name, String type, Date beginTime,
 			Date endTime, Integer courtId, String courtName, String rule,
 			Date relTime, char verify, String score, Integer userId,
-			String userName) {
+			String userName, String region) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -41,6 +42,7 @@ public class MatchBean implements Serializable{
 		this.score = score;
 		this.userId = userId;
 		this.userName = userName;
+		this.region = region;
 	}
 	/**
 	 * @return the id
@@ -203,6 +205,18 @@ public class MatchBean implements Serializable{
 	 */
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+	/**
+	 * @return the region
+	 */
+	public String getRegion() {
+		return region;
+	}
+	/**
+	 * @param region the region to set
+	 */
+	public void setRegion(String region) {
+		this.region = region;
 	}
 	
 }
