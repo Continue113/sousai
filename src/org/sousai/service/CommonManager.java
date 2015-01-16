@@ -106,4 +106,18 @@ public interface CommonManager
 	 * @throws Exception
 	 */
 	public List<CourtBean> findPagedByParams(String keyValue, String matchType, Integer courtTypeId, String region, int currentPage, int rows,String orderByCol, Boolean isAsc) throws Exception;
+	
+	/**
+	 * 通过id获取场地信息
+	 * @param id
+	 * @return
+	 */
+	public CourtBean findCourtBeanById(Integer id);
+	
+	/**
+	 * 通过id获取比赛信息
+	 * @param id
+	 * @return
+	 */
+	public MatchBean findMatchBeanById(Integer id);
 }

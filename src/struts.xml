@@ -164,6 +164,9 @@
 		
 		<action name="getCourtByP" class="org.sousai.action.GetCourtByParamsAction">
 		</action>
+		
+		<action name="getCourtById" class="org.sousai.action.GetCourtById"></action>
+		<action name="getMatchById" class="org.sousai.action.GetMatchById"></action>
 	</package>
 	
 	

@@ -63,14 +63,12 @@ public class CommonManagerImpl implements CommonManager {
 	}
 	@Override
 	public List<Region> getProvince() {
-		// TODO Auto-generated method stub
 		// 0为数据库中中国的id
 		return regionDao.getSon(1);
 	}
 
 	@Override
 	public List<Region> getCity(String provinceCode, int order) {
-		// TODO Auto-generated method stub
 		MyPrint.myPrint("in");
 		MyPrint.myPrint("cmg.getCity() now");
 		MyPrint.myPrint("provinceCode = " + provinceCode + " /n order = "
@@ -80,45 +78,38 @@ public class CommonManagerImpl implements CommonManager {
 
 	@Override
 	public List<Region> getZone(String cityCode, int order) {
-		// TODO Auto-generated method stub
 		return regionDao.getSonByCode(cityCode, order);
 	}
 
 	@Override
 	public CourtType findCourtTypeById(Integer id) {
-		// TODO Auto-generated method stub
 		return courtTypeDao.get(id);
 	}
 
 	@Override
 	public List<CourtType> findCourtTypeByMatchTypeId(Integer id)
 			throws Exception {
-		// TODO Auto-generated method stub
 		return courtTypeDao.findByMatchTypeId(id);
 	}
 
 	@Override
 	public List<MatchType> findAllMatchTypeEpt(Integer id) {
-		// TODO Auto-generated method stub
 		return matchTypeDao.findAllExcept(id);
 	}
 
 	@Override
 	public List<MatchType> findMatchTypeByMatchClassIdEpt(Integer mcId,
 			Integer id) {
-		// TODO Auto-generated method stub
 		return matchTypeDao.findAllByMcIdExcept(mcId, id);
 	}
 
 	@Override
 	public List<MatchClass> findAllMatchClass() {
-		// TODO Auto-generated method stub
 		return matchClassDao.findAll();
 	}
 
 	@Override
 	public List<MatchClass> findAllMatchClassEpt(Integer id) throws Exception {
-		// TODO Auto-generated method stub
 		MyPrint.myPrint("in findAllMatchClassEpt");
 		return matchClassDao.findAllExcept(id);
 	}
@@ -126,7 +117,6 @@ public class CommonManagerImpl implements CommonManager {
 	@Override
 	public List<MatchBean> findMatchByMatchTypeName(String typeName,
 			int currentPage, int rows) {
-		// TODO Auto-generated method stub
 		return matchDao.findByMatchTypeName(typeName, currentPage, rows);
 	}
 
@@ -141,6 +131,16 @@ public class CommonManagerImpl implements CommonManager {
 			Integer courtTypeId, String region, int currentPage, int rows,String orderByCol, Boolean isAsc)
 			throws Exception {
 		return courtDao.findPagedByParams(keyValue, matchType, courtTypeId, region, currentPage, rows,orderByCol,isAsc);
+	}
+
+	@Override
+	public CourtBean findCourtBeanById(Integer id) {
+		return courtDao.get(id);
+	}
+
+	@Override
+	public MatchBean findMatchBeanById(Integer id) {
+		return matchDao.getMatchBean(id);
 	}
 
 }
