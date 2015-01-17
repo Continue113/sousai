@@ -2,8 +2,11 @@ package org.sousai.action;
 
 import java.io.File;
 
+import org.apache.struts2.ServletActionContext;
 import org.sousai.action.base.*;
+import org.sousai.common.Constant;
 import org.sousai.domain.*;
+import org.sousai.tools.JSONUtils;
 import org.sousai.tools.MyPrint;
 import org.sousai.vo.*;
 
@@ -64,35 +67,36 @@ public class RelCourtAction extends UserBaseAction {
 	}
 
 	public String execute() throws Exception {
+		String result = Constant.FAIL;
 		UserBean userBean = (UserBean) ActionContext.getContext().getSession()
 				.get("userBean");
 		if (umg.isExeed(userBean.getUserId(), MAX_COURT_COUNT, 1)) {
-			return EXEED_COUNT;
-		}
-		MyPrint.myPrint(court.toString());
-		MyPrint.myPrint("RelCourtAction now");
-		String result = FAIL;
-		Court tempCourt = getCourt();
-		// tempCourt.setCourtTypeId(getCourtTypeId());
-		tempCourt.setVerify('0');
-		MyPrint.myPrint("regionId = " + tempCourt.getRegionId());
+			result = EXEED_COUNT;
+		} else {
+			MyPrint.myPrint(court.toString());
+			MyPrint.myPrint("RelCourtAction now");
+			Court tempCourt = getCourt();
+			// tempCourt.setCourtTypeId(getCourtTypeId());
+			tempCourt.setVerify('0');
+			MyPrint.myPrint("regionId = " + tempCourt.getRegionId());
 
-		try {
-			tempCourt.setUserId(userBean.getUserId());
-			// tempCourt.setUser(new
-			// User((UserBean)ActionContext.getContext().getSession().get("userBean")));
-		
-
-		// 上传图片，并将场地信息存入数据库
-		if (umg.saveCourtPic(getImages(), getImgNames(), getCourt().getUserId()) != "fail"
-		// && umg.releaseCourt(tempCourt)==1)
-		) {
-			result = umg.releaseCourt(tempCourt).toString();
-		}} catch (Exception e) {
-			e.printStackTrace();
-			MyPrint.myPrint(result);
-			return result;
+			try {
+				tempCourt.setUserId(userBean.getUserId());
+				// tempCourt.setUser(new
+				// User((UserBean)ActionContext.getContext().getSession().get("userBean")));
+				// 上传图片，并将场地信息存入数据库
+				if (umg.saveCourtPic(getImages(), getImgNames(), getCourt()
+						.getUserId()) != "fail"
+				// && umg.releaseCourt(tempCourt)==1)
+				) {
+					result = umg.releaseCourt(tempCourt).toString();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				MyPrint.myPrint(result);
+			}
 		}
-		return result;
+		JSONUtils.toJson(ServletActionContext.getResponse(), result);
+		return null;
 	}
 }

@@ -61,9 +61,6 @@
 		
 		<!-- 发布场地的action -->
 		<action name="relCourt" class="org.sousai.action.RelCourtAction">
-			<result name="success">userCenter-releaseCourt.jsp</result>
-			<result name="fail">error.jsp</result>
-			<result name="exeed">error.jsp</result>
 		</action>
 		
 		<!-- 获取所有比赛大类的action -->
