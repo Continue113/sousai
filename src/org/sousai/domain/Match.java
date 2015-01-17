@@ -82,26 +82,31 @@ public class Match implements Serializable {
 	 * @param beginTime
 	 *            the beginTime to set
 	 */
-	public void setBeginTime(Date beginTime) {
-		this.beginTime = beginTime;
+	// public void setBeginTime(Date beginTime) {
+	// this.beginTime = beginTime;
+	// }
+	// public void setBeginTime(String beginTime) throws Exception{
+	// this.endTime = CommonUtils.ParseDateParam(beginTime, null);
+	// }
+	// public void setBeginTime(String[] beginTime) throws Exception{
+	// this.endTime = CommonUtils.ParseDateParam(beginTime[0], null);
+	// }
+
+	public void setBeginTime(Object beginTime) throws Exception {
+		try {
+			if (beginTime instanceof Date) {
+				this.beginTime = (Date) beginTime;
+			} else if (beginTime instanceof String) {
+				this.beginTime = CommonUtils.ParseDateParam(
+						((String) beginTime), null);
+			} else if (beginTime instanceof String[]) {
+				this.beginTime = CommonUtils.ParseDateParam(
+						((String[]) beginTime)[0], null);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-	public void setBeginTime(String beginTime) throws Exception{
-		this.endTime = CommonUtils.ParseDateParam(beginTime, null);
-	}
-	public void setBeginTime(String[] beginTime) throws Exception{
-		this.endTime = CommonUtils.ParseDateParam(beginTime[0], null);
-	}
-	
-	//beginTime.getClass()应该是一个数组类型
-//	public void setBeginTime(Object beginTime) throws Exception {
-//		System.out.println("beginTime = "+((String[])beginTime)[0]);
-//		if (beginTime.getClass() == Date.class){
-//			this.beginTime = (Date) beginTime;
-//		}
-//		else if (beginTime.getClass() == String.class) {
-//			this.beginTime = CommonUtils.ParseDateParam(((String[])beginTime)[0], null);
-//		}
-//	}
 
 	/**
 	 * @return the endTime
@@ -114,24 +119,31 @@ public class Match implements Serializable {
 	 * @param endTime
 	 *            the endTime to set
 	 */
-	public void setEndTime(Date endTime) {
-		this.endTime = endTime;
-	}
-	public void setEndTime(String endTime) throws Exception{
-		this.endTime = CommonUtils.ParseDateParam(endTime, null);
-	}
-	public void setEndTime(String[] endTime) throws Exception{
-		this.endTime = CommonUtils.ParseDateParam(endTime[0], null);
-	}
+	// public void setEndTime(Date endTime) {
+	// this.endTime = endTime;
+	// }
+	// public void setEndTime(String endTime) throws Exception{
+	// this.endTime = CommonUtils.ParseDateParam(endTime, null);
+	// }
+	// public void setEndTime(String[] endTime) throws Exception{
+	// this.endTime = CommonUtils.ParseDateParam(endTime[0], null);
+	// }
 
-//	public void setEndTime(Object endTime) throws Exception {
-//		if (endTime.getClass() == Date.class){
-//			this.endTime = (Date) endTime;
-//		}
-//		else if (endTime.getClass() == String.class) {
-//			this.endTime = CommonUtils.ParseDateParam(((String[])endTime)[0], null);
-//		} 
-//	}
+	public void setEndTime(Object endTime) throws Exception {
+		try {
+			if (endTime instanceof Date) {
+				this.endTime = (Date) endTime;
+			} else if (endTime instanceof String) {
+				this.endTime = CommonUtils.ParseDateParam(((String) endTime),
+						null);
+			} else if (endTime instanceof String[]) {
+				this.endTime = CommonUtils.ParseDateParam(
+						((String[]) endTime)[0], null);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * @return the courtId
