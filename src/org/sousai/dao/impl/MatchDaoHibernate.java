@@ -33,6 +33,17 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 	}
 
 	@Override
+	public MatchBean getMatchBean(Integer id) {
+		MatchBean value = null;
+		String strHql = String.format("%1$s and m.id=%2$s",selectMatchBean,id);
+		List<MatchBean> list = (List<MatchBean>) findModelList_HQL(strHql);
+		if (!CommonUtils.isNullOrEmpty(list)) {
+			value = list.get(0);
+		}
+		return value;
+	}
+
+	@Override
 	public Integer save(Match match) {
 		return (Integer) getHibernateTemplate().save(match);
 	}
@@ -352,15 +363,30 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 			Date beginTime, Date endTime, String region, int currentPage,
 			int rows, String orderByCol, Boolean isAsc) throws Exception {
 		List<MatchBean> list = null;
-		if(!CommonUtils.isNullOrEmpty(keyValue)){
-			keyValue = " %"+keyValue+"% ";
+		if (!CommonUtils.isNullOrEmpty(keyValue)) {
+			keyValue = " %" + keyValue + "% ";
 		}
-		if(!CommonUtils.isNullOrEmpty(region)){
-			region = " %"+region+"% ";
+		if (!CommonUtils.isNullOrEmpty(region)) {
+			region = " %" + region + "% ";
 		}
-		String strWhere = Append_String(" ", new int[]{2,0,7,3,5,7,5,2}, 
-				new String[]{" and m.name ", " and m.type "," and m.beginTime "," and m.beginTime ", " and m.endTime ", " and m.endTime ", " and m.beginTime ", " and m.beginTime ", " and c.region "},
-				new Object[]{keyValue, matchType, CommonUtils.ToTimestamp(beforeBegin), CommonUtils.ToTimestamp(between1),CommonUtils.ToTimestamp(between2), CommonUtils.ToTimestamp(afterEnd), CommonUtils.ToTimestamp(beginTime), CommonUtils.ToTimestamp(endTime), region});
-		return findPagedByWhereOrderBy(strWhere, currentPage, rows, orderByCol, isAsc);
+
+		// 比赛状态那里应该为or关系，另外看看是否需要加括号
+		String strWhere = Append_String(
+				" ",
+				new int[] { 2, 0, 7, 3, 5, 7, 5, 2 },
+				new String[] { " and m.name ", " and m.type ",
+						" and m.beginTime ", " and m.beginTime ",
+						" and c.region ", " and m.beginTime ",
+						" and m.beginTime ", " and m.endTime ",
+						" and m.endTime " },
+				new Object[] { keyValue, matchType,
+						CommonUtils.ToTimestamp(beginTime),
+						CommonUtils.ToTimestamp(endTime), region,
+						CommonUtils.ToTimestamp(beforeBegin),
+						CommonUtils.ToTimestamp(between1),
+						CommonUtils.ToTimestamp(between2),
+						CommonUtils.ToTimestamp(afterEnd) });
+		return findPagedByWhereOrderBy(strWhere, currentPage, rows, orderByCol,
+				isAsc);
 	}
 }

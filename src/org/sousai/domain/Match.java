@@ -1,6 +1,5 @@
 package org.sousai.domain;
 
-import org.sousai.domain.*;
 
 import java.io.Serializable;
 import java.util.Date;

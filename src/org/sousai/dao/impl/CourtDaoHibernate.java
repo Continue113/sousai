@@ -53,7 +53,7 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 	}
 
 	@Override
-	public Integer save(Court court) {
+	public Integer save(Court court) throws Exception{
 		return (Integer) getHibernateTemplate().save(court);
 	}
 

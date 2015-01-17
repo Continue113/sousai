@@ -265,7 +265,7 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public int releaseCourt(Court court) {
+	public int releaseCourt(Court court) throws Exception{
 		if (courtDao.save(court) != null) {
 			return 1;
 		}

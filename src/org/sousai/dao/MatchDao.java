@@ -13,6 +13,8 @@ public interface MatchDao {
 	public static final int EXCEED_QUOTA = -1;
 
 	Match get(Integer id);
+	
+	MatchBean getMatchBean(Integer id);
 
 	Integer save(Match match);
 
