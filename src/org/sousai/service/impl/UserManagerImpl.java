@@ -84,8 +84,8 @@ public class UserManagerImpl implements UserManager {
 	public void setMatchDao(MatchDao matchDao) {
 		this.matchDao = matchDao;
 	}
-	
-	public void setUserMarkDao(UserMarkDao userMarkDao){
+
+	public void setUserMarkDao(UserMarkDao userMarkDao) {
 		this.userMarkDao = userMarkDao;
 	}
 
@@ -124,8 +124,8 @@ public class UserManagerImpl implements UserManager {
 		 * user.getEmail(), user.getType(), user.getPicId(), user.getRegTime(),
 		 * user.getLastLogTime());
 		 */
-//		return new UserBean(user.getId(), user.getName(), user.getPwd(),
-//				user.getEmail(), user.getType());
+		// return new UserBean(user.getId(), user.getName(), user.getPwd(),
+		// user.getEmail(), user.getType());
 		return new UserBean(user);
 		/*
 		 * UserBean userBean = new UserBean(user.getId(), user.getName(),
@@ -265,11 +265,8 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public int releaseCourt(Court court) throws Exception{
-		if (courtDao.save(court) != null) {
-			return 1;
-		}
-		return 0;
+	public Integer releaseCourt(Court court) throws Exception {
+		return courtDao.save(court);
 	}
 
 	@Override
@@ -441,7 +438,7 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public Long markMatch(UserMark userMark) throws Exception{
+	public Long markMatch(UserMark userMark) throws Exception {
 		return userMarkDao.save(userMark);
 	}
 }

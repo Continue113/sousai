@@ -84,8 +84,10 @@ public class RelMatchAction extends UserBaseAction {
 			// 是否超过当日发布比赛上限
 			if (!umg.isExeed(userBean.getUserId(), MAX_MATCH_COUNT, 0)) {
 				if ((!isCourt || (court != null && umg.releaseCourt(court) != 0))
-						&& getMatch() != null && umg.relMatch(match) != 0) {
-					value = Constant.SUCCESS;
+//						&& getMatch() != null && umg.relMatch(match) != 0) {
+						&& getMatch() != null) {
+					value = umg.relMatch(match).toString();
+//					value = Constant.SUCCESS;
 				} else {
 					value = Constant.FAIL;
 				}

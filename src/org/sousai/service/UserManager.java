@@ -107,7 +107,7 @@ public interface UserManager
 	 * @return 1 成功   0失败
 	 * @throws Exception 
 	 */
-	public int releaseCourt(Court court) throws Exception;
+	public Integer releaseCourt(Court court) throws Exception;
 	
 	public String uploadPicByStream(File resImage);
 	/**
