@@ -64,9 +64,11 @@
         <div class="control-group"> 
          <label class="control-label" for="matchType">比赛类型：</label> 
          <div class="controls"> 
-          <s:include value="selectMatchType.jsp" />
-          <!-- /选择比赛类型 --> 
-         </div> 
+            <select class="selectMatchType" name="mcId"><option value=0>请选择比赛类型</option></select>
+            <select class="selectParticularMatchType"><option value=0>请先选择比赛大类</option></select>
+            <input class="hide" id="particularMatchType" name="court.matchType"/>
+            <label class="omthide hide" class="control-label" for="otherMatchType">请输入类型：<input class="omthide hide" id="otherMatchType" type="text" value="" placeholder="请填写比赛类型"/></label>
+           </div> 
         </div> 
         <div class="control-group matchState"> 
          <label class="control-label" for="matchState">比赛状态：</label> 

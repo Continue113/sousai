@@ -127,14 +127,14 @@
   //根据id获取比赛信息
 function e(){
 	var url = window.location.search,
-    kv = decodeURI(url.substring(url.lastIndexOf('=')+1, url.length)),
+    id = decodeURI(url.substring(url.lastIndexOf('=')+1, url.length)),
     target = $("#match");
 	
 	      $.ajax({
 	          type: "POST",
-	          url: "matchDetail",
+	          url: "getCourtById",//"matchDetail",
 	          contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-	          data: {id:kv},
+	          data: {id:id},
 	          dataType: "json",
 	          success: function(rspdata) {
 	        	  console.log(rspdata);

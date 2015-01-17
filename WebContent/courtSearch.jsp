@@ -69,23 +69,16 @@
         <div class="control-group"> 
          <label class="control-label" for="matchType">比赛类型：</label> 
            <div class="controls"> 
-            <select class="selectMatchType" name="mcId">
-              <option value=0>请选择比赛类型</option>
-            </select>
-            <select class="selectParticularMatchType hide"></select>
+            <select class="selectMatchType" name="mcId"><option value=0>请选择比赛类型</option></select>
+            <select class="selectParticularMatchType"><option value=0>请先选择比赛大类型</option></select>
             <input class="hide" id="particularMatchType" name="court.matchType"/>
-            <label class="omthide hide" class="control-label" for="otherMatchType">请输入类型：</label>
-            <input class="omthide hide" id="otherMatchType" type="text" value="" placeholder="请填写比赛类型"/>
+            <label class="omthide hide" class="control-label" for="otherMatchType">请输入类型：<input class="omthide hide" id="otherMatchType" type="text" value="" placeholder="请填写比赛类型"/></label>
            </div>
         </div> 
         <div class="control-group"> 
          <label class="control-label" for="courtType">场地类型：</label> 
-         <div class="controls"> 
-          <!-- 选择场地类型 --> 
-            <select class="selectCourtType" name="court.courtTypeId">
-              <option value=0>请先选择比赛类型</option>
-            </select>
-          <!-- /选择场地类型 --> 
+         <div class="controls">
+            <select class="selectCourtType" name="court.courtTypeId"><option value=0>请先选择比赛类型</option></select>
          </div> 
         </div> 
         <div class="control-group"> 
@@ -166,6 +159,32 @@
                             
     {{/each}}
   </script>
+  <script id="barcourt-template" type="text/x-handlebars-template">
+    {{#each this}}
+                        
+        <div class="courtBox"  data-info="{{data this}}"> 
+         <!-- img --> 
+         <div class="courtBox-img"> 
+          <img src="img/defaultImg.png" alt="" title="" /> 
+         </div> 
+         <!-- data --> 
+         <div class="courtBox-block"> 
+          <div class="courtBox-title"> 
+           <a href="courtSearchDetail.jsp?id={{id}}">{{name}}</a> 
+           <a href="courtSearchDetail.jsp?id={{id}}" class="btn btn-mini pull-right">查看详细</a> 
+          </div> 
+          <ul class="breadcrumb"> 
+           <li class="courtBox-address">{{address}}</li> 
+           <li class="courtBox-info "> <p>courtTypeId:{{courtTypeId}}</p> <p>赛场<span class="courtBox-infoNumb">{{tableNum}}</span>个</p> <p>{{tel}}</p> </li> 
+           <li class="courtBox-record ">曾举办比赛<p><span class="courtBox-recordNumb">1</span>次</p></li> 
+           <li class="courtBox-evaluation "><p><span>2013-10-10</span>:<span>但行代价昂贵你空间啊好烦你撒谎吃饭了空间啊干那</span></p> <p><span>2013-10-10</span>:<span>撒了你刚才发K 524545呵呵发那个给UI HM</span></p> <p><span>2013-10-10</span>:<span>4256605JKHGCFYUSDA是都还没后 俺哥啊 俺哥爱戴啊</span></p></li> 
+          </ul> 
+         </div> 
+        </div>
+                            
+    {{/each}}
+  </script>
+  
   <script>
   //定义函数
   function e(crtPage,rs,orderbycol,isasc,sc,kv){
@@ -184,7 +203,7 @@
 			//若为空则不访问action，刷新原页面
 			alert("输入搜索关键字不为空，调用模糊搜索");
 			//window.location.herf = window.location;
-			barSearch(urikv);
+			barSearch(urikv,crtPage,rs);
 	    }else{
 			alert("输入搜索关键字问空，调用advCourtSearch");
 	    	//kv不存在 为undefined 说明是从排序过来的。则直接调用
@@ -193,9 +212,15 @@
   }
 
   //搜索栏模糊搜索
-	function barSearch(kv){
-	  	$("#ajaxState .load").show();
-	  	console.log("start");
+	function barSearch(crtPage,rs,kv){
+		$("#ajaxState .load").show();
+		$(".courtBoxs").show();
+		$(".panel-top").hide();
+		$("#ajaxState .noresult").hide();
+		
+		crtPage = crtPage||$("ul.pagination li.active a").html()||1;//若无当前页数，则为当前的页数 否则默认为为1
+		rows = rs||25;//若无行数，则默认为 25行
+		  
 	      $.ajax({
 	          type: "POST",
 	          url: "courtSearch",
@@ -207,7 +232,7 @@
 	        	  console.log(rspdata);
 		        	//设置搜索结果数量
 		        	$(".search-remind span").html(rspdata.count);
-		        	var target = $(".courtBoxs"),template = Handlebars.compile($('#court-template').html());
+		        	var target = $(".courtBoxs"),template = Handlebars.compile($('#barcourt-template').html());
 		            Handlebars.registerHelper("data",function(v){
 		                //将当前对象转化为字符串，保存在data-info中
 		                console.log(v);
@@ -230,7 +255,7 @@
 		              $(".courtBox-address").wordLimit(20);
 		              $(".courtBox-evaluation p").wordLimit();
 
-		    	      pages(rspdata.count,1,25);
+		    	      pages(rspdata.count,crtPage,rs);
 	          },
 	          error: function(jqXHR,textStatus,errorThrown){
 	        	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
@@ -264,9 +289,9 @@ function advCourtSearch(crtPage,rs,orderbycol,isasc,sc,kv){
 	$(".panel-top").show();
 	$("#ajaxState .noresult").hide();
 	console.log("start");
+	
 	  //获取地区region和regionId 需先用这个建立此对象 然后才能将数据放入，否则后被覆盖
 	  var data = getRegion();
-
 	  data.keyValue = kv||$("#keyValue").val(); //若无kv 则默认为 当前的keyValue的值
 	  data.matchType = $("select.selectParticularMatchType option:selected").attr("value") == "0" ? null : $("select.selectParticularMatchType option:selected").text(); //设置若比赛详细类型为初始值则为null
 	  data.courtTypeId = $("select.selectCourtType option:selected").attr("value") == "0" ? null : $("select.selectCourtType option:selected").attr("value"); //设置若场地类型为初始值则为null
