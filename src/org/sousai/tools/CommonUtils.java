@@ -125,6 +125,10 @@ public class CommonUtils {
 			throws Exception {
 		Date value = null;
 		try {
+			if(CommonUtils.isNullOrEmpty(format))
+			{
+				format = new SimpleDateFormat("yyyy-MM-dd");
+			}
 			if (!CommonUtils.isNullOrEmpty(str))
 				value = format.parse(str.trim());
 		} catch (ParseException e) {

@@ -4,6 +4,8 @@ package org.sousai.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.sousai.tools.CommonUtils;
+
 public class Match implements Serializable {
 
 	private static final long serialVersionUID = -2347973669337577325L;
@@ -85,6 +87,9 @@ public class Match implements Serializable {
 		this.beginTime = beginTime;
 	}
 
+	public void setBeginTime(String beginTime) throws Exception{
+		this.beginTime = CommonUtils.ParseDateParam(beginTime, null);
+	}
 	/**
 	 * @return the endTime
 	 */
@@ -100,6 +105,9 @@ public class Match implements Serializable {
 		this.endTime = endTime;
 	}
 
+	public void setEndTime(String endTime) throws Exception{
+		this.endTime = CommonUtils.ParseDateParam(endTime, null);
+	}
 	/**
 	 * @return the courtId
 	 */
