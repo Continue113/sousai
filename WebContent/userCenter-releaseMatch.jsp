@@ -176,8 +176,8 @@ return myDate;
 			      			    "match.name": match.title,
 			      			    "match.type": match.type,
 			      			    //"match.typeId": parseInt(match.typeid), //未使用
-			      			    "match.beginTime": StringToDate(match.begintime),
-			      			    "match.endTime": StringToDate(match.endtime),
+			      			    "match.beginTime": match.begintime,
+			      			    "match.endTime": match.endtime,
 			      			    //"match.court": match.court,
 			      			    "match.courtId": parseInt(match.courtid),
 			      			    "match.rule": match.rule,
@@ -197,8 +197,8 @@ return myDate;
 			      			    "match.name": match.title,
 			      			    "match.type": match.type,
 			      			    //"match.typeId": parseInt(match.typeid), //未使用
-			      			    "match.beginTime": $("#inputMatchTimefrom").datepicker( 'getDate' ),//StringToDate(match.begintime),
-			      			    "match.endTime": $("#inputMatchTimeto").datepicker( 'getDate' ),//StringToDate(match.endtime),
+			      			    "match.beginTime": match.begintime,
+			      			    "match.endTime": match.endtime,
 			      			    //"match.court": match.court,
 			      			    "match.courtId": parseInt(match.courtid),
 			      			    "match.rule": match.rule,
