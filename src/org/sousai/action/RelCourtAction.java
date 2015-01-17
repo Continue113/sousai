@@ -81,17 +81,17 @@ public class RelCourtAction extends UserBaseAction {
 			tempCourt.setUserId(userBean.getUserId());
 			// tempCourt.setUser(new
 			// User((UserBean)ActionContext.getContext().getSession().get("userBean")));
-		} catch (Exception e) {
-			e.printStackTrace();
-			MyPrint.myPrint(result);
-			return result;
-		}
+		
 
 		// 上传图片，并将场地信息存入数据库
 		if (umg.saveCourtPic(getImages(), getImgNames(), getCourt().getUserId()) != "fail"
 		// && umg.releaseCourt(tempCourt)==1)
 		) {
 			result = umg.releaseCourt(tempCourt).toString();
+		}} catch (Exception e) {
+			e.printStackTrace();
+			MyPrint.myPrint(result);
+			return result;
 		}
 		return result;
 	}

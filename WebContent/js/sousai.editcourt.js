@@ -263,7 +263,7 @@ $(function(){
   	}else{
   		$(".courtRegionControls").slideUp();
   		//重置选择比赛场地，同时还原类型
-    		$("#inputCourtRegion").val($("#inputCourtRegion").attr("data-oldregion")).attr("data-regionid",$("#inputCourtRegion").attr("data-oldregionid"));
+  		$("#inputCourtRegion").val($("#inputCourtRegion").attr("data-oldregion")).attr("data-regionid",$("#inputCourtRegion").attr("data-oldregionid"));
   		$(this).text("修改");
   	}
   });
@@ -294,7 +294,7 @@ $(function(){
   $(".controls > .selectCountry").change(function(){
 	  var tgPrt = $(this).parent(),
 	  region = $(".selectProvince option:selected").text() +"-"+ $(".selectProvince option:selected").text()+"-"+ tgPrt.find(".selectCountry option:selected").text();
-	  $("#inputCourtRegion").val(region).attr("data-regionid",tgPrt.find(".selectCountry option:selected").attr("value"));
+	  $("#inputCourtRegion").val(region).attr("data-regionid",tgPrt.find(".selectCountry option:selected").attr("data-regionid"));
   });
   
   var courtValidator = $("#editCourtForm").submit(function() {

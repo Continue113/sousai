@@ -216,13 +216,11 @@ return myDate;
 		                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 		                data: data,
 		                dataType: "json",
-		                success: function(data) {
-		              	  if( data == "success" ){
-		              		  sousaiRemindDialog("发布成功");
-		              	  }else if( data == "fail" ){
-		              		  sousaiRemindDialog("发布失败");
+		                success: function(rspdata) {
+		              	  if( rspdata == "fail" ){
+		              		  sousaiRemindDialog("发布失败，fail");
 		              	  }else{
-		              		  sousaiRemindDialog("发布失败，错误代码未知");
+		              		  sousaiRemindDialog("发布代码为："+rspdata);
 		              	  }
 		                },
 		                error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);

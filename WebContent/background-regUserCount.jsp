@@ -37,19 +37,19 @@
      <!-- background-remind & backgroundMenu --> 
      <ul class="breadcrumb background-remind"> 
       <li>提醒:</li> 
-      <li><a href="#">待处理的比赛信息<span>(5)</span></a></li> 
+      <li><a href="javascript:void(0);">待处理的比赛信息<span>(5)</span></a></li> 
      </ul> 
-     <div class="span2 backgroundMenu "> 
+     <div class="span2 backgroundMenu"> 
       <ul class="nav nav-stacked nav-side"> 
-       <li><h5><a href="#"><i class="icon-minus"></i>系统发布:</a></h5></li> 
+       <li><h5><a href="javascript:void(0);"><i class="icon-minus"></i>系统发布:</a></h5></li> 
        <li><a href="background-collections.jsp"><i class="icon-chevron-down "></i>全部采集</a></li> 
        <li><a href="background-collectionsSetting.jsp"><i class="icon-chevron-down "></i>采集设置</a></li> 
-       <li><h5><a href="#"><i class="icon-minus"></i>数据维护:</a></h5></li> 
+       <li><h5><a href="javascript:void(0);"><i class="icon-minus"></i>数据维护:</a></h5></li> 
        <li><a href="background-matchMaintenance.jsp"><i class="icon-chevron-down "></i>比赛维护</a></li> 
        <li><a href="background-courtMaintenance.jsp"><i class="icon-chevron-down "></i>场地维护</a></li> 
        <li><a href="background-userMaintenance.jsp"><i class="icon-chevron-down "></i>用户维护</a></li> 
        <li><a href="background-evaluationMaintenance.jsp"><i class="icon-chevron-down "></i>评论维护</a></li> 
-       <li><h5><a href="#"><i class="icon-minus"></i>网站统计</a></h5></li> 
+       <li><h5><a href="javascript:void(0);"><i class="icon-minus"></i>网站统计</a></h5></li> 
        <li class="active"><a href="background-regUserCount.jsp"><i class="icon-chevron-down "></i>注册用户</a></li> 
        <li><a href="background-releaseCount.jsp"><i class="icon-chevron-down "></i>发布统计</a></li> 
        <li><a href="background-visitCount.jsp"><i class="icon-chevron-down "></i>访问量</a></li> 
@@ -57,13 +57,10 @@
      </div> 
      <!-- /background-remind & backgroundMenu --> 
      <div class="span9"> 
-      <div class="toolBox"> 
-       <!-- <form class="from-inline" id="form1">  -->
-        <label for="year">请选择年份</label> 
-        <select class="span1" name="year" id="year"> <option>2010</option> <option selected="selected">2011</option> </select> 
+      <div class="toolBox total form-inline">
+        <label for="year">请选择年份：<select class="span1" name="year" id="year"> <option>2010</option> <option selected="selected">2011</option> </select></label> 
         <button class="btn pull-right" id="tableTiggler">显示表格</button>
         <button class="btn pull-right" onclick="GetAjaxChartData()">通过Ajax获取数据</button>
-       <!-- </form> -->
       </div> 
       <div class="hide" id="mainTable"> 
        <table class="table table-bordered table-striped table-condensed table-hover "> 
@@ -204,8 +201,25 @@
         </tbody> 
        </table> 
       </div> 
-      <div class="chartBox" id="mainLine"></div> 
-      <div class="chartBox" id="mainMap"></div> 
+      <div class="chartBox hide" id="mainLine"></div>
+      
+      <div class="toolBox region form-inline">
+        <label for=regionTimeYear>请选择地域统计时间段：</label> 
+        <select class="span1" name="timeYear" id="regionTimeYear"> <option>2010</option> <option selected="selected">2011</option> </select>
+        <select class="span1" name="timeMonth" id="regionTimeMonth"> <option>全年</option> <option selected="selected">1月</option> </select> 
+        <button class="btn " id="tableTigglerRegion">显示表格</button>
+        <button class="btn " onclick="javascript:$('#mainMap').show();">显示地图</button>
+        <button class="btn " onclick="GetAjaxChartDataRegion()">通过Ajax获取数据</button>
+      </div>
+      <div class="chartBox hide" id="mainMap"></div>
+      
+      <div class="toolBox Match form-inline">
+        <label for=matchTime>请输入时间以统计比赛场次：</label>
+        <input type="text" class="input-small height-mini" id="matchTime" placeholder="请输入时间" /> 天内各地乒乓球比赛统计。
+        <button class="btn " id="tableTigglerMatch">统计</button>
+        <p>北京32场、成都23场、北京32场、成都23场、北京32场、成都23场、北京32场、成都23场、北京32场、成都23场、北京32场、成都23场、北京32场、成都23场、</p>
+        <!-- <button class="btn " onclick="GetAjaxChartDataMatch()">通过Ajax获取数据</button> -->
+      </div> 
      </div>
      <!-- /span9 --> 
     </div>
