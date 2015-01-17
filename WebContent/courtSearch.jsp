@@ -203,12 +203,12 @@
 			//若为空则不访问action，刷新原页面
 			alert("输入搜索关键字不为空，调用模糊搜索");
 			//window.location.herf = window.location;
-			barSearch(urikv,crtPage,rs);
+			barSearch(crtPage,rs,urikv);
 	    }else{
 			alert("输入搜索关键字问空，调用advCourtSearch");
 	    	//kv不存在 为undefined 说明是从排序过来的。则直接调用
 	    	advCourtSearch(crtPage,rs,orderbycol,isasc,sc,kv);
-	    }	  
+	    }
   }
 
   //搜索栏模糊搜索
