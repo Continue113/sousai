@@ -124,7 +124,7 @@
   <!-- 页尾信息 -->
   <script>
   //定义函数
-  //搜索栏模糊搜索
+  //根据id获取比赛信息
 function e(){
 	var url = window.location.search,
     kv = decodeURI(url.substring(url.lastIndexOf('=')+1, url.length)),

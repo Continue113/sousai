@@ -104,11 +104,27 @@
   				//设置搜撒提示框，不自动消失，显示确定按钮
   				sousaiRemindDialog("请先登录再发布场地！",-1,true);
   			}else{
+  				
   	  			var court = getCourtInfo();
   	  			court.userId = parseInt(userId);		
   	  			console.log(court);
-  				
-  					/***********************************************/
+  				var data = {
+  						"court.userId": court.userId,
+  						"court.addr": court.addr,
+  						"court.courtTypeId": court.courtTypeId,
+  						"court.name": court.name,
+  						"court.matchType":court.matchType,
+  						"court.regionId": court.regionId,
+  						"court.region": court.region,
+  						"court.tableNum": court.tableNum,
+  						"court.tel": court.tel,
+  						"court.price": court.price,
+  						"court.workTime": court.workTime,
+  						"court.matchCount": court.matchCount,
+  						"court.intro": court.intro
+  				};
+  	  			console.log(data);
+  					/***********************************************
   					//测试formdata
   					var formdata = new FormData();
 
@@ -127,7 +143,7 @@
   		         	//processData: false, //不处理数据
   		        	//contentType: false, //不自动设置请求头
   		            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-  		            data: court,
+  		            data: data,
   		            dataType: "json",
   		            success: function(data) {
   		          	  if( rspdata == "success" ){
