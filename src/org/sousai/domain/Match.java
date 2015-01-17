@@ -106,6 +106,7 @@ public class Match implements Serializable {
 	}
 
 	public void setEndTime(String endTime) throws Exception{
+		System.out.println("endTime = "+endTime);
 		this.endTime = CommonUtils.ParseDateParam(endTime, null);
 	}
 	/**
