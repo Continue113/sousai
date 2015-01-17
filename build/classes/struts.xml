@@ -158,6 +158,9 @@
 		<action name="matchDetail" class="org.sousai.search.MatchDetail" method="matchDetail">
 			<result name="success">/</result>
 		</action>
+		<action name="courtSearch" class="org.sousai.search.CourtSearch" method="courtSearch">
+			<result name="success">/</result>
+		</action>
 		
 		<action name="markMatch" class="org.sousai.action.MarkMatchAction" >
 		</action>

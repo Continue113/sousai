@@ -12,6 +12,7 @@ import org.apache.lucene.document.StringField;
 import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
@@ -103,10 +104,71 @@ public class IndexCreate {
 
 	public void createIndex() {
 		LinkedList<MatchData> matchList = new Jdbc().selectToday();
+		
 		System.out.println(matchList.size());
 		for (int i = 0; i < matchList.size(); i++) {
 			saveIndex("/home/lei/data",matchList.get(i));
 		}
+		
+		LinkedList<Court> courtList = new Jdbc().selectCourtToday() ;
+		for (int i = 0; i < courtList.size(); i++) {
+			saveCourtIndex("/home/lei/data1",courtList.get(i));
+		}
+	}
+	
+	public void saveCourtIndex(String indexSavePath,Court court) {
+		IndexWriter writer = null;
+
+		try {
+			directory = FSDirectory.open(new File(indexSavePath));// 打开存放索引的路径
+			writer = getWriter();
+
+			writer.addDocument(creatCourtTodayIndexDoc(court));// 添加进写入流里
+
+			// writer.forceMerge(1);// 优化压缩段,大规模添加数据的时候建议，少使用本方法，会影响性能
+			writer.commit();// 提交数据
+
+			System.out.println("添加成功");
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		} finally {
+
+			if (writer != null) {
+				try {
+					writer.close();// 关闭流
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	private Document creatCourtTodayIndexDoc(Court court) {
+		Document indexDoc = new Document();
+		// ID,NAME,MATCHTYPE,ADDR,TEL,INTRO
+		int id = 0;
+		String name = null;
+		String matchType = null;
+		String address = null;
+		String tel = null;
+		String intro = null;
+
+		id = court.getId() ;
+		name = court.getName() ;
+		matchType = court.getMatchType() ;
+		address = court.getAddress() ;
+		tel = court.getTel() ;
+		intro = court.getIntro() ;
+
+		indexDoc.add(new IntField("id", id, Store.YES));   //不分词
+		indexDoc.add(new TextField("name", name, Store.YES));
+		indexDoc.add(new TextField("matchType", matchType, Store.YES));
+		indexDoc.add(new TextField("address", address, Store.YES));
+		indexDoc.add(new StringField("tel", tel, Store.YES));   //不分词
+		indexDoc.add(new TextField("intro", intro, Store.YES));
+		return indexDoc;
 	}
 	
 }

@@ -64,9 +64,11 @@
         <div class="control-group"> 
          <label class="control-label" for="matchType">比赛类型：</label> 
          <div class="controls"> 
-          <s:include value="selectMatchType.jsp" />
-          <!-- /选择比赛类型 --> 
-         </div> 
+            <select class="selectMatchType" name="mcId"><option value=0>请选择比赛类型</option></select>
+            <select class="selectParticularMatchType"><option value=0>请先选择比赛大类</option></select>
+            <input class="hide" id="particularMatchType" name="court.matchType"/>
+            <label class="omthide hide" class="control-label" for="otherMatchType">请输入类型：<input class="omthide hide" id="otherMatchType" type="text" value="" placeholder="请填写比赛类型"/></label>
+           </div> 
         </div> 
         <div class="control-group matchState"> 
          <label class="control-label" for="matchState">比赛状态：</label> 
@@ -149,7 +151,7 @@
            <div class="line">&nbsp;-&nbsp;</div> 
            <div class="matchBox-endTime">{{matchDeadline}}<p>星期日</p></div>
 		  </li>
-          <li class="matchBox-court "><a href="javascript:void(0)">场地ID：{{courtId}}</a></li> 
+          <li class="matchBox-court "><a href="courtSearchDetail.jsp?id={{courtId}}">场地ID：{{courtId}}</a></li> 
           <li class="matchBox-state ">报名中</li> 
           <li class="matchBox-info "><a href="matchSearchDetail.jsp?id={{id}}">{{{matchIntroduction}}}</a></li> 
           <li class="matchBox-btns "><a href="markMatch({id})" class="btn btn-mini">收藏比赛</a><a href="matchSearchDetail.jsp?id={{id}}" class="btn btn-mini">查看详细</a></li> 

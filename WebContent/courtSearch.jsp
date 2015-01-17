@@ -69,23 +69,16 @@
         <div class="control-group"> 
          <label class="control-label" for="matchType">比赛类型：</label> 
            <div class="controls"> 
-            <select class="selectMatchType" name="mcId">
-              <option value=0>请选择比赛类型</option>
-            </select>
-            <select class="selectParticularMatchType hide"></select>
+            <select class="selectMatchType" name="mcId"><option value=0>请选择比赛类型</option></select>
+            <select class="selectParticularMatchType"><option value=0>请先选择比赛大类型</option></select>
             <input class="hide" id="particularMatchType" name="court.matchType"/>
-            <label class="omthide hide" class="control-label" for="otherMatchType">请输入类型：</label>
-            <input class="omthide hide" id="otherMatchType" type="text" value="" placeholder="请填写比赛类型"/>
+            <label class="omthide hide" class="control-label" for="otherMatchType">请输入类型：<input class="omthide hide" id="otherMatchType" type="text" value="" placeholder="请填写比赛类型"/></label>
            </div>
         </div> 
         <div class="control-group"> 
          <label class="control-label" for="courtType">场地类型：</label> 
-         <div class="controls"> 
-          <!-- 选择场地类型 --> 
-            <select class="selectCourtType" name="court.courtTypeId">
-              <option value=0>请先选择比赛类型</option>
-            </select>
-          <!-- /选择场地类型 --> 
+         <div class="controls">
+            <select class="selectCourtType" name="court.courtTypeId"><option value=0>请先选择比赛类型</option></select>
          </div> 
         </div> 
         <div class="control-group"> 
@@ -166,6 +159,32 @@
                             
     {{/each}}
   </script>
+  <script id="barcourt-template" type="text/x-handlebars-template">
+    {{#each this}}
+                        
+        <div class="courtBox"  data-info="{{data this}}"> 
+         <!-- img --> 
+         <div class="courtBox-img"> 
+          <img src="img/defaultImg.png" alt="" title="" /> 
+         </div> 
+         <!-- data --> 
+         <div class="courtBox-block"> 
+          <div class="courtBox-title"> 
+           <a href="courtSearchDetail.jsp?id={{id}}">{{name}}</a> 
+           <a href="courtSearchDetail.jsp?id={{id}}" class="btn btn-mini pull-right">查看详细</a> 
+          </div> 
+          <ul class="breadcrumb"> 
+           <li class="courtBox-address">{{address}}</li> 
+           <li class="courtBox-info "> <p>courtTypeId:{{courtTypeId}}</p> <p>赛场<span class="courtBox-infoNumb">{{tableNum}}</span>个</p> <p>{{tel}}</p> </li> 
+           <li class="courtBox-record ">曾举办比赛<p><span class="courtBox-recordNumb">1</span>次</p></li> 
+           <li class="courtBox-evaluation "><p><span>2013-10-10</span>:<span>但行代价昂贵你空间啊好烦你撒谎吃饭了空间啊干那</span></p> <p><span>2013-10-10</span>:<span>撒了你刚才发K 524545呵呵发那个给UI HM</span></p> <p><span>2013-10-10</span>:<span>4256605JKHGCFYUSDA是都还没后 俺哥啊 俺哥爱戴啊</span></p></li> 
+          </ul> 
+         </div> 
+        </div>
+                            
+    {{/each}}
+  </script>
+  
   <script>
   //定义函数
   function e(crtPage,rs,orderbycol,isasc,sc,kv){
@@ -173,9 +192,7 @@
 	  $("#searchbox-tab").find("li:eq(0)").removeClass("active").end().find("li:eq(1)").addClass("active");
 	  $("#searchbox-match").removeClass("active");
 	  $("#searchbox-court").addClass("active");
-	console.log(crtPage,rs,orderbycol,isasc,sc,kv);
-  	advCourtSearch(crtPage,rs,orderbycol,isasc,sc,kv);
-  	
+      console.log(crtPage,rs,orderbycol,isasc,sc,kv);
 		//loc需解码转换为中文
 	    var url = window.location.search,
 	    urikv = decodeURI(url.substring(url.lastIndexOf('=')+1, url.length));
@@ -186,12 +203,66 @@
 			//若为空则不访问action，刷新原页面
 			alert("输入搜索关键字不为空，调用模糊搜索");
 			//window.location.herf = window.location;
+			barSearch(crtPage,rs,urikv);
 	    }else{
 			alert("输入搜索关键字问空，调用advCourtSearch");
 	    	//kv不存在 为undefined 说明是从排序过来的。则直接调用
 	    	advCourtSearch(crtPage,rs,orderbycol,isasc,sc,kv);
-	    }	  
+	    }
   }
+
+  //搜索栏模糊搜索
+	function barSearch(crtPage,rs,kv){
+		$("#ajaxState .load").show();
+		$(".courtBoxs").show();
+		$(".panel-top").hide();
+		$("#ajaxState .noresult").hide();
+		
+		crtPage = crtPage||$("ul.pagination li.active a").html()||1;//若无当前页数，则为当前的页数 否则默认为为1
+		rows = rs||25;//若无行数，则默认为 25行
+		  
+	      $.ajax({
+	          type: "POST",
+	          url: "courtSearch",
+	          contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+	          data: {content:kv},
+	          dataType: "json",
+	          success: function(rspdata) {
+	        	  console.log(rspdata.count);
+	        	  console.log(rspdata);
+		        	//设置搜索结果数量
+		        	$(".search-remind span").html(rspdata.count);
+		        	var target = $(".courtBoxs"),template = Handlebars.compile($('#barcourt-template').html());
+		            Handlebars.registerHelper("data",function(v){
+		                //将当前对象转化为字符串，保存在data-info中
+		                console.log(v);
+		                var v1 = JSON.stringify(v);
+		                //console.log("v1:"+v1);
+		                return v1;
+		              });
+		              //清空tbody并填入数据
+		              target.html(template(rspdata.body));
+		              $("#ajaxState .load").hide();console.log("stop");
+		              //出错或无结果
+		              //target.empty(); //清空tbody
+		              if(target.find("div.courtBox").length == 0){
+		              $("#ajaxState .noresult").show();
+		              $(".panel-top").hide();
+		              target.hide();
+		              console.log("无结果");
+		              }
+		              //字数限制，溢出省略 
+		              $(".courtBox-address").wordLimit(20);
+		              $(".courtBox-evaluation p").wordLimit();
+
+		    	      pages(rspdata.count,crtPage,rs);
+	          },
+	          error: function(jqXHR,textStatus,errorThrown){
+	        	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+	            sousaiRemindDialog("抱歉。ajax错误。");
+	          },
+	        });
+	}  
 //获得场地的省市区信息  
 function getRegion(){
 	  //设置region的值，若只有省级 则 如 北京市-  若有市级 则 北京市-北京市- 若有区级则为 北京市-北京市-东城区 否则传""
@@ -218,9 +289,9 @@ function advCourtSearch(crtPage,rs,orderbycol,isasc,sc,kv){
 	$(".panel-top").show();
 	$("#ajaxState .noresult").hide();
 	console.log("start");
+	
 	  //获取地区region和regionId 需先用这个建立此对象 然后才能将数据放入，否则后被覆盖
 	  var data = getRegion();
-
 	  data.keyValue = kv||$("#keyValue").val(); //若无kv 则默认为 当前的keyValue的值
 	  data.matchType = $("select.selectParticularMatchType option:selected").attr("value") == "0" ? null : $("select.selectParticularMatchType option:selected").text(); //设置若比赛详细类型为初始值则为null
 	  data.courtTypeId = $("select.selectCourtType option:selected").attr("value") == "0" ? null : $("select.selectCourtType option:selected").attr("value"); //设置若场地类型为初始值则为null
@@ -272,122 +343,6 @@ function advCourtSearch(crtPage,rs,orderbycol,isasc,sc,kv){
 	      });
 }
 
-//点击大类比赛类型获得具体比赛类型
-function selectMatchType(tempthis){
-    //tgPrt: targetparent 目标父元素
-    var tgPrt = tempthis.parent();
-    if (tgPrt.find(".selectMatchType option:selected").attr("value") == 0) {
-  	  //当点击默认选项时将具体比赛类型隐藏并设为默认状态 同时 将场地类型设置为默认状态
-  	  tgPrt.find(".selectParticularMatchType").hide().empty().append("<option value=0>请选择比赛类型</option>");
-  	  $(".selectCourtType").empty().append("<option value=0>请先选择比赛类型</option>");
-  	  //若已选择“其他”则改为默认选项
-        if( omtf == 1){
-      	tgPrt.find(".selectParticularMatchType").attr("name","court.matchType");
-          tgPrt.find(".omthide").slideUp();
-          $("#otherMatchType").removeAttr("name");
-          omtf = 0;
-        }
-    }else {
-      $.ajax({
-        type: "POST",
-        url: "showMT",
-        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-        data: {
-          "mcId": tgPrt.find(".selectMatchType option:selected").attr("value"),
-        },
-        dataType: "json",
-        success: function(rspdata) {
-          var sctParMatchType = $(".selectParticularMatchType");
-          sctParMatchType.empty().append("<option value=0>请选择比赛类型</option>");
-          for (var i = 0; i < rspdata.length; i++) {
-            sctParMatchType.append("<option value=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</  option>");
-          }
-          sctParMatchType.append("<option value=1>其他</option>"); //每一个大类比赛类型的“其他”选项
-        },
-        error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-          sousaiRemindDialog("抱歉，获取比赛类型出错了。");
-        },
-      }); //ajax 已得到具体比赛类型
-      //出现具体比赛类型下拉列表并且不再隐藏
-      tgPrt.find(".selectParticularMatchType").show();
-    }
-}
-
-//点击比赛类型获取相应场地类型 或者 选择其他出现输入框
-var omtf = 0;//other match type flag ；0表示默认，1表示已经选过“其他”选项
-function selectParticularMatchType(tempthis){
-    //tgPrt: targetparent 目标父元素
-    var tgPrt = tempthis.parent();
-    if (tgPrt.find(".selectParticularMatchType option:selected").attr("value") == 1 && omtf == 0){
-      //移除name属性，即不会使用select内容提交
-      tempthis.removeAttr("name");
-      //当用户选择其他的时候，弹出隐藏的label和input
-      tgPrt.find(".omthide").slideDown();
-      //添加输入框的name属性，并改变omtf
-      $("#otherMatchType").attr("name","court.matchType");
-      omtf = 1;
-      
-      console.log("获得场地类型");
-      $.ajax({
-        type: "POST",
-        url: "showCT",
-        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-        data: {
-          "matchId": tgPrt.find(".selectParticularMatchType option:selected").attr("value"),
-        },
-        dataType: "json",
-        success: function(rspdata) {
-          var sctCourtType = $(".selectCourtType");
-          sctCourtType.empty().append("<option value=0>请选择场地类型</option>");
-          for (var i = 0; i < rspdata.length; i++) {
-            sctCourtType.append("<option value=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</  option>");
-          }
-        },
-        error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-          sousaiRemindDialog("抱歉，获取场地类型出错了。");
-        },
-      }); //ajax 已得到场地类型
-
-    }else if (tgPrt.find(".selectParticularMatchType option:selected").attr("value") == 0) {
-      //当用户选择具体比赛类型为默认选项时的时候，就将场地类型下拉列表框中原有的“请选择”字样删除。
-      $(".selectCourtType").empty().append("<option value=0>请先选择比赛类型</option>");
-      //若已选择“其他”则改为默认选项
-      if( omtf == 1){
-    	tempthis.attr("name","court.matchType");
-        tgPrt.find(".omthide").slideUp();
-        $("#otherMatchType").removeAttr("name");
-        omtf = 0;
-      }
-    }else {
-      //若已选择“其他”则改为默认选项
-      if( omtf == 1){
-    	tempthis.attr("name","court.matchType");
-        tgPrt.find(".omthide").slideUp();
-        $("#otherMatchType").removeAttr("name");
-        omtf = 0;
-      }
-      console.log("获得场地类型");
-      $.ajax({
-        type: "POST",
-        url: "showCT",
-        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-        data: {
-          "matchId": tgPrt.find(".selectParticularMatchType option:selected").attr("value"),
-        },
-        dataType: "json",
-        success: function(rspdata) {
-          var sctCourtType = $(".selectCourtType");
-          sctCourtType.empty().append("<option value=0>请选择场地类型</option>");
-          for (var i = 0; i < rspdata.length; i++) {
-            sctCourtType.append("<option value=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</  option>");
-          }
-        },
-        error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-          sousaiRemindDialog("抱歉，获取场地类型出错了。");
-        },
-      }); //ajax 已得到场地类型
-    }
-}
   $(function(){
 	//ajax接收所有的场地
 	e();

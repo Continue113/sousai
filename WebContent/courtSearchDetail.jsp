@@ -461,35 +461,7 @@
   </script>
   <script>
   //定义函数
-
-	function e(crtPage,rs,obc,ia,sc,kv){
-    $.ajax({
-      type: "POST",
-      url: "getAllCourt",
-      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-      data: {currentPage:crtPage,rows:rs,orderByCol:obc,isAsc:ia,strColumns:sc,keyValue:kv},
-      dataType: "json",
-      success: function(data) {
-	      console.log(data);//sousaiRemindDialog(rspdata);
-      var target = $(".courtTboby"),template = Handlebars.compile($('#court-template').html());
-      Handlebars.registerHelper("data",function(v){
-        //将当前对象转化为字符串，保存在data-info中
-        console.log(v);
-        var v1 = JSON.stringify(v);
-        //console.log("v1:"+v1);
-        return v1;
-      });
-      target.empty(); //清空tbody
-      target.html(template(data.body));
-      $("title").html(data.body[0].name+" &middot; 搜赛网");
-      $(".title").html(data.body[0].name+"<span>特点</span>").attr("data-id",data.body[0].id);
-      $("#courtContent").html(data.body[0].intro);
-	    },
-      error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-          sousaiRemindDialog("抱歉，ajax出错了。");
-      },
-    });
-	}  	
+  
     //拉取评论
   	function ajaxAllEvaluation(){
   	  	$.ajax({
@@ -647,10 +619,46 @@
         }); //ajax 已得到发送评论到服务器
         console.log("ajax结束");
     }
+  //根据id获取场地信息
+  function getCourtById(){
+
+		var url = window.location.search,
+	    id = decodeURI(url.substring(url.lastIndexOf('=')+1, url.length));
+
+	    $.ajax({
+	      type: "POST",
+	      url: "getCourtById",
+	      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+	      data: {id:id},
+	      dataType: "json",
+	      success: function(data) {
+		      console.log(data);//sousaiRemindDialog(rspdata);
+	      var target = $(".courtTboby"),template = Handlebars.compile($('#court-template').html());
+	      Handlebars.registerHelper("data",function(v){
+	        //将当前对象转化为字符串，保存在data-info中
+	        console.log(v);
+	        var v1 = JSON.stringify(v);
+	        //console.log("v1:"+v1);
+	        return v1;
+	      });
+	      target.empty(); //清空tbody
+	      target.html(template(data.body));
+	      $("title").html(data.body[0].name+" &middot; 搜赛网");
+	      $(".title").html(data.body[0].name+"<span>特点</span>").attr("data-id",data.body[0].id);
+	      $("#courtContent").html(data.body[0].intro);
+		    },
+	      error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+	          sousaiRemindDialog("抱歉，ajax出错了。");
+	      },
+	    });
+  }
   
   $(function(){
+	  //根据id获取场地信息
+	  getCourtById();
 	  
-	e(1,1,"name",true,"name","");
+	//e(1,1,"name",true,"name","");
+	
 	//初始化生成验证码
     createCode("inputValidateImg");
     

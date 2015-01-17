@@ -123,6 +123,24 @@
     {{/each}}
   </script>
   <script>
+//+---------------------------------------------------
+//| 字符串转成日期类型
+//| 格式 MM/dd/YYYY MM-dd-YYYY YYYY/MM/dd YYYY-MM-dd
+//+---------------------------------------------------
+function StringToDate(DateStr)
+{
+
+var converted = Date.parse(DateStr);
+var myDate = new Date(converted);
+if (isNaN(myDate))
+{
+//var delimCahar = DateStr.indexOf('/')!=-1?'/':'-';
+var arys= DateStr.split('-');
+myDate = new Date(arys[0],--arys[1],arys[2]);
+}
+return myDate;
+}
+  
   $(function () {
 	  
 	  //将editMatch修改为适合发布场地页面
@@ -146,31 +164,50 @@
 			}else if(!match){
 				return false;
 			}else{
+				console.log("beginTime");console.log($("#inputMatchTimefrom").datepicker( 'getDate' ) );
+				console.log("endTime");console.log($("#inputMatchTimeto").datepicker( 'getDate' ) );
+				
 		      		console.log("getMatchInfo获取到的：");console.log(match);
+		      		var data;
 		      		if(match.iscourt == "true"){
 		      			match.iscourt = true;
+			      		data = {
+			      			    //"match.id": parseInt(match.id),
+			      			    "match.name": match.title,
+			      			    "match.type": match.type,
+			      			    //"match.typeId": parseInt(match.typeid), //未使用
+			      			    "match.beginTime": StringToDate(match.begintime),
+			      			    "match.endTime": StringToDate(match.endtime),
+			      			    //"match.court": match.court,
+			      			    "match.courtId": parseInt(match.courtid),
+			      			    "match.rule": match.rule,
+			      			    //"match.relTime": match.reltime,
+			      			    //"match.score": match.name,
+			      			    "match.userId": parseInt(userId),
+			      			    "isCourt": match.iscourt,
+			      			    "court.name": match.court,
+			      			    "court.addr": match.courtaddr,
+			      			    "court.type": match.courttype,
+			      			    "court.typeId": parseInt(match.courttypeid),
+			      			};
 		      		}else{
 		      			match.iscourt = false;
+			      		data = {
+			      			    //"match.id": parseInt(match.id),
+			      			    "match.name": match.title,
+			      			    "match.type": match.type,
+			      			    //"match.typeId": parseInt(match.typeid), //未使用
+			      			    "match.beginTime": $("#inputMatchTimefrom").datepicker( 'getDate' ),//StringToDate(match.begintime),
+			      			    "match.endTime": $("#inputMatchTimeto").datepicker( 'getDate' ),//StringToDate(match.endtime),
+			      			    //"match.court": match.court,
+			      			    "match.courtId": parseInt(match.courtid),
+			      			    "match.rule": match.rule,
+			      			    //"match.relTime": match.reltime,
+			      			    //"match.score": match.name,
+			      			    "match.userId": parseInt(userId),
+			      			    "isCourt": match.iscourt,
+			      			};
 		      		}
-		      		var data = {
-		      			    "match.id": parseInt(match.id),
-		      			    "match.name": match.title,
-		      			    "match.type": match.type,
-		      			    "match.typeId": parseInt(match.typeid), //未使用
-		      			    "match.beginTime": match.begintime,
-		      			    "match.endTime": match.endtime,
-		      			    "match.court": match.court,
-		      			    "match.courtId": parseInt(match.courtid),
-		      			    "match.rule": match.rule,
-		      			    //"match.relTime": match.reltime,
-		      			    //"match.score": match.name,
-		      			    "match.userId": parseInt(userId),
-		      			    "isCourt": match.iscourt,
-		      			    "court.name": match.court,
-		      			    "court.addr": match.courtaddr,
-		      			    "court.type": match.courttype,
-		      			    "court.typeId": parseInt(match.courttypeid),
-		      			};
 		      		
 		      		console.log("转换后的：match data");console.log(data);
 		      		$.ajax({

@@ -59,10 +59,10 @@ $(function() {
           alert("抱歉，获取市区出错了。ajax错误。");
         },
       }); //ajax 已得到城市
-      tgPrt.find(".selectSessionCity").show();
+      //tgPrt.find(".selectSessionCity").show();
     } else {
       //当用户没有选择省份的时候，就将市区下拉列表框中原有的“请选择”字样删除。
-      tgPrt.find(".selectSessionCity").hide().empty().append("<option value=0 data-regionid=0>请选择市</option>");
+      tgPrt.find(".selectSessionCity").empty().append("<option value=0 data-regionid=0>请先选择省</option>");
     }
   });
 
@@ -176,13 +176,13 @@ $(function() {
           alert("抱歉，获取市区出错了。");
         },
       }); //ajax 已得到城市
-      tgPrt.find(".selectCity").show();
+      //tgPrt.find(".selectCity").show();
     } else {
       //当用户没有选择省份的时候，就将市区下拉列表框中原有的“请选择”字样删除。
-      tgPrt.find(".selectCity").hide().empty().append("<option value=0 data-regionid=0>请选择市</option>");
+      tgPrt.find(".selectCity").empty().append("<option value=0 data-regionid=0>请先选择省</option>");
     }
     //当用户进行一次省市县的操作后，再次选择省份的时候，后面的县区里面如果有值就要清空
-    tgPrt.find(".selectCountry").hide().empty().append("<option value=0 data-regionid=0>请选择区</option>");
+    tgPrt.find(".selectCountry").empty().append("<option value=0 data-regionid=0>请先选择市</option>");
   });
 
   //当选中市区名称后，查询对应的县区名称
@@ -211,41 +211,21 @@ $(function() {
           alert("抱歉，获取区县出错了。");
         },
       }); //ajax 已得到区县
-      tgPrt.find(".selectCountry").show();
+      //tgPrt.find(".selectCountry").show();
     } else {
       //当用户没有选择市区的时候，就将县区下拉列表框中原有的“请选择”字样删除。
-      tgPrt.find(".selectCountry").hide().empty().append("<option value=0 data-regionid=0>请选择区</option>");
+      tgPrt.find(".selectCountry").empty().append("<option value=0 data-regionid=0>请先选择市</option>");
     }
   });
   //立即调用初始化省 已经使用硬编码的方式替代初始化省
   //initProvince();
 
-  //高级搜索框级联下拉菜单 
-  /*$(".selectMatchType").change(function() {
-    var datafor = $(this).parent().find(".selectMatchType option:selected").data('for');
-    $(this).parent().find("select.hide").find("option[value=0]").attr("selected", "selected"); //设置所有隐藏下拉菜单选择默认项
-    $(this).parent().find("select.hide").hide(); //隐藏所有子下拉菜单
-    $(this).parent().find("." + datafor).show(); //显示选择的子下拉菜单
-  });*/
   //管理员界面搜索框级联下拉菜单
   $(".selectFilter").change(function() {
     var dataforFilter = $(this).parent().find(".selectFilter option:selected").attr("data-forFilter");
     console.log(dataforFilter);
     $(this).parent().find("input[type='text']").attr("data-path", dataforFilter); //设置输入框筛选路径
   });
-  //jplist-panel 中选择省市区自动输入搜索框
-  /*$(".jplist-panel > select.span2").change(function () {
-    var dataforFilter = $(this).parent().find(".selectProvince option:selected");
-    var inputFilter = $(this).parent().find(".text-filter-box > input:text");
-    if(dataforFilter.attr("value") != 0){
-      alert("!==0");
-      inputFilter.get(0).value = dataforFilter.text();
-      inputFilter.keyup();
-    }else{
-      inputFilter.get(0).value = "";
-      inputFilter.keyup();
-    }
-  });*/
 
   //重复点击下拉列表改变排序
   var sortflag=1;
@@ -533,7 +513,7 @@ function pages(count,crtPage,rs){
 		thisvalue = tgPrt.find(".selectMatchType option:selected").attr("value");
 		if (thisvalue == 0) {
 			  //当点击默认选项时将具体比赛类型隐藏并设为默认状态 同时 将场地类型设置为默认状态
-			  tgPrt.find(".selectParticularMatchType").hide().empty().append("<option value=0>请选择比赛类型</option>");
+			  tgPrt.find(".selectParticularMatchType").empty().append("<option value=0>请选择比赛类型</option>");
 	      //若存在场地类型 则将场地类型设置为默认状态 
 	      if ($(".selectCourtType").length != 0) {
 	      $(".selectCourtType").empty().append("<option value=0>请先选择比赛类型</option>");
@@ -550,7 +530,7 @@ function pages(count,crtPage,rs){
 	        $("#otherMatchType").val("");
 			initParticularMatchType(thisvalue);
 		  //出现具体比赛类型下拉列表并且不再隐藏
-		  tgPrt.find(".selectParticularMatchType").show();
+		  //tgPrt.find(".selectParticularMatchType").show();
 		}
 	}
 

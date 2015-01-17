@@ -135,8 +135,57 @@
   <!-- /container --> 
   <s:include value="footer.jsp" />
   <!-- 页尾信息 --> 
+  <script src="js/handlebars-v2.0.0.js"></script>
+  <!-- handlebars template -->
+  <script id="collections-template" type="text/x-handlebars-template">
+    {{#each this}}
+
+<li class="m-sc">
+<a class="blk" target="_blank" href="javascript:void(0)">
+<img alt="乒乓球" src="img/pingpong-grey.png" class="u-pic" /> 
+        <div class="m-dsc"> 
+         <span class="u-tt">乒乓球</span> 
+         <span class="u-dsc">比赛&nbsp;&nbsp;<span class="u-mchnb">32</span>&nbsp;&nbsp;场</span> 
+        </div> 
+        <div class="u-label">进入比赛列表页面</div>
+</a>
+</li> 
+                            
+    {{/each}}
+  </script>
   <script>
+  //定义函数
+  function getAllMatchNum(){
+
+		var target = $("ul.breadcrumb");
+		$.ajax({
+	        type: "POST",
+	        url: "cntEachMatch",
+	        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+	        dataType: "json",
+	        success: function(rspdata) {
+	            console.log("已有比赛信息："+rspdata);
+	            targetBreadcrumb.empty().append("<li>比赛信息:</li>");
+	        	$.each( rspdata, function( key, value ) {
+	      		  console.log( key + ": " + value );
+	      		  targetBreadcrumb.append('<li><a href="userCenter-myMatch.jsp" title="去查看比赛">'+key+'<span>('+value+')</span></a></li>');
+	      		  });
+	        	//若没有比赛信息则提示 没有比赛信息 即，没有span
+	        	if( targetBreadcrumb.find("span").length == 0 ){
+	        		targetBreadcrumb.append('<li><a href="userCenter-releaseMatch.jsp" title="去发布比赛"> 无比赛信息，请发布比赛</a></li>');
+	        	}
+	        },
+	        error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+	          sousaiRemindDialog("抱歉，获取比赛信息出错了。");
+	          console.log("userCenterRemind 抱歉，获取比赛信息出错了。");
+	        },
+	      }); //ajax 已得到发布的比赛信息
+  }
+  
   $(function(){
+	  //加载所有比赛数量
+	 // getAllMatchNum();
+	  
     //首页快捷图标 
     $(".m-sc").hover(function(){
       $(this).find("div[class=u-label]").slideDown();

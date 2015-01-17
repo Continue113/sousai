@@ -264,6 +264,43 @@ public class Jdbc {
 		}
 		return matchList;
 	}
+
+	public LinkedList<Court> selectCourtToday() {
+		LinkedList<Court> courtList = new LinkedList<Court>();
+		try {
+			String sql = "select * from COURT where date(RELDATE) = curdate()";
+			pstmt = conn.prepareStatement(sql);
+			result = pstmt.executeQuery();
+
+			while (result.next()) {
+				// ID,NAME,COURTTYPEID,MATCHTYPE,REGIONID,ADDR,TABLENUM,TEL,MATCHCOUNT,PRICE,WORKTIME,INTRO,VERFY,RELDATE,MODDATE,USERID
+				courtList.add(new Court.Builder().id(result.getInt("ID"))
+						.name(result.getString("NAME"))
+						.courtTypeId(result.getInt("DOURTTYPEID"))
+						.matchType(result.getString("MATCHTYPE"))
+						.address(result.getString("ADDR"))
+						.tableNum(result.getInt("TABLENUM"))
+						.tel(result.getString("TEL"))
+						.matchCount(result.getInt("MATCHCOUNT"))
+						.price(result.getString("PRICE"))
+						.worktime(result.getString("WORKTIME"))
+						.intro(result.getString("INTRO"))
+						.verify(result.getString("VERFY"))
+						.relDate(result.getString("RELDATE"))
+						.modDate(result.getString("MODDATE"))
+						.userId(result.getInt("USERID")).build());
+			}
+		} catch (SQLException e) {
+			System.out.println(e);
+		} finally {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+				System.out.println(e);
+			}
+		}
+		return courtList;
+	}
 }
 
 class JdbcMySqlUtil {

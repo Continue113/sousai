@@ -28,12 +28,8 @@
             </div>
            </div>
            <div class="controls  form-inline hide" id="matchTypeControls">
-            <select class="selectMatchType" name="mcId">
-              <option value=0>请选择比赛类型</option>
-            </select>
-            <select class="selectParticularMatchType hide" name="matchType">
-              <option value=0>请选择比赛类型</option>
-            </select>
+            <select class="selectMatchType" name="mcId"><option value=0>请选择比赛类型</option></select>
+            <select class="selectParticularMatchType" name="matchType"><option value=0>请先选择比赛大类</option></select>
             <label class="omthide hide" class="control-label" for="otherMatchType">请输入类型：<input class="omthide hide" id="otherMatchType" type="text" value="" placeholder="请填写比赛类型" name="otherMatchType" required="required" /></label>
             </div>
           </div>
