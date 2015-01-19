@@ -270,7 +270,7 @@
   }
     $(function () {
 		//ajax接收所有比赛
-		e(1,25,"name",true,"name","");
+		//e(1,25,"name",true,"name","");
     	//点击编辑比赛隐藏List列表同时显示编辑比赛
     	$(".matchBoxs").on("click",".modifyMatch",function(event){
         	var datainfo = $(this).parent().parent().parent().parent().attr("data-info");

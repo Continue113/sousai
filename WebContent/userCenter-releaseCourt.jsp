@@ -145,13 +145,11 @@
   		            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
   		            data: data,
   		            dataType: "json",
-  		            success: function(data) {
-  		          	  if( rspdata == "success" ){
-  		          		  sousaiRemindDialog("发布场地成功");
-  		          	  }else if( data == "fail" ){
-  		          		  sousaiRemindDialog("发布场地失败");
+  		            success: function(rspdata) {
+  		          	  if( data == "fail" ){
+  		          		  sousaiRemindDialog("发布场地失败,fail");
   		          	  }else{
-  		          		  sousaiRemindDialog("删除失败，错误代码未知");
+  		          		  sousaiRemindDialog("发布场地成功,场地信息地址为：courtSearchDetail.jsp?id="+rspdata,-1);
   		          	  }
   		            },
   		            error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);

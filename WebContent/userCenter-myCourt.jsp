@@ -228,7 +228,7 @@
   
     $(function () {
     	//ajax接收所有的场地 默认为第一页 25条，按name排序，升序
-   	 	e(1,25,"name",true,"name","");
+   	 	//e(1,25,"name",true,"name","");
     	
     	//点击编辑比赛隐藏List列表同时显示编辑比赛
     	$(".courtBoxs").on("click",".modifyCourt",function(event){

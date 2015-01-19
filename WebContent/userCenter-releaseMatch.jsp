@@ -123,23 +123,6 @@
     {{/each}}
   </script>
   <script>
-//+---------------------------------------------------
-//| 字符串转成日期类型
-//| 格式 MM/dd/YYYY MM-dd-YYYY YYYY/MM/dd YYYY-MM-dd
-//+---------------------------------------------------
-function StringToDate(DateStr)
-{
-
-var converted = Date.parse(DateStr);
-var myDate = new Date(converted);
-if (isNaN(myDate))
-{
-//var delimCahar = DateStr.indexOf('/')!=-1?'/':'-';
-var arys= DateStr.split('-');
-myDate = new Date(arys[0],--arys[1],arys[2]);
-}
-return myDate;
-}
   
   $(function () {
 	  
@@ -218,9 +201,10 @@ return myDate;
 		                dataType: "json",
 		                success: function(rspdata) {
 		              	  if( rspdata == "fail" ){
-		              		  sousaiRemindDialog("发布失败，fail");
+		              		  sousaiRemindDialog("'"+match.title+"' 发布失败，fail");
 		              	  }else{
-		              		  sousaiRemindDialog("发布代码为："+rspdata);
+		              		  var uriStr = "<h5>发布比赛 成功：</h5><strong>'"+match.title+"'</strong> 成功，比赛信息地址为：<a href='courtSearchDetail.jsp?id="+rspdata+"'>courtSearchDetail.jsp?id="+rspdata+"</a>";
+		              		  sousaiRemindDialog(uriStr,-1);
 		              	  }
 		                },
 		                error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);

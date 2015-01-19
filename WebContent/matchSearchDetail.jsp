@@ -132,7 +132,7 @@ function e(){
 	
 	      $.ajax({
 	          type: "POST",
-	          url: "getCourtById",//"matchDetail",
+	          url: "getMatchById",//"matchDetail",
 	          contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 	          data: {id:id},
 	          dataType: "json",

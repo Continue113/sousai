@@ -293,7 +293,7 @@ function sousaiRemindDialog(text,time,successishide){
     	$("#sousaiRemindDialog").modal("hide");
     }
     
-    $("#sousaiRemindDialog > .modal-body > #SRDcontent").text(text); //设置弹出框的内容
+    $("#sousaiRemindDialog > .modal-body > #SRDcontent").html(text); //设置弹出框的内容
     if(!successishide){
         $("#sousaiRemindDialog > .modal-footer > button.btn-success").hide(); //设置弹出框确定按钮
     }

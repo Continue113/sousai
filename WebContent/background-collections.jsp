@@ -263,8 +263,8 @@
       contentType: "application/x-www-form-urlencoded; charset=UTF-8",
       data: {currentPage:crtPage,rows:rs,orderByCol:obc,isAsc:ia,strColumns:sc,keyValue:kv},
       dataType: "json",
-      success: function(data) {
-    	  //console.log(data);sousaiRemindDialog(data);
+      success: function(rspdata) {
+    	  console.log(rspdata);
 	      var target = $(".collectionsTable > tbody"),template = Handlebars.compile($('#collections-template').html());
 	      Handlebars.registerHelper("data",function(v){
 	    	  //将当前对象转化为字符串，保存在data-info中
@@ -274,7 +274,7 @@
 	    	  return v1;
 	      });
 	      target.empty(); //清空tbody
-	  	  target.html(template(data));
+	  	  target.html(template(rspdata.body));
 	      $("#ajaxState .load").hide();
 	      $("#ajaxState .noresult").hide();
 	      console.log("stop");
@@ -287,7 +287,7 @@
 	      $("td > label > span").wordLimit();
 	      $(".match-court").wordLimit();
 	      $(".match-from > a").wordLimit(25);
-	      //pages(data.count,crtPage,rs);
+	      pages(rspdata.count,crtPage,rs);
 	    },
       error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
 	      $("#ajaxState .noresult").show();console.log("出错了");
