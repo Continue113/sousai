@@ -185,4 +185,20 @@ public interface CourtDao {
 	 * @throws Exception
 	 */
 	Integer countByParams(String keyValue, String matchType, Integer courtTypeId, String region) throws Exception;
+	
+	/**
+	 * 通过region筛选场地
+	 * @param region
+	 * @return
+	 * @throws Exception 
+	 */
+	List<CourtBean> findByRegion(String region,int currentPage, int rows) throws Exception;
+	
+	/**
+	 * 通过region筛选场地，返回最后的记录数
+	 * @param region
+	 * @return
+	 * @throws Exception 
+	 */
+	Integer countByRegion(String region) throws Exception;
 }

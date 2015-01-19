@@ -387,6 +387,10 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
+	public List<CourtBean> getCourtByRegion(String region, int currentPage, int rows) throws Exception{
+		return courtDao.findByRegion(region, currentPage, rows);
+	}
+	@Override
 	public List<MatchBean> getMatchByParms(int[] dayOfWeek, int state,
 			int regionId, int currentPage, int rows) {
 		return (List<MatchBean>) matchDao.findByParms(dayOfWeek, state,
@@ -440,5 +444,10 @@ public class UserManagerImpl implements UserManager {
 	@Override
 	public Long markMatch(UserMark userMark) throws Exception {
 		return userMarkDao.save(userMark);
+	}
+
+	@Override
+	public Integer countByRegion(String region) throws Exception {
+		return courtDao.countByRegion(region);
 	}
 }

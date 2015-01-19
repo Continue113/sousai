@@ -2,7 +2,10 @@ package org.sousai.action;
 
 import org.apache.struts2.ServletActionContext;
 import org.sousai.action.base.*;
+import org.sousai.common.Constant;
 import org.sousai.domain.Court;
+import org.sousai.domain.FrontMessage;
+import org.sousai.tools.CommonUtils;
 import org.sousai.tools.JSONUtils;
 import org.sousai.tools.MyPrint;
 
@@ -10,21 +13,53 @@ public class GetCourtInMatchRelingAction extends UserBaseAction {
 
 	private static final long serialVersionUID = -4391779686549825570L;
 
-	private Integer regionId; // 用户在选择好地区之后，地区所对应的id，直接以regionId这个参数传递给我
+	private String region;
+	private Integer currentPage;
+	private Integer rows;
 
 	/**
-	 * @return the regionId
+	 * @return the region
 	 */
-	public Integer getRegionId() {
-		return regionId;
+	public String getRegion() {
+		return region;
 	}
 
 	/**
-	 * @param regionId
-	 *            the regionId to set
+	 * @param region
+	 *            the region to set
 	 */
-	public void setRegionId(Integer regionId) {
-		this.regionId = regionId;
+	public void setRegion(String region) {
+		this.region = region;
+	}
+
+	/**
+	 * @return the currentPage
+	 */
+	public Integer getCurrentPage() {
+		return currentPage;
+	}
+
+	/**
+	 * @param currentPage
+	 *            the currentPage to set
+	 */
+	public void setCurrentPage(Integer currentPage) {
+		this.currentPage = currentPage;
+	}
+
+	/**
+	 * @return the rows
+	 */
+	public Integer getRows() {
+		return rows;
+	}
+
+	/**
+	 * @param rows
+	 *            the rows to set
+	 */
+	public void setRows(Integer rows) {
+		this.rows = rows;
 	}
 
 	/**
@@ -35,12 +70,24 @@ public class GetCourtInMatchRelingAction extends UserBaseAction {
 	}
 
 	public String execute() throws Exception {
-		MyPrint.myPrint("in GetCourtInMatchReling");
 
-		if (getRegionId() != null) {
-			JSONUtils.toJson(ServletActionContext.getResponse(),
-					umg.getCourtInMatchReling(regionId));
+		if (CommonUtils.isNullOrEmpty(currentPage)) {
+			currentPage = 1;
 		}
+		if (CommonUtils.isNullOrEmpty(rows)) {
+			rows = Constant.DEFAULT_ROWS;
+		}
+		FrontMessage msg = new FrontMessage();
+		if (CommonUtils.isNullOrEmpty(region)) {
+			msg.setCount(umg.countByRegion(region));
+			msg.setBody(umg.getCourtByRegion(region, currentPage, rows));
+			
+		} else {
+			msg.setCount(-1);
+			msg.setBody(Constant.ERROR);
+		}
+		JSONUtils.toJson(ServletActionContext.getResponse(),
+				msg);
 		return null;
 	}
 

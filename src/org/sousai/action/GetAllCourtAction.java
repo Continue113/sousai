@@ -125,7 +125,7 @@ public class GetAllCourtAction extends UserBaseAction {
 				currentPage = 1;
 			}
 			if (rows == null) {
-				rows = 25;
+				rows = Constant.DEFAULT_ROWS;
 			}
 			MyPrint.myPrint("rows=" + rows);
 			MyPrint.myPrint("orderByCol=" + orderByCol);
