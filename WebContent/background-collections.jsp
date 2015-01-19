@@ -53,9 +53,7 @@
        <li><a href="background-userMaintenance.jsp"><i class="icon-chevron-down "></i>用户维护</a></li> 
        <li><a href="background-evaluationMaintenance.jsp"><i class="icon-chevron-down "></i>评论维护</a></li> 
        <li><h5><a href="#"><i class="icon-minus"></i>网站统计</a></h5></li> 
-       <li><a href="background-regUserCount.jsp"><i class="icon-chevron-down "></i>注册用户</a></li> 
-       <li><a href="background-releaseCount.jsp"><i class="icon-chevron-down "></i>发布统计</a></li> 
-       <li><a href="background-visitCount.jsp"><i class="icon-chevron-down "></i>访问量</a></li> 
+       <li><a href="background-regUserCount.jsp"><i class="icon-chevron-down "></i>网站统计</a></li>
       </ul> 
      </div> 
      <!-- /background-remind & backgroundMenu --> 
@@ -63,31 +61,8 @@
       <!--全部采集主体开始--> 
       <div id="collectionLists"> 
        <!-- panel --> 
-       <div class="panel-top">
-       <div class="btn-group sort" role="group">
-		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current" data-orderbycol="name" data-isasc="true">排序方式</span><span class="caret"></span></button>
-		<ul class="dropdown-menu" role="menu">
-          <li><a href="javascript:void(0)" data-orderbycol="name" data-isasc="true">比赛名称<i class="icon-arrow-up"></i></a></li> 
-          <li><a href="javascript:void(0)" data-orderbycol="matchStartTime" data-isasc="true">比赛时间<i class="icon-arrow-up"></i></a></li> 
-          <li><a href="javascript:void(0)" data-orderbycol="matchAddress" data-isasc="true">比赛场地<i class="icon-arrow-up"></i></a></li> 
-          <li><a href="javascript:void(0)" data-orderbycol="url" data-isasc="true">网站来源<i class="icon-arrow-up"></i></a></li>
-		</ul>
-	   </div>
-	    <div class="text-filter-box input-append"> 
-         <input type="text" class="span2" placeholder="请输入关键字"/> 
-         <div class="btn-group" role="group">
-		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current" data-strcolumns="name">比赛名称</span><span class="caret"></span></button>
-		<ul class="dropdown-menu" role="menu">
-			<li><a href="javascript:void(0)" data-strcolumns="name">比赛名称</a></li>
-			<li><a href="javascript:void(0)" data-strcolumns="matchStartTime">比赛时间</a></li>
-			<li><a href="javascript:void(0)" data-strcolumns="matchAddress">比赛场地</a></li>
-			<li><a href="javascript:void(0)" data-strcolumns="url">网站来源</a></li>
-		</ul>
-	   	</div>
-	   	<button class="btn" type="button" id="textFilterBoxSearchButton">搜索</button>
-         <!-- <span class="add-on"><i class="icon-search"></i></span> -->
-        </div> 
-        <select class="select selectRows span1"><option value=10>10条/页</option><option value=2>2条/页</option><option value=5>5条/页</option></select>
+       <div class="panel-top"> 
+        <select class="select selectRows span1"><option value=25>25条/页</option><option value=2>2条/页</option><option value=5>5条/页</option></select>
         <div class="btnbar pull-right"> 
          <button type="button" class="btn deleteMatch">删除选中</button>
          <button type="button" class="btn passMatch">发布选中</button> 
