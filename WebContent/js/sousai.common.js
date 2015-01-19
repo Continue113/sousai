@@ -430,7 +430,7 @@ function initCourtType(particularMatchTypeId){
 //根据当前的没页的条数和总的条数计算总页数
 function pages(count,crtPage,rs){
 	  var pages = Math.ceil(count/rs) || 1, target=$("ul.pagination");console.log(pages); //若当前页数为空则默认为第一页
-	  target.empty();
+	  target.empty().show();
 	  if(pages == 1){
 		  target.append('<li class="active"><a href="javascript:void(0)">1</a></li>').hide();
 		  return false;
