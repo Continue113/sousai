@@ -53,7 +53,7 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 	}
 
 	@Override
-	public Integer save(Court court) throws Exception{
+	public Integer save(Court court) throws Exception {
 		return (Integer) getHibernateTemplate().save(court);
 	}
 
@@ -267,29 +267,38 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 
 	@Override
 	public List<CourtBean> findPagedByParams(String keyValue, String matchType,
-			Integer courtTypeId, String region, int currentPage, int rows, String orderByCol,Boolean isAsc) throws Exception {
+			Integer courtTypeId, String region, int currentPage, int rows,
+			String orderByCol, Boolean isAsc) throws Exception {
 		List<CourtBean> list = null;
-		if(!CommonUtils.isNullOrEmpty(keyValue)){
-			keyValue = " %"+keyValue+"% ";
+		if (!CommonUtils.isNullOrEmpty(keyValue)) {
+			keyValue = " %" + keyValue + "% ";
 		}
-		if(!CommonUtils.isNullOrEmpty(region)){
-			region = " %"+region+"% ";
+		if (!CommonUtils.isNullOrEmpty(region)) {
+			region = " %" + region + "% ";
 		}
-		String strWhere = Append_StringWithout1(" ", new int[]{2,0,1,2}, new String[]{" and c.name"," and c.matchType"," and c.courtTypeId"," and c.region"}, new Object[]{keyValue, matchType, courtTypeId, region});
-		list = findPagedByWhereOrderBy(strWhere, currentPage, rows, addPrefixToColumn(orderByCol), isAsc);
+		String strWhere = Append_StringWithout1(" ", new int[] { 2, 0, 1, 2 },
+				new String[] { " and c.name", " and c.matchType",
+						" and c.courtTypeId", " and c.region" }, new Object[] {
+						keyValue, matchType, courtTypeId, region });
+		list = findPagedByWhereOrderBy(strWhere + " and c.verify='1'",
+				currentPage, rows, addPrefixToColumn(orderByCol), isAsc);
 		return list;
 	}
 
 	@Override
 	public Integer countByParams(String keyValue, String matchType,
 			Integer courtTypeId, String region) throws Exception {
-		if(!CommonUtils.isNullOrEmpty(keyValue)){
-			keyValue = " %"+keyValue+"% ";
+		if (!CommonUtils.isNullOrEmpty(keyValue)) {
+			keyValue = " %" + keyValue + "% ";
 		}
-		if(!CommonUtils.isNullOrEmpty(region)){
-			region = " %"+region+"% ";
+		if (!CommonUtils.isNullOrEmpty(region)) {
+			region = " %" + region + "% ";
 		}
-		String strHql = Append_StringWithout1("select count(*) from Court c where 1=1 ", new int[]{2,0,1,2}, new String[]{" and c.name"," and c.matchType"," and c.courtTypeId"," and c.region"}, new Object[]{keyValue, matchType, courtTypeId, region});
-		return count(strHql);
+		String strHql = Append_StringWithout1(
+				"select count(*) from Court c where 1=1 ", new int[] { 2, 0, 1,
+						2 }, new String[] { " and c.name", " and c.matchType",
+						" and c.courtTypeId", " and c.region" }, new Object[] {
+						keyValue, matchType, courtTypeId, region });
+		return count(strHql + " and c.verify='1'");
 	}
 }

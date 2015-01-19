@@ -143,4 +143,10 @@ public class CommonManagerImpl implements CommonManager {
 		return matchDao.getMatchBean(id);
 	}
 
+	@Override
+	public Integer countByParams(String keyValue, String matchType,
+			Integer courtTypeId, String region) throws Exception {
+		return courtDao.countByParams(keyValue, matchType, courtTypeId, region);
+	}
+
 }

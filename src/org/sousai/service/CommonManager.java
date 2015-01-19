@@ -120,4 +120,15 @@ public interface CommonManager
 	 * @return
 	 */
 	public MatchBean findMatchBeanById(Integer id);
+	
+	/**
+	 * 获取匹配高级搜索场地的记录数
+	 * @param keyValue
+	 * @param matchType
+	 * @param courtTypeId
+	 * @param region
+	 * @return
+	 * @throws Exception 
+	 */
+	public Integer countByParams(String keyValue, String matchType, Integer courtTypeId, String region) throws Exception;
 }

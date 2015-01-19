@@ -162,7 +162,7 @@ public class GetCourtByParamsAction extends UserBaseAction {
 			int count = 0;
 			FrontMessage msg = new FrontMessage(list, count);
 			if (list != null) {
-				msg.setCount(list.size());
+				msg.setCount(cmg.countByParams(keyValue, matchType,courtTypeId, region));
 			}
 			JSONUtils.toJson(ServletActionContext.getResponse(), msg);
 		} catch (Exception e) {
