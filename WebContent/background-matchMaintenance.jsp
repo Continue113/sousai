@@ -76,9 +76,7 @@
        <li><a href="background-userMaintenance.jsp"><i class="icon-chevron-down "></i>用户维护</a></li> 
        <li><a href="background-evaluationMaintenance.jsp"><i class="icon-chevron-down "></i>评论维护</a></li> 
        <li><h5><a href="javascript:void(0)"><i class="icon-minus"></i>网站统计</a></h5></li> 
-       <li><a href="background-regUserCount.jsp"><i class="icon-chevron-down "></i>注册用户</a></li> 
-       <li><a href="background-releaseCount.jsp"><i class="icon-chevron-down "></i>发布统计</a></li> 
-       <li><a href="background-visitCount.jsp"><i class="icon-chevron-down "></i>访问量</a></li> 
+       <li><a href="background-regUserCount.jsp"><i class="icon-chevron-down "></i>网站统计</a></li>
       </ul> 
      </div> 
      <!-- /background-remind & backgroundMenu --> 
@@ -182,31 +180,17 @@
                             
     {{/each}}
   </script>
-  <script id="existCourts-template" type="text/x-handlebars-template">
-    {{#each this}}
-
-		    <tr class="tritem"  data-info="{{data this}}" data-courtid="{{id}}">
-				<td>{{name}}</td>
-				<td>{{addr}}</td>
-				<td>{{courtTypeId}}</td>
-				<td>{{tableNum}}</td>
-				<td>{{matchCount}}</td>
-				<td><a target="_blank" href="courtLink;courtId=?{{id}}">详细</a></td>
-			</tr>
-
-    {{/each}}
-  </script>
   <script>
   //定义函数
   function e(crtPage,rs,obc,ia,sc,kv){
-	  //定义默认选项
+		//定义默认选项
 		rs = rs||$("select.selectRows option:selected").val()||25,
 		crtPage = crtPage||$("ul.pagination li.active a").html()||1, //每次点击改变条数都从第一页开始；parseInt($("ul.pagination > li.active").text()) || 1; //若当前页数为空则默认为第一页
-	  	orderbycol = orderbycol||$(".sort button .current").attr("data-orderbycol"), 
-		isasc = isasc||$(".sort button .current").attr("data-isasc"),
+	  	obc = obc||$(".sort button .current").attr("data-orderbycol"), 
+		ia = ia||$(".sort button .current").attr("data-isasc"),
 		sc = sc||$(".text-filter-box button .current").attr("data-strcolumns"),
 		kv = kv||$(".text-filter-box input").val();
-	  	alert(crtPage+" "+rs+" "+orderbycol+" "+isasc+" "+sc+" "+kv);
+	  	alert(crtPage+" "+rs+" "+obc+" "+ia+" "+sc+" "+kv);
 	  	
   	$("#ajaxState .load").show();console.log("start");
     $.ajax({
@@ -215,18 +199,18 @@
       contentType: "application/x-www-form-urlencoded; charset=UTF-8",
       data: {currentPage:crtPage,rows:rs,orderByCol:obc,isAsc:ia,strColumns:sc,keyValue:kv},
       dataType: "json",
-      success: function(data) {
-    	  console.log(data);
+      success: function(rspdata) {
+    	  console.log(rspdata);
 	      var target = $(".matchTable > tbody"),template = Handlebars.compile($('#match-template').html());
 	      Handlebars.registerHelper("data",function(v){
 	    	  //将当前对象转化为字符串，保存在data-info中
-	    	  console.log(v);
+	    	  //console.log(v);
 	    	  var v1 = JSON.stringify(v);
 	    	  //console.log("v1:"+v1);
 	    	  return v1;
 	      });
 	      target.empty(); //清空tbody
-	  	  target.html(template(data.body));
+	  	  target.html(template(rspdata.body));
 	      $("#ajaxState .load").hide();
 	      $("#ajaxState .noresult").hide();
 	      console.log("stop");
@@ -238,7 +222,7 @@
 	      //字数限制，溢出省略
 	      $("td > label > span").wordLimit();
 	      $(".match-court").wordLimit();
-	      pages(data.count,crtPage,rs);
+	      pages(rspdata.count,crtPage,rs);
 	    },
       error: function(jqXHR,textStatus,errorThrown){
     	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);

@@ -230,13 +230,13 @@
   </script>
   <script>
   //定义函数
-  function e(crtPage,rs,obc,ia,sc,kv){
+  function e(crtPage,rs){
   	$("#ajaxState .load").show();console.log("start");
     $.ajax({
       type: "POST",
       url: "backgroundCollections",
       contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-      data: {currentPage:crtPage,rows:rs,orderByCol:obc,isAsc:ia,strColumns:sc,keyValue:kv},
+      data: {currentPage:crtPage,rows:rs},
       dataType: "json",
       success: function(rspdata) {
     	  console.log(rspdata);
@@ -264,7 +264,8 @@
 	      $(".match-from > a").wordLimit(25);
 	      pages(rspdata.count,crtPage,rs);
 	    },
-      error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+      error: function(jqXHR,textStatus,errorThrown){
+    	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
 	      $("#ajaxState .noresult").show();console.log("出错了");
 	      sousaiRemindDialog("抱歉，获取数据出错了。");
       },

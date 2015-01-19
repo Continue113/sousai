@@ -15,7 +15,7 @@
        </div> 
        <div class="span1"> 
         <a href="userCenter-releaseMatch.jsp">发布比赛</a> 
-        <p><a href="matchSearch.jsp">高级搜索</a></p> 
+        <p><a href="matchSearchAdv.jsp">高级搜索</a></p> 
        </div> 
       </div> 
       <div id="searchbox-court" class="tab-pane"> 
@@ -27,14 +27,14 @@
        </div> 
        <div class="span1"> 
         <a href="userCenter-releaseCourt.jsp">发布场地</a> 
-        <p><a href="courtSearch.jsp">高级搜索</a></p> 
+        <p><a href="courtSearchAdv.jsp">高级搜索</a></p> 
        </div> 
       </div> 
      </div>
-     <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+     <div id="allMatchType" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h5 id="myModalLabel">请选择一个分类</h5><a href="#">所有分类</a>
+    <h5 id="allMatchTypeLabel">请选择一个分类</h5><a href="#">所有分类</a>
   </div>
   <div class="modal-body">
     <div class="breadcrumb-fff">

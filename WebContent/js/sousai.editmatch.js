@@ -61,6 +61,102 @@ function getMatchInfo(){
 	}
 }
 
+function searchExistedCourt(crtPage,rs){
+	  var data = getRegion();
+	  data.currentPage = crtPage||$("div.existCourtsBox ul.pagination li.active a").html()||1;
+	  data.rows = rs||25;
+	  
+	  if(data.regionId == null){
+		  sousaiRemindDialog("省，市，区请至少选择一个为比赛区域！");		  
+	  }else {
+	  //ajax 获取已有场地信息列表
+	  $.ajax({
+	      type: "POST",
+	      url: "getCourtM",
+	      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+	      data: data,
+	      dataType: "json",
+	      success: function(rspdata) {
+	        var target = $(".existCourtsBox > table > tbody"),template = Handlebars.compile($('#existCourts-template').html());
+	        $(".existCourtsBox .noresult").hide(); //隐藏无结果提醒
+		    console.log(rspdata);//sousaiRemindDialog(data);
+	        Handlebars.registerHelper("data",function(v){
+	          //将当前对象转化为字符串，保存在data-info中
+	          //console.log(v);
+	          var v1 = JSON.stringify(v);
+	          //console.log("v1:"+v1);
+	          return v1;
+	        });
+	        target.empty(); //清空tbody
+	        target.html(template(rspdata.body));
+	        //若没有相应的结果，给出提醒
+	        if($(".tritem").length == 0){
+	        	//sousaiRemindDialog("在您选择的比赛地点没有搜索到已有场地，请更换比赛地点或在此地点添加新场地。");
+	        	$(".existCourtsBox .noresult").show();
+	        }
+	        pagesCourts(rspdata.count,data.crtPage,data.rows);
+	      },
+	      error: function(jqXHR,textStatus,errorThrown){
+	    	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+	    	  sousaiRemindDialog("抱歉，获取已有场地信息出错了。");
+	      },
+	    }); //ajax 已得到相应地点场地列表
+	  
+    $("div.existCourtsBox").slideDown(); //将已有场地类表滑出
+    //若添加新场地列表存在，则隐藏并删除
+    if($("#newCourtCheckbox").is(":checked")){
+      $("div.inputCourt").slideUp();
+      $("div.inputCourt").remove();
+      $("#newCourtCheckbox").attr("checked",false);//将添加新场地的复选框设置为非选中状态
+    }
+    }
+}
+
+
+//根据当前的没页的条数和总的条数计算总页数 //现有场地表格的分页代码
+  function pagesCourts(count,crtPage,rs){
+  	  var pages = Math.ceil(count/rs) || 1, target=$(".existCourtsBox .btn-group");
+  	  target.empty().show();
+  	  if(pages == 1){
+  		  target.append('<a class="btn active" href="javascript:void(0);">1</a>').hide();
+  		  return false;
+  	  }
+  	  target.append('<a class="btn prior" href="javascript:priorCourts();">«</a><a class="btn active" href="javascript:void(0);">'+crtPage+'</a>');
+  	  if((pages > 1)&&(crtPage < pages)&&(crtPage+1 != pages)) {
+  	  	target.append('<a class="btn" href="javascript:void(0);">...</a><a href="javascript:searchExistedCourt('+pages+','+rs+');">'+pages+'</a>');
+  	  }else if(crtPage+1 == pages){
+  		target.append('<a href="javascript:searchExistedCourt('+pages+','+rs+');">'+pages+'</a>');
+  	  }
+  	  if(crtPage != pages){
+  	  target.append('<a href="javascript:nextCourts();">»</a>');
+  	  }
+  }
+  	
+  	function priorCourts(){
+  		var target = $(".existCourtsBox .btn-group"),
+  		rs = 10,
+  		crtPage = parseInt(target.find("a.active").text());
+  		if(crtPage==1){
+  			alert('已经到最顶了');
+  			return false;
+  		}else if(crtPage==2){
+  			searchExistedCourt(crtPage - 1,rs);
+  			tgrget.find("a.active").text(crtPage - 1);
+  			tgrget.find("a.prior").hide();
+  		}else{
+  			e(crtPage - 1,rs);
+  			tgrget.find("a.active").text(crtPage - 1);
+  			tgrget.find("a.prior").show();
+  		}
+  	}
+  	function nextCourts(){
+  		var target = $(".existCourtsBox .btn-group"),
+  		rs = 10,
+  		crtPage = parseInt(target.find("a.active").text());
+  		searchExistedCourt(crtPage + 1,rs);
+  		target.find("a.active").text(crtPage+1);
+  		target.find("a.prior").show();
+  	}
 
 $(function(){
 	//立即初始化比赛类型
@@ -218,7 +314,7 @@ $(function(){
       defaultDate: "+1w",
       changeMonth: true,
       onClose: function( selectedDate ) {
-        $( "#to" ).datepicker( "option", "minDate", selectedDate );
+        $( "#inputMatchTimeto" ).datepicker( "option", "minDate", selectedDate );
       }
     });
     $( "#inputMatchTimeto" ).datepicker({
@@ -237,71 +333,9 @@ $(function(){
       $("#inputMatchCourt").val($(this).find("td:eq(0)").text());
       $("#inputMatchCourt").attr("data-courtid",$(this).attr("data-courtid"));
     });
-
     //搜索现有场地
     $("#searchExistedCourt").click(function(){
-  	  //tgPrt: targetparent 目标父元素 ；regionId 默认为零
-  	  var tgPrt = $(this).parent(),regionId = 0;
-  	  //获取省市区信息
-  	  var provinceId = tgPrt.find(".selectProvince option:selected").attr("data-regionid"),
-  	      cityId = tgPrt.find(".selectCity option:selected").attr("data-regionid"), 
-  	      countryId = tgPrt.find(".selectCountry option:selected").attr("data-regionid");
-  	  if(provinceId == 0){
-  		  sousaiRemindDialog("省，市，区请至少选择一个为比赛区域！");		  
-  	  }else {
-  		  
-  		  if(cityId == 0 && countryId == 0){ //若市，区都为零，则说明只有省
-  			  regionId = provinceId;
-  		  }else if(cityId != 0 && countryId == 0){ //若省、市不为零，但区为零，则说明最深选中为市
-  			  regionId = cityId;
-  		  }else if(cityId != 0 && countryId != 0){ //若省，市，区都不为零，则说明最深选中为区
-  			  regionId = countryId;
-  		  }
-  	  
-  	  //sousaiRemindDialog(province + city + country);  //得到省市区信息
-  	  
-  	  //ajax 获取已有场地信息列表
-  	  $.ajax({
-  	      type: "POST",
-  	      url: "getCourtM",
-  	      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-  	      data: {
-  	        "regionId": regionId,
-  	      },
-  	      dataType: "json",
-  	      success: function(data) {
-	        var target = $(".existCourtsBox > table > tbody"),template = Handlebars.compile($('#existCourts-template').html());
-	        $(".existCourtsBox .noresult").hide(); //隐藏无结果提醒
-		    console.log(data);//sousaiRemindDialog(data);
-	        Handlebars.registerHelper("data",function(v){
-	          //将当前对象转化为字符串，保存在data-info中
-	          console.log(v);
-	          var v1 = JSON.stringify(v);
-	          //console.log("v1:"+v1);
-	          return v1;
-	        });
-	        target.empty(); //清空tbody
-	        target.html(template(data));
-	        //若没有相应的结果，给出提醒
-	        if($(".tritem").length == 0){
-	        	sousaiRemindDialog("在您选择的比赛地点没有搜索到已有场地，请更换比赛地点或在此地点添加新场地。");
-	        	$(".existCourtsBox .noresult").show();
-	        }
-  	      },
-  	      error: function(jqXHR,textStatus,errorThrown){
-  	    	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-  	    	  sousaiRemindDialog("抱歉，获取已有场地信息出错了。");
-  	      },
-  	    }); //ajax 已得到相应地点场地列表
-  	  
-      $("div.existCourtsBox").slideDown(); //将已有场地类表滑出
-      //若添加新场地列表存在，则隐藏并删除
-      if($("#newCourtCheckbox").is(":checked")){
-        $("div.inputCourt").slideUp();
-        $("div.inputCourt").remove();
-        $("#newCourtCheckbox").attr("checked",false);//将添加新场地的复选框设置为非选中状态
-      }
-      }
+    	searchExistedCourt(1,10);
     });
     //添加新场地
     $("#newCourtBtn").click(function () {
@@ -391,12 +425,12 @@ $(function(){
       selectProvince: {
       	min: 1,
       },
-      selectCity: {
+      /*selectCity: {
       	min: 1,
       },
       selectCountry: {
       	min: 1,
-      },
+      },*/
       courtName: {
           minlength: 6,
           maxlength: 30

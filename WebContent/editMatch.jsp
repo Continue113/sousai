@@ -80,7 +80,13 @@
            </table>
            <div class="panel-bottom">
        		<div id="ajaxState" class="text-center"><span class="hide noresult">无结果</span><span class="hide load"><img src="img/loading.gif" height="20px" width="20px"></img>数据加载中...</span></div>
-       		<div class="pagination"><nav><ul class="pagination"></ul></nav></div>
+       		<div class="btn-toolbar"><div class="btn-group">
+       		<a class="btn prior" href="javascript:priorCourts();">«</a>
+    	    <a class="btn active" href="javascript:void(0)">1</a>
+    	    <a class="btn" href="javascript:void(0)">...</a>
+    	    <a class="btn" href="javascript:void(0)">5</a>
+    	    <a class="btn" href="javascript:nextCourts();">»</a>
+       		</div></div>
       	   </div>
             <div class="text-center"> 
              <button class="btn" type="button" id="newCourtBtn">没有我要的场地，我要添加新场地</button> 
@@ -105,3 +111,18 @@
           </fieldset> 
         </form>
       </div>
+      
+  <script id="existCourts-template" type="text/x-handlebars-template">
+    {{#each this}}
+
+		    <tr class="tritem"  data-info="{{data this}}" data-courtid="{{id}}">
+				<td>{{name}}</td>
+				<td>{{addr}}</td>
+				<td>{{courtTypeId}}</td>
+				<td>{{tableNum}}</td>
+				<td>{{matchCount}}</td>
+				<td><a target="_blank" href="?id={{id}}">详细</a></td>
+			</tr>
+
+    {{/each}}
+  </script>

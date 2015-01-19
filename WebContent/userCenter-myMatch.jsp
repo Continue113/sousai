@@ -212,20 +212,6 @@
                             
     {{/each}}
   </script>
-  <script id="existCourts-template" type="text/x-handlebars-template">
-    {{#each this}}
-
-		    <tr class="tritem"  data-info="{{data this}}" data-courtid="{{id}}">
-				<td>{{name}}</td>
-				<td>{{addr}}</td>
-				<td>{{courtTypeId}}</td>
-				<td>{{tableNum}}</td>
-				<td>{{matchCount}}</td>
-				<td><a target="_blank" href="courtLink;courtId=?{{id}}">详细</a></td>
-			</tr>
-
-    {{/each}}
-  </script>
   <script>
   function e(crtPage,rs,obc,ia,sc,kv){
 		$("#ajaxState .load").show();console.log("start");

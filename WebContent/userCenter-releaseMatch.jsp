@@ -106,22 +106,6 @@
   <script src="tinymce/tinymce.min.js"></script> 
   <script src="js/jquery.validate.min.js"></script>
   <script src="js/sousai.editmatch.js"></script>
-  
-  <!-- handlebars template -->
-  <script id="existCourts-template" type="text/x-handlebars-template">
-    {{#each this}}
-
-		    <tr class="tritem"  data-info="{{data this}}" data-courtid="{{id}}">
-				<td>{{name}}</td>
-				<td>{{addr}}</td>
-				<td>{{courtTypeId}}</td>
-				<td>{{tableNum}}</td>
-				<td>{{matchCount}}</td>
-				<td><a target="_blank" href="courtLink;courtId=?{{id}}">详细</a></td>
-			</tr>
-
-    {{/each}}
-  </script>
   <script>
   
   $(function () {
@@ -147,9 +131,6 @@
 			}else if(!match){
 				return false;
 			}else{
-				console.log("beginTime");console.log($("#inputMatchTimefrom").datepicker( 'getDate' ) );
-				console.log("endTime");console.log($("#inputMatchTimeto").datepicker( 'getDate' ) );
-				
 		      		console.log("getMatchInfo获取到的：");console.log(match);
 		      		var data;
 		      		if(match.iscourt == "true"){

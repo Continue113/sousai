@@ -48,71 +48,14 @@
     <div class="span8 offset2"> 
      <div class="text-center adFirst">这里是ad.no1</div> 
      <div class="search-remind"> 
-      <p><i class="icon-th-list"></i>&nbsp;找到相关比赛&nbsp;<span>1230</span>&nbsp;场</p> 
-     </div> 
-     <div class="searchbox-ad"> 
-      <form class="form-horizontal"> 
-       <fieldset> 
-        <legend>比赛搜索</legend> 
-        <div class="control-group"> 
-         <label class="control-label" for="searchKey">关&nbsp;&nbsp;键&nbsp;&nbsp;词：</label> 
-         <div class="controls"> 
-          <input type="text" id="searchKey" placeholder="请输入搜索关键词" /> 
-          <a href="courtSearch.jsp" class="btn btn-small pull-right">转换到场地搜索界面</a> 
-         </div> 
-        </div> 
-        <div class="control-group"> 
-         <label class="control-label" for="matchType">比赛类型：</label> 
-         <div class="controls"> 
-            <select class="selectMatchType" name="mcId"><option value=0>请选择比赛类型</option></select>
-            <select class="selectParticularMatchType"><option value=0>请先选择比赛大类</option></select>
-            <input class="hide" id="particularMatchType" name="court.matchType"/>
-            <label class="omthide hide" class="control-label" for="otherMatchType">请输入类型：<input class="omthide hide" id="otherMatchType" type="text" value="" placeholder="请填写比赛类型"/></label>
-           </div> 
-        </div> 
-        <div class="control-group matchState"> 
-         <label class="control-label" for="matchState">比赛状态：</label> 
-         <div class="controls form-inline"> 
-          <label class="checkbox"><input type="checkbox" name="matchState_applying" checked="checked" />报名中&nbsp;&nbsp;</label> 
-          <label class="checkbox"><input type="checkbox" name="matchState_playing" checked="checked" />比赛中&nbsp;&nbsp;</label> 
-          <label class="checkbox"><input type="checkbox" name="matchState_played" checked="checked" />已结束&nbsp;&nbsp;</label> 
-         </div> 
-        </div> 
-        <div class="control-group"> 
-         <label class="control-label" for="matchTime">比赛时间：</label> 
-         <div class="controls form-inline"> 
-          <div class="input-append"> 
-           <input type="text" class="input-small height-mini" id="matchTimefrom" name="from" placeholder="请选择开始日期" /> 
-           <span class="add-on" data-toggle="tooltip" data-placement="top" title="" data-original-title="点击输入框可以选择开始日期"><i class="icon-calendar"></i></span> 
-          </div> 
-          <label for="to">—</label> 
-          <div class="input-append"> 
-           <input type="text" class="input-small" id="matchTimeto" name="to" placeholder="请选择结束日期" /> 
-           <span class="add-on" data-toggle="tooltip" data-placement="top" title="" data-original-title="一天以内结束的比赛，日期为同一天"><i class="icon-calendar"></i></span> 
-          </div> 
-          <label class="checkbox"><input type="checkbox" name="matchTime_days" class="matchTime" />工作日&nbsp;&nbsp;</label> 
-          <label class="checkbox"><input type="checkbox" name="matchTime_saturday" class="matchTime" />星期六&nbsp;&nbsp;</label> 
-          <label class="checkbox"><input type="checkbox" name="matchTime_sunday" class="matchTime" />星期日&nbsp;&nbsp;</label> 
-         </div> 
-        </div> 
-        <div class="control-group"> 
-         <label class="control-label" for="matchPlace">比赛地点：</label> 
-         <div class="controls form-inline"> 
-          <!-- 选择省市区三级下拉框 --> 
-          <s:include value="selectPCC.jsp" />
-          <input type="submit" value="搜&nbsp;&nbsp;索" class="btn span2 btn-success btn-small pull-right" /> 
-         </div> 
-        </div> 
-       </fieldset> 
-      </form> 
-     </div> 
-     <!-- /searchbox-ad --> 
+      <p><i class="icon-th-list"></i>&nbsp;找到相关比赛&nbsp;<span>获取数据中...</span>&nbsp;场&nbsp;&nbsp;&nbsp;使用&nbsp;<a href="courtSearchAdv.jsp">“高级搜索”</a>&nbsp;搜索比赛</p> 
+     </div>
      <div class="matchs" id="matchsList"> 
       <!-- panel --> 
       <div class="panel-top"></div>
       <div class="matchBoxs"></div>
        <div class="panel-bottom">
-       <div id="ajaxState" class="text-center"><span class="hide noresult">无结果</span><span class="hide load"><img src="img/loading.gif" height="20px" width="20px"></img>数据加载中...</span></div>
+       <div id="ajaxState" class="text-center"><span class="noresult">无结果</span><span class="hide load"><img src="img/loading.gif" height="20px" width="20px"></img>数据加载中...</span></div>
        <div class="pagination"><nav><ul class="pagination"></ul></nav></div>
       </div>
       <!-- /matchBoxs -->
@@ -132,8 +75,6 @@
   <s:include value="footer.jsp" />
   <!-- 页尾信息 --> 
   <script src="js/handlebars-v2.0.0.js"></script>
-  <script src="js/jquery-ui-1.10.4.custom.min.js"></script> 
-  <script src="js/jquery.ui.datepicker-zh-CN.js"></script> 
   <script src="js/jquery.wordLimit.js"></script>
   <!-- handlebars template -->
   <script id="match-template" type="text/x-handlebars-template">
@@ -163,28 +104,38 @@
   </script>
   <script>
   //定义函数
-  //搜索栏模糊搜索
-	function e(){
-	  	$("#ajaxState .load").show();
-	  	console.log("start");
-	    //loc需解码转换为中文
+    //定义函数
+  function e(crtPage,rs){
+		//loc需解码转换为中文
 	    var url = window.location.search,
-	    kv = decodeURI(url.substring(url.lastIndexOf('=')+1, url.length)),
-		crtPage = 1,rs = 25;
-	    //将kv填入当前的比赛模糊搜索框
-	    $("#searchbox-match input[type='text']").val(kv);
-	    if(kv==""){
-			//若为空则不访问action，刷新原页面
-			alert("输入搜索关键字问空，");
-			window.location.herf = window.location;
-	    	
+	    urikv = decodeURI(url.substring(url.lastIndexOf('=')+1, url.length));
+	  	//将urikv填入当前的场地模糊搜索框
+	    $("#searchbox-match input[type='text']").val(urikv);
+	  	alert(urikv);
+	    if(urikv){
+			barSearch(crtPage,rs,urikv);
 	    }else{
-	    	
+			sousaiRemindDialog("输入搜索关键字问为空，请重新填写。");
+			//window.location.herf = window.location;
+	    }
+  }
+
+  //搜索栏模糊搜索
+	function barSearch(crtPage,rs,kv){
+		$("#ajaxState .load").show();
+		$(".matchBoxs").show();
+		$(".panel-top").hide();
+		$("#ajaxState .noresult").hide();
+		
+		crtPage = crtPage||$("ul.pagination li.active a").html()||1;//若无当前页数，则为当前的页数 否则默认为为1
+		rows = rs||25;//若无行数，则默认为 25行
+
+    	
 	      $.ajax({
 	          type: "POST",
 	          url: "mainSearch",
 	          contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-	          data: {content:kv},
+	          data: {currentPage:crtPage,rows:rs,content:kv},
 	          dataType: "json",
 	          success: function(rspdata) {
 	        	  console.log(rspdata.count);
@@ -194,7 +145,7 @@
 			      var target = $(".matchBoxs"),template = Handlebars.compile($('#match-template').html());
 			      Handlebars.registerHelper("data",function(v){
 			    	  //将当前对象转化为字符串，保存在data-info中
-			    	  console.log(v);
+			    	  //console.log(v);
 			    	  var v1 = JSON.stringify(v);
 			    	  //console.log("v1:"+v1);
 			    	  return v1;
@@ -219,26 +170,10 @@
 	            sousaiRemindDialog("抱歉。ajax错误。");
 	          },
 	        });
-	    }
-	}  
+	}
   $(function(){
 	//搜索栏模糊搜索
 	e();
-     //日期选择器
-     $( "#matchTimefrom" ).datepicker({
-      defaultDate: "+1w",
-      changeMonth: true,
-      onClose: function( selectedDate ) {
-        $( "#to" ).datepicker( "option", "minDate", selectedDate );
-      }
-    });
-    $( "#matchTimeto" ).datepicker({
-      defaultDate: "+1w",
-      changeMonth: true,
-      onClose: function( selectedDate ) {
-        $( "#matchTimefrom" ).datepicker( "option", "maxDate", selectedDate );
-      }
-    });
     //鼠标hover matchbox
     $(".matchBoxs ").on('mouseenter','div.matchBox',function(){
     	      $('div.matchBox').removeClass("box-active");

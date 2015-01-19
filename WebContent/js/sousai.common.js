@@ -13,13 +13,19 @@ $(function() {
 	
  //搜索栏模糊搜索
 	$("#searchbox-match button").click(function() {
-		  var kv = $("#searchbox-match input[type='text']").val();
-		  alert(kv);
+		
+		  var kv = "";
+		  /*kv += $("#city").text();
+		  if( $("#searchbox-match span.add-selectType span").text() != "所有分类"){
+			  kv += $("#searchbox-match span.add-selectType span").text();
+		  }*/
+		  kv += $("#searchbox-match input[type='text']").val();
+		  //alert(kv); 传到模糊搜索的页面，
     	  window.location.href = "matchSearch.jsp?content="+kv;
     });
 	$("#searchbox-court button").click(function() {
 		  var kv = $("#searchbox-court input[type='text']").val();
-		  alert(kv);
+		  //alert(kv); 传到模糊搜索的页面
   	  window.location.href = "courtSearch.jsp?content="+kv;
 	});
   //切换城市
@@ -115,14 +121,30 @@ $(function() {
   $(".add-on").tooltip();
   //搜索栏选择分类
   $(".add-selectType").click(function() {
-    $('#myModal').modal({
+	  //获取所有比赛类型
+	  $.post("showMC", null, function(data) {
+		    //alert("回调内容为:"+data);//id name 
+		    var target = $("#allMatchType > .modal-body > .breadcrumb-fff");
+		    target.empty();
+		    for (var i = 0; i < data.length; i++) {
+		      target.append('<span class="breadcrumb-title">'+data[i].name+'类:</span>');//<option value=\"" + data[i].id + "\">" + data[i].name + "</option>");
+		      $.post("showMT",{"mcId":data[i].id},function(rspdata){
+		    	  target.append('<ul class="breadcrumb"></ul>');
+		    	  $.each(rspdata,function(index,item){
+		    		  target.append('<li><a href="#" data-id="'+item.id+'">'+item.name+'</a></li>');
+		    	  });
+		      });
+		    }
+		  });
+	  
+    $('#allMatchType').modal({
       backdrop: false,
     });
   });
-  $("#myModal a").click(function() {
+  $("#allMatchType a").click(function() {
     var val = $(this).text();
     $(".add-selectType span").text(val);
-    $('#myModal').modal("hide");
+    $('#allMatchType').modal("hide");
   });
   
   $("#collectLink").click(function() {
@@ -429,7 +451,7 @@ function initCourtType(particularMatchTypeId){
 
 //根据当前的没页的条数和总的条数计算总页数
 function pages(count,crtPage,rs){
-	  var pages = Math.ceil(count/rs) || 1, target=$("ul.pagination");console.log(pages); //若当前页数为空则默认为第一页
+	  var pages = Math.ceil(count/rs) || 1, target=$("ul.pagination");
 	  target.empty().show();
 	  if(pages == 1){
 		  target.append('<li class="active"><a href="javascript:void(0)">1</a></li>').hide();
@@ -592,4 +614,24 @@ function pages(count,crtPage,rs){
 		}else{
 			$("#inputCrtCourtType").val("").attr("data-courttypeid","");
 		}
+	}
+
+	//获得场地的省市区信息  
+	function getRegion(){
+		  //设置region的值，若只有省级 则 如 北京市-  若有市级 则 北京市-北京市- 若有区级则为 北京市-北京市-东城区 否则传""
+		    var data={};
+		    if( $(".form-inline > .selectCountry option:selected").attr("value") !=0 ){
+		    	data.regionId = $(".form-inline > .selectCountry option:selected").attr("data-regionid");
+		      	data.region = $(".form-inline > .selectProvince option:selected").text() + "-" + $(".form-inline > .selectCity option:selected").text() + "-" + $(".form-inline > .selectCountry option:selected").text();
+		    }else if( $(".form-inline > .selectCity option:selected").attr("value") !=0 ){
+		    	data.regionId = $(".form-inline > .selectCity option:selected").attr("data-regionid");
+		      	data.region = $(".form-inline > .selectProvince option:selected").text() + "-" + $(".form-inline > .selectCity option:selected").text() + "-";
+		    }else if( $(".form-inline > .selectProvince option:selected").attr("value") !=0 ){
+		    	data.regionId = $(".form-inline > .selectProvince option:selected").attr("data-regionid");
+		      	data.region = $(".form-inline > .selectProvince option:selected").text() + "-";
+		    }else{
+		    	data.regionId = null;
+		  	  	data.region = null;
+		    }
+		    return data;
 	}
