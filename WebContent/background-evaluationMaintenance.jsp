@@ -140,6 +140,15 @@
   //定义函数
 
 	function e(crtPage,rs,obc,ia,sc,kv){
+		//定义默认选项
+		rs = rs||$("select.selectRows option:selected").val()||25,
+		crtPage = crtPage||$("ul.pagination li.active a").html()||1, //每次点击改变条数都从第一页开始；parseInt($("ul.pagination > li.active").text()) || 1; //若当前页数为空则默认为第一页
+	  	orderbycol = orderbycol||$(".sort button .current").attr("data-orderbycol"), 
+		isasc = isasc||$(".sort button .current").attr("data-isasc"),
+		sc = sc||$(".text-filter-box button .current").attr("data-strcolumns"),
+		kv = kv||$(".text-filter-box input").val();
+	  	alert(crtPage+" "+rs+" "+orderbycol+" "+isasc+" "+sc+" "+kv);
+	  	
 	$("#ajaxState .load").show();console.log("start");
     $.ajax({
         type: "POST",

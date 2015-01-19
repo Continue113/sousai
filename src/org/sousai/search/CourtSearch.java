@@ -143,6 +143,8 @@ public class CourtSearch {
 			currentPage = 1;
 		if (rows == null)
 			rows = 25;
+		
+		System.out.println("sss"+content);
 		LinkedList<Court> listAll = courtSearch(content, "/home/lei/data");
 		for (int i = (currentPage - 1) * rows; i < ((currentPage - 1) * rows + 25)
 				&& i < listAll.size(); i++) {

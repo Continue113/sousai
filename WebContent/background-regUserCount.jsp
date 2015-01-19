@@ -59,10 +59,11 @@
      <div class="span9"> 
       <div class="toolBox total form-inline">
         <label for="year">请选择年份：<select class="span1" name="year" id="year"> <option>2010</option> <option selected="selected">2011</option> </select></label> 
-        <button class="btn pull-right" id="tableTiggler">显示表格</button>
+        <button class="btn pull-right" id="tableTiggler">隐藏表格</button>
+        <button class="btn pull-right" id="chartTiggler">显示图表</button>
         <button class="btn pull-right" onclick="GetAjaxChartData()">通过Ajax获取数据</button>
       </div> 
-      <div class="hide" id="mainTable"> 
+      <div class="" id="mainTable"> 
        <table class="table table-bordered table-striped table-condensed table-hover "> 
         <thead> 
          <tr>
@@ -201,17 +202,16 @@
         </tbody> 
        </table> 
       </div> 
-      <div class="chartBox hide" id="mainLine"></div>
+      <div class="chartBox " id="mainLine"></div>
       
       <div class="toolBox region form-inline">
         <label for=regionTimeYear>请选择地域统计时间段：</label> 
         <select class="span1" name="timeYear" id="regionTimeYear"> <option>2010</option> <option selected="selected">2011</option> </select>
         <select class="span1" name="timeMonth" id="regionTimeMonth"> <option>全年</option> <option selected="selected">1月</option> </select> 
-        <button class="btn " id="tableTigglerRegion">显示表格</button>
-        <button class="btn " onclick="javascript:$('#mainMap').show();">显示地图</button>
+        <button class="btn " id="regionTiggler">显示地图</button>
         <button class="btn " onclick="GetAjaxChartDataRegion()">通过Ajax获取数据</button>
       </div>
-      <div class="chartBox hide" id="mainMap"></div>
+      <div class="chartBox " id="mainMap"></div>
       
       <div class="toolBox Match form-inline">
         <label for=matchTime>请输入时间以统计比赛场次：</label>
@@ -241,26 +241,45 @@
   <script src="js/sousai.bg-eCount-optionMap.js"></script> 
   <script src="js/sousai.common.js"></script> 
   <script>
-  $(function(){	  
-    //重复点击显示/隐藏表格
-    var flag = 1;
-    $("#tableTiggler").click(function(){
-      if(flag==1){
-            //执行方法;
-            $("#mainTable").slideDown();
-            $(this).text("隐藏表格");
-            flag=0;
-            //禁止form自动提交表单
-            return false;
-        }else{
-            //执行方法;
-            $("#mainTable").slideUp();
-            $(this).text("显示表格");
-            flag=1;
-            //禁止form自动提交表单
-            return false;
-        }
-    });
+  //定义函数
+
+  function GetAjaxChartDataRegion(){
+	  alert("SSSS");
+  }
+  $(function(){
+	  $("#mainLine").slideUp();
+	  $("#mainMap").slideUp();
+	  //重复点击显示/隐藏表格
+	  $("#tableTiggler").click(function(){
+		  // 0 为 隐藏， 1为显示
+	      if($(this).text()=="显示表格"){
+	            $("#mainTable").slideDown();
+	            $(this).text("隐藏表格");
+	        }else{
+	            $("#mainTable").slideUp();
+	            $(this).text("显示表格");
+	        }
+	  });
+	  $("#chartTiggler").click(function(){
+		  // 0 为 隐藏， 1为显示
+	      if($(this).text()=="显示图表"){
+	            $("#mainLine").slideDown();
+	            $(this).text("隐藏图表");
+	        }else{
+	            $("#mainLine").slideUp();
+	            $(this).text("显示图表");
+	        }
+	  });
+	  $("#regionTiggler").click(function(){
+		  // 0 为 隐藏， 1为显示
+	      if($(this).text()=="显示地图"){
+	            $("#mainMap").slideDown();
+	            $(this).text("隐藏地图");
+	        }else{
+	            $("#mainMap").slideUp();
+	            $(this).text("显示地图");
+	        }
+	  });
   });
   </script>  
  </body>
