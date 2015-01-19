@@ -78,7 +78,7 @@ public class GetCourtInMatchRelingAction extends UserBaseAction {
 			rows = Constant.DEFAULT_ROWS;
 		}
 		FrontMessage msg = new FrontMessage();
-		if (CommonUtils.isNullOrEmpty(region)) {
+		if (!CommonUtils.isNullOrEmpty(region)) {
 			msg.setCount(umg.countByRegion(region));
 			msg.setBody(umg.getCourtByRegion(region, currentPage, rows));
 			
