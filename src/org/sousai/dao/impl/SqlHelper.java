@@ -159,9 +159,10 @@ public class SqlHelper extends HibernateDaoSupport {
 	 *            between 'value[0]' and 'value[1]'; 4为between不加单引号，如 column
 	 *            between value[0] and value[1]; 5为column<'value'; 6为column<value; 7为column>'value';
 	 *             8为column>value; 9为column<>'value'; 10为column<>value;
+	 *             11为其他sql语句，会自动用括号包括起来，如column1=a or column2>2 会变成(column1=a or column2>2)
 	 * 
 	 * @param columns
-	 *            字段/属性名称数组 需要手动加'and'、'or'等，对()的处理未完成
+	 *            字段/属性名称数组 需要手动加'and'、'or'等，对()的处理未完成，若type为11，则column为sql语句
 	 * @param args
 	 *            字段/属性值数组
 	 * @return
@@ -272,6 +273,12 @@ public class SqlHelper extends HibernateDaoSupport {
 						break;
 					}
 					strBuilder.append(String.format(" %1$s<>%2$s ", columns[i], args[i]));
+					break;
+				case 11:
+					//这里，columns[i]应为sql语句
+					if(!CommonUtils.isNullOrEmpty(columns[i])){
+						strBuilder.append(" ("+columns[i]+") ");
+					}
 					break;
 				default:
 					break;
@@ -392,6 +399,12 @@ public class SqlHelper extends HibernateDaoSupport {
 						break;
 					}
 					strBuilder.append(String.format(" %1$s<>%2$s ", columns[i], args[i]));
+					break;
+				case 11:
+					//这里，columns[i]应为sql语句
+					if(!CommonUtils.isNullOrEmpty(columns[i])){
+						strBuilder.append(" ("+columns[i]+") ");
+					}
 					break;
 				default:
 					break;

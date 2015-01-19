@@ -71,23 +71,26 @@ public class GetCourtInMatchRelingAction extends UserBaseAction {
 
 	public String execute() throws Exception {
 
-		if (CommonUtils.isNullOrEmpty(currentPage)) {
-			currentPage = 1;
+		try {
+			if (CommonUtils.isNullOrEmpty(currentPage)) {
+				currentPage = 1;
+			}
+			if (CommonUtils.isNullOrEmpty(rows)) {
+				rows = Constant.DEFAULT_ROWS;
+			}
+			FrontMessage msg = new FrontMessage();
+			if (!CommonUtils.isNullOrEmpty(region)) {
+				msg.setCount(umg.countByRegion(region));
+				msg.setBody(umg.getCourtByRegion(region, currentPage, rows));
+
+			} else {
+				msg.setCount(-1);
+				msg.setBody(Constant.ERROR);
+			}
+			JSONUtils.toJson(ServletActionContext.getResponse(), msg);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		if (CommonUtils.isNullOrEmpty(rows)) {
-			rows = Constant.DEFAULT_ROWS;
-		}
-		FrontMessage msg = new FrontMessage();
-		if (!CommonUtils.isNullOrEmpty(region)) {
-			msg.setCount(umg.countByRegion(region));
-			msg.setBody(umg.getCourtByRegion(region, currentPage, rows));
-			
-		} else {
-			msg.setCount(-1);
-			msg.setBody(Constant.ERROR);
-		}
-		JSONUtils.toJson(ServletActionContext.getResponse(),
-				msg);
 		return null;
 	}
 

@@ -35,7 +35,8 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 	@Override
 	public MatchBean getMatchBean(Integer id) {
 		MatchBean value = null;
-		String strHql = String.format("%1$s and m.id=%2$s",selectMatchBean,id);
+		String strHql = String
+				.format("%1$s and m.id=%2$s", selectMatchBean, id);
 		List<MatchBean> list = (List<MatchBean>) findModelList_HQL(strHql);
 		if (!CommonUtils.isNullOrEmpty(list)) {
 			value = list.get(0);
@@ -307,17 +308,39 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 	public List<MatchBean> findPagedByKeyValueOrderBy(String[] columns,
 			String keyValue, Integer currentPage, Integer rows,
 			String orderByCol, Boolean isAsc) throws Exception {
+
 		if (!CommonUtils.isNullOrEmpty(keyValue)) {
-			keyValue = " %" + keyValue + "% ";
+			String[] keyValues = keyValue.split(" ");
 			int[] types = new int[columns.length];
 			String[] args = new String[columns.length];
 			for (int i = 0; i < columns.length; i++) {
-				types[i] = 2;
-				args[i] = keyValue;
-				// 加上 别名
-				columns[i] = " and " + addPrefixToColumn(columns[i]);
+				MyPrint.myPrint("keyValues.length = " + keyValues.length);
+				int[] tempTypes = new int[keyValues.length];
+				String[] tempArgs = new String[keyValues.length];
+				String[] tempColumns = new String[keyValues.length];
+				for (int j = 0; j < keyValues.length; j++) {
+					String tempKeyValue = keyValues[j];
+					tempTypes[j] = 2;
+					if (!CommonUtils.isNullOrEmpty(tempKeyValue)) {
+						tempKeyValue = " %" + tempKeyValue + "% ";
+					}
+					tempArgs[j] = tempKeyValue;
+					// 加上 别名
+					// columns[i] = " and " + addPrefixToColumn(columns[i]);
+					if (j != 0) {
+						tempColumns[j] = " or " + addPrefixToColumn(columns[i]);
+					} else {
+						tempColumns[j] = addPrefixToColumn(columns[i]);
+					}
+				}
+				columns[i] = Append_StringWithout1(" ", tempTypes, tempColumns,
+						tempArgs);
+				types[i] = 11;
+				args[i] = null;
 			}
-			String strWhere = Append_String(" and ", types, columns, args);
+			String strWhere = Append_StringWithout1(" and ", types, columns,
+					args);
+			MyPrint.myPrint(strWhere);
 			return findPagedByWhereOrderBy(strWhere, currentPage, rows,
 					addPrefixToColumn(orderByCol), isAsc);
 		} else {

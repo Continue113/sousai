@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.struts2.ServletActionContext;
 import org.sousai.action.base.UserBaseAction;
+import org.sousai.common.Constant;
 import org.sousai.domain.FrontMessage;
 import org.sousai.tools.JSONUtils;
 import org.sousai.tools.MyPrint;
@@ -125,7 +126,7 @@ public class GetAllMatchAction extends UserBaseAction {
 				currentPage = 1;
 			}
 			if (rows == null) {
-				rows = 25;
+				rows = Constant.DEFAULT_ROWS;
 			}
 			String[] columns = strColumns.split(",");
 			List<MatchBean> list = amg.findPagedMatchByKeyValueOrderBy(columns, keyValue, currentPage, rows, orderByCol, isAsc);

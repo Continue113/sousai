@@ -124,5 +124,37 @@
 	<bean id="adminManager"
 		class="org.sousai.service.impl.AdminManagerImpl"
 		parent="managerTemplate"/>
-
+	
+<!-- 定义触发器来管理任务Bean -->
+<bean id="cronTriggerRefreshIndex" 
+	class="org.springframework.scheduling.quartz.CronTriggerBean">
+	<property name="jobDetail">
+		<!-- 使用嵌套Bean的方式来定义任务Bean -->
+		<bean
+		class="org.springframework.scheduling.quartz.JobDetailBean">
+			<!-- 指定任务Bean的实现类 -->
+			<property name="jobClass" 
+				value="org.sousai.action.RefreshIndexAction"/>
+			<!-- 为任务Bean注入属性 -->
+			<!-- <property name="jobDataAsMap"> -->
+<!--				<map-->
+<!--					<entry key="empMgr" value-ref="empManager"/-->
+<!--				</map-->
+<!--			</property> -->
+		</bean>
+	</property>
+	<!-- 指定Cron表达式：每天0点0分1秒执行调度 -->
+	<property name="cronExpression" 
+		value="1 0 0/2 * * ?"/>
+<!-- "1 0 0 * * ?" -->	
+</bean>
+<!-- 执行实际的调度调度 -->
+<bean 
+class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+	<property name="triggers">
+		<list>
+			<ref local="cronTriggerRefreshIndex"/>
+		</list>
+	</property>
+</bean>
 </beans>

@@ -39,14 +39,14 @@ public class UserMarkDaoHibernate extends SqlHelper implements UserMarkDao {
 		Boolean value = false;
 		
 		return value;
-	};
+	}
 	
 	@Override
 	public List<MatchBean> findByMarkingUserId(Integer userId, int currentPage,
 			int rows) {
 		String hql = "select new org.sousai.vo.MatchBean(m.id,m.name,m.type,"
 				+ "m.beginTime,m.endTime,m.courtId,c.name,m.rule,m.relTime,"
-				+ "m.verify,m.score,m.userId,u.name) from Match m, Court c, User u, UserMark um "
+				+ "m.verify,m.score,m.userId,u.name, m.region) from Match m, Court c, User u, UserMark um "
 				+ "where m.courtId=c.id and u.id=m.userId and um.userId=? and m.id=um.matchId";
 		// String hql = selectMatchBean;
 		Session session = getHibernateTemplate().getSessionFactory()
