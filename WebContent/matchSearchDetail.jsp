@@ -72,9 +72,9 @@
      </div>
      <div id="match">
      <div class="matchShortInfo"> 
-      <a href="javascript:markMatch(16)" class="btn btn-mini pull-right" id="markMatch">收藏比赛</a> 
-      <a href="javascript:void(0)" class="btn btn-mini pull-right" id="modifyMatch">修改比赛</a> 
-      <a href="javascript:void(0)" class="btn btn-mini pull-right" id="recordSocre">录入成绩</a> 
+      <a href="javascript:void(0);" class="btn btn-mini pull-right" id="markMatch">收藏比赛</a> 
+      <a href="javascript:void(0);" class="btn btn-mini pull-right" id="modifyMatch">修改比赛</a> 
+      <a href="javascript:void(0);" class="btn btn-mini pull-right" id="recordSocre">录入成绩</a> 
       <table> 
        <thead> 
         <tr> 
@@ -129,7 +129,8 @@ function e(){
 	var url = window.location.search,
     id = decodeURI(url.substring(url.lastIndexOf('=')+1, url.length)),
     target = $("#match");
-	
+	//设置收藏比赛的函数为markMatch(id);
+	$("#markMatch").attr("href","javascript:markMatch("+id+");");
 	      $.ajax({
 	          type: "POST",
 	          url: "getMatchById",//"matchDetail",

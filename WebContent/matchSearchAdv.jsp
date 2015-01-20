@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
   <meta name="description" content="搜赛网比赛搜索页面" /> 
   <meta name="author" content="KING@CQU" /> 
-  <link href="css/smoothness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" /> 
+  <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet" /> 
   <link href="css/bootstrap.min.css" rel="stylesheet" /> 
   <link href="css/bootstrap-responsive.css" rel="stylesheet" />
   <link href="css/sousai.common.css" rel="stylesheet" />
@@ -81,15 +81,15 @@
          </div> 
         </div> 
         <div class="control-group"> 
-         <label class="control-label" for="matchTime">比赛时间：</label> 
+         <label class="control-label" for="inputMatchTimefrom">比赛时间：</label> 
          <div class="controls form-inline"> 
           <div class="input-append"> 
-           <input type="text" class="input-small height-mini" id="matchTimefrom" name="from" placeholder="请选择日期" /> 
+           <input type="text" class="input-small height-mini" id="inputMatchTimefrom" placeholder="请选择日期" /> 
            <span class="add-on" data-toggle="tooltip" data-placement="top" title="" data-original-title="点击输入框可以选择日期"><i class="icon-calendar"></i></span> 
           </div> 
           <label for="to">—</label> 
           <div class="input-append"> 
-           <input type="text" class="input-small" id="matchTimeto" name="to" placeholder="请选择日期" /> 
+           <input type="text" class="input-small" id="inputMatchTimeto" placeholder="请选择日期" /> 
            <span class="add-on" data-toggle="tooltip" data-placement="top" title="" data-original-title="点击输入框可以选择日期"><i class="icon-calendar"></i></span> 
           </div> 
           <label class="checkbox"><input type="checkbox" name="matchTime_days" class="matchTime" />工作日&nbsp;&nbsp;</label> 
@@ -145,8 +145,8 @@
   <s:include value="footer.jsp" />
   <!-- 页尾信息 --> 
   <script src="js/handlebars-v2.0.0.js"></script>
-  <script src="js/jquery-ui-1.10.4.custom.min.js"></script> 
-  <script src="js/jquery.ui.datepicker-zh-CN.js"></script> 
+  <script src="js/bootstrap-datetimepicker.min.js"></script>
+  <script src="js/bootstrap-datetimepicker.zh-CN.js"></script> 
   <script src="js/jquery.wordLimit.js"></script>
   <!-- handlebars template -->
   <script id="match-template" type="text/x-handlebars-template">
@@ -247,21 +247,27 @@
   $(function(){
 	 //搜索栏模糊搜索
 	 e();
-     //日期选择器
-     $( "#matchTimefrom" ).datepicker({
-      defaultDate: "+1w",
-      changeMonth: true,
-      onClose: function( selectedDate ) {
-        $( "#matchTimeto" ).datepicker( "option", "minDate", selectedDate );
-      }
-    });
-    $( "#matchTimeto" ).datepicker({
-      defaultDate: "+1w",
-      changeMonth: true,
-      onClose: function( selectedDate ) {
-        $( "#matchTimefrom" ).datepicker( "option", "maxDate", selectedDate );
-      }
-    });
+	 //日期选择器 bootstrap.datepicker
+	  $("#inputMatchTimefrom").datetimepicker({
+	      language: 'zh-CN',
+	      format: 'yyyy-mm-dd',
+	      minView: 2,
+	      autoclose: true,
+	      todayBtn: 'linked',
+	  }).on('changeDate',function(ev){
+		  if( ($("#inputMatchTimefrom").val() > $("#inputMatchTimeto").val()) ||( $("#inputMatchTimeto").val() == ""))
+	      $("#inputMatchTimeto").datetimepicker('setStartDate',$("#inputMatchTimefrom").val()).val($("#inputMatchTimefrom").val());
+	  });
+	  $("#inputMatchTimeto").datetimepicker({
+	      language: 'zh-CN',
+	      format: 'yyyy-mm-dd',
+	      minView: 2,
+	      autoclose: true,
+	  }).on('changeDate',function(ev){
+	      console.log(ev);
+		  if( ($("#inputMatchTimefrom").val() > $("#inputMatchTimeto").val()) ||( $("#inputMatchTimeto").val() == ""))
+		  $("#inputMatchTimeto").datetimepicker('setStartDate',$("#inputMatchTimefrom").val()).val($("#inputMatchTimefrom").val());
+	  });
     //鼠标hover matchbox
     $(".matchBoxs ").on('mouseenter','div.matchBox',function(){
     	      $('div.matchBox').removeClass("box-active");

@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
   <meta name="description" content="搜赛网-管理员页面-比赛维护" /> 
   <meta name="author" content="KING@CQU" /> 
-  <link href="css/smoothness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" /> 
+  <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet" /> 
   <link href="css/bootstrap.min.css" rel="stylesheet" /> 
   <link href="css/bootstrap-responsive.css" rel="stylesheet" />
   <link href="css/sousai.common.css" rel="stylesheet" /> 
@@ -156,8 +156,8 @@
   <![endif]--> 
   <script src="js/jquery-1.11.0.min.js"></script> 
   <script src="js/bootstrap.min.js"></script> 
-  <script src="js/jquery-ui-1.10.4.custom.min.js"></script> 
-  <script src="js/jquery.ui.datepicker-zh-CN.js"></script> 
+  <script src="js/bootstrap-datetimepicker.min.js"></script> 
+  <script src="js/bootstrap-datetimepicker.zh-CN.js"></script> 
   <script src="tinymce/jquery.tinymce.min.js"></script> 
   <script src="tinymce/tinymce.min.js"></script> 
   <script src="js/jquery.wordLimit.js"></script>
