@@ -158,7 +158,7 @@
 		<action name="courtSearch" class="org.sousai.search.CourtSearch" method="courtSearch">
 			<result name="success">/</result>
 		</action>
-		<action name="statistics" class="org.sousai.webstatistics.Statistics" method="staticsData">
+		<action name="statistics" class="org.sousai.webstatistics.Statistics" method="statisticsData">
 			<result name="success">/</result>
 		</action>
 		

@@ -310,7 +310,9 @@ public class Jdbc {
 		try{
 			pstmt = conn.prepareStatement(sql);
 			result = pstmt.executeQuery();
-			registerNum = result.getInt(1) ;
+			while (result.next()) {
+				registerNum = result.getInt(1) ;
+			}
 		} catch (SQLException e) {
 			System.out.println(e);
 		} finally {
