@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 
 import org.sousai.tools.CommonUtils;
+import org.sousai.webstatistics.SiteStats;
 
 public class Jdbc {
 	private Connection conn = null;
@@ -303,7 +304,32 @@ public class Jdbc {
 	}
 	
 	//查询某年某月的注册用户数量
+	public int selectRegisterNum(int year,int month){
+		int registerNum = 0;
+		String sql = "SELECT COUNT(REGTIME) FROM USER WHERE YEAR(REGTIME)="+year+" AND MONTH(REGTIME)="+month;
+		try{
+			pstmt = conn.prepareStatement(sql);
+			result = pstmt.executeQuery();
+			registerNum = result.getInt(1) ;
+		} catch (SQLException e) {
+			System.out.println(e);
+		} finally {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+				System.out.println(e);
+			}
+		}
+		return registerNum ;
+	}
 	
+	//查询某年某月的比赛发布(搜赛网)数量
+	
+	//查询某年某月的比赛发布(自然人)数量
+	
+	//查询某年某月的场地发布(搜赛网)数量
+	
+	//查询某年某月的场地发布(自然人)数量
 }
 
 class JdbcMySqlUtil {
