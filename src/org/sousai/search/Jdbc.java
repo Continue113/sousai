@@ -301,6 +301,9 @@ public class Jdbc {
 		}
 		return courtList;
 	}
+	
+	//查询某年某月的注册用户数量
+	
 }
 
 class JdbcMySqlUtil {
