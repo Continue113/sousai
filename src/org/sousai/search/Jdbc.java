@@ -303,7 +303,7 @@ public class Jdbc {
 		return courtList;
 	}
 	
-	//查询某年某月的注册用户数量
+	//统计某年某月的注册用户数量
 	public int selectRegisterNum(int year,int month){
 		int registerNum = 0;
 		String sql = "SELECT COUNT(REGTIME) FROM USER WHERE YEAR(REGTIME)="+year+" AND MONTH(REGTIME)="+month;
@@ -325,13 +325,35 @@ public class Jdbc {
 		return registerNum ;
 	}
 	
-	//查询某年某月的比赛发布(搜赛网)数量
+	//统计某年某月的比赛发布(搜赛网)数量
 	
-	//查询某年某月的比赛发布(自然人)数量
+	//统计某年某月的比赛发布(自然人)数量
 	
-	//查询某年某月的场地发布(搜赛网)数量
+	//统计某年某月的场地发布(搜赛网)数量
 	
-	//查询某年某月的场地发布(自然人)数量
+	//统计某年某月的场地发布(自然人)数量
+	
+	//统计评论数量   court_time
+	public int selectCommentsNum(int year,int month){
+		int registerNum = 0;
+		String sql = "SELECT COUNT(TIME) FROM MESSAGE WHERE YEAR(TIME)="+year+" AND MONTH(TIME)="+month;
+		try{
+			pstmt = conn.prepareStatement(sql);
+			result = pstmt.executeQuery();
+			while (result.next()) {
+				registerNum = result.getInt(1) ;
+			}
+		} catch (SQLException e) {
+			System.out.println(e);
+		} finally {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+				System.out.println(e);
+			}
+		}
+		return registerNum ;
+	}
 }
 
 class JdbcMySqlUtil {

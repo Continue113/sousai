@@ -34,7 +34,7 @@ public class Statistics {
 			siteStats.add(new SiteStats.Builder().visits(0)
 					.registrantsNum(jdbc.selectRegisterNum(year, i))
 					.sousaiMatchPublish(0).naturalMatchPublish(0)
-					.sousaiSitePublish(0).naturalSitePublish(0).build());
+					.sousaiSitePublish(0).naturalSitePublish(0).comments(jdbc.selectCommentsNum(year, i)).build());
 		}
 		JSONUtils.toJson(ServletActionContext.getResponse(), siteStats);
 		return "success";
