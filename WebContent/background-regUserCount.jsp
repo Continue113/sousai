@@ -58,7 +58,7 @@
      <!-- /background-remind & backgroundMenu --> 
      <div class="span9"> 
       <div class="toolBox total form-inline">
-        <label for="year">请选择年份：<select class="span1" name="year" id="yearS"> <option>2010</option> <option selected="selected">2011</option> </select></label> 
+        <label for="year">请选择年份：<select class="span1" name="year" id="year"> <option>2010</option> <option selected="selected">2011</option> </select></label> 
         <label for="year">请输入年份：<input type="text" class="input-small height-mini" id="statisticsInput" placeholder="请输入年份" /><button class="btn " id="statisticsButton">统计</button></label> 
         <button class="btn pull-right" id="tableTiggler">隐藏表格</button>
         <button class="btn pull-right" id="chartTiggler">显示图表</button>
