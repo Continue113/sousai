@@ -243,10 +243,47 @@
   <script>
   //定义函数
 
-  function GetAjaxChartDataRegion(){
-	  alert("SSSS");
+  function getChartData(year,month){
+	  $.ajax({
+	        type: "POST",
+	        url: "statistics",
+	        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+	        data: {year:year,month:month},
+	        dataType: "json",
+	        success: function(rspdata) {
+	        	console.log(rspdata);
+	            /*var target = $(".evaluationTable > tbody"),template = Handlebars.compile($('#evaluation-template').html());
+	            Handlebars.registerHelper("data",function(v){
+	              //将当前对象转化为字符串，保存在data-info中
+	              //console.log(v);
+	              var v1 = JSON.stringify(v);
+	              //console.log("v1:"+v1);
+	              return v1;
+	            });
+	            target.empty(); //清空tbody
+	            target.html(template(rspdata.body));
+	            $("#ajaxState .load").hide();
+	  	        $("#ajaxState .noresult").hide();
+	  	      console.log("stop");
+	      	    //出错或无结果
+	      	    //target.empty(); //清空tbody
+	      	    if(target.find("tr.evaluation").length == 0){
+	      	    $("#ajaxState .noresult").show();console.log("无结果");
+	      	    }
+	            //管理员界面表格列字数限制，溢出省略
+	            $("td > label").wordLimit();
+	            $(".court-name").wordLimit();
+	            pages(rspdata.count,crtPage,rs);*/
+	  	    },
+	        error: function(jqXHR,textStatus,errorThrown){
+	        	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+	  	      	$("#ajaxState .noresult").show();console.log("出错了");
+	          	ousaiRemindDialog("抱歉，ajax出错了。");
+	        },
+	      });
   }
   $(function(){
+	  getChartData(2015,1);
 	  $("#mainLine").slideUp();
 	  $("#mainMap").slideUp();
 	  //重复点击显示/隐藏表格

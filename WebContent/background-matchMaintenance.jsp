@@ -190,7 +190,7 @@
 		ia = ia||$(".sort button .current").attr("data-isasc"),
 		sc = sc||$(".text-filter-box button .current").attr("data-strcolumns"),
 		kv = kv||$(".text-filter-box input").val();
-	  	alert(crtPage+" "+rs+" "+obc+" "+ia+" "+sc+" "+kv);
+	  	console.log(crtPage+" "+rs+" "+obc+" "+ia+" "+sc+" "+kv);
 	  	
   	$("#ajaxState .load").show();console.log("start");
     $.ajax({
@@ -231,6 +231,40 @@
       },
     });
   }
+  function sureDelete(){
+	  alert("确定删除");
+	  /*var matchIds = new Array(),
+		rs = $("select.selectRows option:selected").val(),
+		crtPage = $("ul.pagination").find("li.active a").text();
+		$(".match input:checked").each(function(index,element){
+			console.log($(this).attr("id"));
+  		matchIds.push($(this).attr("id"));
+		});
+      $.ajax({
+        type: "POST",
+        url: "deleteMatches",
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        data: {
+          "matchIds": matchIds.join(","),
+        },
+        dataType: "json",
+        success: function(rspdata) {
+      	  if( rspdata == "success" ){
+      		  //sousaiRemindDialog("删除成功");sousaiRemindDialog(crtPage);
+      		  //e(crtPage,rs);//刷新数据
+      		  sousaiRemindDialog("删除成功");
+      		  $(".match input:checked").parent().parent().parent().hide();
+      	  }else if( rspdata == "fail" ){
+      		  sousaiRemindDialog("删除失败");
+      	  }else{
+      		  sousaiRemindDialog("删除失败，错误代码未知");
+      	  }
+        },
+        error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+          sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
+        },
+      });*/
+  }
   $(function(){
 	//ajax接收所有比赛
 	e(1,25,"name",true,"name","");
@@ -249,43 +283,15 @@
   	});
     //点击删除比赛 列表界面
     $("#matchMaintenance .deleteMatch").click(function(){
+    	
     	var checked = $(".match input:checked"),n = checked.length;
     	//若为选中则提示
     	if( n == 0){
     		sousaiRemindDialog("请先选中比赛");
     	}else{
-    		var matchIds = new Array(),
-    		rs = $("select.selectRows option:selected").val(),
-    		crtPage = $("ul.pagination").find("li.active a").text();
-    		$(".match input:checked").each(function(index,element){
-    			console.log($(this).attr("id"));
-        		matchIds.push($(this).attr("id"));
-    		});
-    		console.log(matchIds);sousaiRemindDialog("matchIds:"+matchIds.join(",,,"));
-            $.ajax({
-              type: "POST",
-              url: "deleteMatches",
-              contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-              data: {
-                "matchIds": matchIds.join(","),
-              },
-              dataType: "json",
-              success: function(rspdata) {
-            	  if( rspdata == "success" ){
-            		  //sousaiRemindDialog("删除成功");sousaiRemindDialog(crtPage);
-            		  //e(crtPage,rs);//刷新数据
-            		  sousaiRemindDialog("删除成功");
-            		  $(".match input:checked").parent().parent().parent().hide();
-            	  }else if( rspdata == "fail" ){
-            		  sousaiRemindDialog("删除失败");
-            	  }else{
-            		  sousaiRemindDialog("删除失败，错误代码未知");
-            	  }
-              },
-              error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-                sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
-              },
-            });
+    		$("#SRDadd").text("小提示：一旦确定删除将无法取消操作。");
+    		$("#sousaiRemindDialog > .modal-footer > button.btn-success").attr("onclick","sureDelete()");
+    		sousaiRemindDialog("确定删除？",-1,"show");
     	}
     });
     //点击发布比赛 列表界面

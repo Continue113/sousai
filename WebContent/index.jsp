@@ -10,11 +10,58 @@
   <link href="css/bootstrap.min.css" rel="stylesheet" /> 
   <link href="css/bootstrap-responsive.css" rel="stylesheet" /> 
   <link href="css/sousai.common.css" rel="stylesheet" /> 
-  <link href="css/sousai.index.css" rel="stylesheet" /> 
+  
+  <style type="text/css">
+  /* 主页主体快捷图标 */
+.scmn{margin-top: 30px;}
+.scmn li a {
+	float: left;
+	height: 80px;
+	width: 152px;
+	border: 1px solid #ccc;
+	margin: 10px;
+	-webkit-box-shadow: #ccc 0px 0px 5px;
+	-moz-box-shadow: #ccc 0px 0px 5px;
+	box-shadow: #ccc 0px 0px 5px;
+	behavior: url(/PIE.htc);
+}
+.scmn li a:hover {
+	-webkit-box-shadow: #666 2px 2px 5px;
+	-moz-box-shadow: #666 2px 2px 5px;
+	box-shadow: #666 2px 2px 5px;
+	behavior: url(/PIE.htc);
+}
+.scmn li img {
+	position: relative;
+	top: 10px;
+	left: 10px;
+	width: 45px;
+	height: 41px;
+}
+.scmn li .subtitle {
+	position: relative;
+	top: 10px;
+	margin-right: 10px;
+}
+.scmn li .subtitle .title{
+	font-size: 24px;
+	font-weight: bold;
+}
+.scmn li .icon {
+	position: relative;
+	height: 60px;
+}
+.scmn li .iconlabel {
+	display: none;
+	position: relative;
+	width: 152px;
+	background-color: #ccc;
+}
+  </style>
   <!--[if lte IE 8]>
   <link href="css/sousai.IE8.css" rel="stylesheet" /> 
   <![endif]-->
- </head> 
+  </head> 
  <body class="index"> 
   <s:include value="navbar.jsp" />
   <!-- 页首导航条 --> 
@@ -29,105 +76,68 @@
    </div> 
    <div class="row container scmn"> 
     <!--scmn:shortcutmain mchnb:matchnumber dsc:描述--> 
-    <div class="span8 offset2 breadcrumb-fff"> 
-     <ul class="breadcrumb"> 
-      <li class="m-sc"> <a class="blk" target="_blank" href="javascript:void(0)"> <img alt="乒乓球" src="img/pingpong-grey.png" class="u-pic" /> 
-        <div class="m-dsc"> 
-         <span class="u-tt">乒乓球</span> 
-         <span class="u-dsc">比赛&nbsp;&nbsp;<span class="u-mchnb">32</span>&nbsp;&nbsp;场</span> 
-        </div> 
-        <div class="u-label">
-          进入比赛列表页面 
-        </div> </a> </li> 
-      <li class="m-sc"> <a class="blk" target="_blank" href="javascript:void(0)"> <img alt="乒乓球" src="img/defaultIcon.png" class="u-pic" /> 
-        <div class="m-dsc"> 
-         <span class="u-tt">开发中</span> 
-         <span class="u-dsc">coming soon</span> 
-        </div> 
-        <div class="u-label">
-          进入比赛列表页面 
-        </div> </a> </li> 
-      <li class="m-sc"> <a class="blk" target="_blank" href="javascript:void(0)"> <img alt="乒乓球" src="img/defaultIcon.png" class="u-pic" /> 
-        <div class="m-dsc"> 
-         <span class="u-tt">开发中</span> 
-         <span class="u-dsc">coming soon</span> 
-        </div> 
-        <div class="u-label">
-          进入比赛列表页面 
-        </div> </a> </li> 
-      <li class="m-sc"> <a class="blk" target="_blank" href="javascript:void(0)"> <img alt="乒乓球" src="img/defaultIcon.png" class="u-pic" /> 
-        <div class="m-dsc"> 
-         <span class="u-tt">开发中</span> 
-         <span class="u-dsc">coming soon</span> 
-        </div> 
-        <div class="u-label">
-          进入比赛列表页面 
-        </div> </a> </li> 
-      <li class="m-sc"> <a class="blk" target="_blank" href="javascript:void(0)"> <img alt="乒乓球" src="img/defaultIcon.png" class="u-pic" /> 
-        <div class="m-dsc"> 
-         <span class="u-tt">开发中</span> 
-         <span class="u-dsc">coming soon</span> 
-        </div> 
-        <div class="u-label">
-          进入比赛列表页面 
-        </div> </a> </li> 
-      <li class="m-sc"> <a class="blk" target="_blank" href="javascript:void(0)"> <img alt="乒乓球" src="img/defaultIcon.png" class="u-pic" /> 
-        <div class="m-dsc"> 
-         <span class="u-tt">开发中</span> 
-         <span class="u-dsc">coming soon</span> 
-        </div> 
-        <div class="u-label">
-          进入比赛列表页面 
-        </div> </a> </li> 
-      <li class="m-sc"> <a class="blk" target="_blank" href="javascript:void(0)"> <img alt="乒乓球" src="img/defaultIcon.png" class="u-pic" /> 
-        <div class="m-dsc"> 
-         <span class="u-tt">开发中</span> 
-         <span class="u-dsc">coming soon</span> 
-        </div> 
-        <div class="u-label">
-          进入比赛列表页面 
-        </div> </a> </li> 
-      <li class="m-sc"> <a class="blk" target="_blank" href="javascript:void(0)"> <img alt="乒乓球" src="img/defaultIcon.png" class="u-pic" /> 
-        <div class="m-dsc"> 
-         <span class="u-tt">开发中</span> 
-         <span class="u-dsc">coming soon</span> 
-        </div> 
-        <div class="u-label">
-          进入比赛列表页面 
-        </div> </a> </li> 
-      <li class="m-sc"> <a class="blk" target="_blank" href="javascript:void(0)"> <img alt="乒乓球" src="img/defaultIcon.png" class="u-pic" /> 
-        <div class="m-dsc"> 
-         <span class="u-tt">开发中</span> 
-         <span class="u-dsc">coming soon</span> 
-        </div> 
-        <div class="u-label">
-          进入比赛列表页面 
-        </div> </a> </li> 
-      <li class="m-sc"> <a class="blk" target="_blank" href="javascript:void(0)"> <img alt="乒乓球" src="img/defaultIcon.png" class="u-pic" /> 
-        <div class="m-dsc"> 
-         <span class="u-tt">开发中</span> 
-         <span class="u-dsc">coming soon</span> 
-        </div> 
-        <div class="u-label">
-          进入比赛列表页面 
-        </div> </a> </li> 
-      <li class="m-sc"> <a class="blk" target="_blank" href="javascript:void(0)"> <img alt="乒乓球" src="img/defaultIcon.png" class="u-pic" /> 
-        <div class="m-dsc"> 
-         <span class="u-tt">开发中</span> 
-         <span class="u-dsc">coming soon</span> 
-        </div> 
-        <div class="u-label">
-          进入比赛列表页面 
-        </div> </a> </li> 
-      <li class="m-sc"> <a class="blk" target="_blank" href="javascript:void(0)"> <img alt="乒乓球" src="img/defaultIcon.png" class="u-pic" /> 
-        <div class="m-dsc"> 
-         <span class="u-tt">开发中</span> 
-         <span class="u-dsc">coming soon</span> 
-        </div> 
-        <div class="u-label">
-          进入比赛列表页面 
-        </div> </a> </li> 
-     </ul> 
+    <div class="span8 offset2 breadcrumb-fff">
+    <ul class="breadcrumb"> 
+     
+      <li class="matchIcon"><a class="blk" target="_blank" href="javascript:void(0)">
+      <div class="icon">
+      <img alt="乒乓球" src="img/pingpong-grey.png" class="pull-left"/> 
+        <div class="subtitle pull-right text-center"> 
+         <span class="title">乒乓球</span>
+         <p>比赛&nbsp;&nbsp;<span class="number">32</span>&nbsp;&nbsp;场</p> 
+        </div>
+       </div>
+       <div class="iconlabel pull-left text-center">进入比赛列表页面 </div>
+      </a></li>
+        
+      
+	        <li class="matchIcon"><a class="blk" target="_blank" href="javascript:void(0)">
+      <div class="icon">
+      <img alt="乒乓球" src="img/pingpong-grey.png" class="pull-left"/> 
+        <div class="subtitle pull-right text-center"> 
+         <span class="title">开发中</span>
+         <p>比赛&nbsp;&nbsp;<span class="number">32</span>&nbsp;&nbsp;场</p> 
+        </div>
+       </div>
+       <div class="iconlabel pull-left text-center">进入比赛列表页面 </div>
+      </a></li>
+	  
+	  
+	        <li class="matchIcon"><a class="blk" target="_blank" href="javascript:void(0)">
+      <div class="icon">
+      <img alt="乒乓球" src="img/pingpong-grey.png" class="pull-left"/> 
+        <div class="subtitle pull-right text-center"> 
+         <span class="title">开发中</span>
+         <p>比赛&nbsp;&nbsp;<span class="number">32</span>&nbsp;&nbsp;场</p> 
+        </div>
+       </div>
+       <div class="iconlabel pull-left text-center">进入比赛列表页面 </div>
+      </a></li>
+	  
+	  
+	        <li class="matchIcon"><a class="blk" target="_blank" href="javascript:void(0)">
+      <div class="icon">
+      <img alt="乒乓球" src="img/pingpong-grey.png" class="pull-left"/> 
+        <div class="subtitle pull-right text-center"> 
+         <span class="title">开发中</span>
+         <p>比赛&nbsp;&nbsp;<span class="number">32</span>&nbsp;&nbsp;场</p> 
+        </div>
+       </div>
+       <div class="iconlabel pull-left text-center">进入比赛列表页面 </div>
+      </a></li>
+	  
+	  <li class="matchIcon"><a class="blk" target="_blank" href="javascript:void(0)">
+      <div class="icon">
+      <img alt="乒乓球" src="img/pingpong-grey.png" class="pull-left"/> 
+        <div class="subtitle pull-right text-center"> 
+         <span class="title">开发中</span>
+         <p>比赛&nbsp;&nbsp;<span class="number">32</span>&nbsp;&nbsp;场</p> 
+        </div>
+       </div>
+       <div class="iconlabel pull-left text-center">进入比赛列表页面 </div>
+      </a></li>
+      
+     </ul>
     </div> 
    </div> 
    <div class="ftpush"></div> 
@@ -137,43 +147,44 @@
   <!-- 页尾信息 --> 
   <script src="js/handlebars-v2.0.0.js"></script>
   <!-- handlebars template -->
-  <script id="collections-template" type="text/x-handlebars-template">
+  <script id="matchIcon-template" type="text/x-handlebars-template">
     {{#each this}}
-
-<li class="m-sc">
-<a class="blk" target="_blank" href="javascript:void(0)">
-<img alt="乒乓球" src="img/pingpong-grey.png" class="u-pic" /> 
-        <div class="m-dsc"> 
-         <span class="u-tt">乒乓球</span> 
-         <span class="u-dsc">比赛&nbsp;&nbsp;<span class="u-mchnb">32</span>&nbsp;&nbsp;场</span> 
-        </div> 
-        <div class="u-label">进入比赛列表页面</div>
-</a>
-</li> 
+		
+		<li class="matchIcon"><a class="blk" target="_blank" href="javascript:void(0)">
+	      		      <div class="icon">
+	      	      <img alt="乒乓球" src="img/pingpong-grey.png" class="pull-left"/> 
+	      	        <div class="subtitle pull-right text-center"> 
+	      	         <span class="title">{{key}}</span>
+	      	         <p>比赛&nbsp;&nbsp;<span class="number">{{value}}</span>&nbsp;&nbsp;场</p> 
+	      	        </div>
+	      	       </div>
+	      	       <div class="iconlabel pull-left text-center">进入比赛列表页面 </div>
+	      	      </a></li>
                             
     {{/each}}
   </script>
   <script>
   //定义函数
-  function getAllMatchNum(){
+  function getAllMatchIcon(){
 
-		var target = $("ul.breadcrumb");
+		var target = $(".scmn ul.breadcrumb");
 		$.ajax({
 	        type: "POST",
 	        url: "cntEachMatch",
 	        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 	        dataType: "json",
 	        success: function(rspdata) {
-	            console.log("已有比赛信息："+rspdata);
-	            targetBreadcrumb.empty().append("<li>比赛信息:</li>");
+	            console.log(rspdata);
+	            var data=[];
 	        	$.each( rspdata, function( key, value ) {
-	      		  console.log( key + ": " + value );
-	      		  targetBreadcrumb.append('<li><a href="userCenter-myMatch.jsp" title="去查看比赛">'+key+'<span>('+value+')</span></a></li>');
-	      		  });
-	        	//若没有比赛信息则提示 没有比赛信息 即，没有span
-	        	if( targetBreadcrumb.find("span").length == 0 ){
-	        		targetBreadcrumb.append('<li><a href="userCenter-releaseMatch.jsp" title="去发布比赛"> 无比赛信息，请发布比赛</a></li>');
-	        	}
+		      		  data.push({"key":key,"value":value});
+		      		  });
+	            var temp = {
+	            	"data":data	
+	            };
+	            console.log(temp);
+	            var template = Handlebars.compile($('#matchIcon-template').html());
+			    target.empty().html(template(temp.data));
 	        },
 	        error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
 	          sousaiRemindDialog("抱歉，获取比赛信息出错了。");
@@ -184,22 +195,29 @@
   
   $(function(){
 	  //加载所有比赛数量
-	 // getAllMatchNum();
+	 getAllMatchIcon();
 	  
     //首页快捷图标 
-    $(".m-sc").hover(function(){
-      $(this).find("div[class=u-label]").slideDown();
-      var imgurl = $(this).find("img").attr("src");
-      if(imgurl !== "img/defaultIcon.png"){
-        $(this).find("img").attr("src",imgurl.split("-")[0]+".png");
-      };
-    },function(){
-      $(this).find("div[class=u-label]").slideUp();
-      var imgurl = $(this).find("img").attr("src");
-      if(imgurl !== "img/defaultIcon.png"){
-        $(this).find("img").attr("src",imgurl.split(".")[0]+"-grey.png");
-      };
+    $(".scmn").on("mouseenter","li",function(event){
+    	//console.log("mouseenter");//console.log(event);
+
+        $(this).find(".subtitle span.sub").addClass("title").end().find("div.iconlabel").show();
+        
+        var imgurl = $(this).find("img").attr("src");
+        if(imgurl !== "img/defaultIcon.png"){
+          $(this).find("img").attr("src",imgurl.split("-")[0]+".png");
+        };
+        
     });
+    $(".scmn").on("mouseleave","li",function(event){
+    	//console.log("mouseleave");//console.log(event);
+    	$(this).find(".subtitle span.sub").removeClass("title").end().find("div.iconlabel").hide();
+        var imgurl = $(this).find("img").attr("src");
+        if(imgurl !== "img/defaultIcon.png"){
+          $(this).find("img").attr("src",imgurl.split(".")[0]+"-grey.png");
+        };
+    });
+    
   });
   </script>  
  </body>

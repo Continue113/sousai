@@ -151,11 +151,7 @@ $(function() {
     var sURL = document.URL;
     var sTitle = $("title").text();
     AddFavorite(sURL, sTitle);
-    $("#sousaiRemindDialog > .modal-body > #SRDcontent").text("由于浏览器限制，请使用Ctrl+D进行添加"); //设置弹出框的内容
-    $("#sousaiRemindDialog > .modal-footer > button.btn-success").hide(); //设置弹出框确定按钮
-    $("#sousaiRemindDialog").modal({
-      backdrop: false,
-    });
+    sousaiRemindDialog("由于浏览器限制，请使用Ctrl+D进行添加"); //设置弹出框的内容
     return false; //设置a标签的href失效
   });
 
@@ -314,10 +310,9 @@ function sousaiRemindDialog(text,time,successishide){
     function hide(){
     	$("#sousaiRemindDialog").modal("hide");
     }
-    
-    $("#sousaiRemindDialog > .modal-body > #SRDcontent").html(text); //设置弹出框的内容
-    if(!successishide){
-        $("#sousaiRemindDialog > .modal-footer > button.btn-success").hide(); //设置弹出框确定按钮
+    $("#SRDcontent").html(text); //设置弹出框的内容
+    if(successishide == "show"){
+        $("#sousaiRemindDialog > .modal-footer > button.btn-success").show(); //设置弹出框确定按钮
     }
     $("#sousaiRemindDialog").modal({
       backdrop: false,
@@ -331,7 +326,6 @@ function sousaiRemindDialog(text,time,successishide){
 	    window.setTimeout(hide,time);
 	}
 }
-
 //创建验证码，inputValidateId为验证码标签 ID
 function createCode(inputValidateId) {
     var code = "";
