@@ -29,7 +29,7 @@
 		<property name="userName" type="java.lang.String">
 			<column name="USERNAME" />
 		</property>
-		<property name="state" type="java.lang.String">
+		<property name="state" type="java.lang.Integer">
 			<column name="STATE" />
 		</property>
 	</class>
