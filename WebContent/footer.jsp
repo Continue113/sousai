@@ -19,12 +19,12 @@
     <h5 id="sousaiRemindDialogAll">搜赛网提醒：</h5>
   </div>
   <div class="modal-body">
-  <div id="SRDcontent"></div>
-    <div class="SRDadd">搜赛网小提示，可以点击在线联系向我们提意见哟~</div>
+  	<div id="SRDcontent"></div>
+  	<div id="SRDadd">搜赛网小提示，可以点击在线联系向我们提意见哟~</div>
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
-    <button class="btn btn-success">确定</button>
+    <button class="btn btn-success hide">确定</button>
   </div>
   </div>
   <!-- HTML5 elements ,IE9模式, for IE6-8 --> 

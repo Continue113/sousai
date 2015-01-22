@@ -309,8 +309,8 @@ $(function(){
     	selectParticularMatchType($(this));
     });
 
-    //日期选择器 
-    $( "#inputMatchTimefrom" ).datepicker({
+    //日期选择器 jquery.datepicker
+    /*$( "#inputMatchTimefrom" ).datepicker({
       defaultDate: "+1w",
       changeMonth: true,
       onClose: function( selectedDate ) {
@@ -323,8 +323,31 @@ $(function(){
       onClose: function( selectedDate ) {
         $( "#matchTimefrom" ).datepicker( "option", "maxDate", selectedDate );
       }
-    });
-
+    });*/
+    //日期选择器 bootstrap.datepicker
+    $("#inputMatchTimefrom").datetimepicker({
+        language: 'zh-CN',
+        format: 'yyyy-mm-dd',
+        minView: 2,
+        autoclose: true,
+        todayBtn: 'linked',
+    }).on('changeDate',function(ev){
+    	console.log(ev);
+		if( ($("#inputMatchTimefrom").val() > $("#inputMatchTimeto").val()) ||( $("#inputMatchTimeto").val() == ""))
+		$("#inputMatchTimeto").datetimepicker('setStartDate',$("#inputMatchTimefrom").val()).val($("#inputMatchTimefrom").val());
+	});
+    $("#inputMatchTimeto").datetimepicker({
+        language: 'zh-CN',
+        format: 'yyyy-mm-dd',
+        minView: 2,
+        autoclose: true,
+        todayBtn: 'linked',
+    }).on('changeDate',function(ev){
+    	console.log(ev);
+		if( ($("#inputMatchTimefrom").val() > $("#inputMatchTimeto").val()) ||( $("#inputMatchTimeto").val() == ""))
+		$("#inputMatchTimeto").datetimepicker('setStartDate',$("#inputMatchTimefrom").val()).val($("#inputMatchTimefrom").val());
+	});
+    
     //选中表格某行
     $("tbody").on("click",".tritem",function(event){
       $("tr").removeClass("active");

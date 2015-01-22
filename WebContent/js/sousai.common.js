@@ -119,6 +119,7 @@ $(function() {
   	
   //工具提示
   $(".add-on").tooltip();
+  
   //搜索栏选择分类
   $(".add-selectType").click(function() {
 	  //获取所有比赛类型
@@ -126,15 +127,14 @@ $(function() {
 		    //alert("回调内容为:"+data);//id name 
 		    var target = $("#allMatchType > .modal-body > .breadcrumb-fff");
 		    target.empty();
-		    for (var i = 0; i < data.length; i++) {
-		      target.append('<span class="breadcrumb-title">'+data[i].name+'类:</span>');//<option value=\"" + data[i].id + "\">" + data[i].name + "</option>");
-		      $.post("showMT",{"mcId":data[i].id},function(rspdata){
-		    	  target.append('<ul class="breadcrumb"></ul>');
-		    	  $.each(rspdata,function(index,item){
-		    		  target.append('<li><a href="#" data-id="'+item.id+'">'+item.name+'</a></li>');
+		    $.each(data,function(index,item){
+		      target.append('<span class="breadcrumb-title">'+item.name+'类:</span><ul class="breadcrumb typeid'+item.name+'"></ul><hr/>');
+		      $.post("showMT",{"mcId":item.id},function(rspdata){
+		    	  $.each(rspdata,function(index1,item1){
+		    		  target.find(".typeid"+item.name).append('<li><a href="#" data-id="'+item1.id+'">'+item1.name+'</a>&nbsp;&nbsp;</li>');
 		    	  });
 		      });
-		    }
+		    });
 		  });
 	  
     $('#allMatchType').modal({
@@ -151,11 +151,7 @@ $(function() {
     var sURL = document.URL;
     var sTitle = $("title").text();
     AddFavorite(sURL, sTitle);
-    $("#sousaiRemindDialog > .modal-body > #SRDcontent").text("由于浏览器限制，请使用Ctrl+D进行添加"); //设置弹出框的内容
-    $("#sousaiRemindDialog > .modal-footer > button.btn-success").hide(); //设置弹出框确定按钮
-    $("#sousaiRemindDialog").modal({
-      backdrop: false,
-    });
+    sousaiRemindDialog("由于浏览器限制，请使用Ctrl+D进行添加"); //设置弹出框的内容
     return false; //设置a标签的href失效
   });
 
@@ -314,10 +310,9 @@ function sousaiRemindDialog(text,time,successishide){
     function hide(){
     	$("#sousaiRemindDialog").modal("hide");
     }
-    
-    $("#sousaiRemindDialog > .modal-body > #SRDcontent").html(text); //设置弹出框的内容
-    if(!successishide){
-        $("#sousaiRemindDialog > .modal-footer > button.btn-success").hide(); //设置弹出框确定按钮
+    $("#SRDcontent").html(text); //设置弹出框的内容
+    if(successishide == "show"){
+        $("#sousaiRemindDialog > .modal-footer > button.btn-success").show(); //设置弹出框确定按钮
     }
     $("#sousaiRemindDialog").modal({
       backdrop: false,
@@ -331,7 +326,6 @@ function sousaiRemindDialog(text,time,successishide){
 	    window.setTimeout(hide,time);
 	}
 }
-
 //创建验证码，inputValidateId为验证码标签 ID
 function createCode(inputValidateId) {
     var code = "";
@@ -500,13 +494,15 @@ function pages(count,crtPage,rs){
 	
 	//用户添加收藏比赛
 	function markMatch(matchid){
-		var userid = $("#userId").attr("data-userid")||-1,//设置userid是否存在，若不存在则设置为-1
-			    matchid = 16;//测试设置为16
-			    alert(userid);
+		var userid = $("#userId").attr("data-userid")||-1;//设置userid是否存在，若不存在则设置为-1
+		matchid = matchid || -1;//测试设置为16
 			if(userid === -1){
 				sousaiRemindDialog("收藏失败，请先登录！");
 				return false;
-			}
+			}else if(matchid == -1){
+				alert("matchid为-1");
+				return false;
+			}else{
 		$.ajax({
 	        type: "POST",
 	        url: "markMatch",
@@ -526,6 +522,7 @@ function pages(count,crtPage,rs){
 	          sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
 	        },
 	      });
+			}
 	}
 	
 

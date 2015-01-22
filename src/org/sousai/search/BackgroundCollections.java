@@ -14,7 +14,6 @@ public class BackgroundCollections {
 
 	public String loadJson() {
 		LinkedList<MatchData> listAll = new Jdbc().select();
-		System.out.println(currentPage+"----"+rows);
 		for(int i=(currentPage-1)*rows;i<(currentPage*rows)&&i<listAll.size();i++){
 			matches.add(listAll.get(i)) ;
 		}

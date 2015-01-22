@@ -69,7 +69,7 @@
  <div class="hdpush"></div> 
  <div class="row"> 
   <div class="span4"> 
-   <img src="img/logo.png" />
+   <a class="logoBack" href="index.jsp" title="回到首页"><img src="img/logo.png" alt="搜赛网"/></a>
    <span class="logotext">我的搜赛</span> 
   </div> 
   <s:include value="searchbox.jsp" /><!-- 搜索框 -->
