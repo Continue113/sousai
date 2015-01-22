@@ -2,16 +2,13 @@ package org.sousai.dao.impl;
 
 import java.util.List;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.sousai.dao.MesgDao;
 import org.sousai.domain.*;
 import org.sousai.tools.CommonUtils;
 import org.sousai.tools.MyPrint;
-import org.sousai.vo.MatchBean;
 import org.sousai.vo.MessageBean;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 public class MesgDaoHibernate extends SqlHelper implements MesgDao {
 
@@ -68,13 +65,13 @@ public class MesgDaoHibernate extends SqlHelper implements MesgDao {
 	@Override
 	public List<Message> getByCourtId(Integer courtId) {
 		return (List<Message>) getHibernateTemplate().find(
-				"from Message where courtId=? and state=1", courtId);
+				"from Message where courtId=?", courtId);
 	}
 
 	@Override
 	public List<Message> getByParentId(Long parentId) {
 		return (List<Message>) getHibernateTemplate().find(
-				"from Message where parentId=? and state=1", parentId);
+				"from Message where parentId=?", parentId);
 	}
 
 	@SuppressWarnings("unchecked")

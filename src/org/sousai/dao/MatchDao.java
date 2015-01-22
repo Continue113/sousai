@@ -80,7 +80,7 @@ public interface MatchDao {
 	 * 
 	 * @return
 	 */
-	int deleteMatches(Long[] matchIds);
+	int deleteMatches(Integer[] matchIds);
 	
 	/**
 	 * 模糊匹配某个字段

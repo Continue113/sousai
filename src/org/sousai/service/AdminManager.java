@@ -64,10 +64,10 @@ public interface AdminManager {
 	/**
 	 * 批量删除比赛
 	 * 
-	 * @param matchIds
+	 * @param iMatchIds
 	 * @return
 	 */
-	public int deleteMatches(Long[] matchIds);
+	public int deleteMatches(Integer[] iMatchIds);
 
 	/**
 	 * 根据keyValue在columns中模糊查询符合条件的场地，并排序分页

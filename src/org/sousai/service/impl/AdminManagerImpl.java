@@ -94,7 +94,7 @@ public class AdminManagerImpl implements AdminManager {
 	}
 
 	@Override
-	public int deleteMatches(Long[] matchIds) {
+	public int deleteMatches(Integer[] matchIds) {
 		System.out.println(matchIds);
 		return matchDao.deleteMatches(matchIds);
 	}
