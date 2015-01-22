@@ -9,6 +9,7 @@ import org.sousai.vo.MessageBean;
 import org.sousai.vo.UserBean;
 import org.sousai.dao.*;
 import org.sousai.domain.Match;
+import org.sousai.domain.Message;
 
 public class AdminManagerImpl implements AdminManager {
 
@@ -139,5 +140,15 @@ public class AdminManagerImpl implements AdminManager {
 	@Override
 	public int countAllMessage() throws Exception {
 		return mesgDao.countCourt();
+	}
+
+	@Override
+	public void updateMessage(Message message) throws Exception {
+		mesgDao.update(message);
+	}
+	
+	@Override
+	public void deleteMesgs(Integer[] ids) throws Exception{
+		mesgDao.deleteMesgs(ids);
 	}
 }

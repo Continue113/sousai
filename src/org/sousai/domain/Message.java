@@ -16,6 +16,7 @@ public class Message implements Serializable
 	private Date time;
 	private String mesg;
 	private String userName;
+	private Integer state;
 	
 	//默认构造器
 	Message()
@@ -25,7 +26,7 @@ public class Message implements Serializable
 	//初始化所有参数的构造器
 	Message(Long id, Long parentId, Long rootId, Integer userId,
 			Integer courtId, Date time, String mesg,
-			String userName)
+			String userName, Integer state)
 	{
 		this.id = id;
 		this.parentId = parentId;
@@ -35,6 +36,7 @@ public class Message implements Serializable
 		this.time = time;
 		this.mesg = mesg;
 		this.userName = userName;
+		this.state = state;
 	}
 
 	/**
@@ -147,6 +149,21 @@ public class Message implements Serializable
 	 */
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	
+	/**
+	 * @return the state
+	 */
+	public Integer getState() {
+		return state;
+	}
+
+	/**
+	 * @param state the state to set
+	 */
+	public void setState(Integer state) {
+		this.state = state;
 	}
 
 	/**

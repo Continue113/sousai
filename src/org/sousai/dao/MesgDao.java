@@ -93,4 +93,6 @@ public interface MesgDao {
 			String orderByCol, Boolean isAsc) throws Exception;
 	
 	int countCourt();
+
+	void deleteMesgs(Integer[] courtIds) throws Exception;
 }

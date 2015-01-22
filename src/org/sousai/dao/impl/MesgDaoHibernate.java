@@ -2,6 +2,7 @@ package org.sousai.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.sousai.dao.MesgDao;
@@ -46,6 +47,16 @@ public class MesgDaoHibernate extends SqlHelper implements MesgDao {
 	@Override
 	public void delete(Long id) {
 		getHibernateTemplate().delete(get(id));
+	}
+
+	@Override
+	public void deleteMesgs(Integer[] ids) throws Exception{
+		String strHql = "update Court set state=0 where id in(:ids)";
+			Session session = getHibernateTemplate().getSessionFactory()
+					.getCurrentSession();
+			Query q = session.createQuery(strHql);
+			q.setParameterList("ids", ids);
+			q.executeUpdate();
 	}
 
 	@Override

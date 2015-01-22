@@ -11,11 +11,12 @@ public class MessageBean {
 	private Date time;
 	private String mesg;
 	private String userName;
+	private Integer state;
 	private String courtName;
 	
 	
 	public MessageBean(Long id, Long parentId, Long rootId, Integer userId, Integer courtId,
-			Date time, String mesg, String userName, String courtName) {
+			Date time, String mesg, String userName,Integer state, String courtName) {
 		super();
 		this.id = id;
 		this.parentId = parentId;
@@ -25,6 +26,7 @@ public class MessageBean {
 		this.time = time;
 		this.mesg = mesg;
 		this.userName = userName;
+		this.state = state;
 		this.courtName = courtName;
 	}
 	
@@ -105,7 +107,20 @@ public class MessageBean {
 		this.time = time;
 	}
 	
-	
+	/**
+	 * @return the state
+	 */
+	public Integer getState() {
+		return state;
+	}
+
+	/**
+	 * @param state the state to set
+	 */
+	public void setState(Integer state) {
+		this.state = state;
+	}
+
 	/**
 	 * @return the mesg
 	 */
