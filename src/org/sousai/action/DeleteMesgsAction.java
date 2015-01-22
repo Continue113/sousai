@@ -36,9 +36,9 @@ public class DeleteMesgsAction extends UserBaseAction{
 		String value = null;
 		try{
 			String[] arrayMessageIds = messageIds.split(",");
-			Integer[] iMessageIds = new Integer[arrayMessageIds.length];
+			Long[] iMessageIds = new Long[arrayMessageIds.length];
 			for(int i=0; i<arrayMessageIds.length; i++){
-				iMessageIds[i] = Integer.valueOf(arrayMessageIds[i]);
+				iMessageIds[i] = Long.valueOf(arrayMessageIds[i]);
 			}
 			amg.deleteMesgs(iMessageIds);
 			value = Constant.SUCCESS;

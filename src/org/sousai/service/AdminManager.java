@@ -67,7 +67,7 @@ public interface AdminManager {
 	 * @param matchIds
 	 * @return
 	 */
-	public int deleteMatches(Integer[] matchIds);
+	public int deleteMatches(Long[] matchIds);
 
 	/**
 	 * 根据keyValue在columns中模糊查询符合条件的场地，并排序分页
@@ -99,5 +99,5 @@ public interface AdminManager {
 
 	public void updateMessage(Message message) throws Exception;
 	
-	public void deleteMesgs(Integer[] ids) throws Exception;
+	public void deleteMesgs(Long[] ids) throws Exception;
 }

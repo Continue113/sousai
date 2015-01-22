@@ -50,8 +50,8 @@ public class MesgDaoHibernate extends SqlHelper implements MesgDao {
 	}
 
 	@Override
-	public void deleteMesgs(Integer[] ids) throws Exception{
-		String strHql = "update Court set state=0 where id in(:ids)";
+	public void deleteMesgs(Long[] ids) throws Exception{
+		String strHql = "update Message set state=0 where id in(:ids)";
 			Session session = getHibernateTemplate().getSessionFactory()
 					.getCurrentSession();
 			Query q = session.createQuery(strHql);

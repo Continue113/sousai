@@ -94,5 +94,5 @@ public interface MesgDao {
 	
 	int countCourt();
 
-	void deleteMesgs(Integer[] courtIds) throws Exception;
+	void deleteMesgs(Long[] courtIds) throws Exception;
 }
