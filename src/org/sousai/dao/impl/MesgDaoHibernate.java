@@ -15,7 +15,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 public class MesgDaoHibernate extends SqlHelper implements MesgDao {
 
-	private final String selectMesgBean = "select new org.sousai.vo.MessageBean(m.id,m.parentId,m.rootId,m.userId,m.courtId,m.time,m.mesg,m.userName,c.name) "
+	private final String selectMesgBean = "select new org.sousai.vo.MessageBean(m.id,m.parentId,m.rootId,m.userId,m.courtId,m.time,m.mesg,m.userName,m.state,c.name) "
 			+ "from Message m, Court c where m.courtId=c.id";
 
 	public MesgDaoHibernate() {
@@ -68,13 +68,13 @@ public class MesgDaoHibernate extends SqlHelper implements MesgDao {
 	@Override
 	public List<Message> getByCourtId(Integer courtId) {
 		return (List<Message>) getHibernateTemplate().find(
-				"from Message where courtId=?", courtId);
+				"from Message where courtId=? and state=1", courtId);
 	}
 
 	@Override
 	public List<Message> getByParentId(Long parentId) {
 		return (List<Message>) getHibernateTemplate().find(
-				"from Message where parentId=?", parentId);
+				"from Message where parentId=? and state=1", parentId);
 	}
 
 	@SuppressWarnings("unchecked")
