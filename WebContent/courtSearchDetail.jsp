@@ -29,7 +29,8 @@
 .courtSearchDetail .courtShortInfo .courtImg-small > .breadcrumb > li.active {border: 1px solid #51a351;}
 .courtSearchDetail .courtShortInfo .courtImg-small img{width: 45px;height: 45px;}
 .courtSearchDetail .courtShortInfo  table{font-size: 12px;}
-.courtSearchDetail .courtShortInfo  table .td2{width: 280px;}
+.courtSearchDetail .courtShortInfo  table td:first-child {text-align: right;}
+/*.courtSearchDetail .courtShortInfo  table .td2{width: 280px;}*/
 
 /** nav-tabs **/
 .courtSearchDetail .courtSearchDetail-content{margin-left: 0;}
@@ -105,10 +106,7 @@
     <div class="span8 offset2"> 
      <div class="text-center adFirst">这里是ad.no1</div> 
      <div class="courtShortInfo"> 
-      <div class="title">成都11879乒乓球馆<span>特色1</span> 
-       <span>特色1</span> 
-       <span>特色1</span> 
-      </div> 
+      <div class="title">暂无信息<span>暂无信息</span><span>暂无信息</span><span>暂无信息</span></div> 
       <div class="span3 courtImgs" style="margin-left:0;"> 
        <div class="courtImg-big"> 
         <img src="img/defaultImg.png" /> 
@@ -127,44 +125,44 @@
        <table> 
         <tbody class="courtTboby"> 
          <tr> 
-          <td valign="top">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址：</td> 
-          <td class="td2">天津市第五届百年皖酒“杯天津市第五届百年皖酒市第五届百年皖酒“杯天津市第五届百年皖酒“杯</td> 
-          <td valign="bottom">（2013-10-18更新）</td> 
+          <td valign="top">地址：</td> 
+          <td class="td2">暂无信息</td> 
+          <td valign="bottom">（暂无信息）</td> 
          </tr> 
          <tr> 
           <td valign="top">场地类型：</td> 
-          <td class="td2">室内（俱乐部）</td> 
-          <td valign="bottom">（2013-10-18更新）</td> 
+          <td class="td2">暂无信息</td> 
+          <td valign="bottom">（暂无信息）</td> 
          </tr> 
          <tr> 
           <td valign="top">比赛类型：</td> 
-          <td class="td2">乒乓球</td> 
-          <td valign="bottom">（2013-10-18更新）</td> 
+          <td class="td2">暂无信息</td> 
+          <td valign="bottom">（暂无信息）</td> 
          </tr> 
          <tr> 
-          <td valign="top">球&nbsp;&nbsp;台&nbsp;&nbsp;数：</td> 
-          <td class="td2">20张（张）</td> 
-          <td>（2013-10-18更新）</td> 
+          <td valign="top">球台数：</td> 
+          <td class="td2">暂无信息</td> 
+          <td>（暂无信息）</td> 
          </tr> 
          <tr> 
           <td valign="top">联系电话：</td> 
-          <td class="td2">12345678</td> 
-          <td valign="bottom">（2013-10-18更新）</td> 
+          <td class="td2">暂无信息</td> 
+          <td valign="bottom">（暂无信息）</td> 
          </tr> 
          <tr> 
-          <td valign="top">价&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;格：</td> 
-          <td class="td2">每台12元/小时皖酒“杯天津市第五届百年皖酒“杯皖酒“杯天津市第五届百年皖酒“杯</td> 
-          <td valign="bottom">（2013-10-18更新）</td> 
+          <td valign="top">价格：</td> 
+          <td class="td2">暂无信息</td> 
+          <td valign="bottom">（暂无信息）</td> 
          </tr> 
          <tr> 
           <td valign="top">举办比赛：</td> 
-          <td class="td2">12次</td> 
-          <td valign="bottom">（2013-10-18更新）</td> 
+          <td class="td2">暂无信息</td> 
+          <td valign="bottom">（暂无信息）</td> 
          </tr> 
          <tr> 
           <td valign="top">开放时间：</td> 
-          <td class="td2">星期一至星期五12:00-22:00皖酒“杯天津市第五届百年皖酒“杯皖酒“杯天津市第五届百年皖酒“杯</td> 
-          <td valign="bottom">（2013-10-18更新）</td> 
+          <td class="td2">暂无信息</td> 
+          <td valign="bottom">（暂无信息）</td> 
          </tr> 
         </tbody> 
        </table> 
@@ -179,137 +177,11 @@
       <div class="tab-content"> 
        <div id="courtContent" class="tab-pane active"> 
         <div> 
-         <p>天津市第五届百年皖酒“杯XXXXXXXXXX</p> 
+         <p>暂无场地介绍</p> 
         </div> 
        </div> 
-       <div id="courtEvaluation" class="tab-pane "> 
-       <!-- 原失败评论列表 -->
-        <div class="evaluations"> 
-
-         <div class="media evaluation"> 
-          <div class="pull-left author" data-filed='{"userName":"KINGLION","userId":001}'> 
-           <img class="media-object" src="img/defaultImg.png" /> 
-           <div class="evaluationName">
-             KINGLION 
-           </div> 
-          </div> 
-          <div class="media-body"> 
-           <p class="evaluation-authorMain">天津市第五届百年皖酒“杯XXXXXXXXXX</p> 
-           <p class="releasetime">2013年12月29日 15:39</p> 
-           <ul class="evaluation-tool-reply">
-           <li class="evaluation-tool"><a class="evaluation-tool-visible" href="javascript:void(0);">隐藏回复</a>&nbsp;&nbsp;<a class="evaluation-tool-a" href="#myModal">我要补充下</a></li>
-           <li class="evaluation-reply">
-            <div class="media evaluation"> 
-            <div class="pull-left"> 
-             <img class="media-object" src="img/defaultImg.png" /> 
-             <div class="evaluationName" >
-               KINGLIONXXXXXX 
-             </div> 
-            </div> 
-            <div class="media-body"> 
-             <p class="evaluation-main">天津市第五届百年皖酒“杯XXXXXXXXXX</p> 
-             <p class="releasetime">2013年12月29日 15:39</p> 
-             <a class="pull-right evaluation-tool-a" href="#myModal">我要补充下</a> 
-            </div> 
-           </div> 
-           </li>
-           <li class="evaluation-reply">
-            <div class="media evaluation"> 
-            <div class="pull-left"> 
-             <img class="media-object" src="img/defaultImg.png" /> 
-             <div class="evaluationName">
-               KINGLIONXXXXXX 
-             </div> 
-            </div> 
-            <div class="media-body"> 
-             <p class="evaluation-main">天津市第五届百年皖酒“杯XXXXXXXXXX</p> 
-             <p class="releasetime">2013年12月29日 15:39</p> 
-             <a class="pull-right evaluation-tool-a" href="#myModal">我要补充下</a> 
-            </div> 
-           </div> 
-           </li>
-           <li class="evaluation-reply">
-            <div class="media evaluation"> 
-            <div class="pull-left"> 
-             <img class="media-object" src="img/defaultImg.png" /> 
-             <div class="evaluationName">
-               KINGLIONXXXXXX 
-             </div> 
-            </div> 
-            <div class="media-body"> 
-             <p class="evaluation-main">天津市第五届百年皖酒“杯XXXXXXXXXX</p> 
-             <p class="releasetime">2013年12月29日 15:39</p> 
-             <a class="pull-right evaluation-tool-a" href="#myModal">我要补充下</a> 
-            </div> 
-           </div> 
-           </li>
-           </ul>
-          </div> 
-         </div> 
-         
-         <div class="media evaluation"> 
-          <div class="pull-left author"> 
-           <img class="media-object" src="img/defaultImg.png" /> 
-           <div class="evaluationName">
-             KINGLION 
-           </div> 
-          </div> 
-          <div class="media-body"> 
-           <p class="evaluation-authorMain">天津市第五届百年皖酒“杯XXXXXXXXXX</p> 
-           <p class="releasetime">2013年12月29日 15:39</p> 
-           <ul class="evaluation-tool-reply">
-           <li class="evaluation-tool"><a class="evaluation-tool-visible" href="javascript:void(0);">无回复</a>&nbsp;&nbsp;<a class="evaluation-tool-a" href="#myModal">我要补充下</a></li>
-           </ul>
-          </div> 
-         </div>
-
-         <div class="media evaluation"> 
-          <div class="pull-left author"> 
-           <img class="media-object" src="img/defaultImg.png" /> 
-           <div class="evaluationName">
-             KINGLION 
-           </div> 
-          </div> 
-          <div class="media-body"> 
-           <p class="evaluation-authorMain">天津市第五届百年皖酒“杯XXXXXXXXXX</p> 
-           <p class="releasetime">2013年12月29日 15:39</p> 
-           <ul class="evaluation-tool-reply">
-           <li class="evaluation-tool"><a class="evaluation-tool-visible" href="javascript:void(0);">隐藏回复</a>&nbsp;&nbsp;<a class="evaluation-tool-a" href="#myModal">我要补充下</a></li>
-           <li class="evaluation-reply">
-            <div class="media evaluation"> 
-            <div class="pull-left"> 
-             <img class="media-object" src="img/defaultImg.png" /> 
-             <div class="evaluationName" >
-               KINGLIONXXXXXX 
-             </div> 
-            </div> 
-            <div class="media-body"> 
-             <p class="evaluation-main">天津市第五届百年皖酒“杯XXXXXXXXXX</p> 
-             <p class="releasetime">2013年12月29日 15:39</p> 
-             <a class="pull-right evaluation-tool-a" href="#myModal">我要补充下</a> 
-            </div> 
-           </div> 
-           </li>
-           <li class="evaluation-reply">
-            <div class="media evaluation"> 
-            <div class="pull-left"> 
-             <img class="media-object" src="img/defaultImg.png" /> 
-             <div class="evaluationName">
-               KINGLIONXXXXXX 
-             </div> 
-            </div> 
-            <div class="media-body"> 
-             <p class="evaluation-main">天津市第五届百年皖酒“杯XXXXXXXXXX</p> 
-             <p class="releasetime">2013年12月29日 15:39</p> 
-             <a class="pull-right evaluation-tool-a" href="#myModal">我要补充下</a> 
-            </div> 
-           </div> 
-           </li>
-           </ul>
-          </div> 
-         </div> 
-
-        </div> <!-- /evaluations-->
+       <div id="courtEvaluation" class="tab-pane ">
+        <div class="evaluations"></div>
         <div class="media evaluation-response"> 
          <div class="pull-left"> 
            <s:if test="#session.userBean.userName!=null">
@@ -341,55 +213,12 @@
          <thead> 
           <tr> 
            <th>比赛名称</th> 
-           <th>开赛时间</th> 
+           <th>比赛时间</th> 
            <th>比赛状态</th> 
            <th>成绩</th> 
           </tr> 
          </thead> 
-         <tbody> 
-          <tr class="tbl-item"> 
-           <td><a href="javascript:void(0)">2014年成都乒乓球大赛</a></td> 
-           <td>2014年1月23日</td> 
-           <td>进行中</td> 
-           <td>暂无</td> 
-          </tr> 
-          <tr class="tbl-item"> 
-           <td><a href="javascript:void(0)">2014年成都乒乓球大赛</a></td> 
-           <td>2014年1月23日</td> 
-           <td>进行中</td> 
-           <td>暂无</td> 
-          </tr> 
-          <tr class="tbl-item">  
-           <td><a href="javascript:void(0)">2014年成都乒乓球大赛</a></td> 
-           <td>2014年1月23日</td> 
-           <td>已结束</td> 
-           <td><a href="javascript:void(0)">查看</a></td> 
-          </tr> 
-          <tr class="tbl-item"> 
-           <td><a href="javascript:void(0)">2014年成都乒乓球大赛</a></td> 
-           <td>2014年1月23日</td> 
-           <td>已结束</td> 
-           <td><a href="javascript:void(0)">查看</a></td> 
-          </tr> 
-          <tr class="tbl-item"> 
-           <td><a href="javascript:void(0)">2014年成都乒乓球大赛</a></td> 
-           <td>2014年1月23日</td> 
-           <td>已结束</td> 
-           <td><a href="javascript:void(0)">查看</a></td> 
-          </tr> 
-          <tr class="tbl-item"> 
-           <td><a href="javascript:void(0)">2014年成都乒乓球大赛</a></td> 
-           <td>2014年1月23日</td> 
-           <td>已结束</td> 
-           <td><a href="javascript:void(0)">查看</a></td> 
-          </tr> 
-          <tr class="tbl-item"> 
-           <td><a href="javascript:void(0)">2014年成都乒乓球大赛</a></td> 
-           <td>2014年1月23日</td> 
-           <td>已结束</td> 
-           <td><a href="javascript:void(0)">查看</a></td> 
-          </tr> 
-         </tbody> 
+         <tbody></tbody> 
         </table> 
         <div class="panel"> 
          <!-- pagination --> 
@@ -410,55 +239,78 @@
   <s:include value="footer.jsp" />
   <!-- 页尾信息 --> 
   <script src="js/handlebars-v2.0.0.js"></script>
-  <script src="js/jquery.wordLimit.js"></script>
-  
+  <script src="js/jquery.wordLimit.js"></script>  
   <!-- handlebars template -->
   <script id="court-template" type="text/x-handlebars-template">
     {{#each this}}
         
          <tr data-info="{{data this}}"> 
-          <td valign="top">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址：</td> 
+          <td valign="top">地址：</td> 
           <td class="td2">{{addr}}</td> 
-          <td valign="bottom">（2013-10-18更新）</td> 
+          <td valign="bottom">（{{modDate}}更新）</td> 
          </tr> 
          <tr> 
           <td valign="top">场地类型：</td> 
           <td class="td2">{{courtType}}</td> 
-          <td valign="bottom">（2013-10-18更新）</td> 
+          <td valign="bottom">（{{modDate}}更新）</td> 
          </tr> 
          <tr> 
           <td valign="top">比赛类型：</td> 
           <td class="td2">{{matchType}}</td> 
-          <td valign="bottom">（2013-10-18更新）</td> 
+          <td valign="bottom">（{{modDate}}更新）</td> 
          </tr> 
          <tr> 
-          <td valign="top">球&nbsp;&nbsp;台&nbsp;&nbsp;数：</td> 
+          <td valign="top">球台数：</td> 
           <td class="td2">{{tableNum}}</td> 
-          <td>（2013-10-18更新）</td> 
+          <td>（{{modDate}}更新）</td> 
          </tr> 
          <tr> 
           <td valign="top">联系电话：</td> 
           <td class="td2">{{tel}}</td> 
-          <td valign="bottom">（2013-10-18更新）</td> 
+          <td valign="bottom">（{{modDate}}更新）</td> 
          </tr> 
          <tr> 
-          <td valign="top">价&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;格：</td> 
+          <td valign="top">价格：</td> 
           <td class="td2">{{price}}</td> 
-          <td valign="bottom">（2013-10-18更新）</td> 
+          <td valign="bottom">（{{modDate}}更新）</td> 
          </tr> 
          <tr> 
           <td valign="top">举办比赛：</td> 
           <td class="td2">12次</td> 
-          <td valign="bottom">（2013-10-18更新）</td> 
+          <td valign="bottom">（{{modDate}}更新）</td> 
          </tr> 
          <tr> 
           <td valign="top">开放时间：</td> 
           <td class="td2">{{workTime}}</td> 
-          <td valign="bottom">（2013-10-18更新）</td> 
+          <td valign="bottom">（{{modDate}}更新）</td> 
+         </tr>
+         <tr> 
+          <td valign="top">更新时间：</td> 
+          <td class="td2">{{relDate}} 更新</td> 
+          <td valign="bottom">（{{modDate}}更新）</td> 
          </tr>
 
     {{/each}}
   </script>
+  <script id="record-template" type="text/x-handlebars-template">
+    {{#each this}}
+
+  <tr class="tbl-item"> 
+   <td><a href="javascript:void(0)">2014年成都乒乓球大赛</a></td> 
+   <td>2014年1月23日</td> 
+   <td>进行中</td> 
+   <td>暂无</td> 
+  </tr> 
+  <tr class="tbl-item">  
+   <td><a href="javascript:void(0)">2014年成都乒乓球大赛</a></td> 
+   <td>2014年1月23日</td> 
+   <td>已结束</td> 
+   <td><a href="javascript:void(0)">查看</a></td> 
+  </tr> 
+
+  {{/each}}  
+  </script>
+  
   <script>
   //定义函数
   
@@ -477,6 +329,7 @@
   	        	console.log(rspdata);
   	        	var evaluations = $(".evaluations"),userName,mesg;
   	            evaluations.empty();
+  	            $("#courtEvaluationTab span").text(rspdata.length);
   	            for (var i = 0; i < rspdata.length; i++) {
 
   	            	if(rspdata[i].userName == null){ 
