@@ -69,7 +69,7 @@
       <ul class="nav nav-stacked nav-side"> 
        <li><h5><a href="javascript:void(0)"><i class="icon-minus"></i>系统发布:</a></h5></li> 
        <li><a href="background-collections.jsp"><i class="icon-chevron-down "></i>全部采集</a></li> 
-       <li><a href="background-collectionsSetting.jsp"><i class="icon-chevron-down "></i>采集设置</a></li> 
+       <li><a href="background-collectionsSetting.jsp"><i class="icon-chevron-down "></i>网站设置</a></li> 
        <li><h5><a href="javascript:void(0)"><i class="icon-minus"></i>数据维护:</a></h5></li> 
        <li class="active"><a href="background-matchMaintenance.jsp"><i class="icon-chevron-down "></i>比赛维护</a></li> 
        <li><a href="background-courtMaintenance.jsp"><i class="icon-chevron-down "></i>场地维护</a></li> 
@@ -170,9 +170,9 @@
     {{#each this}}
                         
         <tr class="match" data-info="{{data this}}"> 
-          <td class="match-title"><label for="{{id}}"><input type="checkbox" id="{{id}}"/><span>{{name}}</span></label></td> 
+          <td class="match-title"><label for="{{id}}"><input type="checkbox" id="{{id}}"/><span>{{id}}:{{name}}</span></label></td> 
           <td class="match-time">{{beginTime}} - {{endTime}}</td> 
-          <td class="match-court">{{courtName}}</td> 
+          <td class="match-court">{{region}}:{{courtName}}</td> 
           <td class="match-releaseTime">{{relTime}}</td> 
           <td class="match-releaseUser">{{userName}}</td> 
           <td class="match-oprate"><a href="javascript:void(0)" class="btn btn-mini pull-right">查看编辑</a></td> 
@@ -232,13 +232,13 @@
     });
   }
   function sureDelete(){
-	  alert("确定删除");
-	  /*var matchIds = new Array(),
+	  hideSousaiRemindDialog();
+	  var matchIds = new Array(),
 		rs = $("select.selectRows option:selected").val(),
 		crtPage = $("ul.pagination").find("li.active a").text();
 		$(".match input:checked").each(function(index,element){
 			console.log($(this).attr("id"));
-  		matchIds.push($(this).attr("id"));
+  			matchIds.push($(this).attr("id"));
 		});
       $.ajax({
         type: "POST",
@@ -253,17 +253,18 @@
       		  //sousaiRemindDialog("删除成功");sousaiRemindDialog(crtPage);
       		  //e(crtPage,rs);//刷新数据
       		  sousaiRemindDialog("删除成功");
-      		  $(".match input:checked").parent().parent().parent().hide();
+      		  $(".match input:checked").parent().parent().parent().remove();
       	  }else if( rspdata == "fail" ){
       		  sousaiRemindDialog("删除失败");
       	  }else{
-      		  sousaiRemindDialog("删除失败，错误代码未知");
+      		  sousaiRemindDialog("删除失败，错误代码为"+rspdata);
       	  }
         },
-        error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+        error: function(jqXHR,textStatus,errorThrown){
+        	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
           sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
         },
-      });*/
+      });
   }
   $(function(){
 	//ajax接收所有比赛
@@ -289,7 +290,7 @@
     	if( n == 0){
     		sousaiRemindDialog("请先选中比赛");
     	}else{
-    		$("#SRDadd").text("小提示：一旦确定删除将无法取消操作。");
+    		$("#SRDadd").text("小提示：一旦确定删除将无法取消操作,同时将对收藏此比赛的用户照成影响。");
     		$("#sousaiRemindDialog > .modal-footer > button.btn-success").attr("onclick","sureDelete()");
     		sousaiRemindDialog("确定删除？",-1,"show");
     	}
@@ -324,7 +325,8 @@
             		  sousaiRemindDialog("发布失败，错误代码未知");
             	  }
               },
-              error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+              error: function(jqXHR,textStatus,errorThrown){
+            	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
                 sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
               },
             });

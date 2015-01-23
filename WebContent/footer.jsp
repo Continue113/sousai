@@ -20,7 +20,7 @@
   </div>
   <div class="modal-body">
   	<div id="SRDcontent"></div>
-  	<div id="SRDadd">搜赛网小提示，可以点击在线联系向我们提意见哟~</div>
+  	<div id="SRDadd" class="SRDadd">搜赛网小提示，可以点击在线联系向我们提意见哟~</div>
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>

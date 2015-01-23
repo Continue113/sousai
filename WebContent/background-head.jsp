@@ -9,7 +9,7 @@
   </div>
   <div class="modal-body">
   	<div id="SRDcontent"></div>
-  	<div id="SRDadd">搜赛网小提示，可以点击在线联系向我们提意见哟~</div>
+  	<div id="SRDadd" class="SRDadd">搜赛网小提示，删除之前请先确认该目标无相关联的其他场地、比赛、评论、收藏！</div>
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>

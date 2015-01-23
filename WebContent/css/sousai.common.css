@@ -73,7 +73,7 @@ box-shadow: 0 0 0 0 rgba(0,0,0,.1);
   text-align:center;
 }
 /** 搜赛网提醒对话框  **/
-#SRDadd {
+.SRDadd {
 	color: #cccccc;
 }
 /** LOGO旁边的说明信息  **/
