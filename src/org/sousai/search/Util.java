@@ -18,6 +18,7 @@ public class Util {
 			JSONUtils.toJson(ServletActionContext.getResponse(), userId);
 			System.out.println(e);
 		}
+		JSONUtils.toJson(ServletActionContext.getResponse(), userId);
 		return null ;
 	}
 }
