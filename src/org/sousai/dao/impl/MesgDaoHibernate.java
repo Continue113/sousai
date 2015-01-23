@@ -8,13 +8,11 @@ import org.sousai.dao.MesgDao;
 import org.sousai.domain.*;
 import org.sousai.tools.CommonUtils;
 import org.sousai.tools.MyPrint;
-import org.sousai.vo.MatchBean;
 import org.sousai.vo.MessageBean;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 public class MesgDaoHibernate extends SqlHelper implements MesgDao {
 
-	private final String selectMesgBean = "select new org.sousai.vo.MessageBean(m.id,m.parentId,m.rootId,m.userId,m.courtId,m.time,m.mesg,m.userName,c.name) "
+	private final String selectMesgBean = "select new org.sousai.vo.MessageBean(m.id,m.parentId,m.rootId,m.userId,m.courtId,m.time,m.mesg,m.userName,m.state,c.name) "
 			+ "from Message m, Court c where m.courtId=c.id";
 
 	public MesgDaoHibernate() {
@@ -46,6 +44,16 @@ public class MesgDaoHibernate extends SqlHelper implements MesgDao {
 	@Override
 	public void delete(Long id) {
 		getHibernateTemplate().delete(get(id));
+	}
+
+	@Override
+	public void deleteMesgs(Long[] ids) throws Exception{
+		String strHql = "update Message set state=0 where id in(:ids)";
+			Session session = getHibernateTemplate().getSessionFactory()
+					.getCurrentSession();
+			Query q = session.createQuery(strHql);
+			q.setParameterList("ids", ids);
+			q.executeUpdate();
 	}
 
 	@Override

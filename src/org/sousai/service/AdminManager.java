@@ -15,17 +15,21 @@ public interface AdminManager {
 	public List<MessageBean> getAllMessage();
 
 	public int countAllMessage() throws Exception;
+
 	/**
 	 * 获取所有场地
-	 * @param rows 
-	 * @param currentPage 
+	 * 
+	 * @param rows
+	 * @param currentPage
 	 * 
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
-	public List<CourtBean> getAllCourt(Integer currentPage, Integer rows) throws Exception;
-	
+	public List<CourtBean> getAllCourt(Integer currentPage, Integer rows)
+			throws Exception;
+
 	public int countAllCourt() throws Exception;
+
 	/**
 	 * 获取所有比赛
 	 * 
@@ -34,6 +38,7 @@ public interface AdminManager {
 	public List<MatchBean> getAllMatch(int currentPage, int rows);
 
 	public int countAllMatch() throws Exception;
+
 	/**
 	 * 获取所有用户
 	 * 
@@ -43,12 +48,15 @@ public interface AdminManager {
 
 	/**
 	 * 获取总用户数量
+	 * 
 	 * @return
 	 */
 	public int countAllUser();
+
 	/**
 	 * 批量删除比赛
-	 * @param courtIds	
+	 * 
+	 * @param courtIds
 	 * @return
 	 */
 	public int deleteCourts(Integer[] courtIds);
@@ -56,13 +64,14 @@ public interface AdminManager {
 	/**
 	 * 批量删除比赛
 	 * 
-	 * @param matchIds	
+	 * @param iMatchIds
 	 * @return
 	 */
-	public int deleteMatches(Integer[] matchIds);
-	
+	public int deleteMatches(Integer[] iMatchIds);
+
 	/**
 	 * 根据keyValue在columns中模糊查询符合条件的场地，并排序分页
+	 * 
 	 * @param columns
 	 * @param keyValue
 	 * @param currentPage
@@ -75,16 +84,20 @@ public interface AdminManager {
 	List<CourtBean> findPagedCourtByKeyValueOrderBy(String[] columns,
 			String keyValue, Integer currentPage, Integer rows,
 			String orderByCol, Boolean isAsc) throws Exception;
-	
+
 	List<MatchBean> findPagedMatchByKeyValueOrderBy(String[] columns,
 			String keyValue, Integer currentPage, Integer rows,
 			String orderByCol, Boolean isAsc) throws Exception;
-	
+
 	List<MessageBean> findPagedMesgByKeyValueOrderBy(String[] columns,
 			String keyValue, Integer currentPage, Integer rows,
 			String orderByCol, Boolean isAsc) throws Exception;
-	
+
 	List<UserBean> findPagedUserByKeyValueOrderBy(String[] columns,
 			String keyValue, Integer currentPage, Integer rows,
 			String orderByCol, Boolean isAsc) throws Exception;
+
+	public void updateMessage(Message message) throws Exception;
+	
+	public void deleteMesgs(Long[] ids) throws Exception;
 }

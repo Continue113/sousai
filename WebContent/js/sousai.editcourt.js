@@ -24,12 +24,11 @@ function getCourtInfo(){
 	//获取比赛信息存储到match对象中用于返回比赛信息
 	var court={};
 	 court.id = parseInt($("#inputCourtName").attr("data-id"));
-	 court.userId = parseInt($("#inputCourtName").attr("data-userid"));
 	 court.name = $("#inputCourtName").val();
-	 court.courtType = $("#inputCrtCourtType").val();
+	 //court.courtType = $("#inputCrtCourtType").val();
 	 court.courtTypeId = parseInt($("#inputCrtCourtType").attr("data-courttypeid"));
 	 court.matchType = $("#inputMatchType").val();
-	 court.matchTypeId = parseInt($("#inputMatchType").attr("data-matchtypeid"));
+	 //court.matchTypeId = parseInt($("#inputMatchType").attr("data-matchtypeid"));
 	 court.region = $("#inputCourtRegion").val();
 	 court.regionId = parseInt($("#inputCourtRegion").attr("data-regionid"));
 	 court.addr = $("#inputCourtAddress").val();
@@ -37,8 +36,9 @@ function getCourtInfo(){
 	 court.tel = $("#inputCourtTel").val();
 	 court.price = $("#inputCourtPrice").val();
 	 court.workTime = $("#inputCourtOpenTime").val();
-	 court.courtPictures = [];
+	 //court.courtPictures = []; //未使用
 	 court.intro = tinymce.activeEditor.getContent();
+	 court.userId = parseInt($("#inputCourtName").attr("data-userid"));
 	 	 
 	if( $("#editCourtForm").valid() === true ){ //验证所有显式表单
 		
@@ -147,7 +147,32 @@ if(obj.files && obj.files[0]){
 }
 }
 // OLD pic upload js
-
+function sureDeleteEdit(){
+	hideSousaiRemindDialog();
+	$.ajax({
+        type: "POST",
+        url: "deleteCourts",
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        data: {
+          "courtIds": $("#inputCourtName").attr("data-id"),
+        },
+        dataType: "json",
+        success: function(rspdata) {
+      	  if( rspdata == "success" ){
+      		  sousaiRemindDialog("删除成功");
+      		  $("#"+$("#inputCourtName").attr("data-id")).parent().parent().parent().remove();
+      	  }else if( rspdata == "fail" ){
+      		  sousaiRemindDialog("删除失败");
+      	  }else{
+      		  sousaiRemindDialog("删除失败，错误代码为："+rspdata);
+      	  }
+        },
+        error: function(jqXHR,textStatus,errorThrown){
+        	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+          sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
+        },
+      });
+}
 $(function(){
   //立即初始化比赛类型
   initMatchType();
@@ -159,32 +184,39 @@ $(function(){
 
   //点击删除场地 编辑场地界面
   $(".editCourt .deleteCourt").click(function(){
-          $.ajax({
-            type: "POST",
-            url: "deleteCourts",
-            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-            data: {
-              "courtIds": $("#inputCourtName").attr("data-id"),
-            },
-            dataType: "json",
-            success: function(data) {
-          	  if( rspdata == "success" ){
-          		  sousaiRemindDialog("删除成功");
-          	  }else if( data == "fail" ){
-          		  sousaiRemindDialog("删除失败");
-          	  }else{
-          		  sousaiRemindDialog("删除失败，错误代码未知");
-          	  }
-            },
-            error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-              sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
-            },
-          });
+	  	$("#SRDadd").text("小提示：一旦确定删除将无法取消操作,同时将对使用此场地的比赛和评论照成影响。");
+		$("#sousaiRemindDialog > .modal-footer > button.btn-success").attr("onclick","sureDeleteEdit()");
+		sousaiRemindDialog("确定删除？",-1,"show");
   });
   //点击保存修改
 	$(".editCourt .saveCourt").click(function(){
-		var court = getCourtInfo();
+		var court = getCourtInfo(),data={};
 		console.log(court);
+		for(i in court){
+			//console.log(i);
+			data["court."+i] = court[i];
+		}
+		console.log(data);
+		$.ajax({
+            type: "POST",
+            url: "updateCourt",
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            data: data,
+            dataType: "json",
+            success: function(rspdata) {
+          	  if( rspdata == "success" ){
+          		  sousaiRemindDialog("保存成功");
+          	  }else if( rspdata == "fail" ){
+          		  sousaiRemindDialog("保存失败");
+          	  }else{
+          		  sousaiRemindDialog("保存失败，错误代码为："+rspdata);
+          	  }
+            },
+            error: function(jqXHR,textStatus,errorThrown){
+          	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+              sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
+            },
+          });
 	  });
   //点击发布场地 编辑场地界面
   $(".editCourt .passCourt").click(function(){

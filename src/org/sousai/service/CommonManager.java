@@ -131,4 +131,18 @@ public interface CommonManager
 	 * @throws Exception 
 	 */
 	public Integer countByParams(String keyValue, String matchType, Integer courtTypeId, String region) throws Exception;
+	
+	/**
+	 * 修改比赛信息
+	 * @param match
+	 * @throws Exception 
+	 */
+	public void updateMatch(Match match) throws Exception;
+	
+	/**
+	 * 修改场地信息
+	 * @param court
+	 * @throws Exception 
+	 */
+	public void updateCourt(Court court) throws Exception;
 }

@@ -149,4 +149,14 @@ public class CommonManagerImpl implements CommonManager {
 		return courtDao.countByParams(keyValue, matchType, courtTypeId, region);
 	}
 
+	@Override
+	public void updateMatch(Match match) throws Exception{
+		matchDao.update(match);
+	}
+
+	@Override
+	public void updateCourt(Court court) throws Exception{
+		courtDao.update(court);
+	}
+
 }

@@ -50,6 +50,12 @@
 		<action name="updateUserInfo" class="org.sousai.action.UpdateUserAction">
 		</action>
 		
+		<!-- 更新场地信息的Action -->
+		<action name="updateCourt" class="org.sousai.action.UpdateCourtAction">
+		</action>
+		<!-- 更新比赛信息的Action -->
+		<action name="updateMatch" class="org.sousai.action.UpdateMatchAction">
+		</action>
 		<!-- 上传用户头像的Action -->
 		<action name="uploadUserPic" class="org.sousai.action.UploadUserPicAction">
 		</action>
@@ -168,8 +174,18 @@
 		<action name="getCourtByP" class="org.sousai.action.GetCourtByParamsAction">
 		</action>
 		
-		<action name="getCourtById" class="org.sousai.action.GetCourtById"></action>
-		<action name="getMatchById" class="org.sousai.action.GetMatchById"></action>
+		<!-- 通过ID查询场地信息 -->
+		<action name="getCourtById" class="org.sousai.action.GetCourtById">
+		</action>
+		<!-- 通过ID查询比赛信息 -->
+		<action name="getMatchById" class="org.sousai.action.GetMatchById">
+		</action>
+		<!-- 修改评论这个action只有管理员可用 -->
+		<action name="updateMessage" class="org.sousai.action.UpdateMessageAction">
+		</action>
+		<!-- 批量删除评论这个action只有管理员可用 -->
+		<action name="deleteMesgs" class="org.sousai.action.DeleteMesgsAction">
+		</action>
 	</package>
 	
 	

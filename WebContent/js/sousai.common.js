@@ -26,7 +26,7 @@ $(function() {
 	$("#searchbox-court button").click(function() {
 		  var kv = $("#searchbox-court input[type='text']").val();
 		  //alert(kv); 传到模糊搜索的页面
-  	  window.location.href = "courtSearch.jsp?content="+kv;
+		  window.location.href = "courtSearch.jsp?content="+kv;
 	});
   //切换城市
   $("#changeCityBtn").click(function() {
@@ -305,11 +305,12 @@ $(function() {
 ////////////////////////   FUNCTION   ///////////////////////
 /////////////////////////////////////////////////////////////
 
+function hideSousaiRemindDialog(){
+	$("#sousaiRemindDialog").modal("hide");
+	$("#sousaiRemindDialog > .modal-footer > button.btn-success").hide(); //设置弹出框确定按钮为默认隐藏
+}
 //全局弹出对话框提示操作
-function sousaiRemindDialog(text,time,successishide){
-    function hide(){
-    	$("#sousaiRemindDialog").modal("hide");
-    }
+function sousaiRemindDialog(text,time,successishide){    
     $("#SRDcontent").html(text); //设置弹出框的内容
     if(successishide == "show"){
         $("#sousaiRemindDialog > .modal-footer > button.btn-success").show(); //设置弹出框确定按钮
@@ -323,7 +324,7 @@ function sousaiRemindDialog(text,time,successishide){
 	if( time == -1){ //若时间设置为-1则表示自动关闭对话框
 		return;
 	}else{
-	    window.setTimeout(hide,time);
+	    window.setTimeout(hideSousaiRemindDialog,time);
 	}
 }
 //创建验证码，inputValidateId为验证码标签 ID
@@ -366,7 +367,8 @@ function userCenterRemind(){
         		targetBreadcrumb.append('<li><a href="userCenter-releaseMatch.jsp" title="去发布比赛"> 无比赛信息，请发布比赛</a></li>');
         	}
         },
-        error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+        error: function(jqXHR,textStatus,errorThrown){
+        	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
           sousaiRemindDialog("抱歉，获取比赛信息出错了。");
           console.log("userCenterRemind 抱歉，获取比赛信息出错了。");
         },

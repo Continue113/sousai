@@ -9,8 +9,6 @@
   <meta name="author" content="KING@CQU" /> 
   <link href="css/bootstrap.min.css" rel="stylesheet" /> 
   <link href="css/bootstrap-responsive.css" rel="stylesheet" /> 
-  <link href="css/jquery.fileupload.css" rel="stylesheet" /> 
-  <link href="css/jquery.fileupload-ui.css" rel="stylesheet" /> 
   <link href="css/sousai.common.css" rel="stylesheet" /> 
   <link href="css/sousai.background.css" rel="stylesheet" /> 
   <!--[if lte IE 8]>
@@ -42,7 +40,7 @@
   <div class="container"> 
    <div class="row"> 
     <div class="span4"> 
-     <img src="img/logo.png" /> 
+     <a class="logoBack" href="index.jsp" title="回到首页"><img src="img/logo.png" alt="搜赛网"/></a>
      <span class="logotext">管理员页面</span> 
     </div>
    </div> 
@@ -51,22 +49,20 @@
      <!-- background-remind & backgroundMenu --> 
      <ul class="breadcrumb background-remind"> 
       <li>提醒:</li> 
-      <li><a href="#">待处理的比赛信息<span>(5)</span></a></li> 
+      <li><a href=javascript:void(0);>待处理的比赛信息<span>(5)</span></a></li> 
      </ul> 
      <div class="span2 backgroundMenu "> 
       <ul class="nav nav-stacked nav-side"> 
-       <li><h5><a href="#"><i class="icon-minus"></i>系统发布:</a></h5></li> 
+       <li><h5><a href=javascript:void(0);><i class="icon-minus"></i>系统发布:</a></h5></li> 
        <li><a href="background-collections.jsp"><i class="icon-chevron-down "></i>全部采集</a></li> 
-       <li class="active"><a href="background-collectionsSetting.jsp"><i class="icon-chevron-down "></i>采集设置</a></li> 
-       <li><h5><a href="#"><i class="icon-minus"></i>数据维护:</a></h5></li> 
+       <li class="active"><a href="background-collectionsSetting.jsp"><i class="icon-chevron-down "></i>网站设置</a></li> 
+       <li><h5><a href=javascript:void(0);><i class="icon-minus"></i>数据维护:</a></h5></li> 
        <li><a href="background-matchMaintenance.jsp"><i class="icon-chevron-down "></i>比赛维护</a></li> 
        <li><a href="background-courtMaintenance.jsp"><i class="icon-chevron-down "></i>场地维护</a></li> 
        <li><a href="background-userMaintenance.jsp"><i class="icon-chevron-down "></i>用户维护</a></li> 
        <li><a href="background-evaluationMaintenance.jsp"><i class="icon-chevron-down "></i>评论维护</a></li> 
-       <li><h5><a href="#"><i class="icon-minus"></i>网站统计</a></h5></li> 
-       <li><a href="background-regUserCount.jsp"><i class="icon-chevron-down "></i>注册用户</a></li> 
-       <li><a href="background-releaseCount.jsp"><i class="icon-chevron-down "></i>发布统计</a></li> 
-       <li><a href="background-visitCount.jsp"><i class="icon-chevron-down "></i>访问量</a></li> 
+       <li><h5><a href=javascript:void(0);><i class="icon-minus"></i>网站统计</a></h5></li> 
+       <li><a href="background-regUserCount.jsp"><i class="icon-chevron-down "></i>网站统计</a></li>
       </ul> 
      </div> 
      <!-- /background-remind & backgroundMenu --> 
@@ -150,89 +146,9 @@
     <script src="js/IE9.js"></script>
   <![endif]--> 
   <script src="js/jquery-1.11.0.min.js"></script> 
-  <script src="js/jquery.ui.widget.js"></script> 
-  <script src="js/tmpl.min.js"></script> 
   <script src="js/bootstrap.min.js"></script> 
-  <script src="js/jquery.iframe-transport.js"></script> 
-  <script src="js/jquery.fileupload.js"></script> 
-  <script src="js/jquery.fileupload-process.js"></script> 
-  <script src="js/jquery.fileupload-ui.js"></script> 
   <script src="js/jquery.validate.min.js"></script> 
   <script src="js/sousai.common.js"></script> 
-  <script id="template-upload" type="text/x-tmpl">
-{% for (var i=0, file; file=o.files[i]; i++) { %}
-    <tr class="template-upload fade">
-        <td>
-            <span class="preview"></span>
-        </td>
-        <td>
-            <p class="name">{%=file.name%}</p>
-            <strong class="error text-danger"></strong>
-        </td>
-        <td>
-            <p class="size">上传中...</p>
-            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
-        </td>
-        <td>
-            {% if (!i && !o.options.autoUpload) { %}
-                <button class="btn start" disabled>
-                    <i class="icon-upload"></i>
-                    <span>开始</span>
-                </button>
-            {% } %}
-            {% if (!i) { %}
-                <button class="btn cancel">
-                    <i class="icon-ban-circle"></i>
-                    <span>取消</span>
-                </button>
-            {% } %}
-        </td>
-    </tr>
-{% } %}
-</script> 
-  <!-- The template to display files available for download --> 
-  <script id="template-download" type="text/x-tmpl">
-{% for (var i=0, file; file=o.files[i]; i++) { %}
-    <tr class="template-download fade">
-        <td>
-            <span class="preview">
-                {% if (file.thumbnailUrl) { %}
-                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
-                {% } %}
-            </span>
-        </td>
-        <td>
-            <p class="name">
-                {% if (file.url) { %}
-                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
-                {% } else { %}
-                    <span>{%=file.name%}</span>
-                {% } %}
-            </p>
-            {% if (file.error) { %}
-                <div><span class="label label-danger">Error</span> {%=file.error%}</div>
-            {% } %}
-        </td>
-        <td>
-            <span class="size">{%=o.formatFileSize(file.size)%}</span>
-        </td>
-        <td>
-            {% if (file.deleteUrl) { %}
-                <button class="btn delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
-                    <i class="icon-trash"></i>
-                    <span>删除</span>
-                </button>
-                <input type="checkbox" name="delete" value="1" class="toggle">
-            {% } else { %}
-                <button class="btn cancel">
-                    <i class="icon-ban-circle"></i>
-                    <span>取消</span>
-                </button>
-            {% } %}
-        </td>
-    </tr>
-{% } %}
-</script> 
   <script>
   $(function(){
     /** 表单验证代码 **/
@@ -256,7 +172,7 @@
     $("input[type='reset']").click(function(){ 
     validateor.resetForm(); 
     }); 
-    /** 用户头像图片上传 **/
+    /** 用户头像图片上传 **
     $('#collectionsSettingForm').fileupload({
             url: 'server/java/'
         });
@@ -266,8 +182,8 @@
             maxFileSize: 5000000,
             maxNumberOfFiles : 5,
             acceptFileTypes: /(\.|\/)(txt)$/i
-        });
-  })
+        });*/
+  });
   </script>  
  </body>
 </html>
