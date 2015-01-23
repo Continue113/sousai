@@ -326,13 +326,89 @@ public class Jdbc {
 	}
 	
 	//统计某年某月的比赛发布(搜赛网)数量
-	
+	public int selectSousaiMatchPublish(int year,int month){
+		int registerNum = 0;
+		String sql = "SELECT COUNT(RELTIME) FROM MATCHES WHERE YEAR(RELTIME)="+year+" AND MONTH(RELTIME)="+month + "AND USERID in (select USERID from USER where TYPE = '2')";
+		try{
+			pstmt = conn.prepareStatement(sql);
+			result = pstmt.executeQuery();
+			while (result.next()) {
+				registerNum = result.getInt(1) ;
+			}
+		} catch (SQLException e) {
+			System.out.println(e);
+		} finally {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+				System.out.println(e);
+			}
+		}
+		return registerNum ;
+	}
 	//统计某年某月的比赛发布(自然人)数量
-	
+	public int selectNaturalMatchPublish(int year,int month){
+		int registerNum = 0;
+		String sql = "SELECT COUNT(RELTIME) FROM MATCHES WHERE YEAR(RELTIME)="+year+" AND MONTH(RELTIME)="+month + "AND USERID not in (select USERID from USER where TYPE = '2')";
+		try{
+			pstmt = conn.prepareStatement(sql);
+			result = pstmt.executeQuery();
+			while (result.next()) {
+				registerNum = result.getInt(1) ;
+			}
+		} catch (SQLException e) {
+			System.out.println(e);
+		} finally {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+				System.out.println(e);
+			}
+		}
+		return registerNum ;
+	}
 	//统计某年某月的场地发布(搜赛网)数量
-	
+	public int selectSousaiCourtPublish(int year,int month){
+		int registerNum = 0;
+		String sql = "SELECT COUNT(RELDATE) FROM COURT WHERE YEAR(RELDATE)="+year+" AND MONTH(RELDATE)="+month + "AND USERID in (select USERID from USER where TYPE = '2')";
+		try{
+			pstmt = conn.prepareStatement(sql);
+			result = pstmt.executeQuery();
+			while (result.next()) {
+				registerNum = result.getInt(1) ;
+			}
+		} catch (SQLException e) {
+			System.out.println(e);
+		} finally {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+				System.out.println(e);
+			}
+		}
+		return registerNum ;
+	}
 	//统计某年某月的场地发布(自然人)数量
-	
+	public int selectNaturalCourtPublish(int year,int month){
+		int registerNum = 0;
+		String sql = "SELECT COUNT(RELDATE) FROM COURT WHERE YEAR(RELDATE)="+year+" AND MONTH(RELDATE)="+month + "AND USERID NOT in (select USERID from USER where TYPE = '2')";
+		try{
+			pstmt = conn.prepareStatement(sql);
+			result = pstmt.executeQuery();
+			while (result.next()) {
+				registerNum = result.getInt(1) ;
+			}
+		} catch (SQLException e) {
+			System.out.println(e);
+		} finally {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+				System.out.println(e);
+			}
+		}
+		return registerNum ;
+	}
 	//统计评论数量   court_time
 	public int selectCommentsNum(int year,int month){
 		int registerNum = 0;
