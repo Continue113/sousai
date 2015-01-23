@@ -318,7 +318,7 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 		{
 			region += "% ";
 		}
-		String strHql = Append_String("select count(*) from Court where c.verify='1' and ", new int[]{2}, new String[]{" and c.region "}, new String[]{region}); 
+		String strHql = Append_String("select count(*) from Court c where c.verify='1' and ", new int[]{2}, new String[]{" and c.region "}, new String[]{region}); 
 		return count(strHql);
 	}
 }
