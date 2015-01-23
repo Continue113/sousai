@@ -46,7 +46,7 @@
       <ul class="nav nav-stacked nav-side"> 
        <li><h5><a href="#"><i class="icon-minus"></i>系统发布:</a></h5></li> 
        <li class="active"><a href="background-collections.jsp"><i class="icon-chevron-down "></i>全部采集</a></li> 
-       <li><a href="background-collectionsSetting.jsp"><i class="icon-chevron-down "></i>采集设置</a></li> 
+       <li><a href="background-collectionsSetting.jsp"><i class="icon-chevron-down "></i>网站设置</a></li> 
        <li><h5><a href="#"><i class="icon-minus"></i>数据维护:</a></h5></li> 
        <li><a href="background-matchMaintenance.jsp"><i class="icon-chevron-down "></i>比赛维护</a></li> 
        <li><a href="background-courtMaintenance.jsp"><i class="icon-chevron-down "></i>场地维护</a></li> 
@@ -171,7 +171,63 @@
       },
     });
   }
-
+function sureDelete(){
+	hideSousaiRemindDialog();
+	var collectionId = new Array();
+	$(".match input:checked").each(function(index,element){
+		console.log($(this).attr("id"));
+		collectionId.push($(this).attr("id"));
+	});
+    $.ajax({
+      type: "POST",
+      url: "deleteCollections",
+      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+      data: {
+        "collectionId": collectionId.join(","),
+      },
+      dataType: "json",
+      success: function(rspdata) {
+    	  if( rspdata == "success" ){
+    		  sousaiRemindDialog("删除成功");
+    		  $(".match input:checked").parent().parent().parent().remove();
+    	  }else if( rspdata == "error" ){
+    		  sousaiRemindDialog("删除失败");
+    	  }else{
+    		  sousaiRemindDialog("删除失败，错误代码为："+rspdata);
+    	  }
+      },
+      error: function(jqXHR,textStatus,errorThrown){
+    	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+       	  sousaiRemindDialog("delete:抱歉，发送信息到服务器出错了。");
+      },
+    });
+}
+function sureDeleteEdit(){
+	hideSousaiRemindDialog();
+	$.ajax({
+        type: "POST",
+        url: "deleteCollections",
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        data: {
+      	  "collectionId": $("#inputMatchTitle").attr("data-id"),
+        },
+        dataType: "json",
+        success: function(rspdata) {
+      	  if( rspdata == "success" ){
+      		  sousaiRemindDialog("删除成功");
+      		  $("#"+$("#inputMatchTitle").attr("data-id")).parent().parent().parent().remove();
+      	  }else if( rspdata == "error" ){
+      		  sousaiRemindDialog("删除失败");
+      	  }else{
+      		  sousaiRemindDialog("删除失败，错误代码为："+rspdata);
+      	  }
+        },
+        error: function(jqXHR,textStatus,errorThrown){
+          	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+      	  sousaiRemindDialog("delete:抱歉，发送信息到服务器出错了。");
+        },
+      });
+}
   $(function(){
 	  //删除.btnbar 中绑定为比赛的class 改为Collection 使原来的发布比赛、保存修改、删除比赛的点击函数失效，
 	  $(".editMatch").find(".btnbar").remove().append('<button type="button" class="btn passCollection">发布采集</button><button type="button" class="btn saveCollection">保存修改</button><button type="button" class="btn deleteCollection">删除采集</button><button type="button" class="btn backList ">返回列表</button>');
@@ -205,39 +261,11 @@
     	var checked = $(".match input:checked"),n = checked.length;
     	//若为选中则提示
     	if( n == 0){
-    		sousaiRemindDialog("请先选中比赛");
+    		sousaiRemindDialog("请先选中采集");
     	}else{
-    		var collectionId = new Array();
-    		$(".match input:checked").each(function(index,element){
-    			console.log($(this).attr("id"));
-        		collectionId.push($(this).attr("id"));
-    		});
-            $.ajax({
-              type: "POST",
-              url: "deleteCollections",
-              contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-              data: {
-                "collectionId": collectionId.join(","),
-              },
-              dataType: "json",
-              success: function(rspdata) {
-            	  if( rspdata == "success" ){
-            		  //sousaiRemindDialog("删除成功");sousaiRemindDialog(crtPage);
-            		  sousaiRemindDialog("删除成功");
-            		  $(".match input:checked").parent().parent().parent().hide();
-            		  //e(crtPage,rs);//刷新数据
-            	  }else if( rspdata == "error" ){
-            		  //sousaiRemindDialog("删除失败")
-            		  sousaiRemindDialog("删除失败");
-            	  }else{
-            		  sousaiRemindDialog("删除失败，错误代码："+rspdata);
-            	  }
-              },
-              error: function(jqXHR,textStatus,errorThrown){
-            	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-               	  sousaiRemindDialog("delete:抱歉，发送信息到服务器出错了。");
-              },
-            });
+    		$("#SRDadd").text("小提示：一旦确定删除将无法取消操作。");
+    		$("#sousaiRemindDialog > .modal-footer > button.btn-success").attr("onclick","sureDelete()");
+    		sousaiRemindDialog("确定删除？",-1,"show");
     	}
     });
     //点击发布比赛 列表界面
@@ -286,28 +314,9 @@
     //***************************************************************************************
     //删除比赛 编辑界面
     $(".editMatch .deleteCollection").click(function (){
-                $.ajax({
-                  type: "POST",
-                  url: "deleteCollections",
-                  contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-                  data: {
-                	  "collectionId": $("#inputMatchTitle").attr("data-id"),
-                  },
-                  dataType: "json",
-                  success: function(rspdata) {
-                	  if( rspdata == "success" ){
-                		  sousaiRemindDialog("删除成功");
-                	  }else if( rspdata == "error" ){
-                		  sousaiRemindDialog("删除失败");
-                	  }else{
-                		  sousaiRemindDialog("删除失败，错误代码未知");
-                	  }
-                  },
-                  error: function(jqXHR,textStatus,errorThrown){
-    	            	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-                	  sousaiRemindDialog("delete:抱歉，发送信息到服务器出错了。");
-                  },
-                });
+    	$("#SRDadd").text("小提示：一旦确定删除将无法取消操作。");
+		$("#sousaiRemindDialog > .modal-footer > button.btn-success").attr("onclick","sureDeleteEdit()");
+		sousaiRemindDialog("确定删除？",-1,"show");
     });
     //点击保存修改
     $(".editMatch .saveCollection").click(function (){

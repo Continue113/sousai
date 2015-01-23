@@ -44,7 +44,7 @@
       <ul class="nav nav-stacked nav-side"> 
        <li><h5><i class="icon-minus"></i>系统发布:</h5></li> 
        <li><a href="background-collections.jsp"><i class="icon-chevron-down "></i>全部采集</a></li> 
-       <li><a href="background-collectionsSetting.jsp"><i class="icon-chevron-down "></i>采集设置</a></li> 
+       <li><a href="background-collectionsSetting.jsp"><i class="icon-chevron-down "></i>网站设置</a></li> 
        <li><h5><i class="icon-minus"></i>数据维护:</h5></li> 
        <li><a href="background-matchMaintenance.jsp"><i class="icon-chevron-down "></i>比赛维护</a></li> 
        <li><a href="background-courtMaintenance.jsp"><i class="icon-chevron-down "></i>场地维护</a></li> 
@@ -204,7 +204,7 @@
 		ia = ia||$(".sort button .current").attr("data-isasc"),
 		sc = sc||$(".text-filter-box button .current").attr("data-strcolumns"),
 		kv = kv||$(".text-filter-box input").val();
-	  	alert(crtPage+" "+rs+" "+obc+" "+ia+" "+sc+" "+kv);
+	  	//alert(crtPage+" "+rs+" "+obc+" "+ia+" "+sc+" "+kv);
 	  	
 		$("#ajaxState .load").show();console.log("start");
 	    $.ajax({
@@ -214,7 +214,7 @@
 	        data: {currentPage:crtPage,rows:rs,orderByCol:obc,isAsc:ia,strColumns:sc,keyValue:kv},
 	        dataType: "json",
 	        success: function(rspdata) {
-	        	console.log(data);
+	        	console.log(rspdata);
 	        	  var target = $(".userTable > tbody"),template = Handlebars.compile($('#user-template').html());
 	        	  Handlebars.registerHelper("data",function(v){
 	        	    //将当前对象转化为字符串，保存在data-info中
@@ -293,41 +293,6 @@
     // 编辑用户的js代码，关于验证用户信息是否合法，同场注册页面。   *********************** BEGIN *****************
     //***************************************************************************************
     
-
-        //表单验证代码
-    /*$("#editUserForm").validate({
-      rules: {
-        "user.name": {
-          minlength: 4,
-          maxlength: 16,
-          remote: "validName",
-        },
-        "user.pwd": {
-          minlength: 6
-        },
-        "user.email": {
-          email: true
-        },
-      },
-      messages: {
-        "user.name": {
-          required: "请输入用户名",
-          minlength: "用户名至少4个字符",
-          maxlength: "用户名最多16个字符",
-          remote: "该用户名已存在，请换个其他的用户名！"
-        },
-        "user.pwd": {
-          required: "请输入密码",
-          minlength: "密码请设置至少6位"
-        },
-        "user.email": {
-          required: "请输入邮箱",
-          email: "请输入有效的邮箱"
-        },
-      },
-    });*/
-
-
     //表单验证代码
 $("#userNameForm").validate({
   rules: {
@@ -403,13 +368,13 @@ messages: {
 	                "user.pwd": datapwd,
 	                "user.email": dataemail,
 	            },
-	            success: function(data){
-	            	console.log(data);
-	            	if(data == "success"){
+	            success: function(rspdata){
+	            	console.log(rspdata);
+	            	if(rspdata == "success"){
 	            		sousaiRemindDialog("添加用户成功.");
-		                window.setTimeout("window.location='background-userMaintenance.jsp'",1000);
+		                //window.setTimeout("window.location='background-userMaintenance.jsp'",1000);
 	            	}else{
-	            		sousaiRemindDialog("由于未知错误，添加用户失败。");
+	            		sousaiRemindDialog("添加用户失败，错误代码为："+rspdata);
 	            	}
 	            },
 	            error: function(jqXHR,textStatus,errorThrown){
@@ -426,19 +391,19 @@ messages: {
     $("button.saveUser").click(function (){ //修改用户名错误,修改密码居然是修改到了已经登录的那个 。
     	//用户名已存在问题：胭脂是否为用户名的问题，若用户名没有修改则设置valid为true；
 		var valid = false,
-		oldname = $("#userName").attr("data-oldname"),
+		//oldname = $("#userName").attr("data-oldname"),
         dataid = $("#userName").attr("data-id"),
         dataname = $("#userName").val(),
         datapwd = $("#userPassword").val(),
         dataemail = $("#userEmail").val();
 
-    	if( ($("#userNameForm").valid()||(dataname === oldname)) && $("#userPasswordForm").valid() && $("#userEmailForm").valid() ){
+    	if( /*($("#userNameForm").valid()||(dataname === oldname)) &&*/ $("#userPasswordForm").valid() && $("#userEmailForm").valid() ){
     		valid = true;
     	}
 		
 		if( valid === true ){
 			console.log("通过验证");
-    	console.log(dataid+" ,"+dataname+" ,"+datapwd+" ,"+dataemail);
+    	//console.log(dataid+" ,"+dataname+" ,"+datapwd+" ,"+dataemail);
 
         $.ajax({
         url: "updateUserInfo",
@@ -452,12 +417,16 @@ messages: {
             "user.email": dataemail,
           },
         success: function(rspdata) {
-          window.setTimeout("window.location='background-userMaintenance.jsp'",1000);
-          sousaiRemindDialog("编辑账户成功,请刷新页面。");
+        	if(rspdata == "SUCCESS"){
+        		sousaiRemindDialog("编辑账户成功");
+        	}else{
+    		sousaiRemindDialog("编辑用户失败，错误代码为："+rspdata);
+    		//window.setTimeout("window.location='background-userMaintenance.jsp'",1000);  
+    		}          	        
         },
         error: function(jqXHR,textStatus,errorThrown){
         	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-          sousaiRemindDialog("抱歉，发送数据出错了，请重新输入。");
+          	sousaiRemindDialog("抱歉，发送数据出错了，请重新输入。");
         },
         });
 		}else{

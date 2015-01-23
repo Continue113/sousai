@@ -31,10 +31,15 @@ public class Statistics {
 		Jdbc jdbc = new Jdbc();
 		for (int i = 1; i < 13; i++) {
 			jdbc.selectRegisterNum(year, i);
-			siteStats.add(new SiteStats.Builder().visits(0)
-					.registrantsNum(jdbc.selectRegisterNum(year, i))
-					.sousaiMatchPublish(0).naturalMatchPublish(0)
-					.sousaiSitePublish(0).naturalSitePublish(0).comments(jdbc.selectCommentsNum(year, i)).build());
+			siteStats
+					.add(new SiteStats.Builder()
+							.visits(0)
+							.registrantsNum(jdbc.selectRegisterNum(year, i))
+							.sousaiMatchPublish(jdbc.selectSousaiMatchPublish(year, i))
+							.naturalMatchPublish(jdbc.selectNaturalMatchPublish(year, i))
+							.sousaiSitePublish(jdbc.selectSousaiCourtPublish(year, i))
+							.naturalSitePublish(jdbc.selectNaturalCourtPublish(year, i))
+							.comments(jdbc.selectCommentsNum(year, i)).build());
 		}
 		JSONUtils.toJson(ServletActionContext.getResponse(), siteStats);
 		return "success";

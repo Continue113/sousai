@@ -45,7 +45,7 @@
       <ul class="nav nav-stacked nav-side"> 
        <li><h5><a href="javascript:void(0)"><i class="icon-minus"></i>系统发布:</a></h5></li> 
        <li><a href="background-collections.jsp"><i class="icon-chevron-down "></i>全部采集</a></li> 
-       <li><a href="background-collectionsSetting.jsp"><i class="icon-chevron-down "></i>采集设置</a></li> 
+       <li><a href="background-collectionsSetting.jsp"><i class="icon-chevron-down "></i>网站设置</a></li> 
        <li><h5><a href="javascript:void(0)"><i class="icon-minus"></i>数据维护:</a></h5></li> 
        <li><a href="background-matchMaintenance.jsp"><i class="icon-chevron-down "></i>比赛维护</a></li> 
        <li class="active"><a href="background-courtMaintenance.jsp"><i class="icon-chevron-down "></i>场地维护</a></li> 
@@ -143,9 +143,9 @@
     {{#each this}}
                         
         <tr class="court" data-info="{{data this}}"> 
-          <td class="court-title"><label for="{{id}}"><input type="checkbox" id="{{id}}"/><span>{{name}}</span></label></td> 
+          <td class="court-title"><label for="{{id}}"><input type="checkbox" id="{{id}}"/><span>{{id}}:{{name}}</span></label></td> 
           <td class="match-type">{{matchType}}</td> 
-          <td class="court-addr">{{addr}}</td> 
+          <td class="court-addr">{{region}}:{{addr}}</td> 
           <td class="court-releaseTime">{{relDate}}</td> 
           <td class="court-releaseUser">{{userName}}</td> 
           <td class="court-oprate"><a href="javascript:void(0)" class="btn btn-mini pull-right">查看编辑</a></td> 
@@ -164,7 +164,7 @@
 		ia = ia||$(".sort button .current").attr("data-isasc"),
 		sc = sc||$(".text-filter-box button .current").attr("data-strcolumns"),
 		kv = kv||$(".text-filter-box input").val();
-	  	alert(crtPage+" "+rs+" "+obc+" "+ia+" "+sc+" "+kv);
+	  	//alert(crtPage+" "+rs+" "+obc+" "+ia+" "+sc+" "+kv);
 	  	
 	  $("#ajaxState .load").show();console.log("start");
     $.ajax({
@@ -205,6 +205,39 @@
       },
     });
 }
+  function sureDelete(){
+	  hideSousaiRemindDialog();
+		var courtIds = new Array(),
+		rs = $("select.selectRows option:selected").val(),
+		crtPage = $("ul.pagination").find("li.active a").text();
+		$(".court input:checked").each(function(index,element){
+			console.log($(this).attr("id"));
+			courtIds.push($(this).attr("id"));
+		});
+      $.ajax({
+        type: "POST",
+        url: "deleteCourts",
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        data: {
+          "courtIds": courtIds.join(","),
+        },
+        dataType: "json",
+        success: function(rspdata) {
+      	  if( rspdata == "success" ){
+      		  sousaiRemindDialog("删除成功");
+      		  $(".court input:checked").parent().parent().parent().remove();
+      	  }else if( rspdata == "fail" ){
+      		  sousaiRemindDialog("删除失败");
+      	  }else{
+      		  sousaiRemindDialog("删除失败，错误代码为："+rspdata);
+      	  }
+        },
+        error: function(jqXHR,textStatus,errorThrown){
+        	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+          sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
+        },
+      }); //ajax 已得到具体比赛类型
+  }
   
   $(function(){
 	 //ajax接收所有的场地 默认为第一页 25条，按name排序，升序
@@ -225,38 +258,11 @@
     	var checked = $(".court input:checked"),n = checked.length;
     	//若为选中则提示
     	if( n == 0){
-    		sousaiRemindDialog("请先选中比赛");
+    		sousaiRemindDialog("请先选中场地");
     	}else{
-    		var courtIds = new Array(),
-    		rs = $("select.selectRows option:selected").val(),
-    		crtPage = $("ul.pagination").find("li.active a").text();
-    		$(".court input:checked").each(function(index,element){
-    			console.log($(this).attr("id"));
-    			courtIds.push($(this).attr("id"));
-    		});
-    		console.log(courtIds);sousaiRemindDialog(courtIds);
-            $.ajax({
-              type: "POST",
-              url: "deleteCourts",
-              contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-              data: {
-                "courtIds": courtIds.join(","),
-              },
-              dataType: "json",
-              success: function(rspdata) {
-            	  if( rspdata == "success" ){
-            		  sousaiRemindDialog("删除成功");
-                      e(crtPage,rs); //刷新数据 
-            	  }else if( rspdata == "fail" ){
-            		  sousaiRemindDialog("删除失败");
-            	  }else{
-            		  sousaiRemindDialog("删除失败，错误代码未知");
-            	  }
-              },
-              error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-                sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
-              },
-            }); //ajax 已得到具体比赛类型
+    		$("#SRDadd").text("小提示：一旦确定删除将无法取消操作,同时将对使用此场地的比赛和评论照成影响。");
+    		$("#sousaiRemindDialog > .modal-footer > button.btn-success").attr("onclick","sureDelete()");
+    		sousaiRemindDialog("确定删除？",-1,"show");
     	}
     });
     //点击发布比赛 列表界面
