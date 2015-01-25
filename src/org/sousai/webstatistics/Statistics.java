@@ -57,10 +57,13 @@ public class Statistics {
 				"黑龙江", "江苏", "浙江", "安徽", "福建", "台湾", "江西", "山东", "河南", "湖北",
 				"湖南", "广东", "湖南", "四川", "贵州", "云南", "陕西", "甘肃", "青海", "内蒙古",
 				"广西", "西藏", "宁夏", "新疆", "香港", "澳门" };
-		SortedMap<String,Integer> cityCourt = new TreeMap() ;
+		SortedMap<String,Integer> cityCourt = new TreeMap<String,Integer>() ;
 		for(int i=0;i<city.length;i++){
-			cityCourt.put(city[i], jdbc.selectCityCourt(city[i])) ;
+			int num = jdbc.selectCityCourt(city[i]) ;
+			if(num!=0)
+				cityCourt.put(city[i], num) ;
 		}
+		JSONUtils.toJson(ServletActionContext.getResponse(), cityCourt);
 		return "success";
 	}
 }

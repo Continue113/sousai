@@ -6,6 +6,7 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.sousai.action.base.UserBaseAction;
+import org.sousai.search.IndexCreate;
 import org.sousai.tools.MyPrint;
 
 public class RefreshIndexAction implements Job{
@@ -21,6 +22,7 @@ public class RefreshIndexAction implements Job{
 
 		num++;
 		MyPrint.myPrint("Num."+num + " job act"+new Date());
+		new IndexCreate().createIndex();
 	}
 
 }
