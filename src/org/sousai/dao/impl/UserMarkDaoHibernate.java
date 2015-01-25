@@ -64,7 +64,7 @@ public class UserMarkDaoHibernate extends SqlHelper implements UserMarkDao {
 
 	@Override
 	public int countByMarkingUserId(Integer userId) {
-		String strHql = "select count(*) from from Match m, Court c, User u, UserMark um "
+		String strHql = "select count(*) from Match m, Court c, User u, UserMark um "
 				+ "where m.courtId=c.id and u.id=m.userId and um.userId=? and m.id=um.matchId";
 		List<Integer> params = new ArrayList<Integer>();
 		params.add(userId);
