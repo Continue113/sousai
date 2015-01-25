@@ -14,7 +14,6 @@ import org.sousai.domain.Match;
 import org.sousai.domain.User;
 import org.sousai.tools.CommonUtils;
 import org.sousai.tools.MyPrint;
-import org.sousai.vo.CourtBean;
 import org.sousai.vo.MatchBean;
 
 public class MatchDaoHibernate extends SqlHelper implements MatchDao {

@@ -26,7 +26,7 @@
         <property name="rule" type="java.lang.String">
             <column name="RULE" />
         </property>
-        <property name="relTime" type="java.sql.Date">
+        <property name="relTime" type="java.util.Date">
             <column name="RELTIME" />
         </property>
         <property name="verify" type="char">
