@@ -18,9 +18,6 @@
 		<!-- ============================下面是员工角色的Action======================== -->
 		<!-- 定义处理登录系统的Action -->
 		<action name="processLogin" class="org.sousai.action.LoginAction">
-			<result name="user">index.jsp</result>
-			<result name="error">login.jsp</result>
-			<result name="input">login.jsp</result>
 		</action>
 		
 		<!-- 定义处理注册的Action -->
@@ -91,10 +88,6 @@
 		
 		<!-- 在发布比赛页面获取场地的action -->
 		<action name="getCourtM" class="org.sousai.action.GetCourtInMatchRelingAction">
-		</action>
-		
-		<!-- 筛选比赛的action -->
-		<action name="scrMatch" class="org.sousai.action.ScreenMatchAction">
 		</action>
 		
 		<!-- 通过场地id获取场地详细信息的action -->
@@ -176,8 +169,13 @@
 		
 		<action name="markMatch" class="org.sousai.action.MarkMatchAction" >
 		</action>
-		
+
+		<!-- 高级搜索场地 -->		
 		<action name="getCourtByP" class="org.sousai.action.GetCourtByParamsAction">
+		</action>
+		
+		<!-- 高级搜索比赛 -->
+		<action name="getMatchByP" class="org.sousai.action.GetMatchByParamsAction">
 		</action>
 		
 		<!-- 通过ID查询场地信息 -->
@@ -192,6 +190,13 @@
 		<!-- 批量删除评论这个action只有管理员可用 -->
 		<action name="deleteMesgs" class="org.sousai.action.DeleteMesgsAction">
 		</action>
+		<!-- 批量发布场地这个action只有管理员可用 -->
+		<action name="relCourtsByAdmin" class="org.sousai.action.RelCourtsByAdminAction">
+		</action>
+		<!-- 批量删除用户这个action只有管理员可用 -->
+		<action name="deleteUsersByAdmin" class="org.sousai.action.DeleteUsersByAdminAction">
+		</action>
+		
 	</package>
 	
 	

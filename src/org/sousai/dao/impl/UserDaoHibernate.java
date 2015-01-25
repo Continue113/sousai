@@ -154,4 +154,14 @@ public class UserDaoHibernate extends SqlHelper implements UserDao {
 		Query q = session.createQuery(hql);
 		return (List<UserBean>) findPagedModelList_HQL(q, currentPage, rows);
 	}
+
+	@Override
+	public void deleteUsers(Integer[] ids) {
+		String strHql = "update User set type=0 where id in (:ids)";
+		Session session = getHibernateTemplate().getSessionFactory()
+				.getCurrentSession();
+		Query q = session.createQuery(strHql);
+		q.setParameterList("ids", ids);
+		q.executeUpdate();
+	}
 }

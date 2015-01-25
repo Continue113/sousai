@@ -48,7 +48,6 @@ public class RegAction extends UserBaseAction {
 		// user.setEmail("test11@stest.com");
 		MyPrint.myPrint("Pwd" + getUser().getPwd());
 		MyPrint.myPrint("email" + getUser().getEmail());
-		user.setType('0');
 		if (umg == null) {
 			System.out.println("umg null!!!");
 		}

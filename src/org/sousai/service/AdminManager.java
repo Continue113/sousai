@@ -98,6 +98,25 @@ public interface AdminManager {
 			String orderByCol, Boolean isAsc) throws Exception;
 
 	public void updateMessage(Message message) throws Exception;
-	
+
+	/**
+	 * 批量删除评论（将state置为0）
+	 * @param ids
+	 * @throws Exception
+	 */
 	public void deleteMesgs(Long[] ids) throws Exception;
+
+	/**
+	 * 批量删除用户（将type置为0）
+	 * @param ids
+	 * @throws Exception
+	 */
+	public void deleteUsers(Integer[] ids) throws Exception;
+
+	/**
+	 * 批量发布场地（将verify置为1）
+	 * @param ids
+	 * @throws Exception
+	 */
+	public void relCourts(Integer[] ids) throws Exception;
 }

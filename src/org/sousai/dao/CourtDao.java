@@ -201,4 +201,11 @@ public interface CourtDao {
 	 * @throws Exception 
 	 */
 	Integer countByRegion(String region) throws Exception;
+	
+	/**
+	 * 批量发布比赛（将verify设为1）
+	 * @param ids
+	 * @throws Exception 
+	 */
+	void relCourts(Integer[] ids) throws Exception;
 }

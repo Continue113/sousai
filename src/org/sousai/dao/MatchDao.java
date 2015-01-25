@@ -13,7 +13,7 @@ public interface MatchDao {
 	public static final int EXCEED_QUOTA = -1;
 
 	Match get(Integer id);
-	
+
 	MatchBean getMatchBean(Integer id);
 
 	Integer save(Match match);
@@ -26,18 +26,22 @@ public interface MatchDao {
 
 	List<MatchBean> findAll(int currentPage, int rows);
 
-	List<MatchBean> findByUser(User user,int currentPage, int rows);
+	List<MatchBean> findByUser(User user, int currentPage, int rows);
 
-	List<MatchBean> findByUserId(Integer userId,int currentPage, int rows);
+	List<MatchBean> findByUserId(Integer userId, int currentPage, int rows);
 
-	List<MatchBean> findByMatchTypeId(Integer matchTypeId,int currentPage, int rows);
+	List<MatchBean> findByMatchTypeId(Integer matchTypeId, int currentPage,
+			int rows);
 
-	List<MatchBean> findByMatchTypeName(String matchTypeName,int currentPage, int rows);
+	List<MatchBean> findByMatchTypeName(String matchTypeName, int currentPage,
+			int rows);
 
-	List<MatchBean> findByMatchClassId(Integer matchClassId,int currentPage, int rows);
+	List<MatchBean> findByMatchClassId(Integer matchClassId, int currentPage,
+			int rows);
 
-	List<MatchBean> findByMatchClassName(String matchClassName,int currentPage, int rows);
-	
+	List<MatchBean> findByMatchClassName(String matchClassName,
+			int currentPage, int rows);
+
 	/**
 	 * 根据可选参数，从数据库返回比赛。
 	 * 
@@ -52,7 +56,7 @@ public interface MatchDao {
 	 * @return 符合参数要求的所有比赛
 	 */
 	List<MatchBean> findByParms(int[] dayOfWeek, int state, Date date,
-			Integer regionId,int currentPage, int rows);
+			Integer regionId, int currentPage, int rows);
 
 	/**
 	 * 统计用户发布的每种比赛的数量
@@ -81,9 +85,10 @@ public interface MatchDao {
 	 * @return
 	 */
 	int deleteMatches(Integer[] matchIds);
-	
+
 	/**
 	 * 模糊匹配某个字段
+	 * 
 	 * @param keyValue
 	 * @return
 	 */
@@ -93,18 +98,19 @@ public interface MatchDao {
 			int pageSize);
 
 	int countMatch();
-	
+
 	List<MatchBean> findPagedByKeyValueOrderBy(String[] columns,
 			String keyValue, Integer currentPage, Integer rows,
 			String orderByCol, Boolean isAsc) throws Exception;
-	
+
 	/**
 	 * 高级搜索比赛
+	 * 
 	 * @param keyValue
 	 * @param matchType
-	 * @param beforeBegin
-	 * @param between
-	 * @param afterEnd
+	 * @param now
+	 * @param matchState
+	 * @param dayOfWeek
 	 * @param beginTime
 	 * @param endTime
 	 * @param region
@@ -115,7 +121,9 @@ public interface MatchDao {
 	 * @return
 	 * @throws Exception
 	 */
-	List<MatchBean> findPagedByParams(String keyValue, String matchType, Date beforeBegin, Date between1, Date betwween2, Date afterEnd,Date beginTime, Date endTime, String region, int currentPage, int rows, String orderByCol,Boolean isAsc) throws Exception;
-	
-	
+	List<MatchBean> findPagedByParams(String keyValue, String matchType,
+			java.sql.Date now, int matchState, int dayOfWeek, Date beginTime,
+			Date endTime, String region, int currentPage, int rows,
+			String orderByCol, Boolean isAsc) throws Exception;
+
 }

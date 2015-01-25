@@ -6,7 +6,7 @@ PWD varchar(16) binary not null,
 EMAIL varchar(32) binary not null,
 REGTIME timestamp not null default current_timestamp,
 LASTLOGTIME timestamp null,
-TYPE char(1) not null default '0',
+TYPE char(1)  null default '1',
 PICID int null default 1,
 constraint foreign key(PICID) references USERPIC(ID) on delete set null on update cascade
 );

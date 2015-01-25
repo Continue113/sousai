@@ -157,7 +157,7 @@ public class GetCourtByParamsAction extends UserBaseAction {
 			if (rows == null) {
 				rows = 25;
 			}
-			List<CourtBean> list = cmg.findPagedByParams(keyValue, matchType,
+			List<CourtBean> list = cmg.findPagedCourtByParams(keyValue, matchType,
 					courtTypeId, region, currentPage, rows, orderByCol, isAsc);
 			int count = 0;
 			FrontMessage msg = new FrontMessage(list, count);

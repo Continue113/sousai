@@ -295,30 +295,46 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 			region = " %" + region + "% ";
 		}
 		String strHql = Append_StringWithout1(
-				"select count(*) from Court c where c.verify='1' ", new int[] { 2, 0, 1,
-						2 }, new String[] { " and c.name", " and c.matchType",
-						" and c.courtTypeId", " and c.region" }, new Object[] {
-						keyValue, matchType, courtTypeId, region });
+				"select count(*) from Court c where c.verify='1' ", new int[] {
+						2, 0, 1, 2 }, new String[] { " and c.name",
+						" and c.matchType", " and c.courtTypeId",
+						" and c.region" }, new Object[] { keyValue, matchType,
+						courtTypeId, region });
 		return count(strHql);
 	}
 
 	@Override
-	public List<CourtBean> findByRegion(String region, int currentPage, int rows) throws Exception {
-		if(!CommonUtils.isNullOrEmpty(region))
-		{
+	public List<CourtBean> findByRegion(String region, int currentPage, int rows)
+			throws Exception {
+		if (!CommonUtils.isNullOrEmpty(region)) {
 			region += "% ";
 		}
-		String strWhere = Append_String(" and c.verify='1' and ", new int[]{2}, new String[]{" and c.region "}, new String[]{region}); 
+		String strWhere = Append_String(" and c.verify='1' and ",
+				new int[] { 2 }, new String[] { " and c.region " },
+				new String[] { region });
 		return findPagedByWhereOrderBy(strWhere, currentPage, rows, null, null);
 	}
 
 	@Override
 	public Integer countByRegion(String region) throws Exception {
-		if(!CommonUtils.isNullOrEmpty(region))
-		{
+		if (!CommonUtils.isNullOrEmpty(region)) {
 			region += "% ";
 		}
-		String strHql = Append_String("select count(*) from Court c where c.verify='1' and ", new int[]{2}, new String[]{" and c.region "}, new String[]{region}); 
+		String strHql = Append_String(
+				"select count(*) from Court c where c.verify='1' and ",
+				new int[] { 2 }, new String[] { " and c.region " },
+				new String[] { region });
 		return count(strHql);
 	}
+
+	@Override
+	public void relCourts(Integer[] ids) throws Exception {
+		String strHql = "update Court set verify='1' where id in (:ids)";
+		Session session = getHibernateTemplate().getSessionFactory()
+				.getCurrentSession();
+		Query q = session.createQuery(strHql);
+		q.setParameterList("ids", ids);
+		q.executeUpdate();
+	}
+
 }

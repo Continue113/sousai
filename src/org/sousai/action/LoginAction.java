@@ -1,8 +1,12 @@
 package org.sousai.action;
 
+import org.apache.struts2.ServletActionContext;
 import org.sousai.action.base.*;
+import org.sousai.common.Constant;
 import org.sousai.domain.*;
+import org.sousai.tools.JSONUtils;
 import org.sousai.vo.*;
+
 import static org.sousai.service.UserManager.*;
 
 import com.opensymphony.xwork2.*;
@@ -27,7 +31,6 @@ public class LoginAction extends UserBaseAction
 	private final String ADMIN_RESULT = "admin";
 	//��װ�������
 	private User user;
-	//�����¼�����ʾ��Ϣ
 	private String tip;
 	
 	//��������getter��setter
@@ -38,18 +41,6 @@ public class LoginAction extends UserBaseAction
 	public User getUser()
 	{
 		return this.user;
-	}
-	
-	
-	
-	//tip属性的setter和getter
-	public void setTip(String tip)
-	{
-		this.tip = tip;
-	}
-	public String getTip()
-	{
-		return this.tip;
 	}
 	
 	public UserBean getUserInfo()
@@ -66,7 +57,8 @@ public class LoginAction extends UserBaseAction
 		//��ȡHttpSession�е�rand����
 		//System.out.println(getUser().getName()+"  "+getUser().getPwd());
 		//String ver2 = (String)ctx.getSession().get("rand");
-		
+
+		String value = null;
 		if(umg==null)
 		{
 			System.out.println("umg null!!!");
@@ -82,7 +74,7 @@ public class LoginAction extends UserBaseAction
 				, WebConstant.USER_LEVEL);*/
 			ctx.getSession().put("userBean", getUserInfo());
 			System.out.println(getUserInfo().getUserRegTime());
-			return USER_RESULT;
+			value = Constant.SUCCESS;
 		}
 		//��¼���Ϊ����
 		/*else if (result == LOGIN_ADMIN)
@@ -98,11 +90,10 @@ public class LoginAction extends UserBaseAction
 		else
 		{
 			//setTip("�û���/���벻ƥ��");
-			System.out.println("valid Error");
 			System.out.println(user.getName());
-			setTip(user.getName());
-			return ERROR;
+			value = Constant.ERROR;
 		}
-			
+		JSONUtils.toJson(ServletActionContext.getResponse(), value);
+		return null;
 	}
 }
