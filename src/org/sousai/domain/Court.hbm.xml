@@ -47,7 +47,7 @@
         <property name="verify" type="char">
             <column name="VERIFY" />
         </property>
-        <property name="relDate" type="java.sql.Date">
+        <property name="relDate" type="java.util.Date">
             <column name="RELDATE" />
         </property>
         <property name="modDate" type="java.sql.Date">

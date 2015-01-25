@@ -1,7 +1,7 @@
 package org.sousai.vo;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.sousai.domain.User;
@@ -25,8 +25,8 @@ public class UserBean implements Serializable {
 	private String userEmail;
 	private char userType;
 	private String userPicId;
-	private Date userRegTime;
-	private Date userLastLogTime;
+	private String userRegTime;
+	private String userLastLogTime;
 	private Integer userLastRegionId;
 
 	// Ĭ�Ϲ�����
@@ -36,15 +36,16 @@ public class UserBean implements Serializable {
 	// ��ʼ���������ԵĹ�����
 	public UserBean(Integer userId, String userName, String userPwd,
 			String userEmail, char userType, String userPicId,
-			Timestamp userRegTime, Timestamp userLastLogTime, Integer userLastRegionId) {
+			Date userRegTime, Date userLastLogTime, Integer userLastRegionId) {
 		this.setUserId(userId);
 		this.setUserName(userName);
 		this.setUserPwd(userPwd);
 		this.setUserEmail(userEmail);
 		this.setUserType(userType);
 		this.setUserPicId(userPicId);
-		this.setUserRegTime(userRegTime);
-		this.setUserLastLogTime(userLastLogTime);
+		SimpleDateFormat timeFm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		this.userRegTime = timeFm.format(userRegTime);
+		this.userLastLogTime = timeFm.format(userLastLogTime);
 		this.setUserLastRegionId(userLastRegionId);
 	}
 
@@ -58,7 +59,7 @@ public class UserBean implements Serializable {
 	}
 
 	public UserBean(Integer userId, String userName, String userPwd, String userEmail,
-			char userType, Date userRegTime, Date userLastLogTime) {
+			char userType, String userRegTime, String userLastLogTime) {
 		this.userId = userId;
 		this.userName = userName;
 		this.userPwd = userPwd;
@@ -72,10 +73,11 @@ public class UserBean implements Serializable {
 		this.userId = user.getId();
 		this.userName = user.getName();
 		this.userEmail = user.getEmail();
-		this.userLastLogTime = user.getLastLogTime();
+		SimpleDateFormat timeFm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		this.userLastLogTime = timeFm.format(user.getLastLogTime());
 		this.userPicId = user.getPicId();
 		this.userPwd = user.getPwd();
-		this.userRegTime = user.getRegTime();
+		this.userRegTime = timeFm.format(user.getRegTime());
 		this.userType = user.getType();
 		this.userLastRegionId = user.getLastRegionId();
 	}
@@ -135,20 +137,20 @@ public class UserBean implements Serializable {
 	}
 
 	// userRegTime ��setter��getter
-	public void setUserRegTime(Date userRegTime) {
+	public void setUserRegTime(String userRegTime) {
 		this.userRegTime = userRegTime;
 	}
 
-	public Date getUserRegTime() {
+	public String getUserRegTime() {
 		return this.userRegTime;
 	}
 
 	// userLastLogTime ��setter��getter
-	public void setUserLastLogTime(Date userLastLogTime) {
+	public void setUserLastLogTime(String userLastLogTime) {
 		this.userLastLogTime = userLastLogTime;
 	}
 
-	public Date getUserLastLogTime() {
+	public String getUserLastLogTime() {
 		return this.userLastLogTime;
 	}
 

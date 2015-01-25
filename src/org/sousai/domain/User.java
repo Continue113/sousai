@@ -3,8 +3,9 @@ package org.sousai.domain;
 import org.sousai.vo.*;
 
 import java.io.Serializable;
+import java.text.ParseException;
 //import java.sql.Date;
-import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class User implements Serializable {
@@ -24,14 +25,15 @@ public class User implements Serializable {
 	public User() {
 	}
 
-	public User(UserBean userBean) {
+	public User(UserBean userBean) throws ParseException {
 		this.id = userBean.getUserId();
 		this.email = userBean.getUserEmail();
-		this.lastLogTime = userBean.getUserLastLogTime();
+		SimpleDateFormat timeFm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		this.lastLogTime = timeFm.parse(userBean.getUserLastLogTime());
 		this.name = userBean.getUserName();
 		this.picId = userBean.getUserPicId();
 		this.pwd = userBean.getUserPwd();
-		this.regTime = userBean.getUserRegTime();
+		this.regTime = timeFm.parse(userBean.getUserRegTime());
 		this.type = userBean.getUserType();
 		this.lastRegionId = userBean.getUserLastRegionId();
 	}

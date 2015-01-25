@@ -1,5 +1,6 @@
 package org.sousai.vo;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MessageBean {
@@ -8,7 +9,7 @@ public class MessageBean {
 	private Long rootId;
 	private Integer userId;
 	private Integer courtId;
-	private Date time;
+	private String time;
 	private String mesg;
 	private String userName;
 	private Integer state;
@@ -23,7 +24,8 @@ public class MessageBean {
 		this.rootId = rootId;
 		this.userId = userId;
 		this.courtId = courtId;
-		this.time = time;
+		SimpleDateFormat timeFm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		this.time = timeFm.format(time);
 		this.mesg = mesg;
 		this.userName = userName;
 		this.state = state;
@@ -97,13 +99,13 @@ public class MessageBean {
 	/**
 	 * @return the time
 	 */
-	public Date getTime() {
+	public String getTime() {
 		return time;
 	}
 	/**
 	 * @param time the time to set
 	 */
-	public void setTime(Date time) {
+	public void setTime(String time) {
 		this.time = time;
 	}
 	

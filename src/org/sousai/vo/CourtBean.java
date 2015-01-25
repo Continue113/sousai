@@ -1,11 +1,12 @@
 package org.sousai.vo;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CourtBean implements Serializable
 {
-	String selectCourtBeanField = "select c.ID,c.NAME,c.COURTTYPEID,ct.NAME,c.MATCHTYPE,c.REGIONID,c.TABLENUM,c.TEL,c.MATCHCOUNT,c.PRICE,c.WORKTIME,c.INTRO,c.VERIFY,c.RELDATE,c.MODDATE,c.USERID,u.NAME from COURT c, COURTTYPE ct, USER u ";
+	String selectCourtBeanField = "select c.ID,c.NAME,c.COURTTYPEID,ct.NAME,c.MATCHTYPE,c.REGIONID,c.TABLENUM,c.TEL,c.MATCHCOUNT,c.PRICE,c.WORKTIME,c.INTRO,c.VERIFY,c.relDate,c.modDate,c.USERID,u.NAME from COURT c, COURTTYPE ct, USER u ";
 	private static final long serialVersionUID = -7181907300029680131L;
 	private Integer id;
 	private String name;
@@ -22,8 +23,8 @@ public class CourtBean implements Serializable
 	private String workTime;
 	private String intro;
 	private char verify;
-	private Date relDate;
-	private Date modDate;
+	private String relDate;
+	private String modDate;
 	private Long picId;
 	private Integer userId;
 	private String userName;
@@ -32,7 +33,7 @@ public class CourtBean implements Serializable
 	public CourtBean()
 	{
 	}
-	public CourtBean(Date modDate){
+	public CourtBean(String modDate){
 		this.modDate = modDate;
 	}
 	public CourtBean(Integer id, String name, 
@@ -72,8 +73,10 @@ public class CourtBean implements Serializable
 		this.workTime = workTime;
 		this.intro = intro;
 		this.verify = verify;
-		this.relDate = relDate;
-		this.modDate = modDate;
+		SimpleDateFormat timeFm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		this.relDate = timeFm.format(relDate);
+		SimpleDateFormat dateFm = new SimpleDateFormat("yyyy-MM-dd");
+		this.modDate = dateFm.format(modDate);
 //		this.picId = picId;
 		this.userId = userId;
 		this.userName = userName;
@@ -293,28 +296,28 @@ public class CourtBean implements Serializable
 	/**
 	 * @return the relDate
 	 */
-	public Date getRelDate() {
+	public String getrelDate() {
 		return relDate;
 	}
 
 	/**
 	 * @param relDate the relDate to set
 	 */
-	public void setRelDate(Date relDate) {
+	public void setrelDate(String relDate) {
 		this.relDate = relDate;
 	}
 
 	/**
 	 * @return the modDate
 	 */
-	public Date getModDate() {
+	public String getmodDate() {
 		return modDate;
 	}
 
 	/**
 	 * @param modDate the modDate to set
 	 */
-	public void setModDate(Date modDate) {
+	public void setmodDate(String modDate) {
 		this.modDate = modDate;
 	}
 
