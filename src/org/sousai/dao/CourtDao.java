@@ -20,7 +20,7 @@ public interface CourtDao {
 	 * 
 	 * @param court
 	 * @return 存入数据库后，对应的id
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	Integer save(Court court) throws Exception;
 
@@ -68,10 +68,20 @@ public interface CourtDao {
 	 * 
 	 * @param userId
 	 *            用户id
+	 * @param currentPage
+	 * @param rows
 	 * @return 该用户发布的所有场地
 	 */
-	List<CourtBean> findByUserId(Integer userId);
+	List<CourtBean> findPagedByUserId(Integer userId, Integer currentPage,
+			Integer rows);
 
+	/**
+	 * 根据用户id，获取用户所发布的所有场地的数量
+	 * @param userId
+	 * @return
+	 */
+	int countByUserId(Integer userId);
+	
 	/**
 	 * 返回指定类型场地
 	 * 
@@ -86,9 +96,12 @@ public interface CourtDao {
 	 * 
 	 * @param matchType
 	 *            比赛类型
+	 * @param currentPage
+	 * @param rows
 	 * @return 返回所有该比赛场地
 	 */
-	List<CourtBean> findByMatchType(String matchType);
+	List<CourtBean> findPagedByMatchType(String matchType, Integer currentPage,
+			Integer rows);
 
 	/**
 	 * 根据参数，返回符合条件的场地
@@ -106,7 +119,8 @@ public interface CourtDao {
 	List<CourtBean> findByPram(User user, CourtType courtType,
 			String matchType, Region region);
 
-	List<CourtBean> findByRegionId(Integer regionId);
+	List<CourtBean> findPagedByRegionId(Integer regionId, Integer currentPage,
+			Integer rows);
 
 	/**
 	 * 查询用户当天已发布场地数量
@@ -154,14 +168,15 @@ public interface CourtDao {
 	 * @param orderByCol
 	 * @param isAsc
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	List<CourtBean> findPagedByKeyValueOrderBy(String[] columns,
 			String keyValue, Integer currentPage, Integer rows,
 			String orderByCol, Boolean isAsc) throws Exception;
-	
+
 	/**
 	 * 用户高级搜索
+	 * 
 	 * @param keyValue
 	 * @param matchType
 	 * @param courtTypeId
@@ -173,10 +188,13 @@ public interface CourtDao {
 	 * @return
 	 * @throws Exception
 	 */
-	List<CourtBean> findPagedByParams(String keyValue, String matchType, Integer courtTypeId, String region, int currentPage, int rows, String orderByCol,Boolean isAsc) throws Exception;
-	
+	List<CourtBean> findPagedByParams(String keyValue, String matchType,
+			Integer courtTypeId, String region, int currentPage, int rows,
+			String orderByCol, Boolean isAsc) throws Exception;
+
 	/**
 	 * 用户高级搜索时，计算符合的总数
+	 * 
 	 * @param keyValue
 	 * @param matchType
 	 * @param courtTypeId
@@ -184,28 +202,33 @@ public interface CourtDao {
 	 * @return
 	 * @throws Exception
 	 */
-	Integer countByParams(String keyValue, String matchType, Integer courtTypeId, String region) throws Exception;
-	
+	Integer countByParams(String keyValue, String matchType,
+			Integer courtTypeId, String region) throws Exception;
+
 	/**
 	 * 通过region筛选场地
+	 * 
 	 * @param region
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
-	List<CourtBean> findByRegion(String region,int currentPage, int rows) throws Exception;
-	
+	List<CourtBean> findPagedByRegion(String region, int currentPage, int rows)
+			throws Exception;
+
 	/**
 	 * 通过region筛选场地，返回最后的记录数
+	 * 
 	 * @param region
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	Integer countByRegion(String region) throws Exception;
-	
+
 	/**
 	 * 批量发布比赛（将verify设为1）
+	 * 
 	 * @param ids
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	void relCourts(Integer[] ids) throws Exception;
 }

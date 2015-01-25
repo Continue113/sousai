@@ -133,13 +133,15 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 	}
 
 	@Override
-	public List<CourtBean> findByMatchType(String matchType) {
+	public List<CourtBean> findPagedByMatchType(String matchType,
+			Integer currentPage, Integer rows) {
 		Session session = getHibernateTemplate().getSessionFactory()
 				.getCurrentSession();
 		StringBuffer hql = new StringBuffer(selectCourtBean);
 		hql.append("and MATCHTYPE=?");
 		Query q = session.createQuery(hql.toString());
-		q.setString(0, matchType);
+		q.setString(0, matchType).setMaxResults(rows)
+				.setFirstResult((currentPage - 1) * rows);
 		return extracted(q);
 	}
 
@@ -171,23 +173,27 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 	}
 
 	@Override
-	public List<CourtBean> findByRegionId(Integer regionId) {
+	public List<CourtBean> findPagedByRegionId(Integer regionId,
+			Integer currentPage, Integer rows) {
 		Session session = getHibernateTemplate().getSessionFactory()
 				.getCurrentSession();
 		StringBuffer hql = new StringBuffer(selectCourtBean);
 		hql.append("and regionId=?");
 		Query q = session.createQuery(hql.toString());
-		q.setInteger(0, regionId);
+		q.setInteger(0, regionId).setFirstResult((currentPage - 1) * rows)
+				.setMaxResults(rows);
 		return extracted(q);
 	}
 
 	@Override
-	public List<CourtBean> findByUserId(Integer userId) {
+	public List<CourtBean> findPagedByUserId(Integer userId,
+			Integer currentPage, Integer rows) {
 		Session session = getHibernateTemplate().getSessionFactory()
 				.getCurrentSession();
 		StringBuffer hql = new StringBuffer(selectCourtBean);
 		hql.append("and userId=?");
 		Query q = session.createQuery(hql.toString());
+		q.setMaxResults(rows).setFirstResult((currentPage - 1) * rows);
 		q.setInteger(0, userId);
 		return extracted(q);
 	}
@@ -304,8 +310,8 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 	}
 
 	@Override
-	public List<CourtBean> findByRegion(String region, int currentPage, int rows)
-			throws Exception {
+	public List<CourtBean> findPagedByRegion(String region, int currentPage,
+			int rows) throws Exception {
 		if (!CommonUtils.isNullOrEmpty(region)) {
 			region += "% ";
 		}
@@ -335,6 +341,12 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 		Query q = session.createQuery(strHql);
 		q.setParameterList("ids", ids);
 		q.executeUpdate();
+	}
+
+	@Override
+	public int countByUserId(Integer userId) {
+		String strHql = "select count(*) from Court where userId=" + userId;
+		return count(strHql);
 	}
 
 }

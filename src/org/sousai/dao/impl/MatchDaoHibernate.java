@@ -153,7 +153,6 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 		return null;
 	}
 
-
 	@SuppressWarnings("unchecked")
 	@Override
 	public Map<String, Integer> getEachMatchCount(Integer userId) {
@@ -322,7 +321,6 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 			java.sql.Date now, int matchState, int dayOfWeek, Date beginTime,
 			Date endTime, String region, int currentPage, int rows,
 			String orderByCol, Boolean isAsc) throws Exception {
-		List<MatchBean> list = null;
 		if (!CommonUtils.isNullOrEmpty(region)) {
 			region = " %" + region + "% ";
 		}
@@ -535,5 +533,53 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 		Map<String, Integer[]> params = new HashMap<String, Integer[]>();
 		params.put("ids", ids);
 		executeHql(strHql, params);
+	}
+
+	@Override
+	public int countByUserId(Integer userId) {
+		String strHql = "select count(*) from Match where userId=" + userId;
+		return count(strHql);
+	}
+
+	@Override
+	public int countByParams(String keyValue, String matchType,
+			java.sql.Date now, int matchState, int dayOfWeek, Date beginTime,
+			Date endTime, String region) throws Exception {
+		if (!CommonUtils.isNullOrEmpty(region)) {
+			region = " %" + region + "% ";
+		}
+
+		// 构建筛选比赛状态的子语句
+		String strMatchStateStatement = buildMatchStateStatement(matchState,
+				now);
+		// 构建筛选周几的子语句
+		String strDayOfWeekStatement = buildDayOfWeekStatement(dayOfWeek);
+		// 构建查询关键字的子语句，在name，type，region，addr字段查询
+		String strKeyValueStatement = buildKeyValueStatement(keyValue,
+				new String[] { addPrefixToColumn("name"),
+						addPrefixToColumn("type"), addPrefixToColumn("region"),
+						addPrefixToColumn(" addr ") });
+
+		int[] types = new int[] { 11, 11, 0, 3, 2, 11 };
+		String[] columns = new String[] { strKeyValueStatement,
+				strDayOfWeekStatement, addPrefixToColumn("type"),
+				addPrefixToColumn("beginTime"), addPrefixToColumn("region"),
+				strMatchStateStatement };
+		Object[] args = new Object[] {
+				null,
+				null,
+				matchType,
+				new Timestamp[] { CommonUtils.ToTimestamp(beginTime),
+						CommonUtils.ToTimestamp(endTime) }, region, null };
+		int[] relations = new int[] { 1, 1, 1, 1, 1, 1 };
+		String strWhere = Append_StringV2(" ", types, columns, args, relations,
+				false);
+		MyPrint.myPrint("findPagedByParams.strWhere = " + strWhere);
+		// return findPagedByWhereOrderBy(strWhere, currentPage, rows,
+		// orderByCol,
+		// isAsc);
+
+		String strHql = "select count(*) from Match where " + strWhere;
+		return count(strHql);
 	}
 }

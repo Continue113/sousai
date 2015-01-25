@@ -382,18 +382,18 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public List<CourtBean> getCourtInMatchReling(Integer regionId) {
-		return courtDao.findByRegionId(regionId);
+	public List<CourtBean> getCourtInMatchReling(Integer regionId, Integer currentPage, Integer rows) {
+		return courtDao.findPagedByRegionId(regionId, currentPage, rows);
 	}
 
 	@Override
 	public List<CourtBean> getCourtByRegion(String region, int currentPage, int rows) throws Exception{
-		return courtDao.findByRegion(region, currentPage, rows);
+		return courtDao.findPagedByRegion(region, currentPage, rows);
 	}
 
 	@Override
-	public List<CourtBean> getCourtByUserId(Integer userId) {
-		return (List<CourtBean>) courtDao.findByUserId(userId);
+	public List<CourtBean> getCourtByUserId(Integer userId, Integer currentPage, Integer rows) {
+		return (List<CourtBean>) courtDao.findPagedByUserId(userId, currentPage, rows);
 	}
 
 	@Override
@@ -443,5 +443,25 @@ public class UserManagerImpl implements UserManager {
 	@Override
 	public Integer countByRegion(String region) throws Exception {
 		return courtDao.countByRegion(region);
+	}
+
+	@Override
+	public List<MatchBean> getMatchByUserId(Integer userId, Integer currentPage, Integer rows) {
+		return matchDao.findByUserId(userId, currentPage, rows);
+	}
+
+	@Override
+	public int countCourtByUserId(Integer userId) throws Exception {
+		return courtDao.countByUserId(userId);
+	}
+
+	@Override
+	public int countMatchByUserId(Integer userId) throws Exception {
+		return matchDao.countByUserId(userId);
+	}
+
+	@Override
+	public int countUsersFavorMatch(Integer userId) throws Exception {
+		return userMarkDao.countByMarkingUserId(userId);
 	}
 }

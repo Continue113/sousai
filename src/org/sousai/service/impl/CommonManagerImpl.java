@@ -150,7 +150,7 @@ public class CommonManagerImpl implements CommonManager {
 	}
 
 	@Override
-	public Integer countByParams(String keyValue, String matchType,
+	public Integer countCourtByParams(String keyValue, String matchType,
 			Integer courtTypeId, String region) throws Exception {
 		return courtDao.countByParams(keyValue, matchType, courtTypeId, region);
 	}
@@ -172,6 +172,13 @@ public class CommonManagerImpl implements CommonManager {
 			throws Exception {
 		return matchDao.findPagedByParams(keyValue, matchType, now, matchState, dayOfWeek, beginTime, endTime, region,
 				currentPage, rows, orderByCol, isAsc);
+	}
+
+	@Override
+	public Integer countMatchByParams(String keyValue, String matchType,
+			java.sql.Date now, int matchState, int dayOfWeek, Date beginTime,
+			Date endTime, String region) throws Exception {
+		return matchDao.countByParams(keyValue, matchType, now, matchState, dayOfWeek, beginTime, endTime, region);
 	}
 
 }

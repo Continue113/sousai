@@ -101,6 +101,46 @@ public class SqlHelper extends HibernateDaoSupport {
 		return value;
 	}
 
+	public int count(String strHql, Map<String, ?> params) {
+		int value = -1;
+		try {
+			Session session = getHibernateTemplate().getSessionFactory()
+					.getCurrentSession();
+			Query q = session.createQuery(strHql);
+			for (String key : params.keySet()) {
+				if (params.get(key) instanceof Collection) {
+					q.setParameterList(key, (Collection) params.get(key));
+				} else if (params.get(key) instanceof Object[]) {
+					q.setParameterList(key, (Object[]) params.get(key));
+				} else {
+					q.setParameter(key, params.get(key));
+				}
+			}
+			value = ((Long) q.uniqueResult()).intValue();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return value;
+	}
+
+	public int count(String strHql, List<?> params) {
+		int value = -1;
+		try {
+			Session session = getHibernateTemplate().getSessionFactory()
+					.getCurrentSession();
+			Query q = session.createQuery(strHql);
+			for (int i = 0; i < params.size(); i++) {
+				q.setParameter(i, params.get(i));
+			}
+			value = ((Long) q.uniqueResult()).intValue();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return value;
+	}
+
 	/**
 	 * 组装含有like的语句
 	 * 

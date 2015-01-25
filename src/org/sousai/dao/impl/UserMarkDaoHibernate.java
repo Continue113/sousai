@@ -1,5 +1,6 @@
 package org.sousai.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -11,11 +12,11 @@ public class UserMarkDaoHibernate extends SqlHelper implements UserMarkDao {
 
 	@Override
 	public UserMark get(Integer id) {
-		return (UserMark)getHibernateTemplate().get(UserMark.class, id);
+		return (UserMark) getHibernateTemplate().get(UserMark.class, id);
 	}
 
 	@Override
-	public Long save(UserMark userMark) throws Exception{
+	public Long save(UserMark userMark) throws Exception {
 		return Long.parseLong(getHibernateTemplate().save(userMark).toString());
 	}
 
@@ -33,14 +34,14 @@ public class UserMarkDaoHibernate extends SqlHelper implements UserMarkDao {
 	public void delete(Integer id) {
 		getHibernateTemplate().delete(get(id));
 	}
-	
+
 	@Override
 	public Boolean markMatchByUserId(Integer userId, Integer matchId) {
 		Boolean value = false;
-		
+
 		return value;
 	}
-	
+
 	@Override
 	public List<MatchBean> findByMarkingUserId(Integer userId, int currentPage,
 			int rows) {
@@ -61,5 +62,13 @@ public class UserMarkDaoHibernate extends SqlHelper implements UserMarkDao {
 		}
 	}
 
+	@Override
+	public int countByMarkingUserId(Integer userId) {
+		String strHql = "select count(*) from from Match m, Court c, User u, UserMark um "
+				+ "where m.courtId=c.id and u.id=m.userId and um.userId=? and m.id=um.matchId";
+		List<Integer> params = new ArrayList<Integer>();
+		params.add(userId);
+		return count(strHql, params);
+	}
 
 }

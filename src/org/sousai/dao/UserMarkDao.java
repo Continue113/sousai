@@ -34,4 +34,11 @@ public interface UserMarkDao{
 	 */
 	List<MatchBean> findByMarkingUserId(Integer userId, int currentPage,
 			int rows);
+	
+	/**
+	 * 获取用户收藏的比赛数量
+	 * @param userId
+	 * @return
+	 */
+	int countByMarkingUserId(Integer userId);
 }

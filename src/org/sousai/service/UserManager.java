@@ -213,7 +213,7 @@ public interface UserManager {
 	String uploadUserPic(int flag, File[] images, String[] imgNames,
 			Integer UserId);
 
-	public List<CourtBean> getCourtInMatchReling(Integer regionId);
+	public List<CourtBean> getCourtInMatchReling(Integer regionId, Integer currentPage, Integer rows);
 
 	/**
 	 * 通过地区查询场地
@@ -229,7 +229,23 @@ public interface UserManager {
 
 	public Integer relMatch(Match match);
 
-	public List<CourtBean> getCourtByUserId(Integer userId);
+	/**
+	 * 获取指定用户发布的场地信息
+	 * @param userId
+	 * @param currentPage
+	 * @param rows
+	 * @return
+	 */
+	public List<CourtBean> getCourtByUserId(Integer userId, Integer currentPage, Integer rows);
+
+	/**
+	 * 获取指定用户发布的比赛信息
+	 * @param userId
+	 * @param currentPage
+	 * @param rows
+	 * @return
+	 */
+	public List<MatchBean> getMatchByUserId(Integer userId, Integer currentPage, Integer rows);
 
 	/**
 	 * 通过场地id，获取场地信息
@@ -263,4 +279,11 @@ public interface UserManager {
 	public Long markMatch(UserMark userMark) throws Exception;
 	
 	public Integer countByRegion(String region) throws Exception;
+	
+	public int countCourtByUserId(Integer userId) throws Exception;
+	
+	public int countMatchByUserId(Integer userId) throws Exception;
+	
+	public int countUsersFavorMatch(Integer userId) throws Exception;
+	
 }

@@ -1,27 +1,35 @@
 package org.sousai.action;
 
-import java.util.List;
-
 import org.apache.struts2.ServletActionContext;
 import org.sousai.action.base.UserBaseAction;
 import org.sousai.common.Constant;
 import org.sousai.domain.FrontMessage;
-import org.sousai.domain.Match;
 import org.sousai.tools.JSONUtils;
-import org.sousai.vo.MatchBean;
-import org.sousai.vo.UserBean;
 
-import com.opensymphony.xwork2.ActionContext;
+import com.googlecode.jsonplugin.annotations.JSON;
 
-public class GetUserFavorMatchAction extends UserBaseAction {
+public class GetCourtByUserIdAction extends UserBaseAction {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -2544837367980241497L;
+	private static final long serialVersionUID = -6597007450480035051L;
 
+	private Integer userId;
 	private Integer currentPage;
 	private Integer rows;
+
+	/**
+	 * @return the userId
+	 */
+	public Integer getUserId() {
+		return userId;
+	}
+
+	/**
+	 * @param userId
+	 *            the userId to set
+	 */
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
 
 	/**
 	 * @return the currentPage
@@ -61,6 +69,7 @@ public class GetUserFavorMatchAction extends UserBaseAction {
 	}
 
 	public String execute() throws Exception {
+		FrontMessage mesg = new FrontMessage();
 		try {
 			if (currentPage == null) {
 				currentPage = 1;
@@ -68,30 +77,14 @@ public class GetUserFavorMatchAction extends UserBaseAction {
 			if (rows == null) {
 				rows = Constant.DEFAULT_ROWS;
 			}
-			List<MatchBean> list = null;
-			UserBean userBean = (UserBean) ActionContext.getContext()
-					.getSession().get("userBean");
-			if (userBean != null) {
-				Integer userId = userBean.getUserId();
-				FrontMessage mesg = new FrontMessage();
-				list = umg.getUsersFavorMatch(userId,
-						currentPage, rows);
-				if (list != null) {
-					mesg.setBody(list);
-					mesg.setCount(umg.countUsersFavorMatch(userId));
-					JSONUtils.toJson(ServletActionContext.getResponse(), mesg);
-					return null;
-				}
-			}
-
-			JSONUtils.toJson(ServletActionContext.getResponse(), "fail");
-			return null;
-
+			mesg.setBody(umg.getCourtByUserId(userId, currentPage, rows));
+			mesg.setCount(umg.countCourtByUserId(userId));
 		} catch (Exception e) {
 			e.printStackTrace();
-			JSONUtils.toJson(ServletActionContext.getResponse(), "fail");
-			return null;
+			mesg.setCount(-1);
 		}
-
+		JSONUtils.toJson(ServletActionContext.getResponse(), mesg);
+		return null;
 	}
+
 }

@@ -185,8 +185,25 @@ public interface CommonManager {
 	 * @return
 	 * @throws Exception
 	 */
-	public Integer countByParams(String keyValue, String matchType,
+	public Integer countCourtByParams(String keyValue, String matchType,
 			Integer courtTypeId, String region) throws Exception;
+	
+	/**
+	 * 获取匹配高级搜索比赛的记录数
+	 * @param keyValue
+	 * @param matchType
+	 * @param now
+	 * @param matchState
+	 * @param dayOfWeek
+	 * @param beginTime
+	 * @param endTime
+	 * @param region
+	 * @return
+	 * @throws Exception
+	 */
+	public Integer countMatchByParams(String keyValue, String matchType,
+			java.sql.Date now, int matchState, int dayOfWeek, Date beginTime,
+			Date endTime, String region) throws Exception;
 
 	/**
 	 * 修改比赛信息

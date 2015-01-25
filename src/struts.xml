@@ -164,13 +164,14 @@
 			<result name="success">/</result>
 		</action>
 		<action name="courtStatistics" class="org.sousai.webstatistics.Statistics" method="courtStatistics">
-			<result name="success"></result>
+			<result name="success">
+			</result>
 		</action>
 		
 		<action name="markMatch" class="org.sousai.action.MarkMatchAction" >
 		</action>
-
-		<!-- 高级搜索场地 -->		
+		
+		<!-- 高级搜索场地 -->
 		<action name="getCourtByP" class="org.sousai.action.GetCourtByParamsAction">
 		</action>
 		
@@ -199,7 +200,12 @@
 		<!-- 批量删除用户这个action只有管理员可用 -->
 		<action name="deleteUsersByAdmin" class="org.sousai.action.DeleteUsersByAdminAction">
 		</action>
-		
+		<!-- 查询某个用户发布的场地 -->
+		<action name="getCourtByUserId" class="org.sousai.action.GetCourtByUserIdAction">
+		</action>
+		<!-- 查询某个用户发布的比赛 -->
+		<action name="getMatchByUserId" class="org.sousai.action.GetMatchByUserIdAction">
+		</action>
 	</package>
 	
 	

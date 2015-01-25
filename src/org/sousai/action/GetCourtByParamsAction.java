@@ -155,14 +155,14 @@ public class GetCourtByParamsAction extends UserBaseAction {
 				currentPage = 1;
 			}
 			if (rows == null) {
-				rows = 25;
+				rows = Constant.DEFAULT_ROWS;
 			}
 			List<CourtBean> list = cmg.findPagedCourtByParams(keyValue, matchType,
 					courtTypeId, region, currentPage, rows, orderByCol, isAsc);
 			int count = 0;
 			FrontMessage msg = new FrontMessage(list, count);
 			if (list != null) {
-				msg.setCount(cmg.countByParams(keyValue, matchType,courtTypeId, region));
+				msg.setCount(cmg.countCourtByParams(keyValue, matchType,courtTypeId, region));
 			}
 			JSONUtils.toJson(ServletActionContext.getResponse(), msg);
 		} catch (Exception e) {

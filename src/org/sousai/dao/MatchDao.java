@@ -82,6 +82,8 @@ public interface MatchDao {
 			int pageSize);
 
 	int countMatch();
+	
+	int countByUserId(Integer userId);
 
 	List<MatchBean> findPagedByKeyValueOrderBy(String[] columns,
 			String keyValue, Integer currentPage, Integer rows,
@@ -110,6 +112,22 @@ public interface MatchDao {
 			Date endTime, String region, int currentPage, int rows,
 			String orderByCol, Boolean isAsc) throws Exception;
 	
+	/**
+	 * 高级搜索比赛的结果数
+	 * @param keyValue
+	 * @param matchType
+	 * @param now
+	 * @param matchState
+	 * @param dayOfWeek
+	 * @param beginTime
+	 * @param endTime
+	 * @param region
+	 * @return
+	 * @throws Exception
+	 */
+	int countByParams(String keyValue, String matchType,
+			java.sql.Date now, int matchState, int dayOfWeek, Date beginTime,
+			Date endTime, String region) throws Exception;
 	/**
 	 * 批量发布比赛（将verify置为1）
 	 * @param ids

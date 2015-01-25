@@ -3,9 +3,16 @@ package org.sousai.action;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.struts2.ServletActionContext;
 import org.sousai.action.base.UserBaseAction;
+import org.sousai.common.Constant;
+import org.sousai.domain.FrontMessage;
 import org.sousai.service.CommonManager;
 import org.sousai.service.impl.CommonManagerImpl;
+import org.sousai.tools.JSONUtils;
+
+import com.googlecode.jsonplugin.annotations.JSON;
+import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 
 public class GetMatchByParamsAction extends UserBaseAction {
 
@@ -198,27 +205,34 @@ public class GetMatchByParamsAction extends UserBaseAction {
 
 	public String execute() throws Exception {
 
-//		keyValue = "足";
-//		matchType = "足球";
-//		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-//		beginTime = format.parse("2014-12-01");
-//		endTime = format.parse("2014-12-03");
-//		region = "北京市-";
-//		currentPage = 1;
-//		rows = 10;
-//		dayOfWeek = 1;
-//		matchState = 6;
+		// keyValue = "足";
+		// matchType = "足球";
+		// SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		// beginTime = format.parse("2014-12-01");
+		// endTime = format.parse("2014-12-03");
+		// region = "北京市-";
+		// currentPage = 1;
+		// rows = 10;
+		// dayOfWeek = 1;
+		// matchState = 6;
 		if (currentPage == null) {
 			currentPage = 1;
 		}
 		if (rows == null) {
-			rows = 25;
+			rows = Constant.DEFAULT_ROWS;
 		}
-		java.sql.Date now = new java.sql.Date(new Date().getTime());
-		CommonManager cmg = new CommonManagerImpl();
-		cmg.findPagedMatchByParams(keyValue, matchType, now, matchState,
-				dayOfWeek, beginTime, endTime, region, currentPage, rows,
-				orderByCol, isAsc);
+		try {
+			java.sql.Date now = new java.sql.Date(new Date().getTime());
+			FrontMessage mesg = new FrontMessage();
+			mesg.setBody(cmg.findPagedMatchByParams(keyValue, matchType, now,
+					matchState, dayOfWeek, beginTime, endTime, region,
+					currentPage, rows, orderByCol, isAsc));
+			mesg.setCount(cmg.countMatchByParams(keyValue, matchType, now, matchState, dayOfWeek, now, now, region));
+			JSONUtils.toJson(ServletActionContext.getResponse(), mesg);
+		} catch (Exception e) {
+			JSONUtils
+					.toJson(ServletActionContext.getResponse(), Constant.ERROR);
+		}
 		return null;
 	}
 }

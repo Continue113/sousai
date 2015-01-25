@@ -126,7 +126,7 @@ public class GetAllMessageAction extends UserBaseAction {
 				currentPage = 1;
 			}
 			if (rows == null) {
-				rows = 25;
+				rows = Constant.DEFAULT_ROWS;
 			}
 			String[] columns = strColumns.split(",");
 			List<MessageBean> list = amg.findPagedMesgByKeyValueOrderBy(
