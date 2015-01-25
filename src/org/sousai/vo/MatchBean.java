@@ -1,6 +1,7 @@
 package org.sousai.vo;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MatchBean implements Serializable {
@@ -22,6 +23,8 @@ public class MatchBean implements Serializable {
 	private String userName;
 	private String region;
 	private String state;
+	private String beginDayOfWeek;
+	private String endDayOfWeek;
 
 	public MatchBean(Integer id, String name, String type, Date beginTime,
 			Date endTime, Integer courtId, String courtName, String rule,
@@ -51,6 +54,9 @@ public class MatchBean implements Serializable {
 		} else if (now.compareTo(endTime) >= 0) {
 			this.state = "已结束";
 		}
+		SimpleDateFormat dateFm = new SimpleDateFormat("EEEE");
+		this.beginDayOfWeek = dateFm.format(beginTime);
+		this.endDayOfWeek = dateFm.format(endTime);
 	}
 
 	/**
@@ -283,6 +289,34 @@ public class MatchBean implements Serializable {
 	 */
 	public void setState(String state) {
 		this.state = state;
+	}
+
+	/**
+	 * @return the beginDayOfWeek
+	 */
+	public String getBeginDayOfWeek() {
+		return beginDayOfWeek;
+	}
+
+	/**
+	 * @param beginDayOfWeek the beginDayOfWeek to set
+	 */
+	public void setBeginDayOfWeek(String beginDayOfWeek) {
+		this.beginDayOfWeek = beginDayOfWeek;
+	}
+
+	/**
+	 * @return the endDayOfWeek
+	 */
+	public String getEndDayOfWeek() {
+		return endDayOfWeek;
+	}
+
+	/**
+	 * @param endDayOfWeek the endDayOfWeek to set
+	 */
+	public void setEndDayOfWeek(String endDayOfWeek) {
+		this.endDayOfWeek = endDayOfWeek;
 	}
 
 }
