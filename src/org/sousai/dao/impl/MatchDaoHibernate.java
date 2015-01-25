@@ -573,7 +573,7 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 		// return findPagedByWhereOrderBy(strWhere, currentPage, rows,
 		// orderByCol,
 		// isAsc);
-		String strHql = "select count(*) from Match where " + strWhere;
+		String strHql = "select count(*) from Match m where " + strWhere;
 		return count(strHql);
 	}
 }
