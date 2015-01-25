@@ -533,6 +533,7 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 	public void relMatchesByAdmin(Integer[] ids) {
 		String strHql = "update Match set verify='1' where ids in (:ids)";
 		Map<String, Integer[]> params = new HashMap<String, Integer[]>();
+		params.put("ids", ids);
 		executeHql(strHql, params);
 	}
 }
