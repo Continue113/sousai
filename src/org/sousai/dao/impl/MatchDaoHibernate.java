@@ -324,7 +324,7 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 		String strWhere = buildFindByParamsWhere(keyValue, matchType, now,
 				matchState, dayOfWeek, beginTime, endTime, region);
 		MyPrint.myPrint("findPagedByParams.strWhere = " + strWhere);
-		return findPagedByWhereOrderBy(strWhere, currentPage, rows, orderByCol,
+		return findPagedByWhereOrderBy(strWhere, currentPage, rows, addPrefixToColumn(orderByCol),
 				isAsc);
 	}
 

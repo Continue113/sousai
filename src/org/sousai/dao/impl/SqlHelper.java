@@ -474,6 +474,21 @@ public class SqlHelper extends HibernateDaoSupport {
 		return value;
 	}
 
+	private StringBuilder addRelation(StringBuilder strBuilder, int relation){
+		switch (relation) {
+		case 0:
+			break;
+		case 1:
+			strBuilder.append(" and ");
+			break;
+		case 2:
+			strBuilder.append(" or ");
+			break;
+		default:
+			break;
+		}
+		return strBuilder;
+	}
 /**
 	 * 拼接字符串
 	 * 
@@ -512,26 +527,12 @@ public class SqlHelper extends HibernateDaoSupport {
 			StringBuilder strBuilder = new StringBuilder();
 			strBuilder.append(value);
 			for (int i = 0; i < args.length; i++) {
-				if (flag) {
-					switch (relations[i]) {
-					case 0:
-						break;
-					case 1:
-						strBuilder.append(" and ");
-						break;
-					case 2:
-						strBuilder.append(" or ");
-						break;
-					default:
-						break;
-					}
-				}
 				switch (types[i]) {
 				case 0:
 					if (CommonUtils.isNullOrEmpty(args[i])) {
 						break;
 					}
-					flag = true;
+					addRelation(strBuilder, relations[i]);
 					String temp0 = (String) args[i];
 					temp0 = temp0.trim();
 					strBuilder.append(String.format(" %s='%s' ", columns[i],
@@ -543,7 +544,7 @@ public class SqlHelper extends HibernateDaoSupport {
 					}
 					// String temp1 = (String) args[i];
 					// temp1 = temp1.trim();
-					flag = true;
+					addRelation(strBuilder, relations[i]);
 					strBuilder.append(String.format(" %s=%s ", columns[i],
 							args[i]));
 					break;
@@ -551,7 +552,7 @@ public class SqlHelper extends HibernateDaoSupport {
 					if (CommonUtils.isNullOrEmpty(args[i])) {
 						break;
 					}
-					flag = true;
+					addRelation(strBuilder, relations[i]);
 					String temp2 = (String) args[i];
 					temp2 = temp2.trim();
 					strBuilder.append(" "
@@ -561,7 +562,7 @@ public class SqlHelper extends HibernateDaoSupport {
 					if (CommonUtils.isNullOrEmpty(args[i])) {
 						break;
 					}
-					flag = true;
+					addRelation(strBuilder, relations[i]);
 					Object[] temp3 = (Object[]) args[i];
 					if (temp3.length != 2) {
 						String errorPalce = (new Throwable().getStackTrace()[0])
@@ -576,7 +577,7 @@ public class SqlHelper extends HibernateDaoSupport {
 					if (CommonUtils.isNullOrEmpty(args[i])) {
 						break;
 					}
-					flag = true;
+					addRelation(strBuilder, relations[i]);
 					Object[] temp4 = (Object[]) args[i];
 					if (temp4.length != 2) {
 						String errorPalce = (new Throwable().getStackTrace()[0])
@@ -591,7 +592,7 @@ public class SqlHelper extends HibernateDaoSupport {
 					if (CommonUtils.isNullOrEmpty(args[i])) {
 						break;
 					}
-					flag = true;
+					addRelation(strBuilder, relations[i]);
 					strBuilder.append(String.format(" %1$s<'%2$s' ",
 							columns[i], args[i]));
 					break;
@@ -599,7 +600,7 @@ public class SqlHelper extends HibernateDaoSupport {
 					if (CommonUtils.isNullOrEmpty(args[i])) {
 						break;
 					}
-					flag = true;
+					addRelation(strBuilder, relations[i]);
 					strBuilder.append(String.format(" %1$s<%2$s ", columns[i],
 							args[i]));
 					break;
@@ -607,7 +608,7 @@ public class SqlHelper extends HibernateDaoSupport {
 					if (CommonUtils.isNullOrEmpty(args[i])) {
 						break;
 					}
-					flag = true;
+					addRelation(strBuilder, relations[i]);
 					strBuilder.append(String.format(" %1$s>'%2$s' ",
 							columns[i], args[i]));
 					break;
@@ -615,7 +616,7 @@ public class SqlHelper extends HibernateDaoSupport {
 					if (CommonUtils.isNullOrEmpty(args[i])) {
 						break;
 					}
-					flag = true;
+					addRelation(strBuilder, relations[i]);
 					strBuilder.append(String.format(" %1$s>%2$s ", columns[i],
 							args[i]));
 					break;
@@ -623,7 +624,7 @@ public class SqlHelper extends HibernateDaoSupport {
 					if (CommonUtils.isNullOrEmpty(args[i])) {
 						break;
 					}
-					flag = true;
+					addRelation(strBuilder, relations[i]);
 					strBuilder.append(String.format(" %1$s<>'%2$s' ",
 							columns[i], args[i]));
 					break;
@@ -631,7 +632,7 @@ public class SqlHelper extends HibernateDaoSupport {
 					if (CommonUtils.isNullOrEmpty(args[i])) {
 						break;
 					}
-					flag = true;
+					addRelation(strBuilder, relations[i]);
 					strBuilder.append(String.format(" %1$s<>%2$s ", columns[i],
 							args[i]));
 					break;
@@ -640,8 +641,8 @@ public class SqlHelper extends HibernateDaoSupport {
 					if (CommonUtils.isNullOrEmpty(columns[i])) {
 						break;
 					}
+					addRelation(strBuilder, relations[i]);
 					strBuilder.append(" (" + columns[i] + ") ");
-					flag = true;
 					break;
 				default:
 					break;
