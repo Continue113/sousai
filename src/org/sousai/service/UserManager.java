@@ -52,8 +52,9 @@ public interface UserManager {
 	 * @param name
 	 *            �û���
 	 * @return �û���Ϣ
+	 * @throws Exception 
 	 */
-	public UserBean getByName(String name);
+	public UserBean getByName(String name) throws Exception;
 
 	/**
 	 * ��poת����vo
@@ -61,8 +62,9 @@ public interface UserManager {
 	 * @param user
 	 *            po��
 	 * @return userBean vo��
+	 * @throws Exception 
 	 */
-	public UserBean transform(User user);
+	public UserBean transform(User user) throws Exception;
 
 	/**
 	 * ��ݷ�װ��user����ע��
@@ -115,8 +117,9 @@ public interface UserManager {
 	 * @param integer
 	 *            在数据库中德标识
 	 * @return 1成功 0失败
+	 * @throws Exception 
 	 */
-	public int updateInfo(String key, Integer integer);
+	public int updateInfo(String key, Integer integer) throws Exception;
 
 	/**
 	 * 用户发布场地

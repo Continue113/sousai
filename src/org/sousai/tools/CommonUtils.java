@@ -125,8 +125,7 @@ public class CommonUtils {
 			throws Exception {
 		Date value = null;
 		try {
-			if(CommonUtils.isNullOrEmpty(format))
-			{
+			if (CommonUtils.isNullOrEmpty(format)) {
 				format = new SimpleDateFormat("yyyy-MM-dd");
 			}
 			if (!CommonUtils.isNullOrEmpty(str))
@@ -135,6 +134,25 @@ public class CommonUtils {
 			e.printStackTrace();
 			String errorPalce = (new Throwable().getStackTrace()[0]).toString(); // 当前发生异常位置
 			throw new Exception(errorPalce + "String转换日期失败");
+		}
+		return value;
+	}
+
+	/**
+	 * Date转换为String,format为null的花，转换为yyyy-MM-dd格式
+	 * @param date
+	 * @param format
+	 * @return
+	 * @throws Exception
+	 */
+	public static String DateToString(Date date, SimpleDateFormat format)
+			throws Exception {
+		String value = null;
+		if (CommonUtils.isNullOrEmpty(format)) {
+			format = new SimpleDateFormat("yyyy-MM-dd");
+		}
+		if (!CommonUtils.isNullOrEmpty(date)) {
+			value = format.format(date);
 		}
 		return value;
 	}

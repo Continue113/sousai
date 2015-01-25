@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import org.sousai.tools.CommonUtils;
+
 public class MatchBean implements Serializable {
 
 	private static final long serialVersionUID = 9148543628409192006L;
@@ -30,19 +32,17 @@ public class MatchBean implements Serializable {
 	public MatchBean(Integer id, String name, String type, Date beginTime,
 			Date endTime, Integer courtId, String courtName, String rule,
 			Date relTime, char verify, String score, Integer userId,
-			String userName, String region) {
+			String userName, String region) throws Exception {
 		super();
 		this.id = id;
 		this.name = name;
 		this.type = type;
-		SimpleDateFormat dateFm = new SimpleDateFormat("yyyy-MM-dd");
-		this.beginTime = dateFm.format(beginTime);
-		this.endTime = dateFm.format(endTime);
+		this.beginTime = CommonUtils.DateToString(beginTime,null);
+		this.endTime = CommonUtils.DateToString(endTime,null);;
 		this.courtId = courtId;
 		this.courtName = courtName;
 		this.rule = rule;
-		SimpleDateFormat timeFm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		this.relTime = timeFm.format(relTime);
+		this.relTime = CommonUtils.DateToString(relTime,new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
 		this.verify = verify;
 		this.score = score;
 		this.userId = userId;

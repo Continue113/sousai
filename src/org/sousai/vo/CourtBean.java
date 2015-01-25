@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.sousai.tools.CommonUtils;
+
 public class CourtBean implements Serializable
 {
 	String selectCourtBeanField = "select c.ID,c.NAME,c.COURTTYPEID,ct.NAME,c.MATCHTYPE,c.REGIONID,c.TABLENUM,c.TEL,c.MATCHCOUNT,c.PRICE,c.WORKTIME,c.INTRO,c.VERIFY,c.relDate,c.modDate,c.USERID,u.NAME from COURT c, COURTTYPE ct, USER u ";
@@ -56,7 +58,7 @@ public class CourtBean implements Serializable
 			String tel, Integer matchCount, String price,
 			String workTime, String intro, char verify, 
 			Date relDate, Date modDate, Integer userId,
-			String userName) {
+			String userName) throws Exception {
 		super();
 		this.id = id;
 		this.name = name;
@@ -73,10 +75,8 @@ public class CourtBean implements Serializable
 		this.workTime = workTime;
 		this.intro = intro;
 		this.verify = verify;
-		SimpleDateFormat timeFm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		this.relDate = timeFm.format(relDate);
-		SimpleDateFormat dateFm = new SimpleDateFormat("yyyy-MM-dd");
-		this.modDate = dateFm.format(modDate);
+		this.relDate = CommonUtils.DateToString(relDate, null);
+		this.modDate = CommonUtils.DateToString(modDate, new SimpleDateFormat("yyyy-MM-dd"));
 //		this.picId = picId;
 		this.userId = userId;
 		this.userName = userName;

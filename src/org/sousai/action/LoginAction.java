@@ -43,7 +43,7 @@ public class LoginAction extends UserBaseAction
 		return this.user;
 	}
 	
-	public UserBean getUserInfo()
+	public UserBean getUserInfo() throws Exception
 	{
 		return umg.getByName(getUser().getName());
 	}

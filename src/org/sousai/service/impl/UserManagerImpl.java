@@ -105,7 +105,7 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public UserBean getByName(String name) {
+	public UserBean getByName(String name) throws Exception {
 		MyPrint.myPrint("getByName now turn to transform");
 		User user = userDao.findByName(name);
 		if (user != null) {
@@ -116,7 +116,7 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public UserBean transform(User user) {
+	public UserBean transform(User user) throws Exception {
 		MyPrint.myPrint("transform now");
 		// System.out.println(""+user.getName());
 		/*
@@ -248,7 +248,7 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public int updateInfo(String key, Integer id) {
+	public int updateInfo(String key, Integer id) throws Exception {
 		ActionContext ctx = ActionContext.getContext();
 		// 更新用户信息
 		if (key == "userBean") {

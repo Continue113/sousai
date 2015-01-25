@@ -12,6 +12,8 @@ import org.sousai.vo.UserBean;
 import com.opensymphony.xwork2.ActionContext;
 
 public class RegAction extends UserBaseAction {
+
+	private static final long serialVersionUID = -3058552599358397773L;
 	// ��װ�������
 	private User user;
 	// �����¼�����ʾ��Ϣ
@@ -35,7 +37,7 @@ public class RegAction extends UserBaseAction {
 		return this.tip;
 	}
 
-	public UserBean getUserInfo() {
+	public UserBean getUserInfo() throws Exception {
 		return umg.getByName(getUser().getName());
 
 	}

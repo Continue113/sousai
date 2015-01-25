@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.sousai.domain.User;
+import org.sousai.tools.CommonUtils;
 
 /**
  * Description: <br/>
@@ -36,16 +37,15 @@ public class UserBean implements Serializable {
 	// ��ʼ���������ԵĹ�����
 	public UserBean(Integer userId, String userName, String userPwd,
 			String userEmail, char userType, String userPicId,
-			Date userRegTime, Date userLastLogTime, Integer userLastRegionId) {
+			Date userRegTime, Date userLastLogTime, Integer userLastRegionId) throws Exception {
 		this.setUserId(userId);
 		this.setUserName(userName);
 		this.setUserPwd(userPwd);
 		this.setUserEmail(userEmail);
 		this.setUserType(userType);
 		this.setUserPicId(userPicId);
-		SimpleDateFormat timeFm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		this.userRegTime = timeFm.format(userRegTime);
-		this.userLastLogTime = timeFm.format(userLastLogTime);
+		this.userRegTime = CommonUtils.DateToString(userRegTime, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+		this.userLastLogTime = CommonUtils.DateToString(userLastLogTime, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
 		this.setUserLastRegionId(userLastRegionId);
 	}
 
@@ -69,16 +69,14 @@ public class UserBean implements Serializable {
 		this.userRegTime = userRegTime;
 	}
 
-	public UserBean(User user) {
+	public UserBean(User user) throws Exception {
 		this.userId = user.getId();
 		this.userName = user.getName();
 		this.userEmail = user.getEmail();
-		SimpleDateFormat timeFm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		this.userLastLogTime = timeFm.format(user.getLastLogTime());
+		this.userLastLogTime = CommonUtils.DateToString(user.getLastLogTime(), new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
 		this.userPicId = user.getPicId();
 		this.userPwd = user.getPwd();
-		this.userRegTime = timeFm.format(user.getRegTime());
-		this.userType = user.getType();
+		this.userRegTime = CommonUtils.DateToString(user.getRegTime(), new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));		this.userType = user.getType();
 		this.userLastRegionId = user.getLastRegionId();
 	}
 

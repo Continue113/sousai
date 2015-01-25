@@ -3,6 +3,8 @@ package org.sousai.vo;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.sousai.tools.CommonUtils;
+
 public class MessageBean {
 	private Long id;
 	private Long parentId;
@@ -17,15 +19,14 @@ public class MessageBean {
 	
 	
 	public MessageBean(Long id, Long parentId, Long rootId, Integer userId, Integer courtId,
-			Date time, String mesg, String userName,Integer state, String courtName) {
+			Date time, String mesg, String userName,Integer state, String courtName) throws Exception {
 		super();
 		this.id = id;
 		this.parentId = parentId;
 		this.rootId = rootId;
 		this.userId = userId;
 		this.courtId = courtId;
-		SimpleDateFormat timeFm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		this.time = timeFm.format(time);
+		this.time = CommonUtils.DateToString(time, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
 		this.mesg = mesg;
 		this.userName = userName;
 		this.state = state;
