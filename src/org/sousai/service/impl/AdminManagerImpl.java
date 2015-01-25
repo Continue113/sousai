@@ -60,18 +60,20 @@ public class AdminManagerImpl implements AdminManager {
 		this.matchDao = matchDao;
 	}
 
-	public void setUserMarkDao(UserMarkDao userMarkDao){
+	public void setUserMarkDao(UserMarkDao userMarkDao) {
 		this.userMarkDao = userMarkDao;
 	}
-	
+
 	@Override
 	public List<MessageBean> getAllMessage() {
 		return mesgDao.findAll();
 	}
 
 	@Override
-	public List<CourtBean> getAllCourt(Integer currentPage, Integer rows) throws Exception {
-		return courtDao.findPagedByWhereOrderBy(null, currentPage, rows, null, null);
+	public List<CourtBean> getAllCourt(Integer currentPage, Integer rows)
+			throws Exception {
+		return courtDao.findPagedByWhereOrderBy(null, currentPage, rows, null,
+				null);
 	}
 
 	@Override
@@ -83,11 +85,12 @@ public class AdminManagerImpl implements AdminManager {
 	public List<UserBean> getAllUser(int currentPage, int rows) {
 		return userDao.findPagedAll(currentPage, rows);
 	}
-	
+
 	@Override
-	public int countAllUser(){
+	public int countAllUser() {
 		return userDao.countAllUser();
 	}
+
 	@Override
 	public int deleteCourts(Integer[] courtIds) {
 		return courtDao.deleteCourts(courtIds);
@@ -113,28 +116,32 @@ public class AdminManagerImpl implements AdminManager {
 	public List<CourtBean> findPagedCourtByKeyValueOrderBy(String[] columns,
 			String keyValue, Integer currentPage, Integer rows,
 			String orderByCol, Boolean isAsc) throws Exception {
-		return courtDao.findPagedByKeyValueOrderBy(columns, keyValue, currentPage, rows, orderByCol, isAsc);
+		return courtDao.findPagedByKeyValueOrderBy(columns, keyValue,
+				currentPage, rows, orderByCol, isAsc);
 	}
 
 	@Override
 	public List<MatchBean> findPagedMatchByKeyValueOrderBy(String[] columns,
 			String keyValue, Integer currentPage, Integer rows,
 			String orderByCol, Boolean isAsc) throws Exception {
-		return matchDao.findPagedByKeyValueOrderBy(columns, keyValue, currentPage, rows, orderByCol, isAsc);
+		return matchDao.findPagedByKeyValueOrderBy(columns, keyValue,
+				currentPage, rows, orderByCol, isAsc);
 	}
 
 	@Override
 	public List<MessageBean> findPagedMesgByKeyValueOrderBy(String[] columns,
 			String keyValue, Integer currentPage, Integer rows,
 			String orderByCol, Boolean isAsc) throws Exception {
-		return mesgDao.findPagedByKeyValueOrderBy(columns, keyValue, currentPage, rows, orderByCol, isAsc);
+		return mesgDao.findPagedByKeyValueOrderBy(columns, keyValue,
+				currentPage, rows, orderByCol, isAsc);
 	}
 
 	@Override
 	public List<UserBean> findPagedUserByKeyValueOrderBy(String[] columns,
 			String keyValue, Integer currentPage, Integer rows,
 			String orderByCol, Boolean isAsc) throws Exception {
-		return userDao.findPagedByKeyValueOrderBy(columns, keyValue, currentPage, rows, orderByCol, isAsc);
+		return userDao.findPagedByKeyValueOrderBy(columns, keyValue,
+				currentPage, rows, orderByCol, isAsc);
 	}
 
 	@Override
@@ -146,9 +153,19 @@ public class AdminManagerImpl implements AdminManager {
 	public void updateMessage(Message message) throws Exception {
 		mesgDao.update(message);
 	}
-	
+
 	@Override
-	public void deleteMesgs(Long[] ids) throws Exception{
+	public void deleteMesgs(Long[] ids) throws Exception {
 		mesgDao.deleteMesgs(ids);
+	}
+
+	@Override
+	public void relCourts(Integer[] ids) throws Exception {
+		courtDao.relCourts(ids);
+	}
+
+	@Override
+	public void deleteUsers(Integer[] ids) throws Exception {
+		userDao.deleteUsers(ids);
 	}
 }

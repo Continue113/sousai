@@ -1,12 +1,10 @@
 package org.sousai.action;
 
-import java.util.Date;
 
 import org.apache.struts2.ServletActionContext;
 import org.sousai.action.base.UserBaseAction;
 import org.sousai.common.Constant;
 import org.sousai.domain.Match;
-import org.sousai.domain.User;
 import org.sousai.tools.JSONUtils;
 
 public class UpdateMatchAction extends UserBaseAction {

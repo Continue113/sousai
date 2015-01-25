@@ -1,12 +1,10 @@
 package org.sousai.action;
 
 
-import java.sql.Date;
 import org.apache.struts2.ServletActionContext;
 import org.sousai.action.base.UserBaseAction;
 import org.sousai.common.Constant;
 import org.sousai.domain.Court;
-import org.sousai.tools.CommonUtils;
 import org.sousai.tools.JSONUtils;
 
 public class UpdateCourtAction extends UserBaseAction{
@@ -39,8 +37,7 @@ public class UpdateCourtAction extends UserBaseAction{
 	public String execute () throws Exception{
 		String value;
 		try {
-//			court.setModDate(CommonUtils.ToTimestamp(new Date("yyyy-MM-dd")));
-//			new Date(new java.util.Date("yyyy-MM-dd").)
+			court.setModDate(new java.sql.Date(new java.util.Date().getTime()));
 			cmg.updateCourt(court);
 			value = Constant.SUCCESS;
 		} catch (Exception e) {

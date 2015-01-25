@@ -1,5 +1,6 @@
 package org.sousai.dao.impl;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -309,52 +310,18 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 			String keyValue, Integer currentPage, Integer rows,
 			String orderByCol, Boolean isAsc) throws Exception {
 
-		if (!CommonUtils.isNullOrEmpty(keyValue)) {
-			String[] keyValues = keyValue.split(" ");
-			int[] types = new int[columns.length];
-			String[] args = new String[columns.length];
-			for (int i = 0; i < columns.length; i++) {
-				MyPrint.myPrint("keyValues.length = " + keyValues.length);
-				int[] tempTypes = new int[keyValues.length];
-				String[] tempArgs = new String[keyValues.length];
-				String[] tempColumns = new String[keyValues.length];
-				for (int j = 0; j < keyValues.length; j++) {
-					String tempKeyValue = keyValues[j];
-					tempTypes[j] = 2;
-					if (!CommonUtils.isNullOrEmpty(tempKeyValue)) {
-						tempKeyValue = " %" + tempKeyValue + "% ";
-					}
-					tempArgs[j] = tempKeyValue;
-					// 加上 别名
-					// columns[i] = " and " + addPrefixToColumn(columns[i]);
-					if (j != 0) {
-						tempColumns[j] = " or " + addPrefixToColumn(columns[i]);
-					} else {
-						tempColumns[j] = addPrefixToColumn(columns[i]);
-					}
-				}
-				columns[i] = Append_StringWithout1(" ", tempTypes, tempColumns,
-						tempArgs);
-				types[i] = 11;
-				args[i] = null;
-			}
-			String strWhere = Append_StringWithout1(" and ", types, columns,
-					args);
-			MyPrint.myPrint(strWhere);
-			return findPagedByWhereOrderBy(strWhere, currentPage, rows,
-					addPrefixToColumn(orderByCol), isAsc);
-		} else {
-			return findPagedByWhereOrderBy(null, currentPage, rows,
-					addPrefixToColumn(orderByCol), isAsc);
-		}
+		return findPagedByWhereOrderBy(
+				buildKeyValueStatement(keyValue, columns), currentPage, rows,
+				addPrefixToColumn(orderByCol), isAsc);
 	}
 
 	private String addPrefixToColumn(String column) {
 		String value;
 		if (column.equals("userName")) {
 			value = " u.name";
-		} else if (column.equals("courtName")) {
-			value = " c.name";
+		} else if (column.equals("courtName") || column.equals("region")
+				|| column.equals("addr")) {
+			value = " c." + column;
 		} else {
 			value = " m." + column;
 		}
@@ -380,36 +347,235 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 		return (List<MatchBean>) findPagedModelList_HQL(q, currentPage, rows);
 	}
 
+	// private List<MatchBean> findPagedByWhereOrderBy_SQL(String strWhere,
+	// Integer currentPage, Integer rows, String orderByCol, Boolean isAsc)
+	// throws Exception {
+	// Session session = getHibernateTemplate().getSessionFactory()
+	// .getCurrentSession();
+	// String hql = selectMatchBean;
+	// if (!CommonUtils.isNullOrEmpty(strWhere)) {
+	// hql += strWhere;
+	// }
+	// if (!CommonUtils.isNullOrEmpty(orderByCol)) {
+	// hql = String.format("%1$s order by %2$s ", hql, orderByCol);
+	// if (!CommonUtils.isNullOrEmpty(isAsc) && isAsc == false) {
+	// hql += " DESC ";
+	// }
+	// }
+	// Query q = session.createQuery(hql);
+	// return (List<MatchBean>) findPagedModelList_SQL(q, currentPage, rows,
+	// MatchBean.class);
+	// }
+
 	@Override
 	public List<MatchBean> findPagedByParams(String keyValue, String matchType,
-			Date beforeBegin, Date between1, Date between2, Date afterEnd,
-			Date beginTime, Date endTime, String region, int currentPage,
-			int rows, String orderByCol, Boolean isAsc) throws Exception {
+			java.sql.Date now, int matchState, int dayOfWeek, Date beginTime,
+			Date endTime, String region, int currentPage, int rows,
+			String orderByCol, Boolean isAsc) throws Exception {
 		List<MatchBean> list = null;
-		if (!CommonUtils.isNullOrEmpty(keyValue)) {
-			keyValue = " %" + keyValue + "% ";
-		}
 		if (!CommonUtils.isNullOrEmpty(region)) {
 			region = " %" + region + "% ";
 		}
 
-		// 比赛状态那里应该为or关系，另外看看是否需要加括号
-		String strWhere = Append_String(
-				" ",
-				new int[] { 2, 0, 7, 3, 5, 7, 5, 2 },
-				new String[] { " and m.name ", " and m.type ",
-						" and m.beginTime ", " and m.beginTime ",
-						" and c.region ", " and m.beginTime ",
-						" and m.beginTime ", " and m.endTime ",
-						" and m.endTime " },
-				new Object[] { keyValue, matchType,
-						CommonUtils.ToTimestamp(beginTime),
-						CommonUtils.ToTimestamp(endTime), region,
-						CommonUtils.ToTimestamp(beforeBegin),
-						CommonUtils.ToTimestamp(between1),
-						CommonUtils.ToTimestamp(between2),
-						CommonUtils.ToTimestamp(afterEnd) });
+		// 构建筛选比赛状态的子语句
+		String strMatchStateStatement = buildMatchStateStatement(matchState,
+				now);
+		// 构建筛选周几的子语句
+		String strDayOfWeekStatement = buildDayOfWeekStatement(dayOfWeek);
+		// 构建查询关键字的子语句，在name，type，region，addr字段查询
+		String strKeyValueStatement = buildKeyValueStatement(keyValue,
+				new String[] { addPrefixToColumn("name"),
+						addPrefixToColumn("type"), addPrefixToColumn("region"),
+						addPrefixToColumn(" addr ") });
+
+		int[] types = new int[] { 11, 11, 0, 3, 2, 11 };
+		String[] columns = new String[] { strKeyValueStatement,
+				strDayOfWeekStatement, addPrefixToColumn("type"),
+				addPrefixToColumn("beginTime"), addPrefixToColumn("region"),
+				strMatchStateStatement };
+		Object[] args = new Object[] {
+				null,
+				null,
+				matchType,
+				new Timestamp[] { CommonUtils.ToTimestamp(beginTime),
+						CommonUtils.ToTimestamp(endTime) }, region, null };
+		int[] relations = new int[] { 1, 1, 1, 1, 1, 1 };
+		String strWhere = Append_StringV2(" ", types, columns, args, relations,
+				false);
+		MyPrint.myPrint("findPagedByParams.strWhere = " + strWhere);
 		return findPagedByWhereOrderBy(strWhere, currentPage, rows, orderByCol,
 				isAsc);
+	}
+
+	// 构建筛选比赛状态的子语句
+	private String buildMatchStateStatement(int matchState, java.sql.Date now)
+			throws Exception {
+		String strMatchStateStatement = null;
+		int[] types = null;
+		int[] relations = null;
+		String[] columns = null;
+		java.sql.Date[] args = null;
+
+		switch (matchState) {
+		// 都没选
+		case 0:
+			strMatchStateStatement = "1<>1";
+			// 都选
+		case 7:
+			break;
+		// 报名中
+		case 1:
+			types = new int[] { 7 };
+			columns = new String[] { addPrefixToColumn("beginTime") };
+			args = new java.sql.Date[] { now };
+			relations = new int[] { 1 };
+			break;
+		// 比赛中
+		case 2:
+			types = new int[] { 7, 5 };
+			columns = new String[] { addPrefixToColumn("beginTime"),
+					addPrefixToColumn("endTime") };
+			args = new java.sql.Date[] { now, now };
+			relations = new int[] { 1, 1 };
+			break;
+		// 报名中与比赛中
+		case 3:
+			types = new int[] { 7 };
+			columns = new String[] { addPrefixToColumn("endTime") };
+			args = new java.sql.Date[] { now };
+			relations = new int[] { 1 };
+			break;
+		// 已结束
+		case 4:
+			types = new int[] { 5 };
+			columns = new String[] { addPrefixToColumn("endTime") };
+			args = new java.sql.Date[] { now };
+			relations = new int[] { 1 };
+			break;
+		// 报名中与已结束
+		case 5:
+			types = new int[] { 5, 7 };
+			columns = new String[] { addPrefixToColumn("beginTime"),
+					addPrefixToColumn("endTime") };
+			args = new java.sql.Date[] { now, now };
+			relations = new int[] { 1, 2 };
+			break;
+		// 比赛中与已结束
+		case 6:
+			types = new int[] { 5 };
+			columns = new String[] { addPrefixToColumn("beginTime") };
+			args = new java.sql.Date[] { now };
+			relations = new int[] { 1 };
+			break;
+		default:
+			break;
+		}
+		strMatchStateStatement = Append_StringV2("", types, columns, args,
+				relations, false);
+		return strMatchStateStatement;
+	}
+
+	// 构建筛选比赛时间是周几的子语句
+	private String buildDayOfWeekStatement(int dayOfWeek) throws Exception {
+		String strDayOfWeekStatement = null;
+		String strDayOfWeek = "dayOfWeek(" + addPrefixToColumn("beginTime")
+				+ ")";
+		switch (dayOfWeek) {
+		// 周1到周日
+		case 0:
+		case 7:
+			break;
+		// 工作日(即不为周六周日)
+		case 1:
+			strDayOfWeekStatement = Append_StringV2("", new int[] { 10, 10 },
+					new String[] { strDayOfWeek, strDayOfWeek }, new Integer[] {
+							1, 7 }, new int[] { 1, 1 }, false);
+			break;
+
+		// 周六
+		case 2:
+			strDayOfWeekStatement = Append_StringV2("", new int[] { 1 },
+					new String[] { strDayOfWeek }, new Integer[] { 7 },
+					new int[] { 1 }, false);
+			break;
+
+		// 工作日+周六(即不为周日)
+		case 3:
+			strDayOfWeekStatement = Append_StringV2("", new int[] { 10 },
+					new String[] { strDayOfWeek }, new Integer[] { 1 },
+					new int[] { 1 }, false);
+			break;
+
+		// 周日
+		case 4:
+			strDayOfWeekStatement = Append_StringV2("", new int[] { 1 },
+					new String[] { strDayOfWeek }, new Integer[] { 1 },
+					new int[] { 1 }, false);
+			break;
+
+		// 工作日+周日(即不为周六)
+		case 5:
+			strDayOfWeekStatement = Append_StringV2("", new int[] { 10 },
+					new String[] { strDayOfWeek }, new Integer[] { 7 },
+					new int[] { 1 }, false);
+			break;
+
+		// 周六周日
+		case 6:
+			strDayOfWeekStatement = Append_StringV2("", new int[] { 1, 1 },
+					new String[] { strDayOfWeek, strDayOfWeek }, new Integer[] {
+							7, 1 }, new int[] { 1, 2 }, false);
+			break;
+		default:
+			break;
+		}
+		return strDayOfWeekStatement;
+	}
+
+	private String buildKeyValueStatement(String keyValue, String[] columns)
+			throws Exception {
+		String strWhere = null;
+		if (!CommonUtils.isNullOrEmpty(keyValue)) {
+			String[] keyValues = keyValue.split(" ");
+			int[] types = new int[columns.length];
+			String[] args = new String[columns.length];
+			int[] relations = new int[columns.length];
+			for (int i = 0; i < columns.length; i++) {
+				MyPrint.myPrint("keyValues.length = " + keyValues.length);
+				int[] tempTypes = new int[keyValues.length];
+				int[] tempRelations = new int[keyValues.length];
+				String[] tempArgs = new String[keyValues.length];
+				String[] tempColumns = new String[keyValues.length];
+				for (int j = 0; j < keyValues.length; j++) {
+					String tempKeyValue = keyValues[j];
+					tempTypes[j] = 2;
+					if (!CommonUtils.isNullOrEmpty(tempKeyValue)) {
+						tempKeyValue = " %" + tempKeyValue + "% ";
+					}
+					tempArgs[j] = tempKeyValue;
+					tempColumns[j] = columns[i];
+					tempRelations[j] = 2;
+					// if (j != 0) {
+					// tempRelations[j] = 2;
+					// } else {
+					// tempRelations[j] = 0;
+					// }
+				}
+				columns[i] = Append_StringV2(" ", tempTypes, tempColumns,
+						tempArgs, tempRelations, false);
+				types[i] = 11;
+				args[i] = null;
+				relations[i] = 2;
+				// if (i != 0) {
+				// relations[i] = 2;
+				// } else {
+				// relations[i] = 0;
+				// }
+			}
+			strWhere = Append_StringV2(" ", types, columns, args, relations,
+					false);
+			MyPrint.myPrint("buildKeyValueStatement.strWhere = " + strWhere);
+		}
+		return strWhere;
 	}
 }

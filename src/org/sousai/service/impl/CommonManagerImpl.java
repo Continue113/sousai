@@ -1,5 +1,6 @@
 package org.sousai.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.sousai.domain.*;
@@ -8,6 +9,7 @@ import org.sousai.tools.MyPrint;
 import org.sousai.vo.CourtBean;
 import org.sousai.vo.MatchBean;
 import org.sousai.dao.*;
+import org.sousai.dao.impl.MatchDaoHibernate;
 
 public class CommonManagerImpl implements CommonManager {
 
@@ -58,9 +60,10 @@ public class CommonManagerImpl implements CommonManager {
 		this.matchDao = matchDao;
 	}
 
-	public void setUserMarkDao(UserMarkDao userMarkDao){
+	public void setUserMarkDao(UserMarkDao userMarkDao) {
 		this.userMarkDao = userMarkDao;
 	}
+
 	@Override
 	public List<Region> getProvince() {
 		// 0为数据库中中国的id
@@ -123,14 +126,17 @@ public class CommonManagerImpl implements CommonManager {
 	@Override
 	public List<CourtBean> findPagedAllCourtOrderBy(Integer currentPage,
 			Integer rows, String orderByCol, Boolean isAsc) {
-		return courtDao.findPagedByWhereOrderBy(null, currentPage, rows, orderByCol, isAsc);
+		return courtDao.findPagedByWhereOrderBy(null, currentPage, rows,
+				orderByCol, isAsc);
 	}
 
 	@Override
-	public List<CourtBean> findPagedByParams(String keyValue, String matchType,
-			Integer courtTypeId, String region, int currentPage, int rows,String orderByCol, Boolean isAsc)
+	public List<CourtBean> findPagedCourtByParams(String keyValue,
+			String matchType, Integer courtTypeId, String region,
+			int currentPage, int rows, String orderByCol, Boolean isAsc)
 			throws Exception {
-		return courtDao.findPagedByParams(keyValue, matchType, courtTypeId, region, currentPage, rows,orderByCol,isAsc);
+		return courtDao.findPagedByParams(keyValue, matchType, courtTypeId,
+				region, currentPage, rows, orderByCol, isAsc);
 	}
 
 	@Override
@@ -150,13 +156,23 @@ public class CommonManagerImpl implements CommonManager {
 	}
 
 	@Override
-	public void updateMatch(Match match) throws Exception{
+	public void updateMatch(Match match) throws Exception {
 		matchDao.update(match);
 	}
 
 	@Override
-	public void updateCourt(Court court) throws Exception{
+	public void updateCourt(Court court) throws Exception {
 		courtDao.update(court);
+	}
+
+	@Override
+	public List<MatchBean> findPagedMatchByParams(String keyValue,
+			String matchType, java.sql.Date now, int matchState, int dayOfWeek, Date beginTime, Date endTime, String region,
+			int currentPage, int rows, String orderByCol, Boolean isAsc)
+			throws Exception {
+		matchDao = new MatchDaoHibernate();
+		return matchDao.findPagedByParams(keyValue, matchType, now, matchState, dayOfWeek, beginTime, endTime, region,
+				currentPage, rows, orderByCol, isAsc);
 	}
 
 }

@@ -77,4 +77,10 @@ public interface UserDao {
 	List<UserBean> findPagedByKeyValueOrderBy(String[] columns,
 			String keyValue, Integer currentPage, Integer rows,
 			String orderByCol, Boolean isAsc) throws Exception;
+	
+	/**
+	 * 批量删除用户（将type置为0）
+	 * @param ids
+	 */
+	void deleteUsers(Integer[] ids);
 }
