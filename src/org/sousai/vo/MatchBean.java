@@ -3,6 +3,7 @@ package org.sousai.vo;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class MatchBean implements Serializable {
 
@@ -54,7 +55,7 @@ public class MatchBean implements Serializable {
 		} else if (now.compareTo(endTime) >= 0) {
 			this.state = "已结束";
 		}
-		SimpleDateFormat dateFm = new SimpleDateFormat("EEEE");
+		SimpleDateFormat dateFm = new SimpleDateFormat("EEEE",Locale.CHINA);
 		this.beginDayOfWeek = dateFm.format(beginTime);
 		this.endDayOfWeek = dateFm.format(endTime);
 	}
