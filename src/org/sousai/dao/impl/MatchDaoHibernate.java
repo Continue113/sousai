@@ -321,8 +321,26 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 			java.sql.Date now, int matchState, int dayOfWeek, Date beginTime,
 			Date endTime, String region, int currentPage, int rows,
 			String orderByCol, Boolean isAsc) throws Exception {
+		String strWhere = buildFindByParamsWhere(keyValue, matchType, now,
+				matchState, dayOfWeek, beginTime, endTime, region);
+		MyPrint.myPrint("findPagedByParams.strWhere = " + strWhere);
+		return findPagedByWhereOrderBy(strWhere, currentPage, rows, orderByCol,
+				isAsc);
+	}
+
+	private String buildFindByParamsWhere(String keyValue, String matchType,
+			java.sql.Date now, int matchState, int dayOfWeek, Date beginTime,
+			Date endTime, String region) throws Exception {
+		Timestamp tsBeginTime = null;
+		Timestamp tsEndTime = null;
 		if (!CommonUtils.isNullOrEmpty(region)) {
 			region = " %" + region + "% ";
+		}
+		if (!CommonUtils.isNullOrEmpty(beginTime)) {
+			tsBeginTime = CommonUtils.ToTimestamp(beginTime);
+		}
+		if (!CommonUtils.isNullOrEmpty(endTime)) {
+			tsEndTime = CommonUtils.ToTimestamp(endTime);
 		}
 
 		// 构建筛选比赛状态的子语句
@@ -341,18 +359,13 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 				strDayOfWeekStatement, addPrefixToColumn("type"),
 				addPrefixToColumn("beginTime"), addPrefixToColumn("region"),
 				strMatchStateStatement };
-		Object[] args = new Object[] {
-				null,
-				null,
-				matchType,
-				new Timestamp[] { CommonUtils.ToTimestamp(beginTime),
-						CommonUtils.ToTimestamp(endTime) }, region, null };
+		Object[] args = new Object[] { null, null, matchType,
+				new Timestamp[] { tsBeginTime, tsEndTime }, region, null };
 		int[] relations = new int[] { 1, 1, 1, 1, 1, 1 };
 		String strWhere = Append_StringV2(" ", types, columns, args, relations,
 				false);
-		MyPrint.myPrint("findPagedByParams.strWhere = " + strWhere);
-		return findPagedByWhereOrderBy(strWhere, currentPage, rows, orderByCol,
-				isAsc);
+
+		return strWhere;
 	}
 
 	// 构建筛选比赛状态的子语句
@@ -369,7 +382,7 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 		case 0:
 			strMatchStateStatement = "1<>1";
 			break;
-			// 都选
+		// 都选
 		case 7:
 			break;
 		// 报名中
@@ -556,40 +569,11 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 	public int countByParams(String keyValue, String matchType,
 			java.sql.Date now, int matchState, int dayOfWeek, Date beginTime,
 			Date endTime, String region) throws Exception {
-		if (!CommonUtils.isNullOrEmpty(region)) {
-			region = " %" + region + "% ";
-		}
-
-		// 构建筛选比赛状态的子语句
-		String strMatchStateStatement = buildMatchStateStatement(matchState,
-				now);
-		// 构建筛选周几的子语句
-		String strDayOfWeekStatement = buildDayOfWeekStatement(dayOfWeek);
-		// 构建查询关键字的子语句，在name，type，region，addr字段查询
-		String strKeyValueStatement = buildKeyValueStatement(keyValue,
-				new String[] { addPrefixToColumn("name"),
-						addPrefixToColumn("type"), addPrefixToColumn("region"),
-						addPrefixToColumn(" addr ") });
-
-		int[] types = new int[] { 11, 11, 0, 3, 2, 11 };
-		String[] columns = new String[] { strKeyValueStatement,
-				strDayOfWeekStatement, addPrefixToColumn("type"),
-				addPrefixToColumn("beginTime"), addPrefixToColumn("region"),
-				strMatchStateStatement };
-		Object[] args = new Object[] {
-				null,
-				null,
-				matchType,
-				new Timestamp[] { CommonUtils.ToTimestamp(beginTime),
-						CommonUtils.ToTimestamp(endTime) }, region, null };
-		int[] relations = new int[] { 1, 1, 1, 1, 1, 1 };
-		String strWhere = Append_StringV2(" ", types, columns, args, relations,
-				false);
-		MyPrint.myPrint("findPagedByParams.strWhere = " + strWhere);
+		String strWhere = buildFindByParamsWhere(keyValue, matchType, now,
+				matchState, dayOfWeek, beginTime, endTime, region);
 		// return findPagedByWhereOrderBy(strWhere, currentPage, rows,
 		// orderByCol,
 		// isAsc);
-
 		String strHql = "select count(*) from Match where " + strWhere;
 		return count(strHql);
 	}
