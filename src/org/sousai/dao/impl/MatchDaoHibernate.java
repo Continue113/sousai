@@ -331,8 +331,6 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 	private String buildFindByParamsWhere(String keyValue, String matchType,
 			java.sql.Date now, int matchState, int dayOfWeek, Date beginTime,
 			Date endTime, String region) throws Exception {
-		Timestamp tsBeginTime = null;
-		Timestamp tsEndTime = null;
 		if (!CommonUtils.isNullOrEmpty(region)) {
 			region += "% ";
 		}

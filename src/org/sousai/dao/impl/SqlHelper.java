@@ -474,7 +474,7 @@ public class SqlHelper extends HibernateDaoSupport {
 		return value;
 	}
 
-	private StringBuilder addRelation(StringBuilder strBuilder, int relation){
+	private StringBuilder addRelation(StringBuilder strBuilder, int relation) {
 		switch (relation) {
 		case 0:
 			break;
@@ -489,6 +489,7 @@ public class SqlHelper extends HibernateDaoSupport {
 		}
 		return strBuilder;
 	}
+
 /**
 	 * 拼接字符串
 	 * 
@@ -532,11 +533,14 @@ public class SqlHelper extends HibernateDaoSupport {
 					if (CommonUtils.isNullOrEmpty(args[i])) {
 						break;
 					}
-					addRelation(strBuilder, relations[i]);
+					if (flag) {
+						addRelation(strBuilder, relations[i]);
+					}
 					String temp0 = (String) args[i];
 					temp0 = temp0.trim();
 					strBuilder.append(String.format(" %s='%s' ", columns[i],
 							temp0));
+					flag = true;
 					break;
 				case 1:
 					if (CommonUtils.isNullOrEmpty(args[i])) {
@@ -544,25 +548,33 @@ public class SqlHelper extends HibernateDaoSupport {
 					}
 					// String temp1 = (String) args[i];
 					// temp1 = temp1.trim();
-					addRelation(strBuilder, relations[i]);
+					if (flag) {
+						addRelation(strBuilder, relations[i]);
+					}
 					strBuilder.append(String.format(" %s=%s ", columns[i],
 							args[i]));
+					flag = true;
 					break;
 				case 2:
 					if (CommonUtils.isNullOrEmpty(args[i])) {
 						break;
 					}
-					addRelation(strBuilder, relations[i]);
+					if (flag) {
+						addRelation(strBuilder, relations[i]);
+					}
 					String temp2 = (String) args[i];
 					temp2 = temp2.trim();
 					strBuilder.append(" "
 							+ AssembleLikeStatement(columns[i], temp2));
+					flag = true;
 					break;
 				case 3:
 					if (CommonUtils.isNullOrEmpty(args[i])) {
 						break;
 					}
-					addRelation(strBuilder, relations[i]);
+					if (flag) {
+						addRelation(strBuilder, relations[i]);
+					}
 					Object[] temp3 = (Object[]) args[i];
 					if (temp3.length != 2) {
 						String errorPalce = (new Throwable().getStackTrace()[0])
@@ -572,12 +584,15 @@ public class SqlHelper extends HibernateDaoSupport {
 					strBuilder.append(" "
 							+ AssembleBetweenStatement(true, columns[i],
 									temp3[0].toString(), temp3[1].toString()));
+					flag = true;
 					break;
 				case 4:
 					if (CommonUtils.isNullOrEmpty(args[i])) {
 						break;
 					}
-					addRelation(strBuilder, relations[i]);
+					if (flag) {
+						addRelation(strBuilder, relations[i]);
+					}
 					Object[] temp4 = (Object[]) args[i];
 					if (temp4.length != 2) {
 						String errorPalce = (new Throwable().getStackTrace()[0])
@@ -587,62 +602,84 @@ public class SqlHelper extends HibernateDaoSupport {
 					strBuilder.append(" "
 							+ AssembleBetweenStatement(false, columns[i],
 									temp4[0].toString(), temp4[1].toString()));
+					flag = true;
 					break;
 				case 5:
 					if (CommonUtils.isNullOrEmpty(args[i])) {
 						break;
 					}
-					addRelation(strBuilder, relations[i]);
+					if (flag) {
+						addRelation(strBuilder, relations[i]);
+					}
 					strBuilder.append(String.format(" %1$s<'%2$s' ",
 							columns[i], args[i]));
+					flag = true;
 					break;
 				case 6:
 					if (CommonUtils.isNullOrEmpty(args[i])) {
 						break;
 					}
-					addRelation(strBuilder, relations[i]);
+					if (flag) {
+						addRelation(strBuilder, relations[i]);
+					}
 					strBuilder.append(String.format(" %1$s<%2$s ", columns[i],
 							args[i]));
+					flag = true;
 					break;
 				case 7:
 					if (CommonUtils.isNullOrEmpty(args[i])) {
 						break;
 					}
-					addRelation(strBuilder, relations[i]);
+					if (flag) {
+						addRelation(strBuilder, relations[i]);
+					}
 					strBuilder.append(String.format(" %1$s>'%2$s' ",
 							columns[i], args[i]));
+					flag = true;
 					break;
 				case 8:
 					if (CommonUtils.isNullOrEmpty(args[i])) {
 						break;
 					}
-					addRelation(strBuilder, relations[i]);
+					if (flag) {
+						addRelation(strBuilder, relations[i]);
+					}
 					strBuilder.append(String.format(" %1$s>%2$s ", columns[i],
 							args[i]));
+					flag = true;
 					break;
 				case 9:
 					if (CommonUtils.isNullOrEmpty(args[i])) {
 						break;
 					}
-					addRelation(strBuilder, relations[i]);
+					if (flag) {
+						addRelation(strBuilder, relations[i]);
+					}
 					strBuilder.append(String.format(" %1$s<>'%2$s' ",
 							columns[i], args[i]));
+					flag = true;
 					break;
 				case 10:
 					if (CommonUtils.isNullOrEmpty(args[i])) {
 						break;
 					}
-					addRelation(strBuilder, relations[i]);
+					if (flag) {
+						addRelation(strBuilder, relations[i]);
+					}
 					strBuilder.append(String.format(" %1$s<>%2$s ", columns[i],
 							args[i]));
+					flag = true;
 					break;
 				case 11:
 					// 这里，columns[i]应为sql语句
 					if (CommonUtils.isNullOrEmpty(columns[i])) {
 						break;
 					}
-					addRelation(strBuilder, relations[i]);
+					if (flag) {
+						addRelation(strBuilder, relations[i]);
+					}
 					strBuilder.append(" (" + columns[i] + ") ");
+					flag = true;
 					break;
 				default:
 					break;
