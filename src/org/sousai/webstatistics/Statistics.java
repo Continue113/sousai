@@ -59,7 +59,9 @@ public class Statistics {
 				"广西", "西藏", "宁夏", "新疆", "香港", "澳门" };
 		SortedMap<String,Integer> cityCourt = new TreeMap<String,Integer>() ;
 		for(int i=0;i<city.length;i++){
-			cityCourt.put(city[i], jdbc.selectCityCourt(city[i])) ;
+			int num = jdbc.selectCityCourt(city[i]) ;
+			if(num!=0)
+				cityCourt.put(city[i], num) ;
 		}
 		JSONUtils.toJson(ServletActionContext.getResponse(), cityCourt);
 		return "success";
