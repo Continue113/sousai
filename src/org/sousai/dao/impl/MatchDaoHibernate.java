@@ -361,8 +361,10 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 		Object[] args = new Object[] { null, null, matchType, timePare, region,
 				null };
 		int[] relations = new int[] { 1, 1, 1, 1, 1, 1 };
+		
+		//由于这段sql是拼接在selectMatchBean后边，所以应在前边加and，因此flag为true
 		String strWhere = Append_StringV2(" ", types, columns, args, relations,
-				false);
+				true);
 
 		return strWhere;
 	}
