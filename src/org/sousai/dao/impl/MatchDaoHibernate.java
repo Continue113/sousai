@@ -324,7 +324,7 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 		String strWhere = buildFindByParamsWhere(keyValue, matchType, now,
 				matchState, dayOfWeek, beginTime, endTime, region);
 		MyPrint.myPrint("findPagedByParams.strWhere = " + strWhere);
-		return findPagedByWhereOrderBy(" and "+strWhere, currentPage, rows,
+		return findPagedByWhereOrderBy(strWhere, currentPage, rows,
 				addPrefixToColumn(orderByCol), isAsc);
 	}
 
@@ -361,9 +361,10 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 		Object[] args = new Object[] { null, null, matchType, timePare, region,
 				null };
 		int[] relations = new int[] { 1, 1, 1, 1, 1, 1 };
-		
+
+		// 由于这段sql是拼接在selectMatchBean或者是其他语句之后，前边已经有别的条件语句，因此这里需要加and，将flag置为true
 		String strWhere = Append_StringV2(" ", types, columns, args, relations,
-				false);
+				true);
 
 		return strWhere;
 	}
@@ -574,9 +575,10 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 		// return findPagedByWhereOrderBy(strWhere, currentPage, rows,
 		// orderByCol,
 		// isAsc);
-		String strHql = "select count(*) from Match m ";
+		String strHql = "select count(*) from Match m, Court c, User u "
+				+ "where m.courtId=c.id and u.id=m.userId ";
 		if (!CommonUtils.isNullOrEmpty(strWhere)) {
-			strHql += " where " + strWhere;
+			strHql += strWhere;
 		}
 		return count(strHql);
 	}
