@@ -324,8 +324,8 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 		String strWhere = buildFindByParamsWhere(keyValue, matchType, now,
 				matchState, dayOfWeek, beginTime, endTime, region);
 		MyPrint.myPrint("findPagedByParams.strWhere = " + strWhere);
-		return findPagedByWhereOrderBy(strWhere, currentPage, rows, addPrefixToColumn(orderByCol),
-				isAsc);
+		return findPagedByWhereOrderBy(strWhere, currentPage, rows,
+				addPrefixToColumn(orderByCol), isAsc);
 	}
 
 	private String buildFindByParamsWhere(String keyValue, String matchType,
@@ -335,7 +335,7 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 			region += "% ";
 		}
 		Timestamp[] timePare = null;
-		//如果时间其中一个为空，timePare为空
+		// 如果时间其中一个为空，timePare为空
 		if (!CommonUtils.isNullOrEmpty(beginTime)
 				&& !CommonUtils.isNullOrEmpty(endTime)) {
 			timePare = new Timestamp[] { CommonUtils.ToTimestamp(beginTime),
@@ -573,7 +573,10 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 		// return findPagedByWhereOrderBy(strWhere, currentPage, rows,
 		// orderByCol,
 		// isAsc);
-		String strHql = "select count(*) from Match m where " + strWhere;
+		String strHql = "select count(*) from Match m ";
+		if (!CommonUtils.isNullOrEmpty(strWhere)) {
+			strHql += strWhere;
+		}
 		return count(strHql);
 	}
 }
