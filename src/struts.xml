@@ -193,6 +193,9 @@
 		<!-- 批量发布场地这个action只有管理员可用 -->
 		<action name="relCourtsByAdmin" class="org.sousai.action.RelCourtsByAdminAction">
 		</action>
+		<!-- 批量发布比赛这个action只有管理员可用 -->
+		<action name="relMatchesByAdmin" class="org.sousai.action.RelMatchesByAdminAction">
+		</action>
 		<!-- 批量删除用户这个action只有管理员可用 -->
 		<action name="deleteUsersByAdmin" class="org.sousai.action.DeleteUsersByAdminAction">
 		</action>
