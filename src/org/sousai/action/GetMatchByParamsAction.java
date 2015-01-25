@@ -10,6 +10,7 @@ import org.sousai.domain.FrontMessage;
 import org.sousai.service.CommonManager;
 import org.sousai.service.impl.CommonManagerImpl;
 import org.sousai.tools.JSONUtils;
+import org.sousai.tools.MyPrint;
 
 import com.googlecode.jsonplugin.annotations.JSON;
 import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
@@ -215,6 +216,7 @@ public class GetMatchByParamsAction extends UserBaseAction {
 		// rows = 10;
 		// dayOfWeek = 1;
 		// matchState = 6;
+		MyPrint.myPrint("GetMatchByParamsAction");
 		if (currentPage == null) {
 			currentPage = 1;
 		}
