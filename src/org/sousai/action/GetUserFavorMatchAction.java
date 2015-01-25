@@ -7,6 +7,7 @@ import org.sousai.action.base.UserBaseAction;
 import org.sousai.common.Constant;
 import org.sousai.domain.FrontMessage;
 import org.sousai.domain.Match;
+import org.sousai.tools.CommonUtils;
 import org.sousai.tools.JSONUtils;
 import org.sousai.vo.MatchBean;
 import org.sousai.vo.UserBean;
@@ -15,13 +16,26 @@ import com.opensymphony.xwork2.ActionContext;
 
 public class GetUserFavorMatchAction extends UserBaseAction {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -2544837367980241497L;
 
+	private Integer userId;
 	private Integer currentPage;
 	private Integer rows;
+
+	/**
+	 * @return the userId
+	 */
+	public Integer getUserId() {
+		return userId;
+	}
+
+	/**
+	 * @param userId
+	 *            the userId to set
+	 */
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
 
 	/**
 	 * @return the currentPage
@@ -68,23 +82,23 @@ public class GetUserFavorMatchAction extends UserBaseAction {
 			if (rows == null) {
 				rows = Constant.DEFAULT_ROWS;
 			}
-			List<MatchBean> list = null;
-			UserBean userBean = (UserBean) ActionContext.getContext()
-					.getSession().get("userBean");
-			if (userBean != null) {
-				Integer userId = userBean.getUserId();
-				FrontMessage mesg = new FrontMessage();
-				list = umg.getUsersFavorMatch(userId,
-						currentPage, rows);
-				if (list != null) {
-					mesg.setBody(list);
-					mesg.setCount(umg.countUsersFavorMatch(userId));
-					JSONUtils.toJson(ServletActionContext.getResponse(), mesg);
-					return null;
+			if (CommonUtils.isNullOrEmpty(userId)) {
+				UserBean userBean = (UserBean) ActionContext.getContext()
+						.getSession().get("userBean");
+				if (userBean != null) {
+					userId = userBean.getUserId();
 				}
 			}
-
-			JSONUtils.toJson(ServletActionContext.getResponse(), "fail");
+			List<MatchBean> list = null;
+			FrontMessage mesg = new FrontMessage();
+			list = umg.getUsersFavorMatch(userId, currentPage, rows);
+			if (list != null) {
+				mesg.setBody(list);
+				mesg.setCount(umg.countUsersFavorMatch(userId));
+				JSONUtils.toJson(ServletActionContext.getResponse(), mesg);
+				return null;
+			}
+			JSONUtils.toJson(ServletActionContext.getResponse(), Constant.FAIL);
 			return null;
 
 		} catch (Exception e) {
@@ -92,6 +106,5 @@ public class GetUserFavorMatchAction extends UserBaseAction {
 			JSONUtils.toJson(ServletActionContext.getResponse(), "fail");
 			return null;
 		}
-
 	}
 }

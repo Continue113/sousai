@@ -4,9 +4,12 @@ import org.apache.struts2.ServletActionContext;
 import org.sousai.action.base.UserBaseAction;
 import org.sousai.common.Constant;
 import org.sousai.domain.FrontMessage;
+import org.sousai.tools.CommonUtils;
 import org.sousai.tools.JSONUtils;
+import org.sousai.vo.UserBean;
 
 import com.googlecode.jsonplugin.annotations.JSON;
+import com.opensymphony.xwork2.ActionContext;
 
 public class GetCourtByUserIdAction extends UserBaseAction {
 
@@ -76,6 +79,13 @@ public class GetCourtByUserIdAction extends UserBaseAction {
 			}
 			if (rows == null) {
 				rows = Constant.DEFAULT_ROWS;
+			}
+			if (CommonUtils.isNullOrEmpty(userId)) {
+				UserBean userBean = (UserBean) ActionContext.getContext()
+						.getSession().get("userBean");
+				if (userBean != null) {
+					userId = userBean.getUserId();
+				}
 			}
 			mesg.setBody(umg.getCourtByUserId(userId, currentPage, rows));
 			mesg.setCount(umg.countCourtByUserId(userId));

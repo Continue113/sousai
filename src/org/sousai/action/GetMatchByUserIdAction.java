@@ -4,7 +4,11 @@ import org.apache.struts2.ServletActionContext;
 import org.sousai.action.base.UserBaseAction;
 import org.sousai.common.Constant;
 import org.sousai.domain.FrontMessage;
+import org.sousai.tools.CommonUtils;
 import org.sousai.tools.JSONUtils;
+import org.sousai.vo.UserBean;
+
+import com.opensymphony.xwork2.ActionContext;
 
 public class GetMatchByUserIdAction extends UserBaseAction {
 	private static final long serialVersionUID = 3119105239256982384L;
@@ -73,6 +77,13 @@ public class GetMatchByUserIdAction extends UserBaseAction {
 			}
 			if (rows == null) {
 				rows = 10;
+			}
+			if (CommonUtils.isNullOrEmpty(userId)) {
+				UserBean userBean = (UserBean) ActionContext.getContext()
+						.getSession().get("userBean");
+				if (userBean != null) {
+					userId = userBean.getUserId();
+				}
 			}
 			mesg.setBody(umg.getMatchByUserId(userId, currentPage, rows));
 			mesg.setCount(umg.countMatchByUserId(userId));
