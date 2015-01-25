@@ -324,7 +324,7 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 		String strWhere = buildFindByParamsWhere(keyValue, matchType, now,
 				matchState, dayOfWeek, beginTime, endTime, region);
 		MyPrint.myPrint("findPagedByParams.strWhere = " + strWhere);
-		return findPagedByWhereOrderBy(strWhere, currentPage, rows,
+		return findPagedByWhereOrderBy(" and "+strWhere, currentPage, rows,
 				addPrefixToColumn(orderByCol), isAsc);
 	}
 
@@ -362,9 +362,8 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 				null };
 		int[] relations = new int[] { 1, 1, 1, 1, 1, 1 };
 		
-		//由于这段sql是拼接在selectMatchBean后边，所以应在前边加and，因此flag为true
 		String strWhere = Append_StringV2(" ", types, columns, args, relations,
-				true);
+				false);
 
 		return strWhere;
 	}
