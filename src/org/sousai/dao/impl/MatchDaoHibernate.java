@@ -531,7 +531,7 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 
 	@Override
 	public void relMatchesByAdmin(Integer[] ids) {
-		String strHql = "update Match set verify='1' where ids in (:ids)";
+		String strHql = "update Match set verify='1' where id in (:ids)";
 		Map<String, Integer[]> params = new HashMap<String, Integer[]>();
 		params.put("ids", ids);
 		executeHql(strHql, params);
