@@ -163,6 +163,9 @@
 		<action name="statistics" class="org.sousai.webstatistics.Statistics" method="statisticsData">
 			<result name="success">/</result>
 		</action>
+		<action name="isLogined" class="org.sousai.search.Util" method="isLogined">
+			<result name="success">/</result>
+		</action>
 		
 		<action name="markMatch" class="org.sousai.action.MarkMatchAction" >
 		</action>

@@ -26,13 +26,15 @@ public class PublishCollections {
 		LinkedList<MatchData> matchList = new Jdbc()
 				.selectFromIds(collectionIds);
 		Jdbc publishJdbc = new Jdbc();
-		int userId = 0;
+		int userId = -1;
 		try {
 			User tempUser = new User((UserBean) ActionContext.getContext()
 					.getSession().get("userBean"));
 			userId = tempUser.getId();
 		} catch (Exception e) {
+			JSONUtils.toJson(ServletActionContext.getResponse(), userId);
 			System.out.println(e);
+			return null;
 		}
 		for (int i = 0; i < matchList.size(); ++i) {
 			publishJdbc.publish(matchList.get(i), userId);
