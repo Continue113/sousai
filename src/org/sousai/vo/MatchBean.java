@@ -12,12 +12,12 @@ public class MatchBean implements Serializable {
 	private Integer id; // 数据库自添加，不用传递给后台
 	private String name;
 	private String type;
-	private Date beginTime;
-	private Date endTime;
+	private String beginTime;
+	private String endTime;
 	private Integer courtId; // 可传可不传
 	private String courtName;
 	private String rule; // 可传可不传
-	private Date relTime;
+	private String relTime;
 	private char verify;
 	private String score; // 可传可不传
 	private Integer userId; // 可传可不传
@@ -35,12 +35,14 @@ public class MatchBean implements Serializable {
 		this.id = id;
 		this.name = name;
 		this.type = type;
-		this.beginTime = beginTime;
-		this.endTime = endTime;
+		SimpleDateFormat dateFm = new SimpleDateFormat("yyyy-MM-dd");
+		this.beginTime = dateFm.format(beginTime);
+		this.endTime = dateFm.format(endTime);
 		this.courtId = courtId;
 		this.courtName = courtName;
 		this.rule = rule;
-		this.relTime = relTime;
+		SimpleDateFormat timeFm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		this.relTime = timeFm.format(relTime);
 		this.verify = verify;
 		this.score = score;
 		this.userId = userId;
@@ -55,9 +57,9 @@ public class MatchBean implements Serializable {
 		} else if (now.compareTo(endTime) >= 0) {
 			this.state = "已结束";
 		}
-		SimpleDateFormat dateFm = new SimpleDateFormat("EEEE",Locale.CHINA);
-		this.beginDayOfWeek = dateFm.format(beginTime);
-		this.endDayOfWeek = dateFm.format(endTime);
+		SimpleDateFormat dayOfWeekFm = new SimpleDateFormat("EEEE",Locale.CHINA);
+		this.beginDayOfWeek = dayOfWeekFm.format(beginTime);
+		this.endDayOfWeek = dayOfWeekFm.format(endTime);
 	}
 
 	/**
@@ -108,7 +110,7 @@ public class MatchBean implements Serializable {
 	/**
 	 * @return the beginTime
 	 */
-	public Date getBeginTime() {
+	public String getBeginTime() {
 		return beginTime;
 	}
 
@@ -116,14 +118,14 @@ public class MatchBean implements Serializable {
 	 * @param beginTime
 	 *            the beginTime to set
 	 */
-	public void setBeginTime(Date beginTime) {
+	public void setBeginTime(String beginTime) {
 		this.beginTime = beginTime;
 	}
 
 	/**
 	 * @return the endTime
 	 */
-	public Date getEndTime() {
+	public String getEndTime() {
 		return endTime;
 	}
 
@@ -131,7 +133,7 @@ public class MatchBean implements Serializable {
 	 * @param endTime
 	 *            the endTime to set
 	 */
-	public void setEndTime(Date endTime) {
+	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
 
@@ -183,7 +185,7 @@ public class MatchBean implements Serializable {
 	/**
 	 * @return the relTime
 	 */
-	public Date getRelTime() {
+	public String getRelTime() {
 		return relTime;
 	}
 
@@ -191,7 +193,7 @@ public class MatchBean implements Serializable {
 	 * @param relTime
 	 *            the relTime to set
 	 */
-	public void setRelTime(Date relTime) {
+	public void setRelTime(String relTime) {
 		this.relTime = relTime;
 	}
 
