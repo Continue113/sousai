@@ -368,6 +368,7 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 		// 都没选
 		case 0:
 			strMatchStateStatement = "1<>1";
+			break;
 			// 都选
 		case 7:
 			break;
@@ -377,6 +378,8 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 			columns = new String[] { addPrefixToColumn("beginTime") };
 			args = new java.sql.Date[] { now };
 			relations = new int[] { 1 };
+			strMatchStateStatement = Append_StringV2("", types, columns, args,
+					relations, false);
 			break;
 		// 比赛中
 		case 2:
@@ -385,6 +388,8 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 					addPrefixToColumn("endTime") };
 			args = new java.sql.Date[] { now, now };
 			relations = new int[] { 1, 1 };
+			strMatchStateStatement = Append_StringV2("", types, columns, args,
+					relations, false);
 			break;
 		// 报名中与比赛中
 		case 3:
@@ -392,6 +397,8 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 			columns = new String[] { addPrefixToColumn("endTime") };
 			args = new java.sql.Date[] { now };
 			relations = new int[] { 1 };
+			strMatchStateStatement = Append_StringV2("", types, columns, args,
+					relations, false);
 			break;
 		// 已结束
 		case 4:
@@ -399,6 +406,8 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 			columns = new String[] { addPrefixToColumn("endTime") };
 			args = new java.sql.Date[] { now };
 			relations = new int[] { 1 };
+			strMatchStateStatement = Append_StringV2("", types, columns, args,
+					relations, false);
 			break;
 		// 报名中与已结束
 		case 5:
@@ -407,6 +416,8 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 					addPrefixToColumn("endTime") };
 			args = new java.sql.Date[] { now, now };
 			relations = new int[] { 1, 2 };
+			strMatchStateStatement = Append_StringV2("", types, columns, args,
+					relations, false);
 			break;
 		// 比赛中与已结束
 		case 6:
@@ -414,12 +425,12 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 			columns = new String[] { addPrefixToColumn("beginTime") };
 			args = new java.sql.Date[] { now };
 			relations = new int[] { 1 };
+			strMatchStateStatement = Append_StringV2("", types, columns, args,
+					relations, false);
 			break;
 		default:
 			break;
 		}
-		strMatchStateStatement = Append_StringV2("", types, columns, args,
-				relations, false);
 		return strMatchStateStatement;
 	}
 
