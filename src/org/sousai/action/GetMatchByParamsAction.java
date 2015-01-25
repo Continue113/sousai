@@ -9,6 +9,7 @@ import org.sousai.common.Constant;
 import org.sousai.domain.FrontMessage;
 import org.sousai.service.CommonManager;
 import org.sousai.service.impl.CommonManagerImpl;
+import org.sousai.tools.CommonUtils;
 import org.sousai.tools.JSONUtils;
 import org.sousai.tools.MyPrint;
 
@@ -58,8 +59,20 @@ public class GetMatchByParamsAction extends UserBaseAction {
 	 * @param beginTime
 	 *            the beginTime to set
 	 */
-	public void setBeginTime(Date beginTime) {
-		this.beginTime = beginTime;
+	public void setBeginTime(Object beginTime) throws Exception {
+		try {
+			if (beginTime instanceof Date) {
+				this.beginTime = (Date) beginTime;
+			} else if (beginTime instanceof String) {
+				this.beginTime = CommonUtils.ParseDateParam(
+						((String) beginTime), null);
+			} else if (beginTime instanceof String[]) {
+				this.beginTime = CommonUtils.ParseDateParam(
+						((String[]) beginTime)[0], null);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -73,8 +86,20 @@ public class GetMatchByParamsAction extends UserBaseAction {
 	 * @param endTime
 	 *            the endTime to set
 	 */
-	public void setEndTime(Date endTime) {
-		this.endTime = endTime;
+	public void setEndTime(Object endTime) throws Exception {
+		try {
+			if (endTime instanceof Date) {
+				this.endTime = (Date) endTime;
+			} else if (endTime instanceof String) {
+				this.endTime = CommonUtils.ParseDateParam(
+						((String) endTime), null);
+			} else if (endTime instanceof String[]) {
+				this.endTime = CommonUtils.ParseDateParam(
+						((String[]) endTime)[0], null);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
