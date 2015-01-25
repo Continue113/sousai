@@ -430,6 +430,28 @@ public class Jdbc {
 		}
 		return registerNum ;
 	}
+	
+	//统计各个地区的比赛数量
+	public int selectCityCourt(String city){
+		int courtNum = 0 ;
+		String sql = "SELECT COUNT(COURTID) FROM MATCHES WHERE COURTID IN (SELECT ID FROM COURT WHERE REGION LIKE '%"+city+"%')" ;
+		try{
+			pstmt = conn.prepareStatement(sql);
+			result = pstmt.executeQuery();
+			while (result.next()) {
+				courtNum = result.getInt(1) ;
+			}
+		} catch (SQLException e) {
+			System.out.println(e);
+		} finally {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+				System.out.println(e);
+			}
+		}		
+		return courtNum ;
+	}
 }
 
 class JdbcMySqlUtil {

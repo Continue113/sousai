@@ -170,6 +170,9 @@
 		<action name="isLogined" class="org.sousai.search.Util" method="isLogined">
 			<result name="success">/</result>
 		</action>
+		<action name="courtStatistics" class="org.sousai.webstatistics.Statistics" method="courtStatistics">
+			<result name="success"></result>
+		</action>
 		
 		<action name="markMatch" class="org.sousai.action.MarkMatchAction" >
 		</action>
