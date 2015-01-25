@@ -351,7 +351,7 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 		String strKeyValueStatement = buildKeyValueStatement(keyValue,
 				new String[] { addPrefixToColumn("name"),
 						addPrefixToColumn("type"), addPrefixToColumn("region"),
-						addPrefixToColumn(" addr ") });
+						addPrefixToColumn("addr") });
 
 		int[] types = new int[] { 11, 11, 0, 3, 2, 11 };
 		String[] columns = new String[] { strKeyValueStatement,
