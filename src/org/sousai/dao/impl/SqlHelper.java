@@ -637,9 +637,10 @@ public class SqlHelper extends HibernateDaoSupport {
 					break;
 				case 11:
 					// 这里，columns[i]应为sql语句
-					if (!CommonUtils.isNullOrEmpty(columns[i])) {
-						strBuilder.append(" (" + columns[i] + ") ");
+					if (CommonUtils.isNullOrEmpty(columns[i])) {
+						break;
 					}
+					strBuilder.append(" (" + columns[i] + ") ");
 					flag = true;
 					break;
 				default:
