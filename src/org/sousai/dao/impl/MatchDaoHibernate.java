@@ -576,7 +576,7 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 		// isAsc);
 		String strHql = "select count(*) from Match m ";
 		if (!CommonUtils.isNullOrEmpty(strWhere)) {
-			strHql += strWhere;
+			strHql += " where " + strWhere;
 		}
 		return count(strHql);
 	}
