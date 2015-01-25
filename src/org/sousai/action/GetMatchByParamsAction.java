@@ -232,6 +232,7 @@ public class GetMatchByParamsAction extends UserBaseAction {
 			mesg.setCount(cmg.countMatchByParams(keyValue, matchType, now, matchState, dayOfWeek, now, now, region));
 			JSONUtils.toJson(ServletActionContext.getResponse(), mesg);
 		} catch (Exception e) {
+			e.printStackTrace();
 			JSONUtils
 					.toJson(ServletActionContext.getResponse(), Constant.ERROR);
 		}
