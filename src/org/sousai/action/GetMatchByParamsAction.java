@@ -229,7 +229,7 @@ public class GetMatchByParamsAction extends UserBaseAction {
 			mesg.setBody(cmg.findPagedMatchByParams(keyValue, matchType, now,
 					matchState, dayOfWeek, beginTime, endTime, region,
 					currentPage, rows, orderByCol, isAsc));
-			mesg.setCount(cmg.countMatchByParams(keyValue, matchType, now, matchState, dayOfWeek, now, now, region));
+			mesg.setCount(cmg.countMatchByParams(keyValue, matchType, now, matchState, dayOfWeek, beginTime, endTime, region));
 			JSONUtils.toJson(ServletActionContext.getResponse(), mesg);
 		} catch (Exception e) {
 			e.printStackTrace();
