@@ -5,13 +5,12 @@ import org.sousai.action.base.UserBaseAction;
 import org.sousai.common.Constant;
 import org.sousai.tools.JSONUtils;
 
-public class RelCourtsByAdminAction extends UserBaseAction
-{
+public class RelMatchesByAdminAction extends UserBaseAction {
 
-	private static final long serialVersionUID = -569315712904600957L;
-	
+	private static final long serialVersionUID = 9074485458356135216L;
+
 	private String ids;
-	
+
 	/**
 	 * @return the ids
 	 */
@@ -20,7 +19,8 @@ public class RelCourtsByAdminAction extends UserBaseAction
 	}
 
 	/**
-	 * @param ids the ids to set
+	 * @param ids
+	 *            the ids to set
 	 */
 	public void setIds(String ids) {
 		this.ids = ids;
@@ -33,15 +33,15 @@ public class RelCourtsByAdminAction extends UserBaseAction
 		return serialVersionUID;
 	}
 
-	public String execute() throws Exception{
+	public String execute() throws Exception {
 		String value = null;
 		try {
-			String[] arrayCourtIds = ids.split(",");
-			Integer[] iCourtIds = new Integer[arrayCourtIds.length];
-			for (int i = 0; i < arrayCourtIds.length; i++) {
-				iCourtIds[i] = Integer.valueOf(arrayCourtIds[i]);
+			String[] arrayMatchIds = ids.split(",");
+			Integer[] iMatchIds = new Integer[arrayMatchIds.length];
+			for (int i = 0; i < arrayMatchIds.length; i++) {
+				iMatchIds[i] = Integer.valueOf(arrayMatchIds[i]);
 			}
-			amg.relCourts(iCourtIds);
+			amg.relMatches(iMatchIds);
 			value = Constant.SUCCESS;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -51,4 +51,5 @@ public class RelCourtsByAdminAction extends UserBaseAction
 		JSONUtils.toJson(ServletActionContext.getResponse(), value);
 		return null;
 	}
+
 }

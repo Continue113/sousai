@@ -168,4 +168,9 @@ public class AdminManagerImpl implements AdminManager {
 	public void deleteUsers(Integer[] ids) throws Exception {
 		userDao.deleteUsers(ids);
 	}
+
+	@Override
+	public void relMatches(Integer[] ids) throws Exception {
+		matchDao.relMatchesByAdmin(ids);
+	}
 }

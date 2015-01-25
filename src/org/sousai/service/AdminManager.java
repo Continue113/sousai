@@ -119,4 +119,12 @@ public interface AdminManager {
 	 * @throws Exception
 	 */
 	public void relCourts(Integer[] ids) throws Exception;
+	
+	/**
+	 * 批量发布比赛（将verify置为1）
+	 * @param ids
+	 * @throws Exception
+	 */
+	public void relMatches(Integer[] ids)throws Exception;
+	
 }

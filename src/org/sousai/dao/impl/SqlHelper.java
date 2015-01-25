@@ -634,6 +634,8 @@ public class SqlHelper extends HibernateDaoSupport {
 		for (String key : params.keySet()) {
 			if (params.get(key) instanceof Collection) {
 				q.setParameterList(key, (Collection) params.get(key));
+			} else if (params.get(key) instanceof Object[]) {
+				q.setParameterList(key, (Object[]) params.get(key));
 			} else {
 				q.setParameter(key, params.get(key));
 			}
