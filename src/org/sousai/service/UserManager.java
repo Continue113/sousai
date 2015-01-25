@@ -229,17 +229,6 @@ public interface UserManager {
 
 	public Integer relMatch(Match match);
 
-	/**
-	 * 在查找比赛的时候，通过工作日、比赛状态、地区进行初步筛选
-	 * 
-	 * @param dayOfWeek
-	 * @param state
-	 * @param regionId
-	 * @return
-	 */
-	public List<MatchBean> getMatchByParms(int[] dayOfWeek, int state,
-			int regionId, int currentPage, int rows);
-
 	public List<CourtBean> getCourtByUserId(Integer userId);
 
 	/**

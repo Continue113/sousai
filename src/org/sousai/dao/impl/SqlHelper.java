@@ -1,6 +1,8 @@
 package org.sousai.dao.impl;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -612,5 +614,30 @@ public class SqlHelper extends HibernateDaoSupport {
 			throw new Exception(errorPalce + "参数拼接出错");
 		}
 		return value;
+	}
+
+	public void executeHql(String strHql) {
+		Session session = getHibernateTemplate().getSessionFactory()
+				.getCurrentSession();
+		Query q = session.createQuery(strHql);
+		q.executeUpdate();
+	}
+
+	public void executeHql(Query q) {
+		q.executeUpdate();
+	}
+
+	public void executeHql(String strHql, Map<String, ?> params) {
+		Session session = getHibernateTemplate().getSessionFactory()
+				.getCurrentSession();
+		Query q = session.createQuery(strHql);
+		for (String key : params.keySet()) {
+			if (params.get(key) instanceof Collection) {
+				q.setParameterList(key, (Collection) params.get(key));
+			} else {
+				q.setParameter(key, params.get(key));
+			}
+		}
+		q.executeUpdate();
 	}
 }

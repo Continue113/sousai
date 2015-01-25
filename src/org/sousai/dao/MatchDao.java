@@ -43,22 +43,6 @@ public interface MatchDao {
 			int currentPage, int rows);
 
 	/**
-	 * 根据可选参数，从数据库返回比赛。
-	 * 
-	 * @param dayOfWeek
-	 *            其中的int元素1为周日，2为周一，…，7为周六。若不使用此参数可传递null
-	 * @param state
-	 *            0为报名中，1为比赛中，2为已结束。若不使用此参数，传递-1
-	 * @param date
-	 *            此处应传递当前日期。若state为-1，此处为null
-	 * @param regionId
-	 *            地点id。若不使用此参数，传递-1
-	 * @return 符合参数要求的所有比赛
-	 */
-	List<MatchBean> findByParms(int[] dayOfWeek, int state, Date date,
-			Integer regionId, int currentPage, int rows);
-
-	/**
 	 * 统计用户发布的每种比赛的数量
 	 * 
 	 * @param userId
@@ -125,5 +109,11 @@ public interface MatchDao {
 			java.sql.Date now, int matchState, int dayOfWeek, Date beginTime,
 			Date endTime, String region, int currentPage, int rows,
 			String orderByCol, Boolean isAsc) throws Exception;
+	
+	/**
+	 * 批量发布比赛（将verify置为1）
+	 * @param ids
+	 */
+	void relMatchesByAdmin(Integer[] ids);
 
 }

@@ -208,6 +208,12 @@ public class GetMatchByParamsAction extends UserBaseAction {
 //		rows = 10;
 //		dayOfWeek = 1;
 //		matchState = 6;
+		if (currentPage == null) {
+			currentPage = 1;
+		}
+		if (rows == null) {
+			rows = 25;
+		}
 		java.sql.Date now = new java.sql.Date(new Date().getTime());
 		CommonManager cmg = new CommonManagerImpl();
 		cmg.findPagedMatchByParams(keyValue, matchType, now, matchState,

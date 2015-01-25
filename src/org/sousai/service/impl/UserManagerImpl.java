@@ -390,12 +390,6 @@ public class UserManagerImpl implements UserManager {
 	public List<CourtBean> getCourtByRegion(String region, int currentPage, int rows) throws Exception{
 		return courtDao.findByRegion(region, currentPage, rows);
 	}
-	@Override
-	public List<MatchBean> getMatchByParms(int[] dayOfWeek, int state,
-			int regionId, int currentPage, int rows) {
-		return (List<MatchBean>) matchDao.findByParms(dayOfWeek, state,
-				new Date(), regionId, currentPage, rows);
-	}
 
 	@Override
 	public List<CourtBean> getCourtByUserId(Integer userId) {
