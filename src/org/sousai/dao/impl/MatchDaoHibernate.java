@@ -334,13 +334,14 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 		Timestamp tsBeginTime = null;
 		Timestamp tsEndTime = null;
 		if (!CommonUtils.isNullOrEmpty(region)) {
-			region = " %" + region + "% ";
+			region += "% ";
 		}
-		if (!CommonUtils.isNullOrEmpty(beginTime)) {
-			tsBeginTime = CommonUtils.ToTimestamp(beginTime);
-		}
-		if (!CommonUtils.isNullOrEmpty(endTime)) {
-			tsEndTime = CommonUtils.ToTimestamp(endTime);
+		Timestamp[] timePare = null;
+		//如果时间其中一个为空，timePare为空
+		if (!CommonUtils.isNullOrEmpty(beginTime)
+				&& !CommonUtils.isNullOrEmpty(endTime)) {
+			timePare = new Timestamp[] { CommonUtils.ToTimestamp(beginTime),
+					CommonUtils.ToTimestamp(endTime) };
 		}
 
 		// 构建筛选比赛状态的子语句
@@ -359,8 +360,8 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 				strDayOfWeekStatement, addPrefixToColumn("type"),
 				addPrefixToColumn("beginTime"), addPrefixToColumn("region"),
 				strMatchStateStatement };
-		Object[] args = new Object[] { null, null, matchType,
-				new Timestamp[] { tsBeginTime, tsEndTime }, region, null };
+		Object[] args = new Object[] { null, null, matchType, timePare, region,
+				null };
 		int[] relations = new int[] { 1, 1, 1, 1, 1, 1 };
 		String strWhere = Append_StringV2(" ", types, columns, args, relations,
 				false);
