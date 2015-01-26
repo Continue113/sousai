@@ -13,6 +13,9 @@ public class Statistics {
 	private int year;
 	private LinkedList<SiteStats> siteStats = new LinkedList<SiteStats>();
 
+	private int dayNum ;
+	private String matchType ;
+	
 	public int getMonth() {
 		return month;
 	}
@@ -27,6 +30,23 @@ public class Statistics {
 
 	public void setYear(int year) {
 		this.year = year;
+	}
+	
+
+	public int getDayNum() {
+		return dayNum;
+	}
+
+	public void setDayNum(int dayNum) {
+		this.dayNum = dayNum;
+	}
+
+	public String getMatchType() {
+		return matchType;
+	}
+
+	public void setMatchType(String matchType) {
+		this.matchType = matchType;
 	}
 
 	public String statisticsData() {
@@ -59,7 +79,7 @@ public class Statistics {
 				"广西", "西藏", "宁夏", "新疆", "香港", "澳门" };
 		SortedMap<String,Integer> cityCourt = new TreeMap<String,Integer>() ;
 		for(int i=0;i<city.length;i++){
-			int num = jdbc.selectCityCourt(city[i]) ;
+			int num = jdbc.selectCityCourt(city[i],dayNum,matchType) ;
 			if(num!=0)
 				cityCourt.put(city[i], num) ;
 		}
