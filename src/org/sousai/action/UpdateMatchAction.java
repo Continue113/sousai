@@ -41,6 +41,7 @@ public class UpdateMatchAction extends UserBaseAction {
 			cmg.updateMatch(match);
 			value = Constant.SUCCESS;
 		} catch (Exception e) {
+			e.printStackTrace();
 			value = Constant.ERROR;
 		}
 		JSONUtils.toJson(ServletActionContext.getResponse(), value);
