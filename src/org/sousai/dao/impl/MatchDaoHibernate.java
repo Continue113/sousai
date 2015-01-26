@@ -165,12 +165,12 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 				session = getHibernateTemplate().getSessionFactory()
 						.getCurrentSession();
 				q = session.createQuery(hql);
+				q.setInteger(0, userId);
 			} else {
 				hql = "select type,count(type) from Match m group by type";
 				session = getHibernateTemplate().getSessionFactory()
 						.getCurrentSession();
 				q = session.createQuery(hql);
-				q.setInteger(0, userId);
 			}
 			MyPrint.myPrint("userId = " + userId);
 			for (Object[] ob : (List<Object[]>) q.list()) {
