@@ -78,9 +78,25 @@ public interface MatchDao {
 	 */
 	List<MatchBean> findByKeyValue(String keyValue);
 
+	/**
+	 * 模糊匹配某个字段,分页查询
+	 * 
+	 * @param keyValue
+	 * @return
+	 */
 	List<MatchBean> findPagedByKeyValue(String keyValue, int currentPage,
 			int pageSize);
 
+	/**
+	 * 查询某个场地举办的所有比赛
+	 * @param courtId
+	 * @param currentPage
+	 * @param rows
+	 * @return
+	 * @throws Exception 
+	 */
+	List<MatchBean> findPagedByCourtId(Integer courtId, int currentPage, int rows) throws Exception;
+	
 	int countMatch();
 	
 	int countByUserId(Integer userId);
@@ -128,6 +144,14 @@ public interface MatchDao {
 	int countByParams(String keyValue, String matchType,
 			java.sql.Date now, int matchState, int dayOfWeek, Date beginTime,
 			Date endTime, String region) throws Exception;
+	
+	/**
+	 * 获取某个场地所举办的所有比赛数量
+	 * @param courtId
+	 * @return
+	 */
+	int countByCourtId(Integer courtId) throws Exception;
+
 	/**
 	 * 批量发布比赛（将verify置为1）
 	 * @param ids

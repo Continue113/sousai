@@ -206,7 +206,10 @@
 		<!-- 查询某个用户发布的比赛 -->
 		<action name="getMatchByUserId" class="org.sousai.action.GetMatchByUserIdAction">
 		</action>
-	</package>
+		<!-- 查询某个场地举办的所有比赛-->
+		<action name="getMatchByCourtId" class="org.sousai.action.GetMatchByCourtIdAction">
+		</action>
+		</package>
 	
 	
 	<!-- <package name="ajax" extends="json-default"> <action name="uploadPic" class="org.sousai.action.UploadPicAction">

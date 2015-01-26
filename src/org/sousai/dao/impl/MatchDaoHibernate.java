@@ -157,11 +157,21 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 	public Map<String, Integer> getEachMatchCount(Integer userId) {
 		try {
 			Map<String, Integer> rs = new HashMap<String, Integer>();
-			String hql = "select type,count(type) from Match m where userId=? group by type";
-			Session session = getHibernateTemplate().getSessionFactory()
-					.getCurrentSession();
-			Query q = session.createQuery(hql);
-			q.setInteger(0, userId);
+			String hql = null;
+			Session session = null;
+			Query q = null;
+			if (!CommonUtils.isNullOrEmpty(userId)) {
+				hql = "select type,count(type) from Match m where userId=? group by type";
+				session = getHibernateTemplate().getSessionFactory()
+						.getCurrentSession();
+				q = session.createQuery(hql);
+			} else {
+				hql = "select type,count(type) from Match m group by type";
+				session = getHibernateTemplate().getSessionFactory()
+						.getCurrentSession();
+				q = session.createQuery(hql);
+				q.setInteger(0, userId);
+			}
 			MyPrint.myPrint("userId = " + userId);
 			for (Object[] ob : (List<Object[]>) q.list()) {
 				rs.put((String) ob[0], Integer.valueOf(ob[1].toString()));
@@ -580,5 +590,19 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 			strHql += strWhere;
 		}
 		return count(strHql);
+	}
+
+	@Override
+	public List<MatchBean> findPagedByCourtId(Integer courtId, int currentPage,
+			int rows) throws Exception {
+		String strWhere = Append_StringV2("", new int[]{1}, new String[]{addPrefixToColumn("courtId")}, new Integer[]{courtId}, new int[]{1}, true);
+		return findPagedByWhereOrderBy(strWhere, currentPage, rows, null, null);
+	}
+
+	@Override
+	public int countByCourtId(Integer courtId) throws Exception {
+		String strWhere = Append_StringV2("", new int[]{1}, new String[]{addPrefixToColumn("courtId")}, new Integer[]{courtId}, new int[]{1}, false);
+		
+		return count("select count(*) from Match m where "+strWhere);
 	}
 }

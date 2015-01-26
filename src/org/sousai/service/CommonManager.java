@@ -220,4 +220,22 @@ public interface CommonManager {
 	 * @throws Exception
 	 */
 	public void updateCourt(Court court) throws Exception;
+	
+	/**
+	 * 获取某个场地所举办的所有比赛
+	 * @param courtId
+	 * @param currentPage
+	 * @param rows
+	 * @return
+	 * @throws Exception 
+	 */
+	public List<MatchBean> findPagedMatchByCourtId(Integer courtId, int currentPage, int rows) throws Exception;
+	
+	/**
+	 * 获取某个场地所举办的所有比赛数量
+	 * @param courtId
+	 * @return
+	 * @throws Exception 
+	 */
+	public int countMatchByCourtId(Integer courtId) throws Exception;
 }

@@ -181,4 +181,15 @@ public class CommonManagerImpl implements CommonManager {
 		return matchDao.countByParams(keyValue, matchType, now, matchState, dayOfWeek, beginTime, endTime, region);
 	}
 
+	@Override
+	public List<MatchBean> findPagedMatchByCourtId(Integer courtId,
+			int currentPage, int rows) throws Exception {
+		return matchDao.findPagedByCourtId(courtId, currentPage, rows);
+	}
+
+	@Override
+	public int countMatchByCourtId(Integer courtId) throws Exception {
+		return matchDao.countByCourtId(courtId);
+	}
+
 }
