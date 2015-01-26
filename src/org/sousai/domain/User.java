@@ -1,5 +1,6 @@
 package org.sousai.domain;
 
+import org.sousai.tools.CommonUtils;
 import org.sousai.vo.*;
 
 import java.io.Serializable;
@@ -25,15 +26,15 @@ public class User implements Serializable {
 	public User() {
 	}
 
-	public User(UserBean userBean) throws ParseException {
+	public User(UserBean userBean) throws Exception {
 		this.id = userBean.getUserId();
 		this.email = userBean.getUserEmail();
-		SimpleDateFormat timeFm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		this.lastLogTime = timeFm.parse(userBean.getUserLastLogTime());
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		this.lastLogTime = CommonUtils.ParseDateParam(userBean.getUserLastLogTime(), format);
 		this.name = userBean.getUserName();
 		this.picId = userBean.getUserPicId();
 		this.pwd = userBean.getUserPwd();
-		this.regTime = timeFm.parse(userBean.getUserRegTime());
+		this.regTime = CommonUtils.ParseDateParam(userBean.getUserRegTime(), format);
 		this.type = userBean.getUserType();
 		this.lastRegionId = userBean.getUserLastRegionId();
 	}

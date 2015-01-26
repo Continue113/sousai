@@ -114,7 +114,7 @@ public class CommonUtils {
 	}
 
 	/**
-	 * 若str不为空，将其转换成Date
+	 * 若str不为空，将其转换成Date,若format为空，转换为yyyy-MM-dd格式
 	 * 
 	 * @param str
 	 * @param format
