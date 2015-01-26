@@ -84,7 +84,10 @@ public class Statistics {
 			if(num!=0)
 				cityCourt.put(city[i], num) ;
 		}
-		JSONUtils.toJson(ServletActionContext.getResponse(), cityCourt);
+		if(cityCourt.isEmpty())
+			JSONUtils.toJson(ServletActionContext.getResponse(), "null");
+		else
+			JSONUtils.toJson(ServletActionContext.getResponse(), cityCourt);
 		return "success";
 	}
 }
