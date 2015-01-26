@@ -78,6 +78,7 @@ public class Statistics {
 				"湖南", "广东", "湖南", "四川", "贵州", "云南", "陕西", "甘肃", "青海", "内蒙古",
 				"广西", "西藏", "宁夏", "新疆", "香港", "澳门" };
 		SortedMap<String,Integer> cityCourt = new TreeMap<String,Integer>() ;
+		System.out.println("天数:"+dayNum+"  比赛类型:"+matchType);
 		for(int i=0;i<city.length;i++){
 			int num = jdbc.selectCityCourt(city[i],dayNum,matchType) ;
 			if(num!=0)
