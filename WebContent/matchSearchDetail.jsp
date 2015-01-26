@@ -7,10 +7,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
   <meta name="description" content="搜赛网比赛搜索页面" /> 
   <meta name="author" content="KING@CQU" /> 
+  <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet" /> 
   <link href="css/bootstrap.min.css" rel="stylesheet" /> 
   <link href="css/bootstrap-responsive.css" rel="stylesheet" /> 
   <link href="css/sousai.common.css" rel="stylesheet" /> 
-  <link href="css/sousai.matchSearchDetail.css" rel="stylesheet" /> 
   <!--[if lte IE 8]>
   <link href="css/sousai.IE8.css" rel="stylesheet" /> 
   <![endif]-->
@@ -70,11 +70,11 @@
      <div class="matchSearch-remind"> 
       <p><i class="icon-th-list"></i>&nbsp;比赛详情&nbsp;</p> 
      </div>
-     <div id="match">
+     <div id="match" class="matchList">
      <div class="matchShortInfo"> 
       <a href="javascript:void(0);" class="btn btn-mini pull-right" id="markMatch">收藏比赛</a> 
-      <a href="javascript:void(0);" class="btn btn-mini pull-right" id="modifyMatch">修改比赛</a> 
-      <a href="javascript:void(0);" class="btn btn-mini pull-right" id="recordSocre">录入成绩</a> 
+      <a href="javascript:void(0);" class="btn btn-mini pull-right hide" id="modifyMatch">修改比赛</a> 
+      <a href="javascript:void(0);" class="btn btn-mini pull-right hide" id="recordSocre">录入成绩</a> 
       <table> 
        <thead> 
         <tr> 
@@ -103,7 +103,7 @@
       </table> 
      </div> 
      <div class="matchContent"> 
-      <div class="matchScore"> 
+      <div class="matchScore hide"> 
        <div class="title">比赛成绩 </div> 
        <div class="matchScoreContent"> 比赛进程（状态）是报名中，则不显示比赛成绩这栏。XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX这个页面是在新的窗口打开，添加“修改”和“录入成绩”的按钮，可以修改“比赛规程”和“基本比赛信息”，按钮根据比赛状态（进程），改变按钮出现的情况。根据是否是发布者，出现录入成绩和修改比赛按钮 </div> 
       </div> 
@@ -111,6 +111,9 @@
       <div class="match"><p>天津市第五届百年皖酒“杯XXXXXXXXXX</p></div> 
      </div> 
     </div>
+    <!--编辑比赛 开始-->
+    <s:include value="editMatch.jsp" />
+    <!-- /编辑比赛信息 -->
     </div>
     <div class="span1"> 
      <div class="text-center adSecond">这里是ad.no2</div> 
@@ -121,6 +124,13 @@
   </div> 
   <!-- /container --> 
   <s:include value="footer.jsp" />
+  <script src="js/bootstrap-datetimepicker.min.js"></script> 
+  <script src="js/bootstrap-datetimepicker.zh-CN.js"></script> 
+  <script src="js/handlebars-v2.0.0.js"></script>
+  <script src="tinymce/jquery.tinymce.min.js"></script> 
+  <script src="tinymce/tinymce.min.js"></script>
+  <script src="js/jquery.validate.min.js"></script>
+  <script src="js/sousai.editmatch.js"></script>
   <!-- 页尾信息 -->
   <script>
   //定义函数
@@ -130,7 +140,8 @@ function e(){
     id = decodeURI(url.substring(url.lastIndexOf('=')+1, url.length)),
     target = $("#match");
 	//设置收藏比赛的函数为markMatch(id);
-	$("#markMatch").attr("href","javascript:markMatch("+id+");");
+	$("#markMatch").attr("onclick","markMatch("+id+")");
+	
 	      $.ajax({
 	          type: "POST",
 	          url: "getMatchById",//"matchDetail",
@@ -141,11 +152,23 @@ function e(){
 	        	  console.log(rspdata);
 				  //修改title
 				  $("title").html(rspdata.name+" &middot; 搜赛网");
-				  target.find(".thisname").text(rspdata.name);
-				  target.find(".thistime").text(rspdata.matchStartTime+"-"+rspdata.matchDeadline+"  星期");
-			      target.find(".thisreltime").text(rspdata.publishTime);
-			      target.find(".thiscourt").text(rspdata.courtId);
-			      target.find(".match").html(rspdata.matchIntroduction);
+				  target.find(".thisname").text(rspdata.name).attr("data-info", JSON.stringify(rspdata));
+				  target.find(".thistime").text(rspdata.beginTime+"-"+rspdata.endTime+" "+rspdata.beginDayOfWeek+"-"+rspdata.endDayOfWeek);
+				  //target.find(".thistime").text(rspdata.matchStartTime+"-"+rspdata.matchDeadline+"  星期");  //采集的字段
+				  target.find(".thisreltime").text(rspdata.relTime);
+			      //target.find(".thisreltime").text(rspdata.publishTime);  //采集的字段
+			      target.find(".thiscourt").text(rspdata.courtName);
+			      //target.find(".thiscourt").text(rspdata.courtId);  //采集的字段
+			      target.find(".match").html(rspdata.rule);
+			      //target.find(".match").html(rspdata.matchIntroduction);   //采集的字段
+			      //判断比赛的进程 和 是否为发布者
+			      if(rspdata.state == "已结束"){
+			    	  $(".matchScore").show();
+			      }
+			      if(rspdata.userId == $("#userId").attr("data-userid")){
+			    	  $("#modifyMatch").show();
+			    	  $("#recordSocre").show();
+			      }
 	          },
 	          error: function(jqXHR,textStatus,errorThrown){
 	        	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
@@ -155,7 +178,25 @@ function e(){
 	}  
   $(function(){
 	//搜索栏模糊搜索
-	  e();
+	e();
+	$("#modifyMatch").click(function(){
+		//检测用户是否为登录状态
+		var userid =isLogined();
+		console.log(userid.responseJSON);
+		if(userid.responseJSON==-1){
+			// -1 为未登录状态，其他则为用户ID
+			newformloginBox();
+		}else{
+    	var datainfo = $(".thisname").attr("data-info");
+    	console.log(datainfo);
+    	setMatchInfo(datainfo);
+		$(".matchList").slideUp();
+		$(".editMatch").find("button.passMatch").hide().end().slideDown();
+		}
+	});
+	$("#recordSocre").click(function(){
+		
+	});
   });
   </script>  
  </body>

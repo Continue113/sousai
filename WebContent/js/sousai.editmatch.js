@@ -241,17 +241,19 @@ $(function(){
     });
     //发布比赛 编辑界面
     $(".editMatch .passMatch").click(function (){
-/*                 $.ajax({
+                 $.ajax({
                   type: "POST",
-                  url: "passMatches",
+                  url: "relMatchesByAdmin",
                   contentType: "application/x-www-form-urlencoded; charset=UTF-8",
                   data: {
-                    "matchIds": $("#inputMatchTitle").attr("data-id"),
+                    "ids": $("#inputMatchTitle").attr("data-id"),
                   },
                   dataType: "json",
                   success: function(rspdata) {
                 	  if( rspdata == "success" ){
                 		  sousaiRemindDialog("发布成功");
+                   		  $("#"+$("#inputMatchTitle").attr("data-id")).parent().parent().prepend('<span class="label label-info">已发布</span>');
+                  		  $(".backList").click();
                 	  }else if( rspdata == "fail" ){
                 		  sousaiRemindDialog("发布失败");
                 	  }else{
@@ -261,7 +263,7 @@ $(function(){
                   error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
                     sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
                   },
-                }); */
+                }); 
     });
     //点击修改比赛类型
     $("#editMatchType").click(function (){
@@ -430,8 +432,8 @@ $(function(){
     //表单验证
     //为比赛地点中的省市区添加name属性，然后利用validate插件的min=1验证是否选择了省市区
     $(".controls > .selectProvince").attr("name","selectProvince");
-    $(".controls > .selectCity").attr("name","selectCity");
-    $(".controls > .selectCountry").attr("name","selectCountry");
+    //$(".controls > .selectCity").attr("name","selectCity");
+    //$(".controls > .selectCountry").attr("name","selectCountry");
 
     var matchValidator = $("#editMatchForm").submit(function() {
       // update underlying textarea before submit validation
@@ -481,8 +483,8 @@ $(function(){
       matchEndTime: "请选择结束日期",
       crtCourtName:"请选择已有的场地或添加新的场地",
       selectProvince: "",//省
-      selectCity: "",//市
-      selectCountry: "",//区
+      //selectCity: "",//市
+      //selectCountry: "",//区
       matchRule: "请输入比赛规程",
       courtName: {//新场地的场地名称
     	  required: "请输入场地名称",

@@ -63,6 +63,15 @@
 	      <!--编辑场地开始-->
 	        <s:include value="editCourt.jsp" />
 	      <!-- /编辑场地信息 -->
+      <div id="afterRelease" class="hide">
+	      <div class="page-header row"><h4>场地发布成功</h4></div>
+	      <div class="releaseInfo">
+	      <p>您创建的“<span class="label label-success releaseInfoTitle"></span>”，网站管理员已经收到，将在1-4小时内完成审核，请您耐心等待。（加急联系QQ：200799663）</p>
+	      <p>场地编号为：<span class="label label-success releaseInfoId"></span></p>
+	      <p>场地地址：<a href="" class="releaseInfoHref"><a></p>
+	      <p class="text-center"><button type="button" class="btn btn-success" onclick="backEdit()">返回</button></p>
+	      </div>
+      </div>
        </div> 
        <!-- /releaseCourt --> 
       </div> 
@@ -84,6 +93,11 @@
   <script src="js/jquery.validate.min.js"></script>
   <script src="js/sousai.editcourt.js"></script> 
   <script>
+  //定义函数
+  function backEdit(){
+	  $(".editCourt").show();
+	  $("#afterRelease").hide();
+	  }
   $(function(){
 
 	  //将editCourt修改为适合发布场地页面
@@ -98,15 +112,14 @@
   	  
   	  //点击确认发布，获取地区，比赛类型，场地类型
   	  $("#rlsCourt").click(function(){
-  			var userId = parseInt($("#userId").attr("data-userid"));
-  			
-  			if(!userId){
-  				//设置搜撒提示框，不自动消失，显示确定按钮
-  				sousaiRemindDialog("请先登录再发布场地！",-1,true);
+  		    //检测用户是否为登录状态
+  			var userid =isLogined();
+  			if(userid.responseJSON==-1){
+  				// -1 为未登录状态，其他则为用户ID
+  				newformloginBox();
   			}else{
-  				
   	  			var court = getCourtInfo();
-  	  			court.userId = parseInt(userId);		
+  	  			court.userId = parseInt(userid.responseJSON);		
   	  			console.log(court);
   				var data = {
   						"court.userId": court.userId,
@@ -135,8 +148,6 @@
   					console.log(formdata);
   					console.log(court);
   					/*************************************************/
-  					
-  				
   				$.ajax({
   		            type: "POST",
   		            url: "relCourt",
@@ -146,14 +157,19 @@
   		            data: data,
   		            dataType: "json",
   		            success: function(rspdata) {
-  		          	  if( data == "fail" ){
+  		          	  if( rspdata == "fail" ){
   		          		  sousaiRemindDialog("发布场地失败,fail");
   		          	  }else{
-  		          		  sousaiRemindDialog("发布场地成功,场地信息地址为：courtSearchDetail.jsp?id="+rspdata,-1);
+	              		  $(".editCourt").hide();
+	              		  $("#afterRelease").find(".releaseInfoTitle").text(court.name).end()
+	              		  .find(".releaseInfoId").text(rspdata).end()
+	              		  .find(".releaseInfoHref").text("http://www.isousai.com/sousai/courtSearchDetail.jsp?id="+rspdata).attr("href","courtSearchDetail.jsp?id="+rspdata).end()
+	              		  .show();
   		          	  }
   		            },
-  		            error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-  		              sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
+  		            error: function(jqXHR,textStatus,errorThrown){
+  		            	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+  		                sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
   		            },
   		          });
   			}

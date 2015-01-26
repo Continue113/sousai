@@ -66,19 +66,19 @@
         <div class="control-group"> 
          <label class="control-label" for="matchType">比赛类型：</label> 
          <div class="controls"> 
-            <select class="selectMatchType" name="mcId"><option value=0>请选择比赛类型</option></select>
+            <select class="selectMatchType" name="mcId"><option value=0>请选择比赛大类</option></select>
             <select class="selectParticularMatchType"><option value=0>请先选择比赛大类</option></select>
             <input class="hide" id="particularMatchType" name="court.matchType"/>
             <label class="omthide hide" class="control-label" for="otherMatchType">请输入类型：<input class="omthide hide" id="otherMatchType" type="text" value="" placeholder="请填写比赛类型"/></label>
-           </div> 
+         </div> 
         </div> 
         <div class="control-group matchState"> 
          <label class="control-label" for="matchState">比赛状态：</label> 
          <div class="controls form-inline"> 
-          <label class="checkbox"><input type="checkbox" name="matchState_applying" checked="checked" />报名中&nbsp;&nbsp;</label> 
-          <label class="checkbox"><input type="checkbox" name="matchState_playing" checked="checked" />比赛中&nbsp;&nbsp;</label> 
-          <label class="checkbox"><input type="checkbox" name="matchState_played" checked="checked" />已结束&nbsp;&nbsp;</label> 
-         </div> 
+          <label class="checkbox"><input type="checkbox" id="matchState_applying" checked="checked" />报名中&nbsp;&nbsp;</label> 
+          <label class="checkbox"><input type="checkbox" id="matchState_playing" checked="checked" />比赛中&nbsp;&nbsp;</label> 
+          <label class="checkbox"><input type="checkbox" id="matchState_played" checked="checked" />已结束&nbsp;&nbsp;</label> 
+         </div>
         </div> 
         <div class="control-group"> 
          <label class="control-label" for="inputMatchTimefrom">比赛时间：</label> 
@@ -92,9 +92,9 @@
            <input type="text" class="input-small" id="inputMatchTimeto" placeholder="请选择日期" /> 
            <span class="add-on" data-toggle="tooltip" data-placement="top" title="" data-original-title="点击输入框可以选择日期"><i class="icon-calendar"></i></span> 
           </div> 
-          <label class="checkbox"><input type="checkbox" name="matchTime_days" class="matchTime" />工作日&nbsp;&nbsp;</label> 
-          <label class="checkbox"><input type="checkbox" name="matchTime_saturday" class="matchTime" />星期六&nbsp;&nbsp;</label> 
-          <label class="checkbox"><input type="checkbox" name="matchTime_sunday" class="matchTime" />星期日&nbsp;&nbsp;</label> 
+          <label class="checkbox"><input type="checkbox" id="matchTime_days" class="matchTime" />工作日&nbsp;&nbsp;</label> 
+          <label class="checkbox"><input type="checkbox" id="matchTime_saturday" class="matchTime" />星期六&nbsp;&nbsp;</label> 
+          <label class="checkbox"><input type="checkbox" id="matchTime_sunday" class="matchTime" />星期日&nbsp;&nbsp;</label> 
          </div> 
         </div> 
         <div class="control-group"> 
@@ -102,7 +102,7 @@
          <div class="controls form-inline"> 
           <!-- 选择省市区三级下拉框 --> 
           <s:include value="selectPCC.jsp" />
-          <input type="submit" value="搜&nbsp;&nbsp;索" class="btn btn-success btn-small pull-right" /> 
+          <input type="button" value="搜&nbsp;&nbsp;索" class="btn btn-success btn-small pull-right" id="advMatchSearchButton"/> 
          </div> 
         </div> 
        </fieldset> 
@@ -155,19 +155,19 @@
        <div class="matchBox"  data-info="{{data this}}>
         <div class="matchBox-all"> 
          <div class="matchBox-title"> 
-          <a href="matchSearchDetail.jsp?id={{id}}">{{name}}</a> 
+          <a target="_blank" href="matchSearchDetail.jsp?id={{id}}">{{name}}</a> 
           <span class="pull-right">发布时间：<span class="matchBox-releaseTime">{{publishTime}}</span></span> 
          </div>
          <ul class="breadcrumb">
           <li class="matchBox-time">
-           <div class="matchBox-beginTime">{{matchStartTime}}<p>星期五</p></div> 
+           <div class="matchBox-beginTime">{{beginTime}}<p>{{beginDayOfWeek}}</p></div> 
            <div class="line">&nbsp;-&nbsp;</div> 
-           <div class="matchBox-endTime">{{matchDeadline}}<p>星期日</p></div>
+           <div class="matchBox-endTime">{{endTime}}<p>{{endDayOfWeek}}</p></div>
 		  </li>
-          <li class="matchBox-court "><a href="courtSearchDetail.jsp?id={{courtId}}">场地ID：{{courtId}}</a></li> 
-          <li class="matchBox-state ">报名中</li> 
-          <li class="matchBox-info "><a href="matchSearchDetail.jsp?id={{id}}">{{{matchIntroduction}}}</a></li> 
-          <li class="matchBox-btns "><a href="markMatch({id})" class="btn btn-mini">收藏比赛</a><a href="matchSearchDetail.jsp?id={{id}}" class="btn btn-mini">查看详细</a></li> 
+          <li class="matchBox-court "><a href="courtSearchDetail.jsp?id={{courtId}}">{{courtName}}</a></li> 
+          <li class="matchBox-state ">{{state}}</li> 
+          <li class="matchBox-info "><a target="_blank" href="matchSearchDetail.jsp?id={{id}}">{{{matchIntroduction}}}</a></li> 
+          <li class="matchBox-btns "><a href="javascript:void(0);" class="btn btn-mini" onclick="markMatch({{id}})">收藏比赛</a><a target="_blank" href="matchSearchDetail.jsp?id={{id}}" class="btn btn-mini">查看详细</a></li> 
          </ul> 
         </div>
        </div> 
@@ -177,26 +177,51 @@
   <script>
   //定义函数
   function e(crtPage,rs,orderbycol,isasc,kv){
-	  advCourtSearch(crtPage,rs,orderbycol,isasc,kv);
+	  advMatchSearch(crtPage,rs,orderbycol,isasc,kv);
   }
-
+  function getMatchState(){
+	  var v = 0;
+	  if($("#matchState_applying").is(":checked")){
+		  v +=1;
+	  }
+	  if($("#matchState_playing").is(":checked")){
+		  v +=2;
+	  }
+	  if($("#matchState_played").is(":checked")){
+		  v +=4;
+	  }
+	  return v;
+  }
+  function getDayOfWeek(){
+	  var v = 0;
+	  if($("#matchTime_days").is(":checked")){
+		  v +=1;
+	  }
+	  if($("#matchTime_saturday").is(":checked")){
+		  v +=2;
+	  }
+	  if($("#matchTime_sunday").is(":checked")){
+		  v +=4;
+	  }
+	  return v;
+  }
   //高级比赛搜索函数
-  function advCourtSearch(crtPage,rs,orderbycol,isasc,kv){
+  function advMatchSearch(crtPage,rs,orderbycol,isasc,kv){
 
 		$("#ajaxState .load").show();
 		$(".matchBoxs").show();
 		$(".panel-top").show();
 		$("#ajaxState .noresult").hide();
 		console.log("start");
-		
+					
 		  //获取地区region和regionId 需先用这个建立此对象 然后才能将数据放入，否则后被覆盖
 		  var data = getRegion();
 		  data.keyValue = kv||$("#keyValue").val(); //若无kv 则默认为 当前的keyValue的值
 		  data.matchType = $("select.selectParticularMatchType option:selected").attr("value") == "0" ? null : $("select.selectParticularMatchType option:selected").text(); //设置若比赛详细类型为初始值则为null
-		  data.matchState = null;
-		  data.matchTimefrom = $("#inputMatchTimefrom").val()||null;
-		  data.matchTimeto = $("#inputMatchTimeto").val()||null;
-		  data.matchDate = null;
+		  data.matchState = getMatchState();//0-7 默认为7
+		  data.beginTime = $("#inputMatchTimefrom").val()||null;
+		  data.endTime = $("#inputMatchTimeto").val()||null;
+		  data.dayOfWeek = getDayOfWeek();//0-7默认为0
 		  
 		  data.currentPage = crtPage||$("ul.pagination li.active a").html()||1;//若无当前页数，则为当前的页数 否则默认为为1
 		  data.rows = rs||25;//若无行数，则默认为 25行
@@ -204,7 +229,7 @@
 		  data.isAsc = isasc||$(".sort .current").attr("data-isasc"); //若无排序方向，则默认为当前的排序方向
 		  console.log(data);
 		  
-	      /*$.ajax({
+	      $.ajax({
 	          type: "POST",
 	          url: "getMatchByP",
 	          contentType: "application/x-www-form-urlencoded; charset=UTF-8",
@@ -233,20 +258,34 @@
 			      console.log("无结果");
 			      target.hide();
 			      }
-		    	    //字数限制，溢出省略
-		    	    $(".matchBox-court").wordLimit(20);
-		    	    $(".matchBox-info > a").wordLimit(28);
+		    	  //字数限制，溢出省略
+		    	  $(".matchBox-court").wordLimit(20);
+		    	  $(".matchBox-info > a").wordLimit(28);
 				  pages(rspdata.count,crtPage,rs);
 	          },
 	          error: function(jqXHR,textStatus,errorThrown){
 	        	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-	            sousaiRemindDialog("抱歉。ajax错误。");
+	              sousaiRemindDialog("抱歉。ajax错误。");
 	          },
-	        });*/
+	        });
 	}  
   $(function(){
+	 //立即初始化比赛类型
+	 initMatchType();
 	 //搜索栏模糊搜索
 	 e();
+	 //点击高级场地搜索
+	 $("#advMatchSearchButton").click(function(){
+		 advMatchSearch();
+	 });
+	 //点击大类比赛类型获得具体比赛类型
+	 $(".selectMatchType").change(function() {
+	  	selectMatchType($(this));
+	 });
+	 //点击比赛类型 选择其他出现输入框 或者 当场地类型存在时获取相应场地类型
+	 $(".selectParticularMatchType").change(function() {
+	    selectParticularMatchType($(this));
+	 });
 	 //日期选择器 bootstrap.datepicker
 	  $("#inputMatchTimefrom").datetimepicker({
 	      language: 'zh-CN',

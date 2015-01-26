@@ -209,8 +209,13 @@
       <div class="chartBox " id="mainMap"></div>
       <hr />
       <div class="toolBox Match form-inline">
-        <label for=matchTime>请输入时间以统计比赛场次：</label>
-        <input type="text" class="input-small height-mini" id="matchTime" placeholder="请输入时间" /> 天内各地乒乓球比赛统计。
+        <label for=day>请输入时间以统计比赛场次：</label>
+        <input type="text" class="input-small height-mini" id="day" placeholder="请输入天数" /> 天内各地
+            <select class="selectMatchType span1" name="mcId"><option value=0>请选择比赛大类</option></select>
+            <select class="selectParticularMatchType span1"><option value=0>请先选择比赛大类</option></select>
+            <input class="hide" id="particularMatchType" name="court.matchType"/>
+            <label class="omthide hide" class="control-label" for="otherMatchType">请输入类型：<input class="omthide hide" id="otherMatchType" type="text" value="" placeholder="请填写比赛类型"/></label>
+            比赛统计。
         <button class="btn " id="tableTigglerMatch">统计</button>
         <button class="btn pull-right" id="matchTiggler">显示表格</button>        
       </div>
@@ -272,6 +277,7 @@
   <script src="js/jquery-1.11.0.min.js"></script> 
   <script src="js/bootstrap.min.js"></script> 
   <script src="js/handlebars-v2.0.0.js"></script>
+  <script src="js/jquery.validate.min.js"></script> 
   <script src="js/sousai.common.js"></script> 
   <script src="js/esl.js"></script> 
   <script src="js/sousai.bg-eCount-optionLine.js"></script> 
@@ -286,6 +292,114 @@
   </script>
   <script>
   //定义函数
+  function getAllMatchType(){
+	//获取所有比赛类型
+      $.post("showMC", null, function(data) {
+          //alert("回调内容为:"+data);//id name 
+          var target = $("#allMatchType > .modal-body > .breadcrumb-fff");
+          target.empty();
+          $.each(data, function(index, item) {
+              target.append('<span class="breadcrumb-title">' + item.name + '类:</span><ul class="breadcrumb typeid' + item.name + '"></ul><hr/>');
+              $.post("showMT", {"mcId": item.id}, function(rspdata) {
+                  $.each(rspdata, function(index1, item1) {
+                      target.find(".typeid" + item.name).append('<li><a href="#" data-id="' + item1.id + '">' + item1.name + '</a>&nbsp;&nbsp;</li>');
+                  });
+              });
+          });
+      });
+  }
+$(function(){
+	 	
+	  //初始化所有需要选择年份的select 设置年份到今年
+	  var date = new Date();
+	  $("select.year").empty();
+	  for(var i=2011;i<date.getFullYear();i++){
+		  $("select.year").append("<option>"+i+"</option>");
+	  }
+	  $("select.year").append("<option selected='selected'>"+date.getFullYear()+"</option>");
+	  getChartData($("#year option:selected").text());
+	  
+	  //选择 搜赛网统计数据 的年份
+	  $("#year").change(function(){
+		  getChartData($("#year option:selected").text());
+	  });
+	  //初始化比赛类型
+	  initMatchType();
+	  //点击大类比赛类型获得具体比赛类型
+	  $(".selectMatchType").change(function() {
+		  selectMatchType($(this));
+	  });
+	  //点击比赛类型 选择其他出现输入框 或者 当场地类型存在时获取相应场地类型
+	  $(".selectParticularMatchType").change(function() {
+		 selectParticularMatchType($(this));
+	  });
+	  //
+	  $("#tableTigglerMatch").click(function(){
+			var data = {
+	            	dayNum: $("#day").val(),
+	            	matchType: $(".selectParticularMatchType option:selected").text()
+	            };
+			console.log(data);
+	        $.ajax({
+	            type: "POST",
+	            url: "courtStatistics",
+	            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+	            data: data,
+	            dataType: "json",
+	            success: function(rspdata) {
+	            	console.log(rspdata);
+	            },
+	            error: function(jqXHR,textStatus,errorThrown){
+	            	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+	              	sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
+	            },
+	          });
+	  });
+	  
+	  //$("#mainLine").hide();
+	  //$("#mainMap").hide();
+	  //重复点击显示/隐藏表格
+	  $("#tableTiggler").click(function(){
+		  // 0 为 隐藏， 1为显示
+	      if($(this).text()=="显示表格"){
+	            $("#mainTable").slideDown();
+	            $(this).text("隐藏表格");
+	        }else{
+	            $("#mainTable").slideUp();
+	            $(this).text("显示表格");
+	        }
+	  });
+	  $("#chartTiggler").click(function(){
+		  // 0 为 隐藏， 1为显示
+	      if($(this).text()=="显示图表"){
+	            $("#mainLine").show();
+	            $(this).text("隐藏图表");
+	        }else{
+	            $("#mainLine").hide();
+	            $(this).text("显示图表");
+	        }
+	  });
+	  $("#regionTiggler").click(function(){
+		  // 0 为 隐藏， 1为显示
+	      if($(this).text()=="显示地图"){
+	            $("#mainMap").show();
+	            $(this).text("隐藏地图");
+	        }else{
+	            $("#mainMap").hide();
+	            $(this).text("显示地图");
+	        }
+	  });
+	  $("#matchTiggler").click(function(){
+		  // 0 为 隐藏， 1为显示
+	      if($(this).text()=="显示表格"){
+	            $(".matchTable").slideDown();
+	            $(this).text("隐藏表格");
+	        }else{
+	            $(".matchTable").slideUp();
+	            $(this).text("显示表格");
+	        }
+	  });
+});
   </script>  
  </body>
 </html>

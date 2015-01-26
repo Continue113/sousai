@@ -21,7 +21,7 @@
    <div class="navbar-inner"> 
     <div class="pull-left"> 
      <ul class="breadcrumb">
-      <li>您好，<span id="userId"><s:property value="#session.userBean.userName"/></span></a>！ <a href="processLogout">退出</a></li>      
+      <li>您好，管理员：<span id="userId" data-userid='<s:property value="#session.userBean.userId"/>'><s:property value="#session.userBean.userName"/></span></a>！ <a href="processLogout">退出</a></li>      
      </ul> 
     </div> 
    </div> 

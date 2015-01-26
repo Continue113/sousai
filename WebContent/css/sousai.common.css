@@ -54,6 +54,24 @@ box-shadow: 0 0 0 0 rgba(0,0,0,.1);
 /** ÇëµÇÂ¼Á´½ÓÑÕÉ« **/
 .unsignin,a.unsignin:hover{color: #abcf20;}
 .navbar .btn{margin-top: 0;}
+/** µÇÂ¼¿ò  **/
+.form-signin {
+  padding: 25px 30px 10px 30px;
+  border: 1px solid #ccc;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+  -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+  box-shadow: 0 1px 2px rgba(0,0,0,.05);
+}
+.form-signin .btn {
+  margin-left: 0;
+  width: 100%;
+}
+.form-signin a {
+  float: right;
+}
 /** Ò³Í·ºÍÒ³Î²Õ¼Î»¿é **/
 .hdpush {
     height: 50px;

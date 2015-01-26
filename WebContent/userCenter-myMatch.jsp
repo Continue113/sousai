@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
   <meta name="description" content="搜赛网用户中心-我的搜赛-我发布的比赛" /> 
   <meta name="author" content="KING@CQU" />
+  <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet" /> 
   <link href="css/bootstrap.min.css" rel="stylesheet" /> 
   <link href="css/bootstrap-responsive.css" rel="stylesheet" />
   <link href="css/sousai.common.css" rel="stylesheet" />
@@ -117,37 +118,7 @@
 		</ul>
 	     </div>
          </div>
-         <div class="matchBoxs">           
-          <div class="matchBox">
-          <div class="matchBox-all"> 
-           <div class="matchBox-title">
-            <a href="javascript:void(0)">一北京东城区草根杯乒乓球比赛</a>
-            <span class="pull-right">发布时间：<span class="matchBox-releaseTime">2013-10-10</span></span>
-           </div>
-           <div class="hidden">
-            <span class="matchBox-type-pp">乒乓球</span>
-           </div> 
-           <ul class="breadcrumb">
-            <li class="matchBox-time">
-             <div class="matchBox-matchTime">
-              2013-10-17
-              <p>星期五</p>
-             </div>
-             <div class="line">
-              &nbsp;-&nbsp;
-             </div>
-             <div>
-              2013-10-20
-              <p>星期日</p>
-             </div></li> 
-            <li class="matchBox-court "><a href="javascript:void(0)">一北京东城区北京大学体育乓</a></li> 
-            <li class="matchBox-state ">报名中</li> 
-            <li class="matchBox-info "><a href="javascript:void(0)">北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球比赛北京东城区草根杯乒乓球</a></li> 
-            <li class="matchBox-btns "><a href="javascript:void(0)" class="btn btn-mini">修改规程</a><a href="javascript:void(0)" class="btn btn-mini">查看详细</a></li> 
-           </ul> 
-          </div>
-          </div> 
-         </div>
+         <div class="matchBoxs"></div>
          <!-- /matchBoxs -->
          <div class="panel-bottom">
        		<div id="ajaxState" class="text-center"><span class="hide noresult">您还没有创建比赛</span><span class="hide load"><img src="img/loading.gif" height="20px" width="20px"></img>数据加载中...</span></div>
@@ -178,8 +149,8 @@
   <!-- /container --> 
   <s:include value="footer.jsp" />
   <!-- 页尾信息 --> 
-  <script src="js/jquery-ui-1.10.4.custom.min.js"></script> 
-  <script src="js/jquery.ui.datepicker-zh-CN.js"></script> 
+  <script src="js/bootstrap-datetimepicker.min.js"></script> 
+  <script src="js/bootstrap-datetimepicker.zh-CN.js"></script> 
   <script src="js/handlebars-v2.0.0.js"></script>
   <script src="js/jquery.wordLimit.js"></script>
   <script src="tinymce/jquery.tinymce.min.js"></script> 
@@ -193,19 +164,19 @@
        <div class="matchBox"  data-info="{{data this}}">
         <div class="matchBox-all"> 
          <div class="matchBox-title"> 
-          <a href="javascript:void(0)">{{name}}</a> 
+          <a target="_blank" href="courtSearchDetail.jsp?id={{id}}">{{name}}</a> 
           <span class="pull-right">发布时间：<span class="matchBox-releaseTime">{{relTime}}</span></span> 
          </div>
          <ul class="breadcrumb"> 
           <li class="matchBox-time"> 
-           <div class="matchBox-beginTime">{{beginTime}}<p>星期五</p></div> 
+           <div class="matchBox-beginTime">{{beginTime}}<p>{{beginDayOfWeek}}</p></div> 
            <div class="line">&nbsp;-&nbsp;</div> 
-           <div class="matchBox-endTime">{{endTime}}<p>星期日</p></div>
+           <div class="matchBox-endTime">{{endTime}}<p>{{endDayOfWeek}}</p></div>
 		  </li>
-          <li class="matchBox-court "><a href="javascript:void(0)">{{courtName}}</a></li> 
-          <li class="matchBox-state ">报名中</li> 
-          <li class="matchBox-info "><a href="javascript:void(0)">{{{rule}}}</a></li> 
-          <li class="matchBox-btns "><a href="javascript:void(0)" class="btn btn-mini modifyMatch">修改比赛</a><a href="javascript:void(0)" class="btn btn-mini">查看详细</a></li> 
+          <li class="matchBox-court "><a target="_blank" href="courtSearchDetail.jsp?id={{courtId}}">{{courtName}}</a></li> 
+          <li class="matchBox-state ">{{state}}</li> 
+          <li class="matchBox-info "><a target="_blank" href="matchSearchDetail.jsp?id={{id}}">{{{rule}}}</a></li> 
+          <li class="matchBox-btns "><a href="javascript:void(0)" class="btn btn-mini modifyMatch">修改比赛</a><a target="_blank" href="matchSearchDetail.jsp?id={{id}}" class="btn btn-mini">查看详细</a></li> 
          </ul> 
         </div>
        </div> 
@@ -214,24 +185,33 @@
   </script>
   <script>
   function e(crtPage,rs,obc,ia,sc,kv){
+		//定义默认选项
+		rs = rs||$("select.selectRows option:selected").val()||25,
+		crtPage = crtPage||$("ul.pagination li.active a").html()||1, //每次点击改变条数都从第一页开始；parseInt($("ul.pagination > li.active").text()) || 1; //若当前页数为空则默认为第一页
+	  	obc = obc||$(".sort button .current").attr("data-orderbycol"), 
+		ia = ia||$(".sort button .current").attr("data-isasc"),
+		sc = sc||$(".text-filter-box button .current").attr("data-strcolumns"),
+		kv = kv||$(".text-filter-box input").val();
+	  	console.log(crtPage+" "+rs+" "+obc+" "+ia+" "+sc+" "+kv);
+	  	
 		$("#ajaxState .load").show();console.log("start");
 	  	$.ajax({
 	        type: "POST",
-	        url: "getAllMatch",
+	        url: "getMatchByUserId",
 	        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 	        dataType: "json",
 	        data: {currentPage:crtPage,rows:rs,orderByCol:obc,isAsc:ia,strColumns:sc,keyValue:kv},
-	        success: function(data) {
-	        	console.log(data);//sousaiRemindDialog(data);
+	        success: function(rspdata) {
+	        	console.log(rspdata);//sousaiRemindDialog(data);
 			      var target = $(".matchBoxs"),template = Handlebars.compile($('#match-template').html());
 			      Handlebars.registerHelper("data",function(v){
 			    	  //将当前对象转化为字符串，保存在data-info中
-			    	  console.log(v);
+			    	  //console.log(v);
 			    	  var v1 = JSON.stringify(v);
 			    	  //console.log("v1:"+v1);
 			    	  return v1;
 			      });
-			      target.empty().show().html(template(data.body));
+			      target.empty().show().html(template(rspdata.body));
 			      $("#ajaxState .load").hide();
 			      $("#ajaxState .noresult").hide();
 			      console.log("stop");
@@ -246,7 +226,7 @@
 		    	  $(".matchBox-court").wordLimit(20);
 		    	  $(".matchBox-info > a").wordLimit(28);
 		  	      //根据总数、当前页数、每页行数 分页
-		    	  pages(data.count,crtPage,rs);
+		    	  pages(rspdata.count,crtPage,rs);
 	        },
 	        error: function(jqXHR,textStatus,errorThrown){
 	          console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
@@ -255,8 +235,8 @@
 	      });
   }
     $(function () {
-		//ajax接收所有比赛
-		//e(1,25,"name",true,"name","");
+		//ajax接收所有我发布的比赛
+		e(1,25,"name",true,"name","");
     	//点击编辑比赛隐藏List列表同时显示编辑比赛
     	$(".matchBoxs").on("click",".modifyMatch",function(event){
         	var datainfo = $(this).parent().parent().parent().parent().attr("data-info");

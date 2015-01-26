@@ -38,7 +38,7 @@ function getCourtInfo(){
 	 court.workTime = $("#inputCourtOpenTime").val();
 	 //court.courtPictures = []; //未使用
 	 court.intro = tinymce.activeEditor.getContent();
-	 court.userId = parseInt($("#inputCourtName").attr("data-userid"));
+	 court.userId = parseInt($("#inputCourtName").attr("data-userid")); //若是在发布场地页面 则此属性由发布场地页面的userId覆盖
 	 	 
 	if( $("#editCourtForm").valid() === true ){ //验证所有显式表单
 		
@@ -169,7 +169,7 @@ function sureDeleteEdit(){
         },
         error: function(jqXHR,textStatus,errorThrown){
         	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-          sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
+            sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
         },
       });
 }
@@ -220,27 +220,30 @@ $(function(){
 	  });
   //点击发布场地 编辑场地界面
   $(".editCourt .passCourt").click(function(){
-      /*$.ajax({
+      $.ajax({
         type: "POST",
-        url: "passCourts",
+        url: "relCourtsByAdmin",
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         data: {
-          "courtIds": $("#inputCourtName").attr("data-id"),
+          "ids": $("#inputCourtName").attr("data-id"),
         },
         dataType: "json",
-        success: function(data) {
+        success: function(rspdata) {
       	  if( rspdata == "success" ){
-      		  sousaiRemindDialog("删除成功");
-      	  }else if( data == "fail" ){
-      		  sousaiRemindDialog("删除失败");
+      		  sousaiRemindDialog("发布成功");
+      		  $("#"+$("#inputCourtName").attr("data-id")).parent().parent().prepend('<span class="label label-info">已发布</span>');
+      		  $(".backList").click();
+      	  }else if( rspdata == "fail" ){
+      		  sousaiRemindDialog("发布失败");
       	  }else{
-      		  sousaiRemindDialog("删除失败，错误代码未知");
+      		  sousaiRemindDialog("发布失败，错误代码为："+rspdata);
       	  }
         },
-        error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-          sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
+        error: function(jqXHR,textStatus,errorThrown){
+        	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+            sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
         },
-      });*/
+      });
 	});
 
   //点击修改比赛类型

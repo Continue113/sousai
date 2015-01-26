@@ -171,8 +171,8 @@
      <div class="span8 courtSearchDetail-content"> 
       <ul class="nav nav-tabs courtDetailMenu"> 
        <li class="active" id="courtContentTab"><a href="#courtContent" data-toggle="tab">场地介绍</a></li> 
-       <li id="courtEvaluationTab"><a href="#courtEvaluation" data-toggle="tab">评价详情（<span>3</span>）</a></li> 
-       <li id="courtRecordTab"><a href="#courtRecord" data-toggle="tab">比赛记录（<span>1</span>）</a></li> 
+       <li id="courtEvaluationTab"><a href="#courtEvaluation" data-toggle="tab">评价详情（<span>0</span>）</a></li> 
+       <li id="courtRecordTab"><a href="#courtRecord" data-toggle="tab">比赛记录（<span>0</span>）</a></li> 
       </ul> 
       <div class="tab-content"> 
        <div id="courtContent" class="tab-pane active"> 

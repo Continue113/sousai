@@ -78,10 +78,7 @@
       <div class="userCenter-remind">
        <ul class="breadcrumb"> 
         <li>比赛信息:</li> 
-        <li><a href="javascript:void(0)">乒乓球<span>(5)</span></a></li> 
-        <li><a href="javascript:void(0)">羽毛球<span>(5)</span></a></li> 
-        <li><a href="javascript:void(0)">保宁球<span>(5)</span></a></li> 
-        <li><a href="javascript:void(0)">网球<span>(5)</span></a></li> 
+        <li><a href="javascript:void(0)">暂无信息<span>(0)</span></a></li> 
        </ul>
       </div> 
       <div class="tab-content">
@@ -175,10 +172,7 @@
           </div> 
           <div class="control-group">
            <div class="controls"> 
-            <button type="submit" class="btn btn-success">保存修改</button>
-            <button type="button" class="btn" id="resetEditUserForm">重置</button>
-            <!-- 隐藏重置表单按钮 -->
-            <button type="reset" id="resetBtn" class="btn hide"></button>
+            <button type="button" class="btn btn-success" id="saveEditUserForm">保存修改</button>
            </div>
           </div> 
          </fieldset> 
@@ -202,8 +196,30 @@
   <!-- /container --> 
   <s:include value="footer.jsp" /><!-- 页首导航条 --> 
   <script src="js/ajaxfileupload.js"></script>
-  <script src="js/jquery.validate.min.js"></script>
 <script>
+//定义函数 和 全局变量
+
+//flash上传头像 
+function uploadevent(status,picUrl,callbackdata){
+	console.log(picUrl); //后端存储图片
+	console.log(callbackdata);
+  status += '';
+  switch(status){
+	case '1':
+	var time = new Date().getTime();
+	var filename162 = picUrl+'_162.jpg';
+	var filename48 = picUrl+'_48.jpg';
+	var filename20 = picUrl+"_20.jpg";
+  //显示图片上传预览
+  $(".crtUserIcon > img").attr("src",filename162+"?"+time);
+  break;
+  case '-1':
+  window.location.reload();
+  break;
+	default:
+	window.location.reload();
+}
+}
 $(function () {
     //editUser鼠标点击选择头像
     $("#systemIcons li").click(function(){
@@ -231,31 +247,6 @@ $(function () {
     },"请先输入旧密码");
 
     var editUserValidator = $("#editUserForm").validate({
-      submitHandler: function(){
-        //定义发送至服务器的数据，旧密码未验证通过的情况下，不发送填写的新密码
-        if($("#inputUserNewPassword").val() == "" && $("#inputUserEmail").val() == '<s:property value="#session.userBean.userEmail" />'){
-          return false;
-        }else{
-          var sendurl = 'updateUserInfo?action=1&user.id=<s:property value="#session.userBean.userId" />';
-          if($("#inputUserNewPassword").val() !== "" )
-            sendurl += "&user.pwd="+$("#inputUserNewPassword").val();
-          if($("#inputUserEmail").val() !== "" )
-            sendurl += "&user.email="+$("#inputUserEmail").val();
-          $.ajax({
-          url: sendurl,
-          type: "POST",
-          dataType: 'json',
-          data: null,
-          success: function(rspdata) {
-            window.setTimeout("window.location='userCenter-editUser.jsp'",1000);
-            sousaiRemindDialog("编辑账户成功,请刷新页面。");
-          },
-          error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-            sousaiRemindDialog("抱歉，发送数据出错了，请重新输入。");
-          },
-          });
-        }
-      },
       ignore: ".ignore",
       rules: {
       inputUserPassword: {
@@ -300,14 +291,46 @@ $(function () {
       }
     }
   });
-  //取消编辑账户
-  $("#resetEditUserForm").click(function(){
-    var resetbtn = confirm("确定重置吗？");
-    if (resetbtn == true){
-      $("#resetBtn").trigger('click');
-      editUserValidator.resetForm();
-    }
-  });
+	
+    //点击保存修改
+	$("#saveEditUserForm").click(function(){
+		//检测用户是否为登录状态
+		var userid =isLogined();
+		console.log(userid.responseJSON);
+		if(userid.responseJSON==-1){
+			// -1 为未登录状态，其他则为用户ID
+			newformloginBox();
+		}else{
+			//执行正常的修改用户信息逻辑 ：检测用户的信息
+			if(editUserValidator){
+			        //定义发送至服务器的数据，旧密码未验证通过的情况下，不发送填写的新密码
+			        if($("#inputUserNewPassword").val() == "" && $("#inputUserEmail").val() == '<s:property value="#session.userBean.userEmail" />'){
+			          return false;
+			        }else{
+			          var sendurl = 'updateUserInfo?action=1&user.id=<s:property value="#session.userBean.userId" />';
+			          if($("#inputUserNewPassword").val() !== "" )
+			            sendurl += "&user.pwd="+$("#inputUserNewPassword").val();
+			          if($("#inputUserEmail").val() !== "" )
+			            sendurl += "&user.email="+$("#inputUserEmail").val();
+			          $.ajax({
+			          url: sendurl,
+			          type: "POST",
+			          dataType: 'json',
+			          data: null,
+			          success: function(rspdata) {
+			            window.setTimeout("window.location='userCenter-editUser.jsp'",3000);
+			            sousaiRemindDialog("编辑账户成功,3秒后将刷新页面。");
+			          },
+			          error: function(jqXHR,textStatus,errorThrown){
+			        	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+			              sousaiRemindDialog("抱歉，发送数据出错了，请重新输入。");
+			          },
+			          });
+			        }
+			}			
+		}
+	});
+    
   /** 上传图片 **//*
   $(".fileinput-button").click(function(){
     $("#imgInput").trigger('click');
@@ -392,26 +415,5 @@ function imgValid(file){
   }
 }
 */
-//flash上传头像 
-function uploadevent(status,picUrl,callbackdata){
-	console.log(picUrl); //后端存储图片
-	console.log(callbackdata);
-  status += '';
-  switch(status){
-	case '1':
-	var time = new Date().getTime();
-	var filename162 = picUrl+'_162.jpg';
-	var filename48 = picUrl+'_48.jpg';
-	var filename20 = picUrl+"_20.jpg";
-  //显示图片上传预览
-  $(".crtUserIcon > img").attr("src",filename162+"?"+time);
-  break;
-  case '-1':
-  window.location.reload();
-  break;
-	default:
-	window.location.reload();
-}
-}
 </script>
 </body></html>

@@ -170,7 +170,7 @@
     {{#each this}}
                         
         <tr class="match" data-info="{{data this}}"> 
-          <td class="match-title"><label for="{{id}}"><input type="checkbox" id="{{id}}"/><span>{{id}}:{{name}}</span></label></td> 
+          <td class="match-title">{{checkState verify id name}}</td> 
           <td class="match-time">{{beginTime}} - {{endTime}}</td> 
           <td class="match-court">{{region}}:{{courtName}}</td> 
           <td class="match-releaseTime">{{relTime}}</td> 
@@ -209,6 +209,14 @@
 	    	  //console.log("v1:"+v1);
 	    	  return v1;
 	      });
+	      Handlebars.registerHelper("checkState",function(verify,id,name,options){
+              console.log(verify);console.log(options);
+              if(verify == "1"){
+              	return  new Handlebars.SafeString('<span class="label label-info">已发布</span><label for="'+id+'"><input type="checkbox" id="'+id+'" /><span>'+id+':'+name+'</span></label>');
+              }else{
+              	return new Handlebars.SafeString('<label for="'+id+'"><input type="checkbox" id="'+id+'" /><span>'+id+':'+name+'</span></label>');
+              }
+            });	      
 	      target.empty(); //清空tbody
 	  	  target.html(template(rspdata.body));
 	      $("#ajaxState .load").hide();
@@ -307,27 +315,27 @@
     			console.log($(this).attr("id"));
         		matchIds.push($(this).attr("id"));
     		});
-    		console.log(matchIds);
             $.ajax({
               type: "POST",
-              url: "passMatches",
+              url: "relMatchesByAdmin",
               contentType: "application/x-www-form-urlencoded; charset=UTF-8",
               data: {
-                "matchIds": matchIds.join(","),
+                "ids": matchIds.join(","),
               },
               dataType: "json",
-              success: function(data) {
-            	  if( data == "success" ){
+              success: function(rspdata) {
+            	  if( rspdata == "success" ){
             		  sousaiRemindDialog("发布成功");
-            	  }else if( data == "fail" ){
+              		  $(".match input:checked").attr("checked",false).parent().parent().prepend('<span class="label label-info">已发布</span>');
+            	  }else if( rspdata == "fail" ){
             		  sousaiRemindDialog("发布失败");
             	  }else{
-            		  sousaiRemindDialog("发布失败，错误代码未知");
+            		  sousaiRemindDialog("发布失败，错误代码为："+rspdata);
             	  }
               },
               error: function(jqXHR,textStatus,errorThrown){
             	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-                sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
+                  sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
               },
             });
     	}

@@ -181,7 +181,7 @@
     {{#each this}}
 
 		    <tr class="user" data-info="{{data this}}">
-	    		<td class="user-userName form-inline"><label for="{{id}}"><input type="checkbox" id="{{userId}}"/><span>{{userName}}</span><label></td>
+	    		<td class="user-userName form-inline">{{checkState userType userId userName}}</td>
         	<td class="user-registerTime">{{userRegTime}}</td>
         	<td class="user-lastLoginTime">{{lastLogTime}}</td>
         	<td class="user-matchNumber">{{matchNumber}}</td>
@@ -223,6 +223,16 @@
 	        	    //console.log("v1:"+v1);
 	        	    return v1;
 	        	  });
+	    	      Handlebars.registerHelper("checkState",function(userType,userId,userName,options){
+	                  console.log(userType);console.log(options);
+	                  if(userType == "0"){
+	                  	  return  new Handlebars.SafeString('<span class="label label-info">已禁用</span><label for="'+userId+'"><span>'+userId+':'+userName+'</span></label>');
+	                  }else if(userType == "2"){ //管理员
+	                	  return new Handlebars.SafeString('<span class="label label-important">管理员</span><label for="'+userId+'"><span>'+userId+':'+userName+'</span></label>');
+		              }else{
+	                  	  return new Handlebars.SafeString('<label for="'+userId+'"><input type="checkbox" id="'+userId+'" /><span>'+userId+':'+userName+'</span></label>');
+	                  }
+	                });	 
 	        	  target.empty(); //清空tbody
 	        	  target.html(template(rspdata.body));
 	        	  $("#ajaxState .load").hide();
@@ -434,9 +444,44 @@ messages: {
 		}
     });
 
-    //***************************************************************************************
-    // 编辑用户的js代码，关于验证用户信息是否合法，同场注册页面。   *********************** END *******************
-    //***************************************************************************************
+    //点击发布比赛 列表界面
+    $("button.forbidUser").click(function(){
+    	var checked = $(".user input:checked"),n = checked.length;
+    	//若为选中则提示
+    	if( n == 0){
+    		sousaiRemindDialog("请先选中用户");
+    	}else{
+    		var userIds = new Array();
+    		$(".user input:checked").each(function(index,element){
+    			console.log($(this).attr("id"));
+    			userIds.push($(this).attr("id"));
+    		});
+            $.ajax({
+              type: "POST",
+              url: "deleteUsersByAdmin",
+              contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+              data: {
+                "userIds": userIds.join(","),
+              },
+              dataType: "json",
+              success: function(rspdata) {
+            	  if( rspdata == "success" ){
+            		  sousaiRemindDialog("禁用用户成功");
+              		  $(".user input:checked").parent().parent().prepend('<span class="label label-info">已禁用</span>').end().end().remove();
+            	  }else if( rspdata == "fail" ){
+            		  sousaiRemindDialog("禁用用户失败");
+            	  }else{
+            		  sousaiRemindDialog("禁用用户失败，错误代码为："+rspdata);
+            	  }
+              },
+              error: function(jqXHR,textStatus,errorThrown){
+            	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+                  sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
+              },
+            });
+    	}
+    });
+    
     
   });
   </script>  

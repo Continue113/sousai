@@ -9,8 +9,7 @@
   <meta name="author" content="KING@CQU" /> 
   <link href="css/bootstrap.min.css" rel="stylesheet" /> 
   <link href="css/bootstrap-responsive.css" rel="stylesheet" /> 
-  <link href="css/sousai.common.css" rel="stylesheet" /> 
-  
+  <link href="css/sousai.common.css" rel="stylesheet" />   
   <style type="text/css">
   /* 主页主体快捷图标 */
 .scmn{margin-top: 30px;}

@@ -119,6 +119,7 @@
   <script src="js/bootstrap.min.js"></script> 
   <script src="js/handlebars-v2.0.0.js"></script>
   <script src="js/jquery.wordLimit.js"></script>
+  <script src="js/jquery.validate.min.js"></script> 
   <script src="js/sousai.common.js"></script>
   <!-- handlebars template -->
   <script id="evaluation-template" type="text/x-handlebars-template">
@@ -212,7 +213,7 @@
         success: function(rspdata) {
       	  if( rspdata == "success" ){
       		  sousaiRemindDialog("发布成功");
-      		  $(".evaluation input:checked").parent().parent().parent().remove();
+      		  $(".evaluation input:checked").parent().parent().prepend('<span class="label label-info">已标记为删除</span>').end().remove();
       	  }else if( rspdata == "fail" ){
       		  sousaiRemindDialog("发布失败");
       	  }else{

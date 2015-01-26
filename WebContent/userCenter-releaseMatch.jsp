@@ -83,7 +83,16 @@
       <!--编辑比赛 开始-->
         <s:include value="editMatch.jsp" />
       <!-- /编辑比赛信息 -->
-       </div> 
+      <div id="afterRelease" class="hide">
+	      <div class="page-header row"><h4>比赛发布成功</h4></div>
+	      <div class="releaseInfo">
+	      <p>您创建的“<span class="label label-success releaseInfoTitle"></span>”，网站管理员已经收到，将在1-4小时内完成审核，请您耐心等待。（加急联系QQ：200799663）</p>
+	      <p>比赛编号为：<span class="label label-success releaseInfoId"></span></p>
+	      <p>比赛地址：<a href="" class="releaseInfoHref"><a></p>
+	      <p class="text-center"><button type="button" class="btn btn-success" onclick="backEdit()">返回</button></p>
+	      </div>
+      </div>
+      </div> 
        <!-- /releaseMatch -->
       
       </div> 
@@ -107,7 +116,11 @@
   <script src="js/jquery.validate.min.js"></script>
   <script src="js/sousai.editmatch.js"></script>
   <script>
-  
+  //定义函数
+  function backEdit(){
+	  $(".editMatch").show();
+	  $("#afterRelease").hide();
+	  }
   $(function () {
 	  
 	  //将editMatch修改为适合发布场地页面
@@ -122,11 +135,11 @@
   	  
       //用户点击确认发布比赛
       $("#rlsMatch").click(function(){
-    	  var userId = parseInt($("#userId").attr("data-userid")),match = getMatchInfo();
-			
-			if(!userId){
-				//设置搜撒提示框，不自动消失，显示确定按钮
-				sousaiRemindDialog("请先登录再发布比赛！",-1,true);
+    		//检测用户是否为登录状态
+			var userid =isLogined(),match = getMatchInfo();
+			if(userid.responseJSON==-1){
+				// -1 为未登录状态，其他则为用户ID
+				newformloginBox();
 			}else if(!match){
 				return false;
 			}else{
@@ -146,7 +159,7 @@
 			      			    "match.rule": match.rule,
 			      			    //"match.relTime": match.reltime,
 			      			    //"match.score": match.name,
-			      			    "match.userId": parseInt(userId),
+			      			    "match.userId": parseInt(userid.responseJSON),
 			      			    "isCourt": match.iscourt,
 			      			    "court.name": match.court,
 			      			    "court.addr": match.courtaddr,
@@ -170,8 +183,7 @@
 			      			    "match.userId": parseInt(userId),
 			      			    "isCourt": match.iscourt,
 			      			};
-		      		}
-		      		
+		      		}		      		
 		      		console.log("转换后的：match data");console.log(data);
 		      		$.ajax({
 		                type: "POST",
@@ -183,18 +195,22 @@
 		              	  if( rspdata == "fail" ){
 		              		  sousaiRemindDialog("'"+match.title+"' 发布失败，fail");
 		              	  }else{
-		              		  var uriStr = "<h5>发布比赛 成功：</h5><strong>'"+match.title+"'</strong> 成功，比赛信息地址为：<a href='courtSearchDetail.jsp?id="+rspdata+"'>courtSearchDetail.jsp?id="+rspdata+"</a>";
-		              		  sousaiRemindDialog(uriStr,-1);
+		              		  $(".editMatch").hide();
+		              		  $("#afterRelease").find(".releaseInfoTitle").text(match.title).end()
+		              		  .find(".releaseInfoId").text(rspdata).end()
+		              		  .find(".releaseInfoHref").text("http://www.isousai.com/sousai/matchSearchDetail.jsp?id="+rspdata).attr("href","matchSearchDetail.jsp?id="+rspdata).end()
+		              		  .show();
 		              	  }
 		                },
-		                error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-		                  sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
+		                error: function(jqXHR,textStatus,errorThrown){
+		                	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+		                    sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
 		                },
 		              });
 		 	}
       });
-      
   });
+  
  </script> 
  </body>
 </html>

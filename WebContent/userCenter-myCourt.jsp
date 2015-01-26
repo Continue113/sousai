@@ -94,27 +94,7 @@
 		</ul>
 	   </div>
 	   </div>
-         <div class="courtBoxs">
-          <div class="courtBox">
-           <!-- img --> 
-           <div class="courtBox-img">
-            <img src="img/defaultImg.png" alt="" title="" />
-           </div> 
-           <!-- data --> 
-           <div class="courtBox-block"> 
-            <div class="courtBox-title">
-             <a href="javascript:void(0)">1成都1873乒乓球馆</a>
-             <a href="javascript:void(0)" class="btn btn-mini pull-right">查看详细</a><a href="javascript:void(0)" class="btn btn-mini pull-right">编辑场地</a>
-            </div> 
-            <ul class="breadcrumb"> 
-             <li class="courtBox-address">一北京东城区北京大学体育乓一北京东城区北京大学体育乓</li> 
-             <li class="courtBox-info "> <p>室内球馆（收费）</p> <p>赛场<span class="courtBox-infoNumb">1</span>个</p> <p>12345678</p> </li> 
-             <li class="courtBox-record ">曾举办比赛<p><span class="courtBox-recordNumb">1</span>次</p></li> 
-             <li class="courtBox-evaluation "><p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p> <p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p> <p><span>2013-10-10</span>:<span>XXXXXXXXXXXXXXXXXXXXXXXXXX</span></p></li> 
-            </ul> 
-           </div> 
-          </div> 
-         </div>
+         <div class="courtBoxs"></div>
          <!-- /courtBoxs -->
          <div class="panel-bottom">
        		<div id="ajaxState" class="text-center"><span class="hide noresult">无结果</span><span class="hide load"><img src="img/loading.gif" height="20px" width="20px"></img>数据加载中...</span></div>
@@ -164,8 +144,8 @@
          <!-- data --> 
          <div class="courtBox-block"> 
           <div class="courtBox-title"> 
-           <a href="{{id}}">{{name}}</a> 
-           <a href="{{id}}" class="btn btn-mini pull-right">查看详细</a> <a href="javascript:void(0)" class="btn btn-mini pull-right modifyCourt">编辑场地</a>
+           <a target="_blank" href="courtSearchDetail.jsp?id={{id}}">{{name}}</a> 
+           <a href="courtSearchDetail.jsp?id={{id}}" target="_blank" class="btn btn-mini pull-right">查看详细</a> <a href="javascript:void(0);" class="btn btn-mini pull-right modifyCourt">编辑场地</a>
           </div> 
           <ul class="breadcrumb"> 
            <li class="courtBox-address">{{addr}}</li> 
@@ -182,28 +162,36 @@
   //定义函数
   
   function e(crtPage,rs,obc,ia,sc,kv){
-
+		//定义默认选项
+		rs = rs||$("select.selectRows option:selected").val()||25,
+		crtPage = crtPage||$("ul.pagination li.active a").html()||1, //每次点击改变条数都从第一页开始；parseInt($("ul.pagination > li.active").text()) || 1; //若当前页数为空则默认为第一页
+	  	obc = obc||$(".sort button .current").attr("data-orderbycol"), 
+		ia = ia||$(".sort button .current").attr("data-isasc"),
+		sc = sc||$(".text-filter-box button .current").attr("data-strcolumns"),
+		kv = kv||$(".text-filter-box input").val();
+	  	console.log(crtPage+" "+rs+" "+obc+" "+ia+" "+sc+" "+kv);
+	  	
   	  //ajax接收所有的场地
   	  $("#ajaxState .load").show();
   		$(".courtBoxs").show();
   		console.log("start");
   	$.ajax({
         type: "POST",
-        url: "getAllCourt",
+        url: "getCourtByUserId",
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         dataType: "json",
         data:{currentPage:crtPage,rows:rs,orderByCol:obc,isAsc:ia,strColumns:sc,keyValue:kv},
-        success: function(data) {
-        	console.log(data);//sousaiRemindDialog(data);
+        success: function(rspdata) {
+        	console.log(rspdata);//sousaiRemindDialog(data);
 		      var target = $(".courtBoxs"),template = Handlebars.compile($('#court-template').html());
 		      Handlebars.registerHelper("data",function(v){
 		    	  //将当前对象转化为字符串，保存在data-info中
-		    	  console.log(v);
+		    	  //console.log(v);
 		    	  var v1 = JSON.stringify(v);
 		    	  //console.log("v1:"+v1);
 		    	  return v1;
 		      });
-		      target.empty().show().html(template(data.body));
+		      target.empty().show().html(template(rspdata.body));
 		      $("#ajaxState .load").hide();
 		      $("#ajaxState .noresult").hide();
 		      console.log("stop");
@@ -217,7 +205,7 @@
 	    	    //字数限制，溢出省略
 	          $(".courtBox-address").wordLimit(20);
 	    	  $(".courtBox-evaluation p").wordLimit();
-	    	  pages(data.count,crtPage,rs);
+	    	  pages(rspdata.count,crtPage,rs);
         },
         error: function(jqXHR,textStatus,errorThrown){
           console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
@@ -228,7 +216,7 @@
   
     $(function () {
     	//ajax接收所有的场地 默认为第一页 25条，按name排序，升序
-   	 	//e(1,25,"name",true,"name","");
+   	 	e(1,25,"name",true,"name","");
     	
     	//点击编辑比赛隐藏List列表同时显示编辑比赛
     	$(".courtBoxs").on("click",".modifyCourt",function(event){

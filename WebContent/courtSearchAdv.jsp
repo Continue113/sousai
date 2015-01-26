@@ -144,8 +144,8 @@
          <!-- data --> 
          <div class="courtBox-block"> 
           <div class="courtBox-title"> 
-           <a href="courtSearchDetail.jsp?id={{id}}">{{name}}</a> 
-           <a href="courtSearchDetail.jsp?id={{id}}" class="btn btn-mini pull-right">查看详细</a> 
+           <a target="_blank" href="courtSearchDetail.jsp?id={{id}}">{{name}}</a> 
+           <a target="_blank" href="courtSearchDetail.jsp?id={{id}}" class="btn btn-mini pull-right">查看详细</a> 
           </div> 
           <ul class="breadcrumb"> 
            <li class="courtBox-address">{{addr}}</li> 
