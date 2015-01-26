@@ -434,7 +434,7 @@ public class Jdbc {
 	//统计各个地区的比赛数量
 	public int selectCityCourt(String city,int dayNum,String matchType){
 		int courtNum = 0 ;
-		String sql = "SELECT COUNT(COURTID) FROM MATCHES WHERE COURTID IN (SELECT ID FROM COURT WHERE REGION LIKE '%"+city+"%') AND RELTIME IN (select * from MATCHES where date_sub(curdate(), INTERVAL "+dayNum+" DAY) <= date(RELTIME)) AND TYPE = "+ matchType ;
+		String sql = "SELECT COUNT(COURTID) FROM MATCHES WHERE COURTID IN (SELECT ID FROM COURT WHERE REGION LIKE '%"+city+"%') AND RELTIME IN (select RELTIME from MATCHES where date_sub(curdate(), INTERVAL "+dayNum+" DAY) <= date(RELTIME)) AND TYPE = "+ matchType ;
 		try{
 			pstmt = conn.prepareStatement(sql);
 			result = pstmt.executeQuery();
