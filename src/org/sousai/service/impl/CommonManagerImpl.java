@@ -145,7 +145,7 @@ public class CommonManagerImpl implements CommonManager {
 	}
 
 	@Override
-	public MatchBean findMatchBeanById(Integer id) {
+	public MatchBean findMatchBeanById(Integer id) throws Exception{
 		return matchDao.getMatchBean(id);
 	}
 

@@ -172,8 +172,9 @@ public interface CommonManager {
 	 * 
 	 * @param id
 	 * @return
+	 * @throws Exception 
 	 */
-	public MatchBean findMatchBeanById(Integer id);
+	public MatchBean findMatchBeanById(Integer id) throws Exception;
 
 	/**
 	 * 获取匹配高级搜索场地的记录数

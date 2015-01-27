@@ -14,7 +14,7 @@ public interface MatchDao {
 
 	Match get(Integer id);
 
-	MatchBean getMatchBean(Integer id);
+	MatchBean getMatchBean(Integer id) throws Exception;
 
 	Integer save(Match match);
 

@@ -33,7 +33,7 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 	}
 
 	@Override
-	public MatchBean getMatchBean(Integer id) {
+	public MatchBean getMatchBean(Integer id) throws Exception{
 		MatchBean value = null;
 		String strHql = String
 				.format("%1$s and m.id=%2$s", selectMatchBean, id);
