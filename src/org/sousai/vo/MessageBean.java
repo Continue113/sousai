@@ -14,12 +14,12 @@ public class MessageBean {
 	private String time;
 	private String mesg;
 	private String userName;
+	private String visibleName;
 	private Integer state;
 	private String courtName;
 	
-	
 	public MessageBean(Long id, Long parentId, Long rootId, Integer userId, Integer courtId,
-			Date time, String mesg, String userName,Integer state, String courtName) throws Exception {
+			Date time, String mesg, String visibleName, String userName, Integer state, String courtName) throws Exception {
 		super();
 		this.id = id;
 		this.parentId = parentId;
@@ -29,10 +29,25 @@ public class MessageBean {
 		this.time = CommonUtils.DateToString(time, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
 		this.mesg = mesg;
 		this.userName = userName;
+		this.visibleName = visibleName;
 		this.state = state;
 		this.courtName = courtName;
 	}
 	
+	public MessageBean(Long id, Long parentId, Long rootId, Integer userId, Integer courtId,
+			Date time, String mesg, String visibleName, Integer state, String courtName) throws Exception {
+		super();
+		this.id = id;
+		this.parentId = parentId;
+		this.rootId = rootId;
+		this.userId = userId;
+		this.courtId = courtId;
+		this.time = CommonUtils.DateToString(time, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+		this.mesg = mesg;
+		this.visibleName = visibleName;
+		this.state = state;
+		this.courtName = courtName;
+	}
 	/**
 	 * @return the id
 	 */
@@ -59,6 +74,20 @@ public class MessageBean {
 	}
 	
 	
+	/**
+	 * @return the visibleName
+	 */
+	public String getVisibleName() {
+		return visibleName;
+	}
+
+	/**
+	 * @param visibleName the visibleName to set
+	 */
+	public void setVisibleName(String visibleName) {
+		this.visibleName = visibleName;
+	}
+
 	/**
 	 * @return the rootId
 	 */

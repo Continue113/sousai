@@ -13,8 +13,9 @@ import org.sousai.vo.MessageBean;
 public class MesgDaoHibernate extends SqlHelper implements MesgDao {
 
 	private final String selectMesgBean = "select new org.sousai.vo.MessageBean(m.id,m.parentId,m.rootId,m.userId,m.courtId,m.time,m.mesg,m.userName,m.state,c.name) "
-			+ "from Message m, Court c where m.courtId=c.id";
-
+			+ "from Message m, Court c, User u where m.courtId=c.id";
+	private final String selectMesgBeanForAdmin = "select new org.sousai.vo.MessageBean(m.id,m.parentId,m.rootId,m.userId,m.courtId,m.time,m.mesg,m.userName,u.name,m.state,c.name) "
+			+ "from Message m, Court c, User u where m.courtId=c.id and u.name=m.userName";
 	public MesgDaoHibernate() {
 		super();
 	}
@@ -80,7 +81,7 @@ public class MesgDaoHibernate extends SqlHelper implements MesgDao {
 		try {
 			Session session = getHibernateTemplate().getSessionFactory()
 					.getCurrentSession();
-			String hql = selectMesgBean;
+			String hql = selectMesgBeanForAdmin;
 			return (List<MessageBean>) session.createQuery(hql).list();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -126,7 +127,7 @@ public class MesgDaoHibernate extends SqlHelper implements MesgDao {
 			throws Exception {
 		Session session = getHibernateTemplate().getSessionFactory()
 				.getCurrentSession();
-		String hql = selectMesgBean;
+		String hql = selectMesgBeanForAdmin;
 		if (!CommonUtils.isNullOrEmpty(strWhere)) {
 			hql += strWhere;
 		}
