@@ -15,7 +15,7 @@ public class MesgDaoHibernate extends SqlHelper implements MesgDao {
 	private final String selectMesgBean = "select new org.sousai.vo.MessageBean(m.id,m.parentId,m.rootId,m.userId,m.courtId,m.time,m.mesg,m.userName,m.state,c.name) "
 			+ "from Message m, Court c, User u where m.courtId=c.id";
 	private final String selectMesgBeanForAdmin = "select new org.sousai.vo.MessageBean(m.id,m.parentId,m.rootId,m.userId,m.courtId,m.time,m.mesg,m.userName,u.name,m.state,c.name) "
-			+ "from Message m, Court c, User u where m.courtId=c.id and u.name=m.userName";
+			+ "from Message m, Court c, User u where m.courtId=c.id and u.id=m.userId";
 	public MesgDaoHibernate() {
 		super();
 	}
