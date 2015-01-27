@@ -68,19 +68,19 @@ public class RelCourtAction extends UserBaseAction {
 
 	public String execute() throws Exception {
 		String result = Constant.FAIL;
-		UserBean userBean = (UserBean) ActionContext.getContext().getSession()
-				.get("userBean");
-		if (umg.isExeed(userBean.getUserId(), MAX_COURT_COUNT, 1)) {
-			result = EXEED_COUNT;
-		} else {
-			MyPrint.myPrint(court.toString());
-			MyPrint.myPrint("RelCourtAction now");
-			Court tempCourt = getCourt();
-			// tempCourt.setCourtTypeId(getCourtTypeId());
-			tempCourt.setVerify('0');
-			MyPrint.myPrint("regionId = " + tempCourt.getRegionId());
+		try {
+			UserBean userBean = (UserBean) ActionContext.getContext()
+					.getSession().get("userBean");
+			if (umg.isExeed(userBean.getUserId(), MAX_COURT_COUNT, 1)) {
+				result = EXEED_COUNT;
+			} else {
+				MyPrint.myPrint(court.toString());
+				MyPrint.myPrint("RelCourtAction now");
+				Court tempCourt = getCourt();
+				// tempCourt.setCourtTypeId(getCourtTypeId());
+				tempCourt.setVerify('0');
+				MyPrint.myPrint("regionId = " + tempCourt.getRegionId());
 
-			try {
 				tempCourt.setUserId(userBean.getUserId());
 				// tempCourt.setUser(new
 				// User((UserBean)ActionContext.getContext().getSession().get("userBean")));
@@ -88,13 +88,13 @@ public class RelCourtAction extends UserBaseAction {
 				if (umg.saveCourtPic(getImages(), getImgNames(), getCourt()
 						.getUserId()) != "fail"
 				// && umg.releaseCourt(tempCourt)==1)
-				) {
+				)
 					result = umg.releaseCourt(tempCourt).toString();
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				MyPrint.myPrint(result);
+
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			MyPrint.myPrint(result);
 		}
 		JSONUtils.toJson(ServletActionContext.getResponse(), result);
 		return null;

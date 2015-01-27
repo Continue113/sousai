@@ -333,7 +333,7 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 		String strWhere = buildFindByParamsWhere(keyValue, matchType, now,
 				matchState, dayOfWeek, beginTime, endTime, region);
 		MyPrint.myPrint("findPagedByParams.strWhere = " + strWhere);
-		return findPagedByWhereOrderBy(strWhere, currentPage, rows,
+		return findPagedByWhereOrderBy(" and m.verify='1' "+strWhere, currentPage, rows,
 				addPrefixToColumn(orderByCol), isAsc);
 	}
 
@@ -406,6 +406,7 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 			break;
 		// 比赛中
 		case 2:
+			
 			types = new int[] { 7, 5 };
 			columns = new String[] { addPrefixToColumn("beginTime"),
 					addPrefixToColumn("endTime") };
@@ -585,7 +586,7 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 		// orderByCol,
 		// isAsc);
 		String strHql = "select count(*) from Match m, Court c, User u "
-				+ "where m.courtId=c.id and u.id=m.userId ";
+				+ "where m.courtId=c.id and u.id=m.userId and m.verify='1'";
 		if (!CommonUtils.isNullOrEmpty(strWhere)) {
 			strHql += strWhere;
 		}
@@ -595,13 +596,13 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 	@Override
 	public List<MatchBean> findPagedByCourtId(Integer courtId, int currentPage,
 			int rows) throws Exception {
-		String strWhere = Append_StringV2("", new int[]{1}, new String[]{addPrefixToColumn("courtId")}, new Integer[]{courtId}, new int[]{1}, true);
+		String strWhere = Append_StringV2(" and m.verify='1' ", new int[]{1}, new String[]{addPrefixToColumn("courtId")}, new Integer[]{courtId}, new int[]{1}, true);
 		return findPagedByWhereOrderBy(strWhere, currentPage, rows, null, null);
 	}
 
 	@Override
 	public int countByCourtId(Integer courtId) throws Exception {
-		String strWhere = Append_StringV2("", new int[]{1}, new String[]{addPrefixToColumn("courtId")}, new Integer[]{courtId}, new int[]{1}, false);
+		String strWhere = Append_StringV2(" m.verify='1' ", new int[]{1}, new String[]{addPrefixToColumn("courtId")}, new Integer[]{courtId}, new int[]{1}, false);
 		
 		return count("select count(*) from Match m where "+strWhere);
 	}

@@ -178,7 +178,7 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 		Session session = getHibernateTemplate().getSessionFactory()
 				.getCurrentSession();
 		StringBuffer hql = new StringBuffer(selectCourtBean);
-		hql.append("and regionId=?");
+		hql.append("and c.regionId=? and c.verify='1'");
 		Query q = session.createQuery(hql.toString());
 		q.setInteger(0, regionId).setFirstResult((currentPage - 1) * rows)
 				.setMaxResults(rows);
@@ -191,7 +191,7 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 		Session session = getHibernateTemplate().getSessionFactory()
 				.getCurrentSession();
 		StringBuffer hql = new StringBuffer(selectCourtBean);
-		hql.append("and userId=?");
+		hql.append("and c.userId=?");
 		Query q = session.createQuery(hql.toString());
 		q.setMaxResults(rows).setFirstResult((currentPage - 1) * rows);
 		q.setInteger(0, userId);
@@ -212,6 +212,7 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 			e.printStackTrace();
 			return -1;
 		}
+		System.out.println("value = "+value);
 		return value;
 	}
 

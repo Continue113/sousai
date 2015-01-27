@@ -59,14 +59,14 @@ public class UserBean implements Serializable {
 	}
 
 	public UserBean(Integer userId, String userName, String userPwd, String userEmail,
-			char userType, String userRegTime, String userLastLogTime) {
+			char userType, Date userRegTime, Date userLastLogTime) throws Exception {
 		this.userId = userId;
 		this.userName = userName;
 		this.userPwd = userPwd;
-		this.userLastLogTime = userLastLogTime;
+		this.userRegTime = CommonUtils.DateToString(userRegTime, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+		this.userLastLogTime = CommonUtils.DateToString(userLastLogTime, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
 		this.userEmail = userEmail;
 		this.userType = userType;
-		this.userRegTime = userRegTime;
 	}
 
 	public UserBean(User user) throws Exception {
