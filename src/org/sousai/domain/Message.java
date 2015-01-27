@@ -4,6 +4,8 @@ package org.sousai.domain;
 import java.util.Date;
 import java.io.Serializable;
 
+import org.sousai.tools.CommonUtils;
+
 public class Message implements Serializable
 {
 	private static final long serialVersionUID = 7388668113838768234L;
@@ -119,8 +121,20 @@ public class Message implements Serializable
 	/**
 	 * @param time the time to set
 	 */
-	public void setTime(Date time) {
-		this.time = time;
+	public void setTime(Object time) {
+		try {
+			if (time instanceof Date) {
+				this.time = (Date) time;
+			} else if (time instanceof String) {
+				this.time = CommonUtils.ParseDateParam(((String) time),
+						null);
+			} else if (time instanceof String[]) {
+				this.time = CommonUtils.ParseDateParam(
+						((String[]) time)[0], null);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**

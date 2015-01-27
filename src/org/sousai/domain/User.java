@@ -140,8 +140,20 @@ public class User implements Serializable {
 	 * @param regTime
 	 *            the regTime to set
 	 */
-	public void setRegTime(Date regTime) {
-		this.regTime = regTime;
+	public void setRegTime(Object regTime) {
+		try {
+			if (regTime instanceof Date) {
+				this.regTime = (Date) regTime;
+			} else if (regTime instanceof String) {
+				this.regTime = CommonUtils.ParseDateParam(((String) regTime),
+						null);
+			} else if (regTime instanceof String[]) {
+				this.regTime = CommonUtils.ParseDateParam(
+						((String[]) regTime)[0], null);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -155,8 +167,20 @@ public class User implements Serializable {
 	 * @param lastLogTime
 	 *            the lastLogTime to set
 	 */
-	public void setLastLogTime(Date lastLogTime) {
-		this.lastLogTime = lastLogTime;
+	public void setLastLogTime(Object lastLogTime) {
+		try {
+			if (lastLogTime instanceof Date) {
+				this.lastLogTime = (Date) lastLogTime;
+			} else if (lastLogTime instanceof String) {
+				this.lastLogTime = CommonUtils.ParseDateParam(((String) lastLogTime),
+						null);
+			} else if (lastLogTime instanceof String[]) {
+				this.lastLogTime = CommonUtils.ParseDateParam(
+						((String[]) lastLogTime)[0], null);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**

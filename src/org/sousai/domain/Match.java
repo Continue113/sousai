@@ -186,8 +186,20 @@ public class Match implements Serializable {
 	 * @param relTime
 	 *            the relTime to set
 	 */
-	public void setRelTime(Date relTime) {
-		this.relTime = relTime;
+	public void setRelTime(Object relTime) {
+		try {
+			if (relTime instanceof Date) {
+				this.relTime = (Date) endTime;
+			} else if (relTime instanceof String) {
+				this.relTime = CommonUtils.ParseDateParam(((String) relTime),
+						null);
+			} else if (relTime instanceof String[]) {
+				this.relTime = CommonUtils.ParseDateParam(
+						((String[]) relTime)[0], null);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**

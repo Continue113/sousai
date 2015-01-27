@@ -2,7 +2,9 @@ package org.sousai.domain;
 
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
+
+import org.sousai.tools.CommonUtils;
 
 public class Court implements Serializable
 {
@@ -23,7 +25,7 @@ public class Court implements Serializable
 	private String intro;
 	private char verify;
 	private Date relDate;
-	private Date modDate;
+	private java.sql.Date modDate;
 //	private Set<CourtPic> courtPic = new HashSet<CourtPic>();
 //	private Set<Message> message = new HashSet<Message>();
 	private Integer userId;
@@ -238,8 +240,20 @@ public class Court implements Serializable
 	/**
 	 * @param relDate the relDate to set
 	 */
-	public void setRelDate(Date relDate) {
-		this.relDate = relDate;
+	public void setRelDate(Object relDate) {
+		try {
+			if (relDate instanceof Date) {
+				this.relDate = (Date) relDate;
+			} else if (relDate instanceof String) {
+				this.relDate = CommonUtils.ParseDateParam(((String) relDate),
+						null);
+			} else if (relDate instanceof String[]) {
+				this.relDate = CommonUtils.ParseDateParam(
+						((String[]) relDate)[0], null);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -252,8 +266,20 @@ public class Court implements Serializable
 	/**
 	 * @param modDate the modDate to set
 	 */
-	public void setModDate(Date modDate) {
-		this.modDate = modDate;
+	public void setModDate(Object modDate) {
+		try {
+			if (modDate instanceof java.sql.Date) {
+				this.modDate = (java.sql.Date) modDate;
+			} else if (modDate instanceof String) {
+				this.modDate = new java.sql.Date(CommonUtils.ParseDateParam(((String) modDate),
+						null).getTime());
+			} else if (modDate instanceof String[]) {
+				this.modDate = new java.sql.Date(CommonUtils.ParseDateParam(
+						((String[]) modDate)[0], null).getTime());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
