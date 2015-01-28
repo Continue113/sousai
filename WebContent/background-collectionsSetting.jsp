@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
  <head> 
-  <title>管理员页面&middot;采集设置&middot;搜赛网</title> 
+  <title>管理员页面&middot;网站设置&middot;搜赛网</title> 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
   <meta name="description" content="搜赛网-管理员页面-采集设置" /> 
   <meta name="author" content="KING@CQU" /> 
@@ -17,6 +17,8 @@
   <style>
   .form-horizontal .control-label {width: 140px;}
   .form-horizontal .controls {margin-left: 150px;}
+  
+  .breadcrumb-fff .span1 {margin-top: 4px}
   /** 重置最小宽度下form-horizontal的左边距 **/
   @media (max-width: 480px) {
   .form-horizontal .control-label {
@@ -29,9 +31,6 @@
       margin-left: 0;
     }
   }
-  /** 按钮左边距 **/
-  .btn {margin-left: 10px;}
-  .fileupload-buttonbar .btn {margin-left: 0;}
   </style> 
  </head> 
  <body class="background"> 
@@ -67,8 +66,20 @@
      </div> 
      <!-- /background-remind & backgroundMenu --> 
      <div class="span9"> 
-      <form class="form-horizontal" id="collectionsSettingForm" action="releaseCourtAction" method="post" enctype="multipart/form-data"> 
-       <fieldset> 
+      <form class="form-horizontal">
+      <fieldset>
+      <legend>网站设置</legend> 
+        <div class="control-group" id="matchTypeControlGroup">
+        <label class="control-label" for="inputMatchType">比赛类型设置：</label> 
+        <div class="controls toolbar"> 
+        <button type="button" class="btn" onclick="editAllMatchType()">编辑比赛类型</button>
+        <button type="button" class="btn" onclick="saveAllMatchType()">保存当前比赛类型</button>
+        </div>
+        <div class="controls breadcrumb-fff"></div>
+        </div> 
+      
+      </fieldset>
+<%--        <fieldset> 
         <legend>采集设置</legend> 
         <div class="control-group"> 
          <label class="control-label" for="inputMatchTitleKey">比赛名称关键字：</label> 
@@ -130,7 +141,7 @@
          <input class="btn pull-right" type="reset" value="重置" /> 
          <input class="btn btn-success pull-right" type="submit" value="保存" /> 
         </div> 
-       </fieldset> 
+       </fieldset>  --%>
       </form> 
      </div>
      <!-- /span9 --> 
@@ -147,13 +158,70 @@
   <![endif]--> 
   <script src="js/jquery-1.11.0.min.js"></script> 
   <script src="js/bootstrap.min.js"></script> 
+  <script src="js/handlebars-v2.0.0.js"></script>
   <script src="js/jquery.validate.min.js"></script> 
   <script src="js/sousai.common.js"></script> 
+  <!-- handlebars template -->
+  <script id="matchCatalog-template" type="text/x-handlebars-template">
+    {{#each this}}
+         
+        <input disabled class="span1 catalog" type="text" id="catalog{{id}}" value="{{name}}" placeholder="如：请填写大类的类型" required="required" /> <span class="divider">:</span>
+		<ul class="breadcrumb" id="catalogBreadcrumb{{id}}">{{literal}}</ul>
+
+    {{/each}}
+  </script>
+  <script id="matchType-template" type="text/x-handlebars-template">
+    {{#each this}}
+         
+        <li><input disabled class="span1 " type="text" id="matchType{{id}}" value="{{name}}" placeholder="如：请填写比赛类型" required="required" /></li>
+
+    {{/each}}
+  </script>
+  
   <script>
+  //定义函数
+      function getAllMatchType(){
+    	//获取所有比赛类型
+          $.post("showMC", null, function(rspdata) {
+        	  console.log(rspdata);
+		      var target = $("#matchTypeControlGroup .breadcrumb-fff"),template = Handlebars.compile($('#matchCatalog-template').html());
+		      Handlebars.registerHelper("literal",function(){
+		    	  var cataid = this.id;
+		    	  $.post("showMT", {"mcId": cataid}, function(rspType) {
+		    		  console.log("XXX"+cataid);console.log(rspType);
+				      var targetType = $("#catalogBreadcrumb"+cataid),templateType = Handlebars.compile($('#matchType-template').html());
+				      targetType.empty().html(templateType(rspType));//.append('<li><button type="button" class="btn btn-link" onclick="addMatchTpyeInthisCatalog('+cataid+')">添加小类型</button></li>');
+	              });
+		      });
+		      target.empty().html(template(rspdata));//.append('<button type="button" class="btn btn-link" onclick="addCatalog()">添加大类</button>');
+			  
+	    	  
+          });
+    	  
+      }
+  function editAllMatchType(){
+	  $("#matchTypeControlGroup .breadcrumb-fff").find("input").removeAttr("disabled");
+  }
+  function saveAllMatchType(){
+	  var target = $("#matchTypeControlGroup .breadcrumb-fff");
+	  $.each( target.find("input.catalog"),function(index,item){
+		  console.log(item);
+		  console.log($(item).val());
+		  console.log(target.find(".breadcrumb")[index]);
+	  });
+  }
+  function addMatchTpyeInthisCatalog(cataid){
+	  var targetType = $("#catalog"+cataid+"Breadcrumb");
+	  targetType.find("li:last").before('<li><input class="span1 " type="text"  placeholder="如：请填写比赛类型" required="required" /></li>');//.html('<li><button type="button" class="btn btn-link" onclick="saveMatchTpyeInthisCatalog('+cataid+')">保存当前小类型</button></li>');
+  }
+  function addCatalog(){
+	  console.log($(this));
+	  $("button[onclick='addCatalog()']").before('<input class="span1 " type="text" placeholder="如：请填写大类的类型" required="required" /> <span class="divider">:</span><ul class="breadcrumb newCatalogBreadcrumb"><li><input class="span1 " type="text" placeholder="如：请填写类型" required="required" /></li></ul>');
+  }
   $(function(){
+	  getAllMatchType();
     /** 表单验证代码 **/
     var validateor = $("#collectionsSettingForm").validate({
-      submitHandler: function(){},
     rules: {
     },
     messages: {

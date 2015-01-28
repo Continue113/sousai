@@ -97,7 +97,7 @@
           <textarea id="inputMatchRules" name="matchRule" required="required"></textarea>
           <div class="control-group hide">
            <div class="controls">
-            <button type="submit" class="btn btn-success pull-right" id="rlsMatch">确定发布</button>
+            <button type="button" class="btn btn-success pull-right" id="rlsMatch">确定发布</button>
             <button type="reset" class="btn pull-right" id="resetMatchForm">清空</button>
            </div> 
           </div>

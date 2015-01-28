@@ -602,7 +602,7 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 
 	@Override
 	public int countByCourtId(Integer courtId) throws Exception {
-		String strWhere = Append_StringV2(" m.verify='1' ", new int[]{1}, new String[]{addPrefixToColumn("courtId")}, new Integer[]{courtId}, new int[]{1}, false);
+		String strWhere = Append_StringV2(" m.verify='1' ", new int[]{1}, new String[]{addPrefixToColumn("courtId")}, new Integer[]{courtId}, new int[]{1}, true);
 		
 		return count("select count(*) from Match m where "+strWhere);
 	}

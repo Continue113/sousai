@@ -174,6 +174,7 @@
       data: args,
       dataType: "json",
       success: function(rspdata) {
+    	  console.log(rspdata);
       var target = $(".courtTable > tbody"),template = Handlebars.compile($('#court-template').html());
       Handlebars.registerHelper("data",function(){
         return JSON.stringify(this);

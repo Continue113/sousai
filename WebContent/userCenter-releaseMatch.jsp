@@ -146,7 +146,11 @@
 			}else if(!match){
 				return false;
 			}else{
-		      		var data;
+		      		var data,regionData = getRegion();
+		      		if(!regionData.region){
+		      			sousaiRemindDialog("场地区域不对，请重新选择省市区");
+		      			return false;
+		      		}
 		      		if(match.iscourt == "true"){
 		      			match.iscourt = true;
 			      		data = {
@@ -157,16 +161,24 @@
 			      			    "match.beginTime": match.begintime,
 			      			    "match.endTime": match.endtime,
 			      			    //"match.court": match.court,
-			      			    "match.courtId": parseInt(match.courtid),
+			      			    //"match.courtId": parseInt(match.courtid),
 			      			    "match.rule": match.rule,
 			      			    //"match.relTime": match.reltime,
 			      			    //"match.score": match.name,
 			      			    "match.userId": userid.responseJSON.userId,
 			      			    "isCourt": match.iscourt,
-			      			    "court.name": match.court,
-			      			    "court.addr": match.courtaddr,
-			      			    "court.type": match.courttype,
-			      			    "court.typeId": parseInt(match.courttypeid),
+		  						"court.userId": userid.responseJSON.userId,
+		  						"court.addr": match.courtaddr,
+		  						"court.courtTypeId": parseInt(match.courttypeid),
+		  						"court.name": match.court,
+		  						"court.matchType":match.type,
+		  						"court.regionId": regionData.regionId,
+		  						"court.region": regionData.region,
+		  						"court.tableNum": "",
+		  						"court.tel": "",
+		  						"court.price": "",
+		  						"court.workTime": "",
+		  						"court.intro": "",
 			      			};
 		      		}else{
 		      			match.iscourt = false;
@@ -186,7 +198,8 @@
 			      			    "isCourt": match.iscourt,
 			      			};
 		      		}
-		      		$.ajax({
+		      		console.log(data);
+		      		 $.ajax({
 		                type: "POST",
 		                url: "relMatch",
 		                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
@@ -208,7 +221,7 @@
 		                	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
 		                    sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
 		                },
-		              });
+		              }); 
 		 	}
       });
   });

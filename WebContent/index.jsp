@@ -90,7 +90,7 @@
 		<li class="matchIcon">
 		<a class="blk" target="_blank" href="matchSearchAdv.jsp?matchType={{key}}">
 	      		      <div class="icon">
-	      	      <img alt="{{key}}" src="img/{{key}}-grey.jpg" class="pull-left"/> 
+	      	      <img alt="{{key}}" src="img/{{UnicodeKey}}-grey.png" class="pull-left"/> 
 	      	        <div class="subtitle pull-right text-center"> 
 	      	         <span class="title">{{key}}</span>
 	      	         <p>比赛&nbsp;&nbsp;<span class="number">{{value}}</span>&nbsp;&nbsp;场</p> 
@@ -121,8 +121,10 @@
 	            var temp = {
 	            	"data":data	
 	            };
-	            console.log(temp);
 	            var template = Handlebars.compile($('#matchIcon-template').html());
+	            Handlebars.registerHelper("UnicodeKey",function(){
+	                return escape(this.key).toLocaleLowerCase().replace(/%u/gi, 'u');
+	              });
 			    target.empty().html(template(temp.data));
 	        },
 	        error: function(jqXHR,textStatus,errorThrown){
@@ -144,7 +146,7 @@
         
         var imgurl = $(this).find("img").attr("src");
         if(imgurl !== "img/defaultIcon.png"){
-          $(this).find("img").attr("src",imgurl.split("-")[0]+".jpg");
+          $(this).find("img").attr("src",imgurl.split("-")[0]+".png");
         };
         
     });
@@ -153,7 +155,7 @@
     	$(this).find(".subtitle span.sub").removeClass("title").end().find("div.iconlabel").hide();
         var imgurl = $(this).find("img").attr("src");
         if(imgurl !== "img/defaultIcon.png"){
-          $(this).find("img").attr("src",imgurl.split(".")[0]+"-grey.jpg");
+          $(this).find("img").attr("src",imgurl.split(".")[0]+"-grey.png");
         };
     });
     

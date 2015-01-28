@@ -194,6 +194,7 @@
 	        	        async: false, //设置异步为false,解决ajax异步不能设置全局变量的问题
 	          	        dataType: "json"
 	          	        });
+	          	  	console.log(recordNumb.responseJSON);
 	          	  	 if(!recordNumb.responseJSON.count){
 	          	  		 return 0;
 	          	  	 }
@@ -208,6 +209,7 @@
 	        	        async: false, //设置异步为false,解决ajax异步不能设置全局变量的问题
 	          	        dataType: "json"
 	          	        });
+		          	 console.log(evaluationNumb.responseJSON);
 	          	  	 if(!evaluationNumb.responseJSON.length){
 	          	  		 return 0;
 	          	  	 }

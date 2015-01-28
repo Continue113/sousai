@@ -358,20 +358,26 @@ $(function(){
     });
     //搜索现有场地
     $("#searchExistedCourt").click(function(){
-    	searchExistedCourt(1,1);
+    	searchExistedCourt(1,10);
     });
     //添加新场地
-    $("#newCourtBtn").click(function () {
+    $("#newCourtBtn").click(function(){
       $("#newCourtCheckbox").click();
     });
 
-    $("#newCourtCheckbox").click(function () {
+    $("#newCourtCheckbox").click(function(){
+    	alert($("#inputMatchCourt").attr("data-iscourt"));
       if($(this).is(":checked")){
+    	  //市和区的验证在发布新场地的时候需要添加
+    	  $(".controls > .selectCity").attr("name","selectCity");
+    	  $(".controls > .selectCountry").attr("name","selectCountry");
+    	  
     	  //若添加新场地的复选框 是选中状态时则生成添加新场地的表单
     	  var inputCourtStr = '<div class="inputCourt hide"><div class="control-group"><label class="control-label" for="courtName">场地名称：</label><div class="controls"><input type="text" id="courtName" name="courtName" placeholder="如：2012年XXXXXXX杯乒乓球季度赛" class="span5 add-on" data-toggle="tooltip" data-placement="top" title="" data-original-title="限定30个字符以下" required="required"/></div></div><div class="control-group"><label class="control-label" for="courtAddress">详细地址：</label><div class="controls"><input type="text" id="courtAddress" name="courtAddr" placeholder="如：某某桥某某路XXXXXXX杯乒乓球季度赛某楼" class="span5 add-on" data-toggle="tooltip" data-placement="top" title="" data-original-title="限定30个字符以下" required="required"/></div></div><div class="control-group"><label class="control-label" for="courtType">场地类型：</label><div class="controls"><select class="selectCourtType" name="courtType"><option value="0">请先选择比赛类型</option></select></div></div></div>';
     	  $(inputCourtStr).insertAfter($(this).parent());
     	  //设置data-iscourt属性为true，同时设置比赛地点为 选择新场地
     	  $("#inputMatchCourt").val("选择添加新场地").attr("data-iscourt",true);
+    	  alert($("#inputMatchCourt").attr("data-iscourt"));
     	  //根据已选的比赛类型获取场地类型
     	  var particularMatchTypeId = $(".selectParticularMatchType option:selected").attr("value");
     	  if(particularMatchTypeId != 0){
@@ -387,13 +393,19 @@ $(function(){
 
     	  $("div.inputCourt").slideDown();
     	  $("div.existCourtsBox").slideUp();
-      }else {//若复选框不是选中的，则滑出已有场地列表并删除添加新场地的表单
+      }else {
+    	  //若复选框不是选中的，则滑出已有场地列表并删除添加新场地的表单
     	  $("div.existCourtsBox").slideDown();
     	  $("div.inputCourt").slideUp("slow",function(){
     		  $("div.inputCourt").remove();
     	  });
+    	  //市和区的验证在不需要发布新场地的时候移除
+    	  $(".controls > .selectCity").removeAttr("name");
+    	  $(".controls > .selectCountry").removeAttr("name");
+    	  
     	  //设置data-iscourt属性为false，同时设置比赛地点为 空
     	  $("#inputMatchCourt").val("").attr("data-iscourt",false);
+    	  alert($("#inputMatchCourt").attr("data-iscourt"));
       }
     });
 
@@ -421,6 +433,7 @@ $(function(){
     //表单验证
     //为比赛地点中的省市区添加name属性，然后利用validate插件的min=1验证是否选择了省市区
     $(".controls > .selectProvince").attr("name","selectProvince");
+    //市和区的验证在发布新场地的时候需要添加
     //$(".controls > .selectCity").attr("name","selectCity");
     //$(".controls > .selectCountry").attr("name","selectCountry");
 
@@ -428,9 +441,6 @@ $(function(){
       // update underlying textarea before submit validation
       tinyMCE.triggerSave();
     }).validate({
-    	submitHandler: function(form){
-    		console.log("validate");
-    },
     rules: {
       matchName: {
         minlength: 6,
@@ -448,12 +458,12 @@ $(function(){
       selectProvince: {
       	min: 1,
       },
-      /*selectCity: {
+      selectCity: {
       	min: 1,
       },
       selectCountry: {
       	min: 1,
-      },*/
+      },
       courtName: {
           minlength: 6,
           maxlength: 30
@@ -472,8 +482,8 @@ $(function(){
       matchEndTime: "请选择结束日期",
       crtCourtName:"请选择已有的场地或添加新的场地",
       selectProvince: "",//省
-      //selectCity: "",//市
-      //selectCountry: "",//区
+      selectCity: "",//市
+      selectCountry: "",//区
       matchRule: "请输入比赛规程",
       courtName: {//新场地的场地名称
     	  required: "请输入场地名称",
