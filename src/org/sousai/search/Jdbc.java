@@ -11,7 +11,6 @@ import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 
 import org.sousai.tools.CommonUtils;
-import org.sousai.webstatistics.SiteStats;
 
 public class Jdbc {
 	private Connection conn = null;
@@ -302,16 +301,17 @@ public class Jdbc {
 		}
 		return courtList;
 	}
-	
-	//统计某年某月的注册用户数量
-	public int selectRegisterNum(int year,int month){
+
+	// 统计某年某月的注册用户数量
+	public int selectRegisterNum(int year, int month) {
 		int registerNum = 0;
-		String sql = "SELECT COUNT(REGTIME) FROM USER WHERE YEAR(REGTIME)="+year+" AND MONTH(REGTIME)="+month;
-		try{
+		String sql = "SELECT COUNT(REGTIME) FROM USER WHERE YEAR(REGTIME)="
+				+ year + " AND MONTH(REGTIME)=" + month;
+		try {
 			pstmt = conn.prepareStatement(sql);
 			result = pstmt.executeQuery();
 			while (result.next()) {
-				registerNum = result.getInt(1) ;
+				registerNum = result.getInt(1);
 			}
 		} catch (SQLException e) {
 			System.out.println(e);
@@ -322,18 +322,20 @@ public class Jdbc {
 				System.out.println(e);
 			}
 		}
-		return registerNum ;
+		return registerNum;
 	}
-	
-	//统计某年某月的比赛发布(搜赛网)数量
-	public int selectSousaiMatchPublish(int year,int month){
+
+	// 统计某年某月的比赛发布(搜赛网)数量
+	public int selectSousaiMatchPublish(int year, int month) {
 		int registerNum = 0;
-		String sql = "SELECT COUNT(RELTIME) FROM MATCHES WHERE YEAR(RELTIME)="+year+" AND MONTH(RELTIME)="+month + " AND USERID in (select ID from USER where TYPE = '2')";
-		try{
+		String sql = "SELECT COUNT(RELTIME) FROM MATCHES WHERE YEAR(RELTIME)="
+				+ year + " AND MONTH(RELTIME)=" + month
+				+ " AND USERID in (select ID from USER where TYPE = '2')";
+		try {
 			pstmt = conn.prepareStatement(sql);
 			result = pstmt.executeQuery();
 			while (result.next()) {
-				registerNum = result.getInt(1) ;
+				registerNum = result.getInt(1);
 			}
 		} catch (SQLException e) {
 			System.out.println(e);
@@ -344,17 +346,20 @@ public class Jdbc {
 				System.out.println(e);
 			}
 		}
-		return registerNum ;
+		return registerNum;
 	}
-	//统计某年某月的比赛发布(自然人)数量
-	public int selectNaturalMatchPublish(int year,int month){
+
+	// 统计某年某月的比赛发布(自然人)数量
+	public int selectNaturalMatchPublish(int year, int month) {
 		int registerNum = 0;
-		String sql = "SELECT COUNT(RELTIME) FROM MATCHES WHERE YEAR(RELTIME)="+year+" AND MONTH(RELTIME)="+month + " AND USERID not in (select ID from USER where TYPE = '2')";
-		try{
+		String sql = "SELECT COUNT(RELTIME) FROM MATCHES WHERE YEAR(RELTIME)="
+				+ year + " AND MONTH(RELTIME)=" + month
+				+ " AND USERID not in (select ID from USER where TYPE = '2')";
+		try {
 			pstmt = conn.prepareStatement(sql);
 			result = pstmt.executeQuery();
 			while (result.next()) {
-				registerNum = result.getInt(1) ;
+				registerNum = result.getInt(1);
 			}
 		} catch (SQLException e) {
 			System.out.println(e);
@@ -365,17 +370,20 @@ public class Jdbc {
 				System.out.println(e);
 			}
 		}
-		return registerNum ;
+		return registerNum;
 	}
-	//统计某年某月的场地发布(搜赛网)数量
-	public int selectSousaiCourtPublish(int year,int month){
+
+	// 统计某年某月的场地发布(搜赛网)数量
+	public int selectSousaiCourtPublish(int year, int month) {
 		int registerNum = 0;
-		String sql = "SELECT COUNT(RELDATE) FROM COURT WHERE YEAR(RELDATE)="+year+" AND MONTH(RELDATE)="+month + " AND USERID in (select ID from USER where TYPE = '2')";
-		try{
+		String sql = "SELECT COUNT(RELDATE) FROM COURT WHERE YEAR(RELDATE)="
+				+ year + " AND MONTH(RELDATE)=" + month
+				+ " AND USERID in (select ID from USER where TYPE = '2')";
+		try {
 			pstmt = conn.prepareStatement(sql);
 			result = pstmt.executeQuery();
 			while (result.next()) {
-				registerNum = result.getInt(1) ;
+				registerNum = result.getInt(1);
 			}
 		} catch (SQLException e) {
 			System.out.println(e);
@@ -386,17 +394,20 @@ public class Jdbc {
 				System.out.println(e);
 			}
 		}
-		return registerNum ;
+		return registerNum;
 	}
-	//统计某年某月的场地发布(自然人)数量
-	public int selectNaturalCourtPublish(int year,int month){
+
+	// 统计某年某月的场地发布(自然人)数量
+	public int selectNaturalCourtPublish(int year, int month) {
 		int registerNum = 0;
-		String sql = "SELECT COUNT(RELDATE) FROM COURT WHERE YEAR(RELDATE)="+year+" AND MONTH(RELDATE)="+month + " AND USERID NOT in (select ID from USER where TYPE = '2')";
-		try{
+		String sql = "SELECT COUNT(RELDATE) FROM COURT WHERE YEAR(RELDATE)="
+				+ year + " AND MONTH(RELDATE)=" + month
+				+ " AND USERID NOT in (select ID from USER where TYPE = '2')";
+		try {
 			pstmt = conn.prepareStatement(sql);
 			result = pstmt.executeQuery();
 			while (result.next()) {
-				registerNum = result.getInt(1) ;
+				registerNum = result.getInt(1);
 			}
 		} catch (SQLException e) {
 			System.out.println(e);
@@ -407,17 +418,19 @@ public class Jdbc {
 				System.out.println(e);
 			}
 		}
-		return registerNum ;
+		return registerNum;
 	}
-	//统计评论数量   court_time
-	public int selectCommentsNum(int year,int month){
+
+	// 统计评论数量 court_time
+	public int selectCommentsNum(int year, int month) {
 		int registerNum = 0;
-		String sql = "SELECT COUNT(TIME) FROM MESSAGE WHERE YEAR(TIME)="+year+" AND MONTH(TIME)="+month;
-		try{
+		String sql = "SELECT COUNT(TIME) FROM MESSAGE WHERE YEAR(TIME)=" + year
+				+ " AND MONTH(TIME)=" + month;
+		try {
 			pstmt = conn.prepareStatement(sql);
 			result = pstmt.executeQuery();
 			while (result.next()) {
-				registerNum = result.getInt(1) ;
+				registerNum = result.getInt(1);
 			}
 		} catch (SQLException e) {
 			System.out.println(e);
@@ -428,18 +441,24 @@ public class Jdbc {
 				System.out.println(e);
 			}
 		}
-		return registerNum ;
+		return registerNum;
 	}
-	
-	//统计各个地区的比赛数量
-	public int selectCityCourt(String city,int dayNum,String matchType){
-		int courtNum = 0 ;
-		String sql = "SELECT COUNT(COURTID) FROM MATCHES WHERE COURTID IN (SELECT ID FROM COURT WHERE REGION LIKE '%"+city+"%') AND RELTIME IN (select RELTIME from MATCHES where date_sub(curdate(), INTERVAL "+dayNum+" DAY) <= date(RELTIME)) AND TYPE = '"+ matchType +"'" ;
-		try{
+
+	// 统计各个地区的比赛数量
+	public int selectCityCourt(String city, int dayNum, String matchType) {
+		int courtNum = 0;
+		String sql = "SELECT COUNT(COURTID) FROM MATCHES WHERE COURTID IN (SELECT ID FROM COURT WHERE REGION LIKE '%"
+				+ city
+				+ "%') AND RELTIME IN (select RELTIME from MATCHES where date_sub(curdate(), INTERVAL "
+				+ dayNum
+				+ " DAY) <= date(RELTIME)) AND TYPE = '"
+				+ matchType
+				+ "'";
+		try {
 			pstmt = conn.prepareStatement(sql);
 			result = pstmt.executeQuery();
 			while (result.next()) {
-				courtNum = result.getInt(1) ;
+				courtNum = result.getInt(1);
 			}
 		} catch (SQLException e) {
 			System.out.println(e);
@@ -449,8 +468,25 @@ public class Jdbc {
 			} catch (SQLException e) {
 				System.out.println(e);
 			}
-		}		
-		return courtNum ;
+		}
+		return courtNum;
+	}
+
+	// 通过id查看场地名称
+	public String selectCourtNameById(int id) {
+		String courtName = null;
+		String sql = "SELECT NAME FROM COURT WHERE ID = ?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, id);
+			result = pstmt.executeQuery();
+			while (result.next()) {
+				courtName = result.getString(1);
+			}
+		} catch (SQLException e) {
+			System.out.println(e);
+		}
+		return courtName;
 	}
 }
 

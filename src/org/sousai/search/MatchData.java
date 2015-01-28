@@ -18,6 +18,10 @@ public class MatchData implements Serializable {
 	private String matchAddress = null; // 比赛地点
 	private String matchStartTime = null; // 比赛开始时间
 	private String matchDeadline = null; // 截止日期
+	private String courtName = null ;
+	private String state = null ;
+	private String beginWeek = null ;
+	private String endWeek = null ;
 
 	// html+css文件内容
 	private String matchIntroduction = null; // 比赛简介
@@ -34,7 +38,11 @@ public class MatchData implements Serializable {
 		private String matchAddress = null; // 比赛地点
 		private String matchStartTime = null; // 比赛开始时间
 		private String matchDeadline = null; // 截止日期
-
+		private String courtName = null ;
+		private String state = null ;
+		private String beginWeek = null ;
+		private String endWeek = null ;
+		
 		// html+css文件内容
 		private String matchIntroduction = null; // 比赛简介
 
@@ -87,6 +95,26 @@ public class MatchData implements Serializable {
 			this.matchIntroduction = matchIntroduction;
 			return this;
 		}
+		
+		public Builder courtName(String courtName){
+			this.courtName = courtName ;
+			return this ;
+		}
+		
+		public Builder state(String state){
+			this.state = state ;
+			return this ;
+		}
+		
+		public Builder beginWeek(String beginWeek){
+			this.beginWeek = beginWeek ;
+			return this ;
+		}
+		
+		public Builder endWeek(String endWeek){
+			this.endWeek = endWeek ;
+			return this ;
+		}
 
 		public MatchData build() {
 			return new MatchData(this);
@@ -108,6 +136,10 @@ public class MatchData implements Serializable {
 		matchStartTime = builder.matchStartTime;
 		matchDeadline = builder.matchDeadline;
 		matchIntroduction = builder.matchIntroduction;
+		courtName = builder.courtName ;
+		state = builder.state ;
+		beginWeek = builder.beginWeek ;
+		endWeek = builder.endWeek ;
 	}
 
 	public void setId(int id) {
@@ -198,12 +230,47 @@ public class MatchData implements Serializable {
 		return matchIntroduction;
 	}
 
+	public String getCourtName() {
+		return courtName;
+	}
+
+	public void setCourtName(String courtName) {
+		this.courtName = courtName;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getBeginWeek() {
+		return beginWeek;
+	}
+
+	public void setBeginWeek(String beginWeek) {
+		this.beginWeek = beginWeek;
+	}
+
+	public String getEndWeek() {
+		return endWeek;
+	}
+
+	public void setEndWeek(String endWeek) {
+		this.endWeek = endWeek;
+	}
+
 	@Override
 	public String toString() {
-		return "MatchData [id=" + id + ", url=" + url + ", courtId=" + courtId
-				+ ", publishTime=" + publishTime + ", name=" + name
-				+ ", matchType=" + matchType + ", matchStartTime="
+		return "MatchData [id=" + id + ", url=" + url + ", sponsor=" + sponsor
+				+ ", courtId=" + courtId + ", publishTime=" + publishTime
+				+ ", name=" + name + ", matchType=" + matchType
+				+ ", matchAddress=" + matchAddress + ", matchStartTime="
 				+ matchStartTime + ", matchDeadline=" + matchDeadline
+				+ ", courtName=" + courtName + ", state=" + state
+				+ ", beginWeek=" + beginWeek + ", endWeek=" + endWeek
 				+ ", matchIntroduction=" + matchIntroduction + "]";
 	}
 }

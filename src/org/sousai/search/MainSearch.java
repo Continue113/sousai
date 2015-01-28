@@ -2,6 +2,10 @@ package org.sousai.search;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 
 import org.apache.lucene.analysis.Analyzer;
@@ -76,6 +80,10 @@ public class MainSearch {
 			String matchStartTime = null;
 			String matchDeadline = null;
 			String matchIntroduction = null;
+			String courtName = null ;
+			String state = null ;
+			String beginWeek = null ;
+			String endWeek = null ;
 
 			// 设定搜索目录
 			ireader = DirectoryReader.open(directory);
@@ -117,14 +125,21 @@ public class MainSearch {
 				matchStartTime = hitDoc.get(multiFields[5]);
 				matchDeadline = hitDoc.get(multiFields[6]);
 				matchIntroduction = hitDoc.get(multiFields[7]);
-
-				//System.out.println(name);
-				
+				courtName = new Jdbc().selectCourtNameById(courtId) ;
+				state = getState(matchStartTime,matchDeadline) ;
+				beginWeek = parseWeek(matchStartTime) ;
+				endWeek = parseWeek(matchDeadline) ;
+				System.out.println(beginWeek);
 				matchList.add(new MatchData.Builder(null, name).id(id)
-						.courtId(courtId).publishTime(publishTime)
+						.courtId(courtId)
+						.publishTime(publishTime)
 						.matchType(matchType).matchStartTime(matchStartTime)
 						.matchDeadline(matchDeadline)
-						.matchIntroduction(matchIntroduction).build());
+						.matchIntroduction(matchIntroduction)
+						.courtName(courtName)
+						.state(state)
+						.beginWeek(beginWeek)
+						.endWeek(endWeek).build());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -137,7 +152,54 @@ public class MainSearch {
 		}
 		return matchList;
 	}
+	
+	public String getState(String begin,String end) {
+		String str = null ;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+		try {
+			Date currentDate = new Date() ;
+			Date beginDate = sdf.parse(begin) ;
+			Date endDate = sdf.parse(end) ;
+			if(currentDate.before(beginDate))
+				str = "报名中" ;
+			else if(currentDate.after(endDate))
+				str = "已结束" ;
+			else
+				str = "比赛中" ;
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return str ;
+	}
 
+	public String parseWeek(String time){
+		String week = null ;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+		Calendar cal=Calendar.getInstance();
+		try {
+			cal.setTime(sdf.parse(time));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		int n = cal.get(Calendar.DAY_OF_WEEK); 
+		
+		if(n==1)
+			week = "星期日" ;
+		else if(n==2)
+			week = "星期一" ;
+		else if(n==3)
+			week = "星期二" ;
+		else if(n==4)
+			week = "星期三" ;
+		else if(n==5)
+			week = "星期四" ;
+		else if(n==6)
+			week = "星期五" ;
+		else if(n==7)
+			week = "星期六" ;
+		return week ;
+	}
 	public LinkedList<MatchData> matchSearch(String searchContent,String indexPath){
 		
 		return indexSearch(new IKAnalyzer(true),new File(indexPath),searchContent) ;
