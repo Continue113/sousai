@@ -98,8 +98,7 @@
           <div class="control-group hide">
            <div class="controls">
             <button type="submit" class="btn btn-success pull-right" id="rlsMatch">确定发布</button>
-            <button type="reset" class="btn pull-right" id="resetMatchForm">重置</button>
-            <button type="button" class="btn pull-right" name="preView">预览</button> 
+            <button type="reset" class="btn pull-right" id="resetMatchForm">清空</button>
            </div> 
           </div>
           </fieldset> 

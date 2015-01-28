@@ -118,7 +118,7 @@
   <script id="collections-template" type="text/x-handlebars-template">
     {{#each this}}
                         
-        <tr class="match" data-info="{{data this}}"> 
+        <tr class="match" data-info="{{data}}"> 
           <td class="match-title"><label for="{{id}}"><input type="checkbox" id="{{id}}"/><span>{{name}}</span></label></td> 
           <td class="match-time">{{matchStartTime}} - {{matchDeadline}}</td> 
           <td class="match-court">{{matchAddress}}</td>
@@ -130,44 +130,42 @@
   </script>
   <script>
   //定义函数
-  function e(crtPage,rs){
-  	$("#ajaxState .load").show();console.log("start");
+  function e(argso){
+		//定义默认选项 
+		var args=argso;
+		args.currentPage = args.currentPage||$("ul.pagination li.active a").html()||1;
+		args.rows = args.rows||$("select.selectRows option:selected").val()||25;
+		args.orderByCol = args.orderByCol||$(".sort button .current").attr("data-orderbycol")||"name";
+		args.isAsc = args.isAsc||$(".sort button .current").attr("data-isasc")||true;
+		args.strColumns = args.strColumns||$(".text-filter-box button .current").attr("data-strcolumns")||"name";
+		args.keyValue = args.keyValue||$(".text-filter-box input").val()||"";
+	  	
+  	$("#ajaxState .load").show();
     $.ajax({
       type: "POST",
       url: "backgroundCollections",
       contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-      data: {currentPage:crtPage,rows:rs},
+      data: args,
       dataType: "json",
       success: function(rspdata) {
-    	  console.log(rspdata);
 	      var target = $(".collectionsTable > tbody"),template = Handlebars.compile($('#collections-template').html());
-	      Handlebars.registerHelper("data",function(v){
-	    	  //将当前对象转化为字符串，保存在data-info中
-	    	  //console.log(v);
-	    	  var v1 = JSON.stringify(v);
-	    	  //console.log("v1:"+v1);
-	    	  return v1;
+	      Handlebars.registerHelper("data",function(){
+	    	  return JSON.stringify(this);
 	      });
-	      target.empty(); //清空tbody
-	  	  target.html(template(rspdata.body));
+	      target.empty().html(template(rspdata.body));
 	      $("#ajaxState .load").hide();
 	      $("#ajaxState .noresult").hide();
-	      console.log("stop");
-	      //出错或无结果
-	      //target.empty(); //清空tbody
 	      if(target.find("tr.match").length == 0){
-	      $("#ajaxState .noresult").show();console.log("无结果");
+	      $("#ajaxState .noresult").show();
 	      }
 	      //字数限制，溢出省略
 	      $("td > label > span").wordLimit();
 	      $(".match-court").wordLimit();
 	      $(".match-from > a").wordLimit(25);
-	      pages(rspdata.count,crtPage,rs);
+	      pages(rspdata.count,args.currentPage,args.rows);
 	    },
       error: function(jqXHR,textStatus,errorThrown){
-    	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-	      $("#ajaxState .noresult").show();console.log("出错了");
-	      sousaiRemindDialog("抱歉，获取数据出错了。");
+	      $("#ajaxState .noresult").show();
       },
     });
   }
@@ -175,7 +173,6 @@ function sureDelete(){
 	hideSousaiRemindDialog();
 	var collectionId = new Array();
 	$(".match input:checked").each(function(index,element){
-		console.log($(this).attr("id"));
 		collectionId.push($(this).attr("id"));
 	});
     $.ajax({
@@ -190,15 +187,12 @@ function sureDelete(){
     	  if( rspdata == "success" ){
     		  sousaiRemindDialog("删除成功");
     		  $(".match input:checked").parent().parent().parent().remove();
-    	  }else if( rspdata == "error" ){
-    		  sousaiRemindDialog("删除失败");
     	  }else{
     		  sousaiRemindDialog("删除失败，错误代码为："+rspdata);
     	  }
       },
       error: function(jqXHR,textStatus,errorThrown){
-    	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-       	  sousaiRemindDialog("delete:抱歉，发送信息到服务器出错了。");
+       	  sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
       },
     });
 }
@@ -216,15 +210,13 @@ function sureDeleteEdit(){
       	  if( rspdata == "success" ){
       		  sousaiRemindDialog("删除成功");
       		  $("#"+$("#inputMatchTitle").attr("data-id")).parent().parent().parent().remove();
-      	  }else if( rspdata == "error" ){
-      		  sousaiRemindDialog("删除失败");
       	  }else{
       		  sousaiRemindDialog("删除失败，错误代码为："+rspdata);
       	  }
         },
         error: function(jqXHR,textStatus,errorThrown){
           	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-      	  sousaiRemindDialog("delete:抱歉，发送信息到服务器出错了。");
+      	    sousaiRemindDialog("delete:抱歉，发送信息到服务器出错了。");
         },
       });
 }
@@ -233,7 +225,7 @@ function sureDeleteEdit(){
 	  $(".editMatch").find(".btnbar").html('<button type="button" class="btn passCollection">发布采集</button><button type="button" class="btn saveCollection">保存修改</button><button type="button" class="btn deleteCollection">删除采集</button><button type="button" class="btn backList ">返回列表</button>');
 	  
 	//ajax接收所有比赛
-	e(1,25);
+	e({currentPage:1,rows:25});
     //点击编辑比赛隐藏List列表同时显示编辑比赛
     $("tbody").on("click",".match-oprate > a",function(event){
         var datainfo = $(this).parent().parent().attr("data-info");
@@ -360,12 +352,9 @@ function sureDeleteEdit(){
                 		  },
                   dataType: "json",
                   success: function(rspdata) {
-                	  //sousaiRemindDialog(rspdata);console.log(rspdata);
                 	  if( rspdata == "success" ){
-                		  //sousaiRemindDialog("保存成功");
-                		  sousaiRemindDialog("保存成功");
-                	  }else if( rspdata == "error" ){
-                		  sousaiRemindDialog("保存失败");
+                		  window.setTimeout("window.location。href=window.location。href",3000);
+                  		  sousaiRemindDialog("保存成功,3秒后将刷新页面。");
                 	  }else{
                 		  sousaiRemindDialog("保存失败，错误代码未知");
                 	  }
@@ -392,10 +381,8 @@ function sureDeleteEdit(){
                   success: function(rspdata) {
                 	  if( rspdata == "success" ){
                 		  sousaiRemindDialog("发布成功");
-                	  }else if( rspdata == "fail" ){
-                		  sousaiRemindDialog("发布失败");
                 	  }else{
-                		  sousaiRemindDialog("发布失败，错误代码未知");
+                		  sousaiRemindDialog("发布失败，错误代码为："+rspdata);
                 	  }
                   },
                   error: function(jqXHR,textStatus,errorThrown){

@@ -80,22 +80,22 @@
   <script id="match-template" type="text/x-handlebars-template">
     {{#each this}}
 
-       <div class="matchBox"  data-info="{{data this}}>
+       <div class="matchBox"  data-info="{{data}}>
         <div class="matchBox-all"> 
          <div class="matchBox-title"> 
-          <a href="matchSearchDetail.jsp?id={{id}}">{{name}}</a> 
+          <a target="_blank" href="matchSearchDetail.jsp?id={{id}}">{{name}}</a> 
           <span class="pull-right">发布时间：<span class="matchBox-releaseTime">{{publishTime}}</span></span> 
          </div>
          <ul class="breadcrumb">
           <li class="matchBox-time">
-           <div class="matchBox-beginTime">{{matchStartTime}}<p>星期五</p></div> 
+           <div class="matchBox-beginTime">{{matchStartTime}}<p>{{beginWeek}}</p></div> 
            <div class="line">&nbsp;-&nbsp;</div> 
-           <div class="matchBox-endTime">{{matchDeadline}}<p>星期日</p></div>
+           <div class="matchBox-endTime">{{matchDeadline}}<p>{{endWeek}}</p></div>
 		  </li>
-          <li class="matchBox-court "><a href="courtSearchDetail.jsp?id={{courtId}}">场地ID：{{courtId}}</a></li> 
-          <li class="matchBox-state ">报名中</li> 
-          <li class="matchBox-info "><a href="matchSearchDetail.jsp?id={{id}}">{{{matchIntroduction}}}</a></li> 
-          <li class="matchBox-btns "><a href="markMatch({id})" class="btn btn-mini">收藏比赛</a><a href="matchSearchDetail.jsp?id={{id}}" class="btn btn-mini">查看详细</a></li> 
+          <li class="matchBox-court "><a target="_blank" href="courtSearchDetail.jsp?id={{courtId}}">{{courtName}}</a></li> 
+          <li class="matchBox-state ">{{state}}</li> 
+          <li class="matchBox-info "><a target="_blank" href="matchSearchDetail.jsp?id={{id}}">{{{matchIntroduction}}}</a></li> 
+          <li class="matchBox-btns "><a href="markMatch({id})" class="btn btn-mini">收藏比赛</a><a target="_blank" href="matchSearchDetail.jsp?id={{id}}" class="btn btn-mini">查看详细</a></li> 
          </ul> 
         </div>
        </div> 
@@ -105,7 +105,50 @@
   <script>
   //定义函数
     //定义函数
-  function e(crtPage,rs){
+  function e(argso){
+	  var args = argso;
+	  args.currentPage = args.currentPage||$("ul.pagination li.active a").html()||1;
+	  args.rows = args.rows||25;
+	  args.content = args.content||"";
+	  
+		$("#ajaxState .load").show();
+		$(".matchBoxs").show();
+		$(".panel-top").hide();
+		$("#ajaxState .noresult").hide();
+    	
+	      $.ajax({
+	          type: "POST",
+	          url: "mainSearch",
+	          contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+	          data: args,
+	          dataType: "json",
+	          success: function(rspdata) {
+	        	  console.log(rspdata.count);console.log(rspdata);
+		       	  //设置搜索结果数量
+		          $(".search-remind span").html(rspdata.count);
+			      var target = $(".matchBoxs"),template = Handlebars.compile($('#match-template').html());
+			      Handlebars.registerHelper("data",function(){
+			    	  return JSON.stringify(this);
+			      });
+			      target.empty().show().html(template(rspdata.body));
+			      $("#ajaxState .load").hide();
+			      if(target.find("div.matchBox").length == 0){
+			      $("#ajaxState .noresult").show();
+			      target.hide();
+			      }
+		    	  //字数限制，溢出省略
+		    	  $(".matchBox-court").wordLimit(20);
+		    	  $(".matchBox-info > a").wordLimit(28);
+				  pages(rspdata.count,args.currentPage,args.rows);
+	          },
+	          error: function(jqXHR,textStatus,errorThrown){
+	        	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+	            sousaiRemindDialog("抱歉。ajax错误。");
+	          },
+	        });
+	  
+  }
+  $(function(){
 		//loc需解码转换为中文
 	    var url = window.location.search,
 	    urikv = decodeURI(url.substring(url.lastIndexOf('=')+1, url.length));
@@ -113,67 +156,11 @@
 	    $("#searchbox-match input[type='text']").val(urikv);
 	  	alert(urikv);
 	    if(urikv){
-			barSearch(crtPage,rs,urikv);
+			e({content:urikv});
 	    }else{
 			sousaiRemindDialog("输入搜索关键字问为空，请重新填写。");
 			//window.location.herf = window.location;
 	    }
-  }
-
-  //搜索栏模糊搜索
-	function barSearch(crtPage,rs,kv){
-		$("#ajaxState .load").show();
-		$(".matchBoxs").show();
-		$(".panel-top").hide();
-		$("#ajaxState .noresult").hide();
-		
-		crtPage = crtPage||$("ul.pagination li.active a").html()||1;//若无当前页数，则为当前的页数 否则默认为为1
-		rows = rs||25;//若无行数，则默认为 25行
-
-    	
-	      $.ajax({
-	          type: "POST",
-	          url: "mainSearch",
-	          contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-	          data: {currentPage:crtPage,rows:rs,content:kv},
-	          dataType: "json",
-	          success: function(rspdata) {
-	        	  console.log(rspdata.count);
-	        	  console.log(rspdata);
-		       	  //设置搜索结果数量
-		          $(".search-remind span").html(rspdata.count);
-			      var target = $(".matchBoxs"),template = Handlebars.compile($('#match-template').html());
-			      Handlebars.registerHelper("data",function(v){
-			    	  //将当前对象转化为字符串，保存在data-info中
-			    	  //console.log(v);
-			    	  var v1 = JSON.stringify(v);
-			    	  //console.log("v1:"+v1);
-			    	  return v1;
-			      });
-			      target.empty().show().html(template(rspdata.body));
-			      $("#ajaxState .load").hide();
-			      console.log("stop");
-			      //出错或无结果
-			      //target.empty(); //清空tbody
-			      if(target.find("div.matchBox").length == 0){
-			      $("#ajaxState .noresult").show();
-			      console.log("无结果");
-			      target.hide();
-			      }
-		    	    //字数限制，溢出省略
-		    	    $(".matchBox-court").wordLimit(20);
-		    	    $(".matchBox-info > a").wordLimit(28);
-				  pages(rspdata.count,crtPage,rs);
-	          },
-	          error: function(jqXHR,textStatus,errorThrown){
-	        	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-	            sousaiRemindDialog("抱歉。ajax错误。");
-	          },
-	        });
-	}
-  $(function(){
-	//搜索栏模糊搜索
-	e();
     //鼠标hover matchbox
     $(".matchBoxs ").on('mouseenter','div.matchBox',function(){
     	      $('div.matchBox').removeClass("box-active");

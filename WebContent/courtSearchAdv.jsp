@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
  <head> 
-  <title>场地搜索 &middot; 搜赛网</title> 
+  <title>场地高级搜索 &middot; 搜赛网</title> 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
   <meta name="description" content="搜赛网场地搜索页面" /> 
   <meta name="author" content="KING@CQU" /> 
@@ -68,8 +68,8 @@
         <div class="control-group"> 
          <label class="control-label" for="matchType">比赛类型：</label> 
            <div class="controls"> 
-            <select class="selectMatchType" name="mcId"><option value=0>请选择比赛类型</option></select>
-            <select class="selectParticularMatchType"><option value=0>请先选择比赛大类型</option></select>
+            <select class="selectMatchType" name="mcId"><option value=0>请选择比赛大类</option></select>
+            <select class="selectParticularMatchType"><option value=0>请先选择比赛大类</option></select>
             <input class="hide" id="particularMatchType" name="court.matchType"/>
             <label class="omthide hide" class="control-label" for="otherMatchType">请输入类型：<input class="omthide hide" id="otherMatchType" type="text" value="" placeholder="请填写比赛类型"/></label>
            </div>
@@ -136,7 +136,7 @@
   <script id="court-template" type="text/x-handlebars-template">
     {{#each this}}
                         
-        <div class="courtBox"  data-info="{{data this}}"> 
+        <div class="courtBox"  data-info="{{data}}"> 
          <!-- img --> 
          <div class="courtBox-img"> 
           <img src="img/defaultImg.png" alt="" title="" /> 
@@ -149,10 +149,11 @@
           </div> 
           <ul class="breadcrumb"> 
            <li class="courtBox-address">{{addr}}</li> 
-           <li class="courtBox-info "> <p>{{courtType}}</p> <p>赛场<span class="courtBox-infoNumb">{{tableNum}}</span>个</p> <p>{{tel}}</p> </li> 
-           <li class="courtBox-record ">曾举办比赛<p><span class="courtBox-recordNumb">1</span>次</p></li> 
-           <li class="courtBox-evaluation "><p><span>2013-10-10</span>:<span>但行代价昂贵你空间啊好烦你撒谎吃饭了空间啊干那</span></p> <p><span>2013-10-10</span>:<span>撒了你刚才发K 524545呵呵发那个给UI HM</span></p> <p><span>2013-10-10</span>:<span>4256605JKHGCFYUSDA是都还没后 俺哥啊 俺哥爱戴啊</span></p></li> 
-          </ul> 
+           <li class="courtBox-info "><p>{{courtType}}</p><p>{{#if tableNum}}赛场{{tableNum}}个{{else}}暂无赛场数据{{/if}}</p><p>{{#if tel}}电话：{{tel}}{{else}}暂无电话信息{{/if}}</p></li> 
+           <li class="courtBox-record ">举办比赛次数<p><span class="courtBox-recordNumb">{{recordNumb}}</span>次</p></li> 
+           <li class="courtBox-evaluation ">评论次数<p><span class="courtBox-evaluationNumb">{{evaluationNumb}}</spn>次</p></li>
+{{!<li class="courtBox-evaluation "><p><span>2013-10-10</span>:<span>但行代价昂贵你空间啊好烦你撒谎吃饭了空间啊干那</span></p> <p><span>2013-10-10</span>:<span>撒了你刚才发K 524545呵呵发那个给UI HM</span></p> <p><span>2013-10-10</span>:<span>4256605JKHGCFYUSDA是都还没后 俺哥啊 俺哥爱戴啊</span></p></li> }} 
+		  </ul> 
          </div> 
         </div>
                             
@@ -160,67 +161,96 @@
   </script>
   <script>
   //定义函数
-  function e(crtPage,rs,orderbycol,isasc,sc,kv){
-	  //设置场地模糊搜索为active
-	  $("#searchbox-tab").find("li:eq(0)").removeClass("active").end().find("li:eq(1)").addClass("active");
-	  $("#searchbox-match").removeClass("active");
-	  $("#searchbox-court").addClass("active");
-      console.log(crtPage,rs,orderbycol,isasc,sc,kv);
-	  advCourtSearch(crtPage,rs,orderbycol,isasc,sc,kv);
-  }
 //高级场地搜索函数
-function advCourtSearch(crtPage,rs,orderbycol,isasc,sc,kv){
+function e(argso){
+	  //设置默认参数
+	  var args=argso;
+	  args.region = args.region||getRegion().region;
+	  args.regionId = args.regionId||getRegion().regionId; //暂时未用到
+	  args.keyValue = args.keyValue||$("#keyValue").val()||"";
+	  args.matchType = args.matchType||($("select.selectParticularMatchType option:selected").attr("value") == "0" ? null : $("select.selectParticularMatchType option:selected").text());
+	  args.courtTypeId = args.courtTypeId||($("select.selectCourtType option:selected").attr("value") == "0" ? null : $("select.selectCourtType option:selected").attr("value"));
+	  args.currentPage = args.currentPage||$("ul.pagination li.active a").html()||1;
+	  args.rows = args.rows||25;
+	  args.orderByCol = args.orderByCol||$(".sort .current").attr("data-orderbycol")||"name";
+	  args.isAsc = args.isAsc||$(".sort .current").attr("data-isasc")||true;
+		  
 	$("#ajaxState .load").show();
 	$(".courtBoxs").show();
 	$(".panel-top").show();
 	$("#ajaxState .noresult").hide();
-	console.log("start");
+	console.log(args);
 	
-	  //获取地区region和regionId 需先用这个建立此对象 然后才能将数据放入，否则后被覆盖
-	  var data = getRegion();
-	  data.keyValue = kv||$("#keyValue").val(); //若无kv 则默认为 当前的keyValue的值
-	  data.matchType = $("select.selectParticularMatchType option:selected").attr("value") == "0" ? null : $("select.selectParticularMatchType option:selected").text(); //设置若比赛详细类型为初始值则为null
-	  data.courtTypeId = $("select.selectCourtType option:selected").attr("value") == "0" ? null : $("select.selectCourtType option:selected").attr("value"); //设置若场地类型为初始值则为null
-	  data.currentPage = crtPage||$("ul.pagination li.active a").html()||1;//若无当前页数，则为当前的页数 否则默认为为1
-	  data.rows = rs||25;//若无行数，则默认为 25行
-	  data.orderByCol = orderbycol||$(".sort .current").attr("data-orderbycol"); //若无排序依据，则默认为当前的排序依据方式
-	  data.isAsc = isasc||$(".sort .current").attr("data-isasc"); //若无排序方向，则默认为当前的排序方向
-	  console.log(data);
-	  //发送数据到服务器
 	  $.ajax({
 	        type: "POST",
 	        url: "getCourtByP",
 	        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-	        data: data,
+	        data: args,
+	        //async: false, //设置异步为false,解决ajax异步不能设置全局变量的问题
 	        dataType: "json",
 	        success: function(rspdata) {
 	        	console.log(rspdata);
 	        	//设置搜索结果数量
 	        	$(".search-remind span").html(rspdata.count);
 	        	var target = $(".courtBoxs"),template = Handlebars.compile($('#court-template').html());
-	            Handlebars.registerHelper("data",function(v){
-	                //将当前对象转化为字符串，保存在data-info中
-	                console.log(v);
-	                var v1 = JSON.stringify(v);
-	                //console.log("v1:"+v1);
-	                return v1;
+	        	Handlebars.registerHelper("data",function(){
+	                return JSON.stringify(this);
+	              });
+	        	Handlebars.registerHelper("recordNumb",function(){
+	          	  	var recordNumb = $.ajax({
+	          	  		type: "POST",
+	          	        url: "getMatchByCourtId",
+	          	        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+	          	        data: {
+	          	          courtId: this.id,
+	          	          currentPage: 1,
+	          	          rows: 1
+	          	        },
+	        	        async: false, //设置异步为false,解决ajax异步不能设置全局变量的问题
+	          	        dataType: "json",
+	          	        /* success: function(rspdata) {
+	          	        	console.log(rspdata);
+	          	        },
+	          	        error: function(jqXHR,textStatus,errorThrown){
+	          	        	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+	          	        }, */
+	          	        });
+	          	  	 if(!recordNumb.responseJSON.count){
+	          	  		 return 0;
+	          	  	 }
+		          	 return recordNumb.responseJSON.count;
+	              });
+	        	Handlebars.registerHelper("evaluationNumb",function(){
+	          	  	 var evaluationNumb = $.ajax({
+	          	  		type: "POST",
+	          	        url: "showMsgs",
+	          	        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+	          	        data: {courtId: this.id},
+	        	        async: false, //设置异步为false,解决ajax异步不能设置全局变量的问题
+	          	        dataType: "json",
+	          	        /* success: function(rspdata) {
+	          	        	console.log(rspdata);
+	          	        },
+	          	        error: function(jqXHR,textStatus,errorThrown){
+	          	        	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+	          	        }, */
+	          	        });
+	          	  	 if(!evaluationNumb.responseJSON.length){
+	          	  		 return 0;
+	          	  	 }
+	          	  	 return evaluationNumb.responseJSON.length;
 	              });
 	              //清空tbody并填入数据
-	              target.html(template(rspdata.body));
-	              $("#ajaxState .load").hide();console.log("stop");
-	              //出错或无结果
-	              //target.empty(); //清空tbody
+	              target.empty().html(template(rspdata.body));
+	              $("#ajaxState .load").hide();
 	              if(target.find("div.courtBox").length == 0){
 	              $("#ajaxState .noresult").show();
-	              $(".panel-top").hide();
 	              target.hide();
-	              console.log("无结果");
 	              }
 	              //字数限制，溢出省略 
 	              $(".courtBox-address").wordLimit(20);
 	              $(".courtBox-evaluation p").wordLimit();
-
-	    	      pages(rspdata.count,data.currentPage,data.rows);
+	    	      pages(rspdata.count,args.currentPage,args.rows);
 	        },
 	        error: function(jqXHR,textStatus,errorThrown){
 	        	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
@@ -230,11 +260,15 @@ function advCourtSearch(crtPage,rs,orderbycol,isasc,sc,kv){
 }
 
   $(function(){
+	  //设置场地模糊搜索为active
+	  $("#searchbox-tab").find("li:eq(0)").removeClass("active").end().find("li:eq(1)").addClass("active");
+	  $("#searchbox-match").removeClass("active");
+	  $("#searchbox-court").addClass("active");
 	//ajax接收所有的场地
-	e();
+	e({});
 	//点击高级场地搜索
 	$("#advCourtSearchButton").click(function(){
-		advCourtSearch();
+		e({});
 	});
     //鼠标hover matchbox
     $(".courtBoxs ").on('mouseenter','div.courtBox',function(){

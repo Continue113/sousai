@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
  <head> 
-  <title>比赛搜索 &middot; 搜赛网</title> 
+  <title>比赛高级搜索 &middot; 搜赛网</title> 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
   <meta name="description" content="搜赛网比赛搜索页面" /> 
   <meta name="author" content="KING@CQU" /> 
@@ -152,11 +152,11 @@
   <script id="match-template" type="text/x-handlebars-template">
     {{#each this}}
 
-       <div class="matchBox"  data-info="{{data this}}>
+       <div class="matchBox"  data-info="{{data}}>
         <div class="matchBox-all"> 
          <div class="matchBox-title"> 
           <a target="_blank" href="matchSearchDetail.jsp?id={{id}}">{{name}}</a> 
-          <span class="pull-right">发布时间：<span class="matchBox-releaseTime">{{publishTime}}</span></span> 
+          <span class="pull-right">发布时间：<span class="matchBox-releaseTime">{{relTime}}</span></span> 
          </div>
          <ul class="breadcrumb">
           <li class="matchBox-time">
@@ -166,7 +166,7 @@
 		  </li>
           <li class="matchBox-court "><a href="courtSearchDetail.jsp?id={{courtId}}">{{courtName}}</a></li> 
           <li class="matchBox-state ">{{state}}</li> 
-          <li class="matchBox-info "><a target="_blank" href="matchSearchDetail.jsp?id={{id}}">{{{matchIntroduction}}}</a></li> 
+          <li class="matchBox-info "><a target="_blank" href="matchSearchDetail.jsp?id={{id}}">{{{rule}}}</a></li> 
           <li class="matchBox-btns "><a href="javascript:void(0);" class="btn btn-mini" onclick="markMatch({{id}})">收藏比赛</a><a target="_blank" href="matchSearchDetail.jsp?id={{id}}" class="btn btn-mini">查看详细</a></li> 
          </ul> 
         </div>
@@ -176,9 +176,6 @@
   </script>
   <script>
   //定义函数
-  function e(crtPage,rs,orderbycol,isasc,kv){
-	  advMatchSearch(crtPage,rs,orderbycol,isasc,kv);
-  }
   function getMatchState(){
 	  var v = 0;
 	  if($("#matchState_applying").is(":checked")){
@@ -206,62 +203,52 @@
 	  return v;
   }
   //高级比赛搜索函数
-  function advMatchSearch(crtPage,rs,orderbycol,isasc,kv){
-
+  function e(argso){
+	  //设置默认参数
+	  var args=argso;
+	  args.region = args.region||getRegion().region;
+	  args.regionId = args.regionId||getRegion().regionId; //暂时未用到
+	  args.keyValue = args.keyValue||$("#keyValue").val()||"";
+	  args.matchType = args.matchType||($("select.selectParticularMatchType option:selected").attr("value") == "0" ? null : $("select.selectParticularMatchType option:selected").text());
+	  args.matchState = args.matchState||getMatchState();
+	  args.beginTime = args.beginTime||$("#inputMatchTimefrom").val()||null;
+	  args.endTime = args.endTime||$("#inputMatchTimeto").val()||null;
+	  args.dayOfweek = args.dayOfweek||getDayOfWeek();
+	  args.currentPage = args.currentPage||$("ul.pagination li.active a").html()||1;
+	  args.rows = args.rows||25;
+	  args.orderByCol = args.orderBycol||$(".sort .current").attr("data-orderbycol")||"name";
+	  args.isAsc = args.isAsc||$(".sort .current").attr("data-isasc")||true;
+		  
 		$("#ajaxState .load").show();
 		$(".matchBoxs").show();
 		$(".panel-top").show();
 		$("#ajaxState .noresult").hide();
-		console.log("start");
-					
-		  //获取地区region和regionId 需先用这个建立此对象 然后才能将数据放入，否则后被覆盖
-		  var data = getRegion();
-		  data.keyValue = kv||$("#keyValue").val(); //若无kv 则默认为 当前的keyValue的值
-		  data.matchType = $("select.selectParticularMatchType option:selected").attr("value") == "0" ? null : $("select.selectParticularMatchType option:selected").text(); //设置若比赛详细类型为初始值则为null
-		  data.matchState = getMatchState();//0-7 默认为7
-		  data.beginTime = $("#inputMatchTimefrom").val()||null;
-		  data.endTime = $("#inputMatchTimeto").val()||null;
-		  data.dayOfWeek = getDayOfWeek();//0-7默认为0
-		  
-		  data.currentPage = crtPage||$("ul.pagination li.active a").html()||1;//若无当前页数，则为当前的页数 否则默认为为1
-		  data.rows = rs||25;//若无行数，则默认为 25行
-		  data.orderByCol = orderbycol||$(".sort .current").attr("data-orderbycol"); //若无排序依据，则默认为当前的排序依据方式
-		  data.isAsc = isasc||$(".sort .current").attr("data-isasc"); //若无排序方向，则默认为当前的排序方向
-		  console.log(data);
-		  
+    	console.log(args);
+		
 	      $.ajax({
 	          type: "POST",
 	          url: "getMatchByP",
 	          contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-	          data: data,
+	          data: args,
 	          dataType: "json",
 	          success: function(rspdata) {
-	        	  console.log(rspdata.count);
 	        	  console.log(rspdata);
 		       	  //设置搜索结果数量
 		          $(".search-remind span").html(rspdata.count);
 			      var target = $(".matchBoxs"),template = Handlebars.compile($('#match-template').html());
-			      Handlebars.registerHelper("data",function(v){
-			    	  //将当前对象转化为字符串，保存在data-info中
-			    	  console.log(v);
-			    	  var v1 = JSON.stringify(v);
-			    	  //console.log("v1:"+v1);
-			    	  return v1;
+			      Handlebars.registerHelper("data",function(){
+			    	  return JSON.stringify(this);
 			      });
 			      target.empty().show().html(template(rspdata.body));
 			      $("#ajaxState .load").hide();
-			      console.log("stop");
-			      //出错或无结果
-			      //target.empty(); //清空tbody
 			      if(target.find("div.matchBox").length == 0){
 			      $("#ajaxState .noresult").show();
-			      console.log("无结果");
 			      target.hide();
 			      }
 		    	  //字数限制，溢出省略
-		    	  $(".matchBox-court").wordLimit(20);
+		    	  $(".matchBox-court > a").wordLimit(20);
 		    	  $(".matchBox-info > a").wordLimit(28);
-				  pages(rspdata.count,crtPage,rs);
+				  pages(rspdata.count,args.currentPage,args.rows);
 	          },
 	          error: function(jqXHR,textStatus,errorThrown){
 	        	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
@@ -270,13 +257,16 @@
 	        });
 	}  
   $(function(){
+		//loc需解码转换为中文
+	    var url = window.location.search,
+	    matchType = decodeURI(url.substring(url.lastIndexOf('=')+1, url.length));
+	    console.log(url);console.log(matchType);
+	    e({matchType:matchType});
 	 //立即初始化比赛类型
 	 initMatchType();
-	 //搜索栏模糊搜索
-	 e();
 	 //点击高级场地搜索
 	 $("#advMatchSearchButton").click(function(){
-		 advMatchSearch();
+		 e({});
 	 });
 	 //点击大类比赛类型获得具体比赛类型
 	 $(".selectMatchType").change(function() {

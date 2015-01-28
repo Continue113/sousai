@@ -75,69 +75,7 @@
    </div> 
    <div class="row container scmn"> 
     <!--scmn:shortcutmain mchnb:matchnumber dsc:描述--> 
-    <div class="span8 offset2 breadcrumb-fff">
-    <ul class="breadcrumb"> 
-     
-      <li class="matchIcon"><a class="blk" target="_blank" href="javascript:void(0)">
-      <div class="icon">
-      <img alt="乒乓球" src="img/pingpong-grey.png" class="pull-left"/> 
-        <div class="subtitle pull-right text-center"> 
-         <span class="title">乒乓球</span>
-         <p>比赛&nbsp;&nbsp;<span class="number">32</span>&nbsp;&nbsp;场</p> 
-        </div>
-       </div>
-       <div class="iconlabel pull-left text-center">进入比赛列表页面 </div>
-      </a></li>
-        
-      
-	        <li class="matchIcon"><a class="blk" target="_blank" href="javascript:void(0)">
-      <div class="icon">
-      <img alt="乒乓球" src="img/pingpong-grey.png" class="pull-left"/> 
-        <div class="subtitle pull-right text-center"> 
-         <span class="title">开发中</span>
-         <p>比赛&nbsp;&nbsp;<span class="number">32</span>&nbsp;&nbsp;场</p> 
-        </div>
-       </div>
-       <div class="iconlabel pull-left text-center">进入比赛列表页面 </div>
-      </a></li>
-	  
-	  
-	        <li class="matchIcon"><a class="blk" target="_blank" href="javascript:void(0)">
-      <div class="icon">
-      <img alt="乒乓球" src="img/pingpong-grey.png" class="pull-left"/> 
-        <div class="subtitle pull-right text-center"> 
-         <span class="title">开发中</span>
-         <p>比赛&nbsp;&nbsp;<span class="number">32</span>&nbsp;&nbsp;场</p> 
-        </div>
-       </div>
-       <div class="iconlabel pull-left text-center">进入比赛列表页面 </div>
-      </a></li>
-	  
-	  
-	        <li class="matchIcon"><a class="blk" target="_blank" href="javascript:void(0)">
-      <div class="icon">
-      <img alt="乒乓球" src="img/pingpong-grey.png" class="pull-left"/> 
-        <div class="subtitle pull-right text-center"> 
-         <span class="title">开发中</span>
-         <p>比赛&nbsp;&nbsp;<span class="number">32</span>&nbsp;&nbsp;场</p> 
-        </div>
-       </div>
-       <div class="iconlabel pull-left text-center">进入比赛列表页面 </div>
-      </a></li>
-	  
-	  <li class="matchIcon"><a class="blk" target="_blank" href="javascript:void(0)">
-      <div class="icon">
-      <img alt="乒乓球" src="img/pingpong-grey.png" class="pull-left"/> 
-        <div class="subtitle pull-right text-center"> 
-         <span class="title">开发中</span>
-         <p>比赛&nbsp;&nbsp;<span class="number">32</span>&nbsp;&nbsp;场</p> 
-        </div>
-       </div>
-       <div class="iconlabel pull-left text-center">进入比赛列表页面 </div>
-      </a></li>
-      
-     </ul>
-    </div> 
+    <div class="span8 offset2 breadcrumb-fff"><ul class="breadcrumb"></ul></div> 
    </div> 
    <div class="ftpush"></div> 
   </div> 
@@ -149,16 +87,18 @@
   <script id="matchIcon-template" type="text/x-handlebars-template">
     {{#each this}}
 		
-		<li class="matchIcon"><a class="blk" target="_blank" href="javascript:void(0)">
+		<li class="matchIcon">
+		<a class="blk" target="_blank" href="matchSearchAdv.jsp?matchType={{key}}">
 	      		      <div class="icon">
-	      	      <img alt="乒乓球" src="img/pingpong-grey.png" class="pull-left"/> 
+	      	      <img alt="{{key}}" src="img/{{key}}-grey.jpg" class="pull-left"/> 
 	      	        <div class="subtitle pull-right text-center"> 
 	      	         <span class="title">{{key}}</span>
 	      	         <p>比赛&nbsp;&nbsp;<span class="number">{{value}}</span>&nbsp;&nbsp;场</p> 
 	      	        </div>
 	      	       </div>
 	      	       <div class="iconlabel pull-left text-center">进入比赛列表页面 </div>
-	      	      </a></li>
+	    </a>
+		</li>
                             
     {{/each}}
   </script>
@@ -185,9 +125,9 @@
 	            var template = Handlebars.compile($('#matchIcon-template').html());
 			    target.empty().html(template(temp.data));
 	        },
-	        error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-	          sousaiRemindDialog("抱歉，获取比赛信息出错了。");
-	          console.log("userCenterRemind 抱歉，获取比赛信息出错了。");
+	        error: function(jqXHR,textStatus,errorThrown){
+	        	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+	            sousaiRemindDialog("抱歉，获取比赛信息出错了。");
 	        },
 	      }); //ajax 已得到发布的比赛信息
   }
@@ -204,7 +144,7 @@
         
         var imgurl = $(this).find("img").attr("src");
         if(imgurl !== "img/defaultIcon.png"){
-          $(this).find("img").attr("src",imgurl.split("-")[0]+".png");
+          $(this).find("img").attr("src",imgurl.split("-")[0]+".jpg");
         };
         
     });
@@ -213,7 +153,7 @@
     	$(this).find(".subtitle span.sub").removeClass("title").end().find("div.iconlabel").hide();
         var imgurl = $(this).find("img").attr("src");
         if(imgurl !== "img/defaultIcon.png"){
-          $(this).find("img").attr("src",imgurl.split(".")[0]+"-grey.png");
+          $(this).find("img").attr("src",imgurl.split(".")[0]+"-grey.jpg");
         };
     });
     

@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
  <head> 
-  <title><s:property value=""/>天津市第五届百年皖酒“杯 &middot; 搜赛网</title> 
+  <title>比赛详情   &middot; 搜赛网</title> 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
   <meta name="description" content="搜赛网比赛搜索页面" /> 
   <meta name="author" content="KING@CQU" /> 
@@ -50,6 +50,11 @@
   margin-top:5px;
 }
 .matchSearchDetail .matchContent > .match{padding: 5px 15px;}
+.matchSearchDetail .updateScore button {margin-top: 10px;margin-left: 10px;}
+  /** 编辑比赛 按钮bar  **/
+  .editMatch > .btnbar {margin-left: 0;}
+  /** 编辑比赛按钮bar 中的按钮  **/
+  .editMatch > .btnbar > .btn {float: right;margin-left: 10px;} 
   </style>
  </head> 
  <body class="matchSearchDetail"> 
@@ -59,7 +64,7 @@
    <div class="hdpush"></div> 
    <div class="row"> 
     <div class="span2 offset2"> 
-     <img src="img/logo.png" /> 
+   <a class="logoBack" href="index.jsp" title="回到首页"><img src="img/logo.png" alt="搜赛网"/></a>
     </div> 
     <s:include value="searchbox.jsp" />
     <!-- 搜索框 --> 
@@ -74,30 +79,30 @@
      <div class="matchShortInfo"> 
       <a href="javascript:void(0);" class="btn btn-mini pull-right" id="markMatch">收藏比赛</a> 
       <a href="javascript:void(0);" class="btn btn-mini pull-right hide" id="modifyMatch">修改比赛</a> 
-      <a href="javascript:void(0);" class="btn btn-mini pull-right hide" id="recordSocre">录入成绩</a> 
+      <a href="javascript:void(0);" class="btn btn-mini pull-right hide" id="updateSocre">录入成绩</a> 
       <table> 
        <thead> 
         <tr> 
          <th>比赛名称:</th> 
-         <th class="thisname">天津市第五届百年皖酒“杯</th> 
+         <th class="thisname">暂无信息</th> 
         </tr> 
        </thead> 
        <tbody> 
         <tr> 
          <td>比赛时间:</td> 
-         <td class="thistime">2013年10月18日-2013年10月20日 星期五-星期日</td> 
+         <td class="thistime">暂无信息</td> 
         </tr> 
         <tr> 
          <td>比赛地点:</td> 
-         <td class="thiscourt">中国 北京市 东城区 体育中心2号乒乓球桌</td> 
+         <td class="thiscourt">暂无信息</td> 
         </tr> 
         <tr> 
          <td>发&nbsp;&nbsp;布&nbsp;&nbsp;者:</td> 
-         <td class="thisuser">搜赛网</td> 
+         <td class="thisuser">暂无信息</td> 
         </tr> 
         <tr> 
          <td>发布时间:</td> 
-         <td class="thisreltime">2013-5-2</td> 
+         <td class="thisreltime">暂无信息</td> 
         </tr> 
        </tbody> 
       </table> 
@@ -105,15 +110,24 @@
      <div class="matchContent"> 
       <div class="matchScore hide"> 
        <div class="title">比赛成绩 </div> 
-       <div class="matchScoreContent"> 比赛进程（状态）是报名中，则不显示比赛成绩这栏。XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX这个页面是在新的窗口打开，添加“修改”和“录入成绩”的按钮，可以修改“比赛规程”和“基本比赛信息”，按钮根据比赛状态（进程），改变按钮出现的情况。根据是否是发布者，出现录入成绩和修改比赛按钮 </div> 
+       <div class="matchScoreContent">暂无信息</div> 
       </div> 
-      <div class="title thisname">天津市第五届百年皖酒“杯 <span>比赛规程</span></div> 
-      <div class="match"><p>天津市第五届百年皖酒“杯XXXXXXXXXX</p></div> 
+      <div class="title">"<span class="thisname">暂无信息</span>"&nbsp;&nbsp;&nbsp;&nbsp;<span>比赛规程</span></div> 
+      <div class="match"><p>暂无信息</p></div> 
      </div> 
     </div>
     <!--编辑比赛 开始-->
     <s:include value="editMatch.jsp" />
     <!-- /编辑比赛信息 -->
+    <div class="updateScore hide">
+        <div class="page-header row">
+         <h4 class="thisname">暂无信息</h4>
+         <h4>发布成绩</h4>
+        </div>
+	    <textarea id="updateScoreTextarea" required="required"></textarea>
+	    <button type="button" class="btn pull-right relScore">发布</button>
+	    <button type="button" class="btn pull-right backList">返回</button>
+    </div>
     </div>
     <div class="span1"> 
      <div class="text-center adSecond">这里是ad.no2</div> 
@@ -150,29 +164,27 @@ function e(){
 	          dataType: "json",
 	          success: function(rspdata) {
 	        	  console.log(rspdata);
+	        	  // 比赛进程（状态）是报名中，则不显示比赛成绩这栏。这个页面是在新的窗口打开，添加“修改”和“录入成绩”的按钮，可以修改“比赛规程”和“基本比赛信息”，按钮根据比赛状态（进程），改变按钮出现的情况。根据是否是发布者，出现录入成绩和修改比赛按钮
 				  //修改title
 				  $("title").html(rspdata.name+" &middot; 搜赛网");
 				  target.find(".thisname").text(rspdata.name).attr("data-info", JSON.stringify(rspdata));
-				  target.find(".thistime").text(rspdata.beginTime+"-"+rspdata.endTime+" "+rspdata.beginDayOfWeek+"-"+rspdata.endDayOfWeek);
-				  //target.find(".thistime").text(rspdata.matchStartTime+"-"+rspdata.matchDeadline+"  星期");  //采集的字段
+				  target.find(".thistime").text(rspdata.beginTime+" -  "+rspdata.endTime+"    "+rspdata.beginDayOfWeek+"-"+rspdata.endDayOfWeek);
 				  target.find(".thisreltime").text(rspdata.relTime);
-			      //target.find(".thisreltime").text(rspdata.publishTime);  //采集的字段
-			      target.find(".thiscourt").text(rspdata.courtName);
-			      //target.find(".thiscourt").text(rspdata.courtId);  //采集的字段
+				  target.find(".thisuser").text(rspdata.userName);
+			      target.find(".thiscourt").text(rspdata.region+"  "+rspdata.courtName);
 			      target.find(".match").html(rspdata.rule);
-			      //target.find(".match").html(rspdata.matchIntroduction);   //采集的字段
 			      //判断比赛的进程 和 是否为发布者
 			      if(rspdata.state == "已结束"){
-			    	  $(".matchScore").show();
+			    	  $(".matchScore").find(".matchScoreContent").html(rspdata.score).end().show();
 			      }
 			      if(rspdata.userId == $("#userId").attr("data-userid")){
 			    	  $("#modifyMatch").show();
-			    	  $("#recordSocre").show();
+			    	  $("#updateSocre").show();
 			      }
 	          },
 	          error: function(jqXHR,textStatus,errorThrown){
 	        	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-	            alert("抱歉。ajax错误。");
+	              sousaiRemindDialog("抱歉。ajax错误。");
 	          },
 	        });
 	}  
@@ -194,9 +206,70 @@ function e(){
 		$(".editMatch").find("button.passMatch").hide().end().slideDown();
 		}
 	});
-	$("#recordSocre").click(function(){
-		
+	$("#updateSocre").click(function(){
+		//检测用户是否为登录状态
+		var userid =isLogined();
+		if(userid.responseJSON=="error"){
+			// -1 为未登录状态，其他则为用户ID
+			newformloginBox();
+		}else{
+			$("h4.thisname").text($("th.thisname").text()).attr("data-info",$("th.thisname").attr("data-info"));
+			$(".matchList").slideUp();
+			$(".updateScore").slideDown();
+		} 
 	});
+
+    //点击返回比赛列表
+    $(".updateScore .backList").click(function(){
+    	$(".matchList").slideDown();
+    	$(".updateScore").slideUp();
+    });
+
+    $(".updateScore .relScore").click(function(){
+		//检测用户是否为登录状态
+		var userid =isLogined();
+		if(userid.responseJSON=="error"){
+			// -1 为未登录状态，其他则为用户ID
+			newformloginBox();
+		}else{
+        	var datainfo = $("h4.thisname").attr("data-info"),
+    		match = JSON.parse(datainfo);
+  		data = {
+  			    "match.id": parseInt(match.id),
+  			    "match.name": match.name,
+  			    "match.type": match.type,
+  			    "match.beginTime": match.beginTime,
+  			    "match.endTime": match.endTime,
+  			    "match.courtId": match.courtId,
+  			    "match.rule": match.rule,
+  			    "match.relTime": match.relTime,
+  			    "match.verify": match.verify,
+  			    "match.score": tinymce.activeEditor.getContent(),
+  			    "match.userId": match.userId,
+  			    isCourt: false,
+  			};
+    	 $.ajax({
+            type: "POST",
+            url: "updateMatch",
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            data: data,
+            dataType: "json",
+            success: function(rspdata) {
+          	  if( rspdata == "success" ){
+          		  window.setTimeout("window.location.href=window.location.href",3000);
+            		  sousaiRemindDialog("录入成绩成功,3秒后将刷新页面。");
+          	  }else{
+          		  sousaiRemindDialog("录入成绩失败，错误代码为："+rspdata);
+          	  }
+            },
+            error: function(jqXHR,textStatus,errorThrown){
+          	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+                sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
+            },
+          }); 
+		} 
+    });
+    
   });
   </script>  
  </body>

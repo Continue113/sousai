@@ -95,6 +95,7 @@
        <table class="table table-striped table-hover userTable"> 
         <caption>用户维护</caption> 
         <thead>
+        <tr>
           <th>用户名</th>
           <th>注册时间</th>
           <th>最后登录时间</th>
@@ -180,8 +181,8 @@
   <script id="user-template" type="text/x-handlebars-template">
     {{#each this}}
 
-		    <tr class="user" data-info="{{data this}}">
-	    		<td class="user-userName form-inline">{{checkState userType userId userName}}</td>
+		    <tr class="user" data-info="{{data}}">
+	    		<td class="user-userName form-inline">{{checkState}}</td>
         	<td class="user-registerTime">{{userRegTime}}</td>
         	<td class="user-lastLoginTime">{{lastLogTime}}</td>
         	<td class="user-matchNumber">{{matchNumber}}</td>
@@ -196,77 +197,73 @@
   </script>
   <script>
   //定义函数
-	function e(crtPage,rs,obc,ia,sc,kv){
-		//定义默认选项
-		rs = rs||$("select.selectRows option:selected").val()||25,
-		crtPage = crtPage||$("ul.pagination li.active a").html()||1, //每次点击改变条数都从第一页开始；parseInt($("ul.pagination > li.active").text()) || 1; //若当前页数为空则默认为第一页
-	  	obc = obc||$(".sort button .current").attr("data-orderbycol"), 
-		ia = ia||$(".sort button .current").attr("data-isasc"),
-		sc = sc||$(".text-filter-box button .current").attr("data-strcolumns"),
-		kv = kv||$(".text-filter-box input").val();
-	  	//alert(crtPage+" "+rs+" "+obc+" "+ia+" "+sc+" "+kv);
-	  	
-		$("#ajaxState .load").show();console.log("start");
+	function e(argso){
+		//定义默认选项 
+		var args=argso;
+		args.currentPage = args.currentPage||$("ul.pagination li.active a").html()||1;
+		args.rows = args.rows||$("select.selectRows option:selected").val()||25;
+		args.orderByCol = args.orderByCol||$(".sort button .current").attr("data-orderbycol")||"name";
+		args.isAsc = args.isAsc||$(".sort button .current").attr("data-isasc")||true;
+		args.strColumns = args.strColumns||$(".text-filter-box button .current").attr("data-strcolumns")||"name";
+		args.keyValue = args.keyValue||$(".text-filter-box input").val()||"";
+	  	console.log(args);
+		$("#ajaxState .load").show();
 	    $.ajax({
 	        type: "POST",
 	        url: "getAllUser",
 	        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-	        data: {currentPage:crtPage,rows:rs,orderByCol:obc,isAsc:ia,strColumns:sc,keyValue:kv},
+	        data: args,
 	        dataType: "json",
-	        success: function(rspdata) {
-	        	console.log(rspdata);
+	        success: function(rspdata) {console.log(rspdata);
 	        	  var target = $(".userTable > tbody"),template = Handlebars.compile($('#user-template').html());
-	        	  Handlebars.registerHelper("data",function(v){
-	        	    //将当前对象转化为字符串，保存在data-info中
-	        	    //console.log(v);
-	        	    var v1 = JSON.stringify(v);
-	        	    //console.log("v1:"+v1);
-	        	    return v1;
+	        	  Handlebars.registerHelper("data",function(){
+	        	    return JSON.stringify(this);
 	        	  });
-	    	      Handlebars.registerHelper("checkState",function(userType,userId,userName,options){
-	                  console.log(userType);console.log(options);
-	                  if(userType == "0"){
-	                  	  return  new Handlebars.SafeString('<span class="label label-info">已禁用</span><label for="'+userId+'"><span>'+userId+':'+userName+'</span></label>');
+	    	      Handlebars.registerHelper("checkState",function(){
+	    	    	  switch(this.userType){
+	    	    	  case "0":
+	                  	  return  new Handlebars.SafeString('<label for="'+this.userId+'"><span>'+this.userId+':'+this.userName+'</span></label><span class="label label-info">已禁用</span>');
+	                  	  break;
+	    	    	  case "1":
+	                  	  return new Handlebars.SafeString('<label for="'+this.userId+'"><input type="checkbox" id="'+this.userId+'" /><span>'+this.userId+':'+this.userName+'</span></label>');
+	                  	  break;
+	    	    	  case "2":
+	                	  return new Handlebars.SafeString('<label for="'+this.userId+'"><span>'+this.userId+':'+this.userName+'</span></label><span class="label label-important">管理员</span>');
+	                	  break;
+	    	    	  }
+	                  /*if(this.userType == "0"){
+	                  	  return  new Handlebars.SafeString('<label for="'+this.userId+'"><span>'+this.userId+':'+this.userName+'</span></label><span class="label label-info">已禁用</span>');
 	                  }else if(userType == "2"){ //管理员
-	                	  return new Handlebars.SafeString('<span class="label label-important">管理员</span><label for="'+userId+'"><span>'+userId+':'+userName+'</span></label>');
+	                	  return new Handlebars.SafeString('<label for="'+this.userId+'"><span>'+userId+':'+this.userName+'</span></label><span class="label label-important">管理员</span>');
 		              }else{
-	                  	  return new Handlebars.SafeString('<label for="'+userId+'"><input type="checkbox" id="'+userId+'" /><span>'+userId+':'+userName+'</span></label>');
-	                  }
+	                  	  return new Handlebars.SafeString('<label for="'+this.userId+'"><input type="checkbox" id="'+this.userId+'" /><span>'+this.userId+':'+this.userName+'</span></label>');
+	                  }*/
 	                });	 
-	        	  target.empty(); //清空tbody
-	        	  target.html(template(rspdata.body));
+	        	  target.empty().html(template(rspdata.body));
 	        	  $("#ajaxState .load").hide();
 	    	      $("#ajaxState .noresult").hide();
-	    	      console.log("stop");
-	        	  //出错或无结果
-	        	  //target.empty(); //清空tbody
 	        	  if(target.find("tr.user").length == 0){
-	        	  $("#ajaxState .noresult").show();console.log("无结果");
+	        	  $("#ajaxState .noresult").show();
 	        	  }
 	        	  //管理员界面表格列字数限制，溢出省略
 	        	  $("td > label > span").wordLimit();
 	        	  $(".user-email").wordLimit(16);
-	            pages(rspdata.count,crtPage,rs);
+	              pages(rspdata.count,args.currentPage,args.rows);
 	  	    },
 	        error: function(jqXHR,textStatus,errorThrown){
-	        	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-	  	      	$("#ajaxState .noresult").show();console.log("出错了");
-	          	sousaiRemindDialog("抱歉，ajax出错了。");
+	  	      	$("#ajaxState .noresult").show();
 	        },
 	      });
 }
   
   $(function(){
 	//ajax接受所有的用户 默认为25条每页
-	e(1,25,"name",true,"name","");
+	e({currentPage:1,rows:25});
     //点击编辑用户隐藏List列表同时显示编辑用户
     $("tbody").on("click",".user-oprate > a",function(event){
         var datainfo = $(this).parent().parent().attr("data-info"), target=$(".editUser");
         //显示禁用用户和保存修改用户选项，隐藏保存添加，同时根据data-info填补form，
-        target.find(".forbidUser").show();
-        target.find(".saveUser").show();
-        target.find(".saveAdd").hide();
-      console.log(datainfo);
+        target.find(".forbidUser").show().end().find(".saveUser").show().end().find(".saveAdd").hide();
       //解析datainfo中的信息
       var data = eval('(' + datainfo + ')');
       $("#userName").val(data.userName).attr("data-id",data.userId).attr("data-oldname",data.userName);
@@ -275,7 +272,7 @@
       $(".userList").slideUp();
       target.slideDown();
       //添加用户名输入框的disabled属性      
-      $("#userName").attr("disabled","disabled")
+      $("#userName").attr("disabled","disabled");
     });
     //点击返回用户列表
     $(".backList").click(function(){
@@ -401,20 +398,16 @@ messages: {
     $("button.saveUser").click(function (){ //修改用户名错误,修改密码居然是修改到了已经登录的那个 。
     	//用户名已存在问题：胭脂是否为用户名的问题，若用户名没有修改则设置valid为true；
 		var valid = false,
-		//oldname = $("#userName").attr("data-oldname"),
         dataid = $("#userName").attr("data-id"),
         dataname = $("#userName").val(),
         datapwd = $("#userPassword").val(),
         dataemail = $("#userEmail").val();
 
-    	if( /*($("#userNameForm").valid()||(dataname === oldname)) &&*/ $("#userPasswordForm").valid() && $("#userEmailForm").valid() ){
+    	if($("#userPasswordForm").valid() && $("#userEmailForm").valid() ){
     		valid = true;
     	}
 		
 		if( valid === true ){
-			console.log("通过验证");
-    	//console.log(dataid+" ,"+dataname+" ,"+datapwd+" ,"+dataemail);
-
         $.ajax({
         url: "updateUserInfo",
         type: "POST",
@@ -468,8 +461,6 @@ messages: {
             	  if( rspdata == "success" ){
             		  sousaiRemindDialog("禁用用户成功");
               		  $(".user input:checked").parent().parent().prepend('<span class="label label-info">已禁用</span>').end().end().remove();
-            	  }else if( rspdata == "fail" ){
-            		  sousaiRemindDialog("禁用用户失败");
             	  }else{
             		  sousaiRemindDialog("禁用用户失败，错误代码为："+rspdata);
             	  }

@@ -125,11 +125,11 @@
   <script id="evaluation-template" type="text/x-handlebars-template">
     {{#each this}}
 
-      <tr class="evaluation"  data-info="{{data this}}">
-         <td class="evaluation-content form-inline" data-parentId="{{parentId}}">{{checkState state id mesg}}</td>
+      <tr class="evaluation"  data-info="{{data}}">
+         <td class="evaluation-content form-inline" data-parentId="{{parentId}}">{{checkState}}</td>
          <td class="court-name" data-courtId="{{courtId}}">{{courtName}}</td>
          <td class="evaluation-releaseTime">{{time}}</td>
-         <td class="evaluation-releaseUser" data-userId="{{userId}}">{{#if userName}}{{userName}}{{else}}匿名用户{{/if}}</td>
+         <td class="evaluation-releaseUser" data-userId="{{userId}}">{{userName}}</td>
       </tr>
             
     {{/each}}
@@ -138,60 +138,51 @@
   <script>
   //定义函数
 
-	function e(crtPage,rs,obc,ia,sc,kv){
-		//定义默认选项
-		rs = rs||$("select.selectRows option:selected").val()||25,
-		crtPage = crtPage||$("ul.pagination li.active a").html()||1, //每次点击改变条数都从第一页开始；parseInt($("ul.pagination > li.active").text()) || 1; //若当前页数为空则默认为第一页
-	  	obc = obc||$(".sort button .current").attr("data-orderbycol"), 
-		ia = ia||$(".sort button .current").attr("data-isasc"),
-		sc = sc||$(".text-filter-box button .current").attr("data-strcolumns"),
-		kv = kv||$(".text-filter-box input").val();
-	  	//alert(crtPage+" "+rs+" "+obc+" "+ia+" "+sc+" "+kv);
-	  	
-	$("#ajaxState .load").show();console.log("start");
+	function e(argso){
+		//定义默认选项 
+		var args=argso;
+		args.currentPage = args.currentPage||$("ul.pagination li.active a").html()||1;
+		args.rows = args.rows||$("select.selectRows option:selected").val()||25;
+		args.orderByCol = args.orderByCol||$(".sort button .current").attr("data-orderbycol")||"courtName";
+		args.isAsc = args.isAsc||$(".sort button .current").attr("data-isasc")||true;
+		args.strColumns = args.strColumns||$(".text-filter-box button .current").attr("data-strcolumns")||"courtName";
+		args.keyValue = args.keyValue||$(".text-filter-box input").val()||"";
+	$("#ajaxState .load").show();
     $.ajax({
         type: "POST",
         url: "getAllMesg",
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-        data: {currentPage:crtPage,rows:rs,orderByCol:obc,isAsc:ia,strColumns:sc,keyValue:kv},
+        data: args,
         dataType: "json",
         success: function(rspdata) {
-        	console.log(rspdata);
+    		console.log(rspdata);
             var target = $(".evaluationTable > tbody"),template = Handlebars.compile($('#evaluation-template').html());
-            Handlebars.registerHelper("data",function(v){
-              //将当前对象转化为字符串，保存在data-info中
-              //console.log(v);
-              var v1 = JSON.stringify(v);
-              //console.log("v1:"+v1);
-              return v1;
+            Handlebars.registerHelper("data",function(){
+              return JSON.stringify(this);
             });
-            Handlebars.registerHelper("checkState",function(state,id,mesg,options){
-                console.log(state);console.log(options);
-                if(state == 0){
-                	return  new Handlebars.SafeString('<span class="label label-info">已标记为删除</span><label><span>'+id+':'+mesg+'</span></label>');
-                }else{
-                	return new Handlebars.SafeString('<label for="'+id+'"><input type="checkbox" id="'+id+'" /><span>'+id+':'+mesg+'</span></label>');
+            Handlebars.registerHelper("checkState",function(){
+            	var item = '<label for="'+this.id+'"><input type="checkbox" id="'+this.id+'" /><span>'+this.id+':'+this.mesg+'</span></label>';
+                if(this.state == 0){
+                	item +='<span class="label label-info">已标记为删除</span>&nbsp;&nbsp;';
                 }
+                if(this.visibleName == null){
+                	item +='<span class="label label-info">匿名</span>';
+                }
+                return new Handlebars.SafeString(item);                
               });
-            target.empty(); //清空tbody
-            target.html(template(rspdata.body));
+            target.empty().html(template(rspdata.body));
             $("#ajaxState .load").hide();
   	        $("#ajaxState .noresult").hide();
-  	      	console.log("stop");
-      	    //出错或无结果
-      	    //target.empty(); //清空tbody
       	    if(target.find("tr.evaluation").length == 0){
-      	    $("#ajaxState .noresult").show();console.log("无结果");
+      	    $("#ajaxState .noresult").show();
       	    }
             //管理员界面表格列字数限制，溢出省略
             $("td > label > span").wordLimit();
             $(".court-name").wordLimit();
-            pages(rspdata.count,crtPage,rs);
+            pages(rspdata.count,args.currentPage,args.rows);
   	    },
         error: function(jqXHR,textStatus,errorThrown){
-        	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-  	      $("#ajaxState .noresult").show();console.log("出错了");
-          sousaiRemindDialog("抱歉，ajax出错了。");
+  	      $("#ajaxState .noresult").show();
         },
       });
 	}
@@ -199,7 +190,6 @@
 	  hideSousaiRemindDialog();
 		var evaluationIds = new Array();
 		$(".evaluation input:checked").each(function(index,element){
-			console.log($(this).attr("id"));
 			evaluationIds.push($(this).attr("id"));
 		});
       $.ajax({
@@ -214,8 +204,6 @@
       	  if( rspdata == "success" ){
       		  sousaiRemindDialog("发布成功");
       		  $(".evaluation input:checked").parent().parent().prepend('<span class="label label-info">已标记为删除</span>').end().remove();
-      	  }else if( rspdata == "fail" ){
-      		  sousaiRemindDialog("发布失败");
       	  }else{
       		  sousaiRemindDialog("发布失败，错误代码为："+rspdata);
       	  }
@@ -229,7 +217,7 @@
   
   $(function(){
 	//ajax接受所有的评论
-	e(1,25,"courtName",true,"courtName","");
+	e({currentPage:1,rows:25});
 	//点击删除比赛 列表界面
     $("#evaluationMaintenance .deleteEvaluation").click(function(){
     	

@@ -75,7 +75,7 @@
       <div class="userCenter-remind">
        <ul class="breadcrumb"> 
         <li>场地信息:</li> 
-        <li>暂无信息</li>
+        <li><a href="javascript:void(0)">暂无信息<span>(0)</span></a></li>
        </ul>
       </div> 
       <div class="tab-content">
@@ -97,18 +97,14 @@
          <div class="courtBoxs"></div>
          <!-- /courtBoxs -->
          <div class="panel-bottom">
-       		<div id="ajaxState" class="text-center"><span class="hide noresult">无结果</span><span class="hide load"><img src="img/loading.gif" height="20px" width="20px"></img>数据加载中...</span></div>
+       		<div id="ajaxState" class="text-center"><span class="hide noresult">您还没有创建场地</span><span class="hide load"><img src="img/loading.gif" height="20px" width="20px"></img>数据加载中...</span></div>
        		<div class="pagination"><nav><ul class="pagination"></ul></nav></div>
       	 </div>
         </div> 
         <!-- /courts -->
        </div>
        <!-- /myCourt --> 
-             
-      <!-- ****************************************************************************************************************** -->
-      <!-- ****************************************************************************************************************** -->
-      <!-- ****************************************************************************************************************** -->
-             
+       
        <!--编辑比赛 开始-->
         <s:include value="editCourt.jsp" />
        <!-- /编辑比赛信息 -->
@@ -136,7 +132,7 @@
   <script id="court-template" type="text/x-handlebars-template">
     {{#each this}}
                         
-        <div class="courtBox"  data-info="{{data this}}"> 
+        <div class="courtBox"  data-info="{{data}}"> 
          <!-- img --> 
          <div class="courtBox-img"> 
           <img src="img/defaultImg.png" alt="" title="" /> 
@@ -149,10 +145,10 @@
           </div> 
           <ul class="breadcrumb"> 
            <li class="courtBox-address">{{addr}}</li> 
-           <li class="courtBox-info "> <p>室内球馆（收费）</p> <p>赛场<span class="courtBox-infoNumb">1</span>个</p> <p>12345678</p> </li> 
-           <li class="courtBox-record ">曾举办比赛<p><span class="courtBox-recordNumb">1</span>次</p></li> 
-           <li class="courtBox-evaluation "><p><span>2013-10-10</span>:<span>但行代价昂贵你空间啊好烦你撒谎吃饭了空间啊干那</span></p> <p><span>2013-10-10</span>:<span>撒了你刚才发K 524545呵呵发那个给UI HM</span></p> <p><span>2013-10-10</span>:<span>4256605JKHGCFYUSDA是都还没后 俺哥啊 俺哥爱戴啊</span></p></li> 
-          </ul> 
+           <li class="courtBox-info "><p>{{courtType}}</p><p>{{#if tableNum}}赛场{{tableNum}}个{{else}}暂无赛场数据{{/if}}</p><p>{{#if tel}}电话：{{tel}}{{else}}暂无电话信息{{/if}}</p></li>
+		   <li class="courtBox-record ">举办比赛次数<p><span class="courtBox-recordNumb">{{recordNumb}}</span>次</p></li> 
+           <li class="courtBox-evaluation ">评论次数<p><span class="courtBox-evaluationNumb">{{evaluationNumb}}</spn>次</p></li>
+		  </ul> 
          </div> 
         </div>
                             
@@ -161,51 +157,73 @@
   <script>
   //定义函数
   
-  function e(crtPage,rs,obc,ia,sc,kv){
-		//定义默认选项
-		rs = rs||$("select.selectRows option:selected").val()||25,
-		crtPage = crtPage||$("ul.pagination li.active a").html()||1, //每次点击改变条数都从第一页开始；parseInt($("ul.pagination > li.active").text()) || 1; //若当前页数为空则默认为第一页
-	  	obc = obc||$(".sort button .current").attr("data-orderbycol"), 
-		ia = ia||$(".sort button .current").attr("data-isasc"),
-		sc = sc||$(".text-filter-box button .current").attr("data-strcolumns"),
-		kv = kv||$(".text-filter-box input").val();
-	  	console.log(crtPage+" "+rs+" "+obc+" "+ia+" "+sc+" "+kv);
-	  	
-  	  //ajax接收所有的场地
+  function e(argso){
+	  //设置默认参数
+	  var args=argso;
+	  args.keyValue = args.keyValue||$("#keyValue").val()||"";
+	  args.currentPage = args.currentPage||$("ul.pagination li.active a").html()||1;
+	  args.rows = args.rows||25;
+	  args.orderByCol = args.orderByCol||$(".sort .current").attr("data-orderbycol")||"name";
+	  args.isAsc = args.isAsc||$(".sort .current").attr("data-isasc")||true;
+		  
   	  $("#ajaxState .load").show();
-  		$(".courtBoxs").show();
-  		console.log("start");
+  	  $(".courtBoxs").show();
+  	  
   	$.ajax({
         type: "POST",
         url: "getCourtByUserId",
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         dataType: "json",
-        data:{currentPage:crtPage,rows:rs,orderByCol:obc,isAsc:ia,strColumns:sc,keyValue:kv},
+        data:args,
         success: function(rspdata) {
-        	console.log(rspdata);//sousaiRemindDialog(data);
+        	console.log(rspdata);
 		      var target = $(".courtBoxs"),template = Handlebars.compile($('#court-template').html());
-		      Handlebars.registerHelper("data",function(v){
-		    	  //将当前对象转化为字符串，保存在data-info中
-		    	  //console.log(v);
-		    	  var v1 = JSON.stringify(v);
-		    	  //console.log("v1:"+v1);
-		    	  return v1;
-		      });
+		      Handlebars.registerHelper("data",function(){
+	                return JSON.stringify(this);
+	              });
+	        	Handlebars.registerHelper("recordNumb",function(){
+	          	  	var recordNumb = $.ajax({
+	          	  		type: "POST",
+	          	        url: "getMatchByCourtId",
+	          	        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+	          	        data: {
+	          	          courtId: this.id,
+	          	          currentPage: 1,
+	          	          rows: 1
+	          	        },
+	        	        async: false, //设置异步为false,解决ajax异步不能设置全局变量的问题
+	          	        dataType: "json"
+	          	        });
+	          	  	 if(!recordNumb.responseJSON.count){
+	          	  		 return 0;
+	          	  	 }
+		          	 return recordNumb.responseJSON.count;
+	              });
+	        	Handlebars.registerHelper("evaluationNumb",function(){
+	          	  	 var evaluationNumb = $.ajax({
+	          	  		type: "POST",
+	          	        url: "showMsgs",
+	          	        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+	          	        data: {courtId: this.id},
+	        	        async: false, //设置异步为false,解决ajax异步不能设置全局变量的问题
+	          	        dataType: "json"
+	          	        });
+	          	  	 if(!evaluationNumb.responseJSON.length){
+	          	  		 return 0;
+	          	  	 }
+	          	  	 return evaluationNumb.responseJSON.length;
+	              });
 		      target.empty().show().html(template(rspdata.body));
 		      $("#ajaxState .load").hide();
 		      $("#ajaxState .noresult").hide();
-		      console.log("stop");
-		      //出错或无结果
-		      //target.empty(); //清空tbody
 		      if(target.find("div.courtBox").length == 0){
 		      $("#ajaxState .noresult").show();
 		      target.hide();
-		      console.log("无结果");
 		      }
 	    	    //字数限制，溢出省略
 	          $(".courtBox-address").wordLimit(20);
 	    	  $(".courtBox-evaluation p").wordLimit();
-	    	  pages(rspdata.count,crtPage,rs);
+	    	  pages(rspdata.count,args.currentPage,args.rows);
         },
         error: function(jqXHR,textStatus,errorThrown){
           console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
@@ -215,8 +233,9 @@
   }
   
     $(function () {
-    	//ajax接收所有的场地 默认为第一页 25条，按name排序，升序
-   	 	e(1,25,"name",true,"name","");
+    	//获得已有比赛信息
+    	userCenterRemind();
+   	 	e({currentPage:1,rows:25});
     	
     	//点击编辑比赛隐藏List列表同时显示编辑比赛
     	$(".courtBoxs").on("click",".modifyCourt",function(event){

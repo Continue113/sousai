@@ -132,8 +132,7 @@
           <div class="control-group hide"> 
            <div class="controls"> 
             <button type="button" class="btn btn-success pull-right" id="rlsCourt">确定发布</button> 
-            <button type="reset" class="btn pull-right" id="resetCourtForm">重置</button> 
-            <button type="button" class="btn pull-right" onclick="courtPreview()">预览</button> 
+            <button type="reset" class="btn pull-right" id="resetCourtForm">清空</button> 
            </div> 
           </div> 
           </fieldset>

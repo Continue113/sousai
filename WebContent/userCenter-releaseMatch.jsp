@@ -76,7 +76,10 @@
      </div> 
      <div class="span8"> 
       <div class="userCenter-remind"> 
-       <ul class="breadcrumb"><li>比赛信息:</li></ul> 
+       <ul class="breadcrumb">
+       <li>比赛信息:</li>
+       <li><a href="javascript:void(0)">暂无信息<span>(0)</span></a></li>
+       </ul> 
       </div> 
       <div class="tab-content"> 
        <div id="releaseMatch" class="tab-pane active">
@@ -137,13 +140,12 @@
       $("#rlsMatch").click(function(){
     		//检测用户是否为登录状态
 			var userid =isLogined(),match = getMatchInfo();
-			if(userid.responseJSON==-1){
+			if(userid.responseJSON=="error"){
 				// -1 为未登录状态，其他则为用户ID
 				newformloginBox();
 			}else if(!match){
 				return false;
 			}else{
-		      		console.log("getMatchInfo获取到的：");console.log(match);
 		      		var data;
 		      		if(match.iscourt == "true"){
 		      			match.iscourt = true;
@@ -159,7 +161,7 @@
 			      			    "match.rule": match.rule,
 			      			    //"match.relTime": match.reltime,
 			      			    //"match.score": match.name,
-			      			    "match.userId": parseInt(userid.responseJSON),
+			      			    "match.userId": userid.responseJSON.userId,
 			      			    "isCourt": match.iscourt,
 			      			    "court.name": match.court,
 			      			    "court.addr": match.courtaddr,
@@ -180,11 +182,10 @@
 			      			    "match.rule": match.rule,
 			      			    //"match.relTime": match.reltime,
 			      			    //"match.score": match.name,
-			      			    "match.userId": parseInt(userId),
+			      			    "match.userId": userid.responseJSON.userId,
 			      			    "isCourt": match.iscourt,
 			      			};
-		      		}		      		
-		      		console.log("转换后的：match data");console.log(data);
+		      		}
 		      		$.ajax({
 		                type: "POST",
 		                url: "relMatch",
@@ -195,11 +196,12 @@
 		              	  if( rspdata == "fail" ){
 		              		  sousaiRemindDialog("'"+match.title+"' 发布失败，fail");
 		              	  }else{
-		              		  $(".editMatch").hide();
-		              		  $("#afterRelease").find(".releaseInfoTitle").text(match.title).end()
-		              		  .find(".releaseInfoId").text(rspdata).end()
-		              		  .find(".releaseInfoHref").text("http://www.isousai.com/sousai/matchSearchDetail.jsp?id="+rspdata).attr("href","matchSearchDetail.jsp?id="+rspdata).end()
-		              		  .show();
+		              		  $(".editMatch").hide("fast",function(){
+			              		  $("#afterRelease").find(".releaseInfoTitle").text(match.title).end()
+			              		  .find(".releaseInfoId").text(rspdata).end()
+			              		  .find(".releaseInfoHref").text("http://www.isousai.com/sousai/matchSearchDetail.jsp?id="+rspdata).attr("href","matchSearchDetail.jsp?id="+rspdata).end()
+			              		  .show();		              			  
+		              		  });
 		              	  }
 		                },
 		                error: function(jqXHR,textStatus,errorThrown){

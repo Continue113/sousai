@@ -55,7 +55,7 @@
       <div class="userCenter-remind"> 
        <ul class="breadcrumb"> 
         <li>比赛信息:</li> 
-        <li>暂无信息</li>
+        <li><a href="javascript:void(0)">暂无信息<span>(0)</span></a></li>
        </ul> 
       </div> 
       <div class="tab-content"> 
@@ -68,7 +68,7 @@
 	      <div class="releaseInfo">
 	      <p>您创建的“<span class="label label-success releaseInfoTitle"></span>”，网站管理员已经收到，将在1-4小时内完成审核，请您耐心等待。（加急联系QQ：200799663）</p>
 	      <p>场地编号为：<span class="label label-success releaseInfoId"></span></p>
-	      <p>场地地址：<a href="" class="releaseInfoHref"><a></p>
+	      <p>场地地址：<a href="javascript:void(0);" class="releaseInfoHref"></a></p>
 	      <p class="text-center"><button type="button" class="btn btn-success" onclick="backEdit()">返回</button></p>
 	      </div>
       </div>
@@ -114,15 +114,14 @@
   	  $("#rlsCourt").click(function(){
   		    //检测用户是否为登录状态
   			var userid =isLogined();
-  			if(userid.responseJSON==-1){
+  			if(userid.responseJSON=="error"){
   				// -1 为未登录状态，其他则为用户ID
   				newformloginBox();
   			}else{
   	  			var court = getCourtInfo();
-  	  			court.userId = parseInt(userid.responseJSON);		
   	  			console.log(court);
   				var data = {
-  						"court.userId": court.userId,
+  						"court.userId": userid.responseJSON.userId,
   						"court.addr": court.addr,
   						"court.courtTypeId": court.courtTypeId,
   						"court.name": court.name,

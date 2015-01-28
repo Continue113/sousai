@@ -99,7 +99,7 @@
       <div class="userCenter-remind">
        <ul class="breadcrumb"> 
         <li>比赛信息:</li>
-        <li>暂无信息</li>
+        <li><a href="javascript:void(0)">暂无信息<span>(0)</span></a></li>
        </ul>
       </div> 
       <div class="tab-content">
@@ -127,15 +127,19 @@
         </div> 
        </div>
        <!-- /myMatch -->
-      
-      <!-- ****************************************************************************************************************** -->
-      <!-- ****************************************************************************************************************** -->
-      <!-- ****************************************************************************************************************** -->
-             
        <!--编辑比赛 开始-->
         <s:include value="editMatch.jsp" />
-       <!-- /编辑比赛信息 -->
+       <!-- /编辑比赛信息 -->  
        
+    <div class="updateScore hide">
+        <div class="page-header row">
+         <h4 class="thisname">暂无信息</h4>
+         <h4>发布成绩</h4>
+        </div>
+	    <textarea id="updateScoreTextarea" required="required"></textarea>
+	    <button type="button" class="btn pull-right relScore">发布</button>
+	    <button type="button" class="btn pull-right backList">返回</button>
+    </div>     
       </div>
       <!-- /tab-content --> 
      </div>
@@ -161,7 +165,7 @@
   <script id="match-template" type="text/x-handlebars-template">
     {{#each this}}
 
-       <div class="matchBox"  data-info="{{data this}}">
+       <div class="matchBox"  data-info="{{data}}" id="match{{id}}">
         <div class="matchBox-all"> 
          <div class="matchBox-title"> 
           <a target="_blank" href="courtSearchDetail.jsp?id={{id}}">{{name}}</a> 
@@ -176,7 +180,7 @@
           <li class="matchBox-court "><a target="_blank" href="courtSearchDetail.jsp?id={{courtId}}">{{courtName}}</a></li> 
           <li class="matchBox-state ">{{state}}</li> 
           <li class="matchBox-info "><a target="_blank" href="matchSearchDetail.jsp?id={{id}}">{{{rule}}}</a></li> 
-          <li class="matchBox-btns "><a href="javascript:void(0)" class="btn btn-mini modifyMatch">修改比赛</a><a target="_blank" href="matchSearchDetail.jsp?id={{id}}" class="btn btn-mini">查看详细</a></li> 
+          <li class="matchBox-btns ">{{checkState}}<a target="_blank" href="matchSearchDetail.jsp?id={{id}}" class="btn btn-mini">查看详细</a></li> 
          </ul> 
         </div>
        </div> 
@@ -184,49 +188,47 @@
     {{/each}}
   </script>
   <script>
-  function e(crtPage,rs,obc,ia,sc,kv){
-		//定义默认选项
-		rs = rs||$("select.selectRows option:selected").val()||25,
-		crtPage = crtPage||$("ul.pagination li.active a").html()||1, //每次点击改变条数都从第一页开始；parseInt($("ul.pagination > li.active").text()) || 1; //若当前页数为空则默认为第一页
-	  	obc = obc||$(".sort button .current").attr("data-orderbycol"), 
-		ia = ia||$(".sort button .current").attr("data-isasc"),
-		sc = sc||$(".text-filter-box button .current").attr("data-strcolumns"),
-		kv = kv||$(".text-filter-box input").val();
-	  	console.log(crtPage+" "+rs+" "+obc+" "+ia+" "+sc+" "+kv);
+  function e(argso){
+		//定义默认选项 
+		var args=argso;
+		args.currentPage = args.currentPage||$("ul.pagination li.active a").html()||1;
+		args.rows = args.rows||$("select.selectRows option:selected").val()||25;
+		args.orderByCol = args.orderByCol||$(".sort button .current").attr("data-orderbycol")||"name";
+		args.isAsc = args.isAsc||$(".sort button .current").attr("data-isasc")||true;
+		args.strColumns = args.strColumns||$(".text-filter-box button .current").attr("data-strcolumns")||"name";
+		args.keyValue = args.keyValue||$(".text-filter-box input").val()||"";
 	  	
-		$("#ajaxState .load").show();console.log("start");
+		$("#ajaxState .load").show();
 	  	$.ajax({
 	        type: "POST",
 	        url: "getMatchByUserId",
 	        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 	        dataType: "json",
-	        data: {currentPage:crtPage,rows:rs,orderByCol:obc,isAsc:ia,strColumns:sc,keyValue:kv},
+	        data: argso,
 	        success: function(rspdata) {
-	        	console.log(rspdata);//sousaiRemindDialog(data);
+	        	console.log(rspdata);
 			      var target = $(".matchBoxs"),template = Handlebars.compile($('#match-template').html());
-			      Handlebars.registerHelper("data",function(v){
-			    	  //将当前对象转化为字符串，保存在data-info中
-			    	  //console.log(v);
-			    	  var v1 = JSON.stringify(v);
-			    	  //console.log("v1:"+v1);
-			    	  return v1;
+			      Handlebars.registerHelper("data",function(){
+			    	  return JSON.stringify(this);
+			      });
+			      Handlebars.registerHelper("checkState",function(){
+			    	  if(this.state == "已结束"){
+			    		  return new Handlebars.SafeString('<a href="javascript:void(0)" class="btn btn-mini" onclick="updateScore('+this.id+')">录入成绩</a>');
+			    	  }
+			    	  return new Handlebars.SafeString('<a href="javascript:void(0)" class="btn btn-mini" onclick="modifyMatch('+this.id+')">修改比赛</a>');
 			      });
 			      target.empty().show().html(template(rspdata.body));
 			      $("#ajaxState .load").hide();
 			      $("#ajaxState .noresult").hide();
-			      console.log("stop");
-			      //出错或无结果
-			      //target.empty(); //清空tbody
 			      if(target.find("div.matchBox").length == 0){
 			      $("#ajaxState .noresult").show();
 			      target.hide();
-			      console.log("无结果");
 			      }
 		    	  //字数限制，溢出省略
 		    	  $(".matchBox-court").wordLimit(20);
 		    	  $(".matchBox-info > a").wordLimit(28);
 		  	      //根据总数、当前页数、每页行数 分页
-		    	  pages(rspdata.count,crtPage,rs);
+		    	  pages(rspdata.count,args.currentPage,args.rows);
 	        },
 	        error: function(jqXHR,textStatus,errorThrown){
 	          console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
@@ -234,21 +236,72 @@
 	        },
 	      });
   }
-    $(function () {
+  //点击编辑比赛隐藏List列表同时显示编辑比赛
+  function modifyMatch(id){
+	var datainfo = $("#match"+id).attr("data-info");
+  	setMatchInfo(datainfo);
+	$(".matchList").slideUp();
+	$(".editMatch").find("button.passMatch").hide().end().slideDown();
+	}
+  //点击编辑比赛隐藏List列表同时显示编辑比赛
+  function updateScore(id){
+  	var datainfo = $("#match"+id).attr("data-info");
+	$("h4.thisname").text(JSON.parse(datainfo).name).attr("data-info",datainfo);
+	$(".matchList").slideUp();
+	$(".updateScore").slideDown();
+	}
+    
+  $(function () {
+    	//获得已有比赛信息
+    	userCenterRemind();
 		//ajax接收所有我发布的比赛
-		e(1,25,"name",true,"name","");
-    	//点击编辑比赛隐藏List列表同时显示编辑比赛
-    	$(".matchBoxs").on("click",".modifyMatch",function(event){
-        	var datainfo = $(this).parent().parent().parent().parent().attr("data-info");
-        	console.log(datainfo);
-        	setMatchInfo(datainfo);
-    		$(".matchList").slideUp();
-    		$(".editMatch").find("button.passMatch").hide().end().slideDown();
-  		});
+		e({currentPage:1,rows:25});
         //鼠标hover matchbox
         $(".matchBoxs ").on('mouseenter','div.matchBox',function(){
         	      $('div.matchBox').removeClass("box-active");
         	      $(this).addClass("box-active");
+        });
+        //点击返回比赛列表
+        $(".updateScore .backList").click(function(){
+        	$(".matchList").slideDown();
+        	$(".updateScore").slideUp();
+        });
+        $(".updateScore .relScore").click(function(){
+        	var datainfo = $("h4.thisname").attr("data-info"),
+        		match = JSON.parse(datainfo);
+      		data = {
+      			    "match.id": parseInt(match.id),
+      			    "match.name": match.name,
+      			    "match.type": match.type,
+      			    "match.beginTime": match.beginTime,
+      			    "match.endTime": match.endTime,
+      			    "match.courtId": match.courtId,
+      			    "match.rule": match.rule,
+      			    "match.relTime": match.relTime,
+      			    "match.verify": match.verify,
+      			    "match.score": tinymce.activeEditor.getContent(),
+      			    "match.userId": match.userId,
+      			    isCourt: false,
+      			};
+        	 $.ajax({
+                type: "POST",
+                url: "updateMatch",
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                data: data,
+                dataType: "json",
+                success: function(rspdata) {
+              	  if( rspdata == "success" ){
+              		  window.setTimeout("window.location.href=window.location.href",3000);
+                		  sousaiRemindDialog("录入成绩成功,3秒后将刷新页面。");
+              	  }else{
+              		  sousaiRemindDialog("录入成绩失败，错误代码为："+rspdata);
+              	  }
+                },
+                error: function(jqXHR,textStatus,errorThrown){
+              	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+                    sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
+                },
+              }); 
         });
 
     });

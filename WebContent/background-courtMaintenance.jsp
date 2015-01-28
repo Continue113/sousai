@@ -142,8 +142,8 @@
   <script id="court-template" type="text/x-handlebars-template">
     {{#each this}}
                         
-        <tr class="court" data-info="{{data this}}"> 
-          <td class="court-title">{{checkState verify id name}}</td> 
+        <tr class="court" data-info="{{data}}"> 
+          <td class="court-title">{{checkState}}</td> 
           <td class="match-type">{{matchType}}</td> 
           <td class="court-addr">{{region}}:{{addr}}</td> 
           <td class="court-releaseTime">{{relDate}}</td> 
@@ -156,71 +156,56 @@
   <script>
   //定义函数
 
-	function e(crtPage,rs,obc,ia,sc,kv){
-		//定义默认选项
-		rs = rs||$("select.selectRows option:selected").val()||25,
-		crtPage = crtPage||$("ul.pagination li.active a").html()||1, //每次点击改变条数都从第一页开始；parseInt($("ul.pagination > li.active").text()) || 1; //若当前页数为空则默认为第一页
-	  	obc = obc||$(".sort button .current").attr("data-orderbycol"), 
-		ia = ia||$(".sort button .current").attr("data-isasc"),
-		sc = sc||$(".text-filter-box button .current").attr("data-strcolumns"),
-		kv = kv||$(".text-filter-box input").val();
-	  	//alert(crtPage+" "+rs+" "+obc+" "+ia+" "+sc+" "+kv);
-	  	
-	  $("#ajaxState .load").show();console.log("start");
+	function e(argso){
+		//定义默认选项 
+		var args=argso;
+		args.currentPage = args.currentPage||$("ul.pagination li.active a").html()||1;
+		args.rows = args.rows||$("select.selectRows option:selected").val()||25;
+		args.orderByCol = args.orderByCol||$(".sort button .current").attr("data-orderbycol")||"name";
+		args.isAsc = args.isAsc||$(".sort button .current").attr("data-isasc")||true;
+		args.strColumns = args.strColumns||$(".text-filter-box button .current").attr("data-strcolumns")||"name";
+		args.keyValue = args.keyValue||$(".text-filter-box input").val()||"";
+	  		  	
+	  $("#ajaxState .load").show();
     $.ajax({
       type: "POST",
       url: "getAllCourt",
       contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-      data: {currentPage:crtPage,rows:rs,orderByCol:obc,isAsc:ia,strColumns:sc,keyValue:kv},
+      data: args,
       dataType: "json",
       success: function(rspdata) {
-	      console.log(rspdata);//sousaiRemindDialog(rspdata);
       var target = $(".courtTable > tbody"),template = Handlebars.compile($('#court-template').html());
-      Handlebars.registerHelper("data",function(v){
-        //将当前对象转化为字符串，保存在data-info中
-        //console.log(v);
-        var v1 = JSON.stringify(v);
-        //console.log("v1:"+v1);
-        return v1;
+      Handlebars.registerHelper("data",function(){
+        return JSON.stringify(this);
       });
 
-      Handlebars.registerHelper("checkState",function(verify,id,name,options){
-          console.log(verify);console.log(options);
-          if(verify == "1"){
-          	return  new Handlebars.SafeString('<span class="label label-info">已发布</span><label for="'+id+'"><input type="checkbox" id="'+id+'" /><span>'+id+':'+name+'</span></label>');
+      Handlebars.registerHelper("checkState",function(){
+          if(this.verify == "1"){
+          	return  new Handlebars.SafeString('<label for="'+this.id+'"><input type="checkbox" id="'+this.id+'" /><span>'+this.id+':'+this.name+'</span></label><span class="label label-info">已发布</span>');
           }else{
-          	return new Handlebars.SafeString('<label for="'+id+'"><input type="checkbox" id="'+id+'" /><span>'+id+':'+name+'</span></label>');
+          	return new Handlebars.SafeString('<label for="'+this.id+'"><input type="checkbox" id="'+this.id+'" /><span>'+this.id+':'+this.name+'</span></label>');
           }
         });
-      target.empty(); //清空tbody
-      target.html(template(rspdata.body));
+      target.empty().html(template(rspdata.body));
       $("#ajaxState .load").hide();
       $("#ajaxState .noresult").hide();
-      console.log("stop");
-	    //出错或无结果
-	    //target.empty(); //清空tbody
 	    if(target.find("tr.court").length == 0){
-	    $("#ajaxState .noresult").show();console.log("无结果");
+	    $("#ajaxState .noresult").show();
 	    }
 	    //管理员界面表格列字数限制，溢出省略
 	    $("td > label > span").wordLimit();
 	    $(".court-addr").wordLimit();
-	    pages(rspdata.count,crtPage,rs);
+	    pages(rspdata.count,args.currentPage,args.rows);
 	    },
       error: function(jqXHR,textStatus,errorThrown){
-    	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-	      $("#ajaxState .noresult").show();console.log("出错了");
-          sousaiRemindDialog("抱歉，ajax出错了。");
+	      $("#ajaxState .noresult").show();
       },
     });
 }
   function sureDelete(){
 	  hideSousaiRemindDialog();
-		var courtIds = new Array(),
-		rs = $("select.selectRows option:selected").val(),
-		crtPage = $("ul.pagination").find("li.active a").text();
+		var courtIds = new Array();
 		$(".court input:checked").each(function(index,element){
-			console.log($(this).attr("id"));
 			courtIds.push($(this).attr("id"));
 		});
       $.ajax({
@@ -235,22 +220,20 @@
       	  if( rspdata == "success" ){
       		  sousaiRemindDialog("删除成功");
       		  $(".court input:checked").parent().parent().parent().remove();
-      	  }else if( rspdata == "fail" ){
-      		  sousaiRemindDialog("删除失败");
       	  }else{
       		  sousaiRemindDialog("删除失败，错误代码为："+rspdata);
       	  }
         },
         error: function(jqXHR,textStatus,errorThrown){
         	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-          sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
+            sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
         },
       }); //ajax 已得到具体比赛类型
   }
   
   $(function(){
 	 //ajax接收所有的场地 默认为第一页 25条，按name排序，升序
-	 e(1,25,"name",true,"name","");
+	 e({currentPage:1,rows:25});
 	 //初始化场地类型 初始化为默认的比赛详细类型的其他 id为1
 	 initCourtType(1);
 	  //点击编辑比赛隐藏List列表同时显示编辑比赛
@@ -297,9 +280,7 @@
               success: function(rspdata) {
             	  if( rspdata == "success" ){
             		  sousaiRemindDialog("发布成功");
-              		  $(".court input:checked").attr("checked",false).parent().parent().prepend('<span class="label label-info">已发布</span>');
-            	  }else if( rspdata == "fail" ){
-            		  sousaiRemindDialog("发布失败");
+              		  $(".court input:checked").attr("checked",false).parent().parent().append('<span class="label label-info">已发布</span>');
             	  }else{
             		  sousaiRemindDialog("发布失败，错误代码为："+rspdata);
             	  }

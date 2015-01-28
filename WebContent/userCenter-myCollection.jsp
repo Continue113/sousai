@@ -29,6 +29,9 @@
 .matchBox .matchBox-state{width: 50px;color: #ff040f;}
 .matchBox .matchBox-info{width: 220px;}
 .matchBox .matchBox-btns{width: 60px;padding-right: 5px;}
+  /** 排序下拉按钮 **/
+  .panel-top > .btn-group {margin-top: 10px;}
+  
   </style>
 </head>
 <body class="userCenter">
@@ -66,18 +69,29 @@
       <div class="userCenter-remind">
        <ul class="breadcrumb"> 
         <li>比赛信息:</li>
-        <li>暂无信息</li>        
+        <li><a href="javascript:void(0)">暂无信息<span>(0)</span></a></li>        
        </ul>
       </div> 
       <div class="tab-content">
        <div id="myCollection" class="tab-pane active">
-        <div class="matchs" id="matchsList-collection"> 
+        <div class="matchs" id="matchsList-collection">
          <!-- panel --> 
-         <div class="panel-top"></div>
+         <div class="panel-top">
+         <div class="btn-group sort" role="group">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current" data-orderbycol="name" data-isasc="true">排序方式</span><span class="caret"></span></button>
+		<ul class="dropdown-menu" role="menu">
+          <li><a href="javascript:void(0)" data-orderbycol="name" data-isasc="true">比赛名称<i class="icon-arrow-up"></i></a></li> 
+          <li><a href="javascript:void(0)" data-orderbycol="beginTime" data-isasc="true">比赛时间<i class="icon-arrow-up"></i></a></li> 
+          <li><a href="javascript:void(0)" data-orderbycol="courtName" data-isasc="true">比赛场地<i class="icon-arrow-up"></i></a></li> 
+          <li><a href="javascript:void(0)" data-orderbycol="relTime" data-isasc="true">发布时间<i class="icon-arrow-up"></i></a></li> 
+          <li><a href="javascript:void(0)" data-orderbycol="userName" data-isasc="true">发布用户<i class="icon-arrow-up"></i></a></li>
+		</ul>
+	     </div>
+         </div>
          <div class="matchBoxs"></div>
          <!-- /matchBoxs -->
          <div class="panel-bottom">
-       		<div id="ajaxState" class="text-center"><span class="hide noresult">无结果</span><span class="hide load"><img src="img/loading.gif" height="20px" width="20px"></img>数据加载中...</span></div>
+       		<div id="ajaxState" class="text-center"><span class="hide noresult">您还没有收藏比赛</span><span class="hide load"><img src="img/loading.gif" height="20px" width="20px"></img>数据加载中...</span></div>
        		<div class="pagination"><nav><ul class="pagination"></ul></nav></div>
       	 </div>
         </div> 
@@ -102,7 +116,7 @@
   <script id="match-template" type="text/x-handlebars-template">
     {{#each this}}
 
-       <div class="matchBox"  data-info="{{data this}}>
+       <div class="matchBox"  data-info="{{data}}>
         <div class="matchBox-all"> 
          <div class="matchBox-title"> 
           <a target="_blank" href="matchSearchDetail.jsp?id={{id}}">{{name}}</a> 
@@ -126,48 +140,40 @@
   </script>
   <script>
   //定义函数
-  function e(crtPage,rs,obc,ia,sc,kv){
-		//定义默认选项
-		rs = rs||$("select.selectRows option:selected").val()||25,
-		crtPage = crtPage||$("ul.pagination li.active a").html()||1, //每次点击改变条数都从第一页开始；parseInt($("ul.pagination > li.active").text()) || 1; //若当前页数为空则默认为第一页
-	  	obc = obc||$(".sort button .current").attr("data-orderbycol"), 
-		ia = ia||$(".sort button .current").attr("data-isasc"),
-		sc = sc||$(".text-filter-box button .current").attr("data-strcolumns"),
-		kv = kv||$(".text-filter-box input").val();
-	  	console.log(crtPage+" "+rs+" "+obc+" "+ia+" "+sc+" "+kv);
+  function e(argso){
+		//定义默认选项 
+		var args=argso;
+		args.currentPage = args.currentPage||$("ul.pagination li.active a").html()||1;
+		args.rows = args.rows||$("select.selectRows option:selected").val()||25;
+		args.orderByCol = args.orderByCol||$(".sort button .current").attr("data-orderbycol")||"name";
+		args.isAsc = args.isAsc||$(".sort button .current").attr("data-isasc")||true;
+		args.strColumns = args.strColumns||$(".text-filter-box button .current").attr("data-strcolumns")||"name";
+		args.keyValue = args.keyValue||$(".text-filter-box input").val()||"";
 	  	
-		$("#ajaxState .load").show();console.log("start");
+		$("#ajaxState .load").show();
 		$.ajax({
 	        type: "POST",
 	        url: "getUserFavM",
 	        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 	        dataType: "json",
-	        data: {currentPage:crtPage,rows:rs,orderByCol:obc,isAsc:ia,strColumns:sc,keyValue:kv},
+	        data: args,
 	        success: function(rspdata) {
-	        	console.log(rspdata);//sousaiRemindDialog(data);
+	        	console.log(rspdata);
 			      var target = $(".matchBoxs"),template = Handlebars.compile($('#match-template').html());
-			      Handlebars.registerHelper("data",function(v){
-			    	  //将当前对象转化为字符串，保存在data-info中
-			    	  //console.log(v);
-			    	  var v1 = JSON.stringify(v);
-			    	  //console.log("v1:"+v1);
-			    	  return v1;
+			      Handlebars.registerHelper("data",function(){
+			    	  return JSON.stringify(this);
 			      });
 			      target.empty().show().html(template(rspdata.body));
 			      $("#ajaxState .load").hide();
 			      $("#ajaxState .noresult").hide();
-			      console.log("stop");
-			      //出错或无结果
-			      //target.empty(); //清空tbody
 			      if(target.find("div.matchBox").length == 0){
 			      $("#ajaxState .noresult").show();
 			      target.hide();
-			      console.log("无结果");
 			      }
 		    	  //字数限制，溢出省略
 		    	  $(".matchBox-court").wordLimit(20);
 		    	  $(".matchBox-info > a").wordLimit(28);
-			      pages(rspdata.count,crtPage,rs);		    	    
+			      pages(rspdata.count,args.currentPage,args.rows);		    	    
 	        },
 	        error: function(jqXHR,textStatus,errorThrown){
 	          console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
@@ -176,16 +182,14 @@
 	      });
   }
     $(function () {
-		//ajax接收所有比赛
-		e(1,25,"name",true,"name","");
+    	//获得已有比赛信息
+    	userCenterRemind();
+		e({currentPage:1,rows:25});
         //鼠标hover matchbox
         $(".matchBoxs ").on('mouseenter','div.matchBox',function(){
         	      $('div.matchBox').removeClass("box-active");
         	      $(this).addClass("box-active");
         });
-      //字数限制，溢出省略
-    $(".matchBox-court").wordLimit(20);
-    $(".matchBox-info > a").wordLimit(28);
     });
 </script>
 </body></html>

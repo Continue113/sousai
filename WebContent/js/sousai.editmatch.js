@@ -5,7 +5,7 @@
 function setMatchInfo(datainfo){
     //解析datainfo中的信息
     var data = eval('(' + datainfo + ')');
-    $("#inputMatchTitle").val(data.name).attr("data-id",data.id).attr("data-userid",data.userId);
+    $("#inputMatchTitle").val(data.name).attr("data-id",data.id).attr("data-userid",data.userId).attr("data-verify",data.verify);
     $("#inputMatchType").val(data.type).attr("data-oldtype",data.type);
     $("#inputMatchTimefrom").val(data.beginTime);
     $("#inputMatchTimeto").val(data.endTime);
@@ -15,10 +15,16 @@ function setMatchInfo(datainfo){
 
 //验证表单并且返回所有信息
 function getMatchInfo(){
+	if( $("#editMatchForm").valid() !== true ){ 
+		//验证所有显式表单
+		sousaiRemindDialog("填写信息不符合验证，请重新填写。");
+		return false;
+	}
 	//获取比赛信息存储到match对象中用于返回比赛信息
 	var match={};
 	 match.id = $("#inputMatchTitle").attr("data-id");
 	 match.userid = $("#inputMatchTitle").attr("data-userid");
+	 match.verify = $("#inputMatchTitle").attr("data-verify");
 	 match.title = $("#inputMatchTitle").val();
 	 match.type = $("#inputMatchType").val();
 	 match.typeid = $("#inputMatchType").attr("data-typeid");
@@ -29,46 +35,77 @@ function getMatchInfo(){
 	 match.iscourt = $("#inputMatchCourt").attr("data-iscourt");
 	 match.rule = tinymce.activeEditor.getContent();
 	 
-	if( $("#editMatchForm").valid() === true ){ //验证所有显式表单
-		
-		if(match.court != ""){//验证比赛地点
-			
-			if(match.rule){//验证比赛规程
-				
-				if(match.iscourt === "true"){//验证是否发布新场地 获取到的data-iscourt的类型为字符串
-					match.court = $("#courtName").val();
-					match.courtaddr = $("#courtAddress").val();
-					match.courttype = $(".selectCourtType option:selected").text();
-					match.courttypeid = $(".selectCourtType option:selected").attr("value");
-				}
-				if(!$("#otherMatchType").is(":hidden")){//验证是否为其他比赛类型
-					match.type = $("#otherMatchType").val();
-				}
-				console.log("验证通过"+match);
-				return match;
-				
-			}else{
-				sousaiRemindDialog("比赛规程不能为空，请重新填写。");
-				return false;				
-			}
-		}else{
-			sousaiRemindDialog("比赛地点不能为空，请使用已有场地或添加新场地。");
-			return false;
-		}
-	}else{
-		sousaiRemindDialog("填写信息不符合验证，请重新填写。");
+	if(!match.court){
+		//验证比赛地点
+		sousaiRemindDialog("比赛地点不能为空，请使用已有场地或添加新场地。");
 		return false;
+	}			
+	if(!match.rule){
+		//验证比赛规程
+		sousaiRemindDialog("比赛规程不能为空，请重新填写。");
+		return false;				
 	}
+	if(match.iscourt === "true"){//验证是否发布新场地 获取到的data-iscourt的类型为字符串
+		match.court = $("#courtName").val();
+		match.courtaddr = $("#courtAddress").val();
+		match.courttype = $(".selectCourtType option:selected").text();
+		match.courttypeid = $(".selectCourtType option:selected").attr("value");
+	}
+	if(!$("#otherMatchType").is(":hidden")){//验证是否为其他比赛类型
+		match.type = $("#otherMatchType").val();
+	}
+	return match;
 }
 
+//根据当前的没页的条数和总的条数计算总页数 //现有场地表格的分页代码
+function pagesCourts(count,crtPage,rs){
+	  var pages = Math.ceil(count/rs) || 1, target=$(".existCourtsBox .btn-group");
+	  target.empty().show();
+	  if(pages == 1){
+		  target.append('<a class="btn active" href="javascript:void(0);">1</a>').hide();
+		  return false;
+	  }
+	  target.append('<a class="btn prior" href="javascript:void(0);" onclick="priorCourts('+rs+')">«</a><a class="btn active" href="javascript:void(0);">'+crtPage+'</a>');
+	  if((pages > 1)&&(crtPage < pages)&&(crtPage+1 != pages)) {
+	  	target.append('<a class="btn" href="javascript:void(0);">...</a><a class="btn" href="javascript:void(0);" onclick="searchExistedCourt('+pages+','+rs+')">'+pages+'</a>');
+	  }else if(crtPage+1 == pages){
+		target.append('<a class="btn" href="javascript:void(0);" onclick="searchExistedCourt('+pages+','+rs+')">'+pages+'</a>');
+	  }
+	  if(crtPage != pages){
+	  target.append('<a class="btn next" href="javascript:void(0);" onclick="nextCourts('+rs+')">»</a>');
+	  }
+}
+	
+	function priorCourts(rs){
+		var target = $(".existCourtsBox .btn-group"),
+		crtPage = parseInt(target.find("a.active").text());
+		rs = rs||10;
+		if(crtPage==1){
+			sousaiRemindDialog('已经到最顶了');
+		}else if(crtPage==2){
+			searchExistedCourt(crtPage - 1,rs);
+			target.find("a.active").text(crtPage - 1).end().find("a.prior").hide();
+		}else{
+			searchExistedCourt(crtPage - 1,rs);
+			target.find("a.active").text(crtPage - 1).end().find("a.prior").show();
+		}
+	}
+	function nextCourts(rs){
+		var target = $(".existCourtsBox .btn-group"),
+		crtPage = parseInt(target.find("a.active").text());
+		rs = rs||10;
+		searchExistedCourt(crtPage + 1,rs);
+		target.find("a.active").text(crtPage+1).end().find("a.prior").show();
+	}
+	
 function searchExistedCourt(crtPage,rs){
 	  var data = getRegion();
 	  data.currentPage = crtPage||$("div.existCourtsBox ul.pagination li.active a").html()||1;
 	  data.rows = rs||25;
-	  
 	  if(data.regionId == null){
-		  sousaiRemindDialog("省，市，区请至少选择一个为比赛区域！");		  
-	  }else {
+		  sousaiRemindDialog("省，市，区请至少选择一个为比赛区域！");
+		  return false;
+	  }
 	  //ajax 获取已有场地信息列表
 	  $.ajax({
 	      type: "POST",
@@ -79,28 +116,22 @@ function searchExistedCourt(crtPage,rs){
 	      success: function(rspdata) {
 	        var target = $(".existCourtsBox > table > tbody"),template = Handlebars.compile($('#existCourts-template').html());
 	        $(".existCourtsBox .noresult").hide(); //隐藏无结果提醒
-		    console.log(rspdata);//sousaiRemindDialog(data);
-	        Handlebars.registerHelper("data",function(v){
-	          //将当前对象转化为字符串，保存在data-info中
-	          //console.log(v);
-	          var v1 = JSON.stringify(v);
-	          //console.log("v1:"+v1);
-	          return v1;
+	        Handlebars.registerHelper("data",function(){
+	          return JSON.stringify(this);
 	        });
-	        target.empty(); //清空tbody
-	        target.html(template(rspdata.body));
+	        target.empty().html(template(rspdata.body));
 	        //若没有相应的结果，给出提醒
 	        if($(".tritem").length == 0){
 	        	//sousaiRemindDialog("在您选择的比赛地点没有搜索到已有场地，请更换比赛地点或在此地点添加新场地。");
 	        	$(".existCourtsBox .noresult").show();
 	        }
-	        pagesCourts(rspdata.count,data.crtPage,data.rows);
+	        pagesCourts(rspdata.count,data.currentPage,data.rows);
 	      },
 	      error: function(jqXHR,textStatus,errorThrown){
 	    	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
 	    	  sousaiRemindDialog("抱歉，获取已有场地信息出错了。");
 	      },
-	    }); //ajax 已得到相应地点场地列表
+	    });
 	  
     $("div.existCourtsBox").slideDown(); //将已有场地类表滑出
     //若添加新场地列表存在，则隐藏并删除
@@ -109,54 +140,8 @@ function searchExistedCourt(crtPage,rs){
       $("div.inputCourt").remove();
       $("#newCourtCheckbox").attr("checked",false);//将添加新场地的复选框设置为非选中状态
     }
-    }
 }
 
-
-//根据当前的没页的条数和总的条数计算总页数 //现有场地表格的分页代码
-  function pagesCourts(count,crtPage,rs){
-  	  var pages = Math.ceil(count/rs) || 1, target=$(".existCourtsBox .btn-group");
-  	  target.empty().show();
-  	  if(pages == 1){
-  		  target.append('<a class="btn active" href="javascript:void(0);">1</a>').hide();
-  		  return false;
-  	  }
-  	  target.append('<a class="btn prior" href="javascript:priorCourts();">«</a><a class="btn active" href="javascript:void(0);">'+crtPage+'</a>');
-  	  if((pages > 1)&&(crtPage < pages)&&(crtPage+1 != pages)) {
-  	  	target.append('<a class="btn" href="javascript:void(0);">...</a><a href="javascript:searchExistedCourt('+pages+','+rs+');">'+pages+'</a>');
-  	  }else if(crtPage+1 == pages){
-  		target.append('<a href="javascript:searchExistedCourt('+pages+','+rs+');">'+pages+'</a>');
-  	  }
-  	  if(crtPage != pages){
-  	  target.append('<a href="javascript:nextCourts();">»</a>');
-  	  }
-  }
-  	
-  	function priorCourts(){
-  		var target = $(".existCourtsBox .btn-group"),
-  		rs = 10,
-  		crtPage = parseInt(target.find("a.active").text());
-  		if(crtPage==1){
-  			alert('已经到最顶了');
-  			return false;
-  		}else if(crtPage==2){
-  			searchExistedCourt(crtPage - 1,rs);
-  			tgrget.find("a.active").text(crtPage - 1);
-  			tgrget.find("a.prior").hide();
-  		}else{
-  			e(crtPage - 1,rs);
-  			tgrget.find("a.active").text(crtPage - 1);
-  			tgrget.find("a.prior").show();
-  		}
-  	}
-  	function nextCourts(){
-  		var target = $(".existCourtsBox .btn-group"),
-  		rs = 10,
-  		crtPage = parseInt(target.find("a.active").text());
-  		searchExistedCourt(crtPage + 1,rs);
-  		target.find("a.active").text(crtPage+1);
-  		target.find("a.prior").show();
-  	}
  //编辑比赛界面 删除
  function sureDeleteEdit(){
 	 hideSousaiRemindDialog();
@@ -172,15 +157,13 @@ function searchExistedCourt(crtPage,rs){
        	  if( rspdata == "success" ){
        		  sousaiRemindDialog("删除成功");
        		  $("#"+$("#inputMatchTitle").attr("data-id")).parent().parent().parent().remove();
-       	  }else if( rspdata == "fail" ){
-       		  sousaiRemindDialog("删除失败");
        	  }else{
        		  sousaiRemindDialog("删除失败，错误代码为："+rspdata);
        	  }
          },
          error: function(jqXHR,textStatus,errorThrown){
         	 console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-           sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
+             sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
          },
        });
  }
@@ -203,39 +186,65 @@ $(function(){
     });
     //点击保存修改
     $(".editMatch .saveMatch").click(function (){
-    	var match = getMatchInfo();
-    	console.log(match);
+    	var match = getMatchInfo(),data;
+  		if(match.iscourt == "true"){
+  			match.iscourt = true;
+      		data = {
+      			    "match.id": parseInt(match.id),
+      			    "match.name": match.title,
+      			    "match.type": match.type,
+      			    //"match.typeId": parseInt(match.typeid), //未使用
+      			    "match.beginTime": match.begintime,
+      			    "match.endTime": match.endtime,
+      			    //"match.court": match.court,
+      			    "match.courtId": parseInt(match.courtid),
+      			    "match.rule": match.rule,
+      			    //"match.relTime": match.reltime,
+      			    //"match.score": match.name,
+      			    "match.userId": parseInt(match.userid),
+      			    "match.verify": match.verify,
+      			    "isCourt": match.iscourt,
+      			    "court.name": match.court,
+      			    "court.addr": match.courtaddr,
+      			    "court.type": match.courttype,
+      			    "court.typeId": parseInt(match.courttypeid),
+      			};
+  		}else{
+  			match.iscourt = false;
+      		data = {
+      			    "match.id": parseInt(match.id),
+      			    "match.name": match.title,
+      			    "match.type": match.type,
+      			    //"match.typeId": parseInt(match.typeid), //未使用
+      			    "match.beginTime": match.begintime,
+      			    "match.endTime": match.endtime,
+      			    //"match.court": match.court,
+      			    "match.courtId": parseInt(match.courtid),
+      			    "match.rule": match.rule,
+      			    //"match.relTime": match.reltime,
+      			    //"match.score": match.name,
+      			    "match.userId": parseInt(match.userid),
+      			    "match.verify": match.verify,
+      			    "isCourt": match.iscourt,
+      			};
+  		}
                 $.ajax({
                   type: "POST",
                   url: "updateMatch",
                   contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-                  data: {
-                	  		"match.id": id,
-                			"match.name": title,
-                		    "match.rule": rule,
-                		    "match.beginTime": begintime,
-                		    "match.endTime": endtime,
-                		    "match.courtId": matchcourtid,
-                		    "match.userId": userid,
-                		    "court.name": court,
-                		    "court.addr": courtaddr,
-                		    "court.regionId": "",
-                		    "court.courtTypeId": "",
-                		    "isCourt": iscourt,
-                		  },
+                  data: data,
                   dataType: "json",
                   success: function(rspdata) {
                 	  if( rspdata == "success" ){
-                		  sousaiRemindDialog("保存成功");
-                	  }else if( rspdata == "fail" ){
-                		  sousaiRemindDialog("保存失败");
+                		  window.setTimeout("window.location。href=window.location。href",3000);
+                  		  sousaiRemindDialog("保存成功,3秒后将刷新页面。");
                 	  }else{
                 		  sousaiRemindDialog("保存失败，错误代码为："+rspdata);
                 	  }
                   },
                   error: function(jqXHR,textStatus,errorThrown){
                 	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-                    sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
+                      sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
                   },
                 });
     });
@@ -252,16 +261,15 @@ $(function(){
                   success: function(rspdata) {
                 	  if( rspdata == "success" ){
                 		  sousaiRemindDialog("发布成功");
-                   		  $("#"+$("#inputMatchTitle").attr("data-id")).parent().parent().prepend('<span class="label label-info">已发布</span>');
+                   		  $("#"+$("#inputMatchTitle").attr("data-id")).parent().parent().append('<span class="label label-info">已发布</span>');
                   		  $(".backList").click();
-                	  }else if( rspdata == "fail" ){
-                		  sousaiRemindDialog("发布失败");
                 	  }else{
-                		  sousaiRemindDialog("发布失败，错误代码未知");
+                		  sousaiRemindDialog("发布失败，错误代码为"+rspdata);
                 	  }
                   },
-                  error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-                    sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
+                  error: function(jqXHR,textStatus,errorThrown){
+                	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
+                      sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
                   },
                 }); 
     });
@@ -308,33 +316,14 @@ $(function(){
   	  var tgPrt = $(this).parent();
   	  $("#newCourtRegion > .newCourtCountry").text( tgPrt.find(".selectCountry option:selected").text() );
     });
-  		  
-  		  
     //点击大类比赛类型获得具体比赛类型
     $(".selectMatchType").change(function() {
     	selectMatchType($(this));
     });
-
     //点击比赛类型 选择其他出现输入框 或者 当场地类型存在时获取相应场地类型
     $(".selectParticularMatchType").change(function() {
     	selectParticularMatchType($(this));
     });
-
-    //日期选择器 jquery.datepicker
-    /*$( "#inputMatchTimefrom" ).datepicker({
-      defaultDate: "+1w",
-      changeMonth: true,
-      onClose: function( selectedDate ) {
-        $( "#inputMatchTimeto" ).datepicker( "option", "minDate", selectedDate );
-      }
-    });
-    $( "#inputMatchTimeto" ).datepicker({
-      defaultDate: "+1w",
-      changeMonth: true,
-      onClose: function( selectedDate ) {
-        $( "#matchTimefrom" ).datepicker( "option", "maxDate", selectedDate );
-      }
-    });*/
     //日期选择器 bootstrap.datepicker
     $("#inputMatchTimefrom").datetimepicker({
         language: 'zh-CN',
@@ -369,7 +358,7 @@ $(function(){
     });
     //搜索现有场地
     $("#searchExistedCourt").click(function(){
-    	searchExistedCourt(1,10);
+    	searchExistedCourt(1,1);
     });
     //添加新场地
     $("#newCourtBtn").click(function () {

@@ -221,6 +221,9 @@ function uploadevent(status,picUrl,callbackdata){
 }
 }
 $(function () {
+	//获得已有比赛信息
+	userCenterRemind();
+	  
     //editUser鼠标点击选择头像
     $("#systemIcons li").click(function(){
       $(this).parent().find("li").removeClass("active");
@@ -296,8 +299,9 @@ $(function () {
 	$("#saveEditUserForm").click(function(){
 		//检测用户是否为登录状态
 		var userid =isLogined();
+		console.log(userid);
 		console.log(userid.responseJSON);
-		if(userid.responseJSON==-1){
+		if(userid.responseJSON=="error"){
 			// -1 为未登录状态，其他则为用户ID
 			newformloginBox();
 		}else{

@@ -81,12 +81,10 @@ function userCenterRemind() {
         url: "cntEachMatch",
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         dataType: "json",
+        data: {action: 1},
         success: function(rspdata) {
-            console.log("已有比赛信息：" + rspdata);
             targetBreadcrumb.empty().append("<li>比赛信息:</li>");
-            $.each(rspdata,
-            function(key, value) {
-                console.log(key + ": " + value);
+            $.each(rspdata, function(key, value) {
                 targetBreadcrumb.append('<li><a href="userCenter-myMatch.jsp" title="去查看比赛">' + key + '<span>(' + value + ')</span></a></li>');
             });
             //若没有比赛信息则提示 没有比赛信息 即，没有span
@@ -96,10 +94,9 @@ function userCenterRemind() {
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(jqXHR + " /" + textStatus + " /" + errorThrown);
-            sousaiRemindDialog("抱歉，获取比赛信息出错了。");
             console.log("userCenterRemind 抱歉，获取比赛信息出错了。");
         },
-    }); //ajax 已得到发布的比赛信息
+    });
 }
 
 //添加本地收藏
@@ -184,45 +181,37 @@ function pages(count, crtPage, rs) {
         target.append('<li class="active"><a href="javascript:void(0)">1</a></li>').hide();
         return false;
     }
-    target.append('<li class="prior"><a href="javascript:prior()"><span aria-hidden="true">«</span><span class="sr-only"></span></a></li><li class="active"><a href="javascript:void(0)">' + crtPage + '</a></li>');
+    target.append('<li class="prior"><a href="javascript:void(0);" onclick="prior('+ rs +')"><span aria-hidden="true">«</span><span class="sr-only"></span></a></li><li class="active"><a href="javascript:void(0)">' + crtPage + '</a></li>');
     if ((pages > 1) && (crtPage < pages) && (crtPage + 1 != pages)) {
-        target.append('<li><a href="javascript:void(0)">...</a></li><li><a href="javascript:e(' + pages + ',' + rs + ')">' + pages + '</a></li>');
+        target.append('<li><a href="javascript:void(0)">...</a></li><li><a href="javascript:void(0);" onclick="e({currentPage:' + pages + ',rows:' + rs + '})">' + pages + '</a></li>');
     } else if (crtPage + 1 == pages) {
-        target.append('<li><a href="javascript:e(' + pages + ',' + rs + ')">' + pages + '</a></li>');
+        target.append('<li><a href="javascript:void(0);" onclick="e({currentPage:' + pages + ',rows:' + rs + '})">' + pages + '</a></li>');
     }
     if (crtPage != pages) {
-        target.append('<li class="next"><a href="javascript:next()"><span aria-hidden="true">»</span><span class="sr-only"></span></a></li>');
+        target.append('<li class="next"><a href="javascript:void(0);" onclick="next('+ rs +')"><span aria-hidden="true">»</span><span class="sr-only"></span></a></li>');
     }
 }
-//点击页码
-//$("ul.pagination > li.prior").click(
-function prior() {
+function prior(rs) {
     var tgrget = $("ul.pagination"),
-    rs = $("select.selectRows option:selected").val(),
-    crtPage = tgrget.find("li.active a").text();
-    //alert(rs +'  '+ crtPage);
+    crtPage = parseInt(tgrget.find("li.active a").text())||1;
+    rs = rs||$("select.selectRows option:selected").val()||25;
     if (crtPage == 1) {
-        alert('已经到最顶了');
+        sousaiRemindDialog('已经到最顶了');
         return false;
     } else if (crtPage == 2) {
-        e(crtPage - 1, rs);
-        tgrget.find("li.active a").text(crtPage - 1);
-        tgrget.find("li.prior").addClass("disabled");
+        e({currentPage:crtPage-1,rows:rs});
+        tgrget.find("li.active a").text(crtPage - 1).end().find("li.prior").addClass("disabled");
     } else {
-        e(crtPage - 1, rs);
-        tgrget.find("li.active a ").text(crtPage - 1);
-        tgrget.find("li.prior").removeClass("disabled");
+        e({currentPage:crtPage-1,rows:rs});
+        tgrget.find("li.active a ").text(crtPage - 1).end().find("li.prior").removeClass("disabled");
     }
 }
-//$("ul.pagination > li.next").click(
-function next() {
+function next(rs) {
     var tgrget = $("ul.pagination").parent(),
-    rs = $("select.selectRows option:selected").val(),
-    crtPage = parseInt(tgrget.find("li.active a").text());
-    //alert(rs +'  '+ crtPage);
-    e(crtPage + 1, rs);
-    tgrget.find("li.active a ").text(crtPage + 1);
-    tgrget.find("li.prior").removeClass("disabled");
+    crtPage = parseInt(tgrget.find("li.active a").text())||1;
+    rs = rs||$("select.selectRows option:selected").val()||25;
+    e({currentPage:crtPage+1,rows:rs});
+    tgrget.find("li.active a ").text(crtPage + 1).end().find("li.prior").removeClass("disabled");
 }
 
 //用户添加收藏比赛
@@ -230,28 +219,27 @@ function markMatch(matchid) {
 	//检测用户是否为登录状态
 	var userid =isLogined();
     matchid = matchid || -1;
-	if(userid.responseJSON==-1){
+    if (matchid == -1) {
+        return false;
+    }
+	if(userid.responseJSON=="error"){
 		// -1 为未登录状态，其他则为用户ID
 		newformloginBox();
-	}else if (matchid == -1) {
-		console.log("matchid为-1");
-        return false;
-    }else {
+	}else {
         $.ajax({
             type: "POST",
             url: "markMatch",
             contentType: "application/x-www-form-urlencoded; charset=UTF-8",
             dataType: "json",
             data: {
-                "userMark.userId": userid.responseJSON,
+                "userMark.userId": userid.responseJSON.userId,
                 "userMark.matchId": matchid
             },
             success: function(rspdata) {
-                console.log("收藏比赛成功：" + rspdata);
                 if (rspdata == "success") {
                     sousaiRemindDialog("收藏比赛成功");
                 } else {
-                    sousaiRemindDialog("收藏比赛失败，错误类型为：" + rspdata + ".请重试");
+                    sousaiRemindDialog("收藏比赛失败，错误类型为：" + rspdata);
                 }
             },
             error: function(jqXHR, textStatus, errorThrown) {
@@ -378,8 +366,8 @@ function getRegion() {
 	        dataType: "json",
 	        async: false, //设置异步为false,解决ajax异步不能设置全局变量的问题
 	        success: function(rspdata) {
-	            //console.log("isLogined函数内USERID:" + rspdata);
-	            return parseInt(rspdata);
+	            //console.log("isLogined函数内USERID:");console.log(rspdata);
+	            return rspdata;
 	        },
 	        error: function(jqXHR, textStatus, errorThrown) {
 	            console.log(jqXHR + " /" + textStatus + " /" + errorThrown);
@@ -508,8 +496,7 @@ $(function() {
     });
     //切换城市
     $("#changeCityBtn").click(function() {
-        $(this).parents("p").hide();
-        $(this).parent().parent().find(".hdcity-hide").fadeIn();
+        $(this).parent().hide().parent().find(".hdcity-hide").fadeIn();
     });
 
     //navbar中 专用的查询函数 当选中一个省份后，查询对应的市区名称
@@ -720,37 +707,24 @@ $(function() {
     });
     //立即调用初始化省 已经使用硬编码的方式替代初始化省
     //initProvince();
-    //管理员界面搜索框级联下拉菜单
-    $(".selectFilter").change(function() {
-        var dataforFilter = $(this).parent().find(".selectFilter option:selected").attr("data-forFilter");
-        console.log(dataforFilter);
-        $(this).parent().find("input[type='text']").attr("data-path", dataforFilter); //设置输入框筛选路径
-    });
 
     //重复点击下拉列表改变排序
     var sortflag = 1;
     $(".sort li").click(function() {
         var tempthis = $(this),
         orderbycol = tempthis.find("a").attr("data-orderbycol"),
-        isasc = tempthis.find("a").attr("data-isasc"),
-        rs = $("select.selectRows option:selected").val(),
-        crtPage = $("ul.pagination > li.active a").text(),
-        sc = $(".text-filter-box button .current").attr("data-strcolumns"),
-        kv = $(".text-filter-box input").val();
+        isasc = tempthis.find("a").attr("data-isasc");
 
         tempthis.parent().parent().find(".current").html(tempthis.find("a").html()).attr("data-orderbycol", orderbycol).attr("data-isasc", isasc);
 
         if (sortflag == 1) {
-            tempthis.find("i").removeClass("icon-arrow-up").addClass("icon-arrow-down");
-            tempthis.find("a").attr("data-isasc", false);
+            tempthis.find("i").removeClass("icon-arrow-up").addClass("icon-arrow-down").end().find("a").attr("data-isasc", false);
             sortflag = 0;
         } else {
-            tempthis.find("i").removeClass("icon-arrow-down").addClass("icon-arrow-up").attr("data-isasc", true);
-            tempthis.find("a").attr("data-isasc", true);
+            tempthis.find("i").removeClass("icon-arrow-down").addClass("icon-arrow-up").attr("data-isasc", true).end().find("a").attr("data-isasc", true);
             sortflag = 1;
         }
-        alert(crtPage + " " + rs + " " + orderbycol + " " + isasc + " " + sc + " " + kv);
-        e(crtPage, rs, orderbycol, isasc, sc, kv);
+        e({orderByCol:orderbycol,isAsc:isasc});
     });
     //点击搜索类别
     $(".text-filter-box li").click(function() {
@@ -761,27 +735,12 @@ $(function() {
     });
     //点击text-filter-box下的搜索按钮
     $("#textFilterBoxSearchButton").click(function() {
-        var orderbycol = $(".sort button .current").attr("data-orderbycol"),
-        isasc = $(".sort button .current").attr("data-isasc"),
-        rs = $("select.selectRows option:selected").val(),
-        crtPage = $("ul.pagination > li.active a").text(),
-        sc = $(".text-filter-box button .current").attr("data-strcolumns"),
-        kv = $(".text-filter-box input").val();
-        alert(crtPage + " " + rs + " " + orderbycol + " " + isasc + " " + sc + " " + kv);
-        e(crtPage, rs, orderbycol, isasc, sc, kv);
+        e({});
     });
 
     //点击切换当前页数显式的条数
     $("select.selectRows").change(function() {
-        var rs = $("select.selectRows option:selected").val(),
-        crtPage = 1,
-        //每次点击改变条数都从第一页开始；parseInt($("ul.pagination > li.active").text()) || 1; //若当前页数为空则默认为第一页
-        orderbycol = $(".sort button .current").attr("data-orderbycol"),
-        isasc = $(".sort button .current").attr("data-isasc"),
-        sc = $(".text-filter-box button .current").attr("data-strcolumns"),
-        kv = $(".text-filter-box input").val();
-        alert(crtPage + " " + rs + " " + orderbycol + " " + isasc + " " + sc + " " + kv);
-        e(crtPage, rs, orderbycol, isasc, sc, kv);
+        e({currentPage:1});
     });
 
 });
