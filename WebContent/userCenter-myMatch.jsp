@@ -3,77 +3,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>我的搜赛 &middot; 我发布的比赛 &middot; 搜赛网</title> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
-  <meta name="description" content="搜赛网用户中心-我的搜赛-我发布的比赛" /> 
-  <meta name="author" content="KING@CQU" />
-  <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet" /> 
-  <link href="css/bootstrap.min.css" rel="stylesheet" /> 
-  <link href="css/bootstrap-responsive.css" rel="stylesheet" />
-  <link href="css/sousai.common.css" rel="stylesheet" />
-  <link href="css/sousai.userCenter.css" rel="stylesheet" />
-  <!--[if lte IE 8]>
-  <link href="css/sousai.IE8.css" rel="stylesheet" /> 
-  <![endif]-->
-  <style type="text/css">
-  
-/** 比赛列表 **/
-.matchBoxs{border: 1px solid #ccc;margin: 10px 0;float: left;padding: 10px;}
-.matchBox .matchBox-all{float: left;}
-.matchBox .matchBox-title{background-color: #f5f5f5;border: 1px solid #ccc;border-bottom: 0;padding:2px 5px;}
-.matchBox ul{padding: 0;background-color: #fff;border: 1px solid #ccc;-webkit-border-radius: 0;
-  -moz-border-radius: 0;border-radius: 0;}
-.matchBox ul > li{padding-left:5px;vertical-align: middle;text-align: center;border-left: 1px solid #ccc;}
-.matchBox .matchBox-time{width: 185px;border-left: 0;}
-.matchBox .matchBox-time > div{float:left;}
-.matchBox .matchBox-time > div.line{height: 50px;line-height:50px;}
-.matchBox .matchBox-court{width: 180px;}
-.matchBox .matchBox-state{width: 50px;color: #ff040f;}
-.matchBox .matchBox-info{width: 220px;}
-.matchBox .matchBox-btns{width: 60px;padding-right: 5px;}
-
-  /** 现有场地框 **/
-  .existCourtsBox{border: 3px solid #ddd;
-  -webkit-border-radius: 0 0 6px 6px;
-  -moz-border-radius: 0 0 6px 6px;
-  border-radius: 0 0 6px 6px;}
-  /** 避免验证后无圆角 **/
-  .input-append span.add-on{
-  -webkit-border-radius: 0 4px 4px 0;
-  -moz-border-radius: 0 4px 4px 0;
-  border-radius: 0 4px 4px 0;
-  }
-  /** 现有场地表格 **/
-  .existCourtsBox tr{cursor: pointer;}
-  .existCourtsBox tr.active {
-    font-weight: bold;
-  }
-  /** 添加场地按钮 **/
-  .existCourtsBox > .text-center > .btn {margin-top: 10px;float: none;}
-  /** 编辑比赛 按钮bar  **/
-  .editMatch > .btnbar {margin-left: 0;}
-  /** 编辑比赛按钮bar 中的按钮  **/
-  .editMatch > .btnbar > .btn {float: right;margin-left: 10px;}  
-  /** 最小宽度情况下 **/
-  @media (max-width: 480px) {
-    /** 搜索现有场地按钮 **/
-    #searchExistedCourt{margin-top: 5px;}
-  }
-  /** 排序下拉按钮 **/
-  .panel-top > .btn-group {margin-top: 10px;}
-  
-  </style>
+  <title>我的搜赛 &middot; 我发布的比赛 &middot; 搜赛网</title>
+  <meta name="description" content="搜赛网用户中心-我的搜赛-我发布的比赛">
+  <s:include value="seg-meta.jsp"/>
+  <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+  <link href="css/sousai.userCenter.css" rel="stylesheet">
 </head>
 <body class="userCenter">
-<s:include value="navbar.jsp" /><!-- 页首导航条 -->
+<s:include value="seg-navbar.jsp"/><!-- 页首导航条 -->
 <div class="container"> 
  <div class="hdpush"></div> 
  <div class="row"> 
   <div class="span4"> 
-   <a class="logoBack" href="index.jsp" title="回到首页"><img src="img/logo.png" alt="搜赛网"/></a>
+   <a class="logoBack" href="index.jsp" title="回到首页"><img src="img/logo.png" alt="搜赛网"></a>
    <span class="logotext">我的搜赛</span> 
   </div> 
-  <s:include value="searchbox.jsp" /><!-- 搜索框 -->
+  <s:include value="seg-searchbox.jsp"/><!-- 搜索框 -->
  </div><!-- /row -->
 
     <div class="row"> 
@@ -85,16 +30,7 @@
        </ul>
       </div>
      </div> 
-     <div class="span2 mySousaiMenu "> 
-      <ul class="nav nav-stacked nav-side"> 
-       <li class="active"><a href="userCenter-myMatch.jsp"><i class="icon-chevron-right"></i> 我发布的比赛</a></li> 
-       <li><a href="userCenter-myCollection.jsp"><i class="icon-chevron-right"></i> 我收藏的比赛</a></li> 
-       <li><a href="userCenter-releaseMatch.jsp"><i class="icon-chevron-right"></i> 发布比赛</a></li> 
-       <li><a href="userCenter-releaseCourt.jsp"><i class="icon-chevron-right"></i> 发布场地</a></li> 
-       <li><a href="userCenter-myCourt.jsp"><i class="icon-chevron-right"></i> 我发布的场地</a></li> 
-       <li><a href="userCenter-editUser.jsp"><i class="icon-chevron-right"></i> 编辑账户</a></li> 
-      </ul> 
-     </div> 
+      <s:include value="seg-userCenter-menu.jsp"/><!-- 用户中心导航菜单 -->
      <div class="span8"> 
       <div class="userCenter-remind">
        <ul class="breadcrumb"> 
@@ -106,7 +42,7 @@
        <div id="myMatch" class="tab-pane active"> 
         <div class="matchs matchList" id="matchsList">
          <!-- panel --> 
-         <div class="panel-top">
+         <div class="panel-top form-inline">
          <div class="btn-group sort" role="group">
 		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current" data-orderbycol="name" data-isasc="true">排序方式</span><span class="caret"></span></button>
 		<ul class="dropdown-menu" role="menu">
@@ -128,7 +64,7 @@
        </div>
        <!-- /myMatch -->
        <!--编辑比赛 开始-->
-        <s:include value="editMatch.jsp" />
+        <s:include value="seg-editMatch.jsp"/>
        <!-- /编辑比赛信息 -->  
        
     <div class="updateScore hide">
@@ -151,7 +87,7 @@
    <div class="ftpush"></div> 
   </div>
   <!-- /container --> 
-  <s:include value="footer.jsp" />
+  <s:include value="seg-footer.jsp"/>
   <!-- 页尾信息 --> 
   <script src="js/bootstrap-datetimepicker.min.js"></script> 
   <script src="js/bootstrap-datetimepicker.zh-CN.js"></script> 
@@ -200,10 +136,7 @@
 	  	
 		$("#ajaxState .load").show();
 	  	$.ajax({
-	        type: "POST",
 	        url: "getMatchByUserId",
-	        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-	        dataType: "json",
 	        data: argso,
 	        success: function(rspdata) {
 	        	console.log(rspdata);
@@ -230,10 +163,6 @@
 		  	      //根据总数、当前页数、每页行数 分页
 		    	  pages(rspdata.count,args.currentPage,args.rows);
 	        },
-	        error: function(jqXHR,textStatus,errorThrown){
-	          console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-	          sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
-	        },
 	      });
   }
   //点击编辑比赛隐藏List列表同时显示编辑比赛
@@ -251,16 +180,18 @@
 	$(".updateScore").slideDown();
 	}
     
-  $(function () {
+  $(function(){
+	  setMenu();
+		//检测用户是否为登录状态
+		var userid =isLogined();
+		if(userid.responseJSON=="error"){
+			$(".span8",".span11").html("您还未登录，请先登录。");
+			return false;
+		}
     	//获得已有比赛信息
     	userCenterRemind();
 		//ajax接收所有我发布的比赛
 		e({currentPage:1,rows:25});
-        //鼠标hover matchbox
-        $(".matchBoxs ").on('mouseenter','div.matchBox',function(){
-        	      $('div.matchBox').removeClass("box-active");
-        	      $(this).addClass("box-active");
-        });
         //点击返回比赛列表
         $(".updateScore .backList").click(function(){
         	$(".matchList").slideDown();
@@ -284,11 +215,8 @@
       			    isCourt: false,
       			};
         	 $.ajax({
-                type: "POST",
                 url: "updateMatch",
-                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
                 data: data,
-                dataType: "json",
                 success: function(rspdata) {
               	  if( rspdata == "success" ){
               		  window.setTimeout("window.location.href=window.location.href",3000);
@@ -296,10 +224,6 @@
               	  }else{
               		  sousaiRemindDialog("录入成绩失败，错误代码为："+rspdata);
               	  }
-                },
-                error: function(jqXHR,textStatus,errorThrown){
-              	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-                    sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
                 },
               }); 
         });

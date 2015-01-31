@@ -4,12 +4,8 @@
 <html>
  <head> 
   <title>搜赛网</title> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
-  <meta name="description" content="搜赛网注册页面" /> 
-  <meta name="author" content="KING@CQU" /> 
-  <link href="css/bootstrap.min.css" rel="stylesheet" /> 
-  <link href="css/bootstrap-responsive.css" rel="stylesheet" /> 
-  <link href="css/sousai.common.css" rel="stylesheet" />   
+  <meta name="description" content="搜赛网注册页面"> 
+  <s:include value="seg-meta.jsp"/>
   <style type="text/css">
   /* 主页主体快捷图标 */
 .scmn{margin-top: 30px;}
@@ -57,20 +53,17 @@
 	background-color: #ccc;
 }
   </style>
-  <!--[if lte IE 8]>
-  <link href="css/sousai.IE8.css" rel="stylesheet" /> 
-  <![endif]-->
   </head> 
  <body class="index"> 
-  <s:include value="navbar.jsp" />
+  <s:include value="seg-navbar.jsp"/>
   <!-- 页首导航条 --> 
   <div class="container"> 
    <div class="hdpush"></div> 
    <div class="row"> 
     <div class="span2 offset1"> 
-     <a class="logoBack" href="index.jsp" title="回到首页"><img src="img/logo.png" alt="搜赛网"/></a> 
+     <a class="logoBack" href="index.jsp" title="回到首页"><img src="img/logo.png" alt="搜赛网"></a> 
     </div> 
-    <s:include value="searchbox.jsp" />
+    <s:include value="seg-searchbox.jsp"/>
     <!-- 搜索框 --> 
    </div> 
    <div class="row container scmn"> 
@@ -80,7 +73,7 @@
    <div class="ftpush"></div> 
   </div> 
   <!-- /container --> 
-  <s:include value="footer.jsp" />
+  <s:include value="seg-footer.jsp"/>
   <!-- 页尾信息 --> 
   <script src="js/handlebars-v2.0.0.js"></script>
   <!-- handlebars template -->
@@ -90,8 +83,8 @@
 		<li class="matchIcon">
 		<a class="blk" target="_blank" href="matchSearchAdv.jsp?matchType={{key}}">
 	      		      <div class="icon">
-	      	      <img alt="{{key}}" src="img/{{UnicodeKey}}-grey.png" class="pull-left"/> 
-	      	        <div class="subtitle pull-right text-center"> 
+	      	      {{!-- <img alt="{{key}}" src="img/{{UnicodeKey}}-grey.png" class="pull-left"> --}}
+	      	        <div class="subtitle {{!-- pull-right --}} text-center"> 
 	      	         <span class="title">{{key}}</span>
 	      	         <p>比赛&nbsp;&nbsp;<span class="number">{{value}}</span>&nbsp;&nbsp;场</p> 
 	      	        </div>
@@ -122,9 +115,9 @@
 	            	"data":data	
 	            };
 	            var template = Handlebars.compile($('#matchIcon-template').html());
-	            Handlebars.registerHelper("UnicodeKey",function(){
+	            /* Handlebars.registerHelper("UnicodeKey",function(){
 	                return escape(this.key).toLocaleLowerCase().replace(/%u/gi, 'u');
-	              });
+	              }); */
 			    target.empty().html(template(temp.data));
 	        },
 	        error: function(jqXHR,textStatus,errorThrown){
@@ -144,19 +137,19 @@
 
         $(this).find(".subtitle span.sub").addClass("title").end().find("div.iconlabel").show();
         
-        var imgurl = $(this).find("img").attr("src");
+        /* var imgurl = $(this).find("img").attr("src");
         if(imgurl !== "img/defaultIcon.png"){
           $(this).find("img").attr("src",imgurl.split("-")[0]+".png");
-        };
+        }; */
         
     });
     $(".scmn").on("mouseleave","li",function(event){
     	//console.log("mouseleave");//console.log(event);
     	$(this).find(".subtitle span.sub").removeClass("title").end().find("div.iconlabel").hide();
-        var imgurl = $(this).find("img").attr("src");
+        /* var imgurl = $(this).find("img").attr("src");
         if(imgurl !== "img/defaultIcon.png"){
           $(this).find("img").attr("src",imgurl.split(".")[0]+"-grey.png");
-        };
+        }; */
     });
     
   });

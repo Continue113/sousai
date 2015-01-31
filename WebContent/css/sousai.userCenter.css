@@ -1,4 +1,4 @@
-/** ä¾§è¾¹å¯¼èˆª **/
+/** ²à±ßµ¼º½ **/
 .mySousaiMenu{margin-left: 0;}
 
 .nav-side.affix {
@@ -62,14 +62,37 @@ box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
 background-image: url(img/glyphicons-halflings-white.png);
 opacity: 1;
 }
-/****/
-/** å‘å¸ƒé¡µé¢æŒ‰é’®é—´éš” **/
+/** ·¢²¼Ò³Ãæ°´Å¥¼ä¸ô **/
 .controls > button {margin-left: 10px;}
-/** ç”¨æˆ·ä¸­å¿ƒæé†’ **/
+/** ÓÃ»§ÖÐÐÄÌáÐÑ **/
 .userCenter-remind span{color:red;}
 .userCenter-remind .breadcrumb{margin-bottom: 0;}
-/** jplist panelå¤–æ¡†**/
-.jplist-panel-top{border: 3px solid #ccc;float: left;padding:0 10px 10px 10px;margin-top: 10px;}
+
 .fileupload-buttonbar{margin-top: 10px;}
-/** ie8-11ä¸‹ span8å·¦è¾¹è·é—®é¢˜ **/
+
+ /* ±à¼­ÓÃ»§ÐÅÏ¢½çÃæÏà¹ØÑùÊ½ */
+  /** ¸ü¸ÄÃÜÂëlabelÅÅÁÐ·½Ê½ **/
+  .control-label-changePwd {margin: 5px 0 0 0;}
+  /** µ±Ç°Í·Ïñ **/
+  #editUserForm .crtUserIcon {
+  display: inline-block;
+  padding: 4px;
+  border: 1px solid #ddd;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  }
+  #editUserForm .crtUserIcon > img {width: 100px;height: 100px;}
+  /** ËõÂÔÍ¼**/
+  .userCenter .thumbnail img {width: 50px;height: 50px;}
+  #imghead {filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=image);height: 70px;}
+  .fileinput-button {margin-top: 5px;}
+/** ie8-11ÏÂ span8×ó±ß¾àÎÊÌâ **/
 .span11 > .span8 {margin-left\0: 100px;}

@@ -1,0 +1,80 @@
+.span4, .span11 {
+  margin-top: 20px;
+}
+/** 管理员页面提醒 **/
+.background-remind span {color: red;margin-left: 5px;}
+/**侧边导航**/
+.backgroundMenu{
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  -webkit-box-shadow: 0 1px 4px rgba(0,0,0,.065);
+  -moz-box-shadow: 0 1px 4px rgba(0,0,0,.065);
+  box-shadow: 0 1px 4px rgba(0,0,0,.065);
+}
+.backgroundMenu h5 {margin-top: 0;margin-bottom: 0;background-color: #f5f5f5;padding: 3px 10px;}
+.backgroundMenu h5 i {margin-right: 5px;}
+.backgroundMenu h5 a{color: #000;}
+.nav-side > li {padding: 3px 5px;}
+.nav-side > li > a {display: block;padding: 3px 10px;}
+.nav-side .icon-chevron-down {opacity: 0;}
+.nav-side .active .icon-chevron-down, .nav-side .active a:hover .icon-chevron-down {
+background-image: url(../img/glyphicons-halflings-white.png);
+opacity: 1;
+}
+.nav-side > .active > a,.nav-side .active a:hover  {
+  color: #fff;
+  background-color: #62c462;
+  font-weight: bold;
+  position: relative;
+  z-index: 2;
+  border: 0;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  text-shadow: 0 1px 0 rgba(0,0,0,.15);
+  -webkit-box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
+  -moz-box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
+  box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
+}
+/** 搜索框 **/
+  .input-append input[type="text"] {
+-webkit-border-radius: 3px 0 0 3px;
+-moz-border-radius: 3px 0 0 3px;
+border-radius: 3px 0 0 3px;
+}
+  .input-append select {
+    width: 100px;
+-webkit-border-radius: 0 0 0 0;
+-moz-border-radius: 0 0 0 0;
+border-radius: 0 0 0 0;
+}
+/** 采集列表 **/
+.table th, .table td{text-align: center;}
+.table .text-center {text-align: center;}
+.table th:first-child {text-align: left;padding-left: 30px;}
+.table td:first-child {text-align: left;}
+.table input[type="checkbox"] {margin: 0;margin-right: 10px;}
+
+.table .match .match-title > label, .table .court .court-name > label {width: 218px;}
+.table .match .court-name {width: 218px;}
+.table .evaluation .evaluation-content > label {width: 400px;}
+.table .evaluation .court-name {width: 270px;}
+.table .court-address {width: 260px;}
+ 
+  /* 后台维护的panel中的复选框 */
+  .matchState > .controls > .checkbox{padding-top: 5px;}
+
+  /* 后台设置页面的比赛类型设置 */
+  .breadcrumb-fff .span1 {margin-top: 4px}
+  
+  /* 后台统计页面regUserCount */
+  .statisticsTable th:first-child,
+  .matchNumTable th:first-child,
+  .matchNumTable td:first-child {text-align: center;padding-left: 0;}
+  .statisticsTable td:first-child {text-align: right;}
+  .toolBox {margin-bottom: 10px;}
+  .chartBox {height:500px;border:1px solid #ccc;padding:10px;margin-bottom: 10px;}

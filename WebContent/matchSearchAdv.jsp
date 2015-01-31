@@ -4,46 +4,20 @@
 <html>
  <head> 
   <title>比赛高级搜索 &middot; 搜赛网</title> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
-  <meta name="description" content="搜赛网比赛搜索页面" /> 
-  <meta name="author" content="KING@CQU" /> 
-  <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet" /> 
-  <link href="css/bootstrap.min.css" rel="stylesheet" /> 
-  <link href="css/bootstrap-responsive.css" rel="stylesheet" />
-  <link href="css/sousai.common.css" rel="stylesheet" />
-  <!--[if lte IE 8]>
-  <link href="css/sousai.IE8.css" rel="stylesheet" /> 
-  <![endif]-->
-  <style type="text/css">
-  .matchState > .controls > .checkbox{padding-top: 5px;}
-/** 比赛列表 **/
-.matchBoxs{border: 1px solid #ccc;margin: 10px 0;float: left;padding: 10px;}
-.matchBox .matchBox-all{float: left;}
-.matchBox .matchBox-title{background-color: #f5f5f5;border: 1px solid #ccc;border-bottom: 0;padding:2px 5px;}
-.matchBox ul{padding: 0;background-color: #fff;border: 1px solid #ccc;-webkit-border-radius: 0;
-  -moz-border-radius: 0;border-radius: 0;}
-.matchBox ul > li{padding-left:5px;vertical-align: middle;text-align: center;border-left: 1px solid #ccc;}
-.matchBox .matchBox-time{width: 185px;border-left: 0;}
-.matchBox .matchBox-time > div{float:left;}
-.matchBox .matchBox-time > div.line{height: 50px;line-height:50px;}
-.matchBox .matchBox-court{width: 180px;}
-.matchBox .matchBox-state{width: 50px;color: #ff040f;}
-.matchBox .matchBox-info{width: 220px;}
-.matchBox .matchBox-btns{width: 60px;padding-right: 5px;}
-/** 比赛排序 **/
-.panel-top{margin-top: 5px;}
-  </style>
+  <meta name="description" content="搜赛网比赛搜索页面" >
+  <s:include value="seg-meta.jsp"/>
+  <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet">
  </head> 
  <body class="matchSearch">
-  <s:include value="navbar.jsp" />
+  <s:include value="seg-navbar.jsp"/>
   <!-- 页首导航条 --> 
   <div class="container"> 
    <div class="hdpush"></div> 
    <div class="row"> 
     <div class="span2 offset2"> 
-     <a class="logoBack" href="index.jsp" title="回到首页"><img src="img/logo.png" alt="搜赛网"/></a> 
+     <a class="logoBack" href="index.jsp" title="回到首页"><img src="img/logo.png" alt="搜赛网"></a> 
     </div> 
-    <s:include value="searchbox.jsp" />
+    <s:include value="seg-searchbox.jsp"/>
     <!-- 搜索框 --> 
    </div> 
    <div class="row"> 
@@ -55,11 +29,10 @@
      <div class="searchbox-ad"> 
       <form class="form-horizontal"> 
        <fieldset> 
-        <legend>比赛搜索</legend> 
         <div class="control-group"> 
          <label class="control-label" for="searchKey">关&nbsp;&nbsp;键&nbsp;&nbsp;词：</label> 
          <div class="controls"> 
-          <input type="text" id="keyValue" placeholder="请输入搜索关键词" /> 
+          <input type="text" id="keyValue" placeholder="请输入搜索关键词" > 
           <a href="courtSearch.jsp" class="btn btn-small pull-right">转换到场地搜索界面</a> 
          </div> 
         </div> 
@@ -68,41 +41,41 @@
          <div class="controls"> 
             <select class="selectMatchType" name="mcId"><option value=0>请选择比赛大类</option></select>
             <select class="selectParticularMatchType"><option value=0>请先选择比赛大类</option></select>
-            <input class="hide" id="particularMatchType" name="court.matchType"/>
-            <label class="omthide hide" class="control-label" for="otherMatchType">请输入类型：<input class="omthide hide" id="otherMatchType" type="text" value="" placeholder="请填写比赛类型"/></label>
+            <input class="hide" id="particularMatchType" name="court.matchType">
+            <label class="omthide hide" class="control-label" for="otherMatchType">请输入类型：<input class="omthide hide" id="otherMatchType" type="text" value="" placeholder="请填写比赛类型"></label>
          </div> 
         </div> 
         <div class="control-group matchState"> 
          <label class="control-label" for="matchState">比赛状态：</label> 
          <div class="controls form-inline"> 
-          <label class="checkbox"><input type="checkbox" id="matchState_applying" checked="checked" />报名中&nbsp;&nbsp;</label> 
-          <label class="checkbox"><input type="checkbox" id="matchState_playing" checked="checked" />比赛中&nbsp;&nbsp;</label> 
-          <label class="checkbox"><input type="checkbox" id="matchState_played" checked="checked" />已结束&nbsp;&nbsp;</label> 
+          <label class="checkbox"><input type="checkbox" id="matchState_applying" checked="checked" >报名中&nbsp;&nbsp;</label> 
+          <label class="checkbox"><input type="checkbox" id="matchState_playing" checked="checked" >比赛中&nbsp;&nbsp;</label> 
+          <label class="checkbox"><input type="checkbox" id="matchState_played" checked="checked" >已结束&nbsp;&nbsp;</label> 
          </div>
         </div> 
         <div class="control-group"> 
          <label class="control-label" for="inputMatchTimefrom">比赛时间：</label> 
          <div class="controls form-inline"> 
           <div class="input-append"> 
-           <input type="text" class="input-small height-mini" id="inputMatchTimefrom" placeholder="请选择日期" /> 
+           <input type="text" class="input-small height-mini" id="inputMatchTimefrom" placeholder="请选择日期" > 
            <span class="add-on" data-toggle="tooltip" data-placement="top" title="" data-original-title="点击输入框可以选择日期"><i class="icon-calendar"></i></span> 
           </div> 
           <label for="to">—</label> 
           <div class="input-append"> 
-           <input type="text" class="input-small" id="inputMatchTimeto" placeholder="请选择日期" /> 
+           <input type="text" class="input-small" id="inputMatchTimeto" placeholder="请选择日期" > 
            <span class="add-on" data-toggle="tooltip" data-placement="top" title="" data-original-title="点击输入框可以选择日期"><i class="icon-calendar"></i></span> 
           </div> 
-          <label class="checkbox"><input type="checkbox" id="matchTime_days" class="matchTime" />工作日&nbsp;&nbsp;</label> 
-          <label class="checkbox"><input type="checkbox" id="matchTime_saturday" class="matchTime" />星期六&nbsp;&nbsp;</label> 
-          <label class="checkbox"><input type="checkbox" id="matchTime_sunday" class="matchTime" />星期日&nbsp;&nbsp;</label> 
+          <label class="checkbox"><input type="checkbox" id="matchTime_days" class="matchTime" >工作日&nbsp;&nbsp;</label> 
+          <label class="checkbox"><input type="checkbox" id="matchTime_saturday" class="matchTime" >星期六&nbsp;&nbsp;</label> 
+          <label class="checkbox"><input type="checkbox" id="matchTime_sunday" class="matchTime" >星期日&nbsp;&nbsp;</label> 
          </div> 
         </div> 
         <div class="control-group"> 
          <label class="control-label" for="matchPlace">比赛地点：</label> 
          <div class="controls form-inline"> 
           <!-- 选择省市区三级下拉框 --> 
-          <s:include value="selectPCC.jsp" />
-          <input type="button" value="搜&nbsp;&nbsp;索" class="btn btn-success btn-small pull-right" id="advMatchSearchButton"/> 
+          <s:include value="seg-selectPCC.jsp"/>
+          <input type="button" value="搜&nbsp;&nbsp;索" class="btn btn-success btn-small pull-right" id="advMatchSearchButton"> 
          </div> 
         </div> 
        </fieldset> 
@@ -142,7 +115,7 @@
    </div> 
   </div> 
   <!-- /container --> 
-  <s:include value="footer.jsp" />
+  <s:include value="seg-footer.jsp"/>
   <!-- 页尾信息 --> 
   <script src="js/handlebars-v2.0.0.js"></script>
   <script src="js/bootstrap-datetimepicker.min.js"></script>
@@ -226,11 +199,8 @@
     	console.log(args);
 		
 	      $.ajax({
-	          type: "POST",
 	          url: "getMatchByP",
-	          contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 	          data: args,
-	          dataType: "json",
 	          success: function(rspdata) {
 	        	  console.log(rspdata);
 		       	  //设置搜索结果数量
@@ -249,11 +219,7 @@
 		    	  $(".matchBox-court > a").wordLimit(20);
 		    	  $(".matchBox-info > a").wordLimit(28);
 				  pages(rspdata.count,args.currentPage,args.rows);
-	          },
-	          error: function(jqXHR,textStatus,errorThrown){
-	        	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-	              sousaiRemindDialog("抱歉。ajax错误。");
-	          },
+	          }
 	        });
 	}  
   $(function(){
@@ -297,11 +263,6 @@
 		  if( ($("#inputMatchTimefrom").val() > $("#inputMatchTimeto").val()) ||( $("#inputMatchTimeto").val() == ""))
 		  $("#inputMatchTimeto").datetimepicker('setStartDate',$("#inputMatchTimefrom").val()).val($("#inputMatchTimefrom").val());
 	  });
-    //鼠标hover matchbox
-    $(".matchBoxs ").on('mouseenter','div.matchBox',function(){
-    	      $('div.matchBox').removeClass("box-active");
-    	      $(this).addClass("box-active");
-    });
   });
   </script>  
  </body>

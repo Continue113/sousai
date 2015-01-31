@@ -3,49 +3,20 @@
 <!DOCTYPE html>
 <html>
  <head> 
-  <title>场地高级搜索 &middot; 搜赛网</title> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
-  <meta name="description" content="搜赛网场地搜索页面" /> 
-  <meta name="author" content="KING@CQU" /> 
-  <link href="css/bootstrap.min.css" rel="stylesheet" /> 
-  <link href="css/bootstrap-responsive.css" rel="stylesheet" />
-  <link href="css/sousai.common.css" rel="stylesheet" />
-  <!--[if lte IE 8]>
-  <link href="css/sousai.IE8.css" rel="stylesheet" /> 
-  <![endif]-->
-  <style type="text/css">
-.courtSearch .matchSearch-remind {margin-top:5px;}
-.courtSearch .matchSearch-remind i{vertical-align: -1px;}
-.courtSearch .matchSearch-remind span{color:#62c462;font-weight: bold;}
-/** 场地列表 **/
-.courtBoxs{border: 1px solid #ccc;margin: 10px 0;float: left;padding-bottom: 20px;}
-.courtBox{margin: 10px 0 0 10px;float: left;}
-.courtBox .courtBox-img{float:left;border: 1px solid #ccc;}
-.courtBox .courtBox-img img{width: 110px;height: 85px;}
-.courtBox .courtBox-block{float: right;margin-left: 10px;}
-.courtBox .courtBox-block p{margin-bottom: 0;font-size: 12px;}
-.courtBox .courtBox-block .courtBox-title{background-color: #f5f5f5;border: 1px solid #ccc;border-bottom: 0;padding:2px 5px;}
-.courtBox .courtBox-block .courtBox-title .btn-mini{line-height: 16px;}
-.courtBox .courtBox-block ul{clear:both;padding: 0;margin-bottom: 0;background-color: #fff;border: 1px solid #ccc;-webkit-border-radius: 0;-moz-border-radius: 0;border-radius: 0;}
-.courtBox .courtBox-block ul > li{padding-left:5px;vertical-align: middle;text-align: center;border-left: 1px solid #ccc;}
-.courtBox .courtBox-block .courtBox-address{width:200px;border-left: 0;}
-.courtBox .courtBox-block .courtBox-info{width:110px;}
-.courtBox .courtBox-block .courtBox-record{width:80px;}
-.courtBox .courtBox-block .courtBox-evaluation{width:200px;}
-/** 场地排序 **/
-.panel-top{margin-top: 5px;}
-  </style>
+  <title>场地高级搜索 &middot; 搜赛网</title>
+  <meta name="description" content="搜赛网场地高级搜索页面" >
+  <s:include value="seg-meta.jsp"/>
  </head> 
  <body class="courtSearch"> 
-  <s:include value="navbar.jsp" />
+  <s:include value="seg-navbar.jsp"/>
   <!-- 页首导航条 --> 
   <div class="container"> 
    <div class="hdpush"></div> 
    <div class="row"> 
     <div class="span2 offset2"> 
-     <a class="logoBack" href="index.jsp" title="回到首页"><img src="img/logo.png" alt="搜赛网"/></a> 
+     <a class="logoBack" href="index.jsp" title="回到首页"><img src="img/logo.png" alt="搜赛网"></a> 
     </div> 
-    <s:include value="searchbox.jsp" />
+    <s:include value="seg-searchbox.jsp"/>
     <!-- 搜索框 --> 
    </div> 
    <div class="row"> 
@@ -56,12 +27,11 @@
      </div> 
      <div class="searchbox-ad"> 
       <form class="form-horizontal" name="advCourtSearch" id="advCourtSearch"> 
-       <fieldset> 
-        <legend>场地搜索</legend> 
+       <fieldset>
         <div class="control-group"> 
          <label class="control-label" for="searchKey">关&nbsp;&nbsp;键&nbsp;&nbsp;词：</label> 
          <div class="controls"> 
-          <input type="text" id="keyValue" name="keyValue" placeholder="请输入搜索关键词" /> 
+          <input type="text" id="keyValue" name="keyValue" placeholder="请输入搜索关键词" > 
           <a href="matchSearch.jsp" class="btn btn-small pull-right">转换到比赛搜索界面</a> 
          </div> 
         </div> 
@@ -70,8 +40,8 @@
            <div class="controls"> 
             <select class="selectMatchType" name="mcId"><option value=0>请选择比赛大类</option></select>
             <select class="selectParticularMatchType"><option value=0>请先选择比赛大类</option></select>
-            <input class="hide" id="particularMatchType" name="court.matchType"/>
-            <label class="omthide hide" class="control-label" for="otherMatchType">请输入类型：<input class="omthide hide" id="otherMatchType" type="text" value="" placeholder="请填写比赛类型"/></label>
+            <input class="hide" id="particularMatchType" name="court.matchType">
+            <label class="omthide hide" class="control-label" for="otherMatchType">请输入类型：<input class="omthide hide" id="otherMatchType" type="text" value="" placeholder="请填写比赛类型"></label>
            </div>
         </div> 
         <div class="control-group"> 
@@ -84,8 +54,8 @@
          <label class="control-label" for="matchPlace">场地地点：</label> 
          <div class="controls form-inline"> 
           <!-- 选择省市区三级下拉框 -->  
-          <s:include value="selectPCC.jsp" />
-          <input type="button" value="搜&nbsp;&nbsp;索" class="btn btn-success btn-small pull-right" id="advCourtSearchButton"/> 
+          <s:include value="seg-selectPCC.jsp"/>
+          <input type="button" value="搜&nbsp;&nbsp;索" class="btn btn-success btn-small pull-right" id="advCourtSearchButton"> 
          </div> 
         </div> 
        </fieldset> 
@@ -128,7 +98,7 @@
    </div> 
   </div> 
   <!-- /container --> 
-  <s:include value="footer.jsp" />
+  <s:include value="seg-footer.jsp"/>
   <!-- 页尾信息 --> 
   <script src="js/handlebars-v2.0.0.js"></script>
   <script src="js/jquery.wordLimit.js"></script>
@@ -139,7 +109,7 @@
         <div class="courtBox"  data-info="{{data}}"> 
          <!-- img --> 
          <div class="courtBox-img"> 
-          <img src="img/defaultImg.png" alt="" title="" /> 
+          <img src="img/defaultImg.png" alt="" title="" > 
          </div> 
          <!-- data --> 
          <div class="courtBox-block"> 
@@ -149,10 +119,10 @@
           </div> 
           <ul class="breadcrumb"> 
            <li class="courtBox-address">{{addr}}</li> 
-           <li class="courtBox-info "><p>{{courtType}}</p><p>{{#if tableNum}}赛场{{tableNum}}个{{else}}暂无赛场数据{{/if}}</p><p>{{#if tel}}电话：{{tel}}{{else}}暂无电话信息{{/if}}</p></li> 
-           <li class="courtBox-record ">举办比赛次数<p><span class="courtBox-recordNumb">{{recordNumb}}</span>次</p></li> 
-           <li class="courtBox-evaluation ">评论次数<p><span class="courtBox-evaluationNumb">{{evaluationNumb}}</spn>次</p></li>
-{{!<li class="courtBox-evaluation "><p><span>2013-10-10</span>:<span>但行代价昂贵你空间啊好烦你撒谎吃饭了空间啊干那</span></p> <p><span>2013-10-10</span>:<span>撒了你刚才发K 524545呵呵发那个给UI HM</span></p> <p><span>2013-10-10</span>:<span>4256605JKHGCFYUSDA是都还没后 俺哥啊 俺哥爱戴啊</span></p></li> }} 
+           <li class="courtBox-info"><p>{{courtType}}</p><p>{{#if tableNum}}赛场{{tableNum}}个{{else}}暂无赛场数据{{/if}}</p></li> 
+		   <li class="courtBox-tel">电话：<p>{{#if tel}}{{tel}}{{else}}暂无电话信息{{/if}}</p></li>
+           <li class="courtBox-record">举办比赛次数<p><span class="courtBox-recordNumb">{{recordNumb}}</span>次</p></li> 
+           <li class="courtBox-evaluation">评论次数<p><span class="courtBox-evaluationNumb">{{evaluationNumb}}</spn>次</p></li>
 		  </ul> 
          </div> 
         </div>
@@ -182,11 +152,8 @@ function e(argso){
 	console.log(args);
 	
 	  $.ajax({
-	        type: "POST",
 	        url: "getCourtByP",
-	        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 	        data: args,
-	        //async: false, //设置异步为false,解决ajax异步不能设置全局变量的问题
 	        dataType: "json",
 	        success: function(rspdata) {
 	        	console.log(rspdata);
@@ -208,12 +175,6 @@ function e(argso){
 	          	        },
 	        	        async: false, //设置异步为false,解决ajax异步不能设置全局变量的问题
 	          	        dataType: "json",
-	          	        /* success: function(rspdata) {
-	          	        	console.log(rspdata);
-	          	        },
-	          	        error: function(jqXHR,textStatus,errorThrown){
-	          	        	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-	          	        }, */
 	          	        });
 	          	  	 if(!recordNumb.responseJSON.count){
 	          	  		 return 0;
@@ -228,12 +189,6 @@ function e(argso){
 	          	        data: {courtId: this.id},
 	        	        async: false, //设置异步为false,解决ajax异步不能设置全局变量的问题
 	          	        dataType: "json",
-	          	        /* success: function(rspdata) {
-	          	        	console.log(rspdata);
-	          	        },
-	          	        error: function(jqXHR,textStatus,errorThrown){
-	          	        	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-	          	        }, */
 	          	        });
 	          	  	 if(!evaluationNumb.responseJSON.length){
 	          	  		 return 0;
@@ -248,14 +203,10 @@ function e(argso){
 	              target.hide();
 	              }
 	              //字数限制，溢出省略 
-	              $(".courtBox-address").wordLimit(20);
-	              $(".courtBox-evaluation p").wordLimit();
+	              $(".courtBox-address").wordLimit();
+	              $(".courtBox-tel p").wordLimit();
 	    	      pages(rspdata.count,args.currentPage,args.rows);
-	        },
-	        error: function(jqXHR,textStatus,errorThrown){
-	        	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-	          	sousaiRemindDialog("抱歉，获取比赛类型出错了。");
-	        },
+	        }
 	      });
 }
 
@@ -270,11 +221,6 @@ function e(argso){
 	$("#advCourtSearchButton").click(function(){
 		e({});
 	});
-    //鼠标hover matchbox
-    $(".courtBoxs ").on('mouseenter','div.courtBox',function(){
-    	      $('div.courtBox').removeClass("box-active");
-    	      $(this).addClass("box-active");
-    });
     
     //立即初始化比赛类型
     initMatchType();

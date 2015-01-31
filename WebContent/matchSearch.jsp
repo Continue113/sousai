@@ -4,44 +4,19 @@
 <html>
  <head> 
   <title>比赛搜索 &middot; 搜赛网</title> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
-  <meta name="description" content="搜赛网比赛搜索页面" /> 
-  <meta name="author" content="KING@CQU" /> 
-  <link href="css/smoothness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" /> 
-  <link href="css/bootstrap.min.css" rel="stylesheet" /> 
-  <link href="css/bootstrap-responsive.css" rel="stylesheet" />
-  <link href="css/sousai.common.css" rel="stylesheet" />
-  <!--[if lte IE 8]>
-  <link href="css/sousai.IE8.css" rel="stylesheet" /> 
-  <![endif]-->
-  <style type="text/css">
-  .matchState > .controls > .checkbox{padding-top: 5px;}
-/** 比赛列表 **/
-.matchBoxs{border: 1px solid #ccc;margin: 10px 0;float: left;padding: 10px;}
-.matchBox .matchBox-all{float: left;}
-.matchBox .matchBox-title{background-color: #f5f5f5;border: 1px solid #ccc;border-bottom: 0;padding:2px 5px;}
-.matchBox ul{padding: 0;background-color: #fff;border: 1px solid #ccc;-webkit-border-radius: 0;
-  -moz-border-radius: 0;border-radius: 0;}
-.matchBox ul > li{padding-left:5px;vertical-align: middle;text-align: center;border-left: 1px solid #ccc;}
-.matchBox .matchBox-time{width: 185px;border-left: 0;}
-.matchBox .matchBox-time > div{float:left;}
-.matchBox .matchBox-time > div.line{height: 50px;line-height:50px;}
-.matchBox .matchBox-court{width: 180px;}
-.matchBox .matchBox-state{width: 50px;color: #ff040f;}
-.matchBox .matchBox-info{width: 220px;}
-.matchBox .matchBox-btns{width: 60px;padding-right: 5px;}
-  </style>
+  <meta name="description" content="搜赛网比赛搜索页面" >
+  <s:include value="seg-meta.jsp"/>
  </head> 
  <body class="matchSearch">
-  <s:include value="navbar.jsp" />
+  <s:include value="seg-navbar.jsp"/>
   <!-- 页首导航条 --> 
   <div class="container"> 
    <div class="hdpush"></div> 
    <div class="row"> 
     <div class="span2 offset2"> 
-     <a class="logoBack" href="index.jsp" title="回到首页"><img src="img/logo.png" alt="搜赛网"/></a> 
+     <a class="logoBack" href="index.jsp" title="回到首页"><img src="img/logo.png" alt="搜赛网"></a> 
     </div> 
-    <s:include value="searchbox.jsp" />
+    <s:include value="seg-searchbox.jsp"/>
     <!-- 搜索框 --> 
    </div> 
    <div class="row"> 
@@ -72,7 +47,7 @@
    </div> 
   </div> 
   <!-- /container --> 
-  <s:include value="footer.jsp" />
+  <s:include value="seg-footer.jsp"/>
   <!-- 页尾信息 --> 
   <script src="js/handlebars-v2.0.0.js"></script>
   <script src="js/jquery.wordLimit.js"></script>
@@ -117,11 +92,8 @@
 		$("#ajaxState .noresult").hide();
     	
 	      $.ajax({
-	          type: "POST",
 	          url: "mainSearch",
-	          contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 	          data: args,
-	          dataType: "json",
 	          success: function(rspdata) {
 	        	  console.log(rspdata.count);console.log(rspdata);
 		       	  //设置搜索结果数量
@@ -140,11 +112,7 @@
 		    	  $(".matchBox-court").wordLimit(20);
 		    	  $(".matchBox-info > a").wordLimit(28);
 				  pages(rspdata.count,args.currentPage,args.rows);
-	          },
-	          error: function(jqXHR,textStatus,errorThrown){
-	        	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-	            sousaiRemindDialog("抱歉。ajax错误。");
-	          },
+	          }
 	        });
 	  
   }
@@ -159,13 +127,7 @@
 			e({content:urikv});
 	    }else{
 			sousaiRemindDialog("输入搜索关键字问为空，请重新填写。");
-			//window.location.herf = window.location;
 	    }
-    //鼠标hover matchbox
-    $(".matchBoxs ").on('mouseenter','div.matchBox',function(){
-    	      $('div.matchBox').removeClass("box-active");
-    	      $(this).addClass("box-active");
-    });
   });
   </script>  
  </body>

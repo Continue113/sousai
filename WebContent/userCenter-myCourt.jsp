@@ -3,53 +3,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>我的搜赛 &middot; 我发布的场地 &middot; 搜赛网</title> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
-  <meta name="description" content="搜赛网用户中心-我的搜赛-我发布的场地" /> 
-  <meta name="author" content="KING@CQU" />
-  <link href="css/bootstrap.min.css" rel="stylesheet" /> 
-  <link href="css/bootstrap-responsive.css" rel="stylesheet" />
-  <link href="css/sousai.common.css" rel="stylesheet" />
-  <link href="css/sousai.userCenter.css" rel="stylesheet" />
-  <!--[if lte IE 8]>
-  <link href="css/sousai.IE8.css" rel="stylesheet" /> 
-  <![endif]-->
-    <style type="text/css">
-/** 场地列表 **/
-.courtBoxs{border: 1px solid #ccc;margin: 10px 0;float: left;padding-bottom: 20px;}
-.courtBox{margin: 10px 0 0 10px;float: left;}
-.courtBox .courtBox-img{float:left;border: 1px solid #ccc;}
-.courtBox .courtBox-img img{width: 110px;height: 85px;}
-.courtBox .courtBox-block{float: right;margin-left: 10px;}
-.courtBox .courtBox-block p{margin-bottom: 0;font-size: 12px;}
-.courtBox .courtBox-block .courtBox-title{background-color: #f5f5f5;border: 1px solid #ccc;border-bottom: 0;padding:2px 5px;}
-.courtBox .courtBox-block .courtBox-title .btn-mini{line-height: 16px;}
-.courtBox .courtBox-block ul{clear:both;padding: 0;margin-bottom: 0;background-color: #fff;border: 1px solid #ccc;-webkit-border-radius: 0;
-  -moz-border-radius: 0;border-radius: 0;}
-.courtBox .courtBox-block ul > li{padding-left:5px;vertical-align: middle;text-align: center;border-left: 1px solid #ccc;}
-.courtBox .courtBox-block .courtBox-address{width:200px;border-left: 0;}
-.courtBox .courtBox-block .courtBox-info{width:110px;}
-.courtBox .courtBox-block .courtBox-record{width:80px;}
-.courtBox .courtBox-block .courtBox-evaluation{width:200px;}
-
-  /** 编辑场地 按钮bar  **/
-  .editCourt > .btnbar {margin-left: 0;}
-  /** 编辑场地按钮bar 中的按钮  **/
-  .editCourt > .btnbar > .btn {float: right;margin-left: 10px;}  
-  /** 排序下拉按钮 **/
-  .panel-top > .btn-group {margin-top: 10px;}
-  </style>
+  <title>我的搜赛 &middot; 我发布的场地 &middot; 搜赛网</title>
+  <meta name="description" content="搜赛网用户中心-我的搜赛-我发布的场地">
+  <s:include value="seg-meta.jsp"/>
+  <link href="css/sousai.userCenter.css" rel="stylesheet">
 </head>
 <body class="userCenter">
-<s:include value="navbar.jsp" /><!-- 页首导航条 -->
+<s:include value="seg-navbar.jsp"/><!-- 页首导航条 -->
 <div class="container"> 
  <div class="hdpush"></div> 
  <div class="row"> 
   <div class="span4"> 
-   <a class="logoBack" href="index.jsp" title="回到首页"><img src="img/logo.png" alt="搜赛网"/></a>
+   <a class="logoBack" href="index.jsp" title="回到首页"><img src="img/logo.png" alt="搜赛网"></a>
    <span class="logotext">我的搜赛</span> 
   </div> 
-  <s:include value="searchbox.jsp" /><!-- 搜索框 -->
+  <s:include value="seg-searchbox.jsp"/><!-- 搜索框 -->
  </div><!-- /row -->
 
     <div class="row"> 
@@ -61,16 +29,7 @@
        </ul>
       </div>
      </div> 
-     <div class="span2 mySousaiMenu "> 
-      <ul class="nav nav-stacked nav-side"> 
-       <li><a href="userCenter-myMatch.jsp"><i class="icon-chevron-right"></i> 我发布的比赛</a></li> 
-       <li><a href="userCenter-myCollection.jsp"><i class="icon-chevron-right"></i> 我收藏的比赛</a></li> 
-       <li><a href="userCenter-releaseMatch.jsp"><i class="icon-chevron-right"></i> 发布比赛</a></li> 
-       <li><a href="userCenter-releaseCourt.jsp"><i class="icon-chevron-right"></i> 发布场地</a></li> 
-       <li class="active"><a href="userCenter-myCourt.jsp"><i class="icon-chevron-right"></i> 我发布的场地</a></li> 
-       <li><a href="userCenter-editUser.jsp"><i class="icon-chevron-right"></i> 编辑账户</a></li> 
-      </ul> 
-     </div> 
+      <s:include value="seg-userCenter-menu.jsp"/><!-- 用户中心导航菜单 -->
      <div class="span8"> 
       <div class="userCenter-remind">
        <ul class="breadcrumb"> 
@@ -106,7 +65,7 @@
        <!-- /myCourt --> 
        
        <!--编辑比赛 开始-->
-        <s:include value="editCourt.jsp" />
+        <s:include value="seg-editCourt.jsp"/>
        <!-- /编辑比赛信息 -->
        
       </div>
@@ -120,7 +79,7 @@
    <div class="ftpush"></div> 
   </div>
   <!-- /container --> 
-  <s:include value="footer.jsp" />
+  <s:include value="seg-footer.jsp"/>
   <!-- 页尾信息 --> 
   <script src="js/handlebars-v2.0.0.js"></script>
   <script src="js/jquery.wordLimit.js"></script>
@@ -135,7 +94,7 @@
         <div class="courtBox"  data-info="{{data}}"> 
          <!-- img --> 
          <div class="courtBox-img"> 
-          <img src="img/defaultImg.png" alt="" title="" /> 
+          <img src="img/defaultImg.png" alt="" title="" > 
          </div> 
          <!-- data --> 
          <div class="courtBox-block"> 
@@ -145,7 +104,8 @@
           </div> 
           <ul class="breadcrumb"> 
            <li class="courtBox-address">{{addr}}</li> 
-           <li class="courtBox-info "><p>{{courtType}}</p><p>{{#if tableNum}}赛场{{tableNum}}个{{else}}暂无赛场数据{{/if}}</p><p>{{#if tel}}电话：{{tel}}{{else}}暂无电话信息{{/if}}</p></li>
+           <li class="courtBox-info"><p>{{courtType}}</p><p>{{#if tableNum}}赛场{{tableNum}}个{{else}}暂无赛场数据{{/if}}</p><p>{{#if tel}}电话：{{tel}}{{else}}暂无电话信息{{/if}}</p></li>
+           <li class="courtBox-tel">电话：<p>{{#if tel}}{{tel}}{{else}}暂无电话信息{{/if}}</p></li>
 		   <li class="courtBox-record ">举办比赛次数<p><span class="courtBox-recordNumb">{{recordNumb}}</span>次</p></li> 
            <li class="courtBox-evaluation ">评论次数<p><span class="courtBox-evaluationNumb">{{evaluationNumb}}</spn>次</p></li>
 		  </ul> 
@@ -170,10 +130,7 @@
   	  $(".courtBoxs").show();
   	  
   	$.ajax({
-        type: "POST",
         url: "getCourtByUserId",
-        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-        dataType: "json",
         data:args,
         success: function(rspdata) {
         	console.log(rspdata);
@@ -223,18 +180,21 @@
 		      target.hide();
 		      }
 	    	    //字数限制，溢出省略
-	          $(".courtBox-address").wordLimit(20);
-	    	  $(".courtBox-evaluation p").wordLimit();
+	          $(".courtBox-address").wordLimit();
+	    	  $(".courtBox-tel p").wordLimit();
 	    	  pages(rspdata.count,args.currentPage,args.rows);
-        },
-        error: function(jqXHR,textStatus,errorThrown){
-          console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-          sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
-        },
+        }
       });
   }
   
     $(function () {
+    	setMenu();
+    	//检测用户是否为登录状态
+    	var userid =isLogined();
+    	if(userid.responseJSON=="error"){
+    		$(".span8",".span11").html("您还未登录，请先登录。");
+    		return false;
+    	}
     	//获得已有比赛信息
     	userCenterRemind();
    	 	e({currentPage:1,rows:25});
@@ -247,11 +207,6 @@
     		$(".courtList").slideUp();
     		$(".editCourt").find("button.passCourt").hide().end().slideDown();
   		});
-      //鼠标hover matchbox
-      $(".courtBoxs ").on('mouseenter','div.courtBox',function(){
-      	      $('div.courtBox').removeClass("box-active");
-      	      $(this).addClass("box-active");
-      });
     });
 </script>
 </body></html>

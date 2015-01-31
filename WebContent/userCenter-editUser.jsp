@@ -3,56 +3,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>我的搜赛 &middot; 编辑账户 &middot; 搜赛网</title> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
-  <meta name="description" content="搜赛网用户中心-我的搜赛-编辑账户" /> 
-  <meta name="author" content="KING@CQU" />
-  <link href="css/bootstrap.min.css" rel="stylesheet" /> 
-  <link href="css/bootstrap-responsive.css" rel="stylesheet" /> 
-  <link href="css/sousai.common.css" rel="stylesheet" />
-  <link href="css/sousai.userCenter.css" rel="stylesheet" />
-  <!--[if lte IE 8]>
-  <link href="css/sousai.IE8.css" rel="stylesheet" /> 
-  <![endif]-->
-  <style>
-  /** 更改密码label排列方式 **/
-  .control-label-changePwd {margin: 5px 0 0 0;}
-  /** 当前头像 **/
-  #editUserForm .crtUserIcon {
-  display: inline-block;
-  padding: 4px;
-  border: 1px solid #ddd;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
-  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
-  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
-  -webkit-transition: all 0.2s ease-in-out;
-  -moz-transition: all 0.2s ease-in-out;
-  -o-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out;
-  }
-  #editUserForm .crtUserIcon > img {width: 100px;height: 100px;}
-  /** 选中图片边框为绿色 **/
-  .active{border-color: #51a351;}
-  /** 缩略图**/
-  .userCenter .thumbnail img {width: 50px;height: 50px;}
-  #imghead {filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=image);height: 70px;}
-  .fileinput-button {margin-top: 5px;}
-  </style>
-
-</head>
+  <title>我的搜赛 &middot; 编辑账户 &middot; 搜赛网</title>
+  <meta name="description" content="搜赛网用户中心-我的搜赛-编辑账户" > 
+  <s:include value="seg-meta.jsp"/>
+  <link href="css/sousai.userCenter.css" rel="stylesheet">
 <body class="userCenter">
-<s:include value="navbar.jsp" /><!-- 页首导航条 -->
+<s:include value="seg-navbar.jsp"/><!-- 页首导航条 -->
 <div class="container"> 
  <div class="hdpush"></div> 
  <div class="row"> 
   <div class="span4"> 
-   <a class="logoBack" href="index.jsp" title="回到首页"><img src="img/logo.png" alt="搜赛网"/></a>
+   <a class="logoBack" href="index.jsp" title="回到首页"><img src="img/logo.png" alt="搜赛网"></a>
    <span class="logotext">我的搜赛</span> 
   </div> 
-  <s:include value="searchbox.jsp" /><!-- 搜索框 -->
+  <s:include value="seg-searchbox.jsp"/><!-- 搜索框 -->
  </div><!-- /row -->
 
     <div class="row"> 
@@ -64,21 +28,12 @@
        </ul>
       </div>
      </div> 
-     <div class="span2 mySousaiMenu "> 
-      <ul class="nav nav-stacked nav-side"> 
-       <li><a href="userCenter-myMatch.jsp"><i class="icon-chevron-right"></i> 我发布的比赛</a></li> 
-       <li><a href="userCenter-myCollection.jsp"><i class="icon-chevron-right"></i> 我收藏的比赛</a></li> 
-       <li><a href="userCenter-releaseMatch.jsp"><i class="icon-chevron-right"></i> 发布比赛</a></li> 
-       <li><a href="userCenter-releaseCourt.jsp"><i class="icon-chevron-right"></i> 发布场地</a></li> 
-       <li><a href="userCenter-myCourt.jsp"><i class="icon-chevron-right"></i> 我发布的场地</a></li> 
-       <li class="active"><a href="userCenter-editUser.jsp"><i class="icon-chevron-right"></i> 编辑账户</a></li> 
-      </ul> 
-     </div> 
+      <s:include value="seg-userCenter-menu.jsp"/><!-- 用户中心导航菜单 -->
      <div class="span8"> 
       <div class="userCenter-remind">
        <ul class="breadcrumb"> 
         <li>比赛信息:</li> 
-        <li><a href="javascript:void(0)">暂无信息<span>(0)</span></a></li> 
+        <li><a href="javascript:void(0)">暂无信息<span>(0)</span></a></li>
        </ul>
       </div> 
       <div class="tab-content">
@@ -87,39 +42,38 @@
          <h4>账户基本信息</h4>
         </div> 
         <form id="editUserForm" class="form-horizontal"> 
-         <fieldset> 
-          <legend>账户基本信息</legend> 
+         <fieldset>
           <div class="control-group"> 
            <label class="control-label" for="userName">用户名：</label> 
            <div class="controls"> 
-            <input class="span3 ignore" type="text" id="userName" value="<s:property value="#session.userBean.userName" />" disabled /> 
+            <input class="span3 ignore" type="text" id="userName" disabled> 
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="courtOpen">密码重置：</label> 
            <div class="controls"> 
             <label class="control-label-changePwd" for="inputUserPassword">旧密码</label> 
-            <input class="span3 add-on" type="password" id="inputUserPassword" name="inputUserPassword" placeholder="请输入旧密码" data-toggle="tooltip" data-placement="top" title="" data-original-title="请输入旧密码" /> 
+            <input class="span3 add-on" type="password" id="inputUserPassword" name="inputUserPassword" placeholder="请输入旧密码" data-toggle="tooltip" data-placement="top" title="" data-original-title="请输入旧密码" > 
            </div>
            <div class="controls"> 
             <label class="control-label-changePwd" for="inputUserNewPassword">新密码</label> 
-            <input class="span3 add-on" type="password" id="inputUserNewPassword" name="user.pwd" placeholder="请先输入旧密码，再输入新密码" data-toggle="tooltip" data-placement="top" title="" data-original-title="请先输入旧密码，再输入新密码" /> 
+            <input class="span3 add-on" type="password" id="inputUserNewPassword" name="user.pwd" placeholder="请先输入旧密码，再输入新密码" data-toggle="tooltip" data-placement="top" title="" data-original-title="请先输入旧密码，再输入新密码" > 
            </div>
            <div class="controls">
             <label class="control-label-changePwd" for="inputUserNewPassword2">确认密码</label> 
-            <input class="span3 add-on" type="password" id="inputUserNewPassword2" name="inputUserNewPassword2" placeholder="请先输入旧密码，再输入新密码" data-toggle="tooltip" data-placement="top" title="" data-original-title="请先输入旧密码，再输入新密码" /> 
+            <input class="span3 add-on" type="password" id="inputUserNewPassword2" name="inputUserNewPassword2" placeholder="请先输入旧密码，再输入新密码" data-toggle="tooltip" data-placement="top" title="" data-original-title="请先输入旧密码，再输入新密码" > 
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="inputUserEmail">注册邮箱：</label> 
            <div class="controls"> 
-            <input class="span3 add-on" type="email" id="inputUserEmail" name="user.email" value="<s:property value="#session.userBean.userEmail" />" data-toggle="tooltip" data-placement="top" title="" data-original-title="可选择修改" /> 
+            <input class="span3 add-on" type="email" id="inputUserEmail" name="user.email" data-toggle="tooltip" data-placement="top" title="" data-original-title="可选择修改" > 
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="userIcon">头像设置：</label> 
            <div class="controls"> 
-            <div class="crtUserIcon"><img src="<s:property value="#session.userBean.userPic" />" /></div>
+            <div class="crtUserIcon"><img src=""></div>
            </div>
            <!-- hide old uploadpic
            <div class="controls"> 
@@ -128,7 +82,7 @@
             <table class="table">
               <tbody class="files">
               <tr class="hide">
-                <td><span id="preview"><img id="imghead" src="" /></span></td>
+                <td><span id="preview"><img id="imghead" src="" ></span></td>
                 <td><span class="name">name</span></td>
                 <td><span class="size">size</span></td>
                 <td><span class="btn" id="start"><i class="icon-upload"></i>上传</span></td>
@@ -146,7 +100,7 @@
             <PARAM NAME=movie VALUE="avatar.swf">
             <PARAM NAME=quality VALUE=high>
             <PARAM NAME=bgcolor VALUE=#FFFFFF>
-            <param name="flashvars" value="imgUrl=img/defaultIcon.png&uploadUrl=./upfile.jsp&uploadSrc=false" />
+            <param name="flashvars" value="imgUrl=img/defaultIcon.png&uploadUrl=./upfile.jsp&uploadSrc=false" >
             <EMBED src="avatar.swf" quality=high bgcolor=#FFFFFF WIDTH="650" HEIGHT="450" wmode="transparent" flashVars="imgUrl=img/defaultIcon.png&uploadUrl=./upfile.jsp&uploadSrc=false"
             NAME="myMovieName" ALIGN="" TYPE="application/x-shockwave-flash" allowScriptAccess="always"
             PLUGINSPAGE="http://www.macromedia.com/go/getflashplayer">
@@ -159,27 +113,27 @@
            <label class="control-label" for="systemIcons">系统头像：</label> 
            <div class="controls" id="systemIcons"> 
             <ul class="breadcrumb"> 
-             <li class="thumbnail active"><img src="img/defaultImg.png" /></li> 
-             <li class="thumbnail"><img src="img/defaultIcon.png" /></li> 
-             <li class="thumbnail"><img src="img/pingpong.png" /></li> 
-             <li class="thumbnail"><img src="img/pingpong-grey.png" /></li> 
-             <li class="thumbnail"><img src="img/defaultIcon.png" /></li> 
-             <li class="thumbnail"><img src="img/defaultImg.png" /></li> 
-             <li class="thumbnail"><img src="img/pingpong.png" /></li> 
-             <li class="thumbnail"><img src="img/defaultIcon.png" /></li>
+             <li class="thumbnail active"><img src="img/defaultImg.png" ></li> 
+             <li class="thumbnail"><img src="img/defaultIcon.png" ></li> 
+             <li class="thumbnail"><img src="img/pingpong.png" ></li> 
+             <li class="thumbnail"><img src="img/pingpong-grey.png" ></li> 
+             <li class="thumbnail"><img src="img/defaultIcon.png" ></li> 
+             <li class="thumbnail"><img src="img/defaultImg.png" ></li> 
+             <li class="thumbnail"><img src="img/pingpong.png" ></li> 
+             <li class="thumbnail"><img src="img/defaultIcon.png" ></li>
             </ul> 
            </div> 
           </div> 
           <div class="control-group">
            <div class="controls"> 
-            <button type="button" class="btn btn-success" id="saveEditUserForm">保存修改</button>
+            <button type="submit" class="btn btn-success" id="saveEditUserForm">保存修改</button>
            </div>
           </div> 
          </fieldset> 
         </form>
         <form  class="hide" id="uploadImgForm" enctype="multipart/form-data" method="POST">
         <input id="imgInput" type="file" name="image" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this)">
-        <input class="btn start" type="submit" value="上传"/><input type="reset" value="取消" class="btn cancle" />
+        <input class="btn start" type="submit" value="上传"><input type="reset" value="取消" class="btn cancle" >
         </form>
        </div>
        <!-- /editUser --> 
@@ -194,7 +148,7 @@
    <div class="ftpush"></div> 
   </div>
   <!-- /container --> 
-  <s:include value="footer.jsp" /><!-- 页首导航条 --> 
+  <s:include value="seg-footer.jsp"/><!-- 页首导航条 --> 
   <script src="js/ajaxfileupload.js"></script>
 <script>
 //定义函数 和 全局变量
@@ -221,9 +175,18 @@ function uploadevent(status,picUrl,callbackdata){
 }
 }
 $(function () {
+	setMenu();
+	//检测用户是否为登录状态
+	var userid =isLogined();
+	if(userid.responseJSON=="error"){
+		$(".span8",".span11").html("您还未登录，请先登录。");
+		return false;
+	}
 	//获得已有比赛信息
 	userCenterRemind();
-	  
+	//初始化用户名和邮箱
+	$("#inputUserEmail").val(userid.responseJSON.userEmail);
+	$("#userName").val(userid.responseJSON.userName);
     //editUser鼠标点击选择头像
     $("#systemIcons li").click(function(){
       $(this).parent().find("li").removeClass("active");
@@ -255,7 +218,7 @@ $(function () {
       inputUserPassword: {
         minlength: 6,
         maxlength: 16,
-        isPwd: '<s:property value="#session.userBean.userPwd"/>'
+        isPwd: userid.responseJSON.userPwd,
       },
       "user.pwd": {
         minlength: 6,
@@ -296,38 +259,38 @@ $(function () {
   });
 	
     //点击保存修改
-	$("#saveEditUserForm").click(function(){
+	$("#editUserForm").submit(function(event){
+		//阻止submit自动提交
+		event.preventDefault();
 		//检测用户是否为登录状态
 		var userid =isLogined();
-		console.log(userid);
-		console.log(userid.responseJSON);
 		if(userid.responseJSON=="error"){
-			// -1 为未登录状态，其他则为用户ID
-			newformloginBox();
+			return false;
 		}else{
 			//执行正常的修改用户信息逻辑 ：检测用户的信息
 			if(editUserValidator){
 			        //定义发送至服务器的数据，旧密码未验证通过的情况下，不发送填写的新密码
-			        if($("#inputUserNewPassword").val() == "" && $("#inputUserEmail").val() == '<s:property value="#session.userBean.userEmail" />'){
+			        if($("#inputUserNewPassword").val() == "" && $("#inputUserEmail").val() == userid.responseJSON.userEmail){
 			          return false;
 			        }else{
-			          var sendurl = 'updateUserInfo?action=1&user.id=<s:property value="#session.userBean.userId" />';
-			          if($("#inputUserNewPassword").val() !== "" )
-			            sendurl += "&user.pwd="+$("#inputUserNewPassword").val();
-			          if($("#inputUserEmail").val() !== "" )
-			            sendurl += "&user.email="+$("#inputUserEmail").val();
+			        	var data={
+			        			action: 1,
+			        			"user.id": userid.responseJSON.userId,
+			        			};
+			          if($("#inputUserNewPassword").val()!=""){
+			        	  data["user.pwd"]= $("#inputUserNewPassword").val();
+			          }
+			            
+			          if($("#inputUserEmail").val()!=""){
+			        	  data["user.email"]= $("#inputUserEmail").val();
+			          }
+			          
 			          $.ajax({
-			          url: sendurl,
-			          type: "POST",
-			          dataType: 'json',
-			          data: null,
+			          url: 'updateUserInfo',
+			          data: data,
 			          success: function(rspdata) {
 			            window.setTimeout("window.location='userCenter-editUser.jsp'",3000);
 			            sousaiRemindDialog("编辑账户成功,3秒后将刷新页面。");
-			          },
-			          error: function(jqXHR,textStatus,errorThrown){
-			        	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-			              sousaiRemindDialog("抱歉，发送数据出错了，请重新输入。");
 			          },
 			          });
 			        }
@@ -350,7 +313,7 @@ $(function () {
 /*
 function ajaxFileUpload() {
   $(".files .name").ajaxStart(function(){
-    $(this).append('<img src="img/loading.gif" width="25" />');
+    $(this).append('<img src="img/loading.gif" width="25" >');
   }).ajaxComplete(function(){
     $(this).remove("img");
   });

@@ -4,46 +4,19 @@
 <html>
  <head> 
   <title>场地搜索 &middot; 搜赛网</title> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
-  <meta name="description" content="搜赛网场地搜索页面" /> 
-  <meta name="author" content="KING@CQU" /> 
-  <link href="css/bootstrap.min.css" rel="stylesheet" /> 
-  <link href="css/bootstrap-responsive.css" rel="stylesheet" />
-  <link href="css/sousai.common.css" rel="stylesheet" />
-  <!--[if lte IE 8]>
-  <link href="css/sousai.IE8.css" rel="stylesheet" /> 
-  <![endif]-->
-  <style type="text/css">
-.courtSearch .matchSearch-remind {margin-top:5px;}
-.courtSearch .matchSearch-remind i{vertical-align: -1px;}
-.courtSearch .matchSearch-remind span{color:#62c462;font-weight: bold;}
-/** 场地列表 **/
-.courtBoxs{border: 1px solid #ccc;margin: 10px 0;float: left;padding-bottom: 20px;}
-.courtBox{margin: 10px 0 0 10px;float: left;}
-.courtBox .courtBox-img{float:left;border: 1px solid #ccc;}
-.courtBox .courtBox-img img{width: 110px;height: 85px;}
-.courtBox .courtBox-block{float: right;margin-left: 10px;}
-.courtBox .courtBox-block p{margin-bottom: 0;font-size: 12px;}
-.courtBox .courtBox-block .courtBox-title{background-color: #f5f5f5;border: 1px solid #ccc;border-bottom: 0;padding:2px 5px;}
-.courtBox .courtBox-block .courtBox-title .btn-mini{line-height: 16px;}
-.courtBox .courtBox-block ul{clear:both;padding: 0;margin-bottom: 0;background-color: #fff;border: 1px solid #ccc;-webkit-border-radius: 0;-moz-border-radius: 0;border-radius: 0;}
-.courtBox .courtBox-block ul > li{padding-left:5px;vertical-align: middle;text-align: center;border-left: 1px solid #ccc;}
-.courtBox .courtBox-block .courtBox-address{width:200px;border-left: 0;}
-.courtBox .courtBox-block .courtBox-info{width:110px;}
-.courtBox .courtBox-block .courtBox-record{width:80px;}
-.courtBox .courtBox-block .courtBox-evaluation{width:200px;}
-  </style>
+  <meta name="description" content="搜赛网场地搜索页面" > 
+  <s:include value="seg-meta.jsp"/>
  </head> 
  <body class="courtSearch"> 
-  <s:include value="navbar.jsp" />
+  <s:include value="seg-navbar.jsp"/>
   <!-- 页首导航条 --> 
   <div class="container"> 
    <div class="hdpush"></div> 
    <div class="row"> 
     <div class="span2 offset2"> 
-     <a class="logoBack" href="index.jsp" title="回到首页"><img src="img/logo.png" alt="搜赛网"/></a> 
+     <a class="logoBack" href="index.jsp" title="回到首页"><img src="img/logo.png" alt="搜赛网"></a> 
     </div> 
-    <s:include value="searchbox.jsp" />
+    <s:include value="seg-searchbox.jsp"/>
     <!-- 搜索框 --> 
    </div> 
    <div class="row"> 
@@ -79,7 +52,7 @@
    </div> 
   </div> 
   <!-- /container --> 
-  <s:include value="footer.jsp" />
+  <s:include value="seg-footer.jsp"/>
   <!-- 页尾信息 --> 
   <script src="js/handlebars-v2.0.0.js"></script>
   <script src="js/jquery.wordLimit.js"></script>
@@ -90,7 +63,7 @@
         <div class="courtBox"  data-info="{{data}}"> 
          <!-- img --> 
          <div class="courtBox-img"> 
-          <img src="img/defaultImg.png" alt="" title="" /> 
+          <img src="img/defaultImg.png" alt="" title="" > 
          </div> 
          <!-- data --> 
          <div class="courtBox-block"> 
@@ -100,7 +73,8 @@
           </div> 
           <ul class="breadcrumb"> 
            <li class="courtBox-address">{{address}}</li> 
-           <li class="courtBox-info "><p>{{courtType}}</p><p>{{#if tableNum}}赛场{{tableNum}}个{{else}}暂无赛场数据{{/if}}</p><p>{{#if tel}}电话：{{tel}}{{else}}暂无电话信息{{/if}}</p></li> 
+           <li class="courtBox-info "><p>{{courtType}}</p><p>{{#if tableNum}}赛场{{tableNum}}个{{else}}暂无赛场数据{{/if}}</p></li>
+		   <li class="courtBox-tel">电话：<p>{{#if tel}}{{tel}}{{else}}暂无电话信息{{/if}}</p></li>
            <li class="courtBox-record ">举办比赛次数<p><span class="courtBox-recordNumb">{{recordNumb}}</span>次</p></li> 
            <li class="courtBox-evaluation ">评论次数<p><span class="courtBox-evaluationNumb">{{evaluationNumb}}</spn>次</p></li>
 		  </ul> 
@@ -124,11 +98,8 @@
 			$("#ajaxState .noresult").hide();
 						  
 		      $.ajax({
-		          type: "POST",
 		          url: "courtSearch",
-		          contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 		          data: args,
-		          dataType: "json",
 		          success: function(rspdata) {
 			        	//设置搜索结果数量
 			        	$(".search-remind span").html(rspdata.count);
@@ -148,12 +119,6 @@
 			          	        },
 			        	        async: false, //设置异步为false,解决ajax异步不能设置全局变量的问题
 			          	        dataType: "json",
-			          	        /* success: function(rspdata) {
-			          	        	console.log(rspdata);
-			          	        },
-			          	        error: function(jqXHR,textStatus,errorThrown){
-			          	        	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-			          	        }, */
 			          	        });
 			          	  	 if(!recordNumb.responseJSON.count){
 			          	  		 return 0;
@@ -168,12 +133,6 @@
 			          	        data: {courtId: this.id},
 			        	        async: false, //设置异步为false,解决ajax异步不能设置全局变量的问题
 			          	        dataType: "json",
-			          	        /* success: function(rspdata) {
-			          	        	console.log(rspdata);
-			          	        },
-			          	        error: function(jqXHR,textStatus,errorThrown){
-			          	        	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-			          	        }, */
 			          	        });
 			          	  	 if(!evaluationNumb.responseJSON.length){
 			          	  		 return 0;
@@ -189,13 +148,9 @@
 			              target.hide();
 			              }
 			              //字数限制，溢出省略 
-			              $(".courtBox-address").wordLimit(20);
-			              $(".courtBox-evaluation p").wordLimit();
+			              $(".courtBox-address").wordLimit();
+			              $(".courtBox-tel p").wordLimit();
 			    	      pages(rspdata.count, args.currentPage, args.rows);
-		          },
-		          error: function(jqXHR,textStatus,errorThrown){
-		        	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-		              sousaiRemindDialog("抱歉。ajax错误。");
 		          },
 		        });
   }
@@ -215,13 +170,7 @@
 			e({content:urikv});
 	    }else{
 			sousaiRemindDialog("输入搜索关键字问为空，请重新填写。");
-			//window.location.herf = window.location;
 	    }
-    //鼠标hover matchbox
-    $(".courtBoxs ").on('mouseenter','div.courtBox',function(){
-    	      $('div.courtBox').removeClass("box-active");
-    	      $(this).addClass("box-active");
-    });
   });
   </script>  
  </body>

@@ -3,32 +3,22 @@
 <!DOCTYPE html>
 <html>
  <head> 
-  <title>我的搜赛 &middot; 发布场地 &middot; 搜赛网</title> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
-  <meta name="description" content="搜赛网用户中心-我的搜赛-发布场地" /> 
-  <meta name="author" content="KING@CQU" /> 
-  <link href="css/bootstrap.min.css" rel="stylesheet" /> 
-  <link href="css/bootstrap-responsive.css" rel="stylesheet" /> 
-  <link href="css/sousai.common.css" rel="stylesheet" /> 
-  <link href="css/sousai.userCenter.css" rel="stylesheet" /> 
-  <!--[if lte IE 8]>
-  <link href="css/sousai.IE8.css" rel="stylesheet" /> 
-  <![endif]-->
-  <style type="text/css">
-  .files img {height: 70px;width: auto;}
-  </style>
+  <title>我的搜赛 &middot; 发布场地 &middot; 搜赛网</title>
+  <meta name="description" content="搜赛网用户中心-我的搜赛-发布场地" >
+  <s:include value="seg-meta.jsp"/>
+  <link href="css/sousai.userCenter.css" rel="stylesheet">
  </head> 
  <body class="userCenter"> 
-  <s:include value="navbar.jsp" />
+  <s:include value="seg-navbar.jsp"/>
   <!-- 页首导航条 --> 
   <div class="container"> 
    <div class="hdpush"></div> 
    <div class="row"> 
     <div class="span4"> 
-     <img src="img/logo.png" /> 
+     <img src="img/logo.png" > 
      <span class="logotext">我的搜赛</span> 
     </div> 
-    <s:include value="searchbox.jsp" />
+    <s:include value="seg-searchbox.jsp"/>
     <!-- 搜索框 --> 
    </div>
    <!-- /row --> 
@@ -70,7 +60,7 @@
           <div class="control-group"> 
            <label class="control-label" for="inputCourtName">场地名称：</label> 
            <div class="controls"> 
-            <input class="span5" type="text" id="inputCourtName" name="court.name" placeholder="如：2012年XXXXXXX杯乒乓球季度赛" required="required" /> 
+            <input class="span5" type="text" id="inputCourtName" name="court.name" placeholder="如：2012年XXXXXXX杯乒乓球季度赛" required="required" > 
             <label class="hide error">请输入场地名称</label>
            </div> 
           </div> 
@@ -81,9 +71,9 @@
               <option value=0>请选择比赛类型</option>
             </select>
             <select class="selectParticularMatchType hide"></select>
-            <input class="hide" id="particularMatchType" name="court.matchType"/>
+            <input class="hide" id="particularMatchType" name="court.matchType">
             <label class="omthide hide" class="control-label" for="otherMatchType">请输入类型：</label>
-            <input class="omthide hide" id="otherMatchType" type="text" value="" placeholder="请填写比赛类型"/>
+            <input class="omthide hide" id="otherMatchType" type="text" value="" placeholder="请填写比赛类型">
            </div> 
           </div> 
           <div class="control-group"> 
@@ -94,48 +84,48 @@
               <option value=0>请先选择比赛类型</option>
             </select> 
             <!-- /选择场地类型 --> 
-            <input class="hide" id="inputCourtType" type="text" value=""/>
+            <input class="hide" id="inputCourtType" type="text" value="">
             <label class="hide error">请选择场地类型</label>
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="selectCourtPlace">场地区域：</label> 
            <div class="controls form-inline"> 
-            <s:include value="selectPCC.jsp" />
+            <s:include value="seg-selectPCC.jsp"/>
             <!-- /选择省市区三级下拉框 --> 
-            <input class="hide" id="inputRegionId" type="text" name="court.regionId" value=""/>
-            <input class="hide" id="inputRegion" type="text" name="court.region" value=""/>
+            <input class="hide" id="inputRegionId" type="text" name="court.regionId" value="">
+            <input class="hide" id="inputRegion" type="text" name="court.region" value="">
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="inputCourtAddress">详细地址：</label> 
            <div class="controls"> 
-            <input class="span5" type="text" id="inputCourtAddress" name="court.addr" placeholder="如：某地某桥某号某号楼" required="required" />
+            <input class="span5" type="text" id="inputCourtAddress" name="court.addr" placeholder="如：某地某桥某号某号楼" required="required" >
             <label class="hide error">请输入场地地址</label>
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="inputCourtTables">赛场数：</label> 
            <div class="controls"> 
-            <input class="span5" type="number" id="inputCourtTables" name="court.tableNum" placeholder="如：12 或 1 " min="1" /> 
+            <input class="span5" type="number" id="inputCourtTables" name="court.tableNum" placeholder="如：12 或 1 " min="1" > 
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="inputCourtTel">联系电话：</label> 
            <div class="controls"> 
-            <input class="span5" type="text" id="inputCourtTel" name="court.tel" placeholder="固定电话或移动电话 或 无" /> 
+            <input class="span5" type="text" id="inputCourtTel" name="court.tel" placeholder="固定电话或移动电话 或 无" > 
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="inputCourtPrice">价格：</label> 
            <div class="controls"> 
-            <input class="span5" type="text" id="inputCourtPrice" name="court.price" placeholder="如：50元/小时/场 或 免费" /> 
+            <input class="span5" type="text" id="inputCourtPrice" name="court.price" placeholder="如：50元/小时/场 或 免费" > 
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="inputCourtOpenTime">开放时间：</label> 
            <div class="controls"> 
-            <input class="span5" type="text" id="inputCourtOpenTime" name="court.workTime" placeholder="如：每天9:00-18:00" /> 
+            <input class="span5" type="text" id="inputCourtOpenTime" name="court.workTime" placeholder="如：每天9:00-18:00" > 
            </div> 
           </div> 
           <div class="control-group"> 
@@ -152,8 +142,8 @@
               <tr id="tr1">
                 <td>
                   <span class="btn fileinput-button" onclick="selectPic(1)"><i class="icon-plus"></i><span>选择图片</span></span>
-                  <input class="hide fileImage" id="fileImage1" type="file" name="images" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this,1)"/>
-                  <input class="hide fileImageNames" type="text" name="imgNames" value=""/>
+                  <input class="hide fileImage" id="fileImage1" type="file" name="images" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this,1)">
+                  <input class="hide fileImageNames" type="text" name="imgNames" value="">
                 </td>
                 <td><span class="preview" id="preview1"></span></td>
                 <td><span class="name"></span></td>
@@ -193,7 +183,7 @@
    </div> 
   </div> 
   <!-- /container --> 
-  <s:include value="footer.jsp" />
+  <s:include value="seg-footer.jsp"/>
   <!-- 页首导航条 --> 
   <script src="tinymce/jquery.tinymce.min.js"></script> 
   <script src="tinymce/tinymce.min.js"></script> 
@@ -386,7 +376,7 @@
       sousaiRemindDialog("抱歉，每个场地最多只可以上传3张图片！");
     }else{
       trNumb++;
-      $(".files").append('<tr class="hide" id="tr'+trNumb+'"><td><span class="btn fileinput-button"  onclick="selectPic('+trNumb+')"><i class="icon-plus"></i><span>选择图片</span></span><input class="hide fileImage" id="fileImage'+trNumb+'" type="file" name="images" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this,'+trNumb+')"/><input class="hide fileImageNames" type="text" name="imgNames" value=""/></td><td><span class="preview" id="preview'+trNumb+'"></span></td><td><span class="name"></span></td><td><span class="size"></span></td><td><span class="btn cancel" onclick="deleteTr('+trNumb+')"><i class="icon-ban-circle"></i>取消</span></td></tr>');
+      $(".files").append('<tr class="hide" id="tr'+trNumb+'"><td><span class="btn fileinput-button"  onclick="selectPic('+trNumb+')"><i class="icon-plus"></i><span>选择图片</span></span><input class="hide fileImage" id="fileImage'+trNumb+'" type="file" name="images" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this,'+trNumb+')"><input class="hide fileImageNames" type="text" name="imgNames" value=""></td><td><span class="preview" id="preview'+trNumb+'"></span></td><td><span class="name"></span></td><td><span class="size"></span></td><td><span class="btn cancel" onclick="deleteTr('+trNumb+')"><i class="icon-ban-circle"></i>取消</span></td></tr>');
       $("#tr"+trNumb).fadeIn();
     }
   });

@@ -3,18 +3,9 @@
 <!DOCTYPE html>
 <html>
  <head> 
-  <title>场地详情 &middot; 搜赛网</title> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
-  <meta name="description" content="搜赛网场地详情页面" /> 
-  <meta name="author" content="KING@CQU" /> 
-  <link href="css/smoothness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" /> 
-  <link href="css/bootstrap.min.css" rel="stylesheet" /> 
-  <link href="css/bootstrap-responsive.css" rel="stylesheet" /> 
-  <link href="css/sousai.common.css" rel="stylesheet" /> 
-  <link href="css/sousai.courtSearchDetail.css" rel="stylesheet" /> 
-  <!--[if lte IE 8]>
-  <link href="css/sousai.IE8.css" rel="stylesheet" /> 
-  <![endif]-->
+  <title>场地详情 &middot; 搜赛网</title>
+  <meta name="description" content="搜赛网场地详情页面" >
+  <s:include value="seg-meta.jsp"/>
   <style type="text/css">
   .courtSearchDetail .courtShortInfo .title{font-weight: bold;font-size: 14px;color: #000;margin: 10px 0;}
 .courtSearchDetail .courtShortInfo .title span{margin-left: 10px;}
@@ -92,15 +83,15 @@
   </style>
  </head> 
  <body class="courtSearchDetail"> 
-  <s:include value="navbar.jsp" />
+  <s:include value="seg-navbar.jsp"/>
   <!-- 页首导航条 --> 
   <div class="container"> 
    <div class="hdpush"></div> 
    <div class="row"> 
     <div class="span2 offset2"> 
-     <a class="logoBack" href="index.jsp" title="回到首页"><img src="img/logo.png" alt="搜赛网"/></a> 
+     <a class="logoBack" href="index.jsp" title="回到首页"><img src="img/logo.png" alt="搜赛网"></a> 
     </div> 
-    <s:include value="searchbox.jsp" />
+    <s:include value="seg-searchbox.jsp"/>
     <!-- 搜索框 --> 
    </div> 
    <div class="row"> 
@@ -110,15 +101,15 @@
       <div class="title">暂无信息<span>暂无信息</span><span>暂无信息</span><span>暂无信息</span></div> 
       <div class="span3 courtImgs" style="margin-left:0;"> 
        <div class="courtImg-big"> 
-        <img src="img/defaultImg.png" /> 
+        <img src="img/defaultImg.png" > 
        </div> 
        <div class="courtImg-small"> 
         <ul class="breadcrumb"> 
-         <li class="firstImg active"><img src="img/defaultImg.png" /></li> 
-         <li><img src="img/defaultIcon.png" /></li> 
-         <li><img src="img/defaultImg.png" /></li> 
-         <li><img src="img/pingpong.png" /></li> 
-         <li class="lastImg"><img src="img/pingpong-grey.png" /></li> 
+         <li class="firstImg active"><img src="img/defaultImg.png" ></li> 
+         <li><img src="img/defaultIcon.png" ></li> 
+         <li><img src="img/defaultImg.png" ></li> 
+         <li><img src="img/pingpong.png" ></li> 
+         <li class="lastImg"><img src="img/pingpong-grey.png" ></li> 
         </ul> 
        </div> 
       </div> 
@@ -182,11 +173,11 @@
         <div class="media evaluation-response"> 
          <div class="pull-left"> 
            <s:if test="#session.userBean.userName!=null">
-           <img class="media-object" src="img/defaultImg.png" /> 
+           <img class="media-object" src="img/defaultImg.png" > 
            <div class="evaluationName" id="evaluationName-main" data-userid='<s:property value="#session.userBean.userId"/>' ><s:property value="#session.userBean.userName"/></div>
            </s:if>
            <s:else>
-           <img class="media-object" src="img/defaultImg.png" alt="请登录" /> 
+           <img class="media-object" src="img/defaultImg.png" alt="请登录" > 
            <div class="evaluationName" id="evaluationName-main" data-userid="0" >
            	<a href="login.jsp" >请登录</a>
            </div>
@@ -196,9 +187,9 @@
           <div class="inputRadios pull-right">
            <textarea id="inputResponse-main" <s:if test="#session.userBean.userName!=null"></s:if><s:else>disabled="disabled" readonly="readonly"</s:else> ></textarea> 
            <div class="radios">
-            <div class="validateCode-main pull-left">验证码&nbsp;:<input type="text" class="input-small" id="inputValidateCodeMain" name="inputValidateCode" placeholder="验证码" required="required" /><span id="inputValidateImg" class="code" onclick="createCode('inputValidateImg')"></span><span class="code-changeLink" onclick="createCode('inputValidateImg')"> 换一张</span></div> 
-            <label for="hideResponse-main" class="radio inline pull-right"><input type="radio" id="hideResponse-main" name="responseState-main" value="1" />匿名</label>
-            <label for="publicResponse-main" class="radio inline pull-right"><input type="radio" id="publicResponse-main" name="responseState-main" value="0" checked="checked" />公开</label> 
+            <div class="validateCode-main pull-left">验证码&nbsp;:<input type="text" class="input-small" id="inputValidateCodeMain" name="inputValidateCode" placeholder="验证码" required="required" ><span id="inputValidateImg" class="code" onclick="createCode('inputValidateImg')"></span><span class="code-changeLink" onclick="createCode('inputValidateImg')"> 换一张</span></div> 
+            <label for="hideResponse-main" class="radio inline pull-right"><input type="radio" id="hideResponse-main" name="responseState-main" value="1" >匿名</label>
+            <label for="publicResponse-main" class="radio inline pull-right"><input type="radio" id="publicResponse-main" name="responseState-main" value="0" checked="checked" >公开</label> 
            </div> 
           </div>
           <button id="reply-main" class="span2 btn btn-success pull-right<s:if test="#session.userBean.userName!=null"></s:if><s:else> disabled</s:else>">发表评论</button> 
@@ -232,7 +223,7 @@
    </div> 
   </div> 
   <!-- /container --> 
-  <s:include value="footer.jsp" />
+  <s:include value="seg-footer.jsp"/>
   <!-- 页尾信息 --> 
   <script src="js/handlebars-v2.0.0.js"></script>
   <script src="js/jquery.wordLimit.js"></script>  
@@ -240,7 +231,7 @@
   <script id="court-template" type="text/x-handlebars-template">
     {{#each this}}
         
-         <tr data-info="{{data this}}"> 
+         <tr data-info="{{data}}"> 
           <td valign="top">地址：</td> 
           <td class="td2">{{addr}}</td> 
          </tr> 
@@ -274,7 +265,7 @@
          </tr>
          <tr> 
           <td valign="top">更新时间：</td> 
-          <td class="td2">{{relDate}} 更新</td> 
+          <td class="td2"><strong>{{relDate}}</strong> 更新</td> 
          </tr>
 
     {{/each}}
@@ -302,13 +293,10 @@
 		  return false;
 	  }
   	  	$.ajax({
-  	  		type: "POST",
   	        url: "showMsgs",
-  	        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
   	        data: {
   	          "courtId": id,
   	        },
-  	        dataType: "json",
   	        success: function(rspdata) {
   	        	console.log(rspdata);
   	        	var evaluations = $(".evaluations"),userName,mesg;
@@ -336,22 +324,18 @@
   	            		  //sousaiRemindDialog( $(this).data("id") );
   	            		  if ( $(this).data("id") == rspdata[i].parentId ) {
   	            			  //console.log("$(this).data(\"id\") : "+$(this).data("id"));
-  	            			  $(this).find(".media-body > .evaluation-tool-reply").append('<li class="evaluation-reply"><div class="media evaluation"><div class="pull-left"><img class="media-object" src="img/defaultImg.png" /><div class="evaluationName">'+userName+'</div></div><div class="media-body"><p class="evaluation-main">'+mesg+'</p><p class="releasetime">'+rspdata[i].time+'</p><a class="pull-right evaluation-tool-a" href="#myModal">我要补充下</a></div></div></li>').find(".evaluation-tool > .evaluation-tool-visible").text('隐藏回复');
+  	            			  $(this).find(".media-body > .evaluation-tool-reply").append('<li class="evaluation-reply"><div class="media evaluation"><div class="pull-left"><img class="media-object" src="img/defaultImg.png" ><div class="evaluationName">'+userName+'</div></div><div class="media-body"><p class="evaluation-main">'+mesg+'</p><p class="releasetime">'+rspdata[i].time+'</p><a class="pull-right evaluation-tool-a" href="#myModal">我要补充下</a></div></div></li>').find(".evaluation-tool > .evaluation-tool-visible").text('隐藏回复');
   	                      }
   	            	  });
   	              };
 
   	            }
-  	        },
-  	        error: function(jqXHR,textStatus,errorThrown){
-  	        	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-  	        	sousaiRemindDialog("抱歉，获取评论出错了。");
-  	        },
+  	        }
   	        });
   	  	}
   //点击我要补充下，滑出回复框
     function appendTextarea (target,img,name,id,parentName) { //添加“我要补充下”回复框
-     var respStr = '<li class="evaluation-response-li hide"><div class="media evaluation-response"><div class="pull-left"><img class="media-object" src="'+img+'" /><div class="evaluationName" id="evaluationName-temp" data-userid="'+id+'">'+name+'</div></div><div class="media-body"><div class="inputRadios pull-right"><textarea id="inputResponse-temp" <s:if test="#session.userBean.userName!=null"></s:if><s:else>disabled="disabled" readonly="readonly"</s:else> > <s:if test="#session.userBean.userName!=null"> 【回复 '+parentName+' 】：</s:if><s:else>请先登录。</s:else> </textarea><div class="radios"><div class="validateCode-main pull-left">验证码&nbsp;:<input type="text" class="input-small" id="inputValidateCodeTemp" name="inputValidateCodeTemp" placeholder="验证码" required="required" /><span id="inputValidateImgTemp" class="code" onclick="createCode(\'inputValidateImgTemp\')"></span><span class="code-changeLink" onclick="createCode(\'inputValidateImgTemp\')"> 换一张</span></div><label for="hideResponse-temp" class="radio inline pull-right"><input type="radio" id="hideResponse-temp" name="responseState-temp" value="1"/>匿名</label><label for="publicResponse-temp" class="radio inline pull-right"><input type="radio" id="publicResponse-temp" name="responseState-temp" value="0" checked="checked"/>公开</label></div></div><button class="btn pull-right" id="cancle-temp">取消</button><button id="reply-temp" class="span2 btn btn-success pull-right<s:if test="#session.userBean.userName!=null"></s:if><s:else> disabled</s:else>">发表评论</button><input type="submit" class="span2 btn btn-success pull-right hide" value="发表评论"/> </div></div></li>';
+     var respStr = '<li class="evaluation-response-li hide"><div class="media evaluation-response"><div class="pull-left"><img class="media-object" src="'+img+'" ><div class="evaluationName" id="evaluationName-temp" data-userid="'+id+'">'+name+'</div></div><div class="media-body"><div class="inputRadios pull-right"><textarea id="inputResponse-temp" <s:if test="#session.userBean.userName!=null"></s:if><s:else>disabled="disabled" readonly="readonly"</s:else> > <s:if test="#session.userBean.userName!=null"> 【回复 '+parentName+' 】：</s:if><s:else>请先登录。</s:else> </textarea><div class="radios"><div class="validateCode-main pull-left">验证码&nbsp;:<input type="text" class="input-small" id="inputValidateCodeTemp" name="inputValidateCodeTemp" placeholder="验证码" required="required" ><span id="inputValidateImgTemp" class="code" onclick="createCode(\'inputValidateImgTemp\')"></span><span class="code-changeLink" onclick="createCode(\'inputValidateImgTemp\')"> 换一张</span></div><label for="hideResponse-temp" class="radio inline pull-right"><input type="radio" id="hideResponse-temp" name="responseState-temp" value="1">匿名</label><label for="publicResponse-temp" class="radio inline pull-right"><input type="radio" id="publicResponse-temp" name="responseState-temp" value="0" checked="checked">公开</label></div></div><button class="btn pull-right" id="cancle-temp">取消</button><button id="reply-temp" class="span2 btn btn-success pull-right<s:if test="#session.userBean.userName!=null"></s:if><s:else> disabled</s:else>">发表评论</button><input type="submit" class="span2 btn btn-success pull-right hide" value="发表评论"> </div></div></li>';
      target.append(respStr);
      createCode("inputValidateImgTemp");
     }
@@ -410,11 +394,8 @@
     	  return false;
       }
       	$.ajax({
-  		type: "POST",
         url: "relMsg",
-        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         data: args,
-        dataType: "json",
         success: function(rspdata) {
         	console.log(rspdata);
         	if(rspdata == "0"){
@@ -433,10 +414,6 @@
         		createCode("inputValidateImg");
         		ajaxAllEvaluation(args.courtId);
         	};
-        },
-        error: function(jqXHR,textStatus,errorThrown){
-        	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-          	sousaiRemindDialog("抱歉，发布评论失败！未能发送到服务器。");
         }
         });
     }
@@ -449,11 +426,8 @@
 			return false;
 		}
 	    $.ajax({
-	      type: "POST",
 	      url: "getCourtById",
-	      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 	      data: {id:id},
-	      dataType: "json",
 	      success: function(rspdata) {
 		      console.log(rspdata);//sousaiRemindDialog(rspdata);
 	      var target = $(".courtTboby"),template = Handlebars.compile($('#court-template').html()),temp={};
@@ -463,15 +437,11 @@
 	      });
 	      target.empty().html(template(temp));
 	      $("title").html(rspdata.name+" &middot; 搜赛网");
-	      $(".title").html(rspdata.name+"<span>特点</span>").attr("data-id",rspdata.id);
+	      $(".title").html(rspdata.name).attr("data-id",rspdata.id);
 	      $("#courtContent").html(rspdata.intro);
 	      ajaxAllEvaluation(id);
 		  e({currentPage:1,rows:10,id:id});
-		  },
-	      error: function(jqXHR,textStatus,errorThrown){
-	    	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-	          sousaiRemindDialog("抱歉，ajax出错了。");
-	      },
+		  }
 	    });
   }
   //根据id获取该场地的比赛信息
@@ -488,11 +458,8 @@
   	  }
   
 	    $.ajax({
-	      type: "POST",
 	      url: "getMatchByCourtId",
-	      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 	      data: args,
-	      dataType: "json",
 	      success: function(rspdata) {
 		      console.log(rspdata);
 	      var target = $(".recordTable > tbody"),template = Handlebars.compile($('#record-template').html());
@@ -502,11 +469,7 @@
 	      target.empty().html(template(rspdata.body));
 	      $("#courtRecordTab span").text(rspdata.count);
 	      pages(rspdata.count,args.currentPage,args.rows);
-		  },
-	      error: function(jqXHR,textStatus,errorThrown){
-	    	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-	          sousaiRemindDialog("抱歉，ajax出错了。");
-	      },
+		  }
 	    });
   }
   
@@ -531,7 +494,7 @@
      $("body").on("click",".evaluation-tool > .evaluation-tool-a",function(){ //仅对一层评论的“我要回复下使用”
       var target = $(this).parent().parent(),//目标为evaluation-tool-reply
           parentName = $.trim(target.parent().parent().find(".author > .evaluationName").text()), //trim()去除前后空格 .evalution > .author > .evaluationName
-          img = 'img/defaultImg.png',//<s:if test="#session.userBean.userName!=null"><s:property value="#session.userBean.userIcon"/></s:if><s:else>'img/defaultImg.png'</s:else>,
+          img = 'img/defaultImg.png',
           id = $("#userId").attr("data-userid")||0,
           name = $("#userId").text()||'<a href="login.jsp" >请登录</a>';
 
@@ -556,7 +519,7 @@
      $("body").on("click",".media-body > .evaluation-tool-a",function(){ //仅对二层评论的“我要回复下使用”
       var target = $(this).parent().parent(),//目标为evaluation
           parentName = $.trim(target.find(".evaluationName").text()), //trim()去除前后空格 .evalution .evaluationName
-          img = 'img/defaultImg.png',//<s:if test="#session.userBean.userName!=null"><s:property value="#session.userBean.userIcon"/></s:if><s:else>'img/defaultImg.png'</s:else>,
+          img = 'img/defaultImg.png',
           id = $("#userId").attr("data-userid")||0,
           name = $("#userId").text()||'<a href="login.jsp" >请登录</a>';
           

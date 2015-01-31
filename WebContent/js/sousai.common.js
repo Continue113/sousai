@@ -2,6 +2,12 @@
 /////////////////////////////////////////////////////////////
 ////////////////////////FUNCTION   ///////////////////////
 /////////////////////////////////////////////////////////////
+function setMenu(){
+    var url = window.location.pathname;
+    urikv = decodeURI(url.substring(url.lastIndexOf('/')+1, url.length));
+    console.log(urikv);
+    $('a[href="'+urikv+'"]',".nav-side").parent().addClass("active");
+}
 
 //新建指定的cookie,cookieKey为cookie名、value为cookie值，expiresTime为cookie有效期
 function setCookie(name, value) {
@@ -359,35 +365,29 @@ function getRegion() {
 
 //检测是否登录，若未登录则提示登录，若已登录则刷新页面，获取当前userid
 	function isLogined() {
-	  return $.ajax({
-	        type: "POST",
+	   var logindata = $.ajax({
 	        url: "isLogined",
-	        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-	        dataType: "json",
 	        async: false, //设置异步为false,解决ajax异步不能设置全局变量的问题
-	        success: function(rspdata) {
-	            //console.log("isLogined函数内USERID:");console.log(rspdata);
-	            return rspdata;
-	        },
-	        error: function(jqXHR, textStatus, errorThrown) {
-	            console.log(jqXHR + " /" + textStatus + " /" + errorThrown);
-	            sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
-	        },
 	    });
+	   if(logindata.responseJSON=="error"){
+			// -1 为未登录状态，其他则为用户ID
+			newformloginBox();
+		}
+	   return logindata;
 	}
 	
 function newformloginBox() {
-    var login = '<div class="span3 form-signin"><form novalidate="novalidate" id="formlogin"><fieldset><legend>会员登录</legend><div class="error hide">您输入的密码和用户名不匹配，请重新输入。</div><label for="formloginInputUsername">用户名:</label>' + '<input aria-required="true" class="input-block-level" id="formloginInputUsername" name="user.name" placeholder="用户名" value="" required="required" type="text">' + '<label for="formloginInputPassword">密码:<a href="javascript:void(0)">忘记密码?</a></label>' + '<input aria-required="true" class="input-block-level" id="formloginInputPassword" name="user.pwd" placeholder="密码" required="required" type="password">' + '<label class="checkbox"> <input id="rememberMe" type="checkbox">记住我</label>' + '<input class="btn btn-success" type="button" id="signinBoxBtn" value="登&nbsp;&nbsp;录"">' + '<label><a href="register.jsp">免费注册</a></label></fieldset></form></div>';
+    var login = '<div class="span3 form-signin"><form novalidate="novalidate" id="formlogin"><fieldset><div class="error hide">您输入的密码和用户名不匹配，请重新输入。</div><label for="inputUsername">用户名:</label>' + '<input aria-required="true" class="input-block-level" id="inputUsername" name="user.name" placeholder="用户名" value="" required="required" type="text">' + '<label for="inputPassword">密码:<a href="javascript:void(0)">忘记密码?</a></label>' + '<input aria-required="true" class="input-block-level" id="inputPassword" name="user.pwd" placeholder="密码" required="required" type="password">' + '<label class="checkbox"> <input id="rememberMe" type="checkbox">记住我</label>' + '<input class="btn btn-success" type="submit" id="signinBoxBtn" value="登&nbsp;&nbsp;录"">' + '<label><a href="register.jsp">免费注册</a></label></fieldset></form></div>';
 
     sousaiRemindDialog(login, -1,"false","isLogin");
 
     //进入此页面查找已存在的cookie
     if (getCookie("sousaiUserName") != null) {
-        $("#formloginInputUsername").val(unescape(getCookie("sousaiUserName")));
+        $("#inputUsername").val(unescape(getCookie("sousaiUserName")));
         $("#rememberMe").attr("checked", "checked");
     } else {
         console.log(getCookie("sousaiUserName"));
-        $("#formloginInputUsername").val("");
+        $("#inputUsername").val("");
     }
 
     //表单验证代码 登录
@@ -414,52 +414,92 @@ function newformloginBox() {
         }
     });
 }
-
-$(function() {
-
-    $("body").on('click', '#signinBoxBtn', function() {
-        if ($("#formlogin").valid() === true) {
-            //登录时检测 记住我 选项是否为勾选状态，
-            if ($("#rememberMe").is(":checked")) {
-                //勾选 记住我，更新已存在的cookie或新建一个cookie;
-                var userName = $("#formloginInputUsername").val();
-                setCookie("sousaiUserName", userName);
-                console.log("set cookie yet and then submit:" + getCookie("sousaiUserName"));
-                console.log($("#formloginInputUsername").val()+$("#formloginInputPassword").val());
-            } else {
-                //若没有勾选 记住我，则直接提交
-                console.log($("#formloginInputUsername").val()+$("#formloginInputPassword").val());
-            }
-
-            $.ajax({
-                type: "POST",
-                url: "processLogin",
-                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-                data: {
-                  "user.name": $("#formloginInputUsername").val(),
-                  "user.pwd": $("#formloginInputPassword").val(),
-                },
-                dataType: "json",
-                success: function(rspdata) {
-                	console.log(rspdata);
+function login(event){
+	//阻止submit自动提交
+	event.preventDefault();
+	if ($("#formlogin").valid() === true) {
+		
+	    	if($("#rememberMe").is(":checked")){
+	    		//勾选 记住我，更新已存在的cookie或新建一个cookie;
+	    		var userName = $("#inputUsername").val();
+	    	    setCookie("sousaiUserName",userName);
+	    	}
+	
+	        $.ajax({
+	            url: "processLogin",
+	            data: {
+	              "user.name": $("#inputUsername").val(),
+	              "user.pwd": $("#inputPassword").val(),
+	            },
+	            success: function(rspdata) {
 	            	  if( rspdata == "success" ){
-	                      //根据session设置本页面的navbar
-	                      window.location.href = window.location;
-	            	  }else if( rspdata == "error" ){
-	            		  $("#formlogin .error").show();
+	            		  if($("body").attr("class")=="login"){
+	            			  window.location.href = "index.jsp";
+	            		  }else{
+	            			  window.location.reload();
+	            		  }
 	            	  }else{
 	            		  $("#formlogin .error").show();
-	            		  console.log("登录失败，错误代码为："+rspdata);
 	            	  }
-                },
-                error: function(jqXHR,textStatus,errorThrown){
-                	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-                  	//sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
-                },
-              });
-        }
-    });
+	            }
+	        });
+	}
+}
 
+$(function() {
+	//common.js的统一初始化代码，
+	//配置信息，初始化页面 需要的所有配置信息，如ajax错误信息，成功输出信息，所有页面关于分页的代码，排序，条数，
+	// 设置jQuery Ajax全局的参数  
+    $.ajaxSetup({  
+        type: "POST",
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        dataType: "json",
+        error: function(jqXHR, textStatus, errorThrown){
+        	console.log(jqXHR);
+        	console.log(textStatus);
+        	console.log(errorThrown);
+            switch (jqXHR.status){  
+                case(500):  
+                    alert("服务器系统内部错误");  
+                    break;  
+                case(401):  
+                    alert("未登录");  
+                    break;  
+                case(403):  
+                    alert("无权限执行此操作");  
+                    break;  
+                case(408):  
+                    alert("请求超时");  
+                    break;  
+                default:  
+                    alert("未知错误");  
+            }  
+        },   
+        success: function(rspdata){  
+            console.log(rspdata);  
+        }  
+    });  
+    //初始化所有选择条数的下拉菜单
+	if($(".selectRows").length != 0){
+		var rows ="", maxRows = 50;
+		for(var i=5;i<=maxRows;i+=5){
+			rows += '<option value="'+i+'">'+i+'条/页</option>';
+		}
+		$(".selectRows").append(rows);
+	}
+	
+	/////////////////////////////////////////////////////////////////////
+	//////////////////// 全局设置所有的初始化函数完成           ///////////////////////////
+	
+    //鼠标hover match/courtbox
+    $(".matchBoxs ").on('mouseenter','.matchBox',function(){
+    	      $('.matchBox').removeClass("box-active");
+    	      $(this).addClass("box-active");
+    });
+    $(".courtBoxs ").on('mouseenter','.courtBox',function(){
+    	      $('.courtBox').removeClass("box-active");
+    	      $(this).addClass("box-active");
+    });
     //记住我：仅记住用户名
     $("body").on('click', "#rememberMe", function() {
         if (!$("#rememberMe").is(":checked")) {
@@ -467,6 +507,11 @@ $(function() {
         }
     });
 
+	//登录框
+    $("body").on('submit', "#formlogin", function(event) {
+    	login(event);
+    });
+	
     //若存在session中的已选城市，则使用此城市，否则使用新浪IP获得所在城市地点 
     /*if( $(".sessionCity").length != 1 ){
 	  //通过调用新浪IP地址库接口查询用户当前所在国家、省份、城市、运营商信息
@@ -587,33 +632,6 @@ $(function() {
 
     //工具提示
     $(".add-on").tooltip();
-
-    //搜索栏选择分类
-    $(".add-selectType").click(function() {
-        //获取所有比赛类型
-        $.post("showMC", null, function(data) {
-            //alert("回调内容为:"+data);//id name 
-            var target = $("#allMatchType > .modal-body > .breadcrumb-fff");
-            target.empty();
-            $.each(data, function(index, item) {
-                target.append('<span class="breadcrumb-title">' + item.name + '类:</span><ul class="breadcrumb typeid' + item.name + '"></ul><hr/>');
-                $.post("showMT", {"mcId": item.id}, function(rspdata) {
-                    $.each(rspdata, function(index1, item1) {
-                        target.find(".typeid" + item.name).append('<li><a href="#" data-id="' + item1.id + '">' + item1.name + '</a>&nbsp;&nbsp;</li>');
-                    });
-                });
-            });
-        });
-
-        $('#allMatchType').modal({
-            backdrop: false,
-        });
-    });
-    $("#allMatchType a").click(function() {
-        var val = $(this).text();
-        $(".add-selectType span").text(val);
-        $('#allMatchType').modal("hide");
-    });
 
     $("#collectLink").click(function() {
         var sURL = document.URL;
