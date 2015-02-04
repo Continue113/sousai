@@ -114,17 +114,19 @@ public interface AdminManager {
 	public void deleteUsers(Integer[] ids) throws Exception;
 
 	/**
-	 * 批量发布场地（将verify置为1）
+	 * 批量发布或取消发布场地（将verify置为1或0）
 	 * @param ids
+	 * @param isRel
 	 * @throws Exception
 	 */
-	public void relCourts(Integer[] ids) throws Exception;
+	public void relCourts(Integer[] ids, boolean isRel) throws Exception;
 	
 	/**
-	 * 批量发布比赛（将verify置为1）
+	 * 批量发布或取消发布比赛（将verify置为1或0）
 	 * @param ids
+	 * @param isRel
 	 * @throws Exception
 	 */
-	public void relMatches(Integer[] ids)throws Exception;
+	public void relMatches(Integer[] ids, boolean isRel)throws Exception;
 	
 }

@@ -153,9 +153,10 @@ public interface MatchDao {
 	int countByCourtId(Integer courtId) throws Exception;
 
 	/**
-	 * 批量发布比赛（将verify置为1）
+	 * 批量发布或取消发布比赛（将verify置为1或0）
 	 * @param ids
+	 * @param isRel
 	 */
-	void relMatchesByAdmin(Integer[] ids);
-
+	void relMatchesByAdmin(Integer[] ids, boolean isRel);
+	
 }

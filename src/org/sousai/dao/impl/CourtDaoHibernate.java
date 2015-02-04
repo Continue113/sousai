@@ -335,8 +335,14 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 	}
 
 	@Override
-	public void relCourts(Integer[] ids) throws Exception {
-		String strHql = "update Court set verify='1' where id in (:ids)";
+	public void relCourts(Integer[] ids, boolean isRel) throws Exception {
+		String strHql;
+		if(isRel){
+			 strHql = "update Court set verify='1' where id in (:ids)";
+		}
+		else{
+			strHql =  "update Court set verify='0' where id in (:ids)";
+		}
 		Session session = getHibernateTemplate().getSessionFactory()
 				.getCurrentSession();
 		Query q = session.createQuery(strHql);

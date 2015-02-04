@@ -160,8 +160,8 @@ public class AdminManagerImpl implements AdminManager {
 	}
 
 	@Override
-	public void relCourts(Integer[] ids) throws Exception {
-		courtDao.relCourts(ids);
+	public void relCourts(Integer[] ids, boolean isRel) throws Exception {
+		courtDao.relCourts(ids, isRel);
 	}
 
 	@Override
@@ -170,7 +170,7 @@ public class AdminManagerImpl implements AdminManager {
 	}
 
 	@Override
-	public void relMatches(Integer[] ids) throws Exception {
-		matchDao.relMatchesByAdmin(ids);
+	public void relMatches(Integer[] ids, boolean isRel) throws Exception {
+		matchDao.relMatchesByAdmin(ids, isRel);
 	}
 }

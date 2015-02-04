@@ -3,6 +3,7 @@ package org.sousai.action;
 import org.apache.struts2.ServletActionContext;
 import org.sousai.action.base.UserBaseAction;
 import org.sousai.common.Constant;
+import org.sousai.tools.CommonUtils;
 import org.sousai.tools.JSONUtils;
 
 public class RelCourtsByAdminAction extends UserBaseAction
@@ -11,6 +12,7 @@ public class RelCourtsByAdminAction extends UserBaseAction
 	private static final long serialVersionUID = -569315712904600957L;
 	
 	private String ids;
+	private Boolean isRel;
 	
 	/**
 	 * @return the ids
@@ -24,6 +26,20 @@ public class RelCourtsByAdminAction extends UserBaseAction
 	 */
 	public void setIds(String ids) {
 		this.ids = ids;
+	}
+
+	/**
+	 * @return the isRel
+	 */
+	public Boolean getIsRel() {
+		return isRel;
+	}
+
+	/**
+	 * @param isRel the isRel to set
+	 */
+	public void setIsRel(Boolean isRel) {
+		this.isRel = isRel;
 	}
 
 	/**
@@ -41,7 +57,11 @@ public class RelCourtsByAdminAction extends UserBaseAction
 			for (int i = 0; i < arrayCourtIds.length; i++) {
 				iCourtIds[i] = Integer.valueOf(arrayCourtIds[i]);
 			}
-			amg.relCourts(iCourtIds);
+			//默认为发布
+			if(CommonUtils.isNullOrEmpty(isRel)){
+				isRel = true;
+			}
+			amg.relCourts(iCourtIds, isRel);
 			value = Constant.SUCCESS;
 		} catch (Exception e) {
 			e.printStackTrace();
