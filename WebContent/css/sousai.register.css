@@ -1,4 +1,4 @@
-.register-heading {
+﻿.register-heading {
     background-color: #c0f449;
     color: #fff;
     margin-top: 10px;
@@ -8,35 +8,6 @@
 }
 .register .popover{display: block;position: relative;z-index: 1;}
 .register .popover strong{color: #62c462;}
-
-.register .control-label {
-    width: 100px;
-}
-
-.register .controls {
-    margin-left: 120px;
-}
-
-.register .controls > .span2{
-    margin-left: 0;
-}
-
-/** 閲嶇疆鏈�皬瀹藉害涓媐orm-horizontal鐨勫乏杈硅窛 **/
-@media (max-width: 480px) {
- .register .form-horizontal .control-label {
-    float: none;
-    width: auto;
-    padding-top: 0;
-    text-align: left;
-  }
- .register .form-horizontal .controls {
-    margin-left: 0;
-  }
- .register .form-horizontal .control-list {
-    padding-top: 0;
-  }
-}
-/****/
 
 /** 楠岃瘉鐮�*/
 .register .form-signin .error {

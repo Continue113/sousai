@@ -7,8 +7,8 @@
     <span><a href="login.jsp">login.jsp </a><a href="register.jsp">register.jsp </a></span>
     <span><a href="courtSearch.jsp">courtSearch.jsp </a><a href="courtSearchDetail.jsp">courtSearchDetail.jsp </a></span>
     <span><a href="matchSearch.jsp">matchSearch.jsp </a><a href="matchSearchDetail.jsp">matchSearchDetail.jsp </a></span>
-    <span><a href="userCenter-editUser.jsp">userCenter-editUser.jsp </a><a href="background-collections.jsp">background-collections.jsp </a></span>
-    <span><a href="background-login.jsp">background-login.jsp</a></span>
+    <span><a href="userCenter-editUser.jsp">userCenter-editUser.jsp </a><a href="back-collection.jsp">back-collection.jsp </a></span>
+    <span><a href="back-match.jsp">back-match.jsp</a></span>
     </div> 
   </div><!-- /footer -->
 

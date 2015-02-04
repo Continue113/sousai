@@ -3,73 +3,36 @@
 <!DOCTYPE html>
 <html>
  <head> 
-  <title>管理员页面 &middot; 全部采集 &middot; 搜赛网</title> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
-  <meta name="description" content="搜赛网-管理员页面-全部采集" /> 
-  <meta name="author" content="KING@CQU" /> 
-  <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet" /> 
-  <link href="css/bootstrap.min.css" rel="stylesheet" /> 
-  <link href="css/bootstrap-responsive.css" rel="stylesheet" />
-  <link href="css/sousai.common.css" rel="stylesheet" /> 
-  <link href="css/sousai.background.css" rel="stylesheet" /> 
-  <!--[if lte IE 8]>
-  <link href="css/sousai.IE8.css" rel="stylesheet" /> 
-  <![endif]-->
-  <style>
-  .table .match-from > a:first-child {width: 200px;}
-  /** 编辑比赛 按钮bar  **/
-  .editMatch > .btnbar {margin-left: 0;}
-  /** 编辑比赛按钮bar 中的按钮  **/
-  .editMatch > .btnbar > .btn {float: right;margin-left: 10px;}  
-  /** 排序下拉按钮 **/
-  .panel-top > .btn-group {margin-top: -10px;}
-  </style>
+  <title>管理员页面 &middot; 全部采集 &middot; 搜赛网</title>
+  <meta name="description" content="搜赛网-管理员页面-全部采集"> 
+  <s:include value="seg-meta.jsp"/>
+  <link href="css/sousai.back.css" rel="stylesheet">
  </head> 
  <body class="background"> 
-  <s:include value="background-head.jsp" /> 
+  <s:include value="seg-back-head.jsp"/> 
   <!-- 管理员界面页头 --> 
   <div class="container"> 
    <div class="row"> 
     <div class="span4"> 
-     <a class="logoBack" href="index.jsp" title="回到首页"><img src="img/logo.png" alt="搜赛网"/></a>
+     <a class="logoBack" href="index.jsp" title="回到首页"><img src="img/logo.png" alt="搜赛网"></a>
      <span class="logotext">管理员页面</span> 
     </div>
    </div> 
    <div class="row"> 
     <div class="span11"> 
-     <!-- background-remind & backgroundMenu --> 
-     <ul class="breadcrumb background-remind"> 
-      <li>提醒:</li> 
-      <li><a href="#">待处理的比赛信息<span>(5)</span></a></li> 
-     </ul> 
-     <div class="span2 backgroundMenu "> 
-      <ul class="nav nav-stacked nav-side"> 
-       <li><h5><a href="#"><i class="icon-minus"></i>系统发布:</a></h5></li> 
-       <li class="active"><a href="background-collections.jsp"><i class="icon-chevron-down "></i>全部采集</a></li> 
-       <li><a href="background-collectionsSetting.jsp"><i class="icon-chevron-down "></i>网站设置</a></li> 
-       <li><h5><a href="#"><i class="icon-minus"></i>数据维护:</a></h5></li> 
-       <li><a href="background-matchMaintenance.jsp"><i class="icon-chevron-down "></i>比赛维护</a></li> 
-       <li><a href="background-courtMaintenance.jsp"><i class="icon-chevron-down "></i>场地维护</a></li> 
-       <li><a href="background-userMaintenance.jsp"><i class="icon-chevron-down "></i>用户维护</a></li> 
-       <li><a href="background-evaluationMaintenance.jsp"><i class="icon-chevron-down "></i>评论维护</a></li> 
-       <li><h5><a href="#"><i class="icon-minus"></i>网站统计</a></h5></li> 
-       <li><a href="background-regUserCount.jsp"><i class="icon-chevron-down "></i>网站统计</a></li>
-      </ul> 
-     </div> 
-     <!-- /background-remind & backgroundMenu --> 
+      <s:include value="seg-back-menu.jsp"/><!-- 后台导航菜单 -->
      <div class="span9"> 
       <!--全部采集主体开始--> 
       <div class="matchList"> 
        <!-- panel --> 
-       <div class="panel-top"> 
-        <select class="select selectRows span1"><option value=25>25条/页</option><option value=2>2条/页</option><option value=5>5条/页</option></select>
+       <div class="panel-top form-inline"> 
+        <select class="select selectRows span1"></select>
         <div class="btnbar pull-right"> 
          <button type="button" class="btn deleteCollection">删除选中</button>
          <button type="button" class="btn passCollection">发布选中</button> 
         </div> 
        </div>
-       <table class="table table-striped table-hover collectionsTable"> 
-        <caption>全部采集</caption> 
+       <table class="table table-striped table-hover collectionsTable">
         <thead>
          <tr>
           <th>比赛名称</th>
@@ -88,7 +51,7 @@
       <!--全部采集主体结束-->
       
       <!--编辑比赛 开始-->
-        <s:include value="editMatch.jsp" />
+        <s:include value="seg-editMatch.jsp"/>
       <!-- /编辑比赛信息 -->
      </div>
      <!-- /span9 --> 
@@ -118,8 +81,8 @@
   <script id="collections-template" type="text/x-handlebars-template">
     {{#each this}}
                         
-        <tr class="match" data-info="{{data this}}"> 
-          <td class="match-title"><label for="{{id}}"><input type="checkbox" id="{{id}}"/><span>{{name}}</span></label></td> 
+        <tr class="match" data-info="{{data}}"> 
+          <td class="match-title"><label for="{{id}}"><input type="checkbox" id="{{id}}"><span>{{name}}</span></label></td> 
           <td class="match-time">{{matchStartTime}} - {{matchDeadline}}</td> 
           <td class="match-court">{{matchAddress}}</td>
           <td class="match-from"><a href="#">{{url}}</a></td> 
@@ -130,110 +93,84 @@
   </script>
   <script>
   //定义函数
-  function e(crtPage,rs){
-  	$("#ajaxState .load").show();console.log("start");
+  function e(argso){
+		//定义默认选项 
+		var args=argso;
+		args.currentPage = args.currentPage||$("ul.pagination li.active a").html()||1;
+		args.rows = args.rows||$("select.selectRows option:selected").val()||25;
+		args.orderByCol = args.orderByCol||$(".sort button .current").attr("data-orderbycol")||"name";
+		args.isAsc = args.isAsc||$(".sort button .current").attr("data-isasc")||true;
+		args.strColumns = args.strColumns||$(".text-filter-box button .current").attr("data-strcolumns")||"name";
+		args.keyValue = args.keyValue||$(".text-filter-box input").val()||"";
+	  	
+  	$("#ajaxState .load").show();
     $.ajax({
-      type: "POST",
       url: "backgroundCollections",
-      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-      data: {currentPage:crtPage,rows:rs},
-      dataType: "json",
+      data: args,
       success: function(rspdata) {
-    	  console.log(rspdata);
 	      var target = $(".collectionsTable > tbody"),template = Handlebars.compile($('#collections-template').html());
-	      Handlebars.registerHelper("data",function(v){
-	    	  //将当前对象转化为字符串，保存在data-info中
-	    	  //console.log(v);
-	    	  var v1 = JSON.stringify(v);
-	    	  //console.log("v1:"+v1);
-	    	  return v1;
+	      Handlebars.registerHelper("data",function(){
+	    	  return JSON.stringify(this);
 	      });
-	      target.empty(); //清空tbody
-	  	  target.html(template(rspdata.body));
+	      target.empty().html(template(rspdata.body));
 	      $("#ajaxState .load").hide();
 	      $("#ajaxState .noresult").hide();
-	      console.log("stop");
-	      //出错或无结果
-	      //target.empty(); //清空tbody
 	      if(target.find("tr.match").length == 0){
-	      $("#ajaxState .noresult").show();console.log("无结果");
+	      $("#ajaxState .noresult").show();
 	      }
 	      //字数限制，溢出省略
 	      $("td > label > span").wordLimit();
 	      $(".match-court").wordLimit();
 	      $(".match-from > a").wordLimit(25);
-	      pages(rspdata.count,crtPage,rs);
-	    },
-      error: function(jqXHR,textStatus,errorThrown){
-    	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-	      $("#ajaxState .noresult").show();console.log("出错了");
-	      sousaiRemindDialog("抱歉，获取数据出错了。");
-      },
+	      pages(rspdata.count,args.currentPage,args.rows);
+	    }
     });
   }
 function sureDelete(){
 	hideSousaiRemindDialog();
 	var collectionId = new Array();
 	$(".match input:checked").each(function(index,element){
-		console.log($(this).attr("id"));
 		collectionId.push($(this).attr("id"));
 	});
     $.ajax({
-      type: "POST",
       url: "deleteCollections",
-      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
       data: {
         "collectionId": collectionId.join(","),
       },
-      dataType: "json",
       success: function(rspdata) {
     	  if( rspdata == "success" ){
     		  sousaiRemindDialog("删除成功");
     		  $(".match input:checked").parent().parent().parent().remove();
-    	  }else if( rspdata == "error" ){
-    		  sousaiRemindDialog("删除失败");
     	  }else{
     		  sousaiRemindDialog("删除失败，错误代码为："+rspdata);
     	  }
-      },
-      error: function(jqXHR,textStatus,errorThrown){
-    	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-       	  sousaiRemindDialog("delete:抱歉，发送信息到服务器出错了。");
-      },
+      }
     });
 }
 function sureDeleteEdit(){
 	hideSousaiRemindDialog();
 	$.ajax({
-        type: "POST",
         url: "deleteCollections",
-        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         data: {
       	  "collectionId": $("#inputMatchTitle").attr("data-id"),
         },
-        dataType: "json",
         success: function(rspdata) {
       	  if( rspdata == "success" ){
       		  sousaiRemindDialog("删除成功");
       		  $("#"+$("#inputMatchTitle").attr("data-id")).parent().parent().parent().remove();
-      	  }else if( rspdata == "error" ){
-      		  sousaiRemindDialog("删除失败");
       	  }else{
       		  sousaiRemindDialog("删除失败，错误代码为："+rspdata);
       	  }
-        },
-        error: function(jqXHR,textStatus,errorThrown){
-          	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-      	  sousaiRemindDialog("delete:抱歉，发送信息到服务器出错了。");
-        },
+        }
       });
 }
   $(function(){
+	  setMenu();
 	  //删除.btnbar 中绑定为比赛的class 改为Collection 使原来的发布比赛、保存修改、删除比赛的点击函数失效，
 	  $(".editMatch").find(".btnbar").html('<button type="button" class="btn passCollection">发布采集</button><button type="button" class="btn saveCollection">保存修改</button><button type="button" class="btn deleteCollection">删除采集</button><button type="button" class="btn backList ">返回列表</button>');
 	  
 	//ajax接收所有比赛
-	e(1,25);
+	e({currentPage:1,rows:25});
     //点击编辑比赛隐藏List列表同时显示编辑比赛
     $("tbody").on("click",".match-oprate > a",function(event){
         var datainfo = $(this).parent().parent().attr("data-info");
@@ -281,30 +218,20 @@ function sureDeleteEdit(){
         		collectionId.push($(this).attr("id"));
     		});
             $.ajax({
-              type: "POST",
               url: "publishCollections",
-              contentType: "application/x-www-form-urlencoded; charset=UTF-8",
               data: {
                 "collectionId": collectionId.join(","),
               },
-              dataType: "json",
               success: function(rspdata) {
             	  if( rspdata == "success" ){
             		  //sousaiRemindDialog("删除成功");sousaiRemindDialog(crtPage);
             		  sousaiRemindDialog("发布成功");
             		  $(".match input:checked").parent().parent().parent().hide();
             		  //e(crtPage,rs);//刷新数据
-            	  }else if( rspdata == "error" ){
-            		  //sousaiRemindDialog("删除失败")
-            		  sousaiRemindDialog("发布失败");
             	  }else{
             		  sousaiRemindDialog("发布失败，错误代码："+rspdata);
             	  }
-              },
-              error: function(jqXHR,textStatus,errorThrown){
-            	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-                sousaiRemindDialog("pass:抱歉，发送信息到服务器出错了。");
-              },
+              }
             });
     	}
     });
@@ -340,9 +267,7 @@ function sureDeleteEdit(){
     	if( $("#editMatchForm").valid() === true ){
     		console.log("验证通过");
                 $.ajax({
-                  type: "POST",
                   url: "updateCollections",
-                  contentType: "application/x-www-form-urlencoded; charset=UTF-8",
                   data: {
                 	  		"matchData.id": id,
                 	  		"matchData.url": url,
@@ -358,22 +283,14 @@ function sureDeleteEdit(){
                 		    //"court.courtTypeId": "",
                 		    //"isCourt": iscourt,
                 		  },
-                  dataType: "json",
                   success: function(rspdata) {
-                	  //sousaiRemindDialog(rspdata);console.log(rspdata);
                 	  if( rspdata == "success" ){
-                		  //sousaiRemindDialog("保存成功");
-                		  sousaiRemindDialog("保存成功");
-                	  }else if( rspdata == "error" ){
-                		  sousaiRemindDialog("保存失败");
+                		  window.setTimeout("window.location。href=window.location。href",3000);
+                  		  sousaiRemindDialog("保存成功,3秒后将刷新页面。");
                 	  }else{
-                		  sousaiRemindDialog("保存失败，错误代码未知");
+                		  sousaiRemindDialog("保存失败，错误代码为："+rspdata);
                 	  }
-                  },
-                  error: function(jqXHR,textStatus,errorThrown){
-  	            	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-                    sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
-                  },
+                  }
                 });
     	}else{
     		sousaiRemindDialog("填写信息不符合验证，请重新填写。");
@@ -382,25 +299,17 @@ function sureDeleteEdit(){
     //发布比赛 编辑界面
     $(".editMatch .passCollection").click(function (){
                  $.ajax({
-                  type: "POST",
                   url: "publishCollections",
-                  contentType: "application/x-www-form-urlencoded; charset=UTF-8",
                   data: {
                     "collectionId": $("#inputMatchTitle").attr("data-id"),
                   },
-                  dataType: "json",
                   success: function(rspdata) {
                 	  if( rspdata == "success" ){
                 		  sousaiRemindDialog("发布成功");
-                	  }else if( rspdata == "fail" ){
-                		  sousaiRemindDialog("发布失败");
                 	  }else{
-                		  sousaiRemindDialog("发布失败，错误代码未知");
+                		  sousaiRemindDialog("发布失败，错误代码为："+rspdata);
                 	  }
-                  },
-                  error: function(jqXHR,textStatus,errorThrown){
-                    sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
-                  },
+                  }
                 }); 
     });
   });

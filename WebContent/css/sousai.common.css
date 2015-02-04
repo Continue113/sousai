@@ -8,9 +8,6 @@ body {  position: relative;
   padding-top: 40px;
   font: 12px/1.5 tahoma,arial,'Hiragino Sans GB',\5b8b\4f53,sans-serif;
 }
-form legend {
-    display: none;
-}
 
 a {
     color: #797979;
@@ -106,8 +103,6 @@ box-shadow: 0 0 0 0 rgba(0,0,0,.1);
     font-weight: normal;
     background: url(../img/logoPoint-5-5.jpg) no-repeat 0 50%;
 }
-/** 表格标题隐藏 **/
-.table caption {display: none;}
 /** 比赛、场地搜索页面提醒搜索结果 **/
 .search-remind {margin-top:5px;}
 .search-remind i{vertical-align: -1px;}
@@ -130,6 +125,11 @@ a.thumbnail:hover,a.thumbnail:focus {
 .form-horizontal .control-group{margin-top:10px;margin-bottom: 0; }
 .form-horizontal .control-label {width: 70px;}
 .form-horizontal .controls{margin-left: 80px;}
+
+/* background管理员页面&middot;网站设置&middot;搜赛网  */
+/* .background .form-horizontal .control-label {width: 140px;}
+.background .form-horizontal .controls {margin-left: 150px;} */
+  
 /** 重置最小宽度下form-horizontal的左边距 **/
 @media (max-width: 480px) {
 .form-horizontal .control-label {
@@ -209,10 +209,7 @@ ul.searchboxMenu > .active > a:focus {
     background-color: #abcf20;
     border: 1px solid #abcf20;
 }
-.span7 > .tab-content .input-append .add-selectType{width: 64px;text-align: center;background-color: #fff;cursor: pointer;}
-.span7 > .tab-content .input-append .add-selectType .caret{margin-top: 10px;}
 .span7 > .tab-content .input-append .btn-search {
-  width: 90px;
   font-size: 16px;
 }
 .span7 > .tab-content > .tab-pane > .span6 {margin-left: 0;}
@@ -234,8 +231,6 @@ ul.searchboxMenu > .active > a:focus {
 .span7 .breadcrumb-fff hr {
   margin: 0;margin-top: 2px;
 }
-/** 选择分类对话框标题 **/
-.modal-body .breadcrumb-title{font-weight: bold;}
 /** 下拉框有小三角 **/
 .dropdown-menu:before {
 position: absolute;
@@ -317,4 +312,105 @@ content: '';
 div.box-active div.matchBox-title , div.box-active > div.courtBox-block > div.courtBox-title {border: 1px solid #51a351;border-bottom: 0;color: #000;font-weight: bold;}
 div.matchBox-title a:first-child, div.box-active div.matchBox-title a:first-child, div.courtBox-block > div.courtBox-title a:first-child, div.box-active > div.courtBox-block > div.courtBox-title a:first-child{color: #000;}
 div.box-active ul.breadcrumb, div.box-active > div.courtBox-block > ul.breadcrumb{border: 1px solid #51a351;}
+
+  /** 现有场地框 **/
+  .existCourtsBox{border: 3px solid #ddd;
+  -webkit-border-radius: 0 0 6px 6px;
+  -moz-border-radius: 0 0 6px 6px;
+  border-radius: 0 0 6px 6px;}
+  /** 避免验证后无圆角 **/
+  /* .input-append span.add-on{
+  -webkit-border-radius: 0 4px 4px 0;
+  -moz-border-radius: 0 4px 4px 0;
+  border-radius: 0 4px 4px 0;
+  } */
+  /** 现有场地表格 **/
+  .existCourtsBox tr{cursor: pointer;}
+  .existCourtsBox tr.active {
+    font-weight: bold;
+  }
+  /** 最小宽度情况下 **/
+  @media (max-width: 480px) {
+    /** 搜索现有场地按钮 **/
+    #searchExistedCourt{margin-top: 5px;}
+  }
+
+/** 比赛列表 **/
+.matchBoxs{border: 1px solid #ccc;margin: 10px 0;float: left;padding: 10px;}
+.matchBox .matchBox-all{float: left;}
+.matchBox .matchBox-title{background-color: #f5f5f5;border: 1px solid #ccc;border-bottom: 0;padding:2px 5px;}
+.matchBox ul{padding: 0;background-color: #fff;border: 1px solid #ccc;-webkit-border-radius: 0;
+  -moz-border-radius: 0;border-radius: 0;}
+.matchBox ul > li{padding-left:5px;vertical-align: middle;text-align: center;border-left: 1px solid #ccc;}
+.matchBox .matchBox-time{width: 185px;border-left: 0;}
+.matchBox .matchBox-time > div{float:left;}
+.matchBox .matchBox-time > div.line{height: 50px;line-height:50px;}
+.matchBox .matchBox-court{width: 180px;}
+.matchBox .matchBox-state{width: 50px;color: #ff040f;}
+.matchBox .matchBox-info{width: 220px;}
+.matchBox .matchBox-btns{width: 60px;padding-right: 5px;}
+/** 场地列表 **/
+.courtBoxs{border: 1px solid #ccc;margin: 10px 0;float: left;padding-bottom: 20px;}
+.courtBox{margin: 10px 0 0 10px;float: left;}
+.courtBox .courtBox-img{float:left;border: 1px solid #ccc;}
+.courtBox .courtBox-img img{width: 110px;height: 85px;}
+.courtBox .courtBox-block{float: right;margin-left: 10px;height: 87px;width: 627px;}
+.courtBox .courtBox-block p{margin-bottom: 0;font-size: 12px;}
+.courtBox .courtBox-block .courtBox-title{background-color: #f5f5f5;border: 1px solid #ccc;border-bottom: 0;padding:2px 5px;}
+.courtBox .courtBox-block .courtBox-title .btn-mini{line-height: 16px;}
+.courtBox .courtBox-block ul{clear: both;padding: 0;height: 60px;margin-bottom: 0;vertical-align: middle;background-color: #fff;border: 1px solid #ccc;-webkit-border-radius: 0;-moz-border-radius: 0;border-radius: 0;}
+.courtBox .courtBox-block ul > li{padding-left:5px;height: 60px;text-align: center;border-left: 1px solid #ccc;}
+.courtBox .courtBox-block .courtBox-address{width:200px;border-left: 0;}
+.courtBox .courtBox-block .courtBox-info{width:110px;}
+.courtBox .courtBox-block .courtBox-tel{width:130px;}
+.courtBox .courtBox-block .courtBox-record{width:80px;}
+.courtBox .courtBox-block .courtBox-evaluation{width:60px;}
+/* 比赛详情  */
+.matchSearchDetail .matchShortInfo{font-size: 14px;padding: 5px;border: 1px solid #ccc;border-top: 3px solid #abcf20;background-color: #f5f5f5;}
+.matchSearchDetail .matchShortInfo th{text-align: left;}
+.matchSearchDetail .matchContent{border: 1px solid #cccccc;margin-top: 10px;}
+.matchSearchDetail .matchContent > .matchScore{border-bottom: 1px solid #cccccc;
+  *border: 0;padding: 5px 15px;}
+.matchSearchDetail .matchContent > .matchScore > .title{text-align: center;font-weight: bold;}
+.matchSearchDetail .matchContent > .title{
+  background-color: #f5f5f5;
+  background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
+  background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);
+  border-color: #e6e6e6 #e6e6e6 #bfbfbf;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  *background-color: #e6e6e6;
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  border: 1px solid #cccccc;
+  *border: 0;
+  border-bottom-color: #b3b3b3;
+  text-align: center;
+  padding: 5px 0;
+  font-weight: bold;
+  margin-top:5px;
+}
+.matchSearchDetail .matchContent > .match{padding: 5px 15px;}
+.matchSearchDetail .updateScore button {margin-top: 10px;margin-left: 10px;}
+
+/* 场地图片 */
+.files img {height: 70px;width: auto;}
+
+  .table .match-from > a:first-child {width: 200px;}
+  /** 编辑栏目的 按钮bar  **/
+  .hide > .btnbar {margin-left: 0;}
+  /** 编辑比赛按钮bar 中的按钮  **/
+  .hide > .btnbar > .btn {float: right;margin-left: 10px;}
   
+  /** 所有页面的panel-top 排序等工具 **/
+  .panel-top{margin-top: 5px;}
+
+  /** 选中图片边框为绿色 包括场地详情和分页的当前页 **/
+  .active{border-color: #51a351;}
+ 
+  /* login页面 登录框和图片*/
+  .login .bd {margin-top: 48px;} 

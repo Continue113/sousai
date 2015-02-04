@@ -6,7 +6,7 @@
 function setCourtInfo(datainfo){
     //解析datainfo中的信息
     var data = eval('(' + datainfo + ')');
-    $("#inputCourtName").val(data.name).attr("data-id",data.id).attr("data-userid",data.userId).attr("data-username",data.userName);
+    $("#inputCourtName").val(data.name).attr("data-id",data.id).attr("data-userid",data.userId).attr("data-username",data.userName).attr("data-verify",data.verify);
     $("#inputCrtCourtType").val(data.courtType).attr("data-oldcourttype",data.courtType).attr("data-courttypeid",data.courtTypeId).attr("data-oldcourttypeid",data.courtTypeId);
     $("#inputMatchType").val(data.matchType).attr("data-oldmatchtype",data.matchType).attr("data-matchtypeid",data.matchType).attr("data-oldmatchtypeid",data.matchType);
     $("#inputCourtRegion").val(data.region).attr("data-oldregion",data.region).attr("data-regionid",data.regionId).attr("data-oldregionid",data.regionId);
@@ -21,9 +21,15 @@ function setCourtInfo(datainfo){
 
 //验证表单并且返回所有信息
 function getCourtInfo(){
+	if( $("#editCourtForm").valid() !== true ){
+		//验证所有显式表单else
+		sousaiRemindDialog("填写信息不符合验证，请重新填写。");
+		return false;
+	}
 	//获取比赛信息存储到match对象中用于返回比赛信息
 	var court={};
 	 court.id = parseInt($("#inputCourtName").attr("data-id"));
+	 court.verify = parseInt($("#inputCourtName").attr("data-verify"));
 	 court.name = $("#inputCourtName").val();
 	 //court.courtType = $("#inputCrtCourtType").val();
 	 court.courtTypeId = parseInt($("#inputCrtCourtType").attr("data-courttypeid"));
@@ -40,45 +46,14 @@ function getCourtInfo(){
 	 court.intro = tinymce.activeEditor.getContent();
 	 court.userId = parseInt($("#inputCourtName").attr("data-userid")); //若是在发布场地页面 则此属性由发布场地页面的userId覆盖
 	 	 
-	if( $("#editCourtForm").valid() === true ){ //验证所有显式表单
-		
-			if(court.intro){//验证比赛规程
-				
-				console.log("验证通过"+court);
-				return court;
-				
-			}else{
-				sousaiRemindDialog("场地介绍不能为空，请重新填写。");
-				return false;				
-			}
+	if(court.intro){
+		//验证比赛规程
+		return court;
 	}else{
-		sousaiRemindDialog("填写信息不符合验证，请重新填写。");
-		return false;
+		sousaiRemindDialog("场地介绍不能为空，请重新填写。");
+		return false;				
 	}
 }
-
-//场地预览
-//function courtPreview(){
-  //定义变量名 场地名称 比赛类型（大类、类型） 场地类型 场地区域（省、市、区） 详细地址 赛场数 联系电话 价格 开放时间 场地图片 
-  //var courtName = $("#inputCourtName").val(),
-  //    matchTypeGenera = $("selectMatchType option:selected").val(),
-  //    matchType,
-  //    courtType = $('select[name="courtType"] option:selected').val(),
-  //    courtProvince = $(".selectProvince option:selected").val(),
-  //    courtCity = $(".selectCity option:selected").val(),
-  //    courtCountry = $(".selectCountry option:selected").val(),
-  //    courtAddress = $("#inputCourtAddress").val(),
-  //    courtTables = $("#inputCourtTables").val(),
-  //    courtTel = $("#inputCourtTel").val(),
-  //    courtPrice = $("#inputCourtPrice").val(),
-  //    courtOpenTime = $("#inputCourtOpenTime").val(),
-  //    courtPics = $(".files .preview > img").attr("src");
-  //将内容发送到预览页面
-  //改变form表单action
-  //$("#releaseCourtForm").attr("action","previewCourtSearchDetail.jsp").attr("target","_blank").submit().attr("action","relCourt").removeAttr("target");
-  //console.log("提交到另一个页面，并改回原来action。")
-//}
-
 
 //选择图片
 function selectPic(id){
@@ -161,8 +136,6 @@ function sureDeleteEdit(){
       	  if( rspdata == "success" ){
       		  sousaiRemindDialog("删除成功");
       		  $("#"+$("#inputCourtName").attr("data-id")).parent().parent().parent().remove();
-      	  }else if( rspdata == "fail" ){
-      		  sousaiRemindDialog("删除失败");
       	  }else{
       		  sousaiRemindDialog("删除失败，错误代码为："+rspdata);
       	  }
@@ -190,13 +163,25 @@ $(function(){
   });
   //点击保存修改
 	$(".editCourt .saveCourt").click(function(){
-		var court = getCourtInfo(),data={};
-		console.log(court);
-		for(i in court){
-			//console.log(i);
-			data["court."+i] = court[i];
-		}
-		console.log(data);
+			var court = getCourtInfo();
+			var data = {
+					"court.id": court.id,
+					"court.userId": court.userId,
+					"court.verify": court.verify,
+					"court.addr": court.addr,
+					"court.courtTypeId": court.courtTypeId,
+					"court.name": court.name,
+					"court.matchType":court.matchType,
+					"court.regionId": court.regionId,
+					"court.region": court.region,
+					"court.tableNum": court.tableNum,
+					"court.tel": court.tel,
+					"court.price": court.price,
+					"court.workTime": court.workTime,
+					"court.matchCount": court.matchCount,
+					"court.intro": court.intro
+			};
+			
 		$.ajax({
             type: "POST",
             url: "updateCourt",
@@ -205,9 +190,8 @@ $(function(){
             dataType: "json",
             success: function(rspdata) {
           	  if( rspdata == "success" ){
-          		  sousaiRemindDialog("保存成功");
-          	  }else if( rspdata == "fail" ){
-          		  sousaiRemindDialog("保存失败");
+          		  window.setTimeout("window.location。href=window.location。href",3000);
+          		  sousaiRemindDialog("保存成功,3秒后将刷新页面。");
           	  }else{
           		  sousaiRemindDialog("保存失败，错误代码为："+rspdata);
           	  }
@@ -233,8 +217,6 @@ $(function(){
       		  sousaiRemindDialog("发布成功");
       		  $("#"+$("#inputCourtName").attr("data-id")).parent().parent().prepend('<span class="label label-info">已发布</span>');
       		  $(".backList").click();
-      	  }else if( rspdata == "fail" ){
-      		  sousaiRemindDialog("发布失败");
       	  }else{
       		  sousaiRemindDialog("发布失败，错误代码为："+rspdata);
       	  }
@@ -263,31 +245,12 @@ $(function(){
   	if($(this).text() == "修改"){
   		$(".courtTypeControls").slideDown();
   		//ajax 已得到场地类型
-  	      $.ajax({
-  	        type: "POST",
-  	        url: "showCT",
-  	        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-  	        data: {
-  	          "matchId": $("#inputMatchType").attr("data-matchtypeid"),
-  	        },
-  	        dataType: "json",
-  	        success: function(rspdata) {
-  	          var sctCourtType = $(".selectCourtType");
-  	          sctCourtType.empty().append("<option value=0>请选择场地类型</option>");
-  	          for (var i = 0; i < rspdata.length; i++) {
-  	            sctCourtType.append("<option value=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</  option>");
-  	          }
-  	        },
-  	        error: function(jqXHR,textStatus,errorThrown){console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-  	          sousaiRemindDialog("抱歉，获取场地类型出错了。");
-  	        },
-  	      }); 
-  	      
+  		initCourtType($("#inputMatchType").attr("data-matchtypeid"));  	      
   		$(this).text("取消修改");
   	}else{
   		$(".courtTypeControls").slideUp();
   		//重置选择比赛场地，同时还原类型
-    		$("#inputCrtCourtType").val($("#inputCourtType").attr("data-oldcourttype")).attr("data-courttypeid",$("#inputCourtType").attr("data-oldcourttypeid"));
+    	$("#inputCrtCourtType").val($("#inputCourtType").attr("data-oldcourttype")).attr("data-courttypeid",$("#inputCourtType").attr("data-oldcourttypeid"));
   		$(this).text("修改");
   	}
   });
@@ -324,7 +287,6 @@ $(function(){
   $(".controls > .selectCity").attr("name","selectCity");
   $(".controls > .selectCountry").attr("name","selectCountry");
 
-
   //选择区时添加 区域到inputCourtRegion中
   $(".controls > .selectCountry").change(function(){
 	  var tgPrt = $(this).parent(),
@@ -336,9 +298,6 @@ $(function(){
     // update underlying textarea before submit validation
     tinyMCE.triggerSave();
   }).validate({
-  	submitHandler: function(form){
-  		console.log("validate");
-  },
   rules: {
 	  "court.name": {
       minlength: 6,

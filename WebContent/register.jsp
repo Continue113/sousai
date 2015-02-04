@@ -3,26 +3,19 @@
 <!DOCTYPE html>
 <html>
  <head> 
-  <title>注册 &middot; 搜赛网</title> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
-  <meta name="description" content="搜赛网注册页面" /> 
-  <meta name="author" content="KING@CQU" /> 
-  <link href="css/bootstrap.min.css" rel="stylesheet" /> 
-  <link href="css/bootstrap-responsive.css" rel="stylesheet" /> 
-  <link href="css/sousai.common.css" rel="stylesheet" /> 
-  <link href="css/sousai.register.css" rel="stylesheet" /> 
-  <!--[if lte IE 8]>
-  <link href="css/sousai.IE8.css" rel="stylesheet" /> 
-  <![endif]-->
+  <title>注册 &middot; 搜赛网</title>
+  <meta name="description" content="搜赛网注册页面" > 
+  <s:include value="seg-meta.jsp"/>
+  <link href="css/sousai.register.css" rel="stylesheet">
  </head> 
  <body class="register"> 
-  <s:include value="navbar.jsp" />
+  <s:include value="seg-navbar.jsp"/>
   <!-- 页首导航条 --> 
   <div class="container"> 
    <div class="hdpush"></div> 
    <div class="row"> 
     <div class="span5 offset1"> 
-     <a class="logoBack" href="index.jsp" title="回到首页"><img src="img/logo.png" alt="搜赛网"/></a>
+     <a class="logoBack" href="index.jsp" title="回到首页"><img src="img/logo.png" alt="搜赛网"></a>
      <span class="logotext">账户注册</span> 
     </div> 
    </div> 
@@ -32,43 +25,42 @@
    <div class="row"> 
     <div class="span4 offset1"> 
      <form class="form-horizontal form-signin" id="registerForm" method="post" action="processReg"> 
-      <fieldset> 
-       <legend>注册表单</legend> 
+      <fieldset>
        <div class="control-group"> 
         <label class="control-label" for="inputUsername">用户名&nbsp;:</label> 
         <div class="controls"> 
-         <input type="text" class="input-block-level" id="inputUsername" name="user.name" placeholder="用户名" required="required" data-toggle="tooltip" data-placement="right" title="" data-original-title="用户名至少4个字符，最多16个字符" /> 
+         <input type="text" class="input-block-level" id="inputUsername" name="user.name" placeholder="用户名" required="required" data-toggle="tooltip" data-placement="right" title="" data-original-title="用户名至少4个字符，最多16个字符" > 
         </div> 
        </div> 
        <div class="control-group"> 
         <label class="control-label" for="inputUserPassword">密码&nbsp;:</label> 
         <div class="controls"> 
-         <input type="password" class="input-block-level" id="inputUserPassword" name="user.pwd" placeholder="密码" required="required" data-toggle="tooltip" data-placement="right" title="" data-original-title="密码至少6位，建议不要使用过于简单的密码。" /> 
+         <input type="password" class="input-block-level" id="inputUserPassword" name="user.pwd" placeholder="密码" required="required" data-toggle="tooltip" data-placement="right" title="" data-original-title="密码至少6位，建议不要使用过于简单的密码。" > 
         </div> 
        </div> 
        <div class="control-group"> 
         <label class="control-label" for="inputUserPassword2">确认密码&nbsp;:</label> 
         <div class="controls"> 
-         <input type="password" class="input-block-level" id="inputUserPassword2" name="inputPassword2" placeholder="确认密码" required="required" /> 
+         <input type="password" class="input-block-level" id="inputUserPassword2" name="inputPassword2" placeholder="确认密码" required="required" > 
         </div> 
        </div> 
        <div class="control-group"> 
         <label class="control-label" for="inputUserEmail">邮箱&nbsp;:</label> 
         <div class="controls"> 
-         <input type="email" class="input-block-level" id="inputUserEmail" name="user.email" placeholder="电子邮箱" required="required" /> 
+         <input type="email" class="input-block-level" id="inputUserEmail" name="user.email" placeholder="电子邮箱" required="required" > 
         </div> 
        </div> 
        <div class="control-group"> 
         <label class="control-label" for="inputValidateCode">验证码&nbsp;:</label> 
         <div class="controls form-inline"> 
-         <input type="text" class="input-block-level" id="inputValidateCode" name="inputValidateCode" placeholder="验证码" required="required" /> 
+         <input type="text" class="input-block-level" id="inputValidateCode" name="inputValidateCode" placeholder="验证码" required="required" > 
          <div id="inputValidateImg" class="code" onclick="createCode('inputValidateImg')"></div> 
          <span class="code-changeLink" onclick="createCode('inputValidateImg')">换一张</span> 
         </div> 
        </div> 
        <div class="control-group"> 
         <div class="controls"> 
-         <input class="btn btn-primary btn-success span2" type="submit" value="注册"/>
+         <input class="btn btn-primary btn-success span2" type="submit" value="注册">
         </div> 
        </div> 
       </fieldset> 
@@ -94,7 +86,7 @@
    <div class="row ftpush"></div> 
   </div> 
   <!-- /container --> 
-  <s:include value="footer.jsp" />
+  <s:include value="seg-footer.jsp"/>
   <!-- 页尾信息 --> 
   <script src="js/jquery.validate.min.js"></script> 
   <script>

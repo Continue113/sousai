@@ -1,66 +1,32 @@
 <%@ page language="java" contentType="text/html;charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
  <head> 
-  <title>管理员页面 &middot; 用户维护 &middot; 搜赛网</title> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
-  <meta name="description" content="搜赛网-管理员页面-用户维护" /> 
-  <meta name="author" content="KING@CQU" /> 
-  <link href="css/bootstrap.min.css" rel="stylesheet" /> 
-  <link href="css/bootstrap-responsive.css" rel="stylesheet" />
-  <link href="css/sousai.common.css" rel="stylesheet" /> 
-  <link href="css/sousai.background.css" rel="stylesheet" /> 
-  <!--[if lte IE 8]>
-  <link href="css/sousai.IE8.css" rel="stylesheet" /> 
-  <![endif]-->
-  <style type="text/css">
-  /** 编辑场地 按钮bar  **/
-  .editUser > .btnbar {margin-left: 0;}
-  /** 编辑场地按钮bar 中的按钮  **/
-  .editUser > .btnbar > .btn {float: right;margin-left: 10px;}
-  /** 排序下拉按钮 **/
-  .panel-top > .btn-group {margin-top: -10px;}
-  </style>
+  <title>管理员页面 &middot; 用户维护 &middot; 搜赛网</title>
+  <meta name="description" content="搜赛网-管理员页面-用户维护"> 
+  <s:include value="seg-meta.jsp"/>
+  <link href="css/sousai.back.css" rel="stylesheet">
  </head> 
  <body class="background"> 
-  <s:include value="background-head.jsp" /> 
+  <s:include value="seg-back-head.jsp"/> 
   <!-- 管理员界面页头 --> 
   <div class="container"> 
    <div class="row"> 
     <div class="span4"> 
-     <a class="logoBack" href="index.jsp" title="回到首页"><img src="img/logo.png" alt="搜赛网"/></a>
+     <a class="logoBack" href="index.jsp" title="回到首页"><img src="img/logo.png" alt="搜赛网"></a>
      <span class="logotext">管理员页面</span> 
     </div>
    </div> 
    <div class="row"> 
     <div class="span11"> 
-     <!-- background-remind & backgroundMenu --> 
-     <ul class="breadcrumb background-remind"> 
-      <li>提醒:</li> 
-      <li><a href="javascript:void(0)">待处理的比赛信息<span>(5)</span></a></li> 
-     </ul> 
-     <div class="span2 backgroundMenu "> 
-      <ul class="nav nav-stacked nav-side"> 
-       <li><h5><i class="icon-minus"></i>系统发布:</h5></li> 
-       <li><a href="background-collections.jsp"><i class="icon-chevron-down "></i>全部采集</a></li> 
-       <li><a href="background-collectionsSetting.jsp"><i class="icon-chevron-down "></i>网站设置</a></li> 
-       <li><h5><i class="icon-minus"></i>数据维护:</h5></li> 
-       <li><a href="background-matchMaintenance.jsp"><i class="icon-chevron-down "></i>比赛维护</a></li> 
-       <li><a href="background-courtMaintenance.jsp"><i class="icon-chevron-down "></i>场地维护</a></li> 
-       <li class="active"><a href="background-userMaintenance.jsp"><i class="icon-chevron-down "></i>用户维护</a></li> 
-       <li><a href="background-evaluationMaintenance.jsp"><i class="icon-chevron-down "></i>评论维护</a></li> 
-       <li><h5><i class="icon-minus"></i>网站统计:</h5></li> 
-       <li><a href="background-regUserCount.jsp"><i class="icon-chevron-down "></i>网站统计户</a></li>
-      </ul> 
-     </div> 
-     <!-- /background-remind & backgroundMenu --> 
+      <s:include value="seg-back-menu.jsp" /><!-- 后台导航菜单 -->
      <div class="span9"> 
      <div class="userList">
       <!--用户维护 开始--> 
       <div id="userMaintenance">
        <!-- panel --> 
-       <div class="panel-top">
+       <div class="panel-top form-inline">
        <div class="btn-group sort" role="group">
 		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current" data-orderbycol="name" data-isasc="true">排序方式</span><span class="caret"></span></button>
 		<ul class="dropdown-menu" role="menu">
@@ -73,7 +39,7 @@
 		</ul>
 	   </div>
 	    <div class="text-filter-box input-append"> 
-         <input type="text" class="span2" placeholder="请输入关键字"/> 
+         <input type="text" class="span2" placeholder="请输入关键字"> 
          <div class="btn-group" role="group">
 		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current" data-strcolumns="name">用户名</span><span class="caret"></span></button>
 		<ul class="dropdown-menu" role="menu">
@@ -84,17 +50,18 @@
 		</ul>
 	   	</div>
 	   	<button class="btn" type="button" id="textFilterBoxSearchButton">搜索</button>
-         <!-- <span class="add-on"><i class="icon-search"></i></span> -->
         </div>   
-        <select class="select selectRows span1"><option value=25>25条/页</option><option value=40>40条/页</option><option value=50>50条/页</option></select>
+        <select class="select selectRows span1"></select>
+        <label class="checkbox"><input type="checkbox">显示所有</label>
         <div class="btnbar pull-right"> 
-         <button type="button" class="btn forbidUser">禁用用户</button>
-         <button type="button" class="btn addUser">添加用户</button> 
-        </div> 
+         <button type="button" class="btn forbidUser">禁用</button>
+         <button type="button" class="btn unforbidUser">解禁</button>
+         <button type="button" class="btn addUser">添加</button> 
+        </div>
        </div>
-       <table class="table table-striped table-hover userTable"> 
-        <caption>用户维护</caption> 
+       <table class="table table-striped table-hover userTable">
         <thead>
+        <tr>
           <th>用户名</th>
           <th>注册时间</th>
           <th>最后登录时间</th>
@@ -134,7 +101,7 @@
           <div class="control-group"> 
            <label class="control-label" for="userName">用户名：</label> 
            <div class="controls"> 
-            <input class="span3" type="text" id="userName" value="" name="user.name" placeholder="用户名" required="required" disabled/> 
+            <input class="span3" type="text" id="userName" value="" name="user.name" placeholder="用户名" required="required" disabled> 
            </div>
           </div>
           </form>
@@ -142,7 +109,7 @@
           <div class="control-group"> 
            <label class="control-label" for="userPassword">密码：</label> 
            <div class="controls"> 
-            <input class="span3" type="text" id="userPassword" value=""  name="user.pwd" placeholder="密码" required="required" />
+            <input class="span3" type="text" id="userPassword" value=""  name="user.pwd" placeholder="密码" required="required">
            </div> 
           </div>
           </form>
@@ -150,7 +117,7 @@
           <div class="control-group"> 
            <label class="control-label" for="userEmail">注册邮箱：</label> 
            <div class="controls"> 
-            <input class="span3" type="email" id="userEmail" value="" name="user.email" placeholder="电子邮箱" required="required" />
+            <input class="span3" type="email" id="userEmail" value="" name="user.email" placeholder="电子邮箱" required="required">
            </div> 
           </div>
           </form>
@@ -180,8 +147,8 @@
   <script id="user-template" type="text/x-handlebars-template">
     {{#each this}}
 
-		    <tr class="user" data-info="{{data this}}">
-	    		<td class="user-userName form-inline">{{checkState userType userId userName}}</td>
+		    <tr class="user" data-info="{{data}}">
+	    		<td class="user-userName form-inline">{{checkState}}</td>
         	<td class="user-registerTime">{{userRegTime}}</td>
         	<td class="user-lastLoginTime">{{lastLogTime}}</td>
         	<td class="user-matchNumber">{{matchNumber}}</td>
@@ -196,77 +163,68 @@
   </script>
   <script>
   //定义函数
-	function e(crtPage,rs,obc,ia,sc,kv){
-		//定义默认选项
-		rs = rs||$("select.selectRows option:selected").val()||25,
-		crtPage = crtPage||$("ul.pagination li.active a").html()||1, //每次点击改变条数都从第一页开始；parseInt($("ul.pagination > li.active").text()) || 1; //若当前页数为空则默认为第一页
-	  	obc = obc||$(".sort button .current").attr("data-orderbycol"), 
-		ia = ia||$(".sort button .current").attr("data-isasc"),
-		sc = sc||$(".text-filter-box button .current").attr("data-strcolumns"),
-		kv = kv||$(".text-filter-box input").val();
-	  	//alert(crtPage+" "+rs+" "+obc+" "+ia+" "+sc+" "+kv);
-	  	
-		$("#ajaxState .load").show();console.log("start");
+	function e(argso){
+		//定义默认选项 
+		var args=argso;
+		args.currentPage = args.currentPage||$("ul.pagination li.active a").html()||1;
+		args.rows = args.rows||$("select.selectRows option:selected").val()||25;
+		args.orderByCol = args.orderByCol||$(".sort button .current").attr("data-orderbycol")||"name";
+		args.isAsc = args.isAsc||$(".sort button .current").attr("data-isasc")||true;
+		args.strColumns = args.strColumns||$(".text-filter-box button .current").attr("data-strcolumns")||"name";
+		args.keyValue = args.keyValue||$(".text-filter-box input").val()||"";
+	  	console.log(args);
+		$("#ajaxState .load").show();
 	    $.ajax({
-	        type: "POST",
 	        url: "getAllUser",
-	        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-	        data: {currentPage:crtPage,rows:rs,orderByCol:obc,isAsc:ia,strColumns:sc,keyValue:kv},
-	        dataType: "json",
+	        data: args,
 	        success: function(rspdata) {
-	        	console.log(rspdata);
 	        	  var target = $(".userTable > tbody"),template = Handlebars.compile($('#user-template').html());
-	        	  Handlebars.registerHelper("data",function(v){
-	        	    //将当前对象转化为字符串，保存在data-info中
-	        	    //console.log(v);
-	        	    var v1 = JSON.stringify(v);
-	        	    //console.log("v1:"+v1);
-	        	    return v1;
+	        	  Handlebars.registerHelper("data",function(){
+	        	    return JSON.stringify(this);
 	        	  });
-	    	      Handlebars.registerHelper("checkState",function(userType,userId,userName,options){
-	                  console.log(userType);console.log(options);
-	                  if(userType == "0"){
-	                  	  return  new Handlebars.SafeString('<span class="label label-info">已禁用</span><label for="'+userId+'"><span>'+userId+':'+userName+'</span></label>');
+	    	      Handlebars.registerHelper("checkState",function(){
+	    	    	  switch(this.userType){
+	    	    	  case "0":
+	                  	  return  new Handlebars.SafeString('<label for="'+this.userId+'"><input type="checkbox" id="'+this.userId+'" /><span>'+this.userId+':'+this.userName+'</span></label><span class="label label-info">已禁用</span>');
+	                  	  break;
+	    	    	  case "1":
+	                  	  return new Handlebars.SafeString('<label for="'+this.userId+'"><input type="checkbox" id="'+this.userId+'" /><span>'+this.userId+':'+this.userName+'</span></label>');
+	                  	  break;
+	    	    	  case "2":
+	                	  return new Handlebars.SafeString('<label for="'+this.userId+'"><span>'+this.userId+':'+this.userName+'</span></label><span class="label label-important">管理员</span>');
+	                	  break;
+	    	    	  }
+	                  /*if(this.userType == "0"){
+	                  	  return  new Handlebars.SafeString('<label for="'+this.userId+'"><span>'+this.userId+':'+this.userName+'</span></label><span class="label label-info">已禁用</span>');
 	                  }else if(userType == "2"){ //管理员
-	                	  return new Handlebars.SafeString('<span class="label label-important">管理员</span><label for="'+userId+'"><span>'+userId+':'+userName+'</span></label>');
+	                	  return new Handlebars.SafeString('<label for="'+this.userId+'"><span>'+userId+':'+this.userName+'</span></label><span class="label label-important">管理员</span>');
 		              }else{
-	                  	  return new Handlebars.SafeString('<label for="'+userId+'"><input type="checkbox" id="'+userId+'" /><span>'+userId+':'+userName+'</span></label>');
-	                  }
+	                  	  return new Handlebars.SafeString('<label for="'+this.userId+'"><input type="checkbox" id="'+this.userId+'" /><span>'+this.userId+':'+this.userName+'</span></label>');
+	                  }*/
 	                });	 
-	        	  target.empty(); //清空tbody
-	        	  target.html(template(rspdata.body));
+	        	  target.empty().html(template(rspdata.body));
 	        	  $("#ajaxState .load").hide();
 	    	      $("#ajaxState .noresult").hide();
-	    	      console.log("stop");
-	        	  //出错或无结果
-	        	  //target.empty(); //清空tbody
 	        	  if(target.find("tr.user").length == 0){
-	        	  $("#ajaxState .noresult").show();console.log("无结果");
+	        	  $("#ajaxState .noresult").show();
 	        	  }
 	        	  //管理员界面表格列字数限制，溢出省略
 	        	  $("td > label > span").wordLimit();
 	        	  $(".user-email").wordLimit(16);
-	            pages(rspdata.count,crtPage,rs);
-	  	    },
-	        error: function(jqXHR,textStatus,errorThrown){
-	        	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-	  	      	$("#ajaxState .noresult").show();console.log("出错了");
-	          	sousaiRemindDialog("抱歉，ajax出错了。");
-	        },
+	              pages(rspdata.count,args.currentPage,args.rows);
+	  	    }
 	      });
 }
   
   $(function(){
+	  setMenu();
 	//ajax接受所有的用户 默认为25条每页
-	e(1,25,"name",true,"name","");
+	e({currentPage:1,rows:25});
     //点击编辑用户隐藏List列表同时显示编辑用户
     $("tbody").on("click",".user-oprate > a",function(event){
         var datainfo = $(this).parent().parent().attr("data-info"), target=$(".editUser");
         //显示禁用用户和保存修改用户选项，隐藏保存添加，同时根据data-info填补form，
-        target.find(".forbidUser").show();
-        target.find(".saveUser").show();
-        target.find(".saveAdd").hide();
-      console.log(datainfo);
+        target.find(".forbidUser").show().end().find(".saveUser").show().end().find(".saveAdd").hide();
       //解析datainfo中的信息
       var data = eval('(' + datainfo + ')');
       $("#userName").val(data.userName).attr("data-id",data.userId).attr("data-oldname",data.userName);
@@ -275,7 +233,7 @@
       $(".userList").slideUp();
       target.slideDown();
       //添加用户名输入框的disabled属性      
-      $("#userName").attr("disabled","disabled")
+      $("#userName").attr("disabled","disabled");
     });
     //点击返回用户列表
     $(".backList").click(function(){
@@ -371,8 +329,6 @@ messages: {
 	    	console.log(dataname+datapwd+dataemail);
 	          $.ajax({
 	            url: "processReg",
-	            type: "POST",
-	            dataType: "json",
 	            data: {
 	                "user.name": dataname,
 	                "user.pwd": datapwd,
@@ -386,11 +342,7 @@ messages: {
 	            	}else{
 	            		sousaiRemindDialog("添加用户失败，错误代码为："+rspdata);
 	            	}
-	            },
-	            error: function(jqXHR,textStatus,errorThrown){
-	            	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-	                sousaiRemindDialog("抱歉，发送数据出错了，请重新输入。");
-	            },
+	            }
 	          });
 			
 		}else{
@@ -401,24 +353,18 @@ messages: {
     $("button.saveUser").click(function (){ //修改用户名错误,修改密码居然是修改到了已经登录的那个 。
     	//用户名已存在问题：胭脂是否为用户名的问题，若用户名没有修改则设置valid为true；
 		var valid = false,
-		//oldname = $("#userName").attr("data-oldname"),
         dataid = $("#userName").attr("data-id"),
         dataname = $("#userName").val(),
         datapwd = $("#userPassword").val(),
         dataemail = $("#userEmail").val();
 
-    	if( /*($("#userNameForm").valid()||(dataname === oldname)) &&*/ $("#userPasswordForm").valid() && $("#userEmailForm").valid() ){
+    	if($("#userPasswordForm").valid() && $("#userEmailForm").valid() ){
     		valid = true;
     	}
 		
 		if( valid === true ){
-			console.log("通过验证");
-    	//console.log(dataid+" ,"+dataname+" ,"+datapwd+" ,"+dataemail);
-
         $.ajax({
         url: "updateUserInfo",
-        type: "POST",
-        dataType: 'json',
         data: {
         	"action": 2,
         	"user.id":dataid,
@@ -433,11 +379,7 @@ messages: {
     		sousaiRemindDialog("编辑用户失败，错误代码为："+rspdata);
     		//window.setTimeout("window.location='background-userMaintenance.jsp'",1000);  
     		}          	        
-        },
-        error: function(jqXHR,textStatus,errorThrown){
-        	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-          	sousaiRemindDialog("抱歉，发送数据出错了，请重新输入。");
-        },
+        }
         });
 		}else{
 			sousaiRemindDialog( "Valid: 有不符合验证的内容，");
@@ -457,27 +399,18 @@ messages: {
     			userIds.push($(this).attr("id"));
     		});
             $.ajax({
-              type: "POST",
               url: "deleteUsersByAdmin",
-              contentType: "application/x-www-form-urlencoded; charset=UTF-8",
               data: {
                 "userIds": userIds.join(","),
               },
-              dataType: "json",
               success: function(rspdata) {
             	  if( rspdata == "success" ){
             		  sousaiRemindDialog("禁用用户成功");
               		  $(".user input:checked").parent().parent().prepend('<span class="label label-info">已禁用</span>').end().end().remove();
-            	  }else if( rspdata == "fail" ){
-            		  sousaiRemindDialog("禁用用户失败");
             	  }else{
             		  sousaiRemindDialog("禁用用户失败，错误代码为："+rspdata);
             	  }
-              },
-              error: function(jqXHR,textStatus,errorThrown){
-            	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-                  sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
-              },
+              }
             });
     	}
     });

@@ -3,65 +3,30 @@
 <!DOCTYPE html>
 <html>
  <head> 
-  <title>管理员页面 &middot; 场地维护 &middot; 搜赛网</title> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
-  <meta name="description" content="搜赛网-管理员页面-场地维护" /> 
-  <meta name="author" content="KING@CQU" /> 
-  <link href="css/bootstrap.min.css" rel="stylesheet" /> 
-  <link href="css/bootstrap-responsive.css" rel="stylesheet" /> 
-  <link href="css/sousai.common.css" rel="stylesheet" /> 
-  <link href="css/sousai.background.css" rel="stylesheet" /> 
-  <!--[if lte IE 8]>
-  <link href="css/sousai.IE8.css" rel="stylesheet" /> 
-  <![endif]-->
-  <style type="text/css">
-  .files img {height: 70px;width: auto;}
-  /** 编辑场地 按钮bar  **/
-  .editCourt > .btnbar {margin-left: 0;}
-  /** 编辑场地按钮bar 中的按钮  **/
-  .editCourt > .btnbar > .btn {float: right;margin-left: 10px;}  
-  /** 排序下拉按钮 **/
-  .panel-top > .btn-group {margin-top: -10px;}
-  </style>
+  <title>管理员页面 &middot; 场地维护 &middot; 搜赛网</title>
+  <meta name="description" content="搜赛网-管理员页面-场地维护"> 
+  <s:include value="seg-meta.jsp"/>
+  <link href="css/sousai.back.css" rel="stylesheet">
  </head> 
  <body class="background"> 
-  <s:include value="background-head.jsp" /> 
+  <s:include value="seg-back-head.jsp"/> 
   <!-- 管理员界面页头 --> 
   <div class="container"> 
    <div class="row"> 
     <div class="span4"> 
-     <a class="logoBack" href="index.jsp" title="回到首页"><img src="img/logo.png" alt="搜赛网"/></a>
+     <a class="logoBack" href="index.jsp" title="回到首页"><img src="img/logo.png" alt="搜赛网"></a>
      <span class="logotext">管理员页面</span> 
     </div>
    </div> 
    <div class="row"> 
     <div class="span11"> 
-     <!-- background-remind & backgroundMenu --> 
-     <ul class="breadcrumb background-remind"> 
-      <li>提醒:</li> 
-      <li><a href="javascript:void(0)">待处理的比赛信息<span>(5)</span></a></li> 
-     </ul> 
-     <div class="span2 backgroundMenu "> 
-      <ul class="nav nav-stacked nav-side"> 
-       <li><h5><a href="javascript:void(0)"><i class="icon-minus"></i>系统发布:</a></h5></li> 
-       <li><a href="background-collections.jsp"><i class="icon-chevron-down "></i>全部采集</a></li> 
-       <li><a href="background-collectionsSetting.jsp"><i class="icon-chevron-down "></i>网站设置</a></li> 
-       <li><h5><a href="javascript:void(0)"><i class="icon-minus"></i>数据维护:</a></h5></li> 
-       <li><a href="background-matchMaintenance.jsp"><i class="icon-chevron-down "></i>比赛维护</a></li> 
-       <li class="active"><a href="background-courtMaintenance.jsp"><i class="icon-chevron-down "></i>场地维护</a></li> 
-       <li><a href="background-userMaintenance.jsp"><i class="icon-chevron-down "></i>用户维护</a></li> 
-       <li><a href="background-evaluationMaintenance.jsp"><i class="icon-chevron-down "></i>评论维护</a></li> 
-       <li><h5><a href="javascript:void(0)"><i class="icon-minus"></i>网站统计</a></h5></li> 
-       <li><a href="background-regUserCount.jsp"><i class="icon-chevron-down "></i>网站统计</a></li>
-      </ul> 
-     </div> 
-     <!-- /background-remind & backgroundMenu --> 
+      <s:include value="seg-back-menu.jsp"/><!-- 后台导航菜单 -->
      <div class="span9">
      <div class="courtList">
       <!--场地维护 开始-->
       <div id="courtMaintenance">
        <!-- panel --> 
-       <div class="panel-top">
+       <div class="panel-top form-inline">
        <div class="btn-group sort" role="group">
 		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current" data-orderbycol="name" data-isasc="true">排序方式</span><span class="caret"></span></button>
 		<ul class="dropdown-menu" role="menu">
@@ -73,7 +38,7 @@
 		</ul>
 	   </div>
 	    <div class="text-filter-box input-append"> 
-         <input type="text" class="span2" placeholder="请输入关键字"/> 
+         <input type="text" class="span2" placeholder="请输入关键字"> 
          <div class="btn-group" role="group">
 		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current" data-strcolumns="name">场地名称</span><span class="caret"></span></button>
 		<ul class="dropdown-menu" role="menu">
@@ -85,16 +50,16 @@
 		</ul>
 	   	</div>
 	   	<button class="btn" type="button" id="textFilterBoxSearchButton">搜索</button>
-         <!-- <span class="add-on"><i class="icon-search"></i></span> -->
         </div> 
-        <select class="select selectRows span1"><option value=10>10条/页</option><option value=2>2条/页</option><option value=5>5条/页</option></select>
+        <select class="select selectRows span1"></select>
+        <label class="checkbox"><input type="checkbox">显示所有</label>
         <div class="btnbar pull-right"> 
-         <button type="button" class="btn deleteCourt">删除选中</button>
-         <button type="button" class="btn passCourt">发布选中</button> 
+         <button type="button" class="btn deleteCourt">删除</button>
+         <button type="button" class="btn passCourt">发布</button>
+         <button type="button" class="btn unpassCourt">不发布</button>
         </div> 
        </div>
-       <table class="table table-striped table-hover courtTable"> 
-        <caption>场地维护</caption> 
+       <table class="table table-striped table-hover courtTable">
         <thead>
          <tr>
           <th>场地名称</th>
@@ -114,7 +79,7 @@
       </div>
       <!--场地维护 结束-->
       <!--编辑场地开始-->
-      <s:include value="editCourt.jsp" />
+      <s:include value="seg-editCourt.jsp"/>
       <!-- /编辑场地信息 -->
      </div>
      <!-- /span8 --> 
@@ -142,8 +107,8 @@
   <script id="court-template" type="text/x-handlebars-template">
     {{#each this}}
                         
-        <tr class="court" data-info="{{data this}}"> 
-          <td class="court-title">{{checkState verify id name}}</td> 
+        <tr class="court" data-info="{{data}}"> 
+          <td class="court-title">{{checkState}}</td> 
           <td class="match-type">{{matchType}}</td> 
           <td class="court-addr">{{region}}:{{addr}}</td> 
           <td class="court-releaseTime">{{relDate}}</td> 
@@ -156,101 +121,73 @@
   <script>
   //定义函数
 
-	function e(crtPage,rs,obc,ia,sc,kv){
-		//定义默认选项
-		rs = rs||$("select.selectRows option:selected").val()||25,
-		crtPage = crtPage||$("ul.pagination li.active a").html()||1, //每次点击改变条数都从第一页开始；parseInt($("ul.pagination > li.active").text()) || 1; //若当前页数为空则默认为第一页
-	  	obc = obc||$(".sort button .current").attr("data-orderbycol"), 
-		ia = ia||$(".sort button .current").attr("data-isasc"),
-		sc = sc||$(".text-filter-box button .current").attr("data-strcolumns"),
-		kv = kv||$(".text-filter-box input").val();
-	  	//alert(crtPage+" "+rs+" "+obc+" "+ia+" "+sc+" "+kv);
-	  	
-	  $("#ajaxState .load").show();console.log("start");
+	function e(argso){
+		//定义默认选项 
+		var args=argso;
+		args.currentPage = args.currentPage||$("ul.pagination li.active a").html()||1;
+		args.rows = args.rows||$("select.selectRows option:selected").val()||25;
+		args.orderByCol = args.orderByCol||$(".sort button .current").attr("data-orderbycol")||"name";
+		args.isAsc = args.isAsc||$(".sort button .current").attr("data-isasc")||true;
+		args.strColumns = args.strColumns||$(".text-filter-box button .current").attr("data-strcolumns")||"name";
+		args.keyValue = args.keyValue||$(".text-filter-box input").val()||"";
+	  		  	
+	  $("#ajaxState .load").show();
     $.ajax({
-      type: "POST",
       url: "getAllCourt",
-      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-      data: {currentPage:crtPage,rows:rs,orderByCol:obc,isAsc:ia,strColumns:sc,keyValue:kv},
-      dataType: "json",
+      data: args,
       success: function(rspdata) {
-	      console.log(rspdata);//sousaiRemindDialog(rspdata);
+    	  console.log(rspdata);
       var target = $(".courtTable > tbody"),template = Handlebars.compile($('#court-template').html());
-      Handlebars.registerHelper("data",function(v){
-        //将当前对象转化为字符串，保存在data-info中
-        //console.log(v);
-        var v1 = JSON.stringify(v);
-        //console.log("v1:"+v1);
-        return v1;
+      Handlebars.registerHelper("data",function(){
+        return JSON.stringify(this);
       });
 
-      Handlebars.registerHelper("checkState",function(verify,id,name,options){
-          console.log(verify);console.log(options);
-          if(verify == "1"){
-          	return  new Handlebars.SafeString('<span class="label label-info">已发布</span><label for="'+id+'"><input type="checkbox" id="'+id+'" /><span>'+id+':'+name+'</span></label>');
+      Handlebars.registerHelper("checkState",function(){
+          if(this.verify == "1"){
+          	return  new Handlebars.SafeString('<label for="'+this.id+'"><input type="checkbox" id="'+this.id+'" ><span>'+this.id+':'+this.name+'</span></label><span class="label label-info">已发布</span>');
           }else{
-          	return new Handlebars.SafeString('<label for="'+id+'"><input type="checkbox" id="'+id+'" /><span>'+id+':'+name+'</span></label>');
+          	return new Handlebars.SafeString('<label for="'+this.id+'"><input type="checkbox" id="'+this.id+'" ><span>'+this.id+':'+this.name+'</span></label>');
           }
         });
-      target.empty(); //清空tbody
-      target.html(template(rspdata.body));
+      target.empty().html(template(rspdata.body));
       $("#ajaxState .load").hide();
       $("#ajaxState .noresult").hide();
-      console.log("stop");
-	    //出错或无结果
-	    //target.empty(); //清空tbody
 	    if(target.find("tr.court").length == 0){
-	    $("#ajaxState .noresult").show();console.log("无结果");
+	    $("#ajaxState .noresult").show();
 	    }
 	    //管理员界面表格列字数限制，溢出省略
 	    $("td > label > span").wordLimit();
 	    $(".court-addr").wordLimit();
-	    pages(rspdata.count,crtPage,rs);
-	    },
-      error: function(jqXHR,textStatus,errorThrown){
-    	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-	      $("#ajaxState .noresult").show();console.log("出错了");
-          sousaiRemindDialog("抱歉，ajax出错了。");
-      },
+	    pages(rspdata.count,args.currentPage,args.rows);
+	    }
     });
 }
   function sureDelete(){
 	  hideSousaiRemindDialog();
-		var courtIds = new Array(),
-		rs = $("select.selectRows option:selected").val(),
-		crtPage = $("ul.pagination").find("li.active a").text();
+		var courtIds = new Array();
 		$(".court input:checked").each(function(index,element){
-			console.log($(this).attr("id"));
 			courtIds.push($(this).attr("id"));
 		});
       $.ajax({
-        type: "POST",
         url: "deleteCourts",
-        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         data: {
           "courtIds": courtIds.join(","),
         },
-        dataType: "json",
         success: function(rspdata) {
       	  if( rspdata == "success" ){
       		  sousaiRemindDialog("删除成功");
       		  $(".court input:checked").parent().parent().parent().remove();
-      	  }else if( rspdata == "fail" ){
-      		  sousaiRemindDialog("删除失败");
       	  }else{
       		  sousaiRemindDialog("删除失败，错误代码为："+rspdata);
       	  }
-        },
-        error: function(jqXHR,textStatus,errorThrown){
-        	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-          sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
-        },
-      }); //ajax 已得到具体比赛类型
+        }
+      });
   }
   
   $(function(){
+	  setMenu();
 	 //ajax接收所有的场地 默认为第一页 25条，按name排序，升序
-	 e(1,25,"name",true,"name","");
+	 e({currentPage:1,rows:25});
 	 //初始化场地类型 初始化为默认的比赛详细类型的其他 id为1
 	 initCourtType(1);
 	  //点击编辑比赛隐藏List列表同时显示编辑比赛
@@ -287,27 +224,18 @@
         		courtIds.push($(this).attr("id"));
     		});
             $.ajax({
-              type: "POST",
               url: "relCourtsByAdmin",
-              contentType: "application/x-www-form-urlencoded; charset=UTF-8",
               data: {
                 "ids": courtIds.join(","),
               },
-              dataType: "json",
               success: function(rspdata) {
             	  if( rspdata == "success" ){
             		  sousaiRemindDialog("发布成功");
-              		  $(".court input:checked").attr("checked",false).parent().parent().prepend('<span class="label label-info">已发布</span>');
-            	  }else if( rspdata == "fail" ){
-            		  sousaiRemindDialog("发布失败");
+              		  $(".court input:checked").attr("checked",false).parent().parent().append('<span class="label label-info">已发布</span>');
             	  }else{
             		  sousaiRemindDialog("发布失败，错误代码为："+rspdata);
             	  }
-              },
-              error: function(jqXHR,textStatus,errorThrown){
-            	  console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-                  sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
-              },
+              }
             });
     	}
     });
