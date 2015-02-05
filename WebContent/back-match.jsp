@@ -53,7 +53,7 @@
 	   	<button class="btn" type="button" id="textFilterBoxSearchButton">搜索</button>
         </div> 
         <select class="select selectRows span1"></select>
-        <label class="checkbox"><input type="checkbox">显示所有</label>
+        <label class="checkbox" for="selType"><input id="selType" type="checkbox" value="1"><span>显示所有</span></label>
         <div class="btnbar pull-right"> 
          <button type="button" class="btn deleteMatch">删除</button>
          <button type="button" class="btn passMatch">发布</button>
@@ -133,6 +133,7 @@
 		args.isAsc = args.isAsc||$(".sort button .current").attr("data-isasc")||true;
 		args.strColumns = args.strColumns||$(".text-filter-box button .current").attr("data-strcolumns")||"name";
 		args.keyValue = args.keyValue||$(".text-filter-box input").val()||"";
+		args.selType = args.selType||$("#selType").attr("value")||1;
 	  	
 		console.log(args);
   	$("#ajaxState .load").show();
@@ -204,8 +205,45 @@
     	$(".matchList").slideUp();
     	$(".editMatch").slideDown();
   	});
-    //点击删除比赛 列表界面
-    $("#matchMaintenance .deleteMatch").click(function(){    	
+    //点击发布比赛 列表界面
+    function passMatch(isrel){
+	var checked = $(".match input:checked"),n = checked.length,data={};
+	//若为选中则提示
+	if( n == 0){
+		sousaiRemindDialog("请先选中比赛");
+	}else{
+		var matchIds = new Array();
+		$(".match input:checked").each(function(index,element){
+			console.log($(this).attr("id"));
+    		matchIds.push($(this).attr("id"));
+		});
+		data.ids=matchIds.join(",");
+		data.isRel=isrel;
+		console.log(data);
+        $.ajax({
+          url: "relMatchesByAdmin",
+          data: data,
+          success: function(rspdata) {
+        	  if( rspdata == "success" ){
+        		  //判断是发布还是不发布
+        		  if(data.isRel){
+            		  sousaiRemindDialog("发布成功");
+              		  $(".match input:checked").attr("checked",false).parent().parent().append('<span class="label label-info">已发布</span>');
+        		  }else{
+            		  sousaiRemindDialog("取消发布成功");
+              		  $(".match input:checked").attr("checked",false).parent().parent().find(".label").remove();
+        		  }
+        	  }else{
+        		  sousaiRemindDialog("操作失败，错误代码为："+rspdata);
+        	  }
+          }
+        });
+	}
+	}
+    
+    $("#matchMaintenance").find(".unpassMatch").click(function(){passMatch(false);}).end()
+    .find(".passMatch").click(function(){passMatch(true);}).end()
+    .find(".deleteMatch").click(function(){
     	var checked = $(".match input:checked"),n = checked.length;
     	//若为选中则提示
     	if( n == 0){
@@ -216,35 +254,17 @@
     		sousaiRemindDialog("确定删除？",-1,"show");
     	}
     });
-    //点击发布比赛 列表界面
-    $("#matchMaintenance .passMatch").click(function(){
-    	var checked = $(".match input:checked"),n = checked.length;
-    	//若为选中则提示
-    	if( n == 0){
-    		sousaiRemindDialog("请先选中比赛");
-    	}else{
-    		var matchIds = new Array();
-    		$(".match input:checked").each(function(index,element){
-    			console.log($(this).attr("id"));
-        		matchIds.push($(this).attr("id"));
-    		});
-            $.ajax({
-              url: "relMatchesByAdmin",
-              data: {
-                "ids": matchIds.join(","),
-              },
-              success: function(rspdata) {
-            	  if( rspdata == "success" ){
-            		  sousaiRemindDialog("发布成功");
-              		  $(".match input:checked").attr("checked",false).parent().parent().append('<span class="label label-info">已发布</span>');
-            	  }else{
-            		  sousaiRemindDialog("发布失败，错误代码为："+rspdata);
-            	  }
-              }
-            });
+
+    $("#selType").click(function(){
+    	var target = $(this);
+    	if(target.attr("value")==1){
+    		e({selType:1});
+    		target.attr("value",0);//.parent().find("span").text("显示未发布");
+    	}else if(target.attr("value")==0){
+    		e({selType:0});
+    		target.attr("value",1);//.parent().find("span").text("显示所有");    		
     	}
     });
-    
   });
   </script>  
  </body>

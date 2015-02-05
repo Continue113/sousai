@@ -49,7 +49,7 @@
 	   	<button class="btn" type="button" id="textFilterBoxSearchButton">搜索</button>
         </div>  
         <select class="select selectRows span1"></select>
-        <label class="checkbox"><input type="checkbox">显示所有</label>
+        <label class="checkbox" for="selType"><input id="selType" type="checkbox" value="1"><span>显示所有</span></label>
         <div class="btnbar pull-right"> 
          <button type="button" class="btn deleteEvaluation">删除</button>
          <button type="button" class="btn signDelete">标记删除</button>
@@ -118,6 +118,7 @@
 		args.isAsc = args.isAsc||$(".sort button .current").attr("data-isasc")||true;
 		args.strColumns = args.strColumns||$(".text-filter-box button .current").attr("data-strcolumns")||"courtName";
 		args.keyValue = args.keyValue||$(".text-filter-box input").val()||"";
+		args.selType = args.selType||$("#selType").attr("value")||1;
 	$("#ajaxState .load").show();
     $.ajax({
         url: "getAllMesg",
@@ -178,8 +179,7 @@
 	//ajax接受所有的评论
 	e({currentPage:1,rows:25});
 	//点击删除比赛 列表界面
-    $("#evaluationMaintenance .deleteEvaluation").click(function(){
-    	
+    $("#evaluationMaintenance .deleteEvaluation").click(function(){    	
     	var checked = $(".evaluation input:checked"),n = checked.length;
     	//若为选中则提示
     	if( n == 0){
@@ -188,6 +188,17 @@
     		$("#SRDadd").text('小提示：此删除将无法取消操作,不会真正删除用户的评论,而是将其设置为 "已被管理员删除" 状态。');
     		$("#sousaiRemindDialog > .modal-footer > button.btn-success").attr("onclick","sureDelete()");
     		sousaiRemindDialog("确定删除？",-1,"show");
+    	}
+    });
+
+    $("#selType").click(function(){
+    	var target = $(this);
+    	if(target.attr("value")==1){
+    		e({selType:1});
+    		target.attr("value",0);//.parent().find("span").text("显示未标记");
+    	}else if(target.attr("value")==0){
+    		e({selType:0});
+    		target.attr("value",1);//.parent().find("span").text("显示所有");    		
     	}
     });
   });

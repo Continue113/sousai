@@ -52,7 +52,7 @@
 	   	<button class="btn" type="button" id="textFilterBoxSearchButton">搜索</button>
         </div>   
         <select class="select selectRows span1"></select>
-        <label class="checkbox"><input type="checkbox">显示所有</label>
+        <label class="checkbox" for="selType"><input id="selType" type="checkbox" value="1"><span>显示所有</span></label>
         <div class="btnbar pull-right"> 
          <button type="button" class="btn forbidUser">禁用</button>
          <button type="button" class="btn unforbidUser">解禁</button>
@@ -172,6 +172,8 @@
 		args.isAsc = args.isAsc||$(".sort button .current").attr("data-isasc")||true;
 		args.strColumns = args.strColumns||$(".text-filter-box button .current").attr("data-strcolumns")||"name";
 		args.keyValue = args.keyValue||$(".text-filter-box input").val()||"";
+		args.selType = args.selType||$("#selType").attr("value")||1;
+		
 	  	console.log(args);
 		$("#ajaxState .load").show();
 	    $.ajax({
@@ -256,6 +258,16 @@
       $("#userName").removeAttr("disabled");
     });
 
+    $("#selType").click(function(){
+    	var target = $(this);
+    	if(target.attr("value")==1){
+    		e({selType:1});
+    		target.attr("value",0);//.parent().find("span").text("显示未禁用");
+    	}else if(target.attr("value")==0){
+    		e({selType:0});
+    		target.attr("value",1);//.parent().find("span").text("显示所有");    		
+    	}
+    });
 
     //***************************************************************************************
     // 编辑用户的js代码，关于验证用户信息是否合法，同场注册页面。   *********************** BEGIN *****************

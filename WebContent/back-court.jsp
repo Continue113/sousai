@@ -52,7 +52,7 @@
 	   	<button class="btn" type="button" id="textFilterBoxSearchButton">搜索</button>
         </div> 
         <select class="select selectRows span1"></select>
-        <label class="checkbox"><input type="checkbox">显示所有</label>
+        <label class="checkbox" for="selType"><input id="selType" type="checkbox" value="1"><span>显示所有</span></label>
         <div class="btnbar pull-right"> 
          <button type="button" class="btn deleteCourt">删除</button>
          <button type="button" class="btn passCourt">发布</button>
@@ -130,6 +130,7 @@
 		args.isAsc = args.isAsc||$(".sort button .current").attr("data-isasc")||true;
 		args.strColumns = args.strColumns||$(".text-filter-box button .current").attr("data-strcolumns")||"name";
 		args.keyValue = args.keyValue||$(".text-filter-box input").val()||"";
+		args.selType = args.selType||$("#selType").attr("value")||1;
 	  		  	
 	  $("#ajaxState .load").show();
     $.ajax({
@@ -200,20 +201,9 @@
 	    $(".editCourt").slideDown();
 	  });
     //点击删除场地 列表界面
-    $("#courtMaintenance .deleteCourt").click(function(){
-    	var checked = $(".court input:checked"),n = checked.length;
-    	//若为选中则提示
-    	if( n == 0){
-    		sousaiRemindDialog("请先选中场地");
-    	}else{
-    		$("#SRDadd").text("小提示：一旦确定删除将无法取消操作,同时将对使用此场地的比赛和评论照成影响。");
-    		$("#sousaiRemindDialog > .modal-footer > button.btn-success").attr("onclick","sureDelete()");
-    		sousaiRemindDialog("确定删除？",-1,"show");
-    	}
-    });
-    //点击发布比赛 列表界面
-    $("#courtMaintenance .passCourt").click(function(){
-    	var checked = $(".court input:checked"),n = checked.length;
+    //点击发布/不发布比赛 列表界面
+    function passCourt(isrel){
+    	var checked = $(".court input:checked"),n = checked.length,data={};
     	//若为选中则提示
     	if( n == 0){
     		sousaiRemindDialog("请先选中场地");
@@ -223,20 +213,52 @@
     			console.log($(this).attr("id"));
         		courtIds.push($(this).attr("id"));
     		});
+    		data.ids=courtIds.join(",");
+    		data.isRel=isrel;
+    		console.log(data);
             $.ajax({
               url: "relCourtsByAdmin",
-              data: {
-                "ids": courtIds.join(","),
-              },
+              data: data,
               success: function(rspdata) {
             	  if( rspdata == "success" ){
-            		  sousaiRemindDialog("发布成功");
-              		  $(".court input:checked").attr("checked",false).parent().parent().append('<span class="label label-info">已发布</span>');
+            		  //判断是发布还是不发布
+            		  if(data.isRel){
+                		  sousaiRemindDialog("发布成功");
+                  		  $(".court input:checked").attr("checked",false).parent().parent().append('<span class="label label-info">已发布</span>');
+            		  }else{
+                		  sousaiRemindDialog("取消发布成功");
+                  		  $(".court input:checked").attr("checked",false).parent().parent().find(".label").remove();
+            		  }
             	  }else{
-            		  sousaiRemindDialog("发布失败，错误代码为："+rspdata);
+            		  sousaiRemindDialog("操作失败，错误代码为："+rspdata);
             	  }
               }
             });
+    	}
+    	
+    }
+    
+    $("#courtMaintenance").find(".unpassMatch").click(function(){passMatch(false);}).end()
+    .find(".passMatch").click(function(){passMatch(true);}).end()
+    .find(".deleteCourt").click(function(){
+	var checked = $(".court input:checked"),n = checked.length;
+	//若为选中则提示
+	if( n == 0){
+		sousaiRemindDialog("请先选中场地");
+	}else{
+		$("#SRDadd").text("小提示：一旦确定删除将无法取消操作,同时将对使用此场地的比赛和评论照成影响。");
+		$("#sousaiRemindDialog > .modal-footer > button.btn-success").attr("onclick","sureDelete()");
+		sousaiRemindDialog("确定删除？",-1,"show");
+	}
+	});
+    $("#selType").click(function(){
+    	var target = $(this);
+    	if(target.attr("value")==1){
+    		e({selType:1});
+    		target.attr("value",0);//.parent().find("span").text("显示未发布");
+    	}else if(target.attr("value")==0){
+    		e({selType:0});
+    		target.attr("value",1);//.parent().find("span").text("显示所有");    		
     	}
     });
     
