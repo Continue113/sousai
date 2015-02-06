@@ -33,7 +33,7 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 	}
 
 	@Override
-	public MatchBean getMatchBean(Integer id) throws Exception{
+	public MatchBean getMatchBean(Integer id) throws Exception {
 		MatchBean value = null;
 		String strHql = String
 				.format("%1$s and m.id=%2$s", selectMatchBean, id);
@@ -258,18 +258,23 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 	}
 
 	@Override
-	public int countMatch() {
+	public int countMatch(Integer selType) {
 		String strHql = "select count(*) from Match";
+		if(!CommonUtils.isNullOrEmpty(selType) && selType==1){
+			strHql += " where verify='0'";
+		}
 		return count(strHql);
 	}
 
 	@Override
 	public List<MatchBean> findPagedByKeyValueOrderBy(String[] columns,
 			String keyValue, Integer currentPage, Integer rows,
-			String orderByCol, Boolean isAsc) throws Exception {
-
-		return findPagedByWhereOrderBy(
-				buildKeyValueStatement(keyValue, columns), currentPage, rows,
+			String orderByCol, Boolean isAsc, Integer selType) throws Exception {
+		String strWhere = buildKeyValueStatement(keyValue, columns);
+		if (!CommonUtils.isNullOrEmpty(selType) && selType == 1) {
+			strWhere += " and m.verify='0'";
+		}
+		return findPagedByWhereOrderBy(strWhere, currentPage, rows,
 				addPrefixToColumn(orderByCol), isAsc);
 	}
 
@@ -333,8 +338,8 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 		String strWhere = buildFindByParamsWhere(keyValue, matchType, now,
 				matchState, dayOfWeek, beginTime, endTime, region);
 		MyPrint.myPrint("findPagedByParams.strWhere = " + strWhere);
-		return findPagedByWhereOrderBy(" and m.verify='1' "+strWhere, currentPage, rows,
-				addPrefixToColumn(orderByCol), isAsc);
+		return findPagedByWhereOrderBy(" and m.verify='1' " + strWhere,
+				currentPage, rows, addPrefixToColumn(orderByCol), isAsc);
 	}
 
 	private String buildFindByParamsWhere(String keyValue, String matchType,
@@ -406,7 +411,7 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 			break;
 		// 比赛中
 		case 2:
-			
+
 			types = new int[] { 7, 5 };
 			columns = new String[] { addPrefixToColumn("beginTime"),
 					addPrefixToColumn("endTime") };
@@ -565,10 +570,9 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 	@Override
 	public void relMatchesByAdmin(Integer[] ids, boolean isRel) {
 		String strHql;
-		if(isRel){
+		if (isRel) {
 			strHql = "update Match set verify='1' where id in (:ids)";
-		}
-		else{
+		} else {
 			strHql = "update Match set verify='0' where id in (:ids)";
 		}
 		Map<String, Integer[]> params = new HashMap<String, Integer[]>();
@@ -602,14 +606,18 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 	@Override
 	public List<MatchBean> findPagedByCourtId(Integer courtId, int currentPage,
 			int rows) throws Exception {
-		String strWhere = Append_StringV2(" and m.verify='1' ", new int[]{1}, new String[]{addPrefixToColumn("courtId")}, new Integer[]{courtId}, new int[]{1}, true);
+		String strWhere = Append_StringV2(" and m.verify='1' ",
+				new int[] { 1 }, new String[] { addPrefixToColumn("courtId") },
+				new Integer[] { courtId }, new int[] { 1 }, true);
 		return findPagedByWhereOrderBy(strWhere, currentPage, rows, null, null);
 	}
 
 	@Override
 	public int countByCourtId(Integer courtId) throws Exception {
-		String strWhere = Append_StringV2(" m.verify='1' ", new int[]{1}, new String[]{addPrefixToColumn("courtId")}, new Integer[]{courtId}, new int[]{1}, true);
-		
-		return count("select count(*) from Match m where "+strWhere);
+		String strWhere = Append_StringV2(" m.verify='1' ", new int[] { 1 },
+				new String[] { addPrefixToColumn("courtId") },
+				new Integer[] { courtId }, new int[] { 1 }, true);
+
+		return count("select count(*) from Match m where " + strWhere);
 	}
 }

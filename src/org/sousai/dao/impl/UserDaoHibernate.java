@@ -95,8 +95,11 @@ public class UserDaoHibernate extends SqlHelper implements UserDao {
 	}
 
 	@Override
-	public int countAllUser() {
+	public int countAllUser(Integer selType) {
 		String strHql = "select count(*) from User";
+		if(!CommonUtils.isNullOrEmpty(selType) && selType==1){
+			strHql += " where type='1'";
+		}
 		return count(strHql);
 	}
 
@@ -110,7 +113,8 @@ public class UserDaoHibernate extends SqlHelper implements UserDao {
 	@Override
 	public List<UserBean> findPagedByKeyValueOrderBy(String[] columns,
 			String keyValue, Integer currentPage, Integer rows,
-			String orderByCol, Boolean isAsc) throws Exception {
+			String orderByCol, Boolean isAsc, Integer selType) throws Exception {
+		String strWhere = null;
 		if (!CommonUtils.isNullOrEmpty(keyValue)) {
 			keyValue = " %" + keyValue + "% ";
 			int[] types = new int[columns.length];
@@ -121,13 +125,13 @@ public class UserDaoHibernate extends SqlHelper implements UserDao {
 				// 加上 别名 统一
 				columns[i] = " and" + addPrefixToColumn(columns[i]);
 			}
-			String strWhere = Append_String(" and ", types, columns, args);
-			return findPagedByWhereOrderBy(strWhere, currentPage, rows,
-					addPrefixToColumn(orderByCol), isAsc);
-		} else {
-			return findPagedByWhereOrderBy(null, currentPage, rows,
-					addPrefixToColumn(orderByCol), isAsc);
+			strWhere = Append_String(" and ", types, columns, args);
 		}
+		if (!CommonUtils.isNullOrEmpty(selType) && selType == 1) {
+			strWhere += " and u.type='1'";
+		}
+		return findPagedByWhereOrderBy(strWhere, currentPage, rows,
+				addPrefixToColumn(orderByCol), isAsc);
 	}
 
 	private String addPrefixToColumn(String column) {

@@ -85,14 +85,15 @@ public interface MesgDao {
 	 * @param rows
 	 * @param orderByCol
 	 * @param isAsc
+	 * @param selType
 	 * @return
 	 * @throws Exception
 	 */
 	List<MessageBean> findPagedByKeyValueOrderBy(String[] columns,
 			String keyValue, Integer currentPage, Integer rows,
-			String orderByCol, Boolean isAsc) throws Exception;
+			String orderByCol, Boolean isAsc, Integer selType) throws Exception;
 	
-	int countCourt();
+	int countCourt(Integer selType);
 
 	void deleteMesgs(Long[] courtIds) throws Exception;
 }

@@ -97,13 +97,25 @@ public interface MatchDao {
 	 */
 	List<MatchBean> findPagedByCourtId(Integer courtId, int currentPage, int rows) throws Exception;
 	
-	int countMatch();
+	int countMatch(Integer selType);
 	
 	int countByUserId(Integer userId);
 
+	/**
+	 * 
+	 * @param columns
+	 * @param keyValue
+	 * @param currentPage
+	 * @param rows
+	 * @param orderByCol
+	 * @param isAsc
+	 * @param selType
+	 * @return
+	 * @throws Exception
+	 */
 	List<MatchBean> findPagedByKeyValueOrderBy(String[] columns,
 			String keyValue, Integer currentPage, Integer rows,
-			String orderByCol, Boolean isAsc) throws Exception;
+			String orderByCol, Boolean isAsc, Integer selType) throws Exception;
 
 	/**
 	 * 高级搜索比赛

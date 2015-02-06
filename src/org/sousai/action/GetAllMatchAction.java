@@ -23,6 +23,22 @@ public class GetAllMatchAction extends UserBaseAction {
 	private Boolean isAsc;
 	private String strColumns;
 	private String keyValue;
+	private Integer selType;
+
+	/**
+	 * @return the selType
+	 */
+	public Integer getSelType() {
+		return selType;
+	}
+
+	/**
+	 * @param selType
+	 *            the selType to set
+	 */
+	public void setSelType(Integer selType) {
+		this.selType = selType;
+	}
 
 	/**
 	 * @return the orderByCol
@@ -32,7 +48,8 @@ public class GetAllMatchAction extends UserBaseAction {
 	}
 
 	/**
-	 * @param orderByCol the orderByCol to set
+	 * @param orderByCol
+	 *            the orderByCol to set
 	 */
 	public void setOrderByCol(String orderByCol) {
 		this.orderByCol = orderByCol;
@@ -46,7 +63,8 @@ public class GetAllMatchAction extends UserBaseAction {
 	}
 
 	/**
-	 * @param isAsc the isAsc to set
+	 * @param isAsc
+	 *            the isAsc to set
 	 */
 	public void setIsAsc(Boolean isAsc) {
 		this.isAsc = isAsc;
@@ -60,7 +78,8 @@ public class GetAllMatchAction extends UserBaseAction {
 	}
 
 	/**
-	 * @param strColumns the strColumns to set
+	 * @param strColumns
+	 *            the strColumns to set
 	 */
 	public void setStrColumns(String strColumns) {
 		this.strColumns = strColumns;
@@ -74,7 +93,8 @@ public class GetAllMatchAction extends UserBaseAction {
 	}
 
 	/**
-	 * @param keyValue the keyValue to set
+	 * @param keyValue
+	 *            the keyValue to set
 	 */
 	public void setKeyValue(String keyValue) {
 		this.keyValue = keyValue;
@@ -129,8 +149,9 @@ public class GetAllMatchAction extends UserBaseAction {
 				rows = Constant.DEFAULT_ROWS;
 			}
 			String[] columns = strColumns.split(",");
-			List<MatchBean> list = amg.findPagedMatchByKeyValueOrderBy(columns, keyValue, currentPage, rows, orderByCol, isAsc);
-			int count = amg.countAllMatch();
+			List<MatchBean> list = amg.findPagedMatchByKeyValueOrderBy(columns,
+					keyValue, currentPage, rows, orderByCol, isAsc, selType);
+			int count = amg.countAllMatch(selType);
 			FrontMessage msg = new FrontMessage(list, count);
 			if (list != null) {
 				MyPrint.myPrint("list.size()=" + list.size());

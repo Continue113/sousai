@@ -87,8 +87,8 @@ public class AdminManagerImpl implements AdminManager {
 	}
 
 	@Override
-	public int countAllUser() {
-		return userDao.countAllUser();
+	public int countAllUser(Integer selType) {
+		return userDao.countAllUser(selType);
 	}
 
 	@Override
@@ -103,50 +103,50 @@ public class AdminManagerImpl implements AdminManager {
 	}
 
 	@Override
-	public int countAllCourt() throws Exception {
-		return courtDao.countMatch();
+	public int countAllCourt(Integer selType) throws Exception {
+		return courtDao.countMatch(selType);
 	}
 
 	@Override
-	public int countAllMatch() throws Exception {
-		return matchDao.countMatch();
+	public int countAllMatch(Integer selType) throws Exception {
+		return matchDao.countMatch(selType);
 	}
 
 	@Override
 	public List<CourtBean> findPagedCourtByKeyValueOrderBy(String[] columns,
 			String keyValue, Integer currentPage, Integer rows,
-			String orderByCol, Boolean isAsc) throws Exception {
+			String orderByCol, Boolean isAsc, Integer selType) throws Exception {
 		return courtDao.findPagedByKeyValueOrderBy(columns, keyValue,
-				currentPage, rows, orderByCol, isAsc);
+				currentPage, rows, orderByCol, isAsc, selType);
 	}
 
 	@Override
 	public List<MatchBean> findPagedMatchByKeyValueOrderBy(String[] columns,
 			String keyValue, Integer currentPage, Integer rows,
-			String orderByCol, Boolean isAsc) throws Exception {
+			String orderByCol, Boolean isAsc, Integer selType) throws Exception {
 		return matchDao.findPagedByKeyValueOrderBy(columns, keyValue,
-				currentPage, rows, orderByCol, isAsc);
+				currentPage, rows, orderByCol, isAsc, selType);
 	}
 
 	@Override
 	public List<MessageBean> findPagedMesgByKeyValueOrderBy(String[] columns,
 			String keyValue, Integer currentPage, Integer rows,
-			String orderByCol, Boolean isAsc) throws Exception {
+			String orderByCol, Boolean isAsc, Integer selType) throws Exception {
 		return mesgDao.findPagedByKeyValueOrderBy(columns, keyValue,
-				currentPage, rows, orderByCol, isAsc);
+				currentPage, rows, orderByCol, isAsc, selType);
 	}
 
 	@Override
 	public List<UserBean> findPagedUserByKeyValueOrderBy(String[] columns,
 			String keyValue, Integer currentPage, Integer rows,
-			String orderByCol, Boolean isAsc) throws Exception {
+			String orderByCol, Boolean isAsc, Integer selType) throws Exception {
 		return userDao.findPagedByKeyValueOrderBy(columns, keyValue,
-				currentPage, rows, orderByCol, isAsc);
+				currentPage, rows, orderByCol, isAsc, selType);
 	}
 
 	@Override
-	public int countAllMessage() throws Exception {
-		return mesgDao.countCourt();
+	public int countAllMessage(Integer selType) throws Exception {
+		return mesgDao.countCourt(selType);
 	}
 
 	@Override

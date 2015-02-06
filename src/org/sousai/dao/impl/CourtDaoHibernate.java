@@ -233,15 +233,19 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 	}
 
 	@Override
-	public int countMatch() {
+	public int countMatch(Integer selType) {
 		String strHql = "select count(*) from Court";
+		if(!CommonUtils.isNullOrEmpty(selType) && selType==1){
+			strHql += " where verify='0'";
+		}
 		return count(strHql);
 	}
 
 	@Override
 	public List<CourtBean> findPagedByKeyValueOrderBy(String[] columns,
 			String keyValue, Integer currentPage, Integer rows,
-			String orderByCol, Boolean isAsc) throws Exception {
+			String orderByCol, Boolean isAsc, Integer selType) throws Exception {
+		String strWhere = null;
 		if (!CommonUtils.isNullOrEmpty(keyValue)) {
 			keyValue = " %" + keyValue + "% ";
 			int[] types = new int[columns.length];
@@ -253,13 +257,14 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 				// 列前加上表别名
 				columns[i] = " and " + addPrefixToColumn(columns[i]);
 			}
-			String strWhere = Append_String(" and ", types, columns, args);
+			strWhere = Append_String(" and ", types, columns, args);
+		}
+		
+		if(!CommonUtils.isNullOrEmpty(selType) && selType==1){
+			strWhere += " and c.verify='0'";
+		}
 			return findPagedByWhereOrderBy(strWhere, currentPage, rows,
 					addPrefixToColumn(orderByCol), isAsc);
-		} else {
-			return findPagedByWhereOrderBy(null, currentPage, rows,
-					addPrefixToColumn(orderByCol), isAsc);
-		}
 	}
 
 	private String addPrefixToColumn(String column) {

@@ -21,6 +21,22 @@ public class GetAllMessageAction extends UserBaseAction {
 	private Boolean isAsc;
 	private String strColumns;
 	private String keyValue;
+	private Integer selType;
+
+	/**
+	 * @return the selType
+	 */
+	public Integer getSelType() {
+		return selType;
+	}
+
+	/**
+	 * @param selType
+	 *            the selType to set
+	 */
+	public void setSelType(Integer selType) {
+		this.selType = selType;
+	}
 
 	/**
 	 * @return the currentPage
@@ -130,8 +146,9 @@ public class GetAllMessageAction extends UserBaseAction {
 			}
 			String[] columns = strColumns.split(",");
 			List<MessageBean> list = amg.findPagedMesgByKeyValueOrderBy(
-					columns, keyValue, currentPage, rows, orderByCol, isAsc);
-			int count = amg.countAllMessage();
+					columns, keyValue, currentPage, rows, orderByCol, isAsc,
+					selType);
+			int count = amg.countAllMessage(selType);
 			FrontMessage msg = new FrontMessage(list, count);
 			if (list != null) {
 				JSONUtils.toJson(ServletActionContext.getResponse(), msg);

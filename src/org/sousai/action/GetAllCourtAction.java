@@ -20,6 +20,22 @@ public class GetAllCourtAction extends UserBaseAction {
 	private Boolean isAsc;
 	private String strColumns;
 	private String keyValue;
+	private Integer selType;
+
+	/**
+	 * @return the selType
+	 */
+	public Integer getSelType() {
+		return selType;
+	}
+
+	/**
+	 * @param selType
+	 *            the selType to set
+	 */
+	public void setSelType(Integer selType) {
+		this.selType = selType;
+	}
 
 	/**
 	 * @return the keyValue
@@ -135,9 +151,9 @@ public class GetAllCourtAction extends UserBaseAction {
 			// List<CourtBean> list = cmg.findPagedAllCourtOrderBy(currentPage,
 			// rows, orderByCol, isAsc);
 			List<CourtBean> list = amg.findPagedCourtByKeyValueOrderBy(columns,
-					keyValue, currentPage, rows, orderByCol, isAsc);
-			MyPrint.myPrint("Intro="+list.get(0).getIntro());
-			int count = amg.countAllCourt();
+					keyValue, currentPage, rows, orderByCol, isAsc, selType);
+			MyPrint.myPrint("Intro=" + list.get(0).getIntro());
+			int count = amg.countAllCourt(selType);
 			FrontMessage msg = new FrontMessage(list, count);
 			if (list != null) {
 				JSONUtils.toJson(ServletActionContext.getResponse(), msg);

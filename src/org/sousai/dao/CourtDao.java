@@ -140,11 +140,12 @@ public interface CourtDao {
 	int deleteCourts(Integer[] courtIds);
 
 	/**
-	 * 查询总比赛数
+	 * 查询总比赛数或未审核通过比赛数
 	 * 
+	 * @param selType 0 总比赛数，1 未审核通过比赛数
 	 * @return
 	 */
-	int countMatch();
+	int countMatch(Integer selType);
 
 	/**
 	 * 查询符合条件的场地，并排序
@@ -167,12 +168,13 @@ public interface CourtDao {
 	 * @param rows
 	 * @param orderByCol
 	 * @param isAsc
+	 * @param selType
 	 * @return
 	 * @throws Exception
 	 */
 	List<CourtBean> findPagedByKeyValueOrderBy(String[] columns,
 			String keyValue, Integer currentPage, Integer rows,
-			String orderByCol, Boolean isAsc) throws Exception;
+			String orderByCol, Boolean isAsc, Integer selType) throws Exception;
 
 	/**
 	 * 用户高级搜索

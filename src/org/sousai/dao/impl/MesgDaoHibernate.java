@@ -16,6 +16,7 @@ public class MesgDaoHibernate extends SqlHelper implements MesgDao {
 			+ "from Message m, Court c, User u where m.courtId=c.id";
 	private final String selectMesgBeanForAdmin = "select new org.sousai.vo.MessageBean(m.id,m.parentId,m.rootId,m.userId,m.courtId,m.time,m.mesg,m.userName,u.name,m.state,c.name) "
 			+ "from Message m, Court c, User u where m.courtId=c.id and u.id=m.userId";
+
 	public MesgDaoHibernate() {
 		super();
 	}
@@ -48,13 +49,13 @@ public class MesgDaoHibernate extends SqlHelper implements MesgDao {
 	}
 
 	@Override
-	public void deleteMesgs(Long[] ids) throws Exception{
+	public void deleteMesgs(Long[] ids) throws Exception {
 		String strHql = "update Message set state=0 where id in(:ids)";
-			Session session = getHibernateTemplate().getSessionFactory()
-					.getCurrentSession();
-			Query q = session.createQuery(strHql);
-			q.setParameterList("ids", ids);
-			q.executeUpdate();
+		Session session = getHibernateTemplate().getSessionFactory()
+				.getCurrentSession();
+		Query q = session.createQuery(strHql);
+		q.setParameterList("ids", ids);
+		q.executeUpdate();
 	}
 
 	@Override
@@ -103,7 +104,8 @@ public class MesgDaoHibernate extends SqlHelper implements MesgDao {
 	@Override
 	public List<MessageBean> findPagedByKeyValueOrderBy(String[] columns,
 			String keyValue, Integer currentPage, Integer rows,
-			String orderByCol, Boolean isAsc) throws Exception {
+			String orderByCol, Boolean isAsc, Integer selType) throws Exception {
+		String strWhere = null;
 		if (!CommonUtils.isNullOrEmpty(keyValue)) {
 			keyValue = " %" + keyValue + "% ";
 			int[] types = new int[columns.length];
@@ -113,13 +115,14 @@ public class MesgDaoHibernate extends SqlHelper implements MesgDao {
 				args[i] = keyValue;
 				columns[i] = " and" + addPrefixToColumn(columns[i]);
 			}
-			String strWhere = Append_String(" and ", types, columns, args);
-			return findPagedByWhereOrderBy(strWhere, currentPage, rows,
-					addPrefixToColumn(orderByCol), isAsc);
-		} else {
-			return findPagedByWhereOrderBy(null, currentPage, rows,
-					addPrefixToColumn(orderByCol), isAsc);
+			strWhere = Append_String(" and ", types, columns, args);
 		}
+		if (!CommonUtils.isNullOrEmpty(selType) && selType == 1) {
+			strWhere += " and m.state=1";
+		}
+		return findPagedByWhereOrderBy(strWhere, currentPage, rows,
+				addPrefixToColumn(orderByCol), isAsc);
+
 	}
 
 	private List<MessageBean> findPagedByWhereOrderBy(String strWhere,
@@ -142,8 +145,12 @@ public class MesgDaoHibernate extends SqlHelper implements MesgDao {
 	}
 
 	@Override
-	public int countCourt() {
-		return count(" select count(*) from Message");
+	public int countCourt(Integer selType) {
+		String strHql = " select count(*) from Message";
+		if(!CommonUtils.isNullOrEmpty(selType) && selType==1){
+			strHql += " where state=1";
+		}
+		return count(strHql);
 	}
 
 }

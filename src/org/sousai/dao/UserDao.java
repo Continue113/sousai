@@ -61,7 +61,7 @@ public interface UserDao {
 	 */
 	User findByName(String name);
 	
-	int countAllUser();
+	int countAllUser(Integer selType);
 	
 	/**
 	 * 
@@ -71,12 +71,13 @@ public interface UserDao {
 	 * @param rows
 	 * @param orderByCol
 	 * @param isAsc
+	 * @param selType
 	 * @return
 	 * @throws Exception
 	 */
 	List<UserBean> findPagedByKeyValueOrderBy(String[] columns,
 			String keyValue, Integer currentPage, Integer rows,
-			String orderByCol, Boolean isAsc) throws Exception;
+			String orderByCol, Boolean isAsc, Integer selType) throws Exception;
 	
 	/**
 	 * 批量删除用户（将type置为0）
