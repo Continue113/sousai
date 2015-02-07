@@ -133,7 +133,7 @@
 		args.isAsc = args.isAsc||$(".sort button .current").attr("data-isasc")||true;
 		args.strColumns = args.strColumns||$(".text-filter-box button .current").attr("data-strcolumns")||"name";
 		args.keyValue = args.keyValue||$(".text-filter-box input").val()||"";
-		args.selType = args.selType||$("#selType").attr("value")||1;
+		args.selType = args.selType||$("#selType").attr("value");
 	  	
 		console.log(args);
   	$("#ajaxState .load").show();
@@ -257,12 +257,12 @@
 
     $("#selType").click(function(){
     	var target = $(this);
-    	if(target.attr("value")==1){
-    		e({selType:1});
-    		target.attr("value",0);//.parent().find("span").text("显示未发布");
+    	if(target.attr("value")==1){ //若为1则说明是默认不勾选状态，勾选选中后发送选择所有，
+    		target.attr("value",0);//.parent().find("span").text("显示未发布"); 0是所有。1是未发布/正常
+    		e({});
     	}else if(target.attr("value")==0){
-    		e({selType:0});
-    		target.attr("value",1);//.parent().find("span").text("显示所有");    		
+    		target.attr("value",1);//.parent().find("span").text("显示所有");  
+    		e({});  		
     	}
     });
   });

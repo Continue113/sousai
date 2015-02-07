@@ -180,6 +180,7 @@
 	        url: "getAllUser",
 	        data: args,
 	        success: function(rspdata) {
+	        	console.log(rspdata);
 	        	  var target = $(".userTable > tbody"),template = Handlebars.compile($('#user-template').html());
 	        	  Handlebars.registerHelper("data",function(){
 	        	    return JSON.stringify(this);
@@ -261,11 +262,11 @@
     $("#selType").click(function(){
     	var target = $(this);
     	if(target.attr("value")==1){
-    		e({selType:1});
     		target.attr("value",0);//.parent().find("span").text("显示未禁用");
+    		e({});
     	}else if(target.attr("value")==0){
-    		e({selType:0});
-    		target.attr("value",1);//.parent().find("span").text("显示所有");    		
+    		target.attr("value",1);//.parent().find("span").text("显示所有");  
+    		e({});  		
     	}
     });
 
