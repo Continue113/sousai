@@ -120,7 +120,8 @@
   						"court.price": court.price,
   						"court.workTime": court.workTime,
   						"court.matchCount": court.matchCount,
-  						"court.intro": court.intro
+  						"court.intro": court.intro,
+  						"court.verify": "0"
   				};
   	  			console.log(data);
   					/***********************************************

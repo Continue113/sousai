@@ -131,6 +131,7 @@
 			      			    //"match.relTime": match.reltime,
 			      			    //"match.score": match.name,
 			      			    "match.userId": userid.responseJSON.userId,
+		  						"match.verify": "0",
 			      			    "isCourt": match.iscourt,
 		  						"court.userId": userid.responseJSON.userId,
 		  						"court.addr": match.courtaddr,
@@ -144,6 +145,7 @@
 		  						"court.price": "",
 		  						"court.workTime": "",
 		  						"court.intro": "",
+		  						"court.verify": "0"
 			      			};
 		      		}else{
 		      			match.iscourt = false;
@@ -161,6 +163,7 @@
 			      			    //"match.score": match.name,
 			      			    "match.userId": userid.responseJSON.userId,
 			      			    "isCourt": match.iscourt,
+		  						"match.verify": "0"
 			      			};
 		      		}
 		      		console.log(data);

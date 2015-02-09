@@ -3,12 +3,7 @@
   <div class="footer"> 
    <div class="container"> 
     <!-- 一行一排 -->
-    <p>KING</p> 
-    <span><a href="login.jsp">login.jsp </a><a href="register.jsp">register.jsp </a></span>
-    <span><a href="courtSearch.jsp">courtSearch.jsp </a><a href="courtSearchDetail.jsp">courtSearchDetail.jsp </a></span>
-    <span><a href="matchSearch.jsp">matchSearch.jsp </a><a href="matchSearchDetail.jsp">matchSearchDetail.jsp </a></span>
-    <span><a href="userCenter-editUser.jsp">userCenter-editUser.jsp </a><a href="back-collection.jsp">back-collection.jsp </a></span>
-    <span><a href="back-match.jsp">back-match.jsp</a></span>
+    <p>KING</p>
     </div> 
   </div><!-- /footer -->
 

@@ -122,6 +122,7 @@
               "user.name": $("#inputUsername").val(),
               "user.pwd": $("#inputUserPassword").val(),
               "user.email": $("#inputUserEmail").val(),
+              "user.type": 1,
             },
             success: function(resdata){
             	console.log(resdata);

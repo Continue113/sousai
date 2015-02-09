@@ -389,6 +389,7 @@
 	  args["message.userName"] = args.userName||null; //发表评论或回复的用户userName
 	  args["message.courtId"] = args.courtId||$(".title").attr("data-id")||null; //评论或回复所在的场地id
 	  args["message.mesg"] = args.mesg||null; //评论或回复的具体内容
+	  args["message.state"] = 1; //评论或回复的状态设置为1 即正常评论
 	  //是否匿名,默认为公开为0，若匿名为1	  
       if(!args["message.userId"]){
     	  return false;

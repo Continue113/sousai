@@ -106,11 +106,13 @@ function searchExistedCourt(crtPage,rs){
 		  sousaiRemindDialog("省，市，区请至少选择一个为比赛区域！");
 		  return false;
 	  }
+	  console.log(data);
 	  //ajax 获取已有场地信息列表
 	  $.ajax({
 	      url: "getCourtM",
 	      data: data,
 	      success: function(rspdata) {
+	    	  console.log(rspdata);
 	        var target = $(".existCourtsBox > table > tbody"),template = Handlebars.compile($('#existCourts-template').html());
 	        $(".existCourtsBox .noresult").hide(); //隐藏无结果提醒
 	        Handlebars.registerHelper("data",function(){
@@ -304,7 +306,7 @@ $(function(){
         autoclose: true,
         todayBtn: 'linked',
     }).on('changeDate',function(ev){
-    	console.log(ev);
+    	//console.log(ev);
 		if( ($("#inputMatchTimefrom").val() > $("#inputMatchTimeto").val()) ||( $("#inputMatchTimeto").val() == ""))
 		$("#inputMatchTimeto").datetimepicker('setStartDate',$("#inputMatchTimefrom").val()).val($("#inputMatchTimefrom").val());
 	});
@@ -315,7 +317,7 @@ $(function(){
         autoclose: true,
         todayBtn: 'linked',
     }).on('changeDate',function(ev){
-    	console.log(ev);
+    	//console.log(ev);
 		if( ($("#inputMatchTimefrom").val() > $("#inputMatchTimeto").val()) ||( $("#inputMatchTimeto").val() == ""))
 		$("#inputMatchTimeto").datetimepicker('setStartDate',$("#inputMatchTimefrom").val()).val($("#inputMatchTimefrom").val());
 	});

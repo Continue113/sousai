@@ -238,8 +238,8 @@
     	
     }
     
-    $("#courtMaintenance").find(".unpassMatch").click(function(){passMatch(false);}).end()
-    .find(".passMatch").click(function(){passMatch(true);}).end()
+    $("#courtMaintenance").find(".unpassCourt").click(function(){passCourt(false);}).end()
+    .find(".passCourt").click(function(){passCourt(true);}).end()
     .find(".deleteCourt").click(function(){
 	var checked = $(".court input:checked"),n = checked.length;
 	//若为选中则提示

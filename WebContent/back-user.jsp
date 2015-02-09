@@ -346,6 +346,7 @@ messages: {
 	                "user.name": dataname,
 	                "user.pwd": datapwd,
 	                "user.email": dataemail,
+	                "user.type": 1,
 	            },
 	            success: function(rspdata){
 	            	console.log(rspdata);
