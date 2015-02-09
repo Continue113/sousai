@@ -129,11 +129,11 @@ public class UserDaoHibernate extends SqlHelper implements UserDao {
 				// 加上 别名 统一
 				columns[i] = " and" + addPrefixToColumn(columns[i]);
 			}
-			strWhere = Append_String(" and ", types, columns, args);
+			strWhere = Append_String(" where ", types, columns, args);
 		}
 		if (!CommonUtils.isNullOrEmpty(selType) && selType == 1) {
 			if (CommonUtils.isNullOrEmpty(strWhere)) {
-				strWhere = " and u.type='1'";
+				strWhere = " where u.type='1'";
 			} else {
 				strWhere += " and u.type='1'";
 			}
