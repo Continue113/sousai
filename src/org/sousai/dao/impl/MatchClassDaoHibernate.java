@@ -2,6 +2,8 @@ package org.sousai.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.sousai.dao.MatchClassDao;
 import org.sousai.domain.MatchClass;
 import org.sousai.tools.MyPrint;
@@ -51,4 +53,13 @@ public class MatchClassDaoHibernate extends HibernateDaoSupport implements Match
 		return (List<MatchClass>)getHibernateTemplate().find("from MatchClass where id<>?", id);
 	}
 
+	@Override
+	public void deleteMatchClasses(Integer[] ids) throws Exception{
+		String strHql = "delete from MatchClass where id in (:ids)";
+		Session session = getHibernateTemplate().getSessionFactory()
+				.getCurrentSession();
+		Query q = session.createQuery(strHql);
+		q.setParameterList("ids", ids);
+		q.executeUpdate();
+	}
 }

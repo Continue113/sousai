@@ -9,6 +9,8 @@ import org.sousai.vo.MessageBean;
 import org.sousai.vo.UserBean;
 import org.sousai.dao.*;
 import org.sousai.domain.Match;
+import org.sousai.domain.MatchClass;
+import org.sousai.domain.MatchType;
 import org.sousai.domain.Message;
 
 public class AdminManagerImpl implements AdminManager {
@@ -172,5 +174,35 @@ public class AdminManagerImpl implements AdminManager {
 	@Override
 	public void relMatches(Integer[] ids, boolean isRel) throws Exception {
 		matchDao.relMatchesByAdmin(ids, isRel);
+	}
+
+	@Override
+	public void addMatchClass(MatchClass mc) throws Exception {
+		matchClassDao.save(mc);
+	}
+
+	@Override
+	public void deleteMatchClasses(Integer[] ids) throws Exception {
+		matchClassDao.deleteMatchClasses(ids);
+	}
+
+	@Override
+	public void updateMatchClass(MatchClass mc) throws Exception {
+		matchClassDao.update(mc);
+	}
+
+	@Override
+	public void addMatchType(MatchType mt) throws Exception {
+		matchTypeDao.save(mt);
+	}
+
+	@Override
+	public void deleteMatchTypes(Integer[] ids) throws Exception {
+		matchTypeDao.deleteMatchTypes(ids);
+	}
+
+	@Override
+	public void updateMatchType(MatchType mt) throws Exception {
+		matchTypeDao.update(mt);
 	}
 }

@@ -52,6 +52,13 @@ public interface MatchClassDao {
 		 * @throws Exception 
 		 */
 		List<MatchClass> findAllExcept(Integer id) throws Exception;
+
+		/**
+		 * 批量产出比赛大类
+		 * @param ids
+		 * @throws Exception
+		 */
+		void deleteMatchClasses(Integer[] ids) throws Exception;
 	
 
 }

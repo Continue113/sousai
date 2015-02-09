@@ -54,4 +54,11 @@ public interface MatchTypeDao
 	 */
 	List<MatchType> findAllExcept(Integer id);
 
+	/**
+	 * 批量删除比赛类型
+	 * @param ids
+	 * @throws Exception
+	 */
+	void deleteMatchTypes(Integer[] ids) throws Exception;
+
 }

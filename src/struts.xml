@@ -209,6 +209,21 @@
 		<!-- 查询某个场地举办的所有比赛-->
 		<action name="getMatchByCourtId" class="org.sousai.action.GetMatchByCourtIdAction">
 		</action>
+		
+		<action name="addMatchClass" class="org.sousai.action.MaintainMatchClass" method="addMatchClass">
+		</action>
+		<action name="deleteMatchClasses" class="org.sousai.action.MaintainMatchClass" method="deleteMatchClasses">
+		</action>
+		<action name="updateMatchClass" class="org.sousai.action.MaintainMatchClass" method="updateMatchClass">
+		</action>
+		
+		<action name="addMatchType" class="org.sousai.action.MaintainMatchType" method="addMatchType">
+		</action>
+		<action name="deleteMatchTypes" class="org.sousai.action.MaintainMatchType" method="deleteMatchTypes">
+		</action>
+		<action name="updateMatchType" class="org.sousai.action.MaintainMatchType" method="updateMatchType">
+		</action>
+		
 		</package>
 	
 	

@@ -132,5 +132,17 @@ public interface AdminManager {
 	 * @throws Exception
 	 */
 	public void relMatches(Integer[] ids, boolean isRel) throws Exception;
+	
+	/**
+	 * 增加比赛大类
+	 * @param mc
+	 * @throws Exception
+	 */
+	public void addMatchClass(MatchClass mc) throws Exception;
+	public void deleteMatchClasses(Integer[] ids) throws Exception;
+	public void updateMatchClass(MatchClass mc) throws Exception;
+	public void addMatchType(MatchType mt) throws Exception;
+	public void deleteMatchTypes(Integer[] ids) throws Exception;
+	public void updateMatchType(MatchType mt) throws Exception;
 
 }
