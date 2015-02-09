@@ -147,6 +147,7 @@ public class GetAllCourtAction extends UserBaseAction {
 			MyPrint.myPrint("orderByCol=" + orderByCol);
 			MyPrint.myPrint("isAsc=" + isAsc);
 			MyPrint.myPrint("strColumns=" + strColumns);
+			MyPrint.myPrint("selType=" + selType);
 			String[] columns = strColumns.split(",");
 			// List<CourtBean> list = cmg.findPagedAllCourtOrderBy(currentPage,
 			// rows, orderByCol, isAsc);

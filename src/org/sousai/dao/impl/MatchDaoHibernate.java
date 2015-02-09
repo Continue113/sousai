@@ -260,8 +260,12 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 	@Override
 	public int countMatch(Integer selType) {
 		String strHql = "select count(*) from Match";
-		if(!CommonUtils.isNullOrEmpty(selType) && selType==1){
-			strHql += " where verify='0'";
+		if (!CommonUtils.isNullOrEmpty(selType) && selType == 1) {
+			if (CommonUtils.isNullOrEmpty(strHql)) {
+				strHql = " where verify='0'";
+			} else {
+				strHql += " where verify='0'";
+			}
 		}
 		return count(strHql);
 	}
@@ -272,7 +276,11 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 			String orderByCol, Boolean isAsc, Integer selType) throws Exception {
 		String strWhere = buildKeyValueStatement(keyValue, columns);
 		if (!CommonUtils.isNullOrEmpty(selType) && selType == 1) {
-			strWhere += " and m.verify='0'";
+			if (CommonUtils.isNullOrEmpty(strWhere)) {
+				strWhere = " and m.verify='0'";
+			} else {
+				strWhere += " and m.verify='0'";
+			}
 		}
 		return findPagedByWhereOrderBy(strWhere, currentPage, rows,
 				addPrefixToColumn(orderByCol), isAsc);

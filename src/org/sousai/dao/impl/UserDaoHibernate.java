@@ -97,8 +97,12 @@ public class UserDaoHibernate extends SqlHelper implements UserDao {
 	@Override
 	public int countAllUser(Integer selType) {
 		String strHql = "select count(*) from User";
-		if(!CommonUtils.isNullOrEmpty(selType) && selType==1){
-			strHql += " where type='1'";
+		if (!CommonUtils.isNullOrEmpty(selType) && selType == 1) {
+			if (CommonUtils.isNullOrEmpty(strHql)) {
+				strHql = " where type='1'";
+			} else {
+				strHql += " where type='1'";
+			}
 		}
 		return count(strHql);
 	}
@@ -128,7 +132,11 @@ public class UserDaoHibernate extends SqlHelper implements UserDao {
 			strWhere = Append_String(" and ", types, columns, args);
 		}
 		if (!CommonUtils.isNullOrEmpty(selType) && selType == 1) {
-			strWhere += " and u.type='1'";
+			if (CommonUtils.isNullOrEmpty(strWhere)) {
+				strWhere = " and u.type='1'";
+			} else {
+				strWhere += " and u.type='1'";
+			}
 		}
 		return findPagedByWhereOrderBy(strWhere, currentPage, rows,
 				addPrefixToColumn(orderByCol), isAsc);

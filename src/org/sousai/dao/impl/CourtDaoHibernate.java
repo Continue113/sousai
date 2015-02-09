@@ -212,7 +212,7 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 			e.printStackTrace();
 			return -1;
 		}
-		System.out.println("value = "+value);
+		System.out.println("value = " + value);
 		return value;
 	}
 
@@ -235,8 +235,12 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 	@Override
 	public int countMatch(Integer selType) {
 		String strHql = "select count(*) from Court";
-		if(!CommonUtils.isNullOrEmpty(selType) && selType==1){
-			strHql += " where verify='0'";
+		if (!CommonUtils.isNullOrEmpty(selType) && selType == 1) {
+			if (CommonUtils.isNullOrEmpty(strHql)) {
+				strHql = " where verify='0'";
+			} else {
+				strHql += " where verify='0'";
+			}
 		}
 		return count(strHql);
 	}
@@ -259,12 +263,16 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 			}
 			strWhere = Append_String(" and ", types, columns, args);
 		}
-		
-		if(!CommonUtils.isNullOrEmpty(selType) && selType==1){
-			strWhere += " and c.verify='0'";
+
+		if (!CommonUtils.isNullOrEmpty(selType) && selType == 1) {
+			if (CommonUtils.isNullOrEmpty(strWhere)) {
+				strWhere = " and c.verify='0'";
+			} else {
+				strWhere += " and c.verify='0'";
+			}
 		}
-			return findPagedByWhereOrderBy(strWhere, currentPage, rows,
-					addPrefixToColumn(orderByCol), isAsc);
+		return findPagedByWhereOrderBy(strWhere, currentPage, rows,
+				addPrefixToColumn(orderByCol), isAsc);
 	}
 
 	private String addPrefixToColumn(String column) {
@@ -342,11 +350,10 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 	@Override
 	public void relCourts(Integer[] ids, boolean isRel) throws Exception {
 		String strHql;
-		if(isRel){
-			 strHql = "update Court set verify='1' where id in (:ids)";
-		}
-		else{
-			strHql =  "update Court set verify='0' where id in (:ids)";
+		if (isRel) {
+			strHql = "update Court set verify='1' where id in (:ids)";
+		} else {
+			strHql = "update Court set verify='0' where id in (:ids)";
 		}
 		Session session = getHibernateTemplate().getSessionFactory()
 				.getCurrentSession();

@@ -118,7 +118,11 @@ public class MesgDaoHibernate extends SqlHelper implements MesgDao {
 			strWhere = Append_String(" and ", types, columns, args);
 		}
 		if (!CommonUtils.isNullOrEmpty(selType) && selType == 1) {
-			strWhere += " and m.state=1";
+			if (CommonUtils.isNullOrEmpty(strWhere)) {
+				strWhere = " and m.state=1";
+			} else {
+				strWhere += " and m.state=1";
+			}
 		}
 		return findPagedByWhereOrderBy(strWhere, currentPage, rows,
 				addPrefixToColumn(orderByCol), isAsc);
@@ -147,8 +151,12 @@ public class MesgDaoHibernate extends SqlHelper implements MesgDao {
 	@Override
 	public int countCourt(Integer selType) {
 		String strHql = " select count(*) from Message";
-		if(!CommonUtils.isNullOrEmpty(selType) && selType==1){
-			strHql += " where state=1";
+		if (!CommonUtils.isNullOrEmpty(selType) && selType == 1) {
+			if (CommonUtils.isNullOrEmpty(strHql)) {
+				strHql = " where state=1";
+			} else {
+				strHql += " where state=1";
+			}
 		}
 		return count(strHql);
 	}
