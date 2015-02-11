@@ -188,7 +188,7 @@
 	    	      Handlebars.registerHelper("checkState",function(){
 	    	    	  switch(this.userType){
 	    	    	  case "0":
-	                  	  return  new Handlebars.SafeString('<label for="'+this.userId+'"><input type="checkbox" id="'+this.userId+'" /><span>'+this.userId+':'+this.userName+'</span></label><span class="label label-info">已禁用</span>');
+	                  	  return new Handlebars.SafeString('<label for="'+this.userId+'"><input type="checkbox" id="'+this.userId+'" /><span>'+this.userId+':'+this.userName+'</span></label><span class="label label-info">已禁用</span>');
 	                  	  break;
 	    	    	  case "1":
 	                  	  return new Handlebars.SafeString('<label for="'+this.userId+'"><input type="checkbox" id="'+this.userId+'" /><span>'+this.userId+':'+this.userName+'</span></label>');

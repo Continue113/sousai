@@ -45,10 +45,10 @@
         
         <div class="control-group" id="matchTypeControlGroup">
         <label class="control-label" for="inputMatchType">比赛类型：</label> 
-        <div class="controls toolbar"> 
+        <!-- <div class="controls toolbar"> 
         <button type="button" class="btn" onclick="editAllMatchType()">编辑</button>
         <button type="button" class="btn" onclick="saveAllMatchType()">保存</button>
-        </div>
+        </div> -->
         <div class="controls breadcrumb-fff"></div>
         </div> 
         
@@ -149,15 +149,16 @@
   <script id="matchCatalog-template" type="text/x-handlebars-template">
     {{#each this}}
          
-        <input disabled class="span1 catalog" type="text" id="catalog{{id}}" value="{{name}}" placeholder="如：请填写大类的类型" required="required" > <span class="divider">:</span>
-		<ul class="breadcrumb" id="catalogBreadcrumb{{id}}">{{literal}}</ul>
+        <input class="span1 catalog" type="text" id="catalog{{id}}" value="{{name}}" data-id="{{id}}" required="required" >
+<span class="divider">:</span> <button type="button" class="btn btn-link" onclick="saveCatalog({{id}})">保存大类</button>
+		<ul class="breadcrumb" id="catalogBreadcrumb{{id}}" data-id="{{id}}">{{literal}}</ul>
 
     {{/each}}
   </script>
   <script id="matchType-template" type="text/x-handlebars-template">
     {{#each this}}
          
-        <li><input disabled class="span1 " type="text" id="matchType{{id}}" value="{{name}}" placeholder="如：请填写比赛类型" required="required" ></li>
+        <li><input class="span1" type="text" id="matchType{{id}}" value="{{name}}" data-id="{{id}}" required="required" ><button type="button" class="btn btn-link" onclick="saveMatchTpye({{id}})">保存小类型</button></li>
 
     {{/each}}
   </script>
@@ -171,19 +172,31 @@
 		      var target = $("#matchTypeControlGroup").find(".breadcrumb-fff"),template = Handlebars.compile($('#matchCatalog-template').html());
 		      Handlebars.registerHelper("literal",function(){
 		    	  var cataid = this.id;
-		    	  $.post("showMT", {"mcId": cataid}, function(rspType) {
-		    		  console.log("XXX"+cataid);console.log(rspType);
-				      var targetType = $("#catalogBreadcrumb"+cataid),templateType = Handlebars.compile($('#matchType-template').html());
-				      targetType.empty().html(templateType(rspType));//.append('<li><button type="button" class="btn btn-link" onclick="addMatchTpyeInthisCatalog('+cataid+')">添加小类型</button></li>');
-	              });
+	    		  $.ajax({
+	    	          url: "showMT",
+	    	          data: {"mcId": cataid},
+	    	          success: function(rspType) {
+			    		  console.log("XXX"+cataid);
+			    		  console.log(rspType);
+					      var targetType = $("#catalogBreadcrumb"+cataid),templateType = Handlebars.compile($('#matchType-template').html());
+					      targetType.empty().html(templateType(rspType)).append('<li><input class="span1 " type="text" id="newMatchType'+cataid+'" value="" required="required" ></li><li><button type="button" class="btn btn-link" onclick="addMatchTpyeInthisCatalog('+cataid+')">添加小类型</button></li>');
+		              },
+		              error: function(){
+		            	  console.log("chucuole");
+		            	  $("#catalogBreadcrumb"+cataid).append('<li><input class="span1 " type="text" id="newMatchType'+cataid+'" value="" required="required" ></li><li><button type="button" class="btn btn-link" onclick="addMatchTpyeInthisCatalog('+cataid+')">添加小类型</button></li>');
+		              	  return new Handlebars.SafeString('<li><input class="span1 " type="text" id="newMatchType'+cataid+'" value="" required="required" ></li><li><button type="button" class="btn btn-link" onclick="addMatchTpyeInthisCatalog('+cataid+')">添加小类型</button></li>');
+			    		}
+	    		  });
+	    		  
+	    		  
+	    		  
 		      });
-		      target.empty().html(template(rspdata));//.append('<button type="button" class="btn btn-link" onclick="addCatalog()">添加大类</button>');
-			  
-	    	  
+		      target.empty().html(template(rspdata)).append('<input class="span1 " type="text" id="newMatchCatalog" required="required" ><button type="button" class="btn btn-link" onclick="addCatalog()">添加大类</button>');
+			  	    	  
           });
     	  
       }
-  function editAllMatchType(){
+/*   function editAllMatchType(){
 	  $("#matchTypeControlGroup .breadcrumb-fff").find("input").removeAttr("disabled");
   }
   function saveAllMatchType(){
@@ -193,18 +206,106 @@
 		  console.log($(item).val());
 		  console.log(target.find(".breadcrumb")[index]);
 	  });
+  } */
+  function saveCatalog(id){
+	  data = {
+              "mc.name": $("#catalog"+id).val(),
+              "mc.id": id,
+          };
+	  console.log(data);
+	  if(!data["mc.name"]){
+			$("#SRDadd").text("小提示：一旦确定删除将无法取消操作,同时将对使用此场地的比赛和评论照成影响。");
+			$("#sousaiRemindDialog > .modal-footer > button.btn-success").attr("onclick","deleteMatchClasses("+id+")");
+			sousaiRemindDialog("确定删除？",-1,"show");
+	  }else{
+		  $.ajax({
+	          url: "updateMatchClass",
+	          data: data,
+	          success: function(rspdata){
+	          	console.log(rspdata);
+	          	getAllMatchType();
+	          }		  
+		  });
+	  }	  
+  }
+  function deleteMatchClasses(id){
+	  $.ajax({
+          url: "deleteMatchClasses",
+          data: {ids: id},
+          success: function(rspdata){
+          	console.log(rspdata);
+          	getAllMatchType();
+          }		  
+	  });
   }
   function addMatchTpyeInthisCatalog(cataid){
-	  var targetType = $("#catalog"+cataid+"Breadcrumb");
-	  targetType.find("li:last").before('<li><input class="span1 " type="text"  placeholder="如：请填写比赛类型" required="required" ></li>');//.html('<li><button type="button" class="btn btn-link" onclick="saveMatchTpyeInthisCatalog('+cataid+')">保存当前小类型</button></li>');
+	  var targetType = $("#newMatchType"+cataid),
+	  data = {
+              "mt.name": targetType.val(),
+              "mt.mcid": cataid,
+          };
+	  console.log(data);
+	  $.ajax({
+          url: "addMatchType",
+          data: data,
+          success: function(rspdata){
+          	console.log(rspdata);
+          	getAllMatchType();
+          }		  
+	  });
+  }
+  function saveMatchTpye(id){
+	  var targetType = $("#matchType"+id),
+	  data = {
+		  	  "mt.id": id,
+              "mt.name": targetType.val(),
+              "mt.mcid": targetType.parent().parent().attr("data-id"),
+          };
+	  console.log(data);
+	  if(!data["mt.name"]){
+			$("#SRDadd").text("小提示：一旦确定删除将无法取消操作,同时将对使用此场地的比赛和评论照成影响。");
+			$("#sousaiRemindDialog > .modal-footer > button.btn-success").attr("onclick","deleteMatchTypes("+id+")");
+			sousaiRemindDialog("确定删除？",-1,"show");
+	  }else{
+		  $.ajax({
+	          url: "updateMatchType",
+	          data: data,
+	          success: function(rspdata){
+	          	console.log(rspdata);
+	          	getAllMatchType();
+	          }		  
+		  });
+	  }	  
+  }
+  function deleteMatchTypes(id){
+	  $.ajax({
+          url: "deleteMatchTypes",
+          data: {ids: id},
+          success: function(rspdata){
+          	console.log(rspdata);
+          	getAllMatchType();
+          }		  
+	  });
   }
   function addCatalog(){
-	  console.log($(this));
-	  $("button[onclick='addCatalog()']").before('<input class="span1 " type="text" placeholder="如：请填写大类的类型" required="required" > <span class="divider">:</span><ul class="breadcrumb newCatalogBreadcrumb"><li><input class="span1 " type="text" placeholder="如：请填写类型" required="required" ></li></ul>');
+	  var target = $("#newMatchCatalog"),
+	  data = {
+          "mc.name": target.val(),
+      };
+  console.log(data);
+  $.ajax({
+      url: "addMatchClass",
+      data: data,
+      success: function(rspdata){
+      	console.log(rspdata);
+      	getAllMatchType();
+      }
+	  
+  });
   }
   $(function(){
 	  setMenu();
-	  //getAllMatchType();
+	  getAllMatchType();
 	  console.log(document.getElementById("editCourtType"));
 	  $(editCourtType);
 	  
