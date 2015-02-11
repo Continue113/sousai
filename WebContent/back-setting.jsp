@@ -223,7 +223,12 @@
 	          data: data,
 	          success: function(rspdata){
 	          	console.log(rspdata);
-	          	getAllMatchType();
+	          	if(rspdata == "success"){
+	              	getAllMatchType();
+	          	    hideSousaiRemindDialog();          		
+	          	}else{
+	          		sousaiRemindDialog("操作失败，错误代码为："+rspdata);
+	          	}
 	          }		  
 		  });
 	  }	  
@@ -234,7 +239,12 @@
           data: {ids: id},
           success: function(rspdata){
           	console.log(rspdata);
-          	getAllMatchType();
+          	if(rspdata == "success"){
+              	getAllMatchType();
+          	    hideSousaiRemindDialog();          		
+          	}else{
+          		sousaiRemindDialog("操作失败，错误代码为："+rspdata);
+          	}
           }		  
 	  });
   }
@@ -250,7 +260,12 @@
           data: data,
           success: function(rspdata){
           	console.log(rspdata);
-          	getAllMatchType();
+          	if(rspdata == "success"){
+              	getAllMatchType();
+          	    hideSousaiRemindDialog();          		
+          	}else{
+          		sousaiRemindDialog("操作失败，错误代码为："+rspdata);
+          	}
           }		  
 	  });
   }
@@ -272,7 +287,12 @@
 	          data: data,
 	          success: function(rspdata){
 	          	console.log(rspdata);
-	          	getAllMatchType();
+	          	if(rspdata == "success"){
+	              	getAllMatchType();
+	          	    hideSousaiRemindDialog();          		
+	          	}else{
+	          		sousaiRemindDialog("操作失败，错误代码为："+rspdata);
+	          	}
 	          }		  
 		  });
 	  }	  
@@ -283,7 +303,12 @@
           data: {ids: id},
           success: function(rspdata){
           	console.log(rspdata);
-          	getAllMatchType();
+          	if(rspdata == "success"){
+              	getAllMatchType();
+          	    hideSousaiRemindDialog();          		
+          	}else{
+          		sousaiRemindDialog("操作失败，错误代码为："+rspdata);
+          	}
           }		  
 	  });
   }
@@ -298,7 +323,12 @@
       data: data,
       success: function(rspdata){
       	console.log(rspdata);
-      	getAllMatchType();
+      	if(rspdata == "success"){
+          	getAllMatchType();
+      	    hideSousaiRemindDialog();          		
+      	}else{
+      		sousaiRemindDialog("操作失败，错误代码为："+rspdata);
+      	}
       }
 	  
   });

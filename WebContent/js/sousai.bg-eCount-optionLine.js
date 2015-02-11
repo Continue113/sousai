@@ -1,7 +1,7 @@
 //折线图（柱形图）配置选项
 var optionLine = {
     title: {
-        text: '搜赛网数据统计(2014年)',
+        text: '搜赛网数据统计(暂无年份)',
         textStyle: {
             fontSize: 14,
         },

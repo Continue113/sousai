@@ -20,19 +20,8 @@ require(
     //折柱
     bgChartLine = ec.init(document.getElementById('mainLine'));
     bgChartLine.setOption(optionLine, true);
-    yearSelector.onchange();//选择年
 	}
 	);
-
-//主要信息选择年
-var yearSelector = document.getElementById('year');
-yearSelector.onchange = function(e) {
-  var curYear = yearSelector.selectedOptions[0].innerHTML;
-  //折线图
-  optionLine.title.text = '搜赛网数据统计 (' + curYear + '年)';
-  //optionLine.series[0].data = dataPeople[curYear];//获得当年的数据
-  bgChartLine.setOption(optionLine, true);
-};
 
 //////////////////////////////////////////////////////////////////////////////////////
 /////////////////	原本属于jsp页面
@@ -51,23 +40,24 @@ function getChartData(year,month){
 	        success: function(rspdata) {
 	        	console.log(rspdata);
 	        	var ajaxChartData={
-	        			//visits :[],     //访问量
 	        			registrantsNum:[],  //注册用户
 	        			sousaiMatchPublish :[],   //比赛发布(搜赛网)
 	        			naturalMatchPublish :[],	//比赛发布(自然人)
 	        			sousaiSitePublish :[],    //场地发布
 	        			naturalSitePublish :[],	//场地发布
 	        			comments :[], 				//评论数
-	        	};
+	        			},statisticTable = $(".statisticsTable");
+	        	//修改表格标题
+	        	statisticTable.find("th:first").text('搜赛网数据统计 (' + year + '年)');
 	        	//使用each遍历每个对象，取出相应对象的各个属性值	        	
 		        $.each(rspdata,function(index,item){
 	        		var index2 = index+2;
-		        		$(".statisticsTable tr:eq(2) > td:eq("+index2+")").text(item.registrantsNum);
-		        		$(".statisticsTable tr:eq(3) > td:eq("+index2+")").text(item.sousaiMatchPublish);
-		        		$(".statisticsTable tr:eq(4) > td:eq("+index2+")").text(item.naturalMatchPublish);
-		        		$(".statisticsTable tr:eq(5) > td:eq("+index2+")").text(item.sousaiSitePublish);
-		        		$(".statisticsTable tr:eq(6) > td:eq("+index2+")").text(item.naturalSitePublish);
-		        		$(".statisticsTable tr:eq(7) > td:eq("+index2+")").text(item.comments);
+	        		statisticTable.find("tr:eq(2)").find("td:eq("+index2+")").text(item.registrantsNum).end().end()
+		        		.find("tr:eq(3)").find("td:eq("+index2+")").text(item.sousaiMatchPublish).end().end()
+		        		.find("tr:eq(4)").find("td:eq("+index2+")").text(item.naturalMatchPublish).end().end()
+		        		.find("tr:eq(5)").find("td:eq("+index2+")").text(item.sousaiSitePublish).end().end()
+		        		.find("tr:eq(6)").find("td:eq("+index2+")").text(item.naturalSitePublish).end().end()
+		        		.find("tr:eq(7)").find("td:eq("+index2+")").text(item.comments);
 	        	});
 		        //计算表格中的累计总数，同时将为0的变为-
       		for(var i=2;i<$(".statisticsTable tr").length;i++){
@@ -109,15 +99,11 @@ function getChartData(year,month){
   	        		}    	        		
   	        	});
       		}
-	        	console.log(ajaxChartData);
-	        	GetAjaxChartData(ajaxChartData);
-      		
+      		ajaxChartData.year = year;
+      		ajaxChartData.month = month;
+	        console.log(ajaxChartData);
+	        GetAjaxChartData(ajaxChartData);      		
 	  	    },
-	        error: function(jqXHR,textStatus,errorThrown){
-	        	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-	  	      	$("#ajaxState .noresult").show();console.log("出错了");
-	          	sousaiRemindDialog("抱歉，ajax出错了。");
-	        },
 	      });
 }
 
@@ -155,10 +141,9 @@ function GetAjaxChartData(ajaxChartData) {  //alert(ajaxChartData);
 			    type: 'bar',
 			    data: ajaxChartData.comments//[35, 59, 90, 26, 287, 707, 156, 182, 487, 188, 60, 23, 20]
 			}];
-		  options.series = series;		  
-		  console.log("options");
+		  options.series = series;
+		  options.title.text = '搜赛网数据统计 (' + ajaxChartData.year + '年)';		  
 		  bgChartLine.hideLoading();
-		  console.log("hideLoading");
 		  bgChartLine.setOption(options);
 		  console.log("bgChartLine.setOption(options);");
 }
