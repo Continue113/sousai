@@ -67,4 +67,9 @@ public class MatchType implements Serializable
 		return serialVersionUID;
 	}
 	
+	@Override
+	public String toString(){
+		String value = String.format("id=%1$s,name=%2$s,mcId=%3$s;", id,name,mcId);
+		return value;
+	}
 }

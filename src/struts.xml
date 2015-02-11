@@ -210,6 +210,7 @@
 		<action name="getMatchByCourtId" class="org.sousai.action.GetMatchByCourtIdAction">
 		</action>
 		
+		<!-- 比赛大类的增删改 -->
 		<action name="addMatchClass" class="org.sousai.action.MaintainMatchClass" method="addMatchClass">
 		</action>
 		<action name="deleteMatchClasses" class="org.sousai.action.MaintainMatchClass" method="deleteMatchClasses">
@@ -217,6 +218,7 @@
 		<action name="updateMatchClass" class="org.sousai.action.MaintainMatchClass" method="updateMatchClass">
 		</action>
 		
+		<!-- 比赛类型的增删改 -->
 		<action name="addMatchType" class="org.sousai.action.MaintainMatchType" method="addMatchType">
 		</action>
 		<action name="deleteMatchTypes" class="org.sousai.action.MaintainMatchType" method="deleteMatchTypes">
@@ -224,6 +226,25 @@
 		<action name="updateMatchType" class="org.sousai.action.MaintainMatchType" method="updateMatchType">
 		</action>
 		
+		<!-- 热门搜索的增删改查 -->
+		<action name="addHotWord" class="org.sousai.action.MaintainHotWordAction" method="addHotWord">
+		</action>
+		<action name="deleteHotWord" class="org.sousai.action.MaintainHotWordAction" method="deleteHotWord">
+		</action>
+		<action name="updateHotWord" class="org.sousai.action.MaintainHotWordAction" method="updateHotWord">
+		</action>
+		<action name="findAllHotWords" class="org.sousai.action.MaintainHotWordAction" method="findAllHotWords">
+		</action>
+		
+		<!--场地类型的增删改查 -->
+		<action name="addCourtType" class="org.sousai.action.MaintainCourtTypeAction" method="addCourtType">
+		</action>
+		<action name="deleteCourtType" class="org.sousai.action.MaintainCourtTypeAction" method="deleteCourtType">
+		</action>
+		<action name="updateCourtType" class="org.sousai.action.MaintainCourtTypeAction" method="updateCourtType">
+		</action>
+		<action name="findAllCourtTypes" class="org.sousai.action.MaintainCourtTypeAction" method="findAllCourtTypes">
+		</action>
 		</package>
 	
 	

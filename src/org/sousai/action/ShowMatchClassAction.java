@@ -28,7 +28,7 @@ public class ShowMatchClassAction extends UserBaseAction {
 	{
 		MyPrint.myPrint("in ShowMatchClass action");
 		setMatchClasses(cmg.findAllMatchClassEpt(DefaultId));
-		if(matchClasses!=null && matchClasses.size()!=0)
+		if(matchClasses!=null)
 		{
 			JSONUtils.toJson(ServletActionContext.getResponse(), matchClasses);
 			MyPrint.myPrint(SUCCESS);

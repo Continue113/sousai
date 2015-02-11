@@ -48,45 +48,160 @@ public class UserManagerImpl implements UserManager {
 	private MatchTypeDao matchTypeDao;
 	private MatchDao matchDao;
 	private UserMarkDao userMarkDao;
+	private HotWordDao hotWordDao;
 
+	/**
+	 * @return the userDao
+	 */
+	public UserDao getUserDao() {
+		return userDao;
+	}
+
+	/**
+	 * @param userDao the userDao to set
+	 */
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
 	}
 
+	/**
+	 * @return the courtDao
+	 */
+	public CourtDao getCourtDao() {
+		return courtDao;
+	}
+
+	/**
+	 * @param courtDao the courtDao to set
+	 */
 	public void setCourtDao(CourtDao courtDao) {
 		this.courtDao = courtDao;
 	}
 
+	/**
+	 * @return the courtPicDao
+	 */
+	public CourtPicDao getCourtPicDao() {
+		return courtPicDao;
+	}
+
+	/**
+	 * @param courtPicDao the courtPicDao to set
+	 */
 	public void setCourtPicDao(CourtPicDao courtPicDao) {
 		this.courtPicDao = courtPicDao;
 	}
 
+	/**
+	 * @return the mesgDao
+	 */
+	public MesgDao getMesgDao() {
+		return mesgDao;
+	}
+
+	/**
+	 * @param mesgDao the mesgDao to set
+	 */
 	public void setMesgDao(MesgDao mesgDao) {
 		this.mesgDao = mesgDao;
 	}
 
+	/**
+	 * @return the regionDao
+	 */
+	public RegionDao getRegionDao() {
+		return regionDao;
+	}
+
+	/**
+	 * @param regionDao the regionDao to set
+	 */
 	public void setRegionDao(RegionDao regionDao) {
 		this.regionDao = regionDao;
 	}
 
+	/**
+	 * @return the courtTypeDao
+	 */
+	public CourtTypeDao getCourtTypeDao() {
+		return courtTypeDao;
+	}
+
+	/**
+	 * @param courtTypeDao the courtTypeDao to set
+	 */
 	public void setCourtTypeDao(CourtTypeDao courtTypeDao) {
 		this.courtTypeDao = courtTypeDao;
 	}
 
+	/**
+	 * @return the matchClassDao
+	 */
+	public MatchClassDao getMatchClassDao() {
+		return matchClassDao;
+	}
+
+	/**
+	 * @param matchClassDao the matchClassDao to set
+	 */
 	public void setMatchClassDao(MatchClassDao matchClassDao) {
 		this.matchClassDao = matchClassDao;
 	}
 
+	/**
+	 * @return the matchTypeDao
+	 */
+	public MatchTypeDao getMatchTypeDao() {
+		return matchTypeDao;
+	}
+
+	/**
+	 * @param matchTypeDao the matchTypeDao to set
+	 */
 	public void setMatchTypeDao(MatchTypeDao matchTypeDao) {
 		this.matchTypeDao = matchTypeDao;
 	}
 
+	/**
+	 * @return the matchDao
+	 */
+	public MatchDao getMatchDao() {
+		return matchDao;
+	}
+
+	/**
+	 * @param matchDao the matchDao to set
+	 */
 	public void setMatchDao(MatchDao matchDao) {
 		this.matchDao = matchDao;
 	}
 
+	/**
+	 * @return the userMarkDao
+	 */
+	public UserMarkDao getUserMarkDao() {
+		return userMarkDao;
+	}
+
+	/**
+	 * @param userMarkDao the userMarkDao to set
+	 */
 	public void setUserMarkDao(UserMarkDao userMarkDao) {
 		this.userMarkDao = userMarkDao;
+	}
+
+	/**
+	 * @return the hotWordDao
+	 */
+	public HotWordDao getHotWordDao() {
+		return hotWordDao;
+	}
+
+	/**
+	 * @param hotWordDao the hotWordDao to set
+	 */
+	public void setHotWordDao(HotWordDao hotWordDao) {
+		this.hotWordDao = hotWordDao;
 	}
 
 	@Override

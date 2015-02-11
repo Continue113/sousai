@@ -1,5 +1,5 @@
 set foreign_key_checks=0;
-create database if not exists SOUSAI;
+create database if not exists SOUSAI DEFAULT CHARSET=UTF8;
 use SOUSAI;
 -- source G:/users/myic/workspace/Git/sousai/sqlFolder/sousai1.1/COURTTYPE.sql;
 -- source G:/users/myic/workspace/Git/sousai/sqlFolder/sousai1.1/COURTPIC.sql;
@@ -39,6 +39,7 @@ source C:/users/KING/git/sousai/sqlFolder/sousai1.1/COURTTYPE.sql;
 source C:/users/KING/git/sousai/sqlFolder/sousai1.1/COURTPIC.sql;
 source C:/users/KING/git/sousai/sqlFolder/sousai1.1/USERPIC.sql;
 source C:/users/KING/git/sousai/sqlFolder/sousai1.1/COURT.sql;
+source C:/users/KING/git/sousai/sqlFolder/sousai1.1/HOTWORD.sql;
 source C:/users/KING/git/sousai/sqlFolder/sousai1.1/USER.sql;
 source C:/users/KING/git/sousai/sqlFolder/sousai1.1/IP.sql;
 source C:/users/KING/git/sousai/sqlFolder/sousai1.1/COLLECTION.sql;

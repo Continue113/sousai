@@ -145,4 +145,13 @@ public interface AdminManager {
 	public void deleteMatchTypes(Integer[] ids) throws Exception;
 	public void updateMatchType(MatchType mt) throws Exception;
 
+	public void addHotWord(HotWord hotWord) throws Exception;
+	public void deleteHotWord(HotWord hotWord) throws Exception;
+	public void updateHotWord(HotWord hotWord) throws Exception;
+	public List<HotWord> findAllHotWords() throws Exception;
+	
+	public void addCourtType(CourtType courtType) throws Exception;
+	public void deleteCourtType(CourtType courtType) throws Exception;
+	public void updateCourtType(CourtType courtType) throws Exception;
+	public List<CourtType> findAllCourtTypes() throws Exception;
 }

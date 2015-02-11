@@ -32,7 +32,7 @@ public class MaintainMatchType extends UserBaseAction{
 	/**
 	 * @return the mt
 	 */
-	public MatchType getMc() {
+	public MatchType getMt() {
 		return mt;
 	}
 
@@ -40,7 +40,7 @@ public class MaintainMatchType extends UserBaseAction{
 	 * @param mt
 	 *            the mt to set
 	 */
-	public void setMc(MatchType mt) {
+	public void setMt(MatchType mt) {
 		this.mt = mt;
 	}
 
@@ -55,10 +55,12 @@ public class MaintainMatchType extends UserBaseAction{
 		String value = null;
 		try {
 			if (!CommonUtils.isNullOrEmpty(mt)) {
+				System.out.println(mt.toString());
 				amg.addMatchType(mt);
 				value = Constant.SUCCESS;
 			}
 			else{
+				System.out.println("mt=null");
 				value = Constant.ERROR;
 			}
 		} catch (Exception e) {

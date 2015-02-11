@@ -39,7 +39,7 @@ public class ShowMatchTypesAction extends UserBaseAction {
 	{
 		MyPrint.myPrint("in ShowMatchTypesAction!!!");
 		List<MatchType> matchTypes = cmg.findMatchTypeByMatchClassIdEpt(mcId, DefaultId);
-		if(matchTypes!=null && matchTypes.size()!=0)
+		if(matchTypes!=null)
 		{
 			JSONUtils.toJson(ServletActionContext.getResponse(), matchTypes);
 			MyPrint.myPrint(SUCCESS);
