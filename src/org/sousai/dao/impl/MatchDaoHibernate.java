@@ -631,6 +631,6 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 
 	@Override
 	public List<String> findMatchType() throws Exception{
-		return (List<String>) new SqlHelper().findModelList_SQL("select TYPE from MATCHES", String.class);
+		return (List<String>) new SqlHelper().findModelList_SQL("select DISTINCT M.TYPE  from MATCHES M where TYPE not in(select name from MATCHTYPE);", String.class);
 	}
 }
