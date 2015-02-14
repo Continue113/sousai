@@ -167,12 +167,12 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 				q = session.createQuery(hql);
 				q.setInteger(0, userId);
 			} else {
-				hql = "select type,count(type) from Match m group by type";
+				//首页，只显示已通过审核的比赛数量
+				hql = "select type,count(type) from Match m  where m.verify='1' group by type";
 				session = getHibernateTemplate().getSessionFactory()
 						.getCurrentSession();
 				q = session.createQuery(hql);
 			}
-			MyPrint.myPrint("userId = " + userId);
 			for (Object[] ob : (List<Object[]>) q.list()) {
 				rs.put((String) ob[0], Integer.valueOf(ob[1].toString()));
 			}
@@ -627,5 +627,10 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 				new Integer[] { courtId }, new int[] { 1 }, true);
 
 		return count("select count(*) from Match m where " + strWhere);
+	}
+
+	@Override
+	public List<String> findMatchType() throws Exception{
+		return (List<String>) new SqlHelper().findModelList_SQL("select TYPE from MATCHES", String.class);
 	}
 }

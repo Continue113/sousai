@@ -40,6 +40,13 @@ public interface AdminManager {
 	public int countAllMatch(Integer selType) throws Exception;
 
 	/**
+	 * 获取MATCHES表中的所有比赛类型（和MATCHTYPE表中不一定相同），用于管理员维护比赛类型
+	 * @return
+	 * @throws Exception
+	 */
+	public List<String> getAllMatchTypeInMatches() throws Exception;
+	
+	/**
 	 * 获取所有用户
 	 * 
 	 * @return

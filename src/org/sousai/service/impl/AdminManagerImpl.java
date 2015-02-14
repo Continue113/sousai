@@ -373,4 +373,9 @@ public class AdminManagerImpl implements AdminManager {
 	public List<CourtType> findAllCourtTypes() throws Exception {
 		return courtTypeDao.findAll();
 	}
+
+	@Override
+	public List<String> getAllMatchTypeInMatches() throws Exception {
+		return matchDao.findMatchType();
+	}
 }

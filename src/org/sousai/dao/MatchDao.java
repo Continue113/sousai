@@ -141,6 +141,13 @@ public interface MatchDao {
 			String orderByCol, Boolean isAsc) throws Exception;
 	
 	/**
+	 * 获得Matches表中的matchType，和MatchType中不一定一样
+	 * @return
+	 * @throws Exception 
+	 */
+	List<String> findMatchType() throws Exception;
+	
+	/**
 	 * 高级搜索比赛的结果数
 	 * @param keyValue
 	 * @param matchType

@@ -1,5 +1,7 @@
 package org.sousai.action;
 
+import java.util.List;
+
 import org.apache.struts2.ServletActionContext;
 import org.sousai.action.base.UserBaseAction;
 import org.sousai.common.Constant;
@@ -7,7 +9,7 @@ import org.sousai.domain.MatchType;
 import org.sousai.tools.CommonUtils;
 import org.sousai.tools.JSONUtils;
 
-public class MaintainMatchType extends UserBaseAction{
+public class MaintainMatchType extends UserBaseAction {
 
 	private static final long serialVersionUID = 7477401382913483310L;
 
@@ -58,8 +60,7 @@ public class MaintainMatchType extends UserBaseAction{
 				System.out.println(mt.toString());
 				amg.addMatchType(mt);
 				value = Constant.SUCCESS;
-			}
-			else{
+			} else {
 				System.out.println("mt=null");
 				value = Constant.ERROR;
 			}
@@ -97,8 +98,7 @@ public class MaintainMatchType extends UserBaseAction{
 			if (!CommonUtils.isNullOrEmpty(mt)) {
 				amg.updateMatchType(mt);
 				value = Constant.SUCCESS;
-			}
-			else{
+			} else {
 				value = Constant.ERROR;
 			}
 		} catch (Exception e) {
@@ -107,6 +107,19 @@ public class MaintainMatchType extends UserBaseAction{
 		}
 		System.out.println(value);
 		JSONUtils.toJson(ServletActionContext.getResponse(), value);
+		return null;
+	}
+
+	public String getMatchTypeInMatches() throws Exception {
+		List<String> list = null;
+		try {
+			list = amg.getAllMatchTypeInMatches();
+			JSONUtils.toJson(ServletActionContext.getResponse(), list);
+		} catch (Exception e) {
+			e.printStackTrace();
+			JSONUtils
+					.toJson(ServletActionContext.getResponse(), Constant.ERROR);
+		}
 		return null;
 	}
 }
