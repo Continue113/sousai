@@ -27,7 +27,7 @@ public class ShowCourtTypesAction extends UserBaseAction {
 		MyPrint.myPrint("in ShowCourtTypesAction");
 		MyPrint.myPrint("matchId = "+getMatchId());
 		List<CourtType> courtTypes = cmg.findCourtTypeByMatchTypeId(getMatchId());
-		if(courtTypes!=null && courtTypes.size()!=0)
+		if(courtTypes!=null)
 		{
 			MyPrint.myPrint("courtTypes");
 			JSONUtils.toJson(ServletActionContext.getResponse(), courtTypes);

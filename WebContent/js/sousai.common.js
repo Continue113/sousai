@@ -157,13 +157,10 @@ function initParticularMatchType(matchTypeId) {
 //根据具体比赛类型 获得场地类型 只有默认类型
 function initCourtType(particularMatchTypeId) {
     $.ajax({
-        type: "POST",
         url: "showCT",
-        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         data: {
             "matchId": particularMatchTypeId,
         },
-        dataType: "json",
         success: function(rspdata) {
             var sctCourtType = $(".selectCourtType");
             sctCourtType.empty().append("<option value=0>请选择场地类型</option>");
@@ -171,11 +168,7 @@ function initCourtType(particularMatchTypeId) {
                 sctCourtType.append("<option value=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</option>");
             }
         },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR + " /" + textStatus + " /" + errorThrown);
-            sousaiRemindDialog("抱歉，获取场地类型出错了。");
-        },
-    }); //ajax 已得到场地类型
+    });
 }
 
 //根据当前的没页的条数和总的条数计算总页数

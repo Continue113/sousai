@@ -27,18 +27,13 @@
       
         <div class="control-group" id="hotSeachControlGroup">
         <label class="control-label" for="inputMatchType">热门搜索：</label> 
-        <div class="controls toolbar"> 
+        <!-- <div class="controls toolbar"> 
         <button type="button" class="btn edit">编辑</button>
         <button type="button" class="btn save">保存</button>
-        </div>
+        </div> -->
         <div class="controls breadcrumb-fff">
         <ul class="breadcrumb" id="hotSearchBreadcrumb">         
-        <li><input class="span1" placeholder="如：请填写关键字" required="required" type="text"></li>
-        <li><input class="span1" placeholder="如：请填写关键字" required="required" type="text"></li>
-        <li><input class="span1" placeholder="如：请填写关键字" required="required" type="text"></li>
-        <li><input class="span1" placeholder="如：请填写关键字" required="required" type="text"></li>
-        <li><input class="span1" placeholder="如：请填写关键字" required="required" type="text"></li>
-        <li><input class="span1" placeholder="如：请填写关键字" required="required" type="text"></li>
+        <li><input class="span1" id="hotword1" required="required" type="text"><button type="button" class="btn btn-link" onclick="addHotWord(1)">添加热门搜索</button></li>
  		</ul>
         </div>
         </div> 
@@ -55,11 +50,13 @@
         
         <div class="control-group" id="courtTypeControlGroup">
         <label class="control-label" for="inputMatchType">场地类型：</label> 
-        <div class="controls toolbar"> 
-        <button type="button" class="btn" id="editCourtType">编辑</button>
-        <button type="button" class="btn" id="saveCourtType">保存</button>
+        <div class="controls toolbar">
+        <select class="selectMatchType span2" name="mcId"><option value=0>请选择比赛大类</option></select>
+        <select class="selectParticularMatchType span2"><option value=0>请先选择比赛大类</option></select>
+        <!-- <button type="button" class="btn" id="editCourtType">编辑</button>
+        <button type="button" class="btn" id="saveCourtType">保存</button> -->
         </div>
-        <div class="controls breadcrumb-fff"></div>
+        <div class="controls breadcrumb-fff"><ul class="breadcrumb selectCourtType"></ul></div>
         </div> 
       
       </fieldset>
@@ -158,18 +155,57 @@
   <script id="matchType-template" type="text/x-handlebars-template">
     {{#each this}}
          
-        <li><input class="span1" type="text" id="matchType{{id}}" value="{{name}}" data-id="{{id}}" required="required" ><button type="button" class="btn btn-link" onclick="saveMatchTpye({{id}})">保存小类型</button></li>
+        <li><input class="span1" type="text" id="matchType{{id}}" value="{{name}}" data-id="{{id}}" required="required" ><button type="button" class="btn btn-link" onclick="saveMatchType({{id}})">保存小类型</button></li>
 
     {{/each}}
   </script>
   
   <script>
   //定义函数
+  function addHotWord(id){
+	 var word =  $("#hotword"+id).val();
+	  var data = {
+			  "hotWord.id" : 1,
+			  "hotWord.word" : word,
+			  "hotWord.hot" : 1,
+	  };
+	  console.log(data);
+	  $.ajax({
+		  url: "addHotWord",
+		  data: data,
+		  success: function(rspdata){
+			  console.log(rspdata);
+		  },
+	  });
+	  
+  }
+  function getAllHotWord(){
+	  $.ajax({
+		  url: "findAllHotWords",
+		  success: function(rspdata){
+			  console.log(rspdata);
+		  },
+	  });
+  }
+  function getAllCourtType(){
+	  $.ajax({
+		  url: "findAllCourtTypes",
+		  success: function(rspdata){
+			  console.log(rspdata);
+		  },
+	  });
+  }
       function getAllMatchType(){
     	//获取所有比赛类型
           $.post("showMC", null, function(rspdata) {
         	  console.log(rspdata);
-		      var target = $("#matchTypeControlGroup").find(".breadcrumb-fff"),template = Handlebars.compile($('#matchCatalog-template').html());
+        	  //初始化场地类型处的比赛类型
+		      var type = $(".selectMatchType"), target = $("#matchTypeControlGroup").find(".breadcrumb-fff"),template = Handlebars.compile($('#matchCatalog-template').html());
+
+       		  for (var i = 0; i < rspdata.length; i++) {
+           		  type.append("<option value=\"" + rspdata[i].id + "\">" + rspdata[i].name + "</option>");
+        	  }
+		      
 		      Handlebars.registerHelper("literal",function(){
 		    	  var cataid = this.id;
 	    		  $.ajax({
@@ -179,13 +215,13 @@
 			    		  console.log("XXX"+cataid);
 			    		  console.log(rspType);
 					      var targetType = $("#catalogBreadcrumb"+cataid),templateType = Handlebars.compile($('#matchType-template').html());
-					      targetType.empty().html(templateType(rspType)).append('<li><input class="span1 " type="text" id="newMatchType'+cataid+'" value="" required="required" ></li><li><button type="button" class="btn btn-link" onclick="addMatchTpyeInthisCatalog('+cataid+')">添加小类型</button></li>');
+					      targetType.empty().html(templateType(rspType)).append('<li><input class="span1 " type="text" id="newMatchType'+cataid+'" value="" required="required" ></li><li><button type="button" class="btn btn-link" onclick="addMatchTypeInthisCatalog('+cataid+')">添加小类型</button></li>');
 		              },
-		              error: function(){
+		              /* error: function(){
 		            	  console.log("chucuole");
 		            	  $("#catalogBreadcrumb"+cataid).append('<li><input class="span1 " type="text" id="newMatchType'+cataid+'" value="" required="required" ></li><li><button type="button" class="btn btn-link" onclick="addMatchTpyeInthisCatalog('+cataid+')">添加小类型</button></li>');
 		              	  return new Handlebars.SafeString('<li><input class="span1 " type="text" id="newMatchType'+cataid+'" value="" required="required" ></li><li><button type="button" class="btn btn-link" onclick="addMatchTpyeInthisCatalog('+cataid+')">添加小类型</button></li>');
-			    		}
+			    		} */
 	    		  });
 	    		  
 	    		  
@@ -248,11 +284,11 @@
           }		  
 	  });
   }
-  function addMatchTpyeInthisCatalog(cataid){
+  function addMatchTypeInthisCatalog(cataid){
 	  var targetType = $("#newMatchType"+cataid),
 	  data = {
               "mt.name": targetType.val(),
-              "mt.mcid": cataid,
+              "mt.mcId": cataid,
           };
 	  console.log(data);
 	  $.ajax({
@@ -269,12 +305,12 @@
           }		  
 	  });
   }
-  function saveMatchTpye(id){
+  function saveMatchType(id){
 	  var targetType = $("#matchType"+id),
 	  data = {
 		  	  "mt.id": id,
               "mt.name": targetType.val(),
-              "mt.mcid": targetType.parent().parent().attr("data-id"),
+              "mt.mcId": targetType.parent().parent().attr("data-id"),
           };
 	  console.log(data);
 	  if(!data["mt.name"]){
@@ -333,13 +369,122 @@
 	  
   });
   }
+  function saveCourtType(id){
+	  var targetType = $("#courtType"+id),
+	  data = {
+	  	  	  "courtType.id": id,
+	  	  	  "courtType.matchTypeId": targetType.attr("data-matchid"),
+              "courtType.name": targetType.val(),
+          };
+	  console.log(data);
+	  if(!data["courtType.name"]){
+			$("#SRDadd").text("小提示：一旦确定删除将无法取消操作,同时将对使用此场地的比赛和评论照成影响。");
+			$("#sousaiRemindDialog > .modal-footer > button.btn-success").attr("onclick","deleteCourtType("+id+")");
+			sousaiRemindDialog("确定删除？",-1,"show");
+	  }else{
+		  $.ajax({
+	          url: "updateCourtType",
+	          data: data,
+	          success: function(rspdata){
+	          	console.log(rspdata);
+	          	if(rspdata == "success"){
+	              	getAllCourtTypeInthisCatalog(data["courtType.matchTypeId"]);
+	          	    hideSousaiRemindDialog();
+	          	}else{
+	          		sousaiRemindDialog("操作失败，错误代码为："+rspdata);
+	          	}
+	          }		  
+		  });
+	  }	  
+  }
+  function deleteCourtType(id){
+	  var targetType = $("#courtType"+id),
+	  data = {
+	  	  	  "courtType.id": id,
+	  	  	  "courtType.matchTypeId": targetType.attr("data-matchid"),
+              "courtType.name": targetType.val(),
+          };
+    	console.log(data);
+	  $.ajax({
+          url: "deleteMatchTypes",
+          data: data,
+          success: function(rspdata){
+          	console.log(rspdata);
+          	if(rspdata == "success"){
+              	getAllCourtTypeInthisCatalog(data["courtType.matchTypeId"]);
+          	    hideSousaiRemindDialog();          		
+          	}else{
+          		sousaiRemindDialog("操作失败，错误代码为："+rspdata);
+          	}
+          }		  
+	  });	  
+  }
+  function addCourtTypeInthisCatalog(cataid){
+	  var targetType = $("#newCourtType"+cataid),
+	  data = {
+              "courtType.name": targetType.val(),
+              "courtType.matchTypeId": cataid,
+              //"courtType.id": id,
+          };
+	  console.log(data);
+	  $.ajax({
+          url: "addCourtType",
+          data: data,
+          success: function(rspdata){
+          	console.log(rspdata);
+          	if(rspdata == "success"){
+              	getAllCourtTypeInthisCatalog(cataid);
+          	    hideSousaiRemindDialog();          		
+          	}else{
+          		sousaiRemindDialog("操作失败，错误代码为："+rspdata);
+          	}
+          }		  
+	  });
+  }
+ function getAllCourtTypeInthisCatalog(cataid){
+     //当选择具体比赛类型时，同时获取相应场地类型
+     $.ajax({
+         url: "showCT",
+         data: {
+             "matchId": cataid,
+         },
+         success: function(rspdata) {
+         	console.log(rspdata);
+             var sctCourtType = $("#courtTypeControlGroup").find(".selectCourtType");
+             sctCourtType.empty();
+             for (var i = 0; i < rspdata.length; i++) { "<option value=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</option>"
+                 sctCourtType.append('<li><input class="span1" type="text" id="courtType' + rspdata[i].id + '" value="' + rspdata[i].name + '" data-id="' + rspdata[i].id + '" data-matchid="'+cataid+'" required="required" ><button type="button" class="btn btn-link" onclick="saveCourtType(' + rspdata[i].id + ')">保存</button></li>');
+             }
+             sctCourtType.append('<li><input class="span1 " type="text" id="newCourtType'+cataid+'" value="" required="required" ></li><li><button type="button" class="btn btn-link" onclick="addCourtTypeInthisCatalog('+cataid+')">添加类型</button></li>');
+         },
+     });
+	 
+ }
   $(function(){
 	  setMenu();
+	  console.log("getAllMatchType");
 	  getAllMatchType();
-	  console.log(document.getElementById("editCourtType"));
-	  $(editCourtType);
-	  
-	  
+	  console.log("getAllHotWord");
+	  getAllHotWord();
+	  //getAllCourtType();
+
+	    //点击大类比赛类型获得具体比赛类型
+	    $(".selectMatchType").change(function() {
+	    	selectMatchType($(this));
+	    });
+	    //点击比赛类型 选择其他出现输入框 或者 当场地类型存在时获取相应场地类型
+	    $(".selectParticularMatchType").change(function() {
+	    	//tgPrt: targetparent 目标父元素
+	        var tgPrt = $(this).parent(),
+	        thisval = tgPrt.find(".selectParticularMatchType option:selected").text(),
+	        thisvalue = tgPrt.find(".selectParticularMatchType option:selected").attr("value");
+			console.log(thisval+thisvalue);
+	        if (thisvalue > 1) {
+	            //当选择具体比赛类型时，同时获取相应场地类型
+	            getAllCourtTypeInthisCatalog(thisvalue);
+	        }
+	    });
+	  	  
     /** 表单验证代码 **/
     var validateor = $("#collectionsSettingForm").validate({
     rules: {
