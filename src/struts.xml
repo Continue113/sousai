@@ -248,8 +248,16 @@
 		</action>
 		<action name="findAllCourtTypes" class="org.sousai.action.MaintainCourtTypeAction" method="findAllCourtTypes">
 		</action>
+		
+		
+		<!-- 获得各场地在比赛中使用次数，管理员删除场地前使用-->
+		<action name="countMatchByCourtId" class="org.sousai.action.CountMatchByCourtIdAction">
+		</action>
+		<!-- 获得各比赛在被用户收藏次数， 管理员删除比赛前使用-->
+		<action name="countUserMarkByMatchId" class="org.sousai.action.CountUserMarkByMatchIdAction">
+		</action>
+		
 		</package>
-	
 	
 	<!-- <package name="ajax" extends="json-default"> <action name="uploadPic" class="org.sousai.action.UploadPicAction">
 		<result type="json"></result> </action> </package> -->

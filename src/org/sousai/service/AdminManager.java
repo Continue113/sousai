@@ -4,6 +4,7 @@ import org.sousai.vo.*;
 import org.sousai.domain.*;
 
 import java.util.List;
+import java.util.Map;
 
 public interface AdminManager {
 
@@ -69,12 +70,30 @@ public interface AdminManager {
 	public int deleteCourts(Integer[] courtIds);
 
 	/**
+	 * 获取指定场地举办的比赛数
+	 * @param courtId
+	 * @return
+	 * @throws Exception 
+	 */
+	public int countMatchByCourtId(Integer courtId) throws Exception;
+	public Map<String, Integer> countMatchByCourtIds(Integer[] courtIds) throws Exception;
+	/**
 	 * 批量删除比赛
 	 * 
 	 * @param iMatchIds
 	 * @return
 	 */
 	public int deleteMatches(Integer[] iMatchIds);
+	
+	/**
+	 * 获取指定比赛被用户收藏的次数
+	 * @param matchId
+	 * @return
+	 * @throws Exception 
+	 */
+	public int countUserMarkByMatchId(Integer matchId) throws Exception;
+	
+	public Map<String, Integer> countUserMarkByMatchIds(Integer[] matchIds) throws Exception;
 
 	/**
 	 * 根据keyValue在columns中模糊查询符合条件的场地，并排序分页

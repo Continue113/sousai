@@ -523,7 +523,7 @@ public class UserManagerImpl implements UserManager {
 
 	@Override
 	public List<MatchBean> getUsersFavorMatch(Integer userId, int currentPage,
-			int rows) {
+			int rows) throws Exception {
 		return (List<MatchBean>) userMarkDao.findByMarkingUserId(userId,
 				currentPage, rows);
 	}

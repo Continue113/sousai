@@ -1,6 +1,7 @@
 package org.sousai.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.sousai.service.AdminManager;
 import org.sousai.vo.CourtBean;
@@ -377,5 +378,27 @@ public class AdminManagerImpl implements AdminManager {
 	@Override
 	public List<String> getAllMatchTypeInMatches() throws Exception {
 		return matchDao.findMatchType();
+	}
+
+	@Override
+	public int countMatchByCourtId(Integer courtId) throws Exception{
+		return matchDao.countByCourtId(courtId);
+	}
+
+	@Override
+	public int countUserMarkByMatchId(Integer matchId) throws Exception{
+		return userMarkDao.countByMarkedMatchId(matchId);
+	}
+
+	@Override
+	public Map<String, Integer> countMatchByCourtIds(Integer[] courtIds)
+			throws Exception {
+		return matchDao.countByCourtIds(courtIds);
+	}
+
+	@Override
+	public Map<String, Integer> countUserMarkByMatchIds(Integer[] matchIds)
+			throws Exception {
+		return userMarkDao.countByMatchIds(matchIds);
 	}
 }

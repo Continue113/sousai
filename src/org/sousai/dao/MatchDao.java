@@ -178,4 +178,12 @@ public interface MatchDao {
 	 */
 	void relMatchesByAdmin(Integer[] ids, boolean isRel);
 	
+	/**
+	 * 获取各场地所举办的所有比赛数量
+	 * @param ids
+	 * @return
+	 * @throws Exception 
+	 */
+	Map<String, Integer> countByCourtIds(Integer[] ids) throws Exception;
+	
 }

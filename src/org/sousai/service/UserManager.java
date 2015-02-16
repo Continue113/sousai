@@ -262,7 +262,7 @@ public interface UserManager {
 	public Map<String, Integer> countEachMatchByUserId(Integer userId);
 
 	public List<MatchBean> getUsersFavorMatch(Integer userId, int currentPage,
-			int rows);
+			int rows) throws Exception;
 
 	/**
 	 * 是否超过每日发布上限

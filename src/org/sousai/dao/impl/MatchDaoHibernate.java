@@ -100,11 +100,11 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<MatchBean> findByUserId(Integer userId, String matchType, int currentPage,
-			int rows) {
+	public List<MatchBean> findByUserId(Integer userId, String matchType,
+			int currentPage, int rows) {
 		String hql = selectMatchBean + "and m.userId=?";
-		if(!CommonUtils.isNullOrEmpty(matchType)){
-			hql = String.format("%1$s and m.type='%2$s'",hql,matchType);
+		if (!CommonUtils.isNullOrEmpty(matchType)) {
+			hql = String.format("%1$s and m.type='%2$s'", hql, matchType);
 		}
 		Session session = getHibernateTemplate().getSessionFactory()
 				.getCurrentSession();
@@ -170,7 +170,7 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 				q = session.createQuery(hql);
 				q.setInteger(0, userId);
 			} else {
-				//首页，只显示已通过审核的比赛数量
+				// 首页，只显示已通过审核的比赛数量
 				hql = "select type,count(type) from Match m  where m.verify='1' group by type";
 				session = getHibernateTemplate().getSessionFactory()
 						.getCurrentSession();
@@ -633,7 +633,28 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 	}
 
 	@Override
-	public List<String> findMatchType() throws Exception{
-		return (List<String>) new SqlHelper().findModelList_SQL("select DISTINCT M.TYPE  from MATCHES M where TYPE not in(select name from MATCHTYPE);", String.class);
+	public List<String> findMatchType() throws Exception {
+		return (List<String>) findModelList_SQL(
+				"select DISTINCT M.TYPE  from MATCHES M where TYPE not in(select name from MATCHTYPE);",
+				String.class);
+	}
+
+	@Override
+	public Map<String, Integer> countByCourtIds(Integer[] ids) throws Exception{
+		try {
+			Map<String, Integer> rs = new HashMap<String, Integer>();
+			String hql = "select courtId,count(*) from Match m where courtId in (:ids) group by courtId";
+			Session session = getHibernateTemplate().getSessionFactory()
+					.getCurrentSession();
+			Query q = session.createQuery(hql);
+			q.setParameterList("ids", ids);
+			for (Object[] ob : (List<Object[]>) q.list()) {
+				rs.put((String) ob[0], Integer.valueOf(ob[1].toString()));
+			}
+			return rs;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 }
