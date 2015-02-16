@@ -15,6 +15,27 @@ public class MaintainHotWordAction extends UserBaseAction {
 
 	private HotWord hotWord;
 
+	/**
+	 * @return the hotWord
+	 */
+	public HotWord getHotWord() {
+		return hotWord;
+	}
+
+	/**
+	 * @param hotWord the hotWord to set
+	 */
+	public void setHotWord(HotWord hotWord) {
+		this.hotWord = hotWord;
+	}
+
+	/**
+	 * @return the serialversionuid
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	public String addHotWord() throws Exception {
 		String value = null;
 		try {

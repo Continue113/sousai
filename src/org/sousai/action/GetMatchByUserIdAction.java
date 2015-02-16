@@ -85,7 +85,7 @@ public class GetMatchByUserIdAction extends UserBaseAction {
 					userId = userBean.getUserId();
 				}
 			}
-			mesg.setBody(umg.getMatchByUserId(userId, currentPage, rows));
+			mesg.setBody(umg.getMatchByUserId(userId, null, currentPage, rows));
 			mesg.setCount(umg.countMatchByUserId(userId));
 		} catch (Exception e) {
 			e.printStackTrace();

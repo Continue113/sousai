@@ -245,10 +245,11 @@ public interface UserManager {
 	 * 获取指定用户发布的比赛信息
 	 * @param userId
 	 * @param currentPage
+	 * @param matchType
 	 * @param rows
 	 * @return
 	 */
-	public List<MatchBean> getMatchByUserId(Integer userId, Integer currentPage, Integer rows);
+	public List<MatchBean> getMatchByUserId(Integer userId, String matchType, Integer currentPage, Integer rows);
 
 	/**
 	 * 通过场地id，获取场地信息

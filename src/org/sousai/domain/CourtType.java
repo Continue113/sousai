@@ -14,7 +14,7 @@ public class CourtType implements Serializable
 	private Integer matchTypeId;
 	
 	//默认构造器
-	CourtType()
+	public CourtType()
 	{
 	}
 

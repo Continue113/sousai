@@ -28,7 +28,7 @@ public interface MatchDao {
 
 	List<MatchBean> findByUser(User user, int currentPage, int rows);
 
-	List<MatchBean> findByUserId(Integer userId, int currentPage, int rows);
+	List<MatchBean> findByUserId(Integer userId, String matchType, int currentPage, int rows);
 
 	List<MatchBean> findByMatchTypeId(Integer matchTypeId, int currentPage,
 			int rows);

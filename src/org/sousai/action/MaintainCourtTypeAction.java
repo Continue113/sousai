@@ -15,6 +15,27 @@ public class MaintainCourtTypeAction extends UserBaseAction {
 
 	private CourtType courtType;
 
+	/**
+	 * @return the courtType
+	 */
+	public CourtType getCourtType() {
+		return courtType;
+	}
+
+	/**
+	 * @param courtType the courtType to set
+	 */
+	public void setCourtType(CourtType courtType) {
+		this.courtType = courtType;
+	}
+
+	/**
+	 * @return the serialversionuid
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	public String addCourtType() throws Exception {
 		String value = null;
 		try {

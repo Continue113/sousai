@@ -100,9 +100,12 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<MatchBean> findByUserId(Integer userId, int currentPage,
+	public List<MatchBean> findByUserId(Integer userId, String matchType, int currentPage,
 			int rows) {
 		String hql = selectMatchBean + "and m.userId=?";
+		if(!CommonUtils.isNullOrEmpty(matchType)){
+			hql = String.format("%1$s and m.type='%2$s'",hql,matchType);
+		}
 		Session session = getHibernateTemplate().getSessionFactory()
 				.getCurrentSession();
 		try {

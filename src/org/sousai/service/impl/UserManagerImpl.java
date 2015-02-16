@@ -561,8 +561,8 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public List<MatchBean> getMatchByUserId(Integer userId, Integer currentPage, Integer rows) {
-		return matchDao.findByUserId(userId, currentPage, rows);
+	public List<MatchBean> getMatchByUserId(Integer userId, String matchType, Integer currentPage, Integer rows) {
+		return matchDao.findByUserId(userId, matchType, currentPage, rows);
 	}
 
 	@Override
