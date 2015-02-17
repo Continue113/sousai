@@ -2,6 +2,21 @@
 /////////////////////////////////////////////////////////////
 ////////////////////////FUNCTION   ///////////////////////
 /////////////////////////////////////////////////////////////
+//设置热门搜索
+	function setAllHotWords(){
+		  $.ajax({
+			  url: "findAllHotWords",
+			  success: function(rspdata) {
+		         	console.log(rspdata);
+		         	var target = $("#searchbox-tab").parent().find(".breadcrumb");
+		         	target.empty().append('<li class="breadcrumb-title">热门搜索:</li>');
+		            for (var i = 0; i < rspdata.length; i++) {
+		            	target.append('<li><a target="_blank" href="matchSearch.jsp?key='+ rspdata[i].word +'">&nbsp;'+ rspdata[i].word +' </a></li>');
+		         	} 
+		            target.append('<li><a target="_blank" href="matchSearchAdv.jsp">&nbsp;更多&gt;&gt;</a></li>');            
+		      },
+		  });		
+	}
 function setMenu(){
     var url = window.location.pathname;
     urikv = decodeURI(url.substring(url.lastIndexOf('/')+1, url.length));
@@ -480,6 +495,8 @@ $(function() {
 		}
 		$(".selectRows").append(rows);
 	}
+	//设置热门搜索
+	setAllHotWords();
 	
 	/////////////////////////////////////////////////////////////////////
 	//////////////////// 全局设置所有的初始化函数完成           ///////////////////////////

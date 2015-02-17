@@ -32,9 +32,7 @@
         <button type="button" class="btn save">保存</button>
         </div> -->
         <div class="controls breadcrumb-fff">
-        <ul class="breadcrumb" id="hotSearchBreadcrumb">         
-        <li><input class="span1" id="hotword1" required="required" type="text"><button type="button" class="btn btn-link" onclick="addHotWord(1)">添加热门搜索</button></li>
- 		</ul>
+        <ul class="breadcrumb" id="hotwords"></ul>
         </div>
         </div> 
         
@@ -162,29 +160,93 @@
   
   <script>
   //定义函数
-  function addHotWord(id){
-	 var word =  $("#hotword"+id).val();
-	  var data = {
-			  "hotWord.id" : 1,
+  function addHotWord(){
+	 if($("#hotwords").find("input").length >= 6){
+		 sousaiRemindDialog("热门搜索关键词已达上限。请修改已有关键词。");
+		 return false;
+	 }
+	 var word =  $("#newHotWord").val(),
+	 data = {
 			  "hotWord.word" : word,
 			  "hotWord.hot" : 1,
 	  };
 	  console.log(data);
+	  if(!data["hotWord.word"]){
+			$("#SRDadd").text("小提示：一旦确定删除将无法取消操作,同时将对使用此场地的比赛和评论照成影响。");
+			$("#sousaiRemindDialog > .modal-footer > button.btn-success").attr("onclick","deleteHotWord("+id+")");
+			sousaiRemindDialog("确定删除？",-1,"show");
+	  }else{
 	  $.ajax({
 		  url: "addHotWord",
 		  data: data,
 		  success: function(rspdata){
 			  console.log(rspdata);
+	          	if(rspdata == "success"){
+	          		getAllHotWord();
+	          	    hideSousaiRemindDialog();          		
+	          	}else{
+	          		sousaiRemindDialog("操作失败，错误代码为："+rspdata);
+	          	}
 		  },
 	  });
-	  
+	  }
   }
+
+  function deleteHotWord(id){
+	  var data = {
+			  "hotWord.word" : word,
+			  "hotWord.hot" : 1,
+			  "hotWord.id" : id,
+	  };
+	  $.ajax({
+          url: "deleteMatchClasses",
+          data: data,
+          success: function(rspdata){
+          	console.log(rspdata);
+          	if(rspdata == "success"){
+              	getAllMatchType();
+          	    hideSousaiRemindDialog();          		
+          	}else{
+          		sousaiRemindDialog("操作失败，错误代码为："+rspdata);
+          	}
+          }		  
+	  });
+  }
+  function saveHotWord(id){
+		 var word =  $("#hotword"+id).val();
+		  var data = {
+				  "hotWord.id" : id,
+				  "hotWord.word" : word,
+				  "hotWord.hot" : id,
+		  };
+		  console.log(data);
+		  $.ajax({
+			  url: "updateHotWord",
+			  data: data,
+			  success: function(rspdata){
+				  console.log(rspdata);
+		          	if(rspdata == "success"){
+		          		getAllHotWord();
+		          	    hideSousaiRemindDialog();          		
+		          	}else{
+		          		sousaiRemindDialog("操作失败，错误代码为："+rspdata);
+		          	}
+			  },
+		  });
+	  }
   function getAllHotWord(){
+      var hotwords = $("#hotwords");
 	  $.ajax({
 		  url: "findAllHotWords",
-		  success: function(rspdata){
-			  console.log(rspdata);
-		  },
+		  success: function(rspdata) {
+	         	console.log(rspdata);
+	         	hotwords.empty();
+	            for (var i = 0; i < rspdata.length; i++) {
+	            	hotwords.append('<li><input class="span1" type="text" id="hotword' + rspdata[i].id + '" value="' + rspdata[i].word + '" data-id="' + rspdata[i].id + '" required="required" ><button type="button" class="btn btn-link" onclick="saveHotWord(' + rspdata[i].id + ')">保存</button></li>');
+	            //$("#hotword"+rspdata[i].id).val(rspdata[i].word);            
+	         	} 
+	            hotwords.append('<li><input class="span1" type="text" id="newHotWord" required="required" ><button type="button" class="btn btn-link" onclick="addHotWord()">添加</button></li>');	            
+	      },
 	  });
   }
   function getAllCourtType(){

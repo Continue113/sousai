@@ -88,8 +88,11 @@
 		//检测用户是否为登录状态
 		var userid =isLogined();
 		if(userid.responseJSON=="error"){
-			$(".span8",".span11").html("您还未登录，请先登录。");
+			$(".span8",".span11").html("您还未登录，请先 <a href=\"login.jsp\">登录</a>。");
 			return false;
+		}else if(userid.responseJSON.userType=="0"){
+			$(".span8",".span11").html("您已被禁用（不能发布比赛、场地与评论），请先向管理员 <a target=\"_blank\" href=\"http://wpa.qq.com/msgrd?v=3&amp;uin=822547462&amp;site=qq&amp;menu=yes\">申请解禁</a> .");
+			return false;			
 		}
 	  
 	  //将editMatch修改为适合发布场地页面
@@ -108,6 +111,9 @@
 			var userid =isLogined(),match = getMatchInfo();
 			if(userid.responseJSON=="error"){
 				return false;
+			}else if(userid.responseJSON.userType=="0"){
+				$(".span8",".span11").html("您已被禁用（不能发布比赛、场地与评论），请先向管理员 <a target=\"_blank\" href=\"http://wpa.qq.com/msgrd?v=3&amp;uin=822547462&amp;site=qq&amp;menu=yes\">申请解禁</a> .");
+				return false;			
 			}else if(!match){
 				return false;
 			}else{

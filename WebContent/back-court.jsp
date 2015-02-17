@@ -169,7 +169,23 @@
 		$(".court input:checked").each(function(index,element){
 			courtIds.push($(this).attr("id"));
 		});
-      $.ajax({
+		var data = {
+          "courtIds": courtIds.join(","),
+        };
+	  $.ajax({
+        url: "countMatchByCourtId",
+        data: data,
+        success: function(rspdata) {
+        	console.log(rspdata);
+      	  /* if( rspdata == "success" ){
+      		  sousaiRemindDialog("删除成功");
+      		  $(".court input:checked").parent().parent().parent().remove();
+      	  }else{
+      		  sousaiRemindDialog("删除失败，错误代码为："+rspdata);
+      	  } */
+        }
+      });
+      /* $.ajax({
         url: "deleteCourts",
         data: {
           "courtIds": courtIds.join(","),
@@ -182,7 +198,7 @@
       		  sousaiRemindDialog("删除失败，错误代码为："+rspdata);
       	  }
         }
-      });
+      }); */
   }
   
   $(function(){

@@ -173,11 +173,27 @@
 		$(".match input:checked").each(function(index,element){
   			matchIds.push($(this).attr("id"));
 		});
-      $.ajax({
-        url: "deleteMatches",
-        data: {
+		var data = {
           "matchIds": matchIds.join(","),
-        },
+        };
+
+	      $.ajax({
+	        url: "countUserMarkByMatchId",
+	        data: data,
+	        success: function(rspdata) {
+	        	console.log(rspdata);
+	      	  /* if( rspdata == "success" ){
+	      		  sousaiRemindDialog("删除成功");
+	      		  $(".match input:checked").parent().parent().parent().remove();
+	      	  }else{
+	      		  sousaiRemindDialog("删除失败，错误代码为"+rspdata);
+	      	  } */
+	        }
+	      });
+		
+     /*  $.ajax({
+        url: "deleteMatches",
+        data: data,
         success: function(rspdata) {
       	  if( rspdata == "success" ){
       		  sousaiRemindDialog("删除成功");
@@ -186,7 +202,7 @@
       		  sousaiRemindDialog("删除失败，错误代码为"+rspdata);
       	  }
         }
-      });
+      }); */
   }
   $(function(){
 	  setMenu();
