@@ -640,21 +640,21 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 	}
 
 	@Override
-	public Map<String, Integer> countByCourtIds(Integer[] ids) throws Exception{
+	public Map<Integer, Integer> countByCourtIds(Integer[] ids) throws Exception{
+		Map<Integer, Integer> rs = null;
 		try {
-			Map<String, Integer> rs = new HashMap<String, Integer>();
+			rs = new HashMap<Integer, Integer>();
 			String hql = "select courtId,count(*) from Match m where courtId in (:ids) group by courtId";
 			Session session = getHibernateTemplate().getSessionFactory()
 					.getCurrentSession();
 			Query q = session.createQuery(hql);
 			q.setParameterList("ids", ids);
 			for (Object[] ob : (List<Object[]>) q.list()) {
-				rs.put((String) ob[0], Integer.valueOf(ob[1].toString()));
+				rs.put((Integer) ob[0], Integer.valueOf(ob[1].toString()));
 			}
-			return rs;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
 		}
+		return rs;
 	}
 }

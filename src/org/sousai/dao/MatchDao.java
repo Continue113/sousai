@@ -184,6 +184,6 @@ public interface MatchDao {
 	 * @return
 	 * @throws Exception 
 	 */
-	Map<String, Integer> countByCourtIds(Integer[] ids) throws Exception;
+	Map<Integer, Integer> countByCourtIds(Integer[] ids) throws Exception;
 	
 }

@@ -391,13 +391,13 @@ public class AdminManagerImpl implements AdminManager {
 	}
 
 	@Override
-	public Map<String, Integer> countMatchByCourtIds(Integer[] courtIds)
+	public Map<Integer, Integer> countMatchByCourtIds(Integer[] courtIds)
 			throws Exception {
 		return matchDao.countByCourtIds(courtIds);
 	}
 
 	@Override
-	public Map<String, Integer> countUserMarkByMatchIds(Integer[] matchIds)
+	public Map<Integer, Integer> countUserMarkByMatchIds(Integer[] matchIds)
 			throws Exception {
 		return userMarkDao.countByMatchIds(matchIds);
 	}

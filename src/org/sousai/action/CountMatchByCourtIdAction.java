@@ -5,6 +5,7 @@ import org.sousai.action.base.UserBaseAction;
 import org.sousai.common.Constant;
 import org.sousai.tools.CommonUtils;
 import org.sousai.tools.JSONUtils;
+import org.sousai.tools.MyPrint;
 
 public class CountMatchByCourtIdAction extends UserBaseAction {
 
@@ -35,6 +36,7 @@ public class CountMatchByCourtIdAction extends UserBaseAction {
 
 	public String execute() throws Exception {
 		try {
+			MyPrint.myPrint("in CountMatchByCourtAction");
 			String[] arrayCourtIds = courtIds.split(",");
 			Integer[] iCourtIds = new Integer[arrayCourtIds.length];
 			for (int i = 0; i < arrayCourtIds.length; i++) {
@@ -43,6 +45,7 @@ public class CountMatchByCourtIdAction extends UserBaseAction {
 			JSONUtils.toJson(ServletActionContext.getResponse(),
 					amg.countMatchByCourtIds(iCourtIds));
 		} catch (Exception e) {
+			e.printStackTrace();
 			JSONUtils
 					.toJson(ServletActionContext.getResponse(), Constant.ERROR);
 		}

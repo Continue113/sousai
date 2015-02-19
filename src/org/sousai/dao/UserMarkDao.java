@@ -60,5 +60,5 @@ public interface UserMarkDao{
 	 * @return
 	 * @throws Exception
 	 */
-	Map<String, Integer> countByMatchIds(Integer[] ids) throws Exception;
+	Map<Integer, Integer> countByMatchIds(Integer[] ids) throws Exception;
 }

@@ -83,16 +83,17 @@ public class UserMarkDaoHibernate extends SqlHelper implements UserMarkDao {
 	}
 
 	@Override
-	public Map<String, Integer> countByMatchIds(Integer[] ids) throws Exception{
+	public Map<Integer, Integer> countByMatchIds(Integer[] ids) throws Exception{
 		try {
-			Map<String, Integer> rs = new HashMap<String, Integer>();
+			Map<Integer, Integer> rs = new HashMap<Integer, Integer>();
 			String hql = "select matchId,count(*) from UserMark um where matchId in (:ids) group by matchId";
 			Session session = getHibernateTemplate().getSessionFactory()
 					.getCurrentSession();
 			Query q = session.createQuery(hql);
 			q.setParameterList("ids", ids);
+			int i=0;
 			for (Object[] ob : (List<Object[]>) q.list()) {
-				rs.put((String) ob[0], Integer.valueOf(ob[1].toString()));
+				rs.put((Integer) ob[0], Integer.valueOf(ob[1].toString()));
 			}
 			return rs;
 		} catch (Exception e) {

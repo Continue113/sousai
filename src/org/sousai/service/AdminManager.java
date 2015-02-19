@@ -76,7 +76,7 @@ public interface AdminManager {
 	 * @throws Exception 
 	 */
 	public int countMatchByCourtId(Integer courtId) throws Exception;
-	public Map<String, Integer> countMatchByCourtIds(Integer[] courtIds) throws Exception;
+	public Map<Integer, Integer> countMatchByCourtIds(Integer[] courtIds) throws Exception;
 	/**
 	 * 批量删除比赛
 	 * 
@@ -93,7 +93,7 @@ public interface AdminManager {
 	 */
 	public int countUserMarkByMatchId(Integer matchId) throws Exception;
 	
-	public Map<String, Integer> countUserMarkByMatchIds(Integer[] matchIds) throws Exception;
+	public Map<Integer, Integer> countUserMarkByMatchIds(Integer[] matchIds) throws Exception;
 
 	/**
 	 * 根据keyValue在columns中模糊查询符合条件的场地，并排序分页
