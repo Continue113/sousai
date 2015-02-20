@@ -124,27 +124,44 @@ if(obj.files && obj.files[0]){
 // OLD pic upload js
 function sureDeleteEdit(){
 	hideSousaiRemindDialog();
-	$.ajax({
-        type: "POST",
-        url: "deleteCourts",
-        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-        data: {
-          "courtIds": $("#inputCourtName").attr("data-id"),
-        },
-        dataType: "json",
-        success: function(rspdata) {
-      	  if( rspdata == "success" ){
-      		  sousaiRemindDialog("删除成功");
+	var data = {
+        "courtIds": $("#inputCourtName").attr("data-id"),
+    };
+	function deleteCourts(data){
+		hideSousaiRemindDialog();
+		  console.log(data);
+		$.ajax({
+	    url: "deleteCourts",
+	    data: data,
+	    success: function(rspdata) {
+	  	  if( rspdata == "success" ){
+	  		  sousaiRemindDialog("删除成功");
       		  $("#"+$("#inputCourtName").attr("data-id")).parent().parent().parent().remove();
-      	  }else{
-      		  sousaiRemindDialog("删除失败，错误代码为："+rspdata);
-      	  }
-        },
-        error: function(jqXHR,textStatus,errorThrown){
-        	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-            sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
-        },
-      });
+	  	  }else{
+	  		  sousaiRemindDialog("删除失败，错误代码为："+rspdata);
+	  	  }
+	    }
+	  });
+	  }
+	  
+  $.ajax({
+    url: "countMatchByCourtId",
+    data: data,
+    success: function(rspdata) {
+  		  var string = "";
+  		  $.each(rspdata,function(index,item){
+  			  string += "此场地有"+item+"个相关联的比赛;\n";
+  		  });
+  	  if(string === ""){
+  		  deleteCourts(data);
+  	  }else{
+  		  var value = confirm(string+"\n是否删除此场地？");
+  		  if(value){
+  			deleteCourts(data);
+  		  }
+  	  }
+    }
+  });
 }
 $(function(){
   //立即初始化比赛类型

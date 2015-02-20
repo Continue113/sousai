@@ -176,33 +176,39 @@
 		var data = {
           "matchIds": matchIds.join(","),
         };
-
+		function deleteMatches(data){
+			$.ajax({
+		        url: "deleteMatches",
+		        data: data,
+		        success: function(rspdata) {
+		      	  if( rspdata == "success" ){
+		      		  sousaiRemindDialog("删除成功");
+		      		  $(".match input:checked").parent().parent().parent().remove();
+		      	  }else{
+		      		  sousaiRemindDialog("删除失败，错误代码为"+rspdata);
+		      	  }
+		        }
+		      });
+		}
+	
 	      $.ajax({
 	        url: "countUserMarkByMatchId",
 	        data: data,
 	        success: function(rspdata) {
-	        	console.log(rspdata);
-	      	  /* if( rspdata == "success" ){
-	      		  sousaiRemindDialog("删除成功");
-	      		  $(".match input:checked").parent().parent().parent().remove();
+	      		  var string = "";
+	      		  $.each(rspdata,function(index,item){
+	      			  string += "ID为"+index+"的比赛有"+item+"个相关联的收藏;\n";
+	      		  });
+	      	  if(string === ""){
+	      		deleteMatches(data);
 	      	  }else{
-	      		  sousaiRemindDialog("删除失败，错误代码为"+rspdata);
-	      	  } */
+	      		  var value = confirm(string+"\n是否删除所选的比赛？");
+	      		  if(value){
+	      			deleteMatches(data);
+	      		  }
+	      	  }
 	        }
 	      });
-		
-     /*  $.ajax({
-        url: "deleteMatches",
-        data: data,
-        success: function(rspdata) {
-      	  if( rspdata == "success" ){
-      		  sousaiRemindDialog("删除成功");
-      		  $(".match input:checked").parent().parent().parent().remove();
-      	  }else{
-      		  sousaiRemindDialog("删除失败，错误代码为"+rspdata);
-      	  }
-        }
-      }); */
   }
   $(function(){
 	  setMenu();

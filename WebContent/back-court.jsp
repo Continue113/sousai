@@ -172,33 +172,42 @@
 		var data = {
           "courtIds": courtIds.join(","),
         };
+
+		  function deleteCourts(data){
+			  hideSousaiRemindDialog();
+			  console.log(data);
+			$.ajax({
+		    url: "deleteCourts",
+		    data: data,
+		    success: function(rspdata) {
+		  	  if( rspdata == "success" ){
+		  		  sousaiRemindDialog("删除成功");
+		  		  $(".court input:checked").parent().parent().parent().remove();
+		  	  }else{
+		  		  sousaiRemindDialog("删除失败，错误代码为："+rspdata);
+		  	  }
+		    }
+		  });
+		  }
+		  
 	  $.ajax({
         url: "countMatchByCourtId",
         data: data,
         success: function(rspdata) {
-        	console.log(rspdata);
-      	  /* if( rspdata == "success" ){
-      		  sousaiRemindDialog("删除成功");
-      		  $(".court input:checked").parent().parent().parent().remove();
+      		  var string = "";
+      		  $.each(rspdata,function(index,item){
+      			  string += "ID为"+index+"的场地有"+item+"个相关联的比赛;\n";
+      		  });
+      	  if(string === ""){
+      		  deleteCourts(data);
       	  }else{
-      		  sousaiRemindDialog("删除失败，错误代码为："+rspdata);
-      	  } */
-        }
-      });
-      /* $.ajax({
-        url: "deleteCourts",
-        data: {
-          "courtIds": courtIds.join(","),
-        },
-        success: function(rspdata) {
-      	  if( rspdata == "success" ){
-      		  sousaiRemindDialog("删除成功");
-      		  $(".court input:checked").parent().parent().parent().remove();
-      	  }else{
-      		  sousaiRemindDialog("删除失败，错误代码为："+rspdata);
+      		  var value = confirm(string+"\n是否删除所选的场地？");
+      		  if(value){
+      			deleteCourts(data);
+      		  }
       	  }
         }
-      }); */
+      });
   }
   
   $(function(){
