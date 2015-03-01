@@ -287,23 +287,27 @@
   //定义函数
   
     //拉取评论
-  	function ajaxAllEvaluation(id){
-	  id = id||$(".title").attr("data-id")||null;
-	  if(!id){
+  	function getAllEvaluations(argso){
+		//定义默认选项 
+		var args=argso;
+		args.currentPage = args.currentPage||$("ul.pagination li.active a").html()||1;
+		args.rows = args.rows||$("select.selectRows option:selected").val()||25;
+		args.courtId = args.courtId||$(".title").attr("data-id")||null;
+	  	
+		console.log(args);
+		
+	  if(!args.courtId){
 		  return false;
 	  }
   	  	$.ajax({
   	        url: "showMsgs",
-  	        data: {
-  	          "courtId": id,
-  	        },
+  	        data: args,
   	        success: function(rspdata) {
   	        	console.log(rspdata);
   	        	var evaluations = $(".evaluations"),userName,mesg;
   	            evaluations.empty();
   	            $("#courtEvaluationTab span").text(rspdata.length);
   	            for (var i = 0; i < rspdata.length; i++) {
-
   	            	if(!rspdata[i].userName){ 
   	            		userName = '匿名的用户'; //匿名的评论
   	            	}else{
@@ -315,10 +319,10 @@
   	            	}else{
   	            		mesg = rspdata[i].mesg;
   	            	}
-  				  //区分是评论还是评论的回复
-  	              if(rspdata[i].parentId == null){
+  				  /* //区分是评论还是评论的回复
+  	              if(rspdata[i].parentId == null){ */
   	            		evaluations.append('<div class="media evaluation" data-id="'+ rspdata[i].id +'"><div class="pull-left author"><img class="media-object" src="img/defaultImg.png"><div class="evaluationName" data-userid="'+rspdata[i].userId+'">'+userName+'</div></div><div class="media-body"><p class="evaluation-authorMain">'+mesg+'</p><p class="releasetime">'+rspdata[i].time+'</p><ul class="evaluation-tool-reply"><li class="evaluation-tool"><a class="evaluation-tool-visible" href="javascript:void(0);"></a>&nbsp;&nbsp;<a class="evaluation-tool-a" href="#myModal">我要补充下</a></li></ul></div></div>');
-  	              }else{
+  	              /* }else{
   	            	  //采用each迭代每一个拥有data-id的 evaluation
   	            	  $( ".evaluation" ).each(function (j) {
   	            		  //sousaiRemindDialog( $(this).data("id") );
@@ -327,7 +331,7 @@
   	            			  $(this).find(".media-body > .evaluation-tool-reply").append('<li class="evaluation-reply"><div class="media evaluation"><div class="pull-left"><img class="media-object" src="img/defaultImg.png" ><div class="evaluationName">'+userName+'</div></div><div class="media-body"><p class="evaluation-main">'+mesg+'</p><p class="releasetime">'+rspdata[i].time+'</p><a class="pull-right evaluation-tool-a" href="#myModal">我要补充下</a></div></div></li>').find(".evaluation-tool > .evaluation-tool-visible").text('隐藏回复');
   	                      }
   	            	  });
-  	              };
+  	              }; */
 
   	            }
   	        }

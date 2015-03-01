@@ -57,6 +57,8 @@
         <div class="controls breadcrumb-fff"><ul class="breadcrumb selectCourtType"></ul></div>
         </div> 
       
+      <iframe src="method-draw/index.html" width="900px" height="600px" id="svgedit" onload="init_embed()"></iframe>
+      
       </fieldset>
 <%--        <fieldset> 
         <legend>采集设置</legend> 
@@ -157,6 +159,51 @@
 
     {{/each}}
   </script>
+  
+  <!-- SVG METHOD-DRAW -->
+    <script type="text/javascript" src="./method-draw/src/embedapi.js"></script>
+    <script type="text/javascript">
+        var svgCanvas = null;
+
+        function init_embed() {
+        	alert("xx");
+            var frame = document.getElementById('svgedit');
+            console.log(frame);
+			svgCanvas = new embedded_svg_edit(frame);
+			
+			// Hide main button, as we will be controlling new/load/save etc from the host document
+			var doc;
+			doc = frame.contentDocument;
+			if (!doc)
+			{
+				doc = frame.contentWindow.document;
+			}
+			
+			var mainButton = doc.getElementById('main_button');
+			mainButton.style.display = 'none';            
+        }
+        
+        function handleSvgData(data, error) {
+			if (error)
+			{
+				alert('error ' + error);
+			}
+            else
+			{
+				alert('Congratulations. Your SVG string is back in the host page, do with it what you will\n\n' + data);
+			}			
+        }
+        
+        function loadSvg() {
+            var svgexample = '<svg width="640" height="480" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><g><title>Layer 1</title><rect stroke-width="5" stroke="#000000" fill="#FF0000" id="svg_1" height="35" width="51" y="35" x="32"/><ellipse ry="15" rx="24" stroke-width="5" stroke="#000000" fill="#0000ff" id="svg_2" cy="60" cx="66"/></g></svg>';
+            svgCanvas.setSvgString(svgexample);
+        }
+		
+		function saveSvg() {			
+			svgCanvas.getSvgString()(handleSvgData);
+		}
+    </script>
+  <!-- /SVG METHOD-DRAW -->  
   
   <script>
   //定义函数
@@ -523,6 +570,9 @@
 	 
  }
   $(function(){
+	  if(isAdmin() == '-1'){
+		  return false;
+	  }
 	  setMenu();
 	  console.log("getAllMatchType");
 	  getAllMatchType();

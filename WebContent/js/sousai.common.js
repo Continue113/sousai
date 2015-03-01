@@ -453,6 +453,17 @@ function login(event){
 	        });
 	}
 }
+//后台检验是否为管理员登录
+function isAdmin(){
+	//检测用户是否为登录状态
+	var userid =isLogined();
+	if(userid.responseJSON.userType=='2'){
+		return 1;
+	}else{
+		$(".background").html("未登录，请先<a href=\"login.jsp\">登录</a>。");
+		return -1;
+	}
+}
 
 $(function() {
 	//common.js的统一初始化代码，

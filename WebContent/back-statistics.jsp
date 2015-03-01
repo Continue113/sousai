@@ -202,6 +202,9 @@
   <script>
   //定义函数
 $(function(){
+	  if(isAdmin() == '-1'){
+		  return false;
+	  }
 	setMenu();
 	  //初始化所有需要选择年份的select 设置年份到今年
 	  var date = new Date();

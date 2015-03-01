@@ -211,6 +211,9 @@
   }
   
   $(function(){
+	  if(isAdmin() == '-1'){
+		  return false;
+	  }
 	  setMenu();
 	 //ajax接收所有的场地 默认为第一页 25条，按name排序，升序
 	 e({currentPage:1,rows:25});

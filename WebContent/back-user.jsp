@@ -220,6 +220,9 @@
 }
   
   $(function(){
+	  if(isAdmin() == '-1'){
+		  return false;
+	  }
 	  setMenu();
 	//ajax接受所有的用户 默认为25条每页
 	e({currentPage:1,rows:25});

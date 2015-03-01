@@ -176,6 +176,9 @@
   }
   
   $(function(){
+	  if(isAdmin() == '-1'){
+		  return false;
+	  }
 	  setMenu();
 	//ajax接受所有的评论
 	e({currentPage:1,rows:25});

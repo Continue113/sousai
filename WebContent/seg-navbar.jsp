@@ -15,14 +15,14 @@
         <li><a tabindex="-1" href="userCenter-releaseMatch.jsp">发布比赛</a></li> 
         <li><a tabindex="-1" href="userCenter-releaseCourt.jsp">发布场地</a></li>
         <li><a tabindex="-1" href="userCenter-myCourt.jsp">我发布的场地</a></li>
-        <li><a tabindex="-1" href="userCenter-editUser.jsp">编辑账户</a></li> 
+        <li><a tabindex="-1" href="userCenter-editUser.jsp">编辑账户</a></li>
        </ul>
      </li>
-     </s:if>
-     <s:else>
+     </s:if><s:else>
      <li><a href="login.jsp" class="unsignin">朋友，请登录</a> <span class="divider">|</span></li> 
      <li><a href="register.jsp">免费注册</a></li>
-     </s:else> 
+     </s:else>
+     <s:if test="#session.userBean.userType == '2' "><li> <span class="divider">|</span><a href="back-collection.jsp">管理员界面</a></li></s:if>
      </ul> 
     </div> 
     <div class="hdcity pull-right">

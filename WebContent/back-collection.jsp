@@ -165,6 +165,10 @@ function sureDeleteEdit(){
       });
 }
   $(function(){
+	  if(isAdmin() == '-1'){
+		  return false;
+	  }
+	  
 	  setMenu();
 	  //删除.btnbar 中绑定为比赛的class 改为Collection 使原来的发布比赛、保存修改、删除比赛的点击函数失效，
 	  $(".editMatch").find(".btnbar").html('<button type="button" class="btn passCollection">发布采集</button><button type="button" class="btn saveCollection">保存修改</button><button type="button" class="btn deleteCollection">删除采集</button><button type="button" class="btn backList ">返回列表</button>');

@@ -211,6 +211,9 @@
 	      });
   }
   $(function(){
+	  if(isAdmin() == '-1'){
+		  return false;
+	  }
 	  setMenu();
 	//ajax接收所有比赛
 	e({currentPage:1,rows:25});
