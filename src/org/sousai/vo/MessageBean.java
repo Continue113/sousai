@@ -17,9 +17,10 @@ public class MessageBean {
 	private String visibleName;
 	private Integer state;
 	private String courtName;
+	private String userPicId;
 	
 	public MessageBean(Long id, Long parentId, Long rootId, Integer userId, Integer courtId,
-			Date time, String mesg, String visibleName, String userName, Integer state, String courtName) throws Exception {
+			Date time, String mesg, String visibleName, String userName, Integer state, String courtName, String userPicId) throws Exception {
 		super();
 		this.id = id;
 		this.parentId = parentId;
@@ -32,6 +33,7 @@ public class MessageBean {
 		this.visibleName = visibleName;
 		this.state = state;
 		this.courtName = courtName;
+		this.userPicId = userPicId;
 	}
 	
 	public MessageBean(Long id, Long parentId, Long rootId, Integer userId, Integer courtId,
@@ -48,6 +50,21 @@ public class MessageBean {
 		this.state = state;
 		this.courtName = courtName;
 	}
+	
+	/**
+	 * @return the picId
+	 */
+	public String getUserPicId() {
+		return userPicId;
+	}
+
+	/**
+	 * @param picId the picId to set
+	 */
+	public void setUserPicId(String userPicId) {
+		this.userPicId = userPicId;
+	}
+
 	/**
 	 * @return the id
 	 */

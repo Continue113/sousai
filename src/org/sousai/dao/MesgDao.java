@@ -57,9 +57,12 @@ public interface MesgDao {
 	 * 
 	 * @param courtId
 	 *            场地id标识属性
+	 * @param currentPage
+	 * @param rows
 	 * @return 对应场地中的所有留言
 	 */
-	List<Message> getByCourtId(Integer courtId);
+	List<MessageBean> getByCourtId(Integer courtId, Integer currentPage,
+			Integer rows);
 
 	/**
 	 * 获取指定评论的所有回复
@@ -79,6 +82,7 @@ public interface MesgDao {
 
 	/**
 	 * 根据关键字，查询结果，并分页排序
+	 * 
 	 * @param columns
 	 * @param keyValue
 	 * @param currentPage
@@ -92,7 +96,7 @@ public interface MesgDao {
 	List<MessageBean> findPagedByKeyValueOrderBy(String[] columns,
 			String keyValue, Integer currentPage, Integer rows,
 			String orderByCol, Boolean isAsc, Integer selType) throws Exception;
-	
+
 	int countCourt(Integer selType);
 
 	void deleteMesgs(Long[] courtIds) throws Exception;

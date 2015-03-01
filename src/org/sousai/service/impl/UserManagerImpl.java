@@ -58,7 +58,8 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	/**
-	 * @param userDao the userDao to set
+	 * @param userDao
+	 *            the userDao to set
 	 */
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
@@ -72,7 +73,8 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	/**
-	 * @param courtDao the courtDao to set
+	 * @param courtDao
+	 *            the courtDao to set
 	 */
 	public void setCourtDao(CourtDao courtDao) {
 		this.courtDao = courtDao;
@@ -86,7 +88,8 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	/**
-	 * @param courtPicDao the courtPicDao to set
+	 * @param courtPicDao
+	 *            the courtPicDao to set
 	 */
 	public void setCourtPicDao(CourtPicDao courtPicDao) {
 		this.courtPicDao = courtPicDao;
@@ -100,7 +103,8 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	/**
-	 * @param mesgDao the mesgDao to set
+	 * @param mesgDao
+	 *            the mesgDao to set
 	 */
 	public void setMesgDao(MesgDao mesgDao) {
 		this.mesgDao = mesgDao;
@@ -114,7 +118,8 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	/**
-	 * @param regionDao the regionDao to set
+	 * @param regionDao
+	 *            the regionDao to set
 	 */
 	public void setRegionDao(RegionDao regionDao) {
 		this.regionDao = regionDao;
@@ -128,7 +133,8 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	/**
-	 * @param courtTypeDao the courtTypeDao to set
+	 * @param courtTypeDao
+	 *            the courtTypeDao to set
 	 */
 	public void setCourtTypeDao(CourtTypeDao courtTypeDao) {
 		this.courtTypeDao = courtTypeDao;
@@ -142,7 +148,8 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	/**
-	 * @param matchClassDao the matchClassDao to set
+	 * @param matchClassDao
+	 *            the matchClassDao to set
 	 */
 	public void setMatchClassDao(MatchClassDao matchClassDao) {
 		this.matchClassDao = matchClassDao;
@@ -156,7 +163,8 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	/**
-	 * @param matchTypeDao the matchTypeDao to set
+	 * @param matchTypeDao
+	 *            the matchTypeDao to set
 	 */
 	public void setMatchTypeDao(MatchTypeDao matchTypeDao) {
 		this.matchTypeDao = matchTypeDao;
@@ -170,7 +178,8 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	/**
-	 * @param matchDao the matchDao to set
+	 * @param matchDao
+	 *            the matchDao to set
 	 */
 	public void setMatchDao(MatchDao matchDao) {
 		this.matchDao = matchDao;
@@ -184,7 +193,8 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	/**
-	 * @param userMarkDao the userMarkDao to set
+	 * @param userMarkDao
+	 *            the userMarkDao to set
 	 */
 	public void setUserMarkDao(UserMarkDao userMarkDao) {
 		this.userMarkDao = userMarkDao;
@@ -198,7 +208,8 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	/**
-	 * @param hotWordDao the hotWordDao to set
+	 * @param hotWordDao
+	 *            the hotWordDao to set
 	 */
 	public void setHotWordDao(HotWordDao hotWordDao) {
 		this.hotWordDao = hotWordDao;
@@ -471,8 +482,9 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public List<Message> getMessages(Integer courtId) {
-		return mesgDao.getByCourtId(courtId);
+	public List<MessageBean> getMessages(Integer courtId, Integer currentPage,
+			Integer rows) {
+		return mesgDao.getByCourtId(courtId, currentPage, rows);
 	}
 
 	@Override
@@ -497,18 +509,22 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public List<CourtBean> getCourtInMatchReling(Integer regionId, Integer currentPage, Integer rows) {
+	public List<CourtBean> getCourtInMatchReling(Integer regionId,
+			Integer currentPage, Integer rows) {
 		return courtDao.findPagedByRegionId(regionId, currentPage, rows);
 	}
 
 	@Override
-	public List<CourtBean> getCourtByRegion(String region, int currentPage, int rows) throws Exception{
+	public List<CourtBean> getCourtByRegion(String region, int currentPage,
+			int rows) throws Exception {
 		return courtDao.findPagedByRegion(region, currentPage, rows);
 	}
 
 	@Override
-	public List<CourtBean> getCourtByUserId(Integer userId, Integer currentPage, Integer rows) {
-		return (List<CourtBean>) courtDao.findPagedByUserId(userId, currentPage, rows);
+	public List<CourtBean> getCourtByUserId(Integer userId,
+			Integer currentPage, Integer rows) {
+		return (List<CourtBean>) courtDao.findPagedByUserId(userId,
+				currentPage, rows);
 	}
 
 	@Override
@@ -561,7 +577,8 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public List<MatchBean> getMatchByUserId(Integer userId, String matchType, Integer currentPage, Integer rows) {
+	public List<MatchBean> getMatchByUserId(Integer userId, String matchType,
+			Integer currentPage, Integer rows) {
 		return matchDao.findByUserId(userId, matchType, currentPage, rows);
 	}
 
@@ -578,5 +595,10 @@ public class UserManagerImpl implements UserManager {
 	@Override
 	public int countUsersFavorMatch(Integer userId) throws Exception {
 		return userMarkDao.countByMarkingUserId(userId);
+	}
+
+	@Override
+	public void updateUserPicId(Integer id, String picId) throws Exception{
+		userDao.updateUserPic(id, picId);
 	}
 }

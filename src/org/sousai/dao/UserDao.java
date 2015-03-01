@@ -84,4 +84,11 @@ public interface UserDao {
 	 * @param ids
 	 */
 	void deleteUsers(Integer[] ids);
+	
+	/**
+	 * 修改图片地址
+	 * @param id
+	 * @param PicId
+	 */
+	void updateUserPic(Integer id, String picId);
 }

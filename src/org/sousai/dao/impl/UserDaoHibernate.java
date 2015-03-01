@@ -176,4 +176,13 @@ public class UserDaoHibernate extends SqlHelper implements UserDao {
 		q.setParameterList("ids", ids);
 		q.executeUpdate();
 	}
+
+	@Override
+	public void updateUserPic(Integer id, String picId) {
+		String strHql = String.format("update User set picId='%1$s' where id=%2$s", picId, id);
+		Session session = getHibernateTemplate().getSessionFactory()
+				.getCurrentSession();
+		Query q = session.createQuery(strHql);
+		q.executeUpdate();
+	}
 }

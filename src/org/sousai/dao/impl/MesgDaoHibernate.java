@@ -12,9 +12,9 @@ import org.sousai.vo.MessageBean;
 
 public class MesgDaoHibernate extends SqlHelper implements MesgDao {
 
-	private final String selectMesgBean = "select new org.sousai.vo.MessageBean(m.id,m.parentId,m.rootId,m.userId,m.courtId,m.time,m.mesg,m.userName,m.state,c.name) "
-			+ "from Message m, Court c, User u where m.courtId=c.id";
-	private final String selectMesgBeanForAdmin = "select new org.sousai.vo.MessageBean(m.id,m.parentId,m.rootId,m.userId,m.courtId,m.time,m.mesg,m.userName,u.name,m.state,c.name) "
+	private final String selectMesgBean = "select new org.sousai.vo.MessageBean(m.id,m.parentId,m.rootId,m.userId,m.courtId,m.time,m.mesg,m.userName,m.state,c.name,u.picId) "
+			+ "from Message m, Court c, User u where m.courtId=c.id and u.id=m.userId";
+	private final String selectMesgBeanForAdmin = "select new org.sousai.vo.MessageBean(m.id,m.parentId,m.rootId,m.userId,m.courtId,m.time,m.mesg,m.userName,u.name,m.state,c.name,u.picId) "
 			+ "from Message m, Court c, User u where m.courtId=c.id and u.id=m.userId";
 
 	public MesgDaoHibernate() {
@@ -65,9 +65,19 @@ public class MesgDaoHibernate extends SqlHelper implements MesgDao {
 	}
 
 	@Override
-	public List<Message> getByCourtId(Integer courtId) {
-		return (List<Message>) getHibernateTemplate().find(
-				"from Message where courtId=?", courtId);
+	public List<MessageBean> getByCourtId(Integer courtId, Integer currentPage, Integer rows) {
+//		return (List<Message>) getHibernateTemplate().find(
+//				"from Message where courtId=?", courtId);
+		try {
+			Session session = getHibernateTemplate().getSessionFactory()
+					.getCurrentSession();
+			String strWhere = " and c.id="+courtId;
+			return findPagedByWhereOrderBy(strWhere, currentPage, rows, " m.time ", null);
+//			return (List<MessageBean>) session.createQuery(hql).list();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
@@ -129,6 +139,16 @@ public class MesgDaoHibernate extends SqlHelper implements MesgDao {
 
 	}
 
+	/**
+	 * 
+	 * @param strWhere 前边需加and
+	 * @param currentPage
+	 * @param rows
+	 * @param orderByCol
+	 * @param isAsc
+	 * @return
+	 * @throws Exception
+	 */
 	private List<MessageBean> findPagedByWhereOrderBy(String strWhere,
 			Integer currentPage, Integer rows, String orderByCol, Boolean isAsc)
 			throws Exception {

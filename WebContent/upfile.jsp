@@ -1,4 +1,6 @@
-<%@page import="java.io.*,sun.misc.*,java.util.*,org.sousai.tools.*"%>
+<%@page import="org.sousai.service.impl.UserManagerImpl"%>
+<%@page import="org.hibernate.connection.UserSuppliedConnectionProvider"%>
+<%@page import="java.io.*,sun.misc.*,java.util.*,org.sousai.tools.*,org.sousai.action.*"%>
 <%
 //String path=application.getRealPath(request.getRequestURI()); 
 String path=application.getRealPath("");
