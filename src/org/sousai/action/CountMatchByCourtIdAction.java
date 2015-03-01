@@ -21,7 +21,8 @@ public class CountMatchByCourtIdAction extends UserBaseAction {
 	}
 
 	/**
-	 * @param courtIds the courtIds to set
+	 * @param courtIds
+	 *            the courtIds to set
 	 */
 	public void setCourtIds(String courtIds) {
 		this.courtIds = courtIds;
@@ -37,13 +38,15 @@ public class CountMatchByCourtIdAction extends UserBaseAction {
 	public String execute() throws Exception {
 		try {
 			MyPrint.myPrint("in CountMatchByCourtAction");
-			String[] arrayCourtIds = courtIds.split(",");
-			Integer[] iCourtIds = new Integer[arrayCourtIds.length];
-			for (int i = 0; i < arrayCourtIds.length; i++) {
-				iCourtIds[i] = Integer.valueOf(arrayCourtIds[i]);
+			if (isAdmin()) {
+				String[] arrayCourtIds = courtIds.split(",");
+				Integer[] iCourtIds = new Integer[arrayCourtIds.length];
+				for (int i = 0; i < arrayCourtIds.length; i++) {
+					iCourtIds[i] = Integer.valueOf(arrayCourtIds[i]);
+				}
+				JSONUtils.toJson(ServletActionContext.getResponse(),
+						amg.countMatchByCourtIds(iCourtIds));
 			}
-			JSONUtils.toJson(ServletActionContext.getResponse(),
-					amg.countMatchByCourtIds(iCourtIds));
 		} catch (Exception e) {
 			e.printStackTrace();
 			JSONUtils

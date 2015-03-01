@@ -36,7 +36,8 @@ public class RelMatchesByAdminAction extends UserBaseAction {
 	}
 
 	/**
-	 * @param isRel the isRel to set
+	 * @param isRel
+	 *            the isRel to set
 	 */
 	public void setIsRel(Boolean isRel) {
 		this.isRel = isRel;
@@ -52,22 +53,24 @@ public class RelMatchesByAdminAction extends UserBaseAction {
 	public String execute() throws Exception {
 		String value = null;
 		try {
-			String[] arrayMatchIds = ids.split(",");
-			Integer[] iMatchIds = new Integer[arrayMatchIds.length];
-			for (int i = 0; i < arrayMatchIds.length; i++) {
-				iMatchIds[i] = Integer.valueOf(arrayMatchIds[i]);
+			if (isAdmin()) {
+				String[] arrayMatchIds = ids.split(",");
+				Integer[] iMatchIds = new Integer[arrayMatchIds.length];
+				for (int i = 0; i < arrayMatchIds.length; i++) {
+					iMatchIds[i] = Integer.valueOf(arrayMatchIds[i]);
+				}
+				if (CommonUtils.isNullOrEmpty(isRel)) {
+					isRel = true;
+				}
+				amg.relMatches(iMatchIds, isRel);
+				value = Constant.SUCCESS;
+				JSONUtils.toJson(ServletActionContext.getResponse(), value);
 			}
-			if (CommonUtils.isNullOrEmpty(isRel)) {
-				isRel = true;
-			}
-			amg.relMatches(iMatchIds, isRel);
-			value = Constant.SUCCESS;
 		} catch (Exception e) {
 			e.printStackTrace();
 			value = Constant.FAIL;
+			JSONUtils.toJson(ServletActionContext.getResponse(), value);
 		}
-		System.out.println(value);
-		JSONUtils.toJson(ServletActionContext.getResponse(), value);
 		return null;
 	}
 

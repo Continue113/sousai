@@ -139,25 +139,29 @@ public class GetAllMatchAction extends UserBaseAction {
 
 	public String execute() throws Exception {
 		try {
-			System.out.println("amg = " + amg.toString());
-			System.out.println("currentPage = " + currentPage);
-			System.out.println("rows = " + rows);
-			if (currentPage == null) {
-				currentPage = 1;
-			}
-			if (rows == null) {
-				rows = Constant.DEFAULT_ROWS;
-			}
-			String[] columns = strColumns.split(",");
-			List<MatchBean> list = amg.findPagedMatchByKeyValueOrderBy(columns,
-					keyValue, currentPage, rows, orderByCol, isAsc, selType);
-			int count = amg.countAllMatch(selType);
-			FrontMessage msg = new FrontMessage(list, count);
-			if (list != null) {
-				MyPrint.myPrint("list.size()=" + list.size());
-				JSONUtils.toJson(ServletActionContext.getResponse(), msg);
-			} else {
-				JSONUtils.toJson(ServletActionContext.getResponse(), "fail");
+			if (isAdmin()) {
+				// System.out.println("amg = " + amg.toString());
+				// System.out.println("currentPage = " + currentPage);
+				// System.out.println("rows = " + rows);
+				if (currentPage == null) {
+					currentPage = 1;
+				}
+				if (rows == null) {
+					rows = Constant.DEFAULT_ROWS;
+				}
+				String[] columns = strColumns.split(",");
+				List<MatchBean> list = amg.findPagedMatchByKeyValueOrderBy(
+						columns, keyValue, currentPage, rows, orderByCol,
+						isAsc, selType);
+				int count = amg.countAllMatch(selType);
+				FrontMessage msg = new FrontMessage(list, count);
+				if (list != null) {
+					MyPrint.myPrint("list.size()=" + list.size());
+					JSONUtils.toJson(ServletActionContext.getResponse(), msg);
+				} else {
+					JSONUtils
+							.toJson(ServletActionContext.getResponse(), "fail");
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

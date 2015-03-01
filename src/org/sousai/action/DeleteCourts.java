@@ -37,19 +37,21 @@ public class DeleteCourts extends UserBaseAction {
 	public String execute() throws Exception {
 		String value = null;
 		try {
-			String[] arrayCourtIds = courtIds.split(",");
-			Integer[] iCourtIds = new Integer[arrayCourtIds.length];
-			for (int i = 0; i < arrayCourtIds.length; i++) {
-				iCourtIds[i] = Integer.valueOf(arrayCourtIds[i]);
+			if (isAdmin()) {
+				String[] arrayCourtIds = courtIds.split(",");
+				Integer[] iCourtIds = new Integer[arrayCourtIds.length];
+				for (int i = 0; i < arrayCourtIds.length; i++) {
+					iCourtIds[i] = Integer.valueOf(arrayCourtIds[i]);
+				}
+				amg.deleteCourts(iCourtIds);
+				value = Constant.SUCCESS;
+				JSONUtils.toJson(ServletActionContext.getResponse(), value);
 			}
-			amg.deleteCourts(iCourtIds);
-			value = Constant.SUCCESS;
 		} catch (Exception e) {
 			e.printStackTrace();
-			value = Constant.FAIL;
+			value = Constant.ERROR;
+			JSONUtils.toJson(ServletActionContext.getResponse(), value);
 		}
-		System.out.println(value);
-		JSONUtils.toJson(ServletActionContext.getResponse(), value);
 		return null;
 	}
 }

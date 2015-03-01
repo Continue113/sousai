@@ -137,30 +137,34 @@ public class GetAllCourtAction extends UserBaseAction {
 	public String execute() throws Exception {
 		MyPrint.myPrint("in GetAllCourtaction");
 		try {
-			if (currentPage == null) {
-				currentPage = 1;
-			}
-			if (rows == null) {
-				rows = Constant.DEFAULT_ROWS;
-			}
-			MyPrint.myPrint("rows=" + rows);
-			MyPrint.myPrint("orderByCol=" + orderByCol);
-			MyPrint.myPrint("isAsc=" + isAsc);
-			MyPrint.myPrint("strColumns=" + strColumns);
-			MyPrint.myPrint("selType=" + selType);
-			String[] columns = strColumns.split(",");
-			// List<CourtBean> list = cmg.findPagedAllCourtOrderBy(currentPage,
-			// rows, orderByCol, isAsc);
-			List<CourtBean> list = amg.findPagedCourtByKeyValueOrderBy(columns,
-					keyValue, currentPage, rows, orderByCol, isAsc, selType);
-			MyPrint.myPrint("Intro=" + list.get(0).getIntro());
-			int count = amg.countAllCourt(selType);
-			FrontMessage msg = new FrontMessage(list, count);
-			if (list != null) {
-				JSONUtils.toJson(ServletActionContext.getResponse(), msg);
-			} else {
-				JSONUtils.toJson(ServletActionContext.getResponse(),
-						Constant.FAIL);
+			if (isAdmin()) {
+				if (currentPage == null) {
+					currentPage = 1;
+				}
+				if (rows == null) {
+					rows = Constant.DEFAULT_ROWS;
+				}
+//				MyPrint.myPrint("rows=" + rows);
+//				MyPrint.myPrint("orderByCol=" + orderByCol);
+//				MyPrint.myPrint("isAsc=" + isAsc);
+//				MyPrint.myPrint("strColumns=" + strColumns);
+//				MyPrint.myPrint("selType=" + selType);
+				String[] columns = strColumns.split(",");
+				// List<CourtBean> list =
+				// cmg.findPagedAllCourtOrderBy(currentPage,
+				// rows, orderByCol, isAsc);
+				List<CourtBean> list = amg.findPagedCourtByKeyValueOrderBy(
+						columns, keyValue, currentPage, rows, orderByCol,
+						isAsc, selType);
+				MyPrint.myPrint("Intro=" + list.get(0).getIntro());
+				int count = amg.countAllCourt(selType);
+				FrontMessage msg = new FrontMessage(list, count);
+				if (list != null) {
+					JSONUtils.toJson(ServletActionContext.getResponse(), msg);
+				} else {
+					JSONUtils.toJson(ServletActionContext.getResponse(),
+							Constant.FAIL);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

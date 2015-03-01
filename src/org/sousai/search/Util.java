@@ -10,12 +10,10 @@ import com.opensymphony.xwork2.ActionContext;
 
 public class Util {
 	public String isLogined(){
-		int userId = -1 ;
 		UserBean tempUser = null;
 		try {
 			tempUser = (UserBean) ActionContext.getContext()
 					.getSession().get("userBean");
-			userId = tempUser.getUserId();
 		} catch (Exception e) {
 			JSONUtils.toJson(ServletActionContext.getResponse(), Constant.ERROR);
 			System.out.println(e);

@@ -23,7 +23,8 @@ public class MaintainCourtTypeAction extends UserBaseAction {
 	}
 
 	/**
-	 * @param courtType the courtType to set
+	 * @param courtType
+	 *            the courtType to set
 	 */
 	public void setCourtType(CourtType courtType) {
 		this.courtType = courtType;
@@ -39,62 +40,73 @@ public class MaintainCourtTypeAction extends UserBaseAction {
 	public String addCourtType() throws Exception {
 		String value = null;
 		try {
-			if (!CommonUtils.isNullOrEmpty(courtType)) {
-				amg.addCourtType(courtType);
-				value = Constant.SUCCESS;
-			} else {
-				value = Constant.ERROR;
+			if (isAdmin()) {
+				if (!CommonUtils.isNullOrEmpty(courtType)) {
+					amg.addCourtType(courtType);
+					value = Constant.SUCCESS;
+					JSONUtils.toJson(ServletActionContext.getResponse(), value);
+				} else {
+					value = Constant.ERROR;
+					JSONUtils.toJson(ServletActionContext.getResponse(), value);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			value = Constant.ERROR;
+			JSONUtils.toJson(ServletActionContext.getResponse(), value);
 		}
-		System.out.println(value);
-		JSONUtils.toJson(ServletActionContext.getResponse(), value);
 		return null;
 	}
 
 	public String deleteCourtType() throws Exception {
 		String value = null;
 		try {
-			if (!CommonUtils.isNullOrEmpty(courtType)) {
-				amg.deleteCourtType(courtType);
-				value = Constant.SUCCESS;
-			} else {
-				value = Constant.ERROR;
+			if (isAdmin()) {
+				if (!CommonUtils.isNullOrEmpty(courtType)) {
+					amg.deleteCourtType(courtType);
+					value = Constant.SUCCESS;
+					JSONUtils.toJson(ServletActionContext.getResponse(), value);
+				} else {
+					value = Constant.ERROR;
+					JSONUtils.toJson(ServletActionContext.getResponse(), value);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			value = Constant.ERROR;
+			JSONUtils.toJson(ServletActionContext.getResponse(), value);
 		}
-		System.out.println(value);
-		JSONUtils.toJson(ServletActionContext.getResponse(), value);
 		return null;
 	}
 
 	public String updateCourtType() throws Exception {
 		String value = null;
 		try {
-			if (!CommonUtils.isNullOrEmpty(courtType)) {
-				amg.updateCourtType(courtType);
-				value = Constant.SUCCESS;
-			} else {
-				value = Constant.ERROR;
+			if (isAdmin()) {
+				if (!CommonUtils.isNullOrEmpty(courtType)) {
+					amg.updateCourtType(courtType);
+					value = Constant.SUCCESS;
+					JSONUtils.toJson(ServletActionContext.getResponse(), value);
+				} else {
+					value = Constant.ERROR;
+					JSONUtils.toJson(ServletActionContext.getResponse(), value);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			value = Constant.ERROR;
+			JSONUtils.toJson(ServletActionContext.getResponse(), value);
 		}
-		System.out.println(value);
-		JSONUtils.toJson(ServletActionContext.getResponse(), value);
 		return null;
 	}
 
 	public String findAllCourtTypes() throws Exception {
 		List<CourtType> list = null;
 		try {
-			list = amg.findAllCourtTypes();
-			JSONUtils.toJson(ServletActionContext.getResponse(), list);
+			if (isAdmin()) {
+				list = amg.findAllCourtTypes();
+				JSONUtils.toJson(ServletActionContext.getResponse(), list);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			JSONUtils

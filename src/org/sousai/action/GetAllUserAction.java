@@ -138,21 +138,24 @@ public class GetAllUserAction extends UserBaseAction {
 
 	public String execute() throws Exception {
 		try {
-			if (currentPage == null) {
-				currentPage = 1;
+			if (isAdmin()) {
+				if (currentPage == null) {
+					currentPage = 1;
+				}
+				if (rows == null) {
+					rows = Constant.DEFAULT_ROWS;
+				}
+				String[] columns = strColumns.split(",");
+				List<UserBean> list = amg.findPagedUserByKeyValueOrderBy(
+						columns, keyValue, currentPage, rows, orderByCol,
+						isAsc, selType);
+				int count = amg.countAllUser(selType);
+				FrontMessage msg = new FrontMessage(list, count);
+				if (list != null) {
+					JSONUtils.toJson(ServletActionContext.getResponse(), msg);
+				}
+				JSONUtils.toJson(ServletActionContext.getResponse(), "fail");
 			}
-			if (rows == null) {
-				rows = Constant.DEFAULT_ROWS;
-			}
-			String[] columns = strColumns.split(",");
-			List<UserBean> list = amg.findPagedUserByKeyValueOrderBy(columns,
-					keyValue, currentPage, rows, orderByCol, isAsc, selType);
-			int count = amg.countAllUser(selType);
-			FrontMessage msg = new FrontMessage(list, count);
-			if (list != null) {
-				JSONUtils.toJson(ServletActionContext.getResponse(), msg);
-			}
-			JSONUtils.toJson(ServletActionContext.getResponse(), "fail");
 		} catch (Exception e) {
 			e.printStackTrace();
 			JSONUtils.toJson(ServletActionContext.getResponse(), "fail");
