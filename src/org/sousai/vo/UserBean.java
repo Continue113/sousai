@@ -76,8 +76,9 @@ public class UserBean implements Serializable {
 		this.userLastLogTime = CommonUtils.DateToString(user.getLastLogTime(), new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
 		this.userPicId = user.getPicId();
 		this.userPwd = user.getPwd();
-		this.userRegTime = CommonUtils.DateToString(user.getRegTime(), new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));		this.userType = user.getType();
+		this.userRegTime = CommonUtils.DateToString(user.getRegTime(), new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
 		this.userLastRegionId = user.getLastRegionId();
+		this.userType = user.getType();
 	}
 
 	// userId ��setter��getter

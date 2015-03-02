@@ -43,7 +43,7 @@ public class UserBaseAction extends ActionSupport {
 					.getSession().get("userBean");
 			if(CommonUtils.isNullOrEmpty(tempUser)){//未登录
 				value = Constant.UNLOGIN;
-			}else if(tempUser.getUserType() == 2){//管理员
+			}else if(tempUser.getUserType() == '2'){//管理员
 				value = Constant.SUCCESS;
 			}else{//普通用户
 				value = Constant.DENIED;
