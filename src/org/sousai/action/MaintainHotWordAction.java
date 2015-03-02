@@ -23,7 +23,8 @@ public class MaintainHotWordAction extends UserBaseAction {
 	}
 
 	/**
-	 * @param hotWord the hotWord to set
+	 * @param hotWord
+	 *            the hotWord to set
 	 */
 	public void setHotWord(HotWord hotWord) {
 		this.hotWord = hotWord;
@@ -39,62 +40,73 @@ public class MaintainHotWordAction extends UserBaseAction {
 	public String addHotWord() throws Exception {
 		String value = null;
 		try {
-			if (!CommonUtils.isNullOrEmpty(hotWord)) {
-				amg.addHotWord(hotWord);
-				value = Constant.SUCCESS;
-			} else {
-				value = Constant.ERROR;
+			if (isAdmin()) {
+				if (!CommonUtils.isNullOrEmpty(hotWord)) {
+					amg.addHotWord(hotWord);
+					value = Constant.SUCCESS;
+					JSONUtils.toJson(ServletActionContext.getResponse(), value);
+				} else {
+					value = Constant.ERROR;
+					JSONUtils.toJson(ServletActionContext.getResponse(), value);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			value = Constant.ERROR;
+			JSONUtils.toJson(ServletActionContext.getResponse(), value);
 		}
-		System.out.println(value);
-		JSONUtils.toJson(ServletActionContext.getResponse(), value);
 		return null;
 	}
 
 	public String deleteHotWord() throws Exception {
 		String value = null;
 		try {
-			if (!CommonUtils.isNullOrEmpty(hotWord)) {
-				amg.deleteHotWord(hotWord);
-				value = Constant.SUCCESS;
-			} else {
-				value = Constant.ERROR;
+			if (isAdmin()) {
+				if (!CommonUtils.isNullOrEmpty(hotWord)) {
+					amg.deleteHotWord(hotWord);
+					value = Constant.SUCCESS;
+					JSONUtils.toJson(ServletActionContext.getResponse(), value);
+				} else {
+					value = Constant.ERROR;
+					JSONUtils.toJson(ServletActionContext.getResponse(), value);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			value = Constant.ERROR;
+			JSONUtils.toJson(ServletActionContext.getResponse(), value);
 		}
-		System.out.println(value);
-		JSONUtils.toJson(ServletActionContext.getResponse(), value);
 		return null;
 	}
 
 	public String updateHotWord() throws Exception {
 		String value = null;
 		try {
-			if (!CommonUtils.isNullOrEmpty(hotWord)) {
-				amg.updateHotWord(hotWord);
-				value = Constant.SUCCESS;
-			} else {
-				value = Constant.ERROR;
+			if (isAdmin()) {
+				if (!CommonUtils.isNullOrEmpty(hotWord)) {
+					amg.updateHotWord(hotWord);
+					value = Constant.SUCCESS;
+					JSONUtils.toJson(ServletActionContext.getResponse(), value);
+				} else {
+					value = Constant.ERROR;
+					JSONUtils.toJson(ServletActionContext.getResponse(), value);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			value = Constant.ERROR;
+			JSONUtils.toJson(ServletActionContext.getResponse(), value);
 		}
-		System.out.println(value);
-		JSONUtils.toJson(ServletActionContext.getResponse(), value);
 		return null;
 	}
 
 	public String findAllHotWords() throws Exception {
 		List<HotWord> list = null;
 		try {
-			list = amg.findAllHotWords();
-			JSONUtils.toJson(ServletActionContext.getResponse(), list);
+			if (isAdmin()) {
+				list = amg.findAllHotWords();
+				JSONUtils.toJson(ServletActionContext.getResponse(), list);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			JSONUtils

@@ -52,7 +52,7 @@ public interface UserManager {
 	 * @param name
 	 *            �û���
 	 * @return �û���Ϣ
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public UserBean getByName(String name) throws Exception;
 
@@ -62,7 +62,7 @@ public interface UserManager {
 	 * @param user
 	 *            po��
 	 * @return userBean vo��
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public UserBean transform(User user) throws Exception;
 
@@ -82,6 +82,8 @@ public interface UserManager {
 	 * @return 0为失败，1为成功
 	 */
 	public int updateUser(User user);
+	
+	public void updateUserPicId(Integer id, String picId) throws Exception;
 
 	/**
 	 * 检测用户名是否存在
@@ -117,7 +119,7 @@ public interface UserManager {
 	 * @param integer
 	 *            在数据库中德标识
 	 * @return 1成功 0失败
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public int updateInfo(String key, Integer integer) throws Exception;
 
@@ -209,14 +211,18 @@ public interface UserManager {
 	 * 查看指定场地的所有评论及回复
 	 * 
 	 * @param courtId
+	 * @param currentPage
+	 * @param rows
 	 * @return 指定场地的所有评论及回复
 	 */
-	public List<Message> getMessages(Integer courtId);
+	public List<MessageBean> getMessages(Integer courtId, Integer currentPage,
+			Integer rows);
 
 	String uploadUserPic(int flag, File[] images, String[] imgNames,
 			Integer UserId);
 
-	public List<CourtBean> getCourtInMatchReling(Integer regionId, Integer currentPage, Integer rows);
+	public List<CourtBean> getCourtInMatchReling(Integer regionId,
+			Integer currentPage, Integer rows);
 
 	/**
 	 * 通过地区查询场地
@@ -225,7 +231,7 @@ public interface UserManager {
 	 * @param currentPage
 	 * @param rows
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public List<CourtBean> getCourtByRegion(String region, int currentPage,
 			int rows) throws Exception;
@@ -234,22 +240,26 @@ public interface UserManager {
 
 	/**
 	 * 获取指定用户发布的场地信息
+	 * 
 	 * @param userId
 	 * @param currentPage
 	 * @param rows
 	 * @return
 	 */
-	public List<CourtBean> getCourtByUserId(Integer userId, Integer currentPage, Integer rows);
+	public List<CourtBean> getCourtByUserId(Integer userId,
+			Integer currentPage, Integer rows);
 
 	/**
 	 * 获取指定用户发布的比赛信息
+	 * 
 	 * @param userId
 	 * @param currentPage
 	 * @param matchType
 	 * @param rows
 	 * @return
 	 */
-	public List<MatchBean> getMatchByUserId(Integer userId, String matchType, Integer currentPage, Integer rows);
+	public List<MatchBean> getMatchByUserId(Integer userId, String matchType,
+			Integer currentPage, Integer rows);
 
 	/**
 	 * 通过场地id，获取场地信息
@@ -281,13 +291,13 @@ public interface UserManager {
 			int pageSize);
 
 	public Long markMatch(UserMark userMark) throws Exception;
-	
+
 	public Integer countByRegion(String region) throws Exception;
-	
+
 	public int countCourtByUserId(Integer userId) throws Exception;
-	
+
 	public int countMatchByUserId(Integer userId) throws Exception;
-	
+
 	public int countUsersFavorMatch(Integer userId) throws Exception;
-	
+
 }

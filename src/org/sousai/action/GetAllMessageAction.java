@@ -138,23 +138,25 @@ public class GetAllMessageAction extends UserBaseAction {
 	public String execute() throws Exception {
 		MyPrint.myPrint("in GetAllMessageAction");
 		try {
-			if (currentPage == null) {
-				currentPage = 1;
-			}
-			if (rows == null) {
-				rows = Constant.DEFAULT_ROWS;
-			}
-			String[] columns = strColumns.split(",");
-			List<MessageBean> list = amg.findPagedMesgByKeyValueOrderBy(
-					columns, keyValue, currentPage, rows, orderByCol, isAsc,
-					selType);
-			int count = amg.countAllMessage(selType);
-			FrontMessage msg = new FrontMessage(list, count);
-			if (list != null) {
-				JSONUtils.toJson(ServletActionContext.getResponse(), msg);
-			} else {
-				JSONUtils.toJson(ServletActionContext.getResponse(),
-						Constant.FAIL);
+			if (isAdmin()) {
+				if (currentPage == null) {
+					currentPage = 1;
+				}
+				if (rows == null) {
+					rows = Constant.DEFAULT_ROWS;
+				}
+				String[] columns = strColumns.split(",");
+				List<MessageBean> list = amg.findPagedMesgByKeyValueOrderBy(
+						columns, keyValue, currentPage, rows, orderByCol,
+						isAsc, selType);
+				int count = amg.countAllMessage(selType);
+				FrontMessage msg = new FrontMessage(list, count);
+				if (list != null) {
+					JSONUtils.toJson(ServletActionContext.getResponse(), msg);
+				} else {
+					JSONUtils.toJson(ServletActionContext.getResponse(),
+							Constant.FAIL);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

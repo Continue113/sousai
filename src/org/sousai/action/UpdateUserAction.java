@@ -12,6 +12,7 @@ public class UpdateUserAction extends UserBaseAction {
 
 	private static final long serialVersionUID = -1209141575075295271L;
 	private User user;
+	private String picId;
 	private Integer action;
 
 	/**
@@ -45,6 +46,20 @@ public class UpdateUserAction extends UserBaseAction {
 		return this.user;
 	}
 
+	/**
+	 * @return the picId
+	 */
+	public String getPicId() {
+		return picId;
+	}
+
+	/**
+	 * @param picId the picId to set
+	 */
+	public void setPicId(String picId) {
+		this.picId = picId;
+	}
+
 	@Override
 	public String execute() throws Exception {
 		MyPrint.myPrint("in update user");
@@ -55,6 +70,10 @@ public class UpdateUserAction extends UserBaseAction {
 		case 1:
 			tempUser = new User((UserBean) ActionContext.getContext()
 					.getSession().get("userBean"));
+			if(!CommonUtils.isNullOrEmpty(picId))
+			{
+				tempUser.setPicId(picId);
+			}
 			break;
 		// 管理员修改用户信息
 		case 2:

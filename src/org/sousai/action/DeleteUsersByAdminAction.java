@@ -5,10 +5,10 @@ import org.sousai.action.base.UserBaseAction;
 import org.sousai.common.Constant;
 import org.sousai.tools.JSONUtils;
 
-public class DeleteUsersByAdminAction extends UserBaseAction{
+public class DeleteUsersByAdminAction extends UserBaseAction {
 
 	private static final long serialVersionUID = -1854249322577891477L;
-	
+
 	private String userIds;
 
 	/**
@@ -19,7 +19,8 @@ public class DeleteUsersByAdminAction extends UserBaseAction{
 	}
 
 	/**
-	 * @param ids the ids to set
+	 * @param ids
+	 *            the ids to set
 	 */
 	public void setUserIds(String userIds) {
 		this.userIds = userIds;
@@ -31,23 +32,25 @@ public class DeleteUsersByAdminAction extends UserBaseAction{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
-	public String execute() throws Exception{
+
+	public String execute() throws Exception {
 		String value = null;
-		try{
-			String[] arrayUserIds = userIds.split(",");
-			Integer[] iUserIds = new Integer[arrayUserIds.length];
-			for(int i=0; i<arrayUserIds.length; i++){
-				iUserIds[i] = Integer.valueOf(arrayUserIds[i]);
+		try {
+			if (isAdmin()) {
+				String[] arrayUserIds = userIds.split(",");
+				Integer[] iUserIds = new Integer[arrayUserIds.length];
+				for (int i = 0; i < arrayUserIds.length; i++) {
+					iUserIds[i] = Integer.valueOf(arrayUserIds[i]);
+				}
+				amg.deleteUsers(iUserIds);
+				value = Constant.SUCCESS;
+				JSONUtils.toJson(ServletActionContext.getResponse(), value);
 			}
-			amg.deleteUsers(iUserIds);
-			value = Constant.SUCCESS;
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 			value = Constant.FAIL;
+			JSONUtils.toJson(ServletActionContext.getResponse(), value);
 		}
-		System.out.println(value);
-		JSONUtils.toJson(ServletActionContext.getResponse(), value);
 		return null;
 	}
 

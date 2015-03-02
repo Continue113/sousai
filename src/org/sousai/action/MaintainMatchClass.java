@@ -54,57 +54,63 @@ public class MaintainMatchClass extends UserBaseAction {
 	public String addMatchClass() throws Exception {
 		String value = null;
 		try {
-			if (!CommonUtils.isNullOrEmpty(mc)) {
-				amg.addMatchClass(mc);
-				value = Constant.SUCCESS;
-			}
-			else{
-				value = Constant.ERROR;
+			if (isAdmin()) {
+				if (!CommonUtils.isNullOrEmpty(mc)) {
+					amg.addMatchClass(mc);
+					value = Constant.SUCCESS;
+					JSONUtils.toJson(ServletActionContext.getResponse(), value);
+				} else {
+					value = Constant.ERROR;
+					JSONUtils.toJson(ServletActionContext.getResponse(), value);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			value = Constant.ERROR;
+			JSONUtils.toJson(ServletActionContext.getResponse(), value);
 		}
-		System.out.println(value);
-		JSONUtils.toJson(ServletActionContext.getResponse(), value);
 		return null;
 	}
 
 	public String deleteMatchClasses() throws Exception {
 		String value = null;
 		try {
-			String[] arrayIds = ids.split(",");
-			Integer[] iIds = new Integer[arrayIds.length];
-			for (int i = 0; i < arrayIds.length; i++) {
-				iIds[i] = Integer.valueOf(arrayIds[i]);
+			if (isAdmin()) {
+				String[] arrayIds = ids.split(",");
+				Integer[] iIds = new Integer[arrayIds.length];
+				for (int i = 0; i < arrayIds.length; i++) {
+					iIds[i] = Integer.valueOf(arrayIds[i]);
+				}
+				amg.deleteMatchClasses(iIds);
+				value = Constant.SUCCESS;
+				JSONUtils.toJson(ServletActionContext.getResponse(), value);
 			}
-			amg.deleteMatchClasses(iIds);
-			value = Constant.SUCCESS;
 		} catch (Exception e) {
 			e.printStackTrace();
 			value = Constant.FAIL;
+			JSONUtils.toJson(ServletActionContext.getResponse(), value);
 		}
-		System.out.println(value);
-		JSONUtils.toJson(ServletActionContext.getResponse(), value);
 		return null;
 	}
 
 	public String updateMatchClass() throws Exception {
 		String value = null;
 		try {
-			if (!CommonUtils.isNullOrEmpty(mc)) {
-				amg.updateMatchClass(mc);
-				value = Constant.SUCCESS;
-			}
-			else{
-				value = Constant.ERROR;
+			if (isAdmin()) {
+				if (!CommonUtils.isNullOrEmpty(mc)) {
+					amg.updateMatchClass(mc);
+					value = Constant.SUCCESS;
+					JSONUtils.toJson(ServletActionContext.getResponse(), value);
+				} else {
+					value = Constant.ERROR;
+					JSONUtils.toJson(ServletActionContext.getResponse(), value);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			value = Constant.ERROR;
+			JSONUtils.toJson(ServletActionContext.getResponse(), value);
 		}
-		System.out.println(value);
-		JSONUtils.toJson(ServletActionContext.getResponse(), value);
 		return null;
 	}
 }

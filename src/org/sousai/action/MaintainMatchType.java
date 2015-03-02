@@ -56,65 +56,75 @@ public class MaintainMatchType extends UserBaseAction {
 	public String addMatchType() throws Exception {
 		String value = null;
 		try {
-			if (!CommonUtils.isNullOrEmpty(mt)) {
-				System.out.println(mt.toString());
-				amg.addMatchType(mt);
-				value = Constant.SUCCESS;
-			} else {
-				System.out.println("mt=null");
-				value = Constant.ERROR;
+			if (isAdmin()) {
+				if (!CommonUtils.isNullOrEmpty(mt)) {
+					System.out.println(mt.toString());
+					amg.addMatchType(mt);
+					value = Constant.SUCCESS;
+					JSONUtils.toJson(ServletActionContext.getResponse(), value);
+				} else {
+					System.out.println("mt=null");
+					value = Constant.ERROR;
+					JSONUtils.toJson(ServletActionContext.getResponse(), value);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			value = Constant.ERROR;
+			JSONUtils.toJson(ServletActionContext.getResponse(), value);
 		}
-		System.out.println(value);
-		JSONUtils.toJson(ServletActionContext.getResponse(), value);
 		return null;
 	}
 
 	public String deleteMatchTypes() throws Exception {
 		String value = null;
 		try {
-			String[] arrayIds = ids.split(",");
-			Integer[] iIds = new Integer[arrayIds.length];
-			for (int i = 0; i < arrayIds.length; i++) {
-				iIds[i] = Integer.valueOf(arrayIds[i]);
+			if (isAdmin()) {
+				String[] arrayIds = ids.split(",");
+				Integer[] iIds = new Integer[arrayIds.length];
+				for (int i = 0; i < arrayIds.length; i++) {
+					iIds[i] = Integer.valueOf(arrayIds[i]);
+				}
+				amg.deleteMatchTypes(iIds);
+				value = Constant.SUCCESS;
+				JSONUtils.toJson(ServletActionContext.getResponse(), value);
 			}
-			amg.deleteMatchTypes(iIds);
-			value = Constant.SUCCESS;
 		} catch (Exception e) {
 			e.printStackTrace();
 			value = Constant.FAIL;
+			JSONUtils.toJson(ServletActionContext.getResponse(), value);
 		}
-		System.out.println(value);
-		JSONUtils.toJson(ServletActionContext.getResponse(), value);
 		return null;
 	}
 
 	public String updateMatchType() throws Exception {
 		String value = null;
 		try {
-			if (!CommonUtils.isNullOrEmpty(mt)) {
-				amg.updateMatchType(mt);
-				value = Constant.SUCCESS;
-			} else {
-				value = Constant.ERROR;
+			if (isAdmin()) {
+				if (!CommonUtils.isNullOrEmpty(mt)) {
+					amg.updateMatchType(mt);
+					value = Constant.SUCCESS;
+					JSONUtils.toJson(ServletActionContext.getResponse(), value);
+				} else {
+					value = Constant.ERROR;
+					JSONUtils.toJson(ServletActionContext.getResponse(), value);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			value = Constant.ERROR;
+			JSONUtils.toJson(ServletActionContext.getResponse(), value);
 		}
-		System.out.println(value);
-		JSONUtils.toJson(ServletActionContext.getResponse(), value);
 		return null;
 	}
 
 	public String getMatchTypeInMatches() throws Exception {
 		List<String> list = null;
 		try {
-			list = amg.getAllMatchTypeInMatches();
-			JSONUtils.toJson(ServletActionContext.getResponse(), list);
+			if (isAdmin()) {
+				list = amg.getAllMatchTypeInMatches();
+				JSONUtils.toJson(ServletActionContext.getResponse(), list);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			JSONUtils
