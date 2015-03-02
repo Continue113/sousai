@@ -370,7 +370,7 @@ function pagesMesg(count,crtPage,rs){
   	        data: args,
   	        success: function(rspdata) {
   	        	console.log(rspdata);
-  	            $("#courtEvaluationTab span").text(rspdata.length);
+  	            $("#courtEvaluationTab span").text(rspdata.count);
   		      var target = $(".evaluations"),template = Handlebars.compile($('#evaluation-template').html());
   		      Handlebars.registerHelper("name",function(){
   		    	  if(!this.visibleName){
@@ -450,7 +450,7 @@ function pagesMesg(count,crtPage,rs){
 	  args["message.state"] = 1; //评论或回复的状态设置为1 即正常评论
 	  
 	  console.log(args);
-	  return false;
+	  //return false;
 	  //是否匿名,默认为公开为0，若匿名为1	  
       if(!args["message.userId"]){
     	  return false;
