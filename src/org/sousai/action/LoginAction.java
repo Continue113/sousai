@@ -31,7 +31,6 @@ public class LoginAction extends UserBaseAction
 	private final String ADMIN_RESULT = "admin";
 	//��װ�������
 	private User user;
-	private String tip;
 	
 	//��������getter��setter
 	public void setUser(User user)
