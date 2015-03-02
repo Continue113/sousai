@@ -118,6 +118,11 @@ public class MaintainMatchType extends UserBaseAction {
 		return null;
 	}
 
+	/**
+	 * 获取比赛表里的比赛类型（包括用户自定义的比赛类型），方便管理员对照修改现有比赛类型
+	 * @return
+	 * @throws Exception
+	 */
 	public String getMatchTypeInMatches() throws Exception {
 		List<String> list = null;
 		try {

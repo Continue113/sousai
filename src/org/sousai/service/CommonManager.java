@@ -239,4 +239,23 @@ public interface CommonManager {
 	 * @throws Exception 
 	 */
 	public int countMatchByCourtId(Integer courtId) throws Exception;
+	
+	/**
+	 * 获取某个场地的所有评论数量
+	 * @param courtId
+	 * @return
+	 * @throws Exception
+	 */
+	public int countMesgByCourtId(Integer courtId) throws Exception;
+	
+	/**
+	 * 查看指定场地的所有评论及回复
+	 * 
+	 * @param courtId
+	 * @param currentPage
+	 * @param rows
+	 * @return 指定场地的所有评论及回复
+	 */
+	public List<MessageBean> getMessages(Integer courtId, Integer currentPage,
+			Integer rows);
 }

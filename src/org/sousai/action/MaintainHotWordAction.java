@@ -103,15 +103,12 @@ public class MaintainHotWordAction extends UserBaseAction {
 	public String findAllHotWords() throws Exception {
 		List<HotWord> list = null;
 		try {
-			if (isAdmin()) {
-				list = amg.findAllHotWords();
-				JSONUtils.toJson(ServletActionContext.getResponse(), list);
-			}
+			list = amg.findAllHotWords();
+			JSONUtils.toJson(ServletActionContext.getResponse(), list);
 		} catch (Exception e) {
 			e.printStackTrace();
 			JSONUtils
 					.toJson(ServletActionContext.getResponse(), Constant.ERROR);
-
 		}
 		return null;
 	}

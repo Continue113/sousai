@@ -482,20 +482,9 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public List<MessageBean> getMessages(Integer courtId, Integer currentPage,
-			Integer rows) {
-		return mesgDao.getByCourtId(courtId, currentPage, rows);
-	}
-
-	@Override
-	public Long relMessage(Message message) {
-		try {
-			MyPrint.myPrint(message.getUserName());
-			return mesgDao.save(message);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+	public Long relMessage(Message message) throws Exception {
+		MyPrint.myPrint(message.getUserName());
+		return mesgDao.save(message);
 	}
 
 	@Override
@@ -598,7 +587,7 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public void updateUserPicId(Integer id, String picId) throws Exception{
+	public void updateUserPicId(Integer id, String picId) throws Exception {
 		userDao.updateUserPic(id, picId);
 	}
 }

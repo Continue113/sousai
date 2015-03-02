@@ -19,8 +19,9 @@ public interface MesgDao {
 	 * 
 	 * @param message
 	 * @return 存入数据库后，对应的id
+	 * @throws Exception 
 	 */
-	Long save(Message message);
+	Long save(Message message) throws Exception;
 
 	/**
 	 * 修改对应的持久化实例
@@ -99,5 +100,13 @@ public interface MesgDao {
 
 	int countCourt(Integer selType);
 
+	/**
+	 * 查找指定场地的评论数
+	 * @param courtId
+	 * @return
+	 * @throws Exception 
+	 */
+	int countByCourtId(Integer courtId) throws Exception;
+	
 	void deleteMesgs(Long[] courtIds) throws Exception;
 }

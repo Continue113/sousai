@@ -37,7 +37,7 @@ public class MessageBean {
 	}
 	
 	public MessageBean(Long id, Long parentId, Long rootId, Integer userId, Integer courtId,
-			Date time, String mesg, String visibleName, Integer state, String courtName) throws Exception {
+			Date time, String mesg, String visibleName, Integer state, String courtName, String userPicId) throws Exception {
 		super();
 		this.id = id;
 		this.parentId = parentId;
@@ -49,6 +49,7 @@ public class MessageBean {
 		this.visibleName = visibleName;
 		this.state = state;
 		this.courtName = courtName;
+		this.userPicId = userPicId;
 	}
 	
 	/**

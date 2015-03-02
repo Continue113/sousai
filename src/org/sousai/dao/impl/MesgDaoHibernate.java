@@ -27,7 +27,7 @@ public class MesgDaoHibernate extends SqlHelper implements MesgDao {
 	}
 
 	@Override
-	public Long save(Message message) {
+	public Long save(Message message) throws Exception {
 		MyPrint.myPrint("userId = " + message.getUserId());
 		MyPrint.myPrint("userName = " + message.getUserName());
 		return (Long) getHibernateTemplate().save(message);
@@ -69,10 +69,8 @@ public class MesgDaoHibernate extends SqlHelper implements MesgDao {
 //		return (List<Message>) getHibernateTemplate().find(
 //				"from Message where courtId=?", courtId);
 		try {
-			Session session = getHibernateTemplate().getSessionFactory()
-					.getCurrentSession();
 			String strWhere = " and c.id="+courtId;
-			return findPagedByWhereOrderBy(strWhere, currentPage, rows, " m.time ", null);
+			return findPagedByWhereOrderBy(strWhere, currentPage, rows, " m.time ", null, false);
 //			return (List<MessageBean>) session.createQuery(hql).list();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -135,7 +133,7 @@ public class MesgDaoHibernate extends SqlHelper implements MesgDao {
 			}
 		}
 		return findPagedByWhereOrderBy(strWhere, currentPage, rows,
-				addPrefixToColumn(orderByCol), isAsc);
+				addPrefixToColumn(orderByCol), isAsc, true);
 
 	}
 
@@ -150,11 +148,17 @@ public class MesgDaoHibernate extends SqlHelper implements MesgDao {
 	 * @throws Exception
 	 */
 	private List<MessageBean> findPagedByWhereOrderBy(String strWhere,
-			Integer currentPage, Integer rows, String orderByCol, Boolean isAsc)
+			Integer currentPage, Integer rows, String orderByCol, Boolean isAsc, boolean isForAdmin)
 			throws Exception {
 		Session session = getHibernateTemplate().getSessionFactory()
 				.getCurrentSession();
-		String hql = selectMesgBeanForAdmin;
+		String hql = null;
+		if(isForAdmin){
+			hql = selectMesgBeanForAdmin;
+		}
+		else{
+			hql = selectMesgBean;
+		}
 		if (!CommonUtils.isNullOrEmpty(strWhere)) {
 			hql += strWhere;
 		}
@@ -178,6 +182,12 @@ public class MesgDaoHibernate extends SqlHelper implements MesgDao {
 				strHql += " where state=1";
 			}
 		}
+		return count(strHql);
+	}
+
+	@Override
+	public int countByCourtId(Integer courtId) throws Exception{
+		String strHql = String.format("select count(*) from Message where courtId=%1$s and state=1",courtId);
 		return count(strHql);
 	}
 

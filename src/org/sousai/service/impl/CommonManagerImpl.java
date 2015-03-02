@@ -8,6 +8,7 @@ import org.sousai.service.CommonManager;
 import org.sousai.tools.MyPrint;
 import org.sousai.vo.CourtBean;
 import org.sousai.vo.MatchBean;
+import org.sousai.vo.MessageBean;
 import org.sousai.dao.*;
 import org.sousai.dao.impl.MatchDaoHibernate;
 
@@ -305,6 +306,17 @@ public class CommonManagerImpl implements CommonManager {
 	@Override
 	public int countMatchByCourtId(Integer courtId) throws Exception {
 		return matchDao.countByCourtId(courtId);
+	}
+
+	@Override
+	public int countMesgByCourtId(Integer courtId) throws Exception {
+		return mesgDao.countByCourtId(courtId);
+	}
+	
+	@Override
+	public List<MessageBean> getMessages(Integer courtId, Integer currentPage,
+			Integer rows) {
+		return mesgDao.getByCourtId(courtId, currentPage, rows);
 	}
 
 }

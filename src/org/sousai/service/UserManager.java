@@ -175,8 +175,9 @@ public interface UserManager {
 	 * @param message
 	 *            所发布的评论或回复实体
 	 * @return 若成功，返回数据库中id标识，失败为0
+	 * @throws Exception 
 	 */
-	public Long relMessage(Message message);
+	public Long relMessage(Message message) throws Exception;
 
 	/**
 	 * 发布评论
@@ -206,17 +207,6 @@ public interface UserManager {
 	 */
 	// public Integer relReply(String mesg, Long parentId, Long courtId, Long
 	// userId);
-
-	/**
-	 * 查看指定场地的所有评论及回复
-	 * 
-	 * @param courtId
-	 * @param currentPage
-	 * @param rows
-	 * @return 指定场地的所有评论及回复
-	 */
-	public List<MessageBean> getMessages(Integer courtId, Integer currentPage,
-			Integer rows);
 
 	String uploadUserPic(int flag, File[] images, String[] imgNames,
 			Integer UserId);

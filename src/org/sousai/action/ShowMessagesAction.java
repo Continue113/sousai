@@ -3,6 +3,7 @@ package org.sousai.action;
 import org.apache.struts2.ServletActionContext;
 import org.sousai.action.base.UserBaseAction;
 import org.sousai.tools.*;
+import org.sousai.vo.MessageBean;
 import org.sousai.common.Constant;
 import org.sousai.domain.*;
 
@@ -75,15 +76,24 @@ public class ShowMessagesAction extends UserBaseAction {
 	}
 
 	public String execute() throws Exception {
-		if (currentPage == null) {
-			currentPage = 1;
+		try {
+			if (currentPage == null) {
+				currentPage = 1;
+			}
+			if (rows == null) {
+				rows = Constant.DEFAULT_ROWS;
+			}
+			MyPrint.myPrint("in ShowMessageAction!");
+			List<MessageBean> list = cmg
+					.getMessages(courtId, currentPage, rows);
+			int count = cmg.countMesgByCourtId(courtId);
+			FrontMessage msg = new FrontMessage(list, count);
+			JSONUtils.toJson(ServletActionContext.getResponse(), msg);
+		} catch (Exception e) {
+			e.printStackTrace();
+			JSONUtils
+					.toJson(ServletActionContext.getResponse(), Constant.ERROR);
 		}
-		if (rows == null) {
-			rows = Constant.DEFAULT_ROWS;
-		}
-		MyPrint.myPrint("in ShowMessageAction!");
-		JSONUtils.toJson(ServletActionContext.getResponse(),
-				umg.getMessages(courtId, currentPage, rows));
 		return null;
 	}
 }
