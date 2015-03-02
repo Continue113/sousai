@@ -270,6 +270,28 @@
 
     {{/each}}
   </script>
+  <script id="evaluation-template" type="text/x-handlebars-template">
+    {{#each this}}
+
+  <div class="media evaluation" data-id="{{id}}">
+<div class="pull-left author">
+<img class="media-object" src="img/defaultImg.png">
+<div class="evaluationName" data-userid="{{userId}}">{{name}}</div>
+</div>
+<div class="media-body">
+<p class="evaluation-authorMain">{{mesg}}</p>
+<p class="releasetime">{{time}}</p>
+<ul class="evaluation-tool-reply">
+<li class="evaluation-tool">
+<a class="evaluation-tool-visible" href="javascript:void(0);"></a>&nbsp;&nbsp;
+<a class="evaluation-tool-a" href="#myModal">我要补充下</a>
+</li>
+</ul>
+</div>
+</div>
+
+  {{/each}}  
+  </script>
   <script id="record-template" type="text/x-handlebars-template">
     {{#each this}}
 
@@ -287,7 +309,7 @@
   //定义函数
   
     //拉取评论
-  	function getAllEvaluations(argso){
+  	function ajaxAllEvaluation(argso){
 		//定义默认选项 
 		var args=argso;
 		args.currentPage = args.currentPage||$("ul.pagination li.active a").html()||1;
@@ -304,36 +326,23 @@
   	        data: args,
   	        success: function(rspdata) {
   	        	console.log(rspdata);
-  	        	var evaluations = $(".evaluations"),userName,mesg;
-  	            evaluations.empty();
   	            $("#courtEvaluationTab span").text(rspdata.length);
-  	            for (var i = 0; i < rspdata.length; i++) {
-  	            	if(!rspdata[i].userName){ 
-  	            		userName = '匿名的用户'; //匿名的评论
-  	            	}else{
-  	            		userName = rspdata[i].userName;//公开的评论
-  	            	};
-  	            	//判断是否为已经被管理员删除
-  	            	if(rspdata[i].state == 0){
-  	            		mesg = '<span class="label label-info">该评论已被管理员删除</span>';
-  	            	}else{
-  	            		mesg = rspdata[i].mesg;
-  	            	}
-  				  /* //区分是评论还是评论的回复
-  	              if(rspdata[i].parentId == null){ */
-  	            		evaluations.append('<div class="media evaluation" data-id="'+ rspdata[i].id +'"><div class="pull-left author"><img class="media-object" src="img/defaultImg.png"><div class="evaluationName" data-userid="'+rspdata[i].userId+'">'+userName+'</div></div><div class="media-body"><p class="evaluation-authorMain">'+mesg+'</p><p class="releasetime">'+rspdata[i].time+'</p><ul class="evaluation-tool-reply"><li class="evaluation-tool"><a class="evaluation-tool-visible" href="javascript:void(0);"></a>&nbsp;&nbsp;<a class="evaluation-tool-a" href="#myModal">我要补充下</a></li></ul></div></div>');
-  	              /* }else{
-  	            	  //采用each迭代每一个拥有data-id的 evaluation
-  	            	  $( ".evaluation" ).each(function (j) {
-  	            		  //sousaiRemindDialog( $(this).data("id") );
-  	            		  if ( $(this).data("id") == rspdata[i].parentId ) {
-  	            			  //console.log("$(this).data(\"id\") : "+$(this).data("id"));
-  	            			  $(this).find(".media-body > .evaluation-tool-reply").append('<li class="evaluation-reply"><div class="media evaluation"><div class="pull-left"><img class="media-object" src="img/defaultImg.png" ><div class="evaluationName">'+userName+'</div></div><div class="media-body"><p class="evaluation-main">'+mesg+'</p><p class="releasetime">'+rspdata[i].time+'</p><a class="pull-right evaluation-tool-a" href="#myModal">我要补充下</a></div></div></li>').find(".evaluation-tool > .evaluation-tool-visible").text('隐藏回复');
-  	                      }
-  	            	  });
-  	              }; */
-
-  	            }
+  		      var target = $(".evaluations"),template = Handlebars.compile($('#evaluation-template').html());
+  		      Handlebars.registerHelper("name",function(){
+  		    	  if(!this.visibleName){
+  		    		  return "匿名用户";
+  		    	  }else{
+  		    		  return this.visibleName;
+  		    	  }
+  		      });
+  		      Handlebars.registerHelper("mesg",function(){
+  		    	  if(this.state == 0){
+  		    		  return Handlebars.SafeStrings('<span class="label label-info">该评论已被管理员删除</span>');
+  		    	  }else{
+  		    		  return this.mesg;
+  		    	  }
+  		      });
+  		      target.empty().html(template(rspdata));
   	        }
   	        });
   	  	}
@@ -394,6 +403,9 @@
 	  args["message.courtId"] = args.courtId||$(".title").attr("data-id")||null; //评论或回复所在的场地id
 	  args["message.mesg"] = args.mesg||null; //评论或回复的具体内容
 	  args["message.state"] = 1; //评论或回复的状态设置为1 即正常评论
+	  
+	  console.log(args);
+	  return false;
 	  //是否匿名,默认为公开为0，若匿名为1	  
       if(!args["message.userId"]){
     	  return false;
@@ -417,7 +429,7 @@
         		$("#inputValidateCodeMain").val("");
         		$("#publicResponse-main").click();
         		createCode("inputValidateImg");
-        		ajaxAllEvaluation(args.courtId);
+        		ajaxAllEvaluation({courtId:args.courtId});
         	};
         }
         });
@@ -444,7 +456,7 @@
 	      $("title").html(rspdata.name+" &middot; 搜赛网");
 	      $(".title").html(rspdata.name).attr("data-id",rspdata.id);
 	      $("#courtContent").html(rspdata.intro);
-	      ajaxAllEvaluation(id);
+	      ajaxAllEvaluation({courtId:id});
 		  e({currentPage:1,rows:10,id:id});
 		  }
 	    });
@@ -485,15 +497,15 @@
 	  getCourtById(id);
 	  //初始化生成验证码
       createCode("inputValidateImg");
-     //点击隐藏回复 和 显示回复
-     $("body").on("click",".evaluation-tool-visible",function(){
+     //点击隐藏回复 和 显示回复   无子回复 所以暂时未使用
+     /* $("body").on("click",".evaluation-tool-visible",function(){
     	 var textState = $(this);
     	 if( textState.text() == "隐藏回复" ){
     		 textState.text("显示回复").parent().parent().find(".evaluation-reply").slideUp("slow");
     	 }else{
     		 textState.text("隐藏回复").parent().parent().find(".evaluation-reply").slideDown("slow");
     	 }
-     });
+     }); */
         
      
      $("body").on("click",".evaluation-tool > .evaluation-tool-a",function(){ //仅对一层评论的“我要回复下使用”
@@ -521,7 +533,7 @@
     return false;
      });
 
-     $("body").on("click",".media-body > .evaluation-tool-a",function(){ //仅对二层评论的“我要回复下使用”
+     /* $("body").on("click",".media-body > .evaluation-tool-a",function(){ //仅对二层评论的“我要回复下使用” 无子回复，所以二级评论的回复框未使用
       var target = $(this).parent().parent(),//目标为evaluation
           parentName = $.trim(target.find(".evaluationName").text()), //trim()去除前后空格 .evalution .evaluationName
           img = 'img/defaultImg.png',
@@ -544,7 +556,7 @@
             });
           }
       return false;
-     });
+     }); */
     //直接发表评论
     $("#reply-main").click(function(){
       $(".evaluations .evaluation-response-li").slideUp("slow",function(){
