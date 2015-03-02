@@ -170,6 +170,10 @@
       <div id="courtContent" class="tab-pane active"><div><p>暂无场地介绍</p></div></div> 
        <div id="courtEvaluation" class="tab-pane ">
         <div class="evaluations"></div>
+           <div class="panel-bottom text-center">
+       		<div id="ajaxState"><span class="hide noresult">无结果</span><span class="hide load"><img src="img/loading.gif" height="20px" width="20px"></img>数据加载中...</span></div>
+       		<div class="btn-toolbar"><div class="btn-group"></div></div>
+      	   </div>
         <div class="media evaluation-response"> 
          <div class="pull-left"> 
            <s:if test="#session.userBean.userName!=null">
@@ -308,12 +312,52 @@
   <script>
   //定义函数
   
+//根据当前的没页的条数和总的条数计算总页数 //现有场地表格的分页代码
+function pagesMesg(count,crtPage,rs){
+	  var pages = Math.ceil(count/rs) || 1, target=$("#courtEvaluation").find(".btn-group");
+	  target.empty().show();
+	  if(pages == 1){
+		  target.append('<a class="btn active" href="javascript:void(0);">1</a>').hide();
+		  return false;
+	  }
+	  target.append('<a class="btn prior" href="javascript:void(0);" onclick="priorMesg('+rs+')">«</a><a class="btn active" href="javascript:void(0);">'+crtPage+'</a>');
+	  if((pages > 1)&&(crtPage < pages)&&(crtPage+1 != pages)) {
+	  	target.append('<a class="btn" href="javascript:void(0);">...</a><a class="btn" href="javascript:void(0);" onclick="ajaxAllEvaluation({currentPage:'+pages+',rows:'+rs+'})">'+pages+'</a>');
+	  }else if(crtPage+1 == pages){
+		target.append('<a class="btn" href="javascript:void(0);" onclick="ajaxAllEvaluation({currentPage:'+pages+',rows:'+rs+'}">'+pages+'</a>');
+	  }
+	  if(crtPage != pages){
+	  target.append('<a class="btn next" href="javascript:void(0);" onclick="nextMesg('+rs+')">»</a>');
+	  }
+}
+	
+	function priorMesg(rs){
+		var target = $("#courtEvaluation").find(".btn-group"),
+		crtPage = parseInt(target.find("a.active").text());
+		rs = rs||10;
+		if(crtPage==1){
+			sousaiRemindDialog('已经到最顶了');
+		}else if(crtPage==2){
+			ajaxAllEvaluation({currentPage:crtPage - 1,rows:rs});
+			target.find("a.active").text(crtPage - 1).end().find("a.prior").hide();
+		}else{
+			ajaxAllEvaluation(crtPage - 1,rs);
+			target.find("a.active").text(crtPage - 1).end().find("a.prior").show();
+		}
+	}
+	function nextMesg(rs){
+		var target = $("#courtEvaluation").find(".btn-group"),
+		crtPage = parseInt(target.find("a.active").text());
+		rs = rs||10;
+		ajaxAllEvaluation({currentPage:crtPage + 1,rows:rs});
+		target.find("a.active").text(crtPage+1).end().find("a.prior").show();
+	}
     //拉取评论
   	function ajaxAllEvaluation(argso){
 		//定义默认选项 
 		var args=argso;
-		args.currentPage = args.currentPage||$("ul.pagination li.active a").html()||1;
-		args.rows = args.rows||$("select.selectRows option:selected").val()||25;
+		args.currentPage = args.currentPage||1;
+		args.rows = args.rows||10;
 		args.courtId = args.courtId||$(".title").attr("data-id")||null;
 	  	
 		console.log(args);
@@ -342,7 +386,8 @@
   		    		  return this.mesg;
   		    	  }
   		      });
-  		      target.empty().html(template(rspdata));
+  		      target.empty().html(template(rspdata.body));
+  		      pagesMesg(rspdata.count,args.currentPage,args.rows);
   	        }
   	        });
   	  	}
