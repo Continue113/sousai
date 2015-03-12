@@ -469,7 +469,7 @@
           };
     	console.log(data);
 	  $.ajax({
-          url: "deleteMatchTypes",
+          url: "deleteCourtType",
           data: data,
           success: function(rspdata){
           	console.log(rspdata);
