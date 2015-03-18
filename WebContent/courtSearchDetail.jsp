@@ -237,7 +237,7 @@
         
          <tr data-info="{{data}}"> 
           <td valign="top">地址：</td> 
-          <td class="td2">{{addr}}</td> 
+          <td class="td2">{{region}} {{addr}}</td> 
          </tr> 
          <tr> 
           <td valign="top">场地类型：</td> 
@@ -261,7 +261,7 @@
          </tr> 
          <tr> 
           <td valign="top">举办比赛：</td> 
-          <td class="td2">12次</td> 
+          <td class="td2">{{matchNumber}}</td> 
          </tr> 
          <tr> 
           <td valign="top">开放时间：</td> 

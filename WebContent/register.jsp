@@ -16,11 +16,11 @@
    <div class="row"> 
     <div class="span5 offset1"> 
      <a class="logoBack" href="index.jsp" title="回到首页"><img src="img/logo.png" alt="搜赛网"></a>
-     <span class="logotext">账户注册</span> 
+     <span class="logotext">用户注册</span> 
     </div> 
    </div> 
    <div class="row"> 
-    <div class="span10 offset1 register-heading">填写账户信息 </div> 
+    <div class="span10 offset1 register-heading">填写用户信息 </div> 
    </div> 
    <div class="row"> 
     <div class="span4 offset1"> 
@@ -77,12 +77,12 @@
      </div> 
     </div> 
    </div> 
-   <div class="row"> 
+<!--    <div class="row"> 
     <div class="span2 offset7"> 
      <i class="icon-user"></i> 
      <a href="tencent://message/?uin=822547462&amp;Site=sousai.com&amp;Menu=yes">页面改进建议</a> 
     </div> 
-   </div> 
+   </div>  -->
    <div class="row ftpush"></div> 
   </div> 
   <!-- /container --> 
@@ -116,8 +116,6 @@
         	console.log("通过验证");
           $.ajax({
             url: "processReg",
-            type: "POST",
-            dataType: "json",
             data: {
               "user.name": $("#inputUsername").val(),
               "user.pwd": $("#inputUserPassword").val(),
@@ -135,10 +133,6 @@
                 location.href = "index.jsp";
               }
               console.log("location.hrefed!");
-            },
-            error: function(jqXHR,textStatus,errorThrown){
-            	console.log(jqXHR+" /"+textStatus+" /"+errorThrown);
-              sousaiRemindDialog("抱歉，发送数据出错了，请重新输入。");
             },
           });
         },

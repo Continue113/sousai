@@ -182,7 +182,7 @@ $(function(){
 	initMatchType();
 
     //点击返回比赛列表
-    $(".editMatch .backList").click(function(){
+    $(".editMatch").on("click",".backList",function(){
     	$(".matchList").slideDown();
     	$(".editMatch").slideUp();
     });
@@ -361,7 +361,7 @@ $(function(){
     });
 
     $("#newCourtCheckbox").click(function(){
-    	alert($("#inputMatchCourt").attr("data-iscourt"));
+    	console.log($("#inputMatchCourt").attr("data-iscourt"));
       if($(this).is(":checked")){
     	  //市和区的验证在发布新场地的时候需要添加
     	  $(".controls > .selectCity").attr("name","selectCity");
@@ -437,7 +437,7 @@ $(function(){
     rules: {
       matchName: {
         minlength: 6,
-        maxlength: 30
+        maxlength: 60
       },
       courtType: {
       	min: 1,
@@ -466,7 +466,7 @@ $(function(){
       matchName: {//比赛名称
         required: "请输入比赛名称",
         minlength: "比赛名称至少6个字符",
-        maxlength: "比赛名称至多30个字符"
+        maxlength: "比赛名称至多60个字符"
       },
       mcId: "",//比赛大类
       matchType: "",//比赛详细类型

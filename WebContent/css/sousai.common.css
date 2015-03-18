@@ -64,6 +64,7 @@ box-shadow: 0 0 0 0 rgba(0,0,0,.1);
 }
 .form-signin .btn {
   margin-left: 0;
+  margin-bottom: 10px;
   width: 100%;
 }
 .form-signin a {

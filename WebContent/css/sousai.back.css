@@ -59,8 +59,9 @@ border-radius: 0 0 0 0;
 .table td:first-child {text-align: left;}
 .table input[type="checkbox"] {margin: 0;margin-right: 10px;}
 
-.table .match .match-title > label, .table .court .court-name > label {width: 218px;}
-.table .match .court-name {width: 218px;}
+.table .match .match-title > label {width: 308px;}
+/*  .table .court .court-name > label  
+.table .match .court-name {width: 308px;} */
 .table .evaluation .evaluation-content > label {width: 400px;}
 .table .evaluation .court-name {width: 270px;}
 .table .court-address {width: 260px;}

@@ -85,7 +85,7 @@
           <td class="match-title"><label for="{{id}}"><input type="checkbox" id="{{id}}"><span>{{name}}</span></label></td> 
           <td class="match-time">{{matchStartTime}} - {{matchDeadline}}</td> 
           <td class="match-court">{{matchAddress}}</td>
-          <td class="match-from"><a href="#">{{url}}</a></td> 
+          <td class="match-from"><a href="{{url}}">{{url}}</a></td> 
           <td class="match-oprate"><a href="javascript:void(0)" class="btn btn-mini pull-right">查看编辑</a></td> 
          </tr>
                             
@@ -121,7 +121,8 @@
 	      //字数限制，溢出省略
 	      $("td > label > span").wordLimit();
 	      $(".match-court").wordLimit();
-	      $(".match-from > a").wordLimit(25);
+	      $(".match-time").wordLimit();
+	      $(".match-from > a").wordLimit();
 	      pages(rspdata.count,args.currentPage,args.rows);
 	    }
     });
@@ -171,10 +172,10 @@ function sureDeleteEdit(){
 	  
 	  setMenu();
 	  //删除.btnbar 中绑定为比赛的class 改为Collection 使原来的发布比赛、保存修改、删除比赛的点击函数失效，
-	  $(".editMatch").find(".btnbar").html('<button type="button" class="btn passCollection">发布采集</button><button type="button" class="btn saveCollection">保存修改</button><button type="button" class="btn deleteCollection">删除采集</button><button type="button" class="btn backList ">返回列表</button>');
+	  $(".editMatch").find(".btnbar").html('<button type="button" class="btn passCollection">发布采集</button><button type="button" class="btn saveCollection">保存修改</button><button type="button" class="btn deleteCollection">删除采集</button><button type="button" class="btn backList">返回列表</button>');
 	  
 	//ajax接收所有比赛
-	e({currentPage:1,rows:25});
+	//e({currentPage:1,rows:25});
     //点击编辑比赛隐藏List列表同时显示编辑比赛
     $("tbody").on("click",".match-oprate > a",function(event){
         var datainfo = $(this).parent().parent().attr("data-info");
@@ -193,7 +194,7 @@ function sureDeleteEdit(){
         $("#inputMatchTimeto").val(data.matchDeadline);
         $("#inputMatchCourt").val(data.matchAddress).attr("data-oldcourt",data.matchAddress);
         tinymce.activeEditor.setContent(data.matchIntroduction);
-                       
+        
     	$(".matchList").slideUp();
     	$(".editMatch").slideDown();
   	});

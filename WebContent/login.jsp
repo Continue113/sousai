@@ -17,7 +17,7 @@
    </div> 
    <div class="row bd"> 
     <div class="span3 offset2 loginImg"> 
-     <img src="img/defaultImg.png" > 
+     <img src="img/picLeftToLoginBOx_1.jpg" > 
     </div> 
     <div class="span3 offset2 form-signin"> 
      <form id="formlogin"> 
@@ -34,12 +34,12 @@
      </form> 
     </div> 
    </div> 
-   <div class="row"> 
+<!--    <div class="row"> 
     <div class="span2 offset2"> 
      <i class="icon-user"></i> 
      <a href="tencent://message/?uin=822547462&amp;Site=sousai.com&amp;Menu=yes" target="blank">页面改进建议</a> 
     </div> 
-   </div> 
+   </div>  -->
    <div class="ftpush"> 
    </div> 
   </div> 

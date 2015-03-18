@@ -227,7 +227,10 @@
 	    var url = window.location.search,
 	    matchType = decodeURI(url.substring(url.lastIndexOf('=')+1, url.length));
 	    console.log(url);console.log(matchType);
-	    e({matchType:matchType});
+	 //若matchType为空则不进行搜索
+	 if(matchType){
+		e({matchType:matchType});		 
+	 }
 	 //立即初始化比赛类型
 	 initMatchType();
 	 //点击高级场地搜索

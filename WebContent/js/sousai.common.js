@@ -10,7 +10,7 @@
 		            for (var i = 0; i < rspdata.length; i++) {
 		            	target.append('<li><a target="_blank" href="matchSearch.jsp?key='+ rspdata[i].word +'">&nbsp;'+ rspdata[i].word +' </a></li>');
 		         	} 
-		            target.append('<li><a target="_blank" href="matchSearchAdv.jsp">&nbsp;更多&gt;&gt;</a></li>');            
+		            //target.append('<li><a target="_blank" href="matchSearchAdv.jsp">&nbsp;更多&gt;&gt;</a></li>');            
 		      },
 		  });		
 	}
@@ -531,15 +531,16 @@ $(function() {
     });
 	
     //若存在session中的已选城市，则使用此城市，否则使用新浪IP获得所在城市地点 
-    /*if( $(".sessionCity").length != 1 ){
+    if( $(".sessionCity").length != 1 ){
 	  //通过调用新浪IP地址库接口查询用户当前所在国家、省份、城市、运营商信息
 	  $.getScript('http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js', function() {
+		  console.log(remote_ip_info);
 	    //   $(".country").html(remote_ip_info.country);
 	    //  $(".province").html(remote_ip_info.province);
 	    $("#city").html(remote_ip_info.city);
 	    //   $(".isp").html(remote_ip_info.isp);
 	  });
-   }*/
+   }
 
     //搜索栏模糊搜索
     $("#searchbox-match button").click(function() {
@@ -572,16 +573,13 @@ $(function() {
 
         if (pCode != 0 && pCode != 810000 && pCode != 820000) {
             $.ajax({
-                type: "POST",
                 url: "selRegion",
-                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
                 data: {
                     "region.level": 1,
                     "region.name": pName,
                     "region.code": pCode,
                     "region.order": order
                 },
-                dataType: "json",
                 success: function(rspdata) {
                     var selectCity = tgPrt.find(".selectSessionCity");
                     selectCity.empty().append("<option value=0 data-regionid=0>请选择市</option>");
@@ -589,11 +587,7 @@ $(function() {
                         selectCity.append("<option value=" + rspdata[i].code + " data-order=\"" + rspdata[i].order + "\" data-regionid=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</option>");
                     }
                 },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.log(jqXHR + " /" + textStatus + " /" + errorThrown);
-                    alert("抱歉，获取市区出错了。ajax错误。");
-                },
-            }); //ajax 已得到城市
+            });
             //tgPrt.find(".selectSessionCity").show();
         } else {
             //当用户没有选择省份的时候，就将市区下拉列表框中原有的“请选择”字样删除。
@@ -613,9 +607,7 @@ $(function() {
         if (cCode != 0) {
             //将选择的城市发送到服务器端
             $.ajax({
-                type: "POST",
                 url: "selRegion",
-                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
                 data: {
                     "region.level": 2,
                     "region.name": cName,
@@ -628,7 +620,6 @@ $(function() {
                     "regionBean.code": cCode,
                     "isNavBar": true
                 },
-                dataType: "json",
                 success: function(rspdata) {
                     if (rspdata == 0) {
                         console.log(rspdata);
@@ -638,11 +629,7 @@ $(function() {
                         console.log(rspdata);
                     }
                 },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.log(jqXHR + " /" + textStatus + " /" + errorThrown);
-                    alert("抱歉，获取市区出错了。ajax错误。");
-                },
-            }); //ajax 已发送
+            });
         }
         tgPrt.hide();
         tgPrt.parent().find("p").fadeIn();

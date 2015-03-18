@@ -215,8 +215,8 @@ function e(argso){
 	  $("#searchbox-tab").find("li:eq(0)").removeClass("active").end().find("li:eq(1)").addClass("active");
 	  $("#searchbox-match").removeClass("active");
 	  $("#searchbox-court").addClass("active");
-	//ajax接收所有的场地
-	e({});
+	//ajax接收所有的场地 不需要进入页面自动搜索
+	//e({});
 	//点击高级场地搜索
 	$("#advCourtSearchButton").click(function(){
 		e({});
