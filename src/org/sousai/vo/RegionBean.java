@@ -9,54 +9,142 @@ public class RegionBean implements Serializable
 	private static final long serialVersionUID = -8689960148505070757L;
 	private Integer pId;	//省id
 	private Integer cId;	//市id
+	private Integer rId;	//显示的id
 	private String code;	//地区码
 	private String pName;	//省名
 	private String cName;	//市名
+	private String rName;	//显示的名字
 	
 	//默认构造器
 	public RegionBean()
 	{
 	}
 
-	public RegionBean(Integer pId, Integer cId, String code, String pName,
-			String cName) {
+	public RegionBean(Integer pId, Integer cId, Integer rId, String code, String pName,
+			String cName, String rName) {
 		super();
 		this.pId = pId;
 		this.cId = cId;
+		this.rId = rId;
 		this.code = code;
 		this.pName = pName;
 		this.cName = cName;
+		this.rName = rName;
 	}
-
 
 	/**
 	 * @return the pId
 	 */
-	public Integer getPId() {
+	public Integer getpId() {
 		return pId;
 	}
 
 	/**
 	 * @param pId the pId to set
 	 */
-	public void setPId(Integer pId) {
+	public void setpId(Integer pId) {
 		this.pId = pId;
 	}
 
 	/**
 	 * @return the cId
 	 */
-	public Integer getCId() {
+	public Integer getcId() {
 		return cId;
 	}
 
 	/**
 	 * @param cId the cId to set
 	 */
-	public void setCId(Integer cId) {
+	public void setcId(Integer cId) {
 		this.cId = cId;
 	}
 
+	/**
+	 * @return the rId
+	 */
+	public Integer getrId() {
+		return rId;
+	}
+
+	/**
+	 * @param rId the rId to set
+	 */
+	public void setrId(Integer rId) {
+		this.rId = rId;
+	}
+
+	/**
+	 * @return the pName
+	 */
+	public String getpName() {
+		return pName;
+	}
+
+	/**
+	 * @param pName the pName to set
+	 */
+	public void setpName(String pName) {
+		this.pName = pName;
+	}
+
+	/**
+	 * @return the cName
+	 */
+	public String getcName() {
+		return cName;
+	}
+
+	/**
+	 * @param cName the cName to set
+	 */
+	public void setcName(String cName) {
+		this.cName = cName;
+	}
+
+	/**
+	 * @return the rName
+	 */
+	public String getrName() {
+		return rName;
+	}
+
+	/**
+	 * @param rName the rName to set
+	 */
+	public void setrName(String rName) {
+		this.rName = rName;
+	}
+
+//	/**
+//	 * @return the pId
+//	 */
+//	public Integer getPId() {
+//		return pId;
+//	}
+//
+//	/**
+//	 * @param pId the pId to set
+//	 */
+//	public void setPId(Integer pId) {
+//		this.pId = pId;
+//	}
+//
+//	/**
+//	 * @return the cId
+//	 */
+//	public Integer getCId() {
+//		return cId;
+//	}
+//
+//	/**
+//	 * @param cId the cId to set
+//	 */
+//	public void setCId(Integer cId) {
+//		this.cId = cId;
+//	}
+//
+//	
 	/**
 	 * @return the code
 	 */
@@ -70,34 +158,34 @@ public class RegionBean implements Serializable
 	public void setCode(String code) {
 		this.code = code;
 	}
-
-	/**
-	 * @return the pName
-	 */
-	public String getPName() {
-		return pName;
-	}
-
-	/**
-	 * @param pName the pName to set
-	 */
-	public void setPName(String pName) {
-		this.pName = pName;
-	}
-
-	/**
-	 * @return the cName
-	 */
-	public String getCName() {
-		return cName;
-	}
-
-	/**
-	 * @param cName the cName to set
-	 */
-	public void setCName(String cName) {
-		this.cName = cName;
-	}
+//
+//	/**
+//	 * @return the pName
+//	 */
+//	public String getPName() {
+//		return pName;
+//	}
+//
+//	/**
+//	 * @param pName the pName to set
+//	 */
+//	public void setPName(String pName) {
+//		this.pName = pName;
+//	}
+//
+//	/**
+//	 * @return the cName
+//	 */
+//	public String getCName() {
+//		return cName;
+//	}
+//
+//	/**
+//	 * @param cName the cName to set
+//	 */
+//	public void setCName(String cName) {
+//		this.cName = cName;
+//	}
 
 	/**
 	 * @return the serialversionuid

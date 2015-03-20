@@ -165,32 +165,34 @@ public class SelRegionAction extends UserBaseAction {
 							.get("regionBean") != null) {
 						RegionBean tRegionBean = (RegionBean) ActionContext
 								.getContext().getSession().get("regionBean");
-						tRegionBean.setCId(regionBean.getCId());
-						MyPrint.myPrint("regionBean.getCName() = "
-								+ regionBean.getCName());
-						tRegionBean.setCName(regionBean.getCName());
+						tRegionBean.setcId(regionBean.getcId());
+						MyPrint.myPrint("regionBean.getcName() = "
+								+ regionBean.getcName());
+						tRegionBean.setcName(regionBean.getcName());
 						tRegionBean.setCode(regionBean.getCode());
-						tRegionBean.setPId(regionBean.getPId());
-						MyPrint.myPrint("regionBean.getPName() = "
-								+ regionBean.getPName());
-						tRegionBean.setPName(regionBean.getPName());
+						tRegionBean.setpId(regionBean.getpId());
+						tRegionBean.setrName(regionBean.getrName());
+						tRegionBean.setrId(regionBean.getrId());
+						MyPrint.myPrint("regionBean.getpName() = "
+								+ regionBean.getpName());
+						tRegionBean.setpName(regionBean.getpName());
 						MyPrint.myPrint("session.get(\"regionBean\").getcName() = "
 								+ ((RegionBean) ActionContext.getContext()
 										.getSession().get("regionBean"))
-										.getCName());
+										.getcName());
 					}
 					// 选省->选市，这种情况下需要将regionBean的pName，cName等设定好之后再一起放到session
 					else {
-						MyPrint.myPrint("regionBean.getPName() = "
-								+ regionBean.getCName());
-						MyPrint.myPrint("regionBean.getPName() = "
-								+ regionBean.getPName());
+						MyPrint.myPrint("regionBean.getpName() = "
+								+ regionBean.getcName());
+						MyPrint.myPrint("regionBean.getpName() = "
+								+ regionBean.getpName());
 						ActionContext.getContext().getSession()
 								.put("regionBean", regionBean);
 						MyPrint.myPrint("session.get(\"regionBean\").getcName() = "
 								+ ((RegionBean) ActionContext.getContext()
 										.getSession().get("regionBean"))
-										.getCName());
+										.getcName());
 					}
 					JSONUtils.toJson(ServletActionContext.getResponse(),
 							SUCCESS);
@@ -206,8 +208,9 @@ public class SelRegionAction extends UserBaseAction {
 				User user = new User(userBean);
 				RegionBean regionBean = (RegionBean) ActionContext.getContext()
 						.getSession().get("regionBean");
-				//若CId为空，则用户只选择了省，则使用PId存入数据库
-				int rId = (regionBean.getCId()==null)?regionBean.getPId():regionBean.getCId();
+				//若CId为空，则用户只选择了省，则使用pId存入数据库
+//				int rId = (regionBean.getcId()==null)?regionBean.getpId():regionBean.getcId();
+				int rId = regionBean.getrId();
 				user.setLastRegionId(rId);
 				umg.updateUser(user);
 			} else {
