@@ -180,4 +180,6 @@ public interface AdminManager {
 	public void deleteCourtType(CourtType courtType) throws Exception;
 	public void updateCourtType(CourtType courtType) throws Exception;
 	public List<CourtType> findAllCourtTypes() throws Exception;
+
+	List<CourtType> findCourtTypeByMatchTypeId(Integer id) throws Exception;
 }

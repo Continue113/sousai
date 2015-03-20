@@ -47,8 +47,9 @@ public interface CourtTypeDao
 	/**
 	 * 返回指定比赛场地
 	 * @param id 比赛类型标识id
+	 * @param isDefault 是否 包含默认的场地类型，及matchType=1的
 	 * @return 返回所有该比赛场地
 	 * @throws Exception 
 	 */
-	List<CourtType> findByMatchTypeId(Integer id) throws Exception;
+	List<CourtType> findByMatchTypeId(Integer id, boolean isDefault) throws Exception;
 }

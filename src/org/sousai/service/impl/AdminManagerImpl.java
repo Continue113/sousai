@@ -381,6 +381,12 @@ public class AdminManagerImpl implements AdminManager {
 	}
 
 	@Override
+	public List<CourtType> findCourtTypeByMatchTypeId(Integer id)
+			throws Exception {
+		return courtTypeDao.findByMatchTypeId(id, true);
+	}
+	
+	@Override
 	public int countMatchByCourtId(Integer courtId) throws Exception{
 		return matchDao.countByCourtId(courtId);
 	}

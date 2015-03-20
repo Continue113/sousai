@@ -3,6 +3,7 @@ package org.sousai.action;
 import java.util.List;
 
 import org.sousai.action.base.*;
+import org.sousai.common.Constant;
 import org.sousai.domain.*;
 import org.sousai.tools.*;
 import org.sousai.vo.RegionBean;
@@ -146,62 +147,68 @@ public class SelRegionAction extends UserBaseAction {
 		else if (level == 2) {
 			MyPrint.myPrint("in level=2,isNamVar = " + isNavBar);
 			MyPrint.myPrint("regionBean = " + regionBean);
-			if (isNavBar) {
-				try {
-					if (regionBean != null) {
-						if (ActionContext.getContext().getSession()
-								.get("regionBean") != null) {
-							RegionBean tRegionBean = (RegionBean) ActionContext
-									.getContext().getSession()
-									.get("regionBean");
-							tRegionBean.setCId(regionBean.getCId());
-							MyPrint.myPrint("regionBean.getCName() = "
-									+ regionBean.getCName());
-							tRegionBean.setCName(regionBean.getCName());
-							tRegionBean.setCode(regionBean.getCode());
-							tRegionBean.setPId(regionBean.getPId());
-							MyPrint.myPrint("regionBean.getPName() = "
-									+ regionBean.getPName());
-							tRegionBean.setPName(regionBean.getPName());
-							MyPrint.myPrint("session.get(\"regionBean\").getcName() = "
-									+ ((RegionBean) ActionContext.getContext()
-											.getSession().get("regionBean"))
-											.getCName());
-						}
-						// 选省->选市，这种情况下需要将regionBean的pName，cName等设定好之后再一起放到session
-						else {
-							MyPrint.myPrint("regionBean.getPName() = "
-									+ regionBean.getCName());
-							MyPrint.myPrint("regionBean.getPName() = "
-									+ regionBean.getPName());
-							ActionContext.getContext().getSession()
-									.put("regionBean", regionBean);
-							MyPrint.myPrint("session.get(\"regionBean\").getcName() = "
-									+ ((RegionBean) ActionContext.getContext()
-											.getSession().get("regionBean"))
-											.getCName());
-						}
-						JSONUtils.toJson(ServletActionContext.getResponse(),
-								SUCCESS);
-					} else
-						JSONUtils.toJson(ServletActionContext.getResponse(),
-								FAIL);
-				} catch (Exception e) {
-					e.printStackTrace();
+			List<Region> zones = cmg.getZone(tempRegion.getCode(),
+					tempRegion.getOrder());
+			if (zones != null && zones.size() != 0) {
+				// setRegions(zones);
+				JSONUtils.toJson(ServletActionContext.getResponse(), zones);
+				System.out.println(ZONE_SUCCESS);
+			} else {
+				System.out.println(ZONE_FAIL);
+			}
+		}
+		// 导航栏的选择地区，点击确定时
+		else if (isNavBar) {
+			try {
+				if (regionBean != null) {
+					if (ActionContext.getContext().getSession()
+							.get("regionBean") != null) {
+						RegionBean tRegionBean = (RegionBean) ActionContext
+								.getContext().getSession().get("regionBean");
+						tRegionBean.setCId(regionBean.getCId());
+						MyPrint.myPrint("regionBean.getCName() = "
+								+ regionBean.getCName());
+						tRegionBean.setCName(regionBean.getCName());
+						tRegionBean.setCode(regionBean.getCode());
+						tRegionBean.setPId(regionBean.getPId());
+						MyPrint.myPrint("regionBean.getPName() = "
+								+ regionBean.getPName());
+						tRegionBean.setPName(regionBean.getPName());
+						MyPrint.myPrint("session.get(\"regionBean\").getcName() = "
+								+ ((RegionBean) ActionContext.getContext()
+										.getSession().get("regionBean"))
+										.getCName());
+					}
+					// 选省->选市，这种情况下需要将regionBean的pName，cName等设定好之后再一起放到session
+					else {
+						MyPrint.myPrint("regionBean.getPName() = "
+								+ regionBean.getCName());
+						MyPrint.myPrint("regionBean.getPName() = "
+								+ regionBean.getPName());
+						ActionContext.getContext().getSession()
+								.put("regionBean", regionBean);
+						MyPrint.myPrint("session.get(\"regionBean\").getcName() = "
+								+ ((RegionBean) ActionContext.getContext()
+										.getSession().get("regionBean"))
+										.getCName());
+					}
+					JSONUtils.toJson(ServletActionContext.getResponse(),
+							SUCCESS);
+				} else
 					JSONUtils.toJson(ServletActionContext.getResponse(), FAIL);
-				}
-				UserBean userBean = (UserBean) ActionContext.getContext()
-						.getSession().get("userBean");
-				if (userBean != null) {
-					User user = new User(userBean);
-					user.setLastRegionId(((RegionBean) ActionContext
-							.getContext().getSession().get("regionBean"))
-							.getCId());
-					umg.updateUser(user);
-				} else {
-					MyPrint.myPrint("userBean = " + userBean);
-				}
-				return null;
+			} catch (Exception e) {
+				e.printStackTrace();
+				JSONUtils.toJson(ServletActionContext.getResponse(), FAIL);
+			}
+			UserBean userBean = (UserBean) ActionContext.getContext()
+					.getSession().get("userBean");
+			if (userBean != null) {
+				User user = new User(userBean);
+				user.setLastRegionId(((RegionBean) ActionContext.getContext()
+						.getSession().get("regionBean")).getCId());
+				umg.updateUser(user);
+			} else {
+				MyPrint.myPrint("userBean = " + userBean);
 			}
 			List<Region> zones = cmg.getZone(tempRegion.getCode(),
 					tempRegion.getOrder());
@@ -212,12 +219,12 @@ public class SelRegionAction extends UserBaseAction {
 			} else {
 				System.out.println(ZONE_FAIL);
 			}
-
 		}
-		// level错误
-		else {
-			System.out.println(LEVEL_ERROR);
+		//没有该操作
+		else{
+			JSONUtils.toJson(ServletActionContext.getResponse(), Constant.ERROR);
 		}
 		return null;
 	}
+
 }

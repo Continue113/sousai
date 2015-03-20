@@ -42,8 +42,12 @@ public class CourtTypeDaoHibernate extends HibernateDaoSupport implements CourtT
 	}
 
 	@Override
-	public List<CourtType> findByMatchTypeId(Integer id) throws Exception{
-		return (List<CourtType>)getHibernateTemplate().find("from CourtType where matchTypeId=? or matchTypeId=1", id);
+	public List<CourtType> findByMatchTypeId(Integer id, boolean isDefault) throws Exception{
+		String strSql = "from CourtType where matchTypeId=?";
+		if(isDefault)
+		{
+			strSql += " or matchTypeId=1";
+		}
+		return (List<CourtType>)getHibernateTemplate().find(strSql, id);
 	}
-
 }
