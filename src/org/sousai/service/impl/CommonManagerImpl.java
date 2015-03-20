@@ -217,9 +217,8 @@ public class CommonManagerImpl implements CommonManager {
 	}
 
 	@Override
-	public List<MatchType> findMatchTypeByMatchClassIdEpt(Integer mcId,
-			Integer id) {
-		return matchTypeDao.findAllByMcIdExcept(mcId, id);
+	public List<MatchType> findMatchTypeByMatchClassIdEpt(Integer mcId) {
+		return matchTypeDao.findAllByMcId(mcId);
 	}
 
 	@Override

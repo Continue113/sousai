@@ -217,6 +217,8 @@
 		</action>
 		<action name="updateMatchClass" class="org.sousai.action.MaintainMatchClass" method="updateMatchClass">
 		</action>
+		<action name="updateMatchClass" class="org.sousai.action.MaintainMatchClass" method="findAllMatchClasses">
+		</action>
 		
 		<!-- 比赛类型的增删改 -->
 		<action name="addMatchType" class="org.sousai.action.MaintainMatchType" method="addMatchType">
@@ -247,6 +249,8 @@
 		<action name="updateCourtType" class="org.sousai.action.MaintainCourtTypeAction" method="updateCourtType">
 		</action>
 		<action name="findAllCourtTypes" class="org.sousai.action.MaintainCourtTypeAction" method="findAllCourtTypes">
+		</action>
+		<action name="findAllCourtTypes" class="org.sousai.action.MaintainCourtTypeAction" method="findCourtTypesByMatchTypeId">
 		</action>
 		
 		

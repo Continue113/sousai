@@ -14,6 +14,7 @@ public class MaintainCourtTypeAction extends UserBaseAction {
 	private static final long serialVersionUID = -8338643341969269247L;
 
 	private CourtType courtType;
+	private Integer matchTypeId;
 
 	/**
 	 * @return the courtType
@@ -28,6 +29,20 @@ public class MaintainCourtTypeAction extends UserBaseAction {
 	 */
 	public void setCourtType(CourtType courtType) {
 		this.courtType = courtType;
+	}
+
+	/**
+	 * @return the matchTypeId
+	 */
+	public Integer getMatchTypeId() {
+		return matchTypeId;
+	}
+
+	/**
+	 * @param matchTypeId the matchTypeId to set
+	 */
+	public void setMatchTypeId(Integer matchTypeId) {
+		this.matchTypeId = matchTypeId;
 	}
 
 	/**
@@ -105,6 +120,27 @@ public class MaintainCourtTypeAction extends UserBaseAction {
 		try {
 			if (isAdmin()) {
 				list = amg.findAllCourtTypes();
+				JSONUtils.toJson(ServletActionContext.getResponse(), list);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			JSONUtils
+					.toJson(ServletActionContext.getResponse(), Constant.ERROR);
+
+		}
+		return null;
+	}
+	
+	/**
+	 * 根据比赛类型Id来获取对应的CourtType列表，不会在所有比赛类型中都显示'默认'比赛类型（及matchTypeId=1）的场地类型
+	 * @return
+	 * @throws Exception
+	 */
+	public String findCourtTypesByMatchTypeId() throws Exception{
+		List<CourtType> list = null;
+		try {
+			if (isAdmin()) {
+				list = amg.findCourtTypeByMatchTypeId(matchTypeId);
 				JSONUtils.toJson(ServletActionContext.getResponse(), list);
 			}
 		} catch (Exception e) {

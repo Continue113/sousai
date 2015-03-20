@@ -72,12 +72,9 @@ public interface CommonManager {
 	 * 
 	 * @param mcId
 	 *            MatchClass的id
-	 * @param id
-	 *            不显式的比赛类型的id
 	 * @return 对应MatchClass的所有MatchType
 	 */
-	public List<MatchType> findMatchTypeByMatchClassIdEpt(Integer mcId,
-			Integer id);
+	public List<MatchType> findMatchTypeByMatchClassIdEpt(Integer mcId);
 
 	/**
 	 * 查询所有的比赛大类

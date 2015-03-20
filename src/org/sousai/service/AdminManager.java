@@ -167,6 +167,8 @@ public interface AdminManager {
 	public void addMatchClass(MatchClass mc) throws Exception;
 	public void deleteMatchClasses(Integer[] ids) throws Exception;
 	public void updateMatchClass(MatchClass mc) throws Exception;
+	public List<MatchClass> findAllMatchClasses() throws Exception;
+	
 	public void addMatchType(MatchType mt) throws Exception;
 	public void deleteMatchTypes(Integer[] ids) throws Exception;
 	public void updateMatchType(MatchType mt) throws Exception;
@@ -182,4 +184,6 @@ public interface AdminManager {
 	public List<CourtType> findAllCourtTypes() throws Exception;
 
 	List<CourtType> findCourtTypeByMatchTypeId(Integer id) throws Exception;
+
+	
 }

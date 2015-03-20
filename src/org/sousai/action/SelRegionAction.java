@@ -204,21 +204,24 @@ public class SelRegionAction extends UserBaseAction {
 					.getSession().get("userBean");
 			if (userBean != null) {
 				User user = new User(userBean);
-				user.setLastRegionId(((RegionBean) ActionContext.getContext()
-						.getSession().get("regionBean")).getCId());
+				RegionBean regionBean = (RegionBean) ActionContext.getContext()
+						.getSession().get("regionBean");
+				//若CId为空，则用户只选择了省，则使用PId存入数据库
+				int rId = (regionBean.getCId()==null)?regionBean.getPId():regionBean.getCId();
+				user.setLastRegionId(rId);
 				umg.updateUser(user);
 			} else {
 				MyPrint.myPrint("userBean = " + userBean);
 			}
-			List<Region> zones = cmg.getZone(tempRegion.getCode(),
-					tempRegion.getOrder());
-			if (zones != null && zones.size() != 0) {
-				// setRegions(zones);
-				JSONUtils.toJson(ServletActionContext.getResponse(), zones);
-				System.out.println(ZONE_SUCCESS);
-			} else {
-				System.out.println(ZONE_FAIL);
-			}
+//			List<Region> zones = cmg.getZone(tempRegion.getCode(),
+//					tempRegion.getOrder());
+//			if (zones != null && zones.size() != 0) {
+//				// setRegions(zones);
+//				JSONUtils.toJson(ServletActionContext.getResponse(), zones);
+//				System.out.println(ZONE_SUCCESS);
+//			} else {
+//				System.out.println(ZONE_FAIL);
+//			}
 		}
 		//没有该操作
 		else{

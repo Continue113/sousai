@@ -1,5 +1,7 @@
 package org.sousai.action;
 
+import java.util.List;
+
 import org.apache.struts2.ServletActionContext;
 import org.sousai.action.base.UserBaseAction;
 import org.sousai.common.Constant;
@@ -110,6 +112,25 @@ public class MaintainMatchClass extends UserBaseAction {
 			e.printStackTrace();
 			value = Constant.ERROR;
 			JSONUtils.toJson(ServletActionContext.getResponse(), value);
+		}
+		return null;
+	}
+	
+	/**
+	 * 获取所有比赛大类（包括'默认'）
+	 * @return
+	 * @throws Exception
+	 */
+	public String findAllMatchClasses() throws Exception{
+		List<MatchClass> list = null;
+		try {
+			if (isAdmin()) {
+				list = amg.findAllMatchClasses();
+				JSONUtils.toJson(ServletActionContext.getResponse(), list);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			JSONUtils.toJson(ServletActionContext.getResponse(), Constant.ERROR);
 		}
 		return null;
 	}

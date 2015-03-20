@@ -376,6 +376,10 @@ public class AdminManagerImpl implements AdminManager {
 	}
 
 	@Override
+	public List<MatchClass> findAllMatchClasses() throws Exception{
+		return matchClassDao.findAll();
+	}
+	@Override
 	public List<String> getAllMatchTypeInMatches() throws Exception {
 		return matchDao.findMatchType();
 	}
