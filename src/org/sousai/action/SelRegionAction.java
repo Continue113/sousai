@@ -129,7 +129,7 @@ public class SelRegionAction extends UserBaseAction {
 
 			// if (isNavBar) { // 确定navBar不使用新浪的，而使用自己的接口之后，还需要设定pId
 			// regionBean = new RegionBean();
-			// regionBean.setpName(tempRegion.getName());
+			// regionBean.setPName(tempRegion.getName());
 			// regionBean.setCode(tempRegion.getName());
 			// }
 
@@ -165,34 +165,34 @@ public class SelRegionAction extends UserBaseAction {
 							.get("regionBean") != null) {
 						RegionBean tRegionBean = (RegionBean) ActionContext
 								.getContext().getSession().get("regionBean");
-						tRegionBean.setcId(regionBean.getcId());
-						MyPrint.myPrint("regionBean.getcName() = "
-								+ regionBean.getcName());
-						tRegionBean.setcName(regionBean.getcName());
+						tRegionBean.setCId(regionBean.getCId());
+						MyPrint.myPrint("regionBean.getCName() = "
+								+ regionBean.getCName());
+						tRegionBean.setCName(regionBean.getCName());
 						tRegionBean.setCode(regionBean.getCode());
-						tRegionBean.setpId(regionBean.getpId());
-						tRegionBean.setrName(regionBean.getrName());
-						tRegionBean.setrId(regionBean.getrId());
-						MyPrint.myPrint("regionBean.getpName() = "
-								+ regionBean.getpName());
-						tRegionBean.setpName(regionBean.getpName());
-						MyPrint.myPrint("session.get(\"regionBean\").getcName() = "
+						tRegionBean.setPId(regionBean.getPId());
+						tRegionBean.setRName(regionBean.getRName());
+						tRegionBean.setRId(regionBean.getRId());
+						MyPrint.myPrint("regionBean.getPName() = "
+								+ regionBean.getPName());
+						tRegionBean.setPName(regionBean.getPName());
+						MyPrint.myPrint("session.get(\"regionBean\").getCName() = "
 								+ ((RegionBean) ActionContext.getContext()
 										.getSession().get("regionBean"))
-										.getcName());
+										.getCName());
 					}
 					// 选省->选市，这种情况下需要将regionBean的pName，cName等设定好之后再一起放到session
 					else {
-						MyPrint.myPrint("regionBean.getpName() = "
-								+ regionBean.getcName());
-						MyPrint.myPrint("regionBean.getpName() = "
-								+ regionBean.getpName());
+						MyPrint.myPrint("regionBean.getPName() = "
+								+ regionBean.getCName());
+						MyPrint.myPrint("regionBean.getPName() = "
+								+ regionBean.getPName());
 						ActionContext.getContext().getSession()
 								.put("regionBean", regionBean);
-						MyPrint.myPrint("session.get(\"regionBean\").getcName() = "
+						MyPrint.myPrint("session.get(\"regionBean\").getCName() = "
 								+ ((RegionBean) ActionContext.getContext()
 										.getSession().get("regionBean"))
-										.getcName());
+										.getCName());
 					}
 					JSONUtils.toJson(ServletActionContext.getResponse(),
 							SUCCESS);
@@ -209,8 +209,8 @@ public class SelRegionAction extends UserBaseAction {
 				RegionBean regionBean = (RegionBean) ActionContext.getContext()
 						.getSession().get("regionBean");
 				//若CId为空，则用户只选择了省，则使用pId存入数据库
-//				int rId = (regionBean.getcId()==null)?regionBean.getpId():regionBean.getcId();
-				int rId = regionBean.getrId();
+//				int rId = (regionBean.getCId()==null)?regionBean.getPId():regionBean.getCId();
+				int rId = regionBean.getRId();
 				user.setLastRegionId(rId);
 				umg.updateUser(user);
 			} else {
