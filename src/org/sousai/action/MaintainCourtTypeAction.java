@@ -137,6 +137,8 @@ public class MaintainCourtTypeAction extends UserBaseAction {
 	 * @throws Exception
 	 */
 	public String findCourtTypesByMatchTypeId() throws Exception{
+		System.out.println("findCourtTypesByMatchTypeId");
+		System.out.println(matchTypeId);
 		List<CourtType> list = null;
 		try {
 			if (isAdmin()) {

@@ -5,8 +5,11 @@
 	"http://struts.apache.org/dtds/struts-2.1.7.dtd">
 <!-- Struts2配置文件的根元素 -->
 <struts>
+	<bean type="org.apache.struts2.dispatcher.multipart.MultiPartRequest" name="myRequestParser" class="org.sousai.filter.RequestParseWrapper" scope="default" optional="true" />
+	<constant name="struts.multipart.handler" value="myRequestParser" />
 	<constant name="struts.custom.i18n.resources" value="resource" />
 	<constant name="struts.devMode" value="true" />
+	<constant name="struts.multipart.saveDir" value="/tmp"/>	
 	<package name="default" extends="struts-default,json-default">
 		
 		<!-- 定义全局Result映射 -->
@@ -256,6 +259,10 @@
 		
 		<!-- 获得各场地在比赛中使用次数，管理员删除场地前使用-->
 		<action name="countMatchByCourtId" class="org.sousai.action.CountMatchByCourtIdAction">
+		</action>
+		
+		<!-- 在场地详情页面中获得该场地举办比赛（已通过审核的）数-->
+		<action name="countMatchInCourtDetail" class="org.sousai.action.CountMatchInCourtDetailAction">
 		</action>
 		<!-- 获得各比赛在被用户收藏次数， 管理员删除比赛前使用-->
 		<action name="countUserMarkByMatchId" class="org.sousai.action.CountUserMarkByMatchIdAction">
