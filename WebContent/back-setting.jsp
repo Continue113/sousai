@@ -146,7 +146,7 @@
     {{#each this}}
          
         <input class="span1 catalog" type="text" id="catalog{{id}}" value="{{name}}" data-id="{{id}}" required="required" >
-<span class="divider">:</span> <button type="button" class="btn btn-link" onclick="saveCatalog({{id}})">保存大类</button>
+		<span class="divider">:</span> <button type="button" class="btn btn-link" onclick="saveCatalog({{id}})">保存大类</button>
 		<ul class="breadcrumb" id="catalogBreadcrumb{{id}}" data-id="{{id}}">{{literal}}</ul>
 
     {{/each}}
@@ -511,8 +511,27 @@
 	    //点击大类比赛类型获得具体比赛类型
 	    $(".selectMatchType").change(function() {
 	    	//将场地类型清空
-	    	$("#courtTypeControlGroup").find(".selectCourtType").empty();
-	    	selectMatchType($(this));
+	    	var target = $("#courtTypeControlGroup");
+	        var thisvalue = target.find(".selectMatchType option:selected").attr("value");
+	    	target.find(".selectCourtType").empty();
+	        if (thisvalue == 0) {
+	            //当点击默认选项时将具体比赛类型隐藏并设为默认状态 同时 将场地类型设置为默认状态
+	            target.find(".selectParticularMatchType").empty().append("<option value=0>请选择比赛类型</option>");
+	        } else {
+	            $.ajax({
+	                url: "showMT",
+	                data: {
+	                    "mcId": thisvalue,
+	                },
+	                success: function(rspdata) {
+	                    var sctParMatchType = target.find(".selectParticularMatchType");
+	                    sctParMatchType.empty().append("<option value=0>请选择比赛类型</option>");
+	                    for (var i = 0; i < rspdata.length; i++) {
+	                        sctParMatchType.append("<option value=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</  option>");
+	                    }
+	                },
+	            });
+	        }
 	    });
 	    //点击比赛类型 选择其他出现输入框 或者 当场地类型存在时获取相应场地类型
 	    $(".selectParticularMatchType").change(function() {
@@ -520,8 +539,8 @@
 	        var tgPrt = $(this).parent(),
 	        thisval = tgPrt.find(".selectParticularMatchType option:selected").text(),
 	        thisvalue = tgPrt.find(".selectParticularMatchType option:selected").attr("value");
-			console.log(thisval+thisvalue);
-	        if (thisvalue > 1) {
+			//console.log(thisval+thisvalue);
+	        if (thisvalue > 0) {
 	            //当选择具体比赛类型时，同时获取相应场地类型
 	            getAllCourtTypeInthisCatalog(thisvalue);
 	        }
