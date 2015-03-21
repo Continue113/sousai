@@ -145,13 +145,10 @@ function initMatchType() {
 //初始化具体的比赛类型
 function initParticularMatchType(matchTypeId) {
     $.ajax({
-        type: "POST",
         url: "showMT",
-        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         data: {
             "mcId": matchTypeId,
         },
-        dataType: "json",
         success: function(rspdata) {
             var sctParMatchType = $(".selectParticularMatchType");
             sctParMatchType.empty().append("<option value=0>请选择比赛类型</option>");
@@ -159,10 +156,6 @@ function initParticularMatchType(matchTypeId) {
                 sctParMatchType.append("<option value=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</  option>");
             }
             sctParMatchType.append("<option value=1>其他</option>"); //每一个大类比赛类型的“其他”选项
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR + " /" + textStatus + " /" + errorThrown);
-            sousaiRemindDialog("抱歉，获取比赛类型出错了。");
         },
     });
 }
