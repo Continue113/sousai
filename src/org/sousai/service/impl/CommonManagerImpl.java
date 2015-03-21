@@ -208,7 +208,7 @@ public class CommonManagerImpl implements CommonManager {
 	@Override
 	public List<CourtType> findCourtTypeByMatchTypeId(Integer id)
 			throws Exception {
-		return courtTypeDao.findByMatchTypeId(id, false);
+		return courtTypeDao.findByMatchTypeId(id, true);
 	}
 
 	@Override
