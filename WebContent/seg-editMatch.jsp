@@ -113,7 +113,7 @@
 				<td>{{courtTypeId}}</td>
 				<td>{{tableNum}}</td>
 				<td>{{matchCount}}</td>
-				<td><a target="_blank" href="?id={{id}}">详细</a></td>
+				<td><a target="_blank" href="courtSearchDetail.jsp?id={{id}}">详细</a></td>
 			</tr>
 
     {{/each}}

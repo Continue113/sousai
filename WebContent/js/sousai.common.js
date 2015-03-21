@@ -600,16 +600,24 @@ $(function() {
         var tgPrt = $(this).parent(),
         pName = tgPrt.find(".selectSessionProvince option:selected").text(),
         pId = tgPrt.find(".selectSessionProvince option:selected").attr("data-regionid"),
-        cName = tgPrt.find(".selectSessionCity option:selected").text(),
-        cId = tgPrt.find(".selectSessionCity option:selected").attr("data-regionid"),
+        rName = cName = tgPrt.find(".selectSessionCity option:selected").text(),
+        rId = cId = tgPrt.find(".selectSessionCity option:selected").attr("data-regionid"),
         cCode = tgPrt.find(".selectSessionCity option:selected").attr("value"),
-        order = tgPrt.find(".selectSessionCity option:selected").attr("data-order");
-        if (cCode != 0) {
+        order = tgPrt.find(".selectSessionCity option:selected").attr("data-order"),
+        level = 3;
+        if (cCode == 0) {
+        	cName = null;
+        	cId = null;
+        	cCode = null;
+        	rName = pName;
+        	rId = pId;
+        }
             //将选择的城市发送到服务器端
             $.ajax({
                 url: "selRegion",
                 data: {
-                    "region.level": 2,
+                    "isNavBar": true,
+                    "region.level": level,
                     "region.name": cName,
                     "region.code": cCode,
                     "region.order": order,
@@ -618,19 +626,19 @@ $(function() {
                     "regionBean.cName": cName,
                     "regionBean.cId": cId,
                     "regionBean.code": cCode,
-                    "isNavBar": true
+                    "regionBean.rName": rName,
+                    "regionBean.rId": rId,
                 },
                 success: function(rspdata) {
                     if (rspdata == 0) {
                         console.log(rspdata);
-                        $("#city").text(cName).attr("data-sessionregion", "{'pName':'" + pName + "','pId':'" + pId + "','cName':'" + cName + "','cId':'" + cId + "','code':'" + cCode + "'}");
+                        $("#city").text(rName).attr("data-sessionregion", "{'pName':'" + pName + "','pId':'" + pId + "','cName':'" + cName + "','cId':'" + cId + "','code':'" + cCode + "'}");
                     } else {
-                        alert("抱歉，获取市区出错了。代码不为0。" + rspdata);
+                        alert("抱歉，获取市区出错了." + rspdata);
                         console.log(rspdata);
                     }
                 },
             });
-        }
         tgPrt.hide();
         tgPrt.parent().find("p").fadeIn();
     });

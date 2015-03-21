@@ -250,17 +250,9 @@
 	      },
 	  });
   }
-  function getAllCourtType(){
-	  $.ajax({
-		  url: "findAllCourtTypes",
-		  success: function(rspdata){
-			  console.log(rspdata);
-		  },
-	  });
-  }
       function getAllMatchType(){
     	//获取所有比赛类型
-          $.post("showMC", null, function(rspdata) {
+          $.post("findAllMatchClasses", null, function(rspdata) {
         	  console.log(rspdata);
         	  //初始化场地类型处的比赛类型
 		      var type = $(".selectMatchType"), target = $("#matchTypeControlGroup").find(".breadcrumb-fff"),template = Handlebars.compile($('#matchCatalog-template').html());
@@ -275,16 +267,9 @@
 	    	          url: "showMT",
 	    	          data: {"mcId": cataid},
 	    	          success: function(rspType) {
-			    		  console.log("XXX"+cataid);
-			    		  console.log(rspType);
 					      var targetType = $("#catalogBreadcrumb"+cataid),templateType = Handlebars.compile($('#matchType-template').html());
 					      targetType.empty().html(templateType(rspType)).append('<li><input class="span1 " type="text" id="newMatchType'+cataid+'" value="" required="required" ></li><li><button type="button" class="btn btn-link" onclick="addMatchTypeInthisCatalog('+cataid+')">添加小类型</button></li>');
 		              },
-		              /* error: function(){
-		            	  console.log("chucuole");
-		            	  $("#catalogBreadcrumb"+cataid).append('<li><input class="span1 " type="text" id="newMatchType'+cataid+'" value="" required="required" ></li><li><button type="button" class="btn btn-link" onclick="addMatchTpyeInthisCatalog('+cataid+')">添加小类型</button></li>');
-		              	  return new Handlebars.SafeString('<li><input class="span1 " type="text" id="newMatchType'+cataid+'" value="" required="required" ></li><li><button type="button" class="btn btn-link" onclick="addMatchTpyeInthisCatalog('+cataid+')">添加小类型</button></li>');
-			    		} */
 	    		  });
 	    		  
 	    		  
@@ -295,17 +280,6 @@
           });
     	  
       }
-/*   function editAllMatchType(){
-	  $("#matchTypeControlGroup .breadcrumb-fff").find("input").removeAttr("disabled");
-  }
-  function saveAllMatchType(){
-	  var target = $("#matchTypeControlGroup .breadcrumb-fff");
-	  $.each( target.find("input.catalog"),function(index,item){
-		  console.log(item);
-		  console.log($(item).val());
-		  console.log(target.find(".breadcrumb")[index]);
-	  });
-  } */
   function saveCatalog(id){
 	  data = {
               "mc.name": $("#catalog"+id).val(),
@@ -507,9 +481,9 @@
  function getAllCourtTypeInthisCatalog(cataid){
      //当选择具体比赛类型时，同时获取相应场地类型
      $.ajax({
-         url: "showCT",
+         url: "findCourtTypesByMatchTypeId",
          data: {
-             "matchId": cataid,
+             "matchTypeId": cataid,
          },
          success: function(rspdata) {
          	console.log(rspdata);
@@ -536,6 +510,8 @@
 
 	    //点击大类比赛类型获得具体比赛类型
 	    $(".selectMatchType").change(function() {
+	    	//将场地类型清空
+	    	$("#courtTypeControlGroup").find(".selectCourtType").empty();
 	    	selectMatchType($(this));
 	    });
 	    //点击比赛类型 选择其他出现输入框 或者 当场地类型存在时获取相应场地类型

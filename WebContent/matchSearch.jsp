@@ -23,7 +23,7 @@
     <div class="span8 offset2"> 
      <div class="text-center adFirst">这里是ad.no1</div> 
      <div class="search-remind"> 
-      <p><i class="icon-th-list"></i>&nbsp;找到相关比赛&nbsp;<span>获取数据中...</span>&nbsp;场&nbsp;&nbsp;&nbsp;使用&nbsp;<a href="courtSearchAdv.jsp">“高级搜索”</a>&nbsp;搜索比赛</p> 
+      <p><i class="icon-th-list"></i>&nbsp;找到相关比赛&nbsp;<span>获取数据中...</span>&nbsp;场&nbsp;&nbsp;&nbsp;使用&nbsp;<a href="matchSearchAdv.jsp">“高级搜索”</a>&nbsp;搜索比赛</p> 
      </div>
      <div class="matchs" id="matchsList"> 
       <!-- panel --> 
