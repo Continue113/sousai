@@ -101,6 +101,8 @@ public final class ConfigManager {
 				conf.put( "maxSize", this.jsonConfig.getLong( "imageMaxSize" ) );
 				conf.put( "allowFiles", this.getArray( "imageAllowFiles" ) );
 				conf.put( "fieldName", this.jsonConfig.getString( "imageFieldName" ) );
+				conf.put("maxCount", this.jsonConfig.getInt("imageMaxCountInfolder"));
+				conf.put("dir", this.jsonConfig.getString("imageManagerListPath"));
 				savePath = this.jsonConfig.getString( "imagePathFormat" );
 				break;
 				

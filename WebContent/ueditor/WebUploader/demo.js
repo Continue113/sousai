@@ -340,6 +340,7 @@ jQuery(function() {
                 break;
             case 'finish':
                 stats = uploader.getStats();
+                console.log(stats);
                 if ( stats.successNum ) {
                     alert( '上传成功' );
                 } else {

@@ -831,7 +831,7 @@
             getStats: function() {
                 // return this._mgr.getStats.apply( this._mgr, arguments );
                 var stats = this.request('get-stats');
-    
+                console.log(stats);
                 return stats ? {
                     successNum: stats.numOfSuccess,
                     progressNum: stats.numOfProgress,
@@ -3667,7 +3667,10 @@
             },
     
             _getStats: function() {
-                return this.request('get-stats');
+            	
+                var tt = this.request('get-stats');
+                console.log(tt);
+                return tt;
             },
     
             /**

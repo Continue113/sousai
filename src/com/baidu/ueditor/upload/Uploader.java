@@ -29,7 +29,7 @@ public class Uploader {
 		State state = null;
 		
 		//先检验目录下图片数量是否已超过最大图片数
-		if (Integer.parseInt((String) conf.get("maxCount")) > FileManager
+		if ((int) conf.get("maxCount") > FileManager
 				.countFile((String) this.conf.get("dir"))) {
 			if ("true".equals(this.conf.get("isBase64"))) {
 				state = Base64Uploader.save(

@@ -46,18 +46,21 @@ public class ActionEnter extends UserBaseAction {
 	public String exec() {
 
 		String callbackName = this.request.getParameter("callback");
-
+		String tt;
 		if (callbackName != null) {
 
 			if (!validCallbackName(callbackName)) {
 				return new BaseState(false, AppInfo.ILLEGAL).toJSONString();
 			}
-
-			return callbackName + "(" + this.invoke() + ");";
-
+			tt = callbackName + "(" + this.invoke() + ");";
+			
 		} else {
-			return this.invoke();
+			tt = this.invoke();
 		}
+		System.out.println(tt);
+		
+
+		return tt;
 
 	}
 
