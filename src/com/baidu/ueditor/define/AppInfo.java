@@ -14,6 +14,7 @@ public final class AppInfo {
 	public static final int PARSE_REQUEST_ERROR = 6;
 	public static final int NOTFOUND_UPLOAD_DATA = 7;
 	public static final int NOT_ALLOW_FILE_TYPE = 8;
+	public static final int MAX_COUNT_IN_FOLDER = 9;
 	
 	public static final int INVALID_ACTION = 101;
 	public static final int CONFIG_ERROR = 102;
@@ -59,7 +60,8 @@ public final class AppInfo {
 		put( AppInfo.NOTFOUND_UPLOAD_DATA, "\u672A\u627E\u5230\u4E0A\u4F20\u6570\u636E" );
 		// 不允许的文件类型
 		put( AppInfo.NOT_ALLOW_FILE_TYPE, "\u4E0D\u5141\u8BB8\u7684\u6587\u4EF6\u7C7B\u578B" );
-		
+		// 超过目录下最多图片数
+		put( AppInfo.MAX_COUNT_IN_FOLDER, "\u8d85\u8fc7\u76ee\u5f55\u4e0b\u6700\u591a\u56fe\u7247\u6570");
 		// 指定路径不是目录
 		put( AppInfo.NOT_DIRECTORY, "\u6307\u5B9A\u8DEF\u5F84\u4E0D\u662F\u76EE\u5F55" );
 		// 指定路径并不存在

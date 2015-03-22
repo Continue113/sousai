@@ -29,11 +29,11 @@ public class FileManager {
 		
 	}
 	
-	public int countFile(){
-		File dir = new File( this.dir );
+	public static int countFile(String dir){
+		File fileDir = new File( dir );
 //		State state = null;
 //		if ( !dir.exists()) {
-		if ( !dir.exists() || !dir.isDirectory()) {
+		if ( !fileDir.exists() || !fileDir.isDirectory()) {
 //			return new BaseState( false, AppInfo.NOT_EXIST );
 			return 0;
 		}
@@ -42,7 +42,7 @@ public class FileManager {
 //			return new BaseState( false, AppInfo.NOT_DIRECTORY );
 //		}
 		
-		Collection<File> list = FileUtils.listFiles( dir, this.allowFiles, true );
+		Collection<File> list = FileUtils.listFiles( fileDir, null, true );
 		return list.size();
 	}
 	public State listFile ( int index ) {
