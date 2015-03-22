@@ -10,6 +10,7 @@ import org.sousai.vo.CourtBean;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.cfg.Configuration;
 
 public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 	// private String selectCourtBean =
@@ -54,7 +55,17 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 
 	@Override
 	public Integer save(Court court) throws Exception {
+		if(getHibernateTemplate() == null){
+			System.out.println("HibernateTemplate null");
+		}
 		return (Integer) getHibernateTemplate().save(court);
+	}
+	
+	@Override
+	public Integer saveWithoutT(Court court) throws Exception {
+		Configuration configure = new Configuration().configure();
+		Session session = configure.buildSessionFactory().getCurrentSession();
+		return (Integer) session.save(court);
 	}
 
 	@Override

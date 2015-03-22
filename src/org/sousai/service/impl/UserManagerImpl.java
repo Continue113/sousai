@@ -17,6 +17,7 @@ import org.apache.tomcat.util.codec.binary.Base64;
 import org.sousai.service.UserManager;
 import org.sousai.tools.*;
 import org.sousai.dao.*;
+import org.sousai.dao.impl.CourtDaoHibernate;
 import org.sousai.domain.*;
 import org.sousai.vo.*;
 
@@ -50,6 +51,9 @@ public class UserManagerImpl implements UserManager {
 	private UserMarkDao userMarkDao;
 	private HotWordDao hotWordDao;
 
+//	public UserManagerImpl(){
+//		courtDao = new CourtDaoHibernate();
+//	}
 	/**
 	 * @return the userDao
 	 */
@@ -589,5 +593,10 @@ public class UserManagerImpl implements UserManager {
 	@Override
 	public void updateUserPicId(Integer id, String picId) throws Exception {
 		userDao.updateUserPic(id, picId);
+	}
+	
+	@Override
+	public Integer relCourtWithoutT(Court court) throws Exception{
+		return courtDao.saveWithoutT(court);
 	}
 }

@@ -290,4 +290,6 @@ public interface UserManager {
 
 	public int countUsersFavorMatch(Integer userId) throws Exception;
 
+	Integer relCourtWithoutT(Court court) throws Exception;
+
 }

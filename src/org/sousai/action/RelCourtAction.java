@@ -80,17 +80,8 @@ public class RelCourtAction extends UserBaseAction {
 				// tempCourt.setCourtTypeId(getCourtTypeId());
 				tempCourt.setVerify('0');
 				MyPrint.myPrint("regionId = " + tempCourt.getRegionId());
-
 				tempCourt.setUserId(userBean.getUserId());
-				// tempCourt.setUser(new
-				// User((UserBean)ActionContext.getContext().getSession().get("userBean")));
-				// 上传图片，并将场地信息存入数据库
-				if (umg.saveCourtPic(getImages(), getImgNames(), getCourt()
-						.getUserId()) != "fail"
-				// && umg.releaseCourt(tempCourt)==1)
-				)
-					result = umg.releaseCourt(tempCourt).toString();
-
+				result = umg.releaseCourt(tempCourt).toString();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

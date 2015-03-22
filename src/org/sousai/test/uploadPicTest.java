@@ -7,7 +7,6 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.sousai.action.GetMatchByParamsAction;
 import org.sousai.dao.impl.SqlHelper;
-
 public class uploadPicTest {
 
 	public static void main(String argsp[]) {

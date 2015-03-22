@@ -234,4 +234,6 @@ public interface CourtDao {
 	 * @throws Exception
 	 */
 	void relCourts(Integer[] ids, boolean isRel) throws Exception;
+
+	Integer saveWithoutT(Court court) throws Exception;
 }
