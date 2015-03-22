@@ -122,6 +122,7 @@
              </table> 
             </div>
             <!-- /OLD pic upload -->
+            <iframe src="ueditor/WebUploader.html" id="ueditor" height="500px" width="800px"></iframe>
            </div> 
           </div> 
           <div class="control-group"> 

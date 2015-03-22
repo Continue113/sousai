@@ -261,7 +261,7 @@
          </tr> 
          <tr> 
           <td valign="top">举办比赛：</td> 
-          <td class="td2">{{matchNumber}}</td> 
+          <td class="td2" id="matchNumber">{{matchNumber}}</td> 
          </tr> 
          <tr> 
           <td valign="top">开放时间：</td> 
@@ -502,9 +502,23 @@ function pagesMesg(count,crtPage,rs){
 	      $(".title").html(rspdata.name).attr("data-id",rspdata.id);
 	      $("#courtContent").html(rspdata.intro);
 	      ajaxAllEvaluation({courtId:id});
+	      countMatchInCourtDetail(id);
 		  e({currentPage:1,rows:10,id:id});
 		  }
 	    });
+	    //获取当前场地的比赛次数 已发布的
+	    function countMatchInCourtDetail(id){
+	    $.ajax({
+	    	url: "countMatchInCourtDetail",
+	    	data: {courtId:id},
+	    	success: function(rspdata){
+	    		console.log(rspdata);
+	    		if(rspdata !== "error"){
+	    		$("#matchNumber").text(rspdata);
+	    		}
+	    	}
+	    });
+	    }
   }
   //根据id获取该场地的比赛信息
   function e(argso){
