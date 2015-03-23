@@ -31,7 +31,7 @@
     <div id="wrapper">
 
 <div class="page-body">
-
+<button onclick="getImg()">获取listimage</button>
 <div id="post-container" class="container">
     
 
@@ -78,6 +78,20 @@
         <script type="text/javascript" src="WebUploader/demo.js"></script>
     
     <script type="text/javascript">
+    function getImg(){
+    	alert("getImg");
+    	$.ajax({
+    	    type: 'POST',
+            url: 'http://localhost:8080/sousai/ueditor/jsp/controller.jsp?action=listimage&id=123456',
+            data: null,
+            success: function(rspdata) {
+          	  console.log(rspdata);alert(rspdata)
+            },
+          });
+    }
+    
+    
+    
     var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
     document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F67c4841095cbee8275705e1f6224a3c7' type='text/javascript'%3E%3C/script%3E"));
     </script><script src="WebUploader/h.js" type="text/javascript"></script>

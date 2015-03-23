@@ -47,6 +47,7 @@ public class FileManager {
 	}
 	public State listFile ( int index ) {
 		
+		System.out.println("dir = "+dir);
 		File dir = new File( this.dir );
 		State state = null;
 
@@ -88,6 +89,7 @@ public class FileManager {
 			file = (File)obj;
 			fileState = new BaseState( true );
 			fileState.putInfo( "url", PathFormat.format( this.getPath( file ) ) );
+			System.out.println("getState url=" + fileState.toString());
 			state.addState( fileState );
 		}
 		
@@ -99,7 +101,7 @@ public class FileManager {
 		
 		String path = file.getAbsolutePath();
 		
-		return path.replace( this.rootPath, "/" );
+		return path.replace( this.rootPath.replace("/", "\\"), "/" );
 		
 	}
 	

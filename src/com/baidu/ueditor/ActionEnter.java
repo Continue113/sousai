@@ -108,13 +108,17 @@ public class ActionEnter extends UserBaseAction {
 			conf = configManager.getConfig(actionCode);
 			int start = this.getStartIndex();
 			state = new FileManager(conf).listFile(start);
+			System.out.println("LIST_IMAGE.state = "+state.toJSONString());
 			break;
 		case ActionMap.DELETE_IMAGE:
 			String strDelImage = (String) request.getParameter("delImage");
+			System.out.println("strDelImage="+strDelImage);
 			String[] delImages = strDelImage.split(",");
 			try {
 				for (String imgPath : delImages) {
-					File delFile = new File(imgPath);
+					System.out.println("imgPath="+imgPath);
+					System.out.println("rootPath+imgPath="+this.rootPath+imgPath);
+					File delFile = new File(this.rootPath+imgPath);
 					if (delFile.exists()) {
 						delFile.delete();
 					}
