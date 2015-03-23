@@ -102,6 +102,7 @@
            <div class="controls"> 
            <!-- OLD pic upload -->
             <div class="fileupload-buttonbar"> 
+ 			 <span id="filePicker" class="btn"><i class="icon-plus"></i>选择图片</span>
              <span class="btn plus"><i class="icon-plus"></i><span>添加图片栏</span></span> 
              <span class="btn allCancel"> <i class="icon-ban-circle"></i> <span>全部取消</span> </span> 
              <span class="error">请上传小于 200KB 的 jpg、jpeg、png、gif 格式的图片。</span>
@@ -122,7 +123,11 @@
              </table> 
             </div>
             <!-- /OLD pic upload -->
-            <iframe src="ueditor/WebUploader.html" id="ueditor" height="500px" width="800px"></iframe>
+            <!-- New uploader -->
+            <div id="uploader">
+ 			   <!--用来存放item-->
+   			   	<ul id="fileList" class="files"></ul>
+			</div>            
            </div> 
           </div> 
           <div class="control-group"> 

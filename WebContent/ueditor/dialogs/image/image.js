@@ -10,8 +10,10 @@
     var remoteImage,
         uploadImage,
         onlineImage,
-        searchImage;
-
+        searchImage,
+    $G = function ( id ) {
+        return document.getElementById( id )
+    };
     window.onload = function () {
         initTabs();
         initAlign();
@@ -860,6 +862,13 @@
                 this.isLoadingData = true;
                 var url = editor.getActionUrl(editor.getOpt('imageManagerActionName')),
                     isJsonp = utils.isCrossDomainUrl(url);
+                //查看获取图片的ajax信息
+                console.log(url,isJsonp,utils.extend({
+                    start: this.listIndex,
+                    size: this.listSize
+                }, editor.queryCommandValue('serverparam')));
+                
+                
                 ajax.request(url, {
                     'timeout': 100000,
                     'dataType': isJsonp ? 'jsonp':'',
@@ -869,6 +878,7 @@
                         }, editor.queryCommandValue('serverparam')),
                     'method': 'get',
                     'onsuccess': function (r) {
+                    	console.log(r);
                         try {
                             var json = isJsonp ? r:eval('(' + r.responseText + ')');
                             if (json.state == 'SUCCESS') {

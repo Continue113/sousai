@@ -7,6 +7,7 @@
   <meta name="description" content="搜赛网用户中心-我的搜赛-发布场地">
   <s:include value="seg-meta.jsp"/>
   <link href="css/sousai.userCenter.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="webuploader/webuploader.css">
  </head> 
  <body class="userCenter"> 
   <s:include value="seg-navbar.jsp"/>
@@ -72,6 +73,7 @@
   <script src="tinymce/jquery.tinymce.min.js"></script> 
   <script src="tinymce/tinymce.min.js"></script> 
   <script src="js/jquery.validate.min.js"></script>
+  <script type="text/javascript" src="webuploader/webuploader.js"></script>
   <script src="js/sousai.editcourt.js"></script> 
   <script>
   //定义函数
