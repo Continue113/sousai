@@ -57,9 +57,6 @@ public class ActionEnter extends UserBaseAction {
 		} else {
 			tt = this.invoke();
 		}
-		System.out.println(tt);
-		
-
 		return tt;
 
 	}
@@ -112,12 +109,10 @@ public class ActionEnter extends UserBaseAction {
 			break;
 		case ActionMap.DELETE_IMAGE:
 			String strDelImage = (String) request.getParameter("delImage");
-			System.out.println("strDelImage="+strDelImage);
 			String[] delImages = strDelImage.split(",");
 			try {
+				
 				for (String imgPath : delImages) {
-					System.out.println("imgPath="+imgPath);
-					System.out.println("rootPath+imgPath="+this.rootPath+imgPath);
 					File delFile = new File(this.rootPath+imgPath);
 					if (delFile.exists()) {
 						delFile.delete();
