@@ -16,6 +16,90 @@ function setCourtInfo(datainfo){
     $("#inputCourtPrice").val(data.price);
     $("#inputCourtOpenTime").val(data.workTime);
     //获取已上传的场地图片
+    //设置上传图片为可见,同时添加删除已有图片功能,
+    (function(){
+    $.ajax({
+        url: 'http://localhost:8080/sousai/ueditor/jsp/controller.jsp?action=listimage',
+        data: {
+        	id:data.id
+        	},
+        success: function(rspdata) {
+      	  console.log(rspdata.replace("list",'"list"'));
+      	  var jsonrspdata = JSON.parse(rspdata.replace("list",'"list"'));
+      	  console.log(jsonrspdata);
+      	  $.each(jsonrspdata.list,function(index,item){
+      		  var imgName = item.url,//.split("/").value[6],
+      		  	  $li = $( '<li id="' + imgName + '">' +
+      	              '<p class="title">' + imgName + '</p>' +
+      	              '<p class="imgWrap"><img src="http://localhost:8080/sousai'+item.url+'"></p>'+
+      	              '</li>').appendTo($('#fileList')),
+      	              
+      	              $btns = $('<div class="file-panel">' +
+      	              		'<span class="delete">删除</span></div>').appendTo( $li );
+
+      	      $li.on( 'mouseenter', function() {
+      	          $btns.stop().animate({height: 30});
+      	      });
+
+      	      $li.on( 'mouseleave', function() {
+      	          $btns.stop().animate({height: 0});
+      	      });
+
+      	      $btns.on( 'click', 'span.delete', function() {
+      	    	  //上传图片之前需要先检查当前已经存储的图片
+      	      	alert( imgName );
+      	      });
+      	  });
+        },
+        error: function(rspdata){
+        	alert("error sousai");
+        	  console.log(rspdata);
+          	  var jsonrspdata = JSON.parse(rspdata.responseText.replace("list",'"list"'));
+          	  console.log(jsonrspdata);
+          	  $.each(jsonrspdata.list,function(index,item){
+          		  var imgName = item.url.split("/")[6].split(".")[0],
+      		  	  $li = $( '<li id="' + imgName + '">' +
+          	              '<p class="title">' + imgName + '</p>' +
+          	              '<p class="imgWrap"><img src="http://localhost:8080/sousai'+item.url+'"></p>'+
+          	              '</li>').appendTo($('#fileList')),
+          	              
+          	              $btns = $('<div class="file-panel">' +
+          	              		'<span class="delete">删除</span></div>').appendTo( $li );
+
+          	      $li.on( 'mouseenter', function() {
+          	          $btns.stop().animate({height: 30});
+          	      });
+
+          	      $li.on( 'mouseleave', function() {
+          	          $btns.stop().animate({height: 0});
+          	      });
+
+          	      $btns.on( 'click', 'span.delete', function() {
+          	    	  //上传图片之前需要先检查当前已经存储的图片
+          	      	alert( imgName );
+          	      	$.ajax({
+          	        url: 'http://localhost:8080/sousai/ueditor/jsp/controller.jsp?action=deleteimage',
+          	        data: {
+          	        	delImage:item.url
+          	        	},
+          	        success: function(rspdata) {
+          	        	console.log(rspdata);
+          	        	if(rspdata.state == "SUCCESS"){
+          	              $('#'+imgName).remove();
+          	        	}
+          	        	},
+          	      	});
+          	      });
+          	  });
+          	  
+        	
+        },
+      });
+    		
+    }());
+    	
+    
+    
     tinymce.activeEditor.setContent(data.intro);
 }
 
@@ -55,73 +139,6 @@ function getCourtInfo(){
 	}
 }
 
-//选择图片
-function selectPic(id){
-$("#fileImage"+id).trigger('click');
-}
-//取消上传
-function deleteTr(id){
-$("#tr"+id).fadeOut();
-setTimeout(function(){
-  $("#tr"+id).remove();
-},1000);
-trNumb--;
-}
-//记录表格中的上传图片的数量
-var trNumb = 1;
-//验证上传图片格式，大小，并在通过后显示图片预览
-function imgValid(obj,id) {
-var files = obj.files,
-      img = new Image(), imgname, imgsize, imgsizeKB, imgtype, 
-previewId = "preview" + id,
- fileList = document.getElementById(previewId), //jquery对象转换为DOM对象
- inputNames = $("#tr"+id+' input[type="text"]'),
- fileName = $("#tr"+id+" .name"),
- fileSize = $("#tr"+id+" .size"); 
-
-if(obj.files && obj.files[0]){
-  //清除上一次的预览图片
-  $(fileList).find("img").remove();
-  var reader = new FileReader();
-  reader.readAsDataURL(files[0]);
-  reader.onload = function(e){
-    //sousaiRemindDialog(files[0].name + "," +e.total + " bytes");
-    imgname = files[0].name;
-    imgtype = files[0].type;
-    imgsize = e.total;
-    imgsizeKB = (imgsize/1024).toFixed(2);
-    if(imgsize >= 200*1024) {
-      sousaiRemindDialog("照片大小为 "+imgsizeKB+"KB,照片太大了，请上传小于200KB的照片.");
-    }else if(imgtype != "image/png" && imgtype != "image/gif" && imgtype != "image/jpg" && imgtype != "image/jpeg" ){
-      sousaiRemindDialog("文件格式为 "+imgtype+",请上传png,gif,jpg,jpeg格式的照片.");
-    }else if( trNumb == 2 && imgname == $("#tr1 .name").text() ){ //trNumb为2时，有两个图片栏，检验第一个图片栏与第二个图片栏是否同名
-      sousaiRemindDialog("图片 "+ imgname +" 名称重复。");
-    }else if( trNumb == 3 && ( imgname == $("#tr1 .name").text() || imgname == $("#tr2 .name").text() ) ){ //trNumb为3时，有三个图片栏，检验第一、第二个图片栏是否与第三个图片栏同名
-      sousaiRemindDialog("图片 "+ imgname +" 名称重复。");
-    }else{
-      img.src = this.result;
-      //img.width = 100;
-      fileList.appendChild(img);
-      fileName.text(imgname);
-      fileSize.text(imgsizeKB+"KB");
-      inputNames.attr("value",imgname);
-    }
-  };
-}else{
-  //ie 只能得到文件名
-  var nfile = $("#tr"+id+' input[type="file"]').val();//fake路径
-  var fileText =nfile.substring(nfile.lastIndexOf("."),nfile.length);//文件后缀名
-  imgname = nfile.substring(nfile.lastIndexOf("\\")+1,nfile.length);//文件名;
-  imgtype =fileText.toLowerCase();//转化为统一小写后缀名.jpg等
-  if(imgtype != ".png" && imgtype != ".gif" && imgtype != ".jpg" && imgtype != ".jpeg" ){
-      sousaiRemindDialog("文件格式为 "+imgtype+",请上传png,gif,jpg,jpeg格式的照片.");
-  }
-  fileName.text(imgname);
-  fileSize.text("");
-  inputNames.attr("value",imgname);
-}
-}
-// OLD pic upload js
 function sureDeleteEdit(){
 	hideSousaiRemindDialog();
 	var data = {
@@ -163,9 +180,154 @@ function sureDeleteEdit(){
     }
   });
 }
+
+
+//图片上传 用于获取图片所属的场地Id
+var upLoaderServerCourtId,
+uploader;
+function imageUploader(){
+  
+  // 优化retina, 在retina下这个值是2
+  var $wrap = $('#uploader'),
+  $upload = $('#startUpload'),
+  // 图片容器
+  $queue = $('#fileList'),
+      
+  ratio = window.devicePixelRatio || 1,
+
+  // 缩略图大小
+  thumbnailWidth = 110 * ratio,
+  thumbnailHeight = 110 * ratio;
+  
+  // 实例化
+  uploader = WebUploader.create({
+      pick: {
+          id: '#filePicker',
+      },
+      accept: {
+          title: 'Images',
+          extensions: 'gif,jpg,jpeg,bmp,png',
+          mimeTypes: 'image/*'
+      },
+      // swf文件路径
+      swf: 'webuploader/Uploader.swf',
+      server: 'http://localhost:8080/sousai/ueditor/jsp/controller.jsp?action=uploadimage&id=123456',
+      fileNumLimit: 3,
+      fileSingleSizeLimit: 200 * 1024,    // 200k
+  });
+  
+// 当有文件添加进来时执行，负责view的创建
+  function addFile( file ) {
+      var $li = $( '<li id="' + file.id + '">' +
+              '<p class="title">' + file.name + '</p>' +
+              '<p class="imgWrap"></p>'+
+              '</li>' ),
+
+          $btns = $('<div class="file-panel">' +
+              '<span class="cancel">删除</span></div>').appendTo( $li ),
+          $wrap = $li.find( 'p.imgWrap' ),
+
+          showError = function( code ) {
+      		console.log(code);
+              sousaiRemindDialog("请上传小于 200KB 的 jpg、jpeg、png、gif 格式的图片。一个场地最多上传3张图片.");
+          };
+
+      if ( file.getStatus() === 'invalid' ) {
+          showError( file.statusText );
+      } else {
+          // @todo lazyload
+          $wrap.text( '预览中' );
+          uploader.makeThumb( file, function( error, src ) {
+              if ( error ) {
+                  $wrap.text( '不能预览' );
+                  return;
+              }
+
+              var img = $('<img src="'+src+'">');
+              $wrap.empty().append( img );
+          }, thumbnailWidth, thumbnailHeight );
+      }
+
+      file.on('statuschange', function( cur, prev ) {
+          if ( prev === 'queued' ) {
+              $li.off( 'mouseenter mouseleave' );
+              $btns.remove();
+          }
+
+          // 成功
+          if ( cur === 'error' || cur === 'invalid' ) {
+              console.log( file.statusText );
+              showError( file.statusText );
+          }
+
+          $li.removeClass( 'state-' + prev ).addClass( 'state-' + cur );
+      });
+
+      $li.on( 'mouseenter', function() {
+          $btns.stop().animate({height: 30});
+      });
+
+      $li.on( 'mouseleave', function() {
+          $btns.stop().animate({height: 0});
+      });
+
+      $btns.on( 'click', 'span.cancel', function() {
+    	  //上传图片之前需要先检查当前已经存储的图片
+      	uploader.removeFile( file );
+      });
+
+      $li.appendTo( $queue );
+  }
+  // 负责view的销毁
+  function removeFile( file ) {
+      var $li = $('#'+file.id);
+      $li.off().find('.file-panel').off().end().remove();
+  }
+  
+  uploader.onFileQueued = function( file ) {
+      addFile( file );
+  };
+
+  uploader.onFileDequeued = function( file ) {
+      removeFile( file );
+  };
+
+  uploader.on( 'all', function( type ) {
+      switch( type ) {
+          case 'uploadFinished':
+              console.log( 'uploadFinished' );
+              alert("uploadFinished 上传图片成功");
+              break;
+
+          case 'startUpload':
+          	console.log( 'uploading' );
+              break;
+
+          case 'stopUpload':
+          	console.log( 'stopUpload' );
+              break;
+
+      }
+  });
+
+  uploader.onError = function( code ) {
+      sousaiRemindDialog( '请上传小于 200KB 的 jpg、jpeg、png、gif 格式的图片。一个场地最多上传3张图片. Eroor: ' + code );
+  };
+
+  $upload.on('click', function() {
+      if ( $(this).hasClass( 'disabled' ) ) {
+          return false;
+      }
+      uploader.upload();
+  });
+}
+
+
 $(function(){
   //立即初始化比赛类型
   initMatchType();
+  //初始化图片上传
+  imageUploader();
   //点击返回场地列表
   $(".backList").click(function(){
     $(".courtList").slideDown();
@@ -397,25 +559,6 @@ $(function(){
       $("#" + editor.id).valid();
     }
   });
-  //添加选项
-  $(".plus").click(function(){
-    if(trNumb == 3){
-      sousaiRemindDialog("抱歉，每个场地最多只可以上传3张图片！");
-    }else{
-      trNumb++;
-      $(".files").append('<tr class="hide" id="tr'+trNumb+'"><td><span class="btn fileinput-button"  onclick="selectPic('+trNumb+')"><i class="icon-plus"></i><span>选择图片</span></span><input class="hide fileImage" id="fileImage'+trNumb+'" type="file" name="images" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this,'+trNumb+')"/><input class="hide fileImageNames" type="text" name="imgNames" value=""/></td><td><span class="preview" id="preview'+trNumb+'"></span></td><td><span class="name"></span></td><td><span class="size"></span></td><td><span class="btn cancel" onclick="deleteTr('+trNumb+')"><i class="icon-ban-circle"></i>取消</span></td></tr>');
-      $("#tr"+trNumb).fadeIn();
-    }
-  });
-  //全部取消
-  $(".allCancel").on('click',function(event){
-    //表格行隐藏并清空所有的输入框，文件名称，文件大小
-    $(".files > tr").fadeOut();
-    setTimeout(function(){
-      $(".files > tr").remove();
-    },1000);
-    trNumb = 0;
-  });
 
   });
-  
+

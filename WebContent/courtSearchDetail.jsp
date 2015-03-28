@@ -106,10 +106,8 @@
        <div class="courtImg-small"> 
         <ul class="breadcrumb"> 
          <li class="firstImg active"><img src="img/defaultImg.png" ></li> 
-         <li><img src="img/defaultIcon.png" ></li> 
-         <li><img src="img/defaultImg.png" ></li> 
-         <li><img src="img/pingpong.png" ></li> 
-         <li class="lastImg"><img src="img/pingpong-grey.png" ></li> 
+         <li><img src="" ></li> 
+         <li class="lastImg"><img src="" ></li> 
         </ul> 
        </div> 
       </div> 
@@ -548,6 +546,9 @@ function pagesMesg(count,crtPage,rs){
 		  }
 	    });
   }
+  // 暂时使用
+	  var url = window.location.search,
+	  id = decodeURI(url.substring(url.lastIndexOf('=')+1, url.length));
   
   $(function(){
 	  var url = window.location.search,
@@ -694,6 +695,28 @@ function pagesMesg(count,crtPage,rs){
       $(".courtImg-big > img").attr("src",imgSrc);
     });
   });
+  (function(){
+		$.ajax({
+		    type: 'POST',
+	        url: 'http://localhost:8080/sousai/ueditor/jsp/controller.jsp?action=listimage&id='+id,
+	        data: null,
+	        success: function(rspdata) {
+	      	  console.log(rspdata.replace("list",'"list"'));
+	      	  var jsonrspdata = JSON.parse(rspdata.replace("list",'"list"'));
+	      	  console.log(jsonrspdata);
+	      	  $.each(jsonrspdata.list,function(index,item){
+	      		  if(index == 0){
+	      			$('.courtImg-big').find("img:eq(0)").attr("src",'http://localhost:8080/sousai'+item.url);	 
+		      		$('.courtImg-small').find("img:eq(0)").attr("src",'http://localhost:8080/sousai'+item.url);	      			  
+	      		  }else if(index ==1){
+	      			$('.courtImg-small').find("img:eq(1)").attr("src",'http://localhost:8080/sousai'+item.url);	 
+	      		  }else if(index ==2){
+	      			$('.courtImg-small').find("img:eq(2)").attr("src",'http://localhost:8080/sousai'+item.url);	 
+	      		  }
+	      	  });
+	        },
+	      });
+	}());
   </script>  
  </body>
 </html>

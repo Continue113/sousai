@@ -7,6 +7,7 @@
   <meta name="description" content="搜赛网用户中心-我的搜赛-我发布的场地">
   <s:include value="seg-meta.jsp"/>
   <link href="css/sousai.userCenter.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="webuploader/webuploader.css">
 </head>
 <body class="userCenter">
 <s:include value="seg-navbar.jsp"/><!-- 页首导航条 -->
@@ -86,6 +87,7 @@
   <script src="tinymce/jquery.tinymce.min.js"></script> 
   <script src="tinymce/tinymce.min.js"></script>
   <script src="js/jquery.validate.min.js"></script>
+  <script src="webuploader/webuploader.js"></script>
   <script src="js/sousai.editcourt.js"></script>
   <!-- handlebars template -->
   <script id="court-template" type="text/x-handlebars-template">
