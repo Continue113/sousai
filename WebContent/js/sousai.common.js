@@ -666,15 +666,12 @@ $(function() {
         tgPrtVal = tgPrt.find(".selectProvince option:selected").attr("value");
         if (tgPrtVal != 0 && tgPrtVal != 810000 && tgPrtVal != 820000) {
             $.ajax({
-                type: "POST",
                 url: "selRegion",
-                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
                 data: {
                     "region.level": 1,
                     "region.code": tgPrt.find(".selectProvince option:selected").attr("value"),
                     "region.order": tgPrt.find(".selectProvince option:selected").attr("data-order")
                 },
-                dataType: "json",
                 success: function(rspdata) {
                     var selectCity = tgPrt.find(".selectCity");
                     selectCity.empty().append("<option value=0 data-regionid=0>请选择市</option>");
@@ -682,11 +679,7 @@ $(function() {
                         selectCity.append("<option value=" + rspdata[i].code + " data-order=\"" + rspdata[i].order + "\" data-regionid=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</option>");
                     }
                 },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.log(jqXHR + " /" + textStatus + " /" + errorThrown);
-                    alert("抱歉，获取市区出错了。");
-                },
-            }); //ajax 已得到城市
+            });
             //tgPrt.find(".selectCity").show();
         } else {
             //当用户没有选择省份的时候，就将市区下拉列表框中原有的“请选择”字样删除。
@@ -702,25 +695,18 @@ $(function() {
         var tgPrt = $(this).parent();
         if (tgPrt.find(".selectCity option:selected").attr("value") != 0) {
             $.ajax({
-                type: "POST",
                 url: "selRegion",
-                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
                 data: {
                     "region.level": 2,
                     "region.code": tgPrt.find(".selectCity option:selected").attr("value"),
                     "region.order": tgPrt.find(".selectCity option:selected").attr("data-order")
                 },
-                dataType: "json",
                 success: function(rspdata) {
                     var selectCountry = tgPrt.find(".selectCountry");
                     selectCountry.empty().append("<option value=0 data-regionid=0>请选择区</option>");
                     for (var i = 0; i < rspdata.length; i++) {
                         selectCountry.append("<option value=" + rspdata[i].code + " data-order=\"" + rspdata[i].order + "\" data-regionid=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</option>");
                     }
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.log(jqXHR + " /" + textStatus + " /" + errorThrown);
-                    alert("抱歉，获取区县出错了。");
                 },
             }); //ajax 已得到区县
             //tgPrt.find(".selectCountry").show();

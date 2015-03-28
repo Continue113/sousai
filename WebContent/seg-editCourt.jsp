@@ -99,35 +99,16 @@
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="uploadCourtImgs">场地图片：</label> 
-           <div class="controls"> 
-           <!-- OLD pic upload -->
+           <div class="controls">
             <div class="fileupload-buttonbar"> 
  			 <span id="filePicker" class="btn"><i class="icon-plus"></i>选择图片</span>
-             <span class="btn plus"><i class="icon-plus"></i><span>添加图片栏</span></span> 
-             <span class="btn allCancel"> <i class="icon-ban-circle"></i> <span>全部取消</span> </span> 
-             <span class="error">请上传小于 200KB 的 jpg、jpeg、png、gif 格式的图片。</span>
-             <table class="table table-striped">
-              <tbody class="files">
-              <tr id="tr1">
-                <td>
-                  <span class="btn fileinput-button" onclick="selectPic(1)"><i class="icon-plus"></i><span>选择图片</span></span>
-                  <input class="hide fileImage" id="fileImage1" type="file" name="images" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="imgValid(this,1)">
-                  <input class="hide fileImageNames" type="text" name="imgNames" value="">
-                </td>
-                <td><span class="preview" id="preview1"></span></td>
-                <td><span class="name"></span></td>
-                <td><span class="size"></span></td>
-                <td><span class="btn cancel" onclick="deleteTr(1)"><i class="icon-ban-circle"></i>取消</span></td>
-              </tr>
-              </tbody>
-             </table> 
+ 			 <span id="startUpload" class="btn hide">开始上传</span>
+             <span class="error">请上传小于 200KB 的 jpg、jpeg、png、gif 格式的图片。一个场地最多上传3张图片.</span>
             </div>
-            <!-- /OLD pic upload -->
-            <!-- New uploader -->
             <div id="uploader">
  			   <!--用来存放item-->
    			   	<ul id="fileList" class="files"></ul>
-			</div>            
+			</div>
            </div> 
           </div> 
           <div class="control-group"> 
@@ -135,7 +116,7 @@
           </div> 
           <textarea id="inputCourtInfo" name="intro"></textarea>          
           <div class="control-group hide"> 
-           <div class="controls"> 
+           <div class="controls">
             <button type="button" class="btn btn-success pull-right" id="rlsCourt">确定发布</button> 
             <button type="reset" class="btn pull-right" id="resetCourtForm">清空</button> 
            </div> 

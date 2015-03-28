@@ -7,6 +7,7 @@
   <meta name="description" content="搜赛网-管理员页面-场地维护"> 
   <s:include value="seg-meta.jsp"/>
   <link href="css/sousai.back.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="webuploader/webuploader.css">
  </head> 
  <body class="background"> 
   <s:include value="seg-back-head.jsp"/> 
@@ -100,6 +101,7 @@
   <script src="tinymce/tinymce.min.js"></script> 
   <script src="js/handlebars-v2.0.0.js"></script>
   <script src="js/jquery.validate.min.js"></script>
+  <script src="webuploader/webuploader.js"></script>
   <script src="js/jquery.wordLimit.js"></script>
   <script src="js/sousai.common.js"></script>
   <script src="js/sousai.editcourt.js"></script>

@@ -73,7 +73,7 @@
   <script src="tinymce/jquery.tinymce.min.js"></script> 
   <script src="tinymce/tinymce.min.js"></script> 
   <script src="js/jquery.validate.min.js"></script>
-  <script type="text/javascript" src="webuploader/webuploader.js"></script>
+  <script src="webuploader/webuploader.js"></script>
   <script src="js/sousai.editcourt.js"></script> 
   <script>
   //定义函数
@@ -147,13 +147,17 @@
   		            url: "relCourt",
   		         	//processData: false, //不处理数据
   		        	//contentType: false, //不自动设置请求头
-  		            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
   		            data: data,
-  		            dataType: "json",
   		            success: function(rspdata) {
   		          	  if( rspdata == "fail" ){
   		          		  sousaiRemindDialog("发布场地失败,fail");
   		          	  }else{
+  		          		  //设置图片所属的场地Id
+  		          		  upLoaderServerCourtId = rspdata;
+  		          		  //上传图片
+  		          		  uploader.option("server",'http://localhost:8080/sousai/ueditor/jsp/controller.jsp?action=uploadimage&id='+upLoaderServerCourtId);
+  		          		  uploader.upload();
+  		          		  
 	              		  $(".editCourt").hide();
 	              		  $("#afterRelease").find(".releaseInfoTitle").text(court.name).end()
 	              		  .find(".releaseInfoId").text(rspdata).end()
