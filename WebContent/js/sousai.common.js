@@ -367,7 +367,8 @@ function getRegion() {
 	        url: "isLogined",
 	        async: false, //设置异步为false,解决ajax异步不能设置全局变量的问题
 	    });
-	   if(logindata.responseJSON=="error"){
+	   console.log(logindata);
+	   if(!logindata.responseJSON){
 			// -1 为未登录状态，其他则为用户ID
 			newformloginBox();
 		}
@@ -447,7 +448,7 @@ function login(event){
 function isAdmin(){
 	//检测用户是否为登录状态
 	var userid =isLogined();
-	if(userid.responseJSON.userType=='2'){
+	if(userid.responseJSON&&userid.responseJSON.userType=='2'){
 		return 1;
 	}else{
 		$(".background").html("未登录，请先<a href=\"login.jsp\">登录</a>。");

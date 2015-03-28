@@ -85,7 +85,7 @@
 	  setMenu();
 		//检测用户是否为登录状态
 		var userid =isLogined();
-		if(userid.responseJSON=="error"){
+		if(!userid.responseJSON){
 			$(".span8",".span11").html("您还未登录，请先 <a href=\"login.jsp\">登录</a>。");
 			return false;
 		}else if(userid.responseJSON.userType=="0"){
@@ -155,7 +155,7 @@
   		          		  //设置图片所属的场地Id
   		          		  upLoaderServerCourtId = rspdata;
   		          		  //上传图片
-  		          		  uploader.option("server",'http://localhost:8080/sousai/ueditor/jsp/controller.jsp?action=uploadimage&id='+upLoaderServerCourtId);
+  		          		  uploader.option("server",'http://localhost:8080/sousai/ueditor/jsp/controller.jsp?action=uploadimage&id=court/'+upLoaderServerCourtId);
   		          		  uploader.upload();
   		          		  
 	              		  $(".editCourt").hide();

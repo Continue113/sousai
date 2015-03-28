@@ -557,15 +557,6 @@ function pagesMesg(count,crtPage,rs){
 	  getCourtById(id);
 	  //初始化生成验证码
       createCode("inputValidateImg");
-     //点击隐藏回复 和 显示回复   无子回复 所以暂时未使用
-     /* $("body").on("click",".evaluation-tool-visible",function(){
-    	 var textState = $(this);
-    	 if( textState.text() == "隐藏回复" ){
-    		 textState.text("显示回复").parent().parent().find(".evaluation-reply").slideUp("slow");
-    	 }else{
-    		 textState.text("隐藏回复").parent().parent().find(".evaluation-reply").slideDown("slow");
-    	 }
-     }); */
         
      
      $("body").on("click",".evaluation-tool > .evaluation-tool-a",function(){ //仅对一层评论的“我要回复下使用”
@@ -593,30 +584,6 @@ function pagesMesg(count,crtPage,rs){
     return false;
      });
 
-     /* $("body").on("click",".media-body > .evaluation-tool-a",function(){ //仅对二层评论的“我要回复下使用” 无子回复，所以二级评论的回复框未使用
-      var target = $(this).parent().parent(),//目标为evaluation
-          parentName = $.trim(target.find(".evaluationName").text()), //trim()去除前后空格 .evalution .evaluationName
-          img = 'img/defaultImg.png',
-          id = $("#userId").attr("data-userid")||0,
-          name = $("#userId").text()||'<a href="login.jsp" >请登录</a>';
-          
-          if( $(".evaluations .evaluation-response-li").length==0){ //判断是否存在.evaluation-response
-            appendTextarea (target.parent().parent(),img,name,id,parentName);
-            $(".evaluations .evaluation-response-li").slideDown();
-            focusLast(document.getElementById("inputResponse-temp"),30,30);
-          }else if(target.parent().parent().find(".evaluation-response-li").length==1){
-            $("#inputResponse-temp").text("【回复 "+parentName+" 】：");
-            focusLast(document.getElementById("inputResponse-temp"),30,30);
-          }else{
-            $(".evaluations .evaluation-response-li").slideUp("slow",function(){
-              $(".evaluations .evaluation-response-li").remove();
-              appendTextarea (target,img,name,id,parentName);
-              $(".evaluations .evaluation-response-li").slideDown();
-              focusLast(document.getElementById("inputResponse-temp"),30,30);
-            });
-          }
-      return false;
-     }); */
     //直接发表评论
     $("#reply-main").click(function(){
       $(".evaluations .evaluation-response-li").slideUp("slow",function(){
@@ -629,7 +596,7 @@ function pagesMesg(count,crtPage,rs){
           inputValidateCaodeMain = $("#inputValidateCodeMain").val().toUpperCase(),
           userid =isLogined();
 	    //检测用户是否为登录状态
-	  	if(userid.responseJSON=="error"){
+	  	if(!userid.responseJSON){
 	  		// -1 为未登录状态，其他则为用户ID
 	  		newformloginBox();
 	  	}else {
@@ -658,7 +625,7 @@ function pagesMesg(count,crtPage,rs){
           inputValidateCaodeMain = $("#inputValidateCodeTemp").val().toUpperCase(),
           userid =isLogined();
 	    //检测用户是否为登录状态
-	  	if(userid.responseJSON=="error"){
+	  	if(!userid.responseJSON){
 	  		// -1 为未登录状态，其他则为用户ID
 	  		newformloginBox();
 	  	}else {

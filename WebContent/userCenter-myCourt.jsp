@@ -142,16 +142,13 @@
 	              });
 	        	Handlebars.registerHelper("recordNumb",function(){
 	          	  	var recordNumb = $.ajax({
-	          	  		type: "POST",
 	          	        url: "getMatchByCourtId",
-	          	        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 	          	        data: {
 	          	          courtId: this.id,
 	          	          currentPage: 1,
 	          	          rows: 1
 	          	        },
 	        	        async: false, //设置异步为false,解决ajax异步不能设置全局变量的问题
-	          	        dataType: "json"
 	          	        });
 	          	  	console.log(recordNumb.responseJSON);
 	          	  	 if(!recordNumb.responseJSON.count){
@@ -161,12 +158,9 @@
 	              });
 	        	Handlebars.registerHelper("evaluationNumb",function(){
 	          	  	 var evaluationNumb = $.ajax({
-	          	  		type: "POST",
 	          	        url: "showMsgs",
-	          	        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 	          	        data: {courtId: this.id},
 	        	        async: false, //设置异步为false,解决ajax异步不能设置全局变量的问题
-	          	        dataType: "json"
 	          	        });
 		          	 console.log(evaluationNumb.responseJSON);
 	          	  	 if(!evaluationNumb.responseJSON.length){
@@ -193,7 +187,7 @@
     	setMenu();
     	//检测用户是否为登录状态
     	var userid =isLogined();
-    	if(userid.responseJSON=="error"){
+    	if(!userid.responseJSON){
     		$(".span8",".span11").html("您还未登录，请先登录。");
     		return false;
     	}

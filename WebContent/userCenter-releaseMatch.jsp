@@ -87,7 +87,7 @@
 	  setMenu();
 		//检测用户是否为登录状态
 		var userid =isLogined();
-		if(userid.responseJSON=="error"){
+		if(!userid.responseJSON){
 			$(".span8",".span11").html("您还未登录，请先 <a href=\"login.jsp\">登录</a>。");
 			return false;
 		}else if(userid.responseJSON.userType=="0"){

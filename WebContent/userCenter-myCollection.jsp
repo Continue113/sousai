@@ -143,7 +143,7 @@
     	setMenu();
     	//检测用户是否为登录状态
     	var userid =isLogined();
-    	if(userid.responseJSON=="error"){
+    	if(!userid.responseJSON){
     		$(".span8",".span11").html("您还未登录，请先登录。");
     		return false;
     	}

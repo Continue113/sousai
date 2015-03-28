@@ -154,7 +154,6 @@ function e(argso){
 	  $.ajax({
 	        url: "getCourtByP",
 	        data: args,
-	        dataType: "json",
 	        success: function(rspdata) {
 	        	console.log(rspdata);
 	        	//设置搜索结果数量
@@ -165,16 +164,13 @@ function e(argso){
 	              });
 	        	Handlebars.registerHelper("recordNumb",function(){
 	          	  	var recordNumb = $.ajax({
-	          	  		type: "POST",
 	          	        url: "getMatchByCourtId",
-	          	        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 	          	        data: {
 	          	          courtId: this.id,
 	          	          currentPage: 1,
 	          	          rows: 1
 	          	        },
 	        	        async: false, //设置异步为false,解决ajax异步不能设置全局变量的问题
-	          	        dataType: "json",
 	          	        });
 	          	  	 if(!recordNumb.responseJSON.count){
 	          	  		 return 0;
@@ -183,12 +179,9 @@ function e(argso){
 	              });
 	        	Handlebars.registerHelper("evaluationNumb",function(){
 	          	  	 var evaluationNumb = $.ajax({
-	          	  		type: "POST",
 	          	        url: "showMsgs",
-	          	        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 	          	        data: {courtId: this.id},
 	        	        async: false, //设置异步为false,解决ajax异步不能设置全局变量的问题
-	          	        dataType: "json",
 	          	        });
 	          	  	 if(!evaluationNumb.responseJSON.length){
 	          	  		 return 0;

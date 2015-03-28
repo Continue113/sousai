@@ -15,23 +15,27 @@ function setCourtInfo(datainfo){
     $("#inputCourtTel").val(data.tel);
     $("#inputCourtPrice").val(data.price);
     $("#inputCourtOpenTime").val(data.workTime);
+    //再次初始化上传图片,
+    imageUploader();
+    uploader.option("server",'http://localhost:8080/sousai/ueditor/jsp/controller.jsp?action=uploadimage&id=court/'+upLoaderServerCourtId);
+		  
     //获取已上传的场地图片
     //设置上传图片为可见,同时添加删除已有图片功能,
     (function(){
     $.ajax({
         url: 'http://localhost:8080/sousai/ueditor/jsp/controller.jsp?action=listimage',
         data: {
-        	id:data.id
+        	id:"court/"+data.id
         	},
         success: function(rspdata) {
-      	  console.log(rspdata.replace("list",'"list"'));
+      	  console.log(rspdata);
       	  var jsonrspdata = JSON.parse(rspdata.replace("list",'"list"'));
       	  console.log(jsonrspdata);
       	  $.each(jsonrspdata.list,function(index,item){
       		  var imgName = item.url,//.split("/").value[6],
       		  	  $li = $( '<li id="' + imgName + '">' +
       	              '<p class="title">' + imgName + '</p>' +
-      	              '<p class="imgWrap"><img src="http://localhost:8080/sousai'+item.url+'"></p>'+
+      	              '<p class="imgWrap"><img src="./'+item.url+'"></p>'+
       	              '</li>').appendTo($('#fileList')),
       	              
       	              $btns = $('<div class="file-panel">' +
@@ -60,7 +64,7 @@ function setCourtInfo(datainfo){
           		  var imgName = item.url.split("/")[6].split(".")[0],
       		  	  $li = $( '<li id="' + imgName + '">' +
           	              '<p class="title">' + imgName + '</p>' +
-          	              '<p class="imgWrap"><img src="http://localhost:8080/sousai'+item.url+'"></p>'+
+          	              '<p class="imgWrap"><img src="./'+item.url+'"></p>'+
           	              '</li>').appendTo($('#fileList')),
           	              
           	              $btns = $('<div class="file-panel">' +
@@ -211,7 +215,7 @@ function imageUploader(){
       },
       // swf文件路径
       swf: 'webuploader/Uploader.swf',
-      server: 'http://localhost:8080/sousai/ueditor/jsp/controller.jsp?action=uploadimage&id=123456',
+      server: 'http://localhost:8080/sousai/ueditor/jsp/controller.jsp?action=uploadimage&id=court/0',
       fileNumLimit: 3,
       fileSingleSizeLimit: 200 * 1024,    // 200k
   });
@@ -313,13 +317,13 @@ function imageUploader(){
   uploader.onError = function( code ) {
       sousaiRemindDialog( '请上传小于 200KB 的 jpg、jpeg、png、gif 格式的图片。一个场地最多上传3张图片. Eroor: ' + code );
   };
-
-  $upload.on('click', function() {
+  //在管理图片时需要使用
+  /*$upload.on('click', function() {
       if ( $(this).hasClass( 'disabled' ) ) {
           return false;
       }
       uploader.upload();
-  });
+  });*/
 }
 
 
