@@ -74,7 +74,7 @@ public class ActionEnter extends UserBaseAction {
 		State state = null;
 
 		int actionCode = ActionMap.getType(this.actionType);
-
+		String typeAndIdPath = request.getParameter("id");
 		Map<String, Object> conf = null;
 
 		switch (actionCode) {
@@ -87,8 +87,8 @@ public class ActionEnter extends UserBaseAction {
 		case ActionMap.UPLOAD_VIDEO:
 		case ActionMap.UPLOAD_FILE:
 			conf = this.configManager.getConfig(actionCode);
-			System.out.println("id=" + request.getParameter("id"));
-			conf.put("id", request.getParameter("id")); // 前端传过来的id，为courtImg/场地id，
+			System.out.println("id=" + typeAndIdPath);
+			conf.put("id", typeAndIdPath); // 前端传过来的id，为courtImg/场地id，
 														// 或者userImg/用户id
 			state = new Uploader(request, conf).doExec();
 			break;
@@ -104,7 +104,7 @@ public class ActionEnter extends UserBaseAction {
 		case ActionMap.LIST_FILE:
 			conf = configManager.getConfig(actionCode);
 			int start = this.getStartIndex();
-			state = new FileManager(conf).listFile(start);
+			state = new FileManager(conf).listFile(start, typeAndIdPath);
 			System.out.println("LIST_IMAGE.state = "+state.toJSONString());
 			break;
 		case ActionMap.DELETE_IMAGE:

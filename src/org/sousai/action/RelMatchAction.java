@@ -81,30 +81,32 @@ public class RelMatchAction extends UserBaseAction {
 
 			MyPrint.myPrint("match.getCourtId() = " + match.getCourtId());
 			// 是否超过当日发布比赛上限
-			Integer id = null;
-			if (!umg.isExeed(userBean.getUserId(), MAX_MATCH_COUNT, 0)) {
-				//需要发布新场地
-				if(isCourt && court!=null){
+			Integer id = match.getCourtId();
+			//非管理员且超过每天发布比赛上限
+			if (userBean.getUserType() != '2'
+					&& !umg.isExeed(userBean.getUserId(), MAX_MATCH_COUNT, 0)) {
+				// 需要发布新场地
+				if (isCourt && court != null) {
 					id = umg.releaseCourt(court);
 				}
-				//不用发布新场地，或者新场地发布成功，则设置比赛的courtid属性，并开始发布比赛
-				if((!isCourt || id!=null) && match !=null )
-				{
+				// 不用发布新场地，或者新场地发布成功，则设置比赛的courtid属性，并开始发布比赛
+				if ((!isCourt || id != null) && match != null) {
 					match.setCourtId(id);
 					value = umg.relMatch(match).toString();
-				}else{
+				} else {
 					value = Constant.FAIL;
 				}
-//				if ((!isCourt || (court != null && (id =umg.releaseCourt(court)) != null))
-////						&& getMatch() != null && umg.relMatch(match) != 0) {
-//						&& getMatch() != null) {
-//					System.out.println("courtId = "+id);
-//					match.setCourtId(id);
-//					value = umg.relMatch(match).toString();
-////					value = Constant.SUCCESS;
-//				} else {
-//					value = Constant.FAIL;
-//				}
+				// if ((!isCourt || (court != null && (id
+				// =umg.releaseCourt(court)) != null))
+				// // && getMatch() != null && umg.relMatch(match) != 0) {
+				// && getMatch() != null) {
+				// System.out.println("courtId = "+id);
+				// match.setCourtId(id);
+				// value = umg.relMatch(match).toString();
+				// // value = Constant.SUCCESS;
+				// } else {
+				// value = Constant.FAIL;
+				// }
 			} else {
 				value = EXEED_COUNT;
 			}

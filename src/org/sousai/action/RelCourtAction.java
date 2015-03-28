@@ -23,7 +23,7 @@ import com.opensymphony.xwork2.*;
  * 
  * @author Myic myic211@gmail.com
  * @version 1.0
- *
+ * 
  */
 
 public class RelCourtAction extends UserBaseAction {
@@ -71,7 +71,9 @@ public class RelCourtAction extends UserBaseAction {
 		try {
 			UserBean userBean = (UserBean) ActionContext.getContext()
 					.getSession().get("userBean");
-			if (umg.isExeed(userBean.getUserId(), MAX_COURT_COUNT, 1)) {
+			//非管理员且超过每天最大发布数
+			if (userBean.getUserType() != '2'
+					&& umg.isExeed(userBean.getUserId(), MAX_COURT_COUNT, 1)) {
 				result = EXEED_COUNT;
 			} else {
 				MyPrint.myPrint(court.toString());

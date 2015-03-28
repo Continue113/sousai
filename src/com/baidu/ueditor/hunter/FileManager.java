@@ -45,10 +45,10 @@ public class FileManager {
 		Collection<File> list = FileUtils.listFiles( fileDir, null, true );
 		return list.size();
 	}
-	public State listFile ( int index ) {
+	public State listFile ( int index, String typeAndIdPath ) {
 		
 		System.out.println("dir = "+dir);
-		File dir = new File( this.dir );
+		File dir = new File( this.dir+"/"+typeAndIdPath );
 		State state = null;
 
 		if ( !dir.exists() ) {
