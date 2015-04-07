@@ -56,7 +56,7 @@ function setCourtInfo(datainfo){
       	  });
         },
         error: function(rspdata){
-        	alert("error sousai");
+        	alert("获取图片出错了,error sousai");
         	  console.log(rspdata);
           	  var jsonrspdata = JSON.parse(rspdata.responseText.replace("list",'"list"'));
           	  console.log(jsonrspdata);
@@ -370,7 +370,7 @@ $(function(){
             data: data,
             success: function(rspdata) {
           	  if( rspdata == "success" ){
-          		  window.setTimeout("window.location。href=window.location。href",3000);
+          		  window.setTimeout("window.location.href=window.location.href",3000);
           		  sousaiRemindDialog("保存成功,3秒后将刷新页面。");
           	  }else{
           		  sousaiRemindDialog("保存失败，错误代码为："+rspdata);
