@@ -147,9 +147,9 @@
 
       Handlebars.registerHelper("checkState",function(){
           if(this.verify == "1"){
-          	return  new Handlebars.SafeString('<label for="'+this.id+'"><input type="checkbox" id="'+this.id+'" ><span>'+this.id+':'+this.name+'</span></label><span class="label label-info">已发布</span>');
+          	return  new Handlebars.SafeString('<label for="'+this.id+'"><input type="checkbox" id="'+this.id+'" ><span>'+this.name+'</span></label><span class="label label-info">已发布</span>');
           }else{
-          	return new Handlebars.SafeString('<label for="'+this.id+'"><input type="checkbox" id="'+this.id+'" ><span>'+this.id+':'+this.name+'</span></label>');
+          	return new Handlebars.SafeString('<label for="'+this.id+'"><input type="checkbox" id="'+this.id+'" ><span>'+this.name+'</span></label>');
           }
         });
       target.empty().html(template(rspdata.body));

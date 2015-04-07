@@ -1,19 +1,4 @@
 
-//设置热门搜索
-	function setAllHotWords(){
-		  $.ajax({
-			  url: "findAllHotWords",
-			  success: function(rspdata) {
-		         	console.log(rspdata);
-		         	var target = $("#searchbox-tab").parent().find(".breadcrumb");
-		         	target.empty().append('<li class="breadcrumb-title">热门搜索:</li>');
-		            for (var i = 0; i < rspdata.length; i++) {
-		            	target.append('<li><a target="_blank" href="matchSearch.jsp?key='+ rspdata[i].word +'">&nbsp;'+ rspdata[i].word +' </a></li>');
-		         	} 
-		            //target.append('<li><a target="_blank" href="matchSearchAdv.jsp">&nbsp;更多&gt;&gt;</a></li>');            
-		      },
-		  });		
-	}
 function setMenu(){
     var url = window.location.pathname;
     urikv = decodeURI(url.substring(url.lastIndexOf('/')+1, url.length));
@@ -369,7 +354,6 @@ function getRegion() {
 	    });
 	   console.log(logindata);
 	   if(!logindata.responseJSON){
-			// -1 为未登录状态，其他则为用户ID
 			newformloginBox();
 		}
 	   return logindata;
@@ -455,7 +439,20 @@ function isAdmin(){
 		return -1;
 	}
 }
-
+//点击发布比赛和发布场地时检测是否登陆
+function towardReleaseBefore(){
+	//检测用户是否为登录状态
+	var userid =isLogined();
+	if(!userid.responseJSON.userId){
+		return false;
+	}else{
+		if($(this).text() == "发布比赛"){
+			location.href = "userCenter-releaseMatch.jsp";
+		}else{
+			location.href = "userCenter-releaseCourt.jsp";			
+		}
+	}
+}
 $(function() {
 	//common.js的统一初始化代码，
 	//配置信息，初始化页面 需要的所有配置信息，如ajax错误信息，成功输出信息，所有页面关于分页的代码，排序，条数，
@@ -465,25 +462,25 @@ $(function() {
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         dataType: "json",
         error: function(jqXHR, textStatus, errorThrown){
+            switch (jqXHR.status){  
+                case(500):  
+                	console.log("服务器系统内部错误");  
+                    break;  
+                case(401):  
+                	console.log("未登录");  
+                    break;  
+                case(403):  
+                	console.log("无权限执行此操作");  
+                    break;  
+                case(408):  
+                	console.log("请求超时");  
+                    break;  
+                default:  
+                	console.log("未知错误");  
+            }  
         	console.log(jqXHR);
         	console.log(textStatus);
         	console.log(errorThrown);
-            switch (jqXHR.status){  
-                case(500):  
-                    alert("服务器系统内部错误");  
-                    break;  
-                case(401):  
-                    alert("未登录");  
-                    break;  
-                case(403):  
-                    alert("无权限执行此操作");  
-                    break;  
-                case(408):  
-                    alert("请求超时");  
-                    break;  
-                default:  
-                    alert("未知错误");  
-            }  
         },   
         success: function(rspdata){  
             console.log(rspdata);  
@@ -497,8 +494,6 @@ $(function() {
 		}
 		$(".selectRows").append(rows);
 	}
-	//设置热门搜索
-	setAllHotWords();
 	
 	/////////////////////////////////////////////////////////////////////
 	//////////////////// 全局设置所有的初始化函数完成           ///////////////////////////

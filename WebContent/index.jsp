@@ -126,10 +126,27 @@
 	        },
 	      }); //ajax 已得到发布的比赛信息
   }
-  
+
+//设置热门搜索
+	function setAllHotWords(){
+		  $.ajax({
+			  url: "findAllHotWords",
+			  success: function(rspdata) {
+		         	console.log(rspdata);
+		         	var target = $("#searchbox-tab").parent().append('<div class="row"><div class="span8 breadcrumb-fff"> <ul class="breadcrumb"> <li class="breadcrumb-title">热门搜索:</li> </ul> <hr class="span5"> </div> </div>').find(".breadcrumb");
+		         	target.empty().append('<li class="breadcrumb-title">热门搜索:</li>');
+		            for (var i = 0; i < rspdata.length; i++) {
+		            	target.append('<li><a target="_blank" href="matchSearch.jsp?key='+ rspdata[i].word +'">&nbsp;'+ rspdata[i].word +' </a></li>');
+		         	} 
+		            //target.append('<li><a target="_blank" href="matchSearchAdv.jsp">&nbsp;更多&gt;&gt;</a></li>');            
+		      },
+		  });		
+	}
   $(function(){
 	  //加载所有比赛数量
 	 getAllMatchIcon();
+	 //设置热门搜索
+	 setAllHotWords();
 	  
     //首页快捷图标 
     $(".scmn").on("mouseenter","li",function(event){

@@ -78,7 +78,7 @@
 		</ul>
 	   </div></div>
        <!-- courtBoxs -->
-       <div class="courtBoxs"></div>
+       <div class="courtBoxs hide"></div>
        <!-- panel --> 
        <div class="panel-bottom">
        <div id="ajaxState" class="text-center"><span class="hide noresult">无结果</span><span class="hide load"><img src="img/loading.gif" height="20px" width="20px"></img>数据加载中...</span></div>

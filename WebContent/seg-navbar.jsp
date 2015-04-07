@@ -8,7 +8,7 @@
       <li><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=200799663&site=qq&menu=yes">在线联系</a> <span class="divider">|</span></li>
       <s:if test="#session.userBean.userName!=null">
       <li>您好，<a tabindex="-1" href="userCenter-editUser.jsp"><span id="userId" data-userid='<s:property value="#session.userBean.userId"/>' data-useremail='<s:property value="#session.userBean.userEmail"/>'><s:property value="#session.userBean.userName"/></span></a>！ <a href="processLogout">退出</a> <span class="divider">|</span></li> 
-      <li class="dropdown"> <a class="dropdown-hover" href="javascript:void(0);">我的搜赛<b class="caret"></b></a> 
+      <li class="dropdown"> <a class="dropdown-hover" href="userCenter-myMatch.jsp">我的搜赛<b class="caret"></b></a> 
        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">  
         <li><a tabindex="-1" href="userCenter-releaseMatch.jsp">发布比赛</a></li> 
         <li><a tabindex="-1" href="userCenter-releaseCourt.jsp">发布场地</a></li>

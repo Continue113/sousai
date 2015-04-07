@@ -13,7 +13,7 @@
         <button class="btn btn-success btn-search" type="button">&nbsp;搜&nbsp;索</button> 
        </div> 
        <div class="span1"> 
-        <a href="userCenter-releaseMatch.jsp">发布比赛</a> 
+        <a href="javascript:;" onclick="towardReleaseBefore()">发布比赛</a> 
         <p><a href="matchSearchAdv.jsp">高级搜索</a></p> 
        </div> 
       </div> 
@@ -24,23 +24,9 @@
         <button class="btn btn-success btn-search" type="button">&nbsp;搜&nbsp;索</button> 
        </div> 
        <div class="span1"> 
-        <a href="userCenter-releaseCourt.jsp">发布场地</a> 
+        <a href="javascript:;" onclick="towardReleaseBefore()">发布场地</a> 
         <p><a href="courtSearchAdv.jsp">高级搜索</a></p> 
        </div> 
       </div> 
      </div>
-     <div class="row"> 
-      <div class="span8 breadcrumb-fff"> 
-       <ul class="breadcrumb"> 
-        <li class="breadcrumb-title">热门搜索:</li> 
-        <li><a href="matchSearch.jsp?key=山东杯">山东杯</a></li> 
-        <li><a href="matchSearch.jsp?key=山东杯">山东杯</a></li> 
-        <li><a href="matchSearch.jsp?key=山东杯">山东杯</a></li> 
-        <li><a href="matchSearch.jsp?key=山东杯">山东杯</a></li> 
-        <li><a href="matchSearch.jsp?key=山东杯">山东杯</a></li> 
-        <li><a href="matchSearchAdv.jsp">更多&gt;&gt;</a></li> 
-       </ul> 
-       <hr class="span5" /> 
-      </div> 
-     </div> 
     </div> <!-- /span7 searchbox -->

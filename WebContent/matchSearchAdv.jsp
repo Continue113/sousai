@@ -96,7 +96,7 @@
 		</ul>
 	   </div>
 	   </div>
-      <div class="matchBoxs"></div>
+      <div class="matchBoxs hide"></div>
        <div class="panel-bottom">
        <div id="ajaxState" class="text-center"><span class="hide noresult">无结果</span><span class="hide load"><img src="img/loading.gif" height="20px" width="20px"></img>数据加载中...</span></div>
        <div class="pagination"><nav><ul class="pagination"></ul></nav></div>
@@ -139,7 +139,7 @@
 		  </li>
           <li class="matchBox-court "><a href="courtSearchDetail.jsp?id={{courtId}}">{{courtName}}</a></li> 
           <li class="matchBox-state ">{{state}}</li> 
-          <li class="matchBox-info "><a target="_blank" href="matchSearchDetail.jsp?id={{id}}">{{{rule}}}</a></li> 
+          <li class="matchBox-info "><a target="_blank" href="matchSearchDetail.jsp?id={{id}}">{{rule}}</a></li> 
           <li class="matchBox-btns "><a href="javascript:void(0);" class="btn btn-mini" onclick="markMatch({{id}})">收藏比赛</a><a target="_blank" href="matchSearchDetail.jsp?id={{id}}" class="btn btn-mini">查看详细</a></li> 
          </ul> 
         </div>

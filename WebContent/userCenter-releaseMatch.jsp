@@ -181,6 +181,8 @@
 		              		  sousaiRemindDialog("'"+match.title+"' 发布失败，fail");
 		              	  }else{
 		              		  $(".editMatch").hide("fast",function(){
+		              			  //清空表单
+		              			  matchValidator.resetForm();
 			              		  $("#afterRelease").find(".releaseInfoTitle").text(match.title).end()
 			              		  .find(".releaseInfoId").text(rspdata).end()
 			              		  .find(".releaseInfoHref").text("http://www.isousai.com/sousai/matchSearchDetail.jsp?id="+rspdata).attr("href","matchSearchDetail.jsp?id="+rspdata).end()

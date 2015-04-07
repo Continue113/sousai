@@ -298,10 +298,10 @@
     {{#each this}}
 
   <tr class="tbl-item" data-info="{{data}}"> 
-   <td><a target="_blank" href="matchSearchDetail.jsp?id={{id}}">{{name}}</a></td> 
+   <td><a target="_blank" href="matchSearchDetail.jsp?id={{id}}">匿名用户</a></td> 
    <td>{{beginTime}} - {{endTime}}</td> 
    <td>{{state}}</td> 
-   <td>{{#if score}}{{score}}{{else}}暂无信息{{/if}}</td> 
+   <td>{{#if score}}已录{{else}}未录{{/if}}</td> 
   </tr> 
 
   {{/each}}  
