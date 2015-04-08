@@ -459,7 +459,7 @@ $(function(){
   //选择区时添加 区域到inputCourtRegion中
   $(".controls > .selectCountry").change(function(){
 	  var tgPrt = $(this).parent(),
-	  region = $(".selectProvince option:selected").text() +"-"+ $(".selectProvince option:selected").text()+"-"+ tgPrt.find(".selectCountry option:selected").text();
+	  region = $(".selectProvince option:selected").text() +"-"+ $(".selectCity option:selected").text()+"-"+ tgPrt.find(".selectCountry option:selected").text();
 	  $("#inputCourtRegion").val(region).attr("data-regionid",tgPrt.find(".selectCountry option:selected").attr("data-regionid"));
   });
   

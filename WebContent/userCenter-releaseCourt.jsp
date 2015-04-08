@@ -115,6 +115,10 @@
   			}else{
   	  			var court = getCourtInfo();
   	  			console.log(court);
+  	  			//若court验证不通过或者有其他情况返回false时.不提交发布,直接返回false
+  	  			if(!court){
+  	  				return false;
+  	  			}
   				var data = {
   						"court.userId": userid.responseJSON.userId,
   						"court.addr": court.addr,
@@ -132,17 +136,6 @@
   						"court.verify": "0"
   				};
   	  			console.log(data);
-  					/***********************************************
-  					//测试formdata
-  					var formdata = new FormData();
-
-  		  			for( i in court){
-  		  				formdata["court."+i] = court[i];
-  		  				court["court."+i] = court[i];
-  		  			}
-  					console.log(formdata);
-  					console.log(court);
-  					/*************************************************/
   				$.ajax({
   		            url: "relCourt",
   		         	//processData: false, //不处理数据
