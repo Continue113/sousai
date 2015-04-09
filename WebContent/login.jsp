@@ -16,10 +16,10 @@
     </div> 
    </div> 
    <div class="row bd"> 
-    <div class="span3 offset2 loginImg"> 
+    <div class="span4 offset2 loginImg"> 
      <img src="img/picLeftToLoginBOx_1.jpg" > 
     </div> 
-    <div class="span3 offset2 form-signin"> 
+    <div class="span3 offset1 form-signin"> 
      <form id="formlogin"> 
       <fieldset>
        <div class="error hide">您输入的密码和用户名不匹配，请重新输入。</div>
