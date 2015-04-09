@@ -233,6 +233,9 @@
 		<!-- 获取比赛表里的比赛类型（包括用户自定义的比赛类型）-->
 		<action name="getMatchTypeInMatches" class="org.sousai.action.MaintainMatchType" method="getMatchTypeInMatches">
 		</action>
+		<!-- 获取指定比赛类型的子类型 -->
+		<action name="getMatchTypeByPId" class="org.sousai.action.MaintainMatchType" method="getMatchTypeByPId">
+		</action>
 		
 		<!-- 热门搜索的增删改查 -->
 		<action name="addHotWord" class="org.sousai.action.MaintainHotWordAction" method="addHotWord">

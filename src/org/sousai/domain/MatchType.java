@@ -11,12 +11,24 @@ public class MatchType implements Serializable
 	private Integer id;
 	private String name;
 	private Integer mcId;
+	private Integer pId;
 	
 	//默认构造函数
 	public MatchType()
 	{
 		
 	}
+
+	
+	public Integer getpId() {
+		return pId;
+	}
+
+
+	public void setpId(Integer pId) {
+		this.pId = pId;
+	}
+
 
 	/**
 	 * @return the id

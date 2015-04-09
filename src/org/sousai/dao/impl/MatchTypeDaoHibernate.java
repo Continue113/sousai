@@ -13,46 +13,38 @@ public class MatchTypeDaoHibernate extends HibernateDaoSupport implements MatchT
 
 	@Override
 	public MatchType get(Integer id) {
-		// TODO Auto-generated method stub
 		return getHibernateTemplate().get(MatchType.class, id);
 	}
 
 	@Override
 	public Integer save(MatchType matchType) {
-		// TODO Auto-generated method stub
 		return (Integer)getHibernateTemplate().save(matchType);
 	}
 
 	@Override
 	public void update(MatchType matchType) {
-		// TODO Auto-generated method stub
 		getHibernateTemplate().update(matchType);
 	}
 
 	@Override
 	public void delete(MatchType matchType) {
-		// TODO Auto-generated method stub
 		getHibernateTemplate().delete(matchType);
 		
 	}
 
 	@Override
 	public void delete(Integer id) {
-		// TODO Auto-generated method stub
 		getHibernateTemplate().delete(get(id));
 	}
 
 	@Override
 	public List<MatchType> findAllByMcId(Integer mcId) {
-		// TODO Auto-generated method stub
 		MyPrint.myPrint("findAllByMcId");
 		return (List<MatchType>)getHibernateTemplate().find("from MatchType where mcId=?", mcId);
 	}
 
 	@Override
 	public List<MatchType> findAllExcept(Integer id) {
-		// TODO Auto-generated method stub
-		
 		return (List<MatchType>)getHibernateTemplate().find("from MatchType where id<>?", id);
 	}
 
@@ -64,6 +56,11 @@ public class MatchTypeDaoHibernate extends HibernateDaoSupport implements MatchT
 		Query q = session.createQuery(strHql);
 		q.setParameterList("ids", ids);
 		q.executeUpdate();
+	}
+
+	@Override
+	public List<MatchType> getByPId(Integer pId) {
+		return (List<MatchType>)getHibernateTemplate().find("from MatchType where pId=?", pId);
 	}
 
 }

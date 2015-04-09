@@ -15,6 +15,22 @@ public class MaintainMatchType extends UserBaseAction {
 
 	private String ids;
 	private MatchType mt;
+	private Integer pId;
+
+	
+	/**
+	 * @return the pId
+	 */
+	public Integer getpId() {
+		return pId;
+	}
+
+	/**
+	 * @param pId the pId to set
+	 */
+	public void setpId(Integer pId) {
+		this.pId = pId;
+	}
 
 	/**
 	 * @return the ids
@@ -130,6 +146,24 @@ public class MaintainMatchType extends UserBaseAction {
 				list = amg.getAllMatchTypeInMatches();
 				JSONUtils.toJson(ServletActionContext.getResponse(), list);
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			JSONUtils
+					.toJson(ServletActionContext.getResponse(), Constant.ERROR);
+		}
+		return null;
+	}
+	
+	/**
+	 * 获取指定比赛类型的子类型
+	 * @return
+	 * @throws Exception
+	 */
+	public String getMatchTypeByPId() throws Exception {
+		List<MatchType> list = null;
+		try {
+				list = cmg.findMatchTypeByPId(pId);
+				JSONUtils.toJson(ServletActionContext.getResponse(), list);
 		} catch (Exception e) {
 			e.printStackTrace();
 			JSONUtils

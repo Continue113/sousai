@@ -318,4 +318,9 @@ public class CommonManagerImpl implements CommonManager {
 		return mesgDao.getByCourtId(courtId, currentPage, rows);
 	}
 
+	@Override
+	public List<MatchType> findMatchTypeByPId(Integer pId) {
+		return matchTypeDao.getByPId(pId);
+	}
+
 }

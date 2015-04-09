@@ -665,7 +665,7 @@ function pagesMesg(count,crtPage,rs){
   (function(){
 		$.ajax({
 		    type: 'POST',
-	        url: 'http://localhost:8080/sousai/ueditor/jsp/controller.jsp?action=listimage&id='+id,
+	        url: 'http://localhost:8080/sousai/ueditor/jsp/controller.jsp?action=listimage&id=court/'+id,
 	        data: null,
 	        success: function(rspdata) {
 	      	  console.log(rspdata.replace("list",'"list"'));
