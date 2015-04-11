@@ -27,7 +27,7 @@ public class Jdbc {
 
 	// 1.增加信息
 	public void add(MatchData matchData) {
-		String sql = "insert into matches(url,name,matchType,matchAddress,matchStartTime,matchDeadline,matchIntroduction) values(?,?,?,?,?,?,?)";
+		String sql = "insert into DATA_COLLECTION(url,name,matchType,matchAddress,matchStartTime,matchDeadline,matchIntroduction) values(?,?,?,?,?,?,?)";
 		try {
 
 			pstmt = conn.prepareStatement(sql);
@@ -58,7 +58,7 @@ public class Jdbc {
 
 	// 2.删除信息
 	public void delete(int id) {
-		String sql = "delete from matches where id = ?";
+		String sql = "delete from DATA_COLLECTION where id = ?";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, id);
@@ -80,7 +80,7 @@ public class Jdbc {
 		 * "/home/lei/data"为存储文件的目录,可改为自己的 抓取下来的信息文件,内容分为
 		 * 比赛信息源地址,比赛名称,比赛类型,比赛地点,比赛开始时间,截止日期,比赛简介
 		 */
-		String sql = "update matches set url=?,name=?,matchType=?,matchAddress=?,matchStartTime=?,matchDeadline=?,matchIntroduction=? where id = ?";
+		String sql = "update DATA_COLLECTION set url=?,name=?,matchType=?,matchAddress=?,matchStartTime=?,matchDeadline=?,matchIntroduction=? where id = ?";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, matchData.getUrl());
@@ -107,7 +107,7 @@ public class Jdbc {
 	public LinkedList<MatchData> select() {
 		LinkedList<MatchData> matchList = new LinkedList<MatchData>();
 		try {
-			String sql = "select * from matches";
+			String sql = "select * from DATA_COLLECTION";
 			pstmt = conn.prepareStatement(sql);
 			result = pstmt.executeQuery();
 
@@ -139,7 +139,7 @@ public class Jdbc {
 		LinkedList<MatchData> matchList = new LinkedList<MatchData>();
 		for (int i = 0; i < ids.length; ++i) {
 			try {
-				String sql = "select * from matches where id = ?";
+				String sql = "select * from DATA_COLLECTION where id = ?";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, Integer.parseInt(ids[i]));
 				result = pstmt.executeQuery();
