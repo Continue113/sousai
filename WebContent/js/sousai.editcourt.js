@@ -16,26 +16,35 @@ function setCourtInfo(datainfo){
     $("#inputCourtPrice").val(data.price);
     $("#inputCourtOpenTime").val(data.workTime);
     //再次初始化上传图片,
-    imageUploader();
-    uploader.option("server",'http://localhost:8080/sousai/ueditor/jsp/controller.jsp?action=uploadimage&id=court/'+upLoaderServerCourtId);
-		  
+    imageUploader(); console.log(uploader.option());console.log(uploader.option("server"));
+    //设置上传图片server
+    upLoaderServerCourtId = data.id;
+    uploader.option("server",location.origin+'/sousai/ueditor/jsp/controller.jsp?action=uploadimage&id=court/'+upLoaderServerCourtId);
+    console.log(uploader.option("server"));
     //获取已上传的场地图片
     //设置上传图片为可见,同时添加删除已有图片功能,
-    (function(){
+    $('#fileList').empty();
     $.ajax({
-        url: 'http://localhost:8080/sousai/ueditor/jsp/controller.jsp?action=listimage',
+        url: location.origin+'/sousai/ueditor/jsp/controller.jsp?action=listimage',
         data: {
         	id:"court/"+data.id
         	},
         success: function(rspdata) {
       	  console.log(rspdata);
-      	  var jsonrspdata = JSON.parse(rspdata.replace("list",'"list"'));
-      	  console.log(jsonrspdata);
-      	  $.each(jsonrspdata.list,function(index,item){
-      		  var imgName = item.url,//.split("/").value[6],
+      	  if(!rspdata.list){
+      		  return false;
+      	  }
+      	  //设置剩余可上传图片数量
+      	  var fileNum = 3-rspdata.total;
+      	  console.log(uploader.option("fileNumLimit"));
+      	  uploader.option("fileNumLimit",fileNum);
+      	  console.log(uploader.option("fileNumLimit"));
+      	  
+      	  $.each(rspdata.list,function(index,item){
+      		  var imgName = item.url.split("/")[7],
       		  	  $li = $( '<li id="' + imgName + '">' +
       	              '<p class="title">' + imgName + '</p>' +
-      	              '<p class="imgWrap"><img src="./'+item.url+'"></p>'+
+      	              '<p class="imgWrap"><img src=".'+item.url+'"></p>'+
       	              '</li>').appendTo($('#fileList')),
       	              
       	              $btns = $('<div class="file-panel">' +
@@ -51,38 +60,8 @@ function setCourtInfo(datainfo){
 
       	      $btns.on( 'click', 'span.delete', function() {
       	    	  //上传图片之前需要先检查当前已经存储的图片
-      	      	alert( imgName );
-      	      });
-      	  });
-        },
-        error: function(rspdata){
-        	alert("获取图片出错了,error sousai");
-        	  console.log(rspdata);
-          	  var jsonrspdata = JSON.parse(rspdata.responseText.replace("list",'"list"'));
-          	  console.log(jsonrspdata);
-          	  $.each(jsonrspdata.list,function(index,item){
-          		  var imgName = item.url.split("/")[6].split(".")[0],
-      		  	  $li = $( '<li id="' + imgName + '">' +
-          	              '<p class="title">' + imgName + '</p>' +
-          	              '<p class="imgWrap"><img src="./'+item.url+'"></p>'+
-          	              '</li>').appendTo($('#fileList')),
-          	              
-          	              $btns = $('<div class="file-panel">' +
-          	              		'<span class="delete">删除</span></div>').appendTo( $li );
-
-          	      $li.on( 'mouseenter', function() {
-          	          $btns.stop().animate({height: 30});
-          	      });
-
-          	      $li.on( 'mouseleave', function() {
-          	          $btns.stop().animate({height: 0});
-          	      });
-
-          	      $btns.on( 'click', 'span.delete', function() {
-          	    	  //上传图片之前需要先检查当前已经存储的图片
-          	      	alert( imgName );
-          	      	$.ajax({
-          	        url: 'http://localhost:8080/sousai/ueditor/jsp/controller.jsp?action=deleteimage',
+          	      $.ajax({
+          	        url: location.origin+'/sousai/ueditor/jsp/controller.jsp?action=deleteimage',
           	        data: {
           	        	delImage:item.url
           	        	},
@@ -90,19 +69,20 @@ function setCourtInfo(datainfo){
           	        	console.log(rspdata);
           	        	if(rspdata.state == "SUCCESS"){
           	              $('#'+imgName).remove();
+          	              uploader.option("fileNumLimit",parseInt(uploader.option("fileNumLimit"))+1);
+          	        	}else{
+          	        		sousaiRemindDialog("删除图片失败,请重试");
           	        	}
           	        	},
           	      	});
-          	      });
-          	  });
-          	  
-        	
+      	      });
+      	  });
+        },
+        error: function(rspdata){
+        	alert("获取图片出错了,error sousai");
+        	  console.log(rspdata);
         },
       });
-    		
-    }());
-    	
-    
     
     tinymce.activeEditor.setContent(data.intro);
 }
@@ -215,7 +195,7 @@ function imageUploader(){
       },
       // swf文件路径
       swf: 'webuploader/Uploader.swf',
-      server: 'http://localhost:8080/sousai/ueditor/jsp/controller.jsp?action=uploadimage&id=court/0',
+      server: location.origin+'/sousai/ueditor/jsp/controller.jsp?action=uploadimage&id=court/0',
       fileNumLimit: 3,
       fileSingleSizeLimit: 200 * 1024,    // 200k
   });
@@ -347,6 +327,10 @@ $(function(){
   //点击保存修改
 	$(".editCourt .saveCourt").click(function(){
 			var court = getCourtInfo();
+			//若court验证不通过或者有其他情况返回false时.不提交发布,直接返回false
+  	  		if(!court){
+  	  			return false;
+  	  		}
 			var data = {
 					"court.id": court.id,
 					"court.userId": court.userId,
@@ -370,6 +354,7 @@ $(function(){
             data: data,
             success: function(rspdata) {
           	  if( rspdata == "success" ){
+          		  uploader.upload();
           		  window.setTimeout("window.location.href=window.location.href",3000);
           		  sousaiRemindDialog("保存成功,3秒后将刷新页面。");
           	  }else{
@@ -470,7 +455,7 @@ $(function(){
   rules: {
 	  "court.name": {
       minlength: 6,
-      maxlength: 30
+      maxlength: 60
     },
     "court.courtTypeId": {
     	min: 1,
@@ -499,7 +484,7 @@ $(function(){
 	  "court.name": {//新场地的场地名称
 		    	  required: "请输入场地名称",
 		    	  minlength: "场地名称至少6个字符",
-		    	  maxlength: "场地名称至多30个字符"
+		    	  maxlength: "场地名称至多60个字符"
 				},
     mcId: "",//比赛大类
     "court.matchType": "",//比赛详细类型

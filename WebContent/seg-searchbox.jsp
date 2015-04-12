@@ -13,7 +13,7 @@
         <button class="btn btn-success btn-search" type="button">&nbsp;搜&nbsp;索</button> 
        </div> 
        <div class="span1"> 
-        <a href="javascript:;" onclick="towardReleaseBefore()">发布比赛</a> 
+        <a href="javascript:;" onclick="towardReleaseBefore(0)">发布比赛</a> 
         <p><a href="matchSearchAdv.jsp">高级搜索</a></p> 
        </div> 
       </div> 
@@ -24,7 +24,7 @@
         <button class="btn btn-success btn-search" type="button">&nbsp;搜&nbsp;索</button> 
        </div> 
        <div class="span1"> 
-        <a href="javascript:;" onclick="towardReleaseBefore()">发布场地</a> 
+        <a href="javascript:;" onclick="towardReleaseBefore(1)">发布场地</a> 
         <p><a href="courtSearchAdv.jsp">高级搜索</a></p> 
        </div> 
       </div> 

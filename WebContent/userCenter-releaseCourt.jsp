@@ -151,7 +151,8 @@
   		          		  uploader.option("server",'http://localhost:8080/sousai/ueditor/jsp/controller.jsp?action=uploadimage&id=court/'+upLoaderServerCourtId);
   		          		  uploader.upload();
               			  //清空表单
-              			  courtValidator.resetForm();
+              			  $("#resetCourtForm").trigger("click");
+              			  $("#fileList").remove();
               			  
 	              		  $(".editCourt").hide();
 	              		  $("#afterRelease").find(".releaseInfoTitle").text(court.name).end()

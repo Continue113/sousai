@@ -56,11 +56,11 @@
             <input class="span3 add-on" type="password" id="inputUserPassword" name="inputUserPassword" placeholder="请输入旧密码" data-toggle="tooltip" data-placement="top" title="" data-original-title="请输入旧密码" > 
            </div>
            <div class="controls"> 
-            <label class="control-label-changePwd" for="inputUserNewPassword">新密码</label> 
+            <label class="control-label-changePwd" for="inputUserNewPassword">请输入新密码</label> 
             <input class="span3 add-on" type="password" id="inputUserNewPassword" name="user.pwd" placeholder="请先输入旧密码，再输入新密码" data-toggle="tooltip" data-placement="top" title="" data-original-title="请先输入旧密码，再输入新密码" > 
            </div>
            <div class="controls">
-            <label class="control-label-changePwd" for="inputUserNewPassword2">确认密码</label> 
+            <label class="control-label-changePwd" for="inputUserNewPassword2">再次输入新密码</label> 
             <input class="span3 add-on" type="password" id="inputUserNewPassword2" name="inputUserNewPassword2" placeholder="请先输入旧密码，再输入新密码" data-toggle="tooltip" data-placement="top" title="" data-original-title="请先输入旧密码，再输入新密码" > 
            </div> 
           </div> 

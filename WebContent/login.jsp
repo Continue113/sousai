@@ -25,7 +25,7 @@
        <div class="error hide">您输入的密码和用户名不匹配，请重新输入。</div>
        <label for="inputUsername">用户名:</label> 
        <input type="text" class="input-block-level" id="inputUsername" name="user.name" placeholder="用户名" value="" required="required" > 
-       <label for="inputPassword">密码:<a href="javascript:void(0)">忘记密码?</a></label> 
+       <label for="inputPassword">密&nbsp;&nbsp;&nbsp;&nbsp;码:<a href="javascript:void(0)">忘记密码?</a></label> 
        <input type="password" class="input-block-level" id="inputPassword" name="user.pwd" placeholder="密码" required="required" > 
        <label class="checkbox" for="rememberMe" > <input type="checkbox" id="rememberMe" >记住我</label> 
        <input class="btn btn-success" type="submit" id="signinBtn" value="登&nbsp;&nbsp;录" > 

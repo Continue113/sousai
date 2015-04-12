@@ -15,9 +15,8 @@
           <div class="control-group"> 
            <label class="control-label" for="inputCourtName">场地名称：</label> 
            <div class="controls"> 
-            <input class="span5" type="text" id="inputCourtName" name="court.name" placeholder="如：2012年XXXXXXX杯乒乓球季度赛" required="required" > 
-            <!-- <label class="hide error">请输入场地名称</label> -->
-           </div> 
+            <input class="span5" type="text" id="inputCourtName" name="court.name" placeholder="如：某某区\市\县XXXXXXX运动俱乐部/体育馆" required="required" > 
+            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="selectMatchType">比赛类型：</label> 
@@ -48,7 +47,6 @@
             </select> 
             <!-- /选择场地类型 --> 
             <input class="hide" id="inputCourtType" type="text" value="">
-            <!-- <label class="hide error">请选择场地类型</label> -->
            </div> 
           </div> 
           <div class="control-group"> 
@@ -61,40 +59,36 @@
             </div>
            <div class="controls form-inline hide courtRegionControls"> 
             <s:include value="seg-selectPCC.jsp"/>
-            <!-- /选择省市区三级下拉框 --> 
-            <!-- <input class="hide" id="inputRegionId" type="text" name="court.regionId" value="">
-            <input class="hide" id="inputRegion" type="text" name="court.region" value=""> -->
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="inputCourtAddress">详细地址：</label> 
            <div class="controls"> 
-            <input class="span5" type="text" id="inputCourtAddress" name="court.addr" placeholder="如：某地某桥某号某号楼" required="required" >
-            <!-- <label class="hide error">请输入场地地址</label> -->
-           </div> 
+            <input class="span5" type="text" id="inputCourtAddress" name="court.addr" placeholder="如：XXX街道/路XXX号（某某标志性建筑对面）" required="required" >
+            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="inputCourtTables">赛场数：</label> 
            <div class="controls"> 
-            <input class="span5" type="text" id="inputCourtTables" name="court.tableNum" placeholder="请填写整数，最小为1，如：12或 1" > 
+            <input class="span5" type="text" id="inputCourtTables" name="court.tableNum" placeholder="请填写可以同时进行比赛的场地数（选填）" > 
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="inputCourtTel">联系电话：</label> 
            <div class="controls"> 
-            <input class="span5" type="text" id="inputCourtTel" name="court.tel" placeholder="固定电话或移动电话 或 无" > 
+            <input class="span5" type="text" id="inputCourtTel" name="court.tel" placeholder="区号-固定电话/移动电话（010-75315471/13883475126)" > 
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="inputCourtPrice">价格：</label> 
            <div class="controls"> 
-            <input class="span5" type="text" id="inputCourtPrice" name="court.price" placeholder="如：50元/小时/场 或 免费" > 
+            <input class="span5" type="text" id="inputCourtPrice" name="court.price" placeholder="如：场地使用收费情况（50元/小时 或 免费）（选填）" > 
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="inputCourtOpenTime">开放时间：</label> 
            <div class="controls"> 
-            <input class="span5" type="text" id="inputCourtOpenTime" name="court.workTime" placeholder="如：每天9:00-18:00" > 
+            <input class="span5" type="text" id="inputCourtOpenTime" name="court.workTime" placeholder="如：场地日常营业时间（星期一 至 星期五 9：00-22：00）（选填）" > 
            </div> 
           </div> 
           <div class="control-group"> 
@@ -113,6 +107,7 @@
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="inputCourtInfo">场地简介：</label> 
+          <div class="controls"><span class="error">请填写场地基本情况，如场地新建时间、场地设施情况、场地优势等</span></div>
           </div> 
           <textarea id="inputCourtInfo" name="intro"></textarea>          
           <div class="control-group hide"> 

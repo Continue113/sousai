@@ -4,7 +4,7 @@
      <!-- background-remind & backgroundMenu --> 
      <ul class="breadcrumb background-remind"> 
       <li>提醒:</li> 
-      <li><a href="javascript:void(0);">待处理的比赛信息<span>(5)</span></a></li> 
+      <li><a href="javascript:void(0);">获取信息中...<span>(0)</span></a></li> 
      </ul> 
      <div class="span2 backgroundMenu "> 
       <ul class="nav nav-stacked nav-side"> 

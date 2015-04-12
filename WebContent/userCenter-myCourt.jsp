@@ -101,15 +101,15 @@
          <!-- data --> 
          <div class="courtBox-block"> 
           <div class="courtBox-title"> 
-           <a target="_blank" href="courtSearchDetail.jsp?id={{id}}">{{name}}</a> 
+           <a target="_blank" href="courtSearchDetail.jsp?id={{id}}">{{title}}</a> 
            <a href="courtSearchDetail.jsp?id={{id}}" target="_blank" class="btn btn-mini pull-right">查看详细</a> <a href="javascript:void(0);" class="btn btn-mini pull-right modifyCourt">编辑场地</a>
           </div> 
           <ul class="breadcrumb"> 
            <li class="courtBox-address">{{addr}}</li> 
-           <li class="courtBox-info"><p>{{courtType}}</p><p>{{#if tableNum}}赛场{{tableNum}}个{{else}}暂无赛场数据{{/if}}</p><p>{{#if tel}}电话：{{tel}}{{else}}暂无电话信息{{/if}}</p></li>
-           <li class="courtBox-tel">电话：<p>{{#if tel}}{{tel}}{{else}}暂无电话信息{{/if}}</p></li>
-		   <li class="courtBox-record ">举办比赛次数<p><span class="courtBox-recordNumb">{{recordNumb}}</span>次</p></li> 
-           <li class="courtBox-evaluation ">评论次数<p><span class="courtBox-evaluationNumb">{{evaluationNumb}}</spn>次</p></li>
+           <li class="courtBox-info"><p>{{courtType}}</p><p>{{#if tableNum}}赛场{{tableNum}}个{{else}}暂无赛场数据{{/if}}</p></li> 
+		   <li class="courtBox-tel">电话：<p>{{#if tel}}{{tel}}{{else}}暂无电话信息{{/if}}</p></li>
+           <li class="courtBox-record">举办比赛次数<p><span class="courtBox-recordNumb">{{recordNumb}}</span>次</p></li> 
+           <li class="courtBox-evaluation">评论次数<p><span class="courtBox-evaluationNumb">{{evaluationNumb}}</spn>次</p></li>
 		  </ul> 
          </div> 
         </div>
@@ -139,6 +139,13 @@
 		      var target = $(".courtBoxs"),template = Handlebars.compile($('#court-template').html());
 		      Handlebars.registerHelper("data",function(){
 	                return JSON.stringify(this);
+	              });
+		      Handlebars.registerHelper("title",function(){
+		    	  if(this.verify == "0"){
+		    		  return new Handlebars.SafeString('<span class="label label-info">等待审核</span>'+this.name);
+		    	  }else{
+		    		  return this.name;
+		    	  }
 	              });
 	        	Handlebars.registerHelper("recordNumb",function(){
 	          	  	var recordNumb = $.ajax({

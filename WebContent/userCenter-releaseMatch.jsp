@@ -177,15 +177,17 @@
 		                url: "relMatch",
 		                data: data,
 		                success: function(rspdata) {
-		              	  if( rspdata == "fail" ){
-		              		  sousaiRemindDialog("'"+match.title+"' 发布失败，fail");
+		              	  if( rspdata == "fail" || rspdata == "error" ){
+		              		  sousaiRemindDialog("'"+match.title+"' 发布失败");
+		              	  }else if( rspdata == "exeed" ){
+		              		  sousaiRemindDialog("'"+match.title+"' 发布失败,超过当日发布数量!");
 		              	  }else{
 		              		  $(".editMatch").hide("fast",function(){
 		              			  //清空表单
-		              			  matchValidator.resetForm();
+		              			  $("#resetMatchForm").trigger("click");
 			              		  $("#afterRelease").find(".releaseInfoTitle").text(match.title).end()
 			              		  .find(".releaseInfoId").text(rspdata).end()
-			              		  .find(".releaseInfoHref").text("http://www.isousai.com/sousai/matchSearchDetail.jsp?id="+rspdata).attr("href","matchSearchDetail.jsp?id="+rspdata).end()
+			              		  .find(".releaseInfoHref").text(location.origin+"/sousai/matchSearchDetail.jsp?id="+rspdata).attr("href","matchSearchDetail.jsp?id="+rspdata).end()
 			              		  .show();		              			  
 		              		  });
 		              	  }

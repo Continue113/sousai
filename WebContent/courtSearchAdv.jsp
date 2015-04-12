@@ -106,7 +106,7 @@
   <script id="court-template" type="text/x-handlebars-template">
     {{#each this}}
                         
-        <div class="courtBox"  data-info="{{data}}"> 
+        <div class="courtBox"  data-info="'{{data}}'"> 
          <!-- img --> 
          <div class="courtBox-img"> 
           <img src="img/defaultImg.png" alt="" title="" > 

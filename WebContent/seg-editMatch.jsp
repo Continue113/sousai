@@ -15,7 +15,7 @@
           <div class="control-group"> 
            <label class="control-label" for="inputMatchTitle">比赛名称：</label> 
            <div class="controls"> 
-            <input class="span5" type="text" id="inputMatchTitle" name="matchName" placeholder="如：2012年XXXXXXX杯乒乓球季度赛" required="required" > 
+            <input class="span5" type="text" id="inputMatchTitle" name="matchName" placeholder="如：2015年XXX区\市\县XXX杯XXX运动XXX比赛" required="required" > 
            </div> 
           </div> 
           <div class="control-group"> 

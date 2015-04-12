@@ -1,8 +1,7 @@
 
 function setMenu(){
-    var url = window.location.pathname;
+    var url = window.location.pathname,
     urikv = decodeURI(url.substring(url.lastIndexOf('/')+1, url.length));
-    console.log(urikv);
     $('a[href="'+urikv+'"]',".nav-side").parent().addClass("active");
 }
 
@@ -94,10 +93,6 @@ function userCenterRemind() {
             if (targetBreadcrumb.find("span").length == 0) {
                 targetBreadcrumb.append('<li><a href="userCenter-releaseMatch.jsp" title="去发布比赛"> 无比赛信息，请发布比赛</a></li>');
             }
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR + " /" + textStatus + " /" + errorThrown);
-            console.log("userCenterRemind 抱歉，获取比赛信息出错了。");
         },
     });
 }
@@ -440,13 +435,13 @@ function isAdmin(){
 	}
 }
 //点击发布比赛和发布场地时检测是否登陆
-function towardReleaseBefore(){
+function towardReleaseBefore(flag){
 	//检测用户是否为登录状态
 	var userid =isLogined();
 	if(!userid.responseJSON.userId){
 		return false;
 	}else{
-		if($(this).text() == "发布比赛"){
+		if(flag == 0){
 			location.href = "userCenter-releaseMatch.jsp";
 		}else{
 			location.href = "userCenter-releaseCourt.jsp";			

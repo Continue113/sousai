@@ -152,12 +152,11 @@
       <hr >
       <div class="toolBox match form-inline">
         <label for=day>请输入时间以统计比赛场次：</label>
-        <input type="text" class="input-small height-mini" id="day" placeholder="请输入天数" > 天内各地
-            <select class="selectMatchType span1" name="mcId"><option value=0>请选择比赛大类</option></select>
-            <select class="selectParticularMatchType span1"><option value=0>请先选择比赛大类</option></select>
+        <input type="text" class="input-small height-mini" id="day" placeholder="请输入天数" required="required"> 天内各地
+            <select class="selectMatchType span2" name="mcId"><option value=0>请选择比赛大类</option></select>
+            <select class="selectParticularMatchType span2"><option value=0>请先选择比赛大类</option></select>
             <input class="hide" id="particularMatchType" name="court.matchType">
-            <label class="omthide hide" class="control-label" for="otherMatchType">请输入类型：<input class="omthide hide" id="otherMatchType" type="text" value="" placeholder="请填写比赛类型"></label>比赛统计。
-        <button class="btn " id="tableTigglerMatch">统计</button>
+            <button class="btn " id="tableTigglerMatch">统计</button>
       </div>
       <div class="panel">
        <div id="ajaxState" class="text-center"><span class="hide noresult">无结果</span><span class="hide load"><img src="img/loading.gif" height="20px" width="20px"></img>数据加载中...</span></div>
@@ -205,7 +204,7 @@ $(function(){
 	  if(isAdmin() == '-1'){
 		  return false;
 	  }
-	setMenu();
+	  setMenu();
 	  //初始化所有需要选择年份的select 设置年份到今年
 	  var date = new Date();
 	  //$("select.year").empty();
@@ -233,13 +232,13 @@ $(function(){
 	  });
 	  //点击统计获取 指定天数内制定比赛的各省数量
 	  $("#tableTigglerMatch").click(function(){
-			/*//验证输入值
+			//验证输入值
 			if(!$("#day").val()){
-				soudaiRemindDialog("请先输入。");
+				soudaiRemindDialog("请先输入统计天数。");
 				return false;
 			}else if($(".selectParticularMatchType option:selected").attr("value") == 0){
 				soudaiRemindDialog("请先选中比赛类型。");
-			} */
+			}
 			var data = {
 	            	dayNum: $("#day").val(),
 	            	matchType: $(".selectParticularMatchType option:selected").text()
