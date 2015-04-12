@@ -96,7 +96,7 @@
         <div class="courtBox"  data-info="{{data}}"> 
          <!-- img --> 
          <div class="courtBox-img"> 
-          <img src="img/defaultImg.png" alt="" title="" > 
+          {{imgIcon}}
          </div> 
          <!-- data --> 
          <div class="courtBox-block"> 
@@ -139,6 +139,20 @@
 		      var target = $(".courtBoxs"),template = Handlebars.compile($('#court-template').html());
 		      Handlebars.registerHelper("data",function(){
 	                return JSON.stringify(this);
+	              });
+		      Handlebars.registerHelper("imgIcon",function(){
+	          	  	var img = $.ajax({
+	  		    	  url: location.origin+'/sousai/ueditor/jsp/controller.jsp?action=listimage',
+			          data: {
+			          	id:"court/"+data.id
+			          	},
+	        	      async: false, //设置异步为false,解决ajax异步不能设置全局变量的问题
+	          	        });
+			        if(!img.responseJSON.list){
+			        	return new Handlebars.SafeString('<img src="img/defaultImg.png" alt="'+ this.name +'" title="'+ this.name +'" >');
+			        }else{
+		                return new Handlebars.SafeString('<img src="'+img.responseJSON.list[0].url+'" alt="'+ this.name +'" title="'+ this.name +'" >');
+			        }
 	              });
 		      Handlebars.registerHelper("title",function(){
 		    	  if(this.verify == "0"){

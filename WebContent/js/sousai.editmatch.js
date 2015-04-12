@@ -459,7 +459,7 @@ $(function(){
       },
       courtName: {
           minlength: 6,
-          maxlength: 30
+          maxlength: 60
       },
     },
     messages: {
@@ -481,7 +481,7 @@ $(function(){
       courtName: {//新场地的场地名称
     	  required: "请输入场地名称",
     	  minlength: "场地名称至少6个字符",
-    	  maxlength: "场地名称至多30个字符"
+    	  maxlength: "场地名称至多60个字符"
       },
       courtAddr: "请输入场地地址",//新场地的场地类型
       courtType: "",//新场地的场地类型

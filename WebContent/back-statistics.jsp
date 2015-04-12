@@ -208,7 +208,7 @@ $(function(){
 	  //初始化所有需要选择年份的select 设置年份到今年
 	  var date = new Date();
 	  //$("select.year").empty();
-	  for(var i=2011;i<=date.getFullYear();i++){
+	  for(var i=2014;i<=date.getFullYear();i++){
 		  $("select.year").append("<option>"+i+"</option>");
 	  }
 	  //$("select.year").append("<option selected='selected'>"+date.getFullYear()+"</option>");
@@ -234,10 +234,10 @@ $(function(){
 	  $("#tableTigglerMatch").click(function(){
 			//验证输入值
 			if(!$("#day").val()){
-				soudaiRemindDialog("请先输入统计天数。");
+				sousaiRemindDialog("请先输入统计天数。");
 				return false;
 			}else if($(".selectParticularMatchType option:selected").attr("value") == 0){
-				soudaiRemindDialog("请先选中比赛类型。");
+				sousaiRemindDialog("请先选中比赛类型。");
 			}
 			var data = {
 	            	dayNum: $("#day").val(),

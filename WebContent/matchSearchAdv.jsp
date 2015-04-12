@@ -38,13 +38,29 @@
         </div> 
         <div class="control-group"> 
          <label class="control-label" for="matchType">比赛类型：</label> 
-         <div class="controls"> 
+         <%-- <div class="controls"> 
             <select class="selectMatchType" name="mcId"><option value=0>请选择大类</option></select>
             <select class="selectParticularMatchType"><option value=0>请先选择大类</option></select>
             <input class="hide" id="particularMatchType" name="court.matchType">
             <label class="omthide hide" class="control-label" for="otherMatchType">请输入类型：<input class="omthide hide" id="otherMatchType" type="text" value="" placeholder="请填写比赛类型"></label>
-         </div> 
+         </div>  --%>
+         
+         <div class="controls hide" id="editMatchTypeControls">
+            <div class="input-append">
+            <input class="span5" type="text" id="inputMatchType"  disabled>
+            <button class="btn" type="button" id="editMatchType">修改</button>
+            </div>
+         </div>
+         <div class="controls  form-inline " id="matchTypeControls">
+            <select class="selectMatchType" name="mcId"><option value=0>请选择大类</option></select>
+            <select class="selectParticularMatchType" name="matchType"><option value=0>请先选择大类</option></select>
+            <input class="hide" id="particularMatchType" name="court.matchType">
+            <label class="omthide hide" class="control-label" for="otherMatchType">请输入类型：<input class="omthide hide" id="otherMatchType" type="text" value="" placeholder="请填写比赛类型" name="otherMatchType" required="required" ></label>
+         </div>
+            
         </div> 
+        
+        
         <div class="control-group matchState"> 
          <label class="control-label" for="matchState">比赛状态：</label> 
          <div class="controls form-inline"> 
@@ -86,7 +102,7 @@
       <!-- panel --> 
       <div class="panel-top">
        <div class="btn-group sort" role="group">
-		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current" data-orderbycol="name" data-isasc="true">排序方式</span><span class="caret"></span></button>
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current" data-orderbycol="relTime" data-isasc="true">排序方式</span><span class="caret"></span></button>
 		<ul class="dropdown-menu" role="menu">
           <li><a href="javascript:void(0)" data-orderbycol="name" data-isasc="true">比赛名称<i class="icon-arrow-up"></i></a></li> 
           <li><a href="javascript:void(0)" data-orderbycol="beginTime" data-isasc="true">比赛时间<i class="icon-arrow-up"></i></a></li> 
@@ -189,7 +205,7 @@
 	  args.dayOfweek = args.dayOfweek||getDayOfWeek();
 	  args.currentPage = args.currentPage||$("ul.pagination li.active a").html()||1;
 	  args.rows = args.rows||25;
-	  args.orderByCol = args.orderBycol||$(".sort .current").attr("data-orderbycol")||"name";
+	  args.orderByCol = args.orderBycol||$(".sort .current").attr("data-orderbycol")||"relTime";
 	  args.isAsc = args.isAsc||$(".sort .current").attr("data-isasc")||true;
 		  
 		$("#ajaxState .load").show();
@@ -229,13 +245,30 @@
 	    console.log(url);console.log(matchType);
 	 //若matchType为空则不进行搜索
 	 if(matchType){
-		e({matchType:matchType});		 
+		e({matchType:matchType});
+		//显示隐藏的editMatchTypeControls
+		$("#inputMatchType").val(matchType);
+		$("#editMatchTypeControls").show();
+		$("#matchTypeControls").hide();
 	 }
 	 //立即初始化比赛类型
 	 initMatchType();
 	 //点击高级场地搜索
 	 $("#advMatchSearchButton").click(function(){
 		 e({});
+	 });
+	 //点击修改比赛类型
+	 $("#editMatchType").click(function (){
+	    	if($(this).text() == "修改"){
+	    		$("#matchTypeControls").slideDown();
+	    		$(this).text("确定");
+	    	}else{
+	    		$("#matchTypeControls").slideUp();
+	    		//重置选择类型的下拉框，同时将原类型还原
+	    		//$(".selectParticularMatchType").hide().empty().append("<option value=0>请先选择比赛大类</option>");
+	    		//$("#inputMatchType").val($("#inputMatchType").attr("data-oldtype"));
+	    		$(this).text("修改");
+	    	}
 	 });
 	 //点击大类比赛类型获得具体比赛类型
 	 $(".selectMatchType").change(function() {
