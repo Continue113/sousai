@@ -542,10 +542,10 @@ public class UserManagerImpl implements UserManager {
 		boolean value = true;
 		switch (type) {
 		case 0:
-			value = matchDao.countRelMatchPerDay(userId) > maxCount;
+			value = matchDao.countRelMatchPerDay(userId) >= maxCount;
 			break;
 		case 1:
-			value = courtDao.countRelMatchPerDay(userId) > maxCount;
+			value = courtDao.countRelMatchPerDay(userId) >= maxCount;
 			break;
 		default:
 			break;

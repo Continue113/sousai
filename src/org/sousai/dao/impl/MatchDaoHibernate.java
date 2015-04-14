@@ -164,17 +164,19 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 			Session session = null;
 			Query q = null;
 			if (!CommonUtils.isNullOrEmpty(userId)) {
-				hql = "select type,count(type) from Match m where userId=? group by type";
+				hql = "select type,count(type) ct from Matches m where userId=? group by type order by ct desc";
 				session = getHibernateTemplate().getSessionFactory()
 						.getCurrentSession();
-				q = session.createQuery(hql);
+				// q = session.createQuery(hql);
+				q = session.createSQLQuery(hql);
 				q.setInteger(0, userId);
 			} else {
 				// 首页，只显示已通过审核的比赛数量
-				hql = "select type,count(type) from Match m  where m.verify='1' group by type";
+				hql = "select type,count(type) ct from Matches m  where m.verify='1' group by type order by ct desc";
 				session = getHibernateTemplate().getSessionFactory()
 						.getCurrentSession();
-				q = session.createQuery(hql);
+				// q = session.createQuery(hql);
+				q = session.createSQLQuery(hql);
 			}
 			for (Object[] ob : (List<Object[]>) q.list()) {
 				rs.put((String) ob[0], Integer.valueOf(ob[1].toString()));
@@ -282,7 +284,13 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 			if (CommonUtils.isNullOrEmpty(strWhere)) {
 				strWhere = " and m.verify='0'";
 			} else {
-				strWhere += " and m.verify='0'";
+				// strWhere += " and m.verify='0'";
+				strWhere = String
+						.format(" and %1$s and m.verify='0'", strWhere);
+			}
+		} else {
+			if (!CommonUtils.isNullOrEmpty(strWhere)) {
+				strWhere = " and " + strWhere;
 			}
 		}
 		return findPagedByWhereOrderBy(strWhere, currentPage, rows,
@@ -293,8 +301,13 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 		String value;
 		if (column.equals("userName")) {
 			value = " u.name";
-		} else if (column.equals("courtName") || column.equals("region")
-				|| column.equals("addr")) {
+			// } else if (column.equals("courtName") || column.equals("region")
+			// || column.equals("addr")) {
+			// value = " c." + column;
+			// } else {
+		} else if (column.equals("courtName")) {
+			value = "c.name";
+		} else if (column.equals("region") || column.equals("addr")) {
 			value = " c." + column;
 		} else {
 			value = " m." + column;
@@ -552,7 +565,8 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 						tempKeyValue = " %" + tempKeyValue + "% ";
 					}
 					tempArgs[j] = tempKeyValue;
-					tempColumns[j] = columns[i];
+					// tempColumns[j] = columns[i];
+					tempColumns[j] = addPrefixToColumn(columns[i]);
 					tempRelations[j] = 2;
 					// if (j != 0) {
 					// tempRelations[j] = 2;
@@ -640,7 +654,8 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 	}
 
 	@Override
-	public Map<Integer, Integer> countByCourtIds(Integer[] ids) throws Exception{
+	public Map<Integer, Integer> countByCourtIds(Integer[] ids)
+			throws Exception {
 		Map<Integer, Integer> rs = null;
 		try {
 			rs = new HashMap<Integer, Integer>();

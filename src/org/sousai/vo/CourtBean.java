@@ -8,7 +8,6 @@ import org.sousai.tools.CommonUtils;
 
 public class CourtBean implements Serializable
 {
-	String selectCourtBeanField = "select c.ID,c.NAME,c.COURTTYPEID,ct.NAME,c.MATCHTYPE,c.REGIONID,c.TABLENUM,c.TEL,c.MATCHCOUNT,c.PRICE,c.WORKTIME,c.INTRO,c.VERIFY,c.relDate,c.modDate,c.USERID,u.NAME from COURT c, COURTTYPE ct, USER u ";
 	private static final long serialVersionUID = -7181907300029680131L;
 	private Integer id;
 	private String name;
@@ -30,6 +29,7 @@ public class CourtBean implements Serializable
 	private Long picId;
 	private Integer userId;
 	private String userName;
+	private Integer msgCount;
 	
 	//默认构造器
 	public CourtBean()

@@ -22,6 +22,7 @@ public final class ActionMap {
 	public static final int LIST_FILE = 6;
 	public static final int LIST_IMAGE = 7;
 	public static final int DELETE_IMAGE = 8;
+	public static final int ONE_FILE = 9;
 	
 	static {
 		mapping = new HashMap<String, Integer>(){{
@@ -34,6 +35,7 @@ public final class ActionMap {
 			put( "listfile", ActionMap.LIST_FILE );
 			put( "listimage", ActionMap.LIST_IMAGE );
 			put( "deleteimage", ActionMap.DELETE_IMAGE );
+			put("onefile", ActionMap.ONE_FILE);
 		}};
 	}
 	

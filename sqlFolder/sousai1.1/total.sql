@@ -14,6 +14,7 @@ source F:/Git_Project/sousai/sqlFolder/sousai1.1/USERMARK.sql;
 source F:/Git_Project/sousai/sqlFolder/sousai1.1/REGION.sql;
 source F:/Git_Project/sousai/sqlFolder/sousai1.1/MATCHTYPE.sql;
 source F:/Git_Project/sousai/sqlFolder/sousai1.1/MATCHCLASS.sql;
+source F:/Git_Project/sousai/sqlFolder/sousai1.1/DATA_COLLECTION.sql;
 source F:/Git_Project/sousai/sqlFolder/sousai1.1/InsertMATCHCLASS.sql;
 source F:/Git_Project/sousai/sqlFolder/sousai1.1/InsertCOURT.sql;
 source F:/Git_Project/sousai/sqlFolder/sousai1.1/InsertMATCHTYPE.sql;

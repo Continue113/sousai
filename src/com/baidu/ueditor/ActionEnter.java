@@ -76,7 +76,7 @@ public class ActionEnter extends UserBaseAction {
 		int actionCode = ActionMap.getType(this.actionType);
 		String typeAndIdPath = request.getParameter("id");
 		Map<String, Object> conf = null;
-
+		String result = null;
 		switch (actionCode) {
 
 		case ActionMap.CONFIG:
@@ -107,6 +107,12 @@ public class ActionEnter extends UserBaseAction {
 			state = new FileManager(conf).listFile(start, typeAndIdPath);
 			System.out.println("LIST_IMAGE.state = "+state.toJSONString());
 			break;
+			
+		case ActionMap.ONE_FILE:
+			//这个case是用于获取单个场地的图片
+			conf = configManager.getConfig(actionCode);
+			result = new FileManager(conf).getOneFile(typeAndIdPath);
+			return result;
 		case ActionMap.DELETE_IMAGE:
 			String strDelImage = (String) request.getParameter("delImage");
 			String[] delImages = strDelImage.split(",");

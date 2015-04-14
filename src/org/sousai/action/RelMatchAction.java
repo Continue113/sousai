@@ -83,8 +83,8 @@ public class RelMatchAction extends UserBaseAction {
 			// 是否超过当日发布比赛上限
 			Integer id = match.getCourtId();
 			//非管理员且超过每天发布比赛上限
-			if (userBean.getUserType() != '2'
-					&& !umg.isExeed(userBean.getUserId(), MAX_MATCH_COUNT, 0)) {
+			if (userBean.getUserType() == '2'
+					|| !umg.isExeed(userBean.getUserId(), MAX_MATCH_COUNT, 0)) {
 				// 需要发布新场地
 				if (isCourt && court != null) {
 					id = umg.releaseCourt(court);

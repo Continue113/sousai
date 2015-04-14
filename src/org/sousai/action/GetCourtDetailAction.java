@@ -7,10 +7,7 @@ import org.sousai.tools.MyPrint;
 import org.sousai.vo.CourtBean;
 
 public class GetCourtDetailAction extends UserBaseAction{
-
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = -4814351319619371893L;
 	
 	public Integer id;

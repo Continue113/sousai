@@ -11,7 +11,7 @@ public class MatchType implements Serializable
 	private Integer id;
 	private String name;
 	private Integer mcId;
-	private Integer pId;
+//	private Integer pId;
 	
 	//默认构造函数
 	public MatchType()
@@ -20,14 +20,14 @@ public class MatchType implements Serializable
 	}
 
 	
-	public Integer getpId() {
-		return pId;
-	}
-
-
-	public void setpId(Integer pId) {
-		this.pId = pId;
-	}
+//	public Integer getpId() {
+//		return pId;
+//	}
+//
+//
+//	public void setpId(Integer pId) {
+//		this.pId = pId;
+//	}
 
 
 	/**
