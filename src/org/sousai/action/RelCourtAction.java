@@ -34,7 +34,7 @@ public class RelCourtAction extends UserBaseAction {
 	// private Integer courtTypeId;
 	private File[] images;
 	private String[] imgNames;
-	public final static int MAX_COURT_COUNT = 5;
+	public final static int MAX_COURT_COUNT = 10;
 	public final static String SUCCESS = "success";
 	public final static String FAIL = "fail";
 	private static final String EXEED_COUNT = "exeed";

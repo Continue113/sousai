@@ -18,7 +18,7 @@ public class RelMatchAction extends UserBaseAction {
 	private Match match;
 	private Court court;
 	private Boolean isCourt;
-	private static final int MAX_MATCH_COUNT = 5;
+	private static final int MAX_MATCH_COUNT = 10;
 
 	/**
 	 * @return the match
