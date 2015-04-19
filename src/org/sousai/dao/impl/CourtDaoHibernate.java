@@ -305,7 +305,7 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 			keyValue = " %" + keyValue + "% ";
 		}
 		if (!CommonUtils.isNullOrEmpty(region)) {
-			region += region + "% ";
+			region += "% ";
 		}
 		String strWhere = Append_StringWithout1(" ", new int[] { 2, 0, 1, 2 },
 				new String[] { " and c.name", " and c.matchType",
