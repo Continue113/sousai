@@ -66,7 +66,7 @@
          <div class="controls form-inline"> 
           <label class="checkbox"><input type="checkbox" id="matchState_applying" checked="checked" >报名中&nbsp;&nbsp;</label> 
           <label class="checkbox"><input type="checkbox" id="matchState_playing" checked="checked" >比赛中&nbsp;&nbsp;</label> 
-          <label class="checkbox"><input type="checkbox" id="matchState_played" checked="checked" >已结束&nbsp;&nbsp;</label> 
+          <label class="checkbox"><input type="checkbox" id="matchState_played" >已结束&nbsp;&nbsp;</label> 
          </div>
         </div> 
         <div class="control-group"> 

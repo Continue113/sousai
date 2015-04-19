@@ -76,7 +76,7 @@
           <div class="control-group"> 
            <label class="control-label" for="inputCourtTel">联系电话：</label> 
            <div class="controls"> 
-            <input class="span5" type="text" id="inputCourtTel" name="court.tel" placeholder="如：区号-固定电话/移动电话（010-75315471/13883475126)" > 
+            <input class="span5" type="text" id="inputCourtTel" name="court.tel" placeholder="如：区号-固定电话/移动电话（010-75315471/13883475126)" >（选填）
            </div> 
           </div> 
           <div class="control-group"> 
