@@ -29,7 +29,7 @@
        <!-- panel --> 
        <div class="panel-top form-inline">
        <div class="btn-group sort" role="group">
-		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current" data-orderbycol="relTime" data-isasc="true">排序方式</span><span class="caret"></span></button>
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current" data-orderbycol="relTime" data-isasc="false">排序方式</span><span class="caret"></span></button>
 		<ul class="dropdown-menu" role="menu">
           <li><a href="javascript:void(0)" data-orderbycol="name" data-isasc="true">比赛名称<i class="icon-arrow-up"></i></a></li> 
           <li><a href="javascript:void(0)" data-orderbycol="beginTime" data-isasc="true">比赛时间<i class="icon-arrow-up"></i></a></li> 
@@ -54,6 +54,8 @@
         </div> 
         <select class="select selectRows span1"></select>
         <label class="checkbox" for="selType"><input id="selType" type="checkbox" value="1"><span>显示所有</span></label>
+        <label class="checkbox" for="selAll"><input id="selAll" type="checkbox" value="1"><span>全选</span></label>
+        <label class="checkbox" id="counts">&nbsp;&nbsp;&nbsp;&nbsp;共<span>...</span>条</label>
         <div class="btnbar pull-right"> 
          <button type="button" class="btn deleteMatch">删除</button>
          <button type="button" class="btn passMatch">发布</button>
@@ -130,7 +132,7 @@
 		args.currentPage = args.currentPage||$("ul.pagination li.active a").html()||1;
 		args.rows = args.rows||$("select.selectRows option:selected").val()||25;
 		args.orderByCol = args.orderByCol||$(".sort button .current").attr("data-orderbycol")||"relTime";
-		args.isAsc = args.isAsc||$(".sort button .current").attr("data-isasc")||true;
+		args.isAsc = args.isAsc||$(".sort button .current").attr("data-isasc")||false;
 		args.strColumns = args.strColumns||$(".text-filter-box button .current").attr("data-strcolumns")||"name";
 		args.keyValue = args.keyValue||$(".text-filter-box input").val()||"";
 		args.selType = args.selType||$("#selType").attr("value");
@@ -164,6 +166,8 @@
 	      $("td > label > span").wordLimit();
 	      $(".match-court").wordLimit();
 	      pages(rspdata.count,args.currentPage,args.rows);
+		    //显示总数目
+		    $("#counts").find("span").text(rspdata.count);
 	    }
     });
   }
@@ -288,6 +292,16 @@
     	}else if(target.attr("value")==0){
     		target.attr("value",1);//.parent().find("span").text("显示所有");  
     		e({});  		
+    	}
+    });
+    $("#selAll").click(function(){
+    	var target = $(this);
+    	if(target.attr("value")==1){
+    		target.attr("value",0);
+    		$(".matchTable").find("[type=checkbox]").prop("checked",true);
+    	}else if(target.attr("value")==0){
+    		target.attr("value",1);
+    		$(".matchTable").find("[type=checkbox]").prop("checked",false);
     	}
     });
   });

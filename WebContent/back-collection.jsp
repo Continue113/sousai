@@ -85,7 +85,7 @@
           <td class="match-title"><label for="{{id}}"><input type="checkbox" id="{{id}}"><span>{{name}}</span></label></td> 
           <td class="match-time">{{matchStartTime}} - {{matchDeadline}}</td> 
           <td class="match-court">{{matchAddress}}</td>
-          <td class="match-from"><a href="{{url}}">{{url}}</a></td> 
+          <td class="match-from"><a href="{{url}}" target="_blank">{{url}}</a></td> 
           <td class="match-oprate"><a href="javascript:void(0)" class="btn btn-mini pull-right">查看编辑</a></td> 
          </tr>
                             

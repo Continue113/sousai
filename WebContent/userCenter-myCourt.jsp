@@ -44,7 +44,7 @@
          <!-- panel --> 
          <div class="panel-top">
        <div class="btn-group sort" role="group">
-		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current" data-orderbycol="name" data-isasc="true">排序方式</span><span class="caret"></span></button>
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current" data-orderbycol="relDate" data-isasc="false">排序方式</span><span class="caret"></span></button>
 		<ul class="dropdown-menu" role="menu">
           <li><a href="javascript:void(0)" data-orderbycol="name" data-isasc="true">场地名称<i class="icon-arrow-up"></i></a></li> 
           <li><a href="javascript:void(0)" data-orderbycol="matchType" data-isasc="true">比赛类型<i class="icon-arrow-up"></i></a></li> 
@@ -125,8 +125,8 @@
 	  args.keyValue = args.keyValue||$("#keyValue").val()||"";
 	  args.currentPage = args.currentPage||$("ul.pagination li.active a").html()||1;
 	  args.rows = args.rows||25;
-	  args.orderByCol = args.orderByCol||$(".sort .current").attr("data-orderbycol")||"name";
-	  args.isAsc = args.isAsc||$(".sort .current").attr("data-isasc")||true;
+	  args.orderByCol = args.orderByCol||$(".sort .current").attr("data-orderbycol")||"relDate";
+	  args.isAsc = args.isAsc||$(".sort .current").attr("data-isasc")||false;
 		  
   	  $("#ajaxState .load").show();
   	  $(".courtBoxs").show();
@@ -144,7 +144,7 @@
 	          	  	var img = $.ajax({
 	  		    	  url: location.origin+'/sousai/ueditor/jsp/controller.jsp?action=listimage',
 			          data: {
-			          	id:"court/"+data.id
+			          	id:"court/"+this.id
 			          	},
 	        	      async: false, //设置异步为false,解决ajax异步不能设置全局变量的问题
 	          	        });

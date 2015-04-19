@@ -33,7 +33,7 @@
          <label class="control-label" for="searchKey">关&nbsp;&nbsp;键&nbsp;&nbsp;词：</label> 
          <div class="controls"> 
           <input type="text" id="keyValue" placeholder="请输入搜索关键词" > 
-          <a href="courtSearch.jsp" class="btn btn-small pull-right">转换到场地搜索界面</a> 
+          <a href="courtSearchAdv.jsp" class="btn btn-small pull-right"><i class="icon-arrow-right"></i><strong>场地搜索</strong></a> 
          </div> 
         </div> 
         <div class="control-group"> 
@@ -102,7 +102,7 @@
       <!-- panel --> 
       <div class="panel-top">
        <div class="btn-group sort" role="group">
-		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current" data-orderbycol="relTime" data-isasc="true">排序方式</span><span class="caret"></span></button>
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current" data-orderbycol="relTime" data-isasc="false">排序方式</span><span class="caret"></span></button>
 		<ul class="dropdown-menu" role="menu">
           <li><a href="javascript:void(0)" data-orderbycol="name" data-isasc="true">比赛名称<i class="icon-arrow-up"></i></a></li> 
           <li><a href="javascript:void(0)" data-orderbycol="beginTime" data-isasc="true">比赛时间<i class="icon-arrow-up"></i></a></li> 
@@ -206,7 +206,7 @@
 	  args.currentPage = args.currentPage||$("ul.pagination li.active a").html()||1;
 	  args.rows = args.rows||25;
 	  args.orderByCol = args.orderBycol||$(".sort .current").attr("data-orderbycol")||"relTime";
-	  args.isAsc = args.isAsc||$(".sort .current").attr("data-isasc")||true;
+	  args.isAsc = args.isAsc||$(".sort .current").attr("data-isasc")||false;
 		  
 		$("#ajaxState .load").show();
 		$(".matchBoxs").show();
@@ -233,16 +233,41 @@
 			      }
 		    	  //字数限制，溢出省略
 		    	  $(".matchBox-court > a").wordLimit(20);
+		    	  //清除比赛规程中的html标签
+		    	  $(".matchBox-info > a").text($('<p>'+$(".matchBox-info > a").text()+'</p>').text());
 		    	  $(".matchBox-info > a").wordLimit(28);
 				  pages(rspdata.count,args.currentPage,args.rows);
 	          }
 	        });
 	}  
   $(function(){
-		//loc需解码转换为中文
-	    var url = window.location.search,
-	    matchType = decodeURI(url.substring(url.lastIndexOf('=')+1, url.length));
-	    console.log(url);console.log(matchType);
+	 //loc需解码转换为中文
+	 var url = window.location.search,
+	 matchType = decodeURI(url.substring(url.lastIndexOf('=')+1, url.length));
+	 //获取data-sessionregion并设置地区
+	 var region = eval("("+$("#city").attr("data-sessionregion")+")");
+	 console.log($(".selectProvince").find("option[text='"+region.pName+"']"));
+	 $(".selectProvince").find("option[data-regionid='"+region.pId+"']").attr("selected",true);
+	 //获取所有市的信息
+	 $.ajax({
+         url: "selRegion",
+         data: {
+             "region.level": 1,
+             "region.code": $(".selectProvince option:selected").attr("value"),
+             "region.order": $(".selectProvince option:selected").attr("data-order")
+         },
+         success: function(rspdata) {
+             var selectCity = $(".selectCity");
+             selectCity.empty().append("<option value=0 data-regionid=0>请选择市</option>");
+             for (var i = 0; i < rspdata.length; i++) {
+                 selectCity.append("<option value=" + rspdata[i].code + " data-order=\"" + rspdata[i].order + "\" data-regionid=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</option>");
+             }
+        	 if(region.cId){
+        		 $(".selectCity").find("option[data-regionid='"+region.cId+"']").attr("selected",true);		 
+        	 }
+         },
+     });	 
+	 
 	 //若matchType为空则不进行搜索
 	 if(matchType){
 		e({matchType:matchType});

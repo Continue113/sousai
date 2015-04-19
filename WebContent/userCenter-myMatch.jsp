@@ -44,7 +44,7 @@
          <!-- panel --> 
          <div class="panel-top form-inline">
          <div class="btn-group sort" role="group">
-		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current" data-orderbycol="name" data-isasc="true">排序方式</span><span class="caret"></span></button>
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current" data-orderbycol="relTime" data-isasc="false">排序方式</span><span class="caret"></span></button>
 		<ul class="dropdown-menu" role="menu">
           <li><a href="javascript:void(0)" data-orderbycol="name" data-isasc="true">比赛名称<i class="icon-arrow-up"></i></a></li> 
           <li><a href="javascript:void(0)" data-orderbycol="beginTime" data-isasc="true">比赛时间<i class="icon-arrow-up"></i></a></li> 
@@ -104,7 +104,7 @@
        <div class="matchBox"  data-info="{{data}}" id="match{{id}}">
         <div class="matchBox-all"> 
          <div class="matchBox-title"> 
-          <a target="_blank" href="courtSearchDetail.jsp?id={{id}}">{{name}}</a> 
+          <a target="_blank" href="courtSearchDetail.jsp?id={{id}}">{{title}}</a> 
           <span class="pull-right">发布时间：<span class="matchBox-releaseTime">{{relTime}}</span></span> 
          </div>
          <ul class="breadcrumb"> 
@@ -129,8 +129,8 @@
 		var args=argso;
 		args.currentPage = args.currentPage||$("ul.pagination li.active a").html()||1;
 		args.rows = args.rows||$("select.selectRows option:selected").val()||25;
-		args.orderByCol = args.orderByCol||$(".sort button .current").attr("data-orderbycol")||"name";
-		args.isAsc = args.isAsc||$(".sort button .current").attr("data-isasc")||true;
+		args.orderByCol = args.orderByCol||$(".sort button .current").attr("data-orderbycol")||"relTime";
+		args.isAsc = args.isAsc||$(".sort button .current").attr("data-isasc")||false;
 		args.strColumns = args.strColumns||$(".text-filter-box button .current").attr("data-strcolumns")||"name";
 		args.keyValue = args.keyValue||$(".text-filter-box input").val()||"";
 	  	
@@ -144,6 +144,13 @@
 			      Handlebars.registerHelper("data",function(){
 			    	  return JSON.stringify(this);
 			      });
+			      Handlebars.registerHelper("title",function(){
+			    	  if(this.verify == "0"){
+			    		  return new Handlebars.SafeString('<span class="label label-info">等待审核</span>'+this.name);
+			    	  }else{
+			    		  return this.name;
+			    	  }
+		              });
 			      Handlebars.registerHelper("checkState",function(){
 			    	  if(this.state == "已结束"){
 			    		  return new Handlebars.SafeString('<a href="javascript:void(0)" class="btn btn-mini" onclick="updateScore('+this.id+')">录入成绩</a>');
@@ -159,6 +166,8 @@
 			      }
 		    	  //字数限制，溢出省略
 		    	  $(".matchBox-court").wordLimit(20);
+		    	  //清除比赛规程中的html标签
+		    	  $(".matchBox-info > a").text($('<p>'+$(".matchBox-info > a").text()+'</p>').text());
 		    	  $(".matchBox-info > a").wordLimit(28);
 		  	      //根据总数、当前页数、每页行数 分页
 		    	  pages(rspdata.count,args.currentPage,args.rows);

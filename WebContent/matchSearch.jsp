@@ -110,6 +110,8 @@
 			      }
 		    	  //字数限制，溢出省略
 		    	  $(".matchBox-court").wordLimit(20);
+		    	  //清除比赛规程中的html标签
+		    	  $(".matchBox-info > a").text($('<p>'+$(".matchBox-info > a").text()+'</p>').text());
 		    	  $(".matchBox-info > a").wordLimit(28);
 				  pages(rspdata.count,args.currentPage,args.rows);
 	          }
@@ -122,7 +124,6 @@
 	    urikv = decodeURI(url.substring(url.lastIndexOf('=')+1, url.length));
 	  	//将urikv填入当前的场地模糊搜索框
 	    $("#searchbox-match input[type='text']").val(urikv);
-	  	alert(urikv);
 	    if(urikv){
 			e({content:urikv});
 	    }else{

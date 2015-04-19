@@ -70,25 +70,25 @@
           <div class="control-group"> 
            <label class="control-label" for="inputCourtTables">赛场数：</label> 
            <div class="controls"> 
-            <input class="span5" type="text" id="inputCourtTables" name="court.tableNum" placeholder="请填写可以同时进行比赛的场地数（选填）" > 
+            <input class="span5" type="text" id="inputCourtTables" name="court.tableNum" placeholder="请填写可以同时进行比赛的场地数" >（选填）
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="inputCourtTel">联系电话：</label> 
            <div class="controls"> 
-            <input class="span5" type="text" id="inputCourtTel" name="court.tel" placeholder="区号-固定电话/移动电话（010-75315471/13883475126)" > 
+            <input class="span5" type="text" id="inputCourtTel" name="court.tel" placeholder="如：区号-固定电话/移动电话（010-75315471/13883475126)" > 
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="inputCourtPrice">价格：</label> 
            <div class="controls"> 
-            <input class="span5" type="text" id="inputCourtPrice" name="court.price" placeholder="如：场地使用收费情况（50元/小时 或 免费）（选填）" > 
+            <input class="span5" type="text" id="inputCourtPrice" name="court.price" placeholder="如：场地使用收费情况（50元/小时 或 免费）" >（选填）
            </div> 
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="inputCourtOpenTime">开放时间：</label> 
            <div class="controls"> 
-            <input class="span5" type="text" id="inputCourtOpenTime" name="court.workTime" placeholder="如：场地日常营业时间（星期一 至 星期五 9：00-22：00）（选填）" > 
+            <input class="span5" type="text" id="inputCourtOpenTime" name="court.workTime" placeholder="如：场地日常营业时间（星期一 至 星期五 9：00-22：00）" >（选填） 
            </div> 
           </div> 
           <div class="control-group"> 

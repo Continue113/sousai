@@ -226,10 +226,6 @@ function markMatch(matchid) {
                     sousaiRemindDialog("收藏比赛失败，错误类型为：" + rspdata);
                 }
             },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR + " /" + textStatus + " /" + errorThrown);
-                sousaiRemindDialog("抱歉，发送信息到服务器出错了。");
-            },
         });
     }
 }
@@ -277,7 +273,6 @@ function selectParticularMatchType(tempthis) {
         omtf = 1;
         //存在场地类型的下拉列表时 当用户选择具体比赛类型时，同时获取相应场地类型
         if ($(".selectCourtType").length != 0) {
-            console.log("获得场地类型");
             initCourtType(thisvalue);
         }
     } else if (thisvalue == 0) {
@@ -300,7 +295,6 @@ function selectParticularMatchType(tempthis) {
         }
         //存在场地类型的下拉列表时 当用户选择具体比赛类型时，同时获取相应场地类型
         if ($(".selectCourtType").length != 0) {
-            console.log("获得场地类型");
             initCourtType(thisvalue);
         }
         //将otherMatchType中填入已选的具体类型
@@ -347,7 +341,6 @@ function getRegion() {
 	        url: "isLogined",
 	        async: false, //设置异步为false,解决ajax异步不能设置全局变量的问题
 	    });
-	   console.log(logindata);
 	   if(!logindata.responseJSON){
 			newformloginBox();
 		}
@@ -364,7 +357,6 @@ function newformloginBox() {
         $("#inputUsername").val(unescape(getCookie("sousaiUserName")));
         $("#rememberMe").attr("checked", "checked");
     } else {
-        console.log(getCookie("sousaiUserName"));
         $("#inputUsername").val("");
     }
 
@@ -515,7 +507,7 @@ $(function() {
     });
 	
     //若存在session中的已选城市，则使用此城市，否则使用新浪IP获得所在城市地点 
-    if( $(".sessionCity").length != 1 ){
+/*    if( $(".sessionCity").length != 1 ){
 	  //通过调用新浪IP地址库接口查询用户当前所在国家、省份、城市、运营商信息
 	  $.getScript('http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js', function() {
 		  console.log(remote_ip_info);
@@ -524,7 +516,7 @@ $(function() {
 	    $("#city").html(remote_ip_info.city);
 	    //   $(".isp").html(remote_ip_info.isp);
 	  });
-   }
+   }*/
 
     //搜索栏模糊搜索
     $("#searchbox-match button").click(function() {
@@ -615,11 +607,7 @@ $(function() {
                 },
                 success: function(rspdata) {
                     if (rspdata == 0) {
-                        console.log(rspdata);
                         $("#city").text(rName).attr("data-sessionregion", "{'pName':'" + pName + "','pId':'" + pId + "','cName':'" + cName + "','cId':'" + cId + "','code':'" + cCode + "'}");
-                    } else {
-                        alert("抱歉，获取市区出错了." + rspdata);
-                        console.log(rspdata);
                     }
                 },
             });

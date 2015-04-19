@@ -28,7 +28,7 @@
        <!-- panel --> 
        <div class="panel-top form-inline">
        <div class="btn-group sort" role="group">
-		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current" data-orderbycol="regTime" data-isasc="true">排序方式</span><span class="caret"></span></button>
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current" data-orderbycol="regTime" data-isasc="false">排序方式</span><span class="caret"></span></button>
 		<ul class="dropdown-menu" role="menu">
           <li><a href="javascript:void(0)" data-orderbycol="name" data-isasc="true">用户名<i class="icon-arrow-up"></i></a></li> 
           <li><a href="javascript:void(0)" data-orderbycol="email" data-isasc="true">注册邮箱<i class="icon-arrow-up"></i></a></li> 
@@ -169,7 +169,7 @@
 		args.currentPage = args.currentPage||$("ul.pagination li.active a").html()||1;
 		args.rows = args.rows||$("select.selectRows option:selected").val()||25;
 		args.orderByCol = args.orderByCol||$(".sort button .current").attr("data-orderbycol")||"regTime";
-		args.isAsc = args.isAsc||$(".sort button .current").attr("data-isasc")||true;
+		args.isAsc = args.isAsc||$(".sort button .current").attr("data-isasc")||false;
 		args.strColumns = args.strColumns||$(".text-filter-box button .current").attr("data-strcolumns")||"name";
 		args.keyValue = args.keyValue||$(".text-filter-box input").val()||"";
 		args.selType = args.selType||$("#selType").attr("value")||1;

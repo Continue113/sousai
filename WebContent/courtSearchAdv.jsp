@@ -32,7 +32,7 @@
          <label class="control-label" for="searchKey">关&nbsp;&nbsp;键&nbsp;&nbsp;词：</label> 
          <div class="controls"> 
           <input type="text" id="keyValue" name="keyValue" placeholder="请输入搜索关键词" > 
-          <a href="matchSearch.jsp" class="btn btn-small pull-right">转换到比赛搜索界面</a> 
+          <a href="matchSearchAdv.jsp" class="btn btn-small pull-right"><i class="icon-arrow-right"></i><strong>比赛搜索</strong></a> 
          </div> 
         </div> 
         <div class="control-group"> 
@@ -68,7 +68,7 @@
        <!-- panel --> 
        <div class="panel-top">
        <div class="btn-group sort" role="group">
-		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current" data-orderbycol="relDate" data-isasc="true">排序方式</span><span class="caret"></span></button>
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="current" data-orderbycol="relDate" data-isasc="false">排序方式</span><span class="caret"></span></button>
 		<ul class="dropdown-menu" role="menu">
           <li><a href="javascript:void(0)" data-orderbycol="name" data-isasc="true">场地名称<i class="icon-arrow-up"></i></a></li> 
           <li><a href="javascript:void(0)" data-orderbycol="matchType" data-isasc="true">比赛类型<i class="icon-arrow-up"></i></a></li> 
@@ -143,7 +143,7 @@ function e(argso){
 	  args.currentPage = args.currentPage||$("ul.pagination li.active a").html()||1;
 	  args.rows = args.rows||25;
 	  args.orderByCol = args.orderByCol||$(".sort .current").attr("data-orderbycol")||"relDate";
-	  args.isAsc = args.isAsc||$(".sort .current").attr("data-isasc")||true;
+	  args.isAsc = args.isAsc||$(".sort .current").attr("data-isasc")||false;
 		  
 	$("#ajaxState .load").show();
 	$(".courtBoxs").show();
@@ -166,7 +166,7 @@ function e(argso){
 	          	  	var img = $.ajax({
 	  		    	  url: location.origin+'/sousai/ueditor/jsp/controller.jsp?action=listimage',
 			          data: {
-			          	id:"court/"+data.id
+			          	id:"court/"+this.id,
 			          	},
 	        	      async: false, //设置异步为false,解决ajax异步不能设置全局变量的问题
 	          	        });
@@ -222,6 +222,29 @@ function e(argso){
 	  $("#searchbox-tab").find("li:eq(0)").removeClass("active").end().find("li:eq(1)").addClass("active");
 	  $("#searchbox-match").removeClass("active");
 	  $("#searchbox-court").addClass("active");
+		 //获取data-sessionregion并设置地区
+		 var region = eval("("+$("#city").attr("data-sessionregion")+")");
+		 console.log($(".selectProvince").find("option[text='"+region.pName+"']"));
+		 $(".selectProvince").find("option[data-regionid='"+region.pId+"']").attr("selected",true);
+		 //获取所有市的信息
+		 $.ajax({
+	         url: "selRegion",
+	         data: {
+	             "region.level": 1,
+	             "region.code": $(".selectProvince option:selected").attr("value"),
+	             "region.order": $(".selectProvince option:selected").attr("data-order")
+	         },
+	         success: function(rspdata) {
+	             var selectCity = $(".selectCity");
+	             selectCity.empty().append("<option value=0 data-regionid=0>请选择市</option>");
+	             for (var i = 0; i < rspdata.length; i++) {
+	                 selectCity.append("<option value=" + rspdata[i].code + " data-order=\"" + rspdata[i].order + "\" data-regionid=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</option>");
+	             }
+	        	 if(region.cId){
+	        		 $(".selectCity").find("option[data-regionid='"+region.cId+"']").attr("selected",true);		 
+	        	 }
+	         },
+	     });	 
 	//ajax接收所有的场地 不需要进入页面自动搜索
 	//e({});
 	//点击高级场地搜索

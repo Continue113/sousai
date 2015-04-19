@@ -33,7 +33,7 @@
         </div> 
        </div> 
        <div class="control-group"> 
-        <label class="control-label" for="inputUserPassword">密码&nbsp;:</label> 
+        <label class="control-label" for="inputUserPassword">密&nbsp;&nbsp;&nbsp;&nbsp;码&nbsp;:</label> 
         <div class="controls"> 
          <input type="password" class="input-block-level" id="inputUserPassword" name="user.pwd" placeholder="密码" required="required" data-toggle="tooltip" data-placement="right" title="" data-original-title="密码至少6位，建议不要使用过于简单的密码。" > 
         </div> 
@@ -45,7 +45,7 @@
         </div> 
        </div> 
        <div class="control-group"> 
-        <label class="control-label" for="inputUserEmail">邮箱&nbsp;:</label> 
+        <label class="control-label" for="inputUserEmail">邮&nbsp;&nbsp;&nbsp;&nbsp;箱&nbsp;:</label> 
         <div class="controls"> 
          <input type="email" class="input-block-level" id="inputUserEmail" name="user.email" placeholder="电子邮箱" required="required" > 
         </div> 
@@ -113,7 +113,6 @@
 
       $("#registerForm").validate({
         submitHandler: function(form){
-        	console.log("通过验证");
           $.ajax({
             url: "processReg",
             data: {
@@ -123,16 +122,13 @@
               "user.type": 1,
             },
             success: function(resdata){
-            	console.log(resdata);
               //$('#sousaiRemindDialog').modal({backdrop:static});
-              console.log("dialoged!");
               //5秒后跳转至首页
               window.setTimeout("window.location='index.jsp'",5000);
               var resetbtn = confirm("注册成功，点击确定直接跳转至首页，点击取消将在5秒后跳转至首页。");
               if (resetbtn == true){
                 location.href = "index.jsp";
               }
-              console.log("location.hrefed!");
             },
           });
         },

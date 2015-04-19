@@ -15,13 +15,15 @@ function setCourtInfo(datainfo){
     $("#inputCourtTel").val(data.tel);
     $("#inputCourtPrice").val(data.price);
     $("#inputCourtOpenTime").val(data.workTime);
-    //再次初始化上传图片,
-    imageUploader(); console.log(uploader.option());console.log(uploader.option("server"));
-    //设置上传图片server
-    upLoaderServerCourtId = data.id;
-    uploader.option("server",location.origin+'/sousai/ueditor/jsp/controller.jsp?action=uploadimage&id=court/'+upLoaderServerCourtId);
-    console.log(uploader.option("server"));
     //获取已上传的场地图片
+	    //设置上传图片server
+	    upLoaderServerCourtId = data.id;
+  	    //再次初始化上传图片,
+  	    //imageUploader(); 
+	    console.log(uploader.option());
+	    console.log(uploader.option("server"));
+  	    uploader.option("server",location.origin+'/sousai/ueditor/jsp/controller.jsp?action=uploadimage&id=court/'+upLoaderServerCourtId);
+  	    console.log(uploader.option("server"));
     //设置上传图片为可见,同时添加删除已有图片功能,
     $('#fileList').empty();
     $.ajax({
@@ -29,6 +31,7 @@ function setCourtInfo(datainfo){
         data: {
         	id:"court/"+data.id
         	},
+        async: false,
         success: function(rspdata) {
       	  console.log(rspdata);
       	  if(!rspdata.list){
@@ -36,10 +39,9 @@ function setCourtInfo(datainfo){
       	  }
       	  //设置剩余可上传图片数量
       	  var fileNum = 3-rspdata.total;
-      	  console.log(uploader.option("fileNumLimit"));
-      	  uploader.option("fileNumLimit",fileNum);
-      	  console.log(uploader.option("fileNumLimit"));
-      	  
+      	uploader.option("fileNumLimit",fileNum);
+	    console.log(uploader.option());
+      	
       	  $.each(rspdata.list,function(index,item){
       		  var imgName = item.url.split("/")[7],
       		  	  $li = $( '<li id="' + imgName + '">' +
@@ -78,10 +80,6 @@ function setCourtInfo(datainfo){
       	      });
       	  });
         },
-        error: function(rspdata){
-        	alert("获取图片出错了,error sousai");
-        	  console.log(rspdata);
-        },
       });
     
     tinymce.activeEditor.setContent(data.intro);
@@ -106,7 +104,7 @@ function getCourtInfo(){
 	 court.region = $("#inputCourtRegion").val();
 	 court.regionId = parseInt($("#inputCourtRegion").attr("data-regionid"));
 	 court.addr = $("#inputCourtAddress").val();
-	 court.tableNum = parseInt($("#inputCourtTables").val());
+	 court.tableNum = parseInt($("#inputCourtTables").val())||null;
 	 court.tel = $("#inputCourtTel").val();
 	 court.price = $("#inputCourtPrice").val();
 	 court.workTime = $("#inputCourtOpenTime").val();
@@ -169,7 +167,7 @@ function sureDeleteEdit(){
 //图片上传 用于获取图片所属的场地Id
 var upLoaderServerCourtId,
 uploader;
-function imageUploader(){
+function imageUploader(fileNum){
   
   // 优化retina, 在retina下这个值是2
   var $wrap = $('#uploader'),
@@ -182,7 +180,8 @@ function imageUploader(){
   // 缩略图大小
   thumbnailWidth = 110 * ratio,
   thumbnailHeight = 110 * ratio;
-  
+  //若没有指定fileNumLimit则默认设置为3
+  fileNum?fileNum:3;
   // 实例化
   uploader = WebUploader.create({
       pick: {
@@ -196,7 +195,7 @@ function imageUploader(){
       // swf文件路径
       swf: 'webuploader/Uploader.swf',
       server: location.origin+'/sousai/ueditor/jsp/controller.jsp?action=uploadimage&id=court/0',
-      fileNumLimit: 3,
+      fileNumLimit: fileNum,
       fileSingleSizeLimit: 200 * 1024,    // 200k
   });
   
@@ -280,7 +279,7 @@ function imageUploader(){
       switch( type ) {
           case 'uploadFinished':
               console.log( 'uploadFinished' );
-              alert("uploadFinished 上传图片成功");
+              console.log("uploadFinished 上传图片成功");
               break;
 
           case 'startUpload':
