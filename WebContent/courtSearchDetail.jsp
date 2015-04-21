@@ -20,7 +20,7 @@
 .courtSearchDetail .courtShortInfo .courtImg-small > .breadcrumb > li.active {border: 1px solid #51a351;}
 .courtSearchDetail .courtShortInfo .courtImg-small img{width: 45px;height: 45px;}
 .courtSearchDetail .courtShortInfo  table{font-size: 12px;}
-.courtSearchDetail .courtShortInfo  table td:first-child {text-align: right;}
+.courtSearchDetail .courtShortInfo  table td:first-child {text-align: right;width: 62px;}
 /*.courtSearchDetail .courtShortInfo  table .td2{width: 280px;}*/
 
 /** nav-tabs **/

@@ -107,7 +107,7 @@
           </div> 
           <div class="control-group"> 
            <label class="control-label" for="inputCourtInfo">场地简介：</label> 
-          <div class="controls"><span class="error">请填写场地基本情况，如场地新建时间、场地设施情况、场地优势等</span></div>
+          <div class="controls"><p class="error" style="padding-top:6px;">请填写场地基本情况，如场地新建时间、场地设施情况、场地优势等</p><!-- 为了对齐特别加入的内联样式 --></div>
           </div> 
           <textarea id="inputCourtInfo" name="intro"></textarea>          
           <div class="control-group hide"> 

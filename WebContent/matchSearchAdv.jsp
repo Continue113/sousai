@@ -246,7 +246,6 @@
 	 matchType = decodeURI(url.substring(url.lastIndexOf('=')+1, url.length));
 	 //获取data-sessionregion并设置地区
 	 var region = eval("("+$("#city").attr("data-sessionregion")+")");
-	 console.log($(".selectProvince").find("option[text='"+region.pName+"']"));
 	 $(".selectProvince").find("option[data-regionid='"+region.pId+"']").attr("selected",true);
 	 //获取所有市的信息
 	 $.ajax({
@@ -263,7 +262,23 @@
                  selectCity.append("<option value=" + rspdata[i].code + " data-order=\"" + rspdata[i].order + "\" data-regionid=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</option>");
              }
         	 if(region.cId){
-        		 $(".selectCity").find("option[data-regionid='"+region.cId+"']").attr("selected",true);		 
+        		 $(".selectCity").find("option[data-regionid='"+region.cId+"']").attr("selected",true);	
+        		 
+        		 $.ajax({
+                     url: "selRegion",
+                     data: {
+                         "region.level": 2,
+                         "region.code": region.cId,
+                         "region.order": region.code,
+                     },
+                     success: function(rspdata) {
+                         var selectCountry = $(".selectCountry");
+                         selectCountry.empty().append("<option value=0 data-regionid=0>请选择区</option>");
+                         for (var i = 0; i < rspdata.length; i++) {
+                             selectCountry.append("<option value=" + rspdata[i].code + " data-order=\"" + rspdata[i].order + "\" data-regionid=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</option>");
+                         }
+                     },
+                 });
         	 }
          },
      });	 

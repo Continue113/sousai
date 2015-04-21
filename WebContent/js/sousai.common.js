@@ -607,7 +607,7 @@ $(function() {
                 },
                 success: function(rspdata) {
                     if (rspdata == 0) {
-                        $("#city").text(rName).attr("data-sessionregion", "{'pName':'" + pName + "','pId':'" + pId + "','cName':'" + cName + "','cId':'" + cId + "','code':'" + cCode + "'}");
+                        $("#city").text("你所在的城市["+rName+"]&nbsp;&nbsp;").attr("data-sessionregion", "{'pName':'" + pName + "','pId':'" + pId + "','cName':'" + cName + "','cId':'" + cId + "','code':'" + cCode + "'}");
                     }
                 },
             });

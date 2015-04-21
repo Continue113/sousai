@@ -478,6 +478,12 @@ $(function(){
     	digits: true, 
     	min: 1,
     },
+    "court.price": {
+        maxlength: 60
+    },
+    "court.workTime": {
+        maxlength: 60
+    },
   },
   messages: {
 	  "court.name": {//新场地的场地名称
@@ -497,6 +503,12 @@ $(function(){
     	digits: "请填写整数，最小为1",
     	min: "请填写整数，最小为1"    	
     }, //赛场数
+    "court.price": {
+        maxlength: "价格最多填写60个字符",
+    },
+    "court.workTime": {
+        maxlength: "开发时间最多填写60个字符",
+    },
     "court.courtTypeId": "",//场地的场地类型
   },
   errorPlacement: function(error, element){

@@ -97,7 +97,7 @@
 		//定义默认选项 
 		var args=argso;
 		args.currentPage = args.currentPage||$("ul.pagination li.active a").html()||1;
-		args.rows = args.rows||$("select.selectRows option:selected").val()||25;
+		args.rows = args.rows||$("select.selectRows option:selected").val()||5;
 		args.orderByCol = args.orderByCol||$(".sort button .current").attr("data-orderbycol")||"name";
 		args.isAsc = args.isAsc||$(".sort button .current").attr("data-isasc")||true;
 		args.strColumns = args.strColumns||$(".text-filter-box button .current").attr("data-strcolumns")||"name";
@@ -175,7 +175,7 @@ function sureDeleteEdit(){
 	  $(".editMatch").find(".btnbar").html('<button type="button" class="btn passCollection">发布采集</button><button type="button" class="btn saveCollection">保存修改</button><button type="button" class="btn deleteCollection">删除采集</button><button type="button" class="btn backList">返回列表</button>');
 	  
 	//ajax接收所有比赛
-	e({currentPage:1,rows:25});
+	//e({currentPage:1,rows:10});
     //点击编辑比赛隐藏List列表同时显示编辑比赛
     $("tbody").on("click",".match-oprate > a",function(event){
         var datainfo = $(this).parent().parent().attr("data-info");
