@@ -110,7 +110,7 @@
 		    <tr class="tritem"  data-info="{{data this}}" data-courtid="{{id}}">
 				<td>{{name}}</td>
 				<td>{{addr}}</td>
-				<td>{{courtTypeId}}</td>
+				<td>{{courtType}}</td>
 				<td>{{tableNum}}</td>
 				<td>{{matchCount}}</td>
 				<td><a target="_blank" href="courtSearchDetail.jsp?id={{id}}">详细</a></td>
