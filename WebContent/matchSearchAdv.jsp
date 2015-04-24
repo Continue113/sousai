@@ -202,7 +202,7 @@
 	  args.matchState = args.matchState||getMatchState();
 	  args.beginTime = args.beginTime||$("#inputMatchTimefrom").val()||null;
 	  args.endTime = args.endTime||$("#inputMatchTimeto").val()||null;
-	  args.dayOfweek = args.dayOfweek||getDayOfWeek();
+	  args.dayOfWeek = args.dayOfweek||getDayOfWeek();
 	  args.currentPage = args.currentPage||$("ul.pagination li.active a").html()||1;
 	  args.rows = args.rows||25;
 	  args.orderByCol = args.orderBycol||$(".sort .current").attr("data-orderbycol")||"relTime";

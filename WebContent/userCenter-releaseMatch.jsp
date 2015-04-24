@@ -117,6 +117,15 @@
 			}else if(!match){
 				return false;
 			}else{
+
+	    		//检查disabled属性
+	    		if($(this).hasClass("disabled")){
+	    			sousaiRemindDialog("正在上传数据，请勿重复点击发布！");
+	    			return false;
+	    		}
+	    		//点击发布后使其不能再点击
+	    		$(this).addClass("disabled");
+	    		
 		      		var data,regionData = getRegion();
 		      		if(!regionData.region){
 		      			sousaiRemindDialog("场地区域不对，请重新选择省市区");
