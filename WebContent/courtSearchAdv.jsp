@@ -173,7 +173,7 @@ function e(argso){
 			        if(!img.responseJSON.list){
 			        	return new Handlebars.SafeString('<img src="img/defaultImg.png" alt="'+ this.name +'" title="'+ this.name +'" >');
 			        }else{
-		                return new Handlebars.SafeString('<img src="'+location.origin + img.responseJSON.list[0].url+'" alt="'+ this.name +'" title="'+ this.name +'" >');
+		                return new Handlebars.SafeString('<img src=".'+ img.responseJSON.list[0].url+'" alt="'+ this.name +'" title="'+ this.name +'" >');
 			        }
 	              });
 	        	Handlebars.registerHelper("recordNumb",function(){
