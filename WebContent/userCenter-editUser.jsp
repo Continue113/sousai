@@ -70,11 +70,11 @@
             <input class="span3 add-on" type="email" id="inputUserEmail" name="user.email" data-toggle="tooltip" data-placement="top" title="" data-original-title="可选择修改" > 
            </div> 
           </div> 
-          <div class="control-group"> 
+          <!-- <div class="control-group"> 
            <label class="control-label" for="userIcon">头像设置：</label> 
            <div class="controls"> 
             <div class="crtUserIcon"><img src=""></div>
-           </div>
+           </div> -->
            <!-- hide old uploadpic
            <div class="controls"> 
             <span class="btn fileinput-button"><i class="icon-plus"></i><span>选择图片</span></span>
@@ -93,7 +93,7 @@
            </div>
            -->
            <!-- flash upload div -->
-           <div class="controls" >
+           <!-- <div class="controls" >
            <OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
             codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"
             WIDTH="650" HEIGHT="450" id="sousaiUserIconUpload">
@@ -108,8 +108,8 @@
             </OBJECT>
            <div id="avatar_priview"></div>
            </div>
-         </div>
-          <div class="control-group"> 
+         </div> -->
+         <!--  <div class="control-group"> 
            <label class="control-label" for="systemIcons">系统头像：</label> 
            <div class="controls" id="systemIcons"> 
             <ul class="breadcrumb"> 
@@ -123,7 +123,7 @@
              <li class="thumbnail"><img src="img/defaultIcon.png" ></li>
             </ul> 
            </div> 
-          </div> 
+          </div>  -->
           <div class="control-group">
            <div class="controls"> 
             <button type="submit" class="btn btn-success" id="saveEditUserForm">保存修改</button>

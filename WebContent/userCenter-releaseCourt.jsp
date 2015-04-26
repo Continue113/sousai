@@ -118,7 +118,17 @@
   	  			//若court验证不通过或者有其他情况返回false时.不提交发布,直接返回false
   	  			if(!court){
   	  				return false;
-  	  			}
+  	  			}  	  			
+
+	    		//检查disabled属性
+	    		if($(this).hasClass("disabled")){
+	    			sousaiRemindDialog("正在上传数据，请勿重复点击发布！");
+	    			return false;
+	    		}
+	    		//点击发布后使其不能再点击
+	    		$(this).addClass("disabled");
+	    		
+  	  			
   				var data = {
   						"court.userId": userid.responseJSON.userId,
   						"court.addr": court.addr,

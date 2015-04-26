@@ -151,7 +151,7 @@
 			        if(!img.responseJSON.list){
 			        	return new Handlebars.SafeString('<img src="img/defaultImg.png" alt="'+ this.name +'" title="'+ this.name +'" >');
 			        }else{
-		                return new Handlebars.SafeString('<img src="'+img.responseJSON.list[0].url+'" alt="'+ this.name +'" title="'+ this.name +'" >');
+		                return new Handlebars.SafeString('<img src=".' + img.responseJSON.list[0].url+'" alt="'+ this.name +'" title="'+ this.name +'" >');
 			        }
 	              });
 		      Handlebars.registerHelper("title",function(){
@@ -223,6 +223,8 @@
         	setCourtInfo(datainfo);
     		$(".courtList").slideUp();
     		$(".editCourt").find("button.passCourt").hide().end().slideDown();
+    	    uploader.refresh();
+    	    console.log(uploader.option());
   		});
     });
 </script>

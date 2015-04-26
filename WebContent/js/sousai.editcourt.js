@@ -181,7 +181,7 @@ function imageUploader(fileNum){
   thumbnailWidth = 110 * ratio,
   thumbnailHeight = 110 * ratio;
   //若没有指定fileNumLimit则默认设置为3
-  fileNum?fileNum:3;
+  fileNum = fileNum||3;
   // 实例化
   uploader = WebUploader.create({
       pick: {
@@ -211,8 +211,7 @@ function imageUploader(fileNum){
           $wrap = $li.find( 'p.imgWrap' ),
 
           showError = function( code ) {
-      		console.log(code);
-              sousaiRemindDialog("请上传小于 200KB 的 jpg、jpeg、png、gif 格式的图片。一个场地最多上传3张图片.");
+    	  console.log(code,uploader.option());
           };
 
       if ( file.getStatus() === 'invalid' ) {
@@ -294,7 +293,22 @@ function imageUploader(fileNum){
   });
 
   uploader.onError = function( code ) {
-      sousaiRemindDialog( '请上传小于 200KB 的 jpg、jpeg、png、gif 格式的图片。一个场地最多上传3张图片. Eroor: ' + code );
+	  console.log(code,uploader.option());
+		switch(code){	
+			case "F_DUPLICATE":
+        sousaiRemindDialog("请不要上传重复的图片。");
+        break;
+			case "F_EXCEED_SIZE":
+            sousaiRemindDialog("超出大小限制了，请上传小于 200KB 的 jpg、jpeg、png、gif 格式的图片。");
+            break;
+			case "Q_TYPE_DENIED":
+            sousaiRemindDialog("格式错误，请上传小于 200KB 的 jpg、jpeg、png、gif 格式的图片。");
+            break;
+			case "Q_EXCEED_NUM_LIMIT":
+            sousaiRemindDialog("一个场地最多上传3张图片.");
+            break;
+				
+		}
   };
   //在管理图片时需要使用
   /*$upload.on('click', function() {
@@ -478,6 +492,12 @@ $(function(){
     	digits: true, 
     	min: 1,
     },
+    "court.price": {
+        maxlength: 60
+    },
+    "court.workTime": {
+        maxlength: 60
+    },
   },
   messages: {
 	  "court.name": {//新场地的场地名称
@@ -497,6 +517,12 @@ $(function(){
     	digits: "请填写整数，最小为1",
     	min: "请填写整数，最小为1"    	
     }, //赛场数
+    "court.price": {
+        maxlength: "价格最多填写60个字符",
+    },
+    "court.workTime": {
+        maxlength: "开发时间最多填写60个字符",
+    },
     "court.courtTypeId": "",//场地的场地类型
   },
   errorPlacement: function(error, element){

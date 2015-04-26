@@ -285,6 +285,7 @@ public class CommonManagerImpl implements CommonManager {
 			String matchType, java.sql.Date now, int matchState, int dayOfWeek, Date beginTime, Date endTime, String region,
 			int currentPage, int rows, String orderByCol, Boolean isAsc)
 			throws Exception {
+		System.out.println("cmg.dayOfWeek = "+dayOfWeek);
 		return matchDao.findPagedByParams(keyValue, matchType, now, matchState, dayOfWeek, beginTime, endTime, region,
 				currentPage, rows, orderByCol, isAsc);
 	}

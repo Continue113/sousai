@@ -385,6 +385,10 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 				now);
 		// 构建筛选周几的子语句
 		String strDayOfWeekStatement = buildDayOfWeekStatement(dayOfWeek);
+		
+		System.out.println("dayOfWeek="+dayOfWeek);
+		System.out.println("strDayOfWeekStatement="+strDayOfWeekStatement);
+		
 		// 构建查询关键字的子语句，在name，type，region，addr字段查询
 		String strKeyValueStatement = buildKeyValueStatement(keyValue,
 				new String[] { addPrefixToColumn("name"),

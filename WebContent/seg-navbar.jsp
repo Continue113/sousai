@@ -27,10 +27,10 @@
     </div> 
     <div class="hdcity pull-right">
      <s:if test="#session.regionBean.rName!=null">
-     <p>[<span id="city" class="sessionCity" data-sessionregion="{'pName':'<s:property value="#session.regionBean.pName"/>','pId':'<s:property value="#session.regionBean.pId"/>','cName':'<s:property value="#session.regionBean.cName"/>','cId':'<s:property value="#session.regionBean.cId"/>','code':'<s:property value="#session.regionBean.code"/>',}" ><s:property value="#session.regionBean.rName"/></span>]<a href="javascript:void(0);" id="changeCityBtn">切换</a></p>
+     <p><span id="city" class="sessionCity" data-sessionregion="{'pName':'<s:property value="#session.regionBean.pName"/>','pId':'<s:property value="#session.regionBean.pId"/>','cName':'<s:property value="#session.regionBean.cName"/>','cId':'<s:property value="#session.regionBean.cId"/>','code':'<s:property value="#session.regionBean.code"/>',}" >你所在的城市[<s:property value="#session.regionBean.rName"/>]&nbsp;&nbsp;</span><a href="javascript:void(0);" id="changeCityBtn">切换</a></p>
      </s:if>
      <s:else>
-     <p>[<span id="city" data-sessionregion="{'pName':'北京市','pId':'2','cName':'北京市','cId':'33','code':'110100'}">北京市</span>]是你所在的城市吗？<a href="javascript:void(0);" id="changeCityBtn">切换</a></p>
+     <p><span id="city" data-sessionregion="{'pName':'北京市','pId':'2','cName':'北京市','cId':'33','code':'110100'}">[北京市]是你所在的城市吗？</span><a href="javascript:void(0);" id="changeCityBtn">切换</a></p>
      </s:else>
      <div class="form-inline hdcity-hide">
       <select class="selectSessionProvince span2">
