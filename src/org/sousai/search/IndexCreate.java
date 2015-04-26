@@ -106,12 +106,12 @@ public class IndexCreate {
 		
 		System.out.println(matchList.size());
 		for (int i = 0; i < matchList.size(); i++) {
-			saveIndex("/home/lei/data",matchList.get(i));
+			saveIndex("/",matchList.get(i));
 		}
 		
 		LinkedList<Court> courtList = new Jdbc().selectCourtToday() ;
 		for (int i = 0; i < courtList.size(); i++) {
-			saveCourtIndex("/home/lei/data1",courtList.get(i));
+			saveCourtIndex("/",courtList.get(i));
 		}
 	}
 	

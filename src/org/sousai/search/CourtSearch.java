@@ -145,7 +145,7 @@ public class CourtSearch {
 			rows = 25;
 		
 		System.out.println("sss"+content);
-		LinkedList<Court> listAll = courtSearch(content, "/home/lei/data");
+		LinkedList<Court> listAll = courtSearch(content, "/");
 		for (int i = (currentPage - 1) * rows; i < ((currentPage - 1) * rows + 25)
 				&& i < listAll.size(); i++) {
 			courtList.add(listAll.get(i));

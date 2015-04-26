@@ -210,7 +210,7 @@ public class MainSearch {
 			currentPage=1 ;
 		if(rows==null)
 			rows = 25 ;
-		LinkedList<MatchData> listAll = matchSearch(content,"/home/lei/data") ;
+		LinkedList<MatchData> listAll = matchSearch(content,"/") ;
 		for(int i=(currentPage-1)*rows;i<((currentPage-1)*rows+25)&&i<listAll.size();i++){
 			matches.add(listAll.get(i)) ;
 		}
