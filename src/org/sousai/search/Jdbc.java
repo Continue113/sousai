@@ -276,7 +276,7 @@ public class Jdbc {
 				// ID,NAME,COURTTYPEID,MATCHTYPE,REGIONID,ADDR,TABLENUM,TEL,MATCHCOUNT,PRICE,WORKTIME,INTRO,VERFY,RELDATE,MODDATE,USERID
 				courtList.add(new Court.Builder().id(result.getInt("ID"))
 						.name(result.getString("NAME"))
-						.courtTypeId(result.getInt("DOURTTYPEID"))
+						.courtTypeId(result.getInt("COURTTYPEID"))
 						.matchType(result.getString("MATCHTYPE"))
 						.address(result.getString("ADDR"))
 						.tableNum(result.getInt("TABLENUM"))
