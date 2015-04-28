@@ -390,10 +390,14 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 		System.out.println("strDayOfWeekStatement="+strDayOfWeekStatement);
 		
 		// 构建查询关键字的子语句，在name，type，region，addr字段查询
+//		String strKeyValueStatement = buildKeyValueStatement(keyValue,
+//				new String[] { addPrefixToColumn("name"),
+//						addPrefixToColumn("type"), addPrefixToColumn("region"),
+//						addPrefixToColumn("addr") });
+		
+		//buildKeyValueStatement方法中会调用addPrefixToColumn方法
 		String strKeyValueStatement = buildKeyValueStatement(keyValue,
-				new String[] { addPrefixToColumn("name"),
-						addPrefixToColumn("type"), addPrefixToColumn("region"),
-						addPrefixToColumn("addr") });
+				new String[] { "name","type","region","addr"});
 
 		int[] types = new int[] { 11, 11, 0, 3, 2, 11 };
 		String[] columns = new String[] { strKeyValueStatement,

@@ -273,7 +273,7 @@ public class Jdbc {
 			result = pstmt.executeQuery();
 
 			while (result.next()) {
-				// ID,NAME,COURTTYPEID,MATCHTYPE,REGIONID,ADDR,TABLENUM,TEL,MATCHCOUNT,PRICE,WORKTIME,INTRO,VERFY,RELDATE,MODDATE,USERID
+				// ID,NAME,COURTTYPEID,MATCHTYPE,REGIONID,ADDR,TABLENUM,TEL,MATCHCOUNT,PRICE,WORKTIME,INTRO,VERIFY,RELDATE,MODDATE,USERID
 				courtList.add(new Court.Builder().id(result.getInt("ID"))
 						.name(result.getString("NAME"))
 						.courtTypeId(result.getInt("COURTTYPEID"))
@@ -285,7 +285,7 @@ public class Jdbc {
 						.price(result.getString("PRICE"))
 						.worktime(result.getString("WORKTIME"))
 						.intro(result.getString("INTRO"))
-						.verify(result.getString("VERFY"))
+						.verify(result.getString("VERIFY"))
 						.relDate(result.getString("RELDATE"))
 						.modDate(result.getString("MODDATE"))
 						.userId(result.getInt("USERID")).build());
