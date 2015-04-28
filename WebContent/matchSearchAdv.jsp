@@ -198,7 +198,7 @@
 	  args.region = args.region||getRegion().region;
 	  args.regionId = args.regionId||getRegion().regionId; //暂时未用到
 	  args.keyValue = args.keyValue||$("#keyValue").val()||"";
-	  args.matchType = args.matchType||($("select.selectParticularMatchType option:selected").attr("value") == "0" ? null : $("select.selectParticularMatchType option:selected").text());
+	  args.matchType = args.matchType||$("#inputMatchType").val()||($("select.selectParticularMatchType option:selected").attr("value") == "0" ? null : $("select.selectParticularMatchType option:selected").text());
 	  args.matchState = args.matchState||getMatchState();
 	  args.beginTime = args.beginTime||$("#inputMatchTimefrom").val()||null;
 	  args.endTime = args.endTime||$("#inputMatchTimeto").val()||null;
@@ -285,11 +285,12 @@
 	 
 	 //若matchType为空则不进行搜索
 	 if(matchType){
-		e({matchType:matchType});
 		//显示隐藏的editMatchTypeControls
 		$("#inputMatchType").val(matchType);
 		$("#editMatchTypeControls").show();
 		$("#matchTypeControls").hide();
+		
+		e({matchType:matchType});
 	 }
 	 //立即初始化比赛类型
 	 initMatchType();

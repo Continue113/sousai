@@ -121,8 +121,8 @@
            <li class="courtBox-address">{{addr}}</li> 
            <li class="courtBox-info"><p>{{courtType}}</p><p>{{#if tableNum}}赛场{{tableNum}}个{{else}}暂无赛场数据{{/if}}</p></li> 
 		   <li class="courtBox-tel">电话：<p>{{#if tel}}{{tel}}{{else}}暂无电话信息{{/if}}</p></li>
-           <li class="courtBox-record">举办比赛次数<p><span class="courtBox-recordNumb">{{recordNumb}}</span>次</p></li> 
-           <li class="courtBox-evaluation">评论次数<p><span class="courtBox-evaluationNumb">{{evaluationNumb}}</spn>次</p></li>
+           <li class="courtBox-record">举办比赛次数<p><span class="courtBox-recordNumb">{{recordNumb}}?</span>次</p></li> 
+           <li class="courtBox-evaluation">评论次数<p><span class="courtBox-evaluationNumb">{{evaluationNumb}}?</spn>次</p></li>
 		  </ul> 
          </div> 
         </div>
@@ -176,7 +176,7 @@ function e(argso){
 		                return new Handlebars.SafeString('<img src=".'+ img.responseJSON.list[0].url+'" alt="'+ this.name +'" title="'+ this.name +'" >');
 			        }
 	              });
-	        	Handlebars.registerHelper("recordNumb",function(){
+	        	/* Handlebars.registerHelper("recordNumb",function(){
 	          	  	var recordNumb = $.ajax({
 	          	        url: "getMatchByCourtId",
 	          	        data: {
@@ -201,7 +201,7 @@ function e(argso){
 	          	  		 return 0;
 	          	  	 }
 	          	  	 return evaluationNumb.responseJSON.length;
-	              });
+	              }); */
 	              //清空tbody并填入数据
 	              target.empty().html(template(rspdata.body));
 	              $("#ajaxState .load").hide();

@@ -108,8 +108,8 @@
            <li class="courtBox-address">{{addr}}</li> 
            <li class="courtBox-info"><p>{{courtType}}</p><p>{{#if tableNum}}赛场{{tableNum}}个{{else}}暂无赛场数据{{/if}}</p></li> 
 		   <li class="courtBox-tel">电话：<p>{{#if tel}}{{tel}}{{else}}暂无电话信息{{/if}}</p></li>
-           <li class="courtBox-record">举办比赛次数<p><span class="courtBox-recordNumb">{{recordNumb}}</span>次</p></li> 
-           <li class="courtBox-evaluation">评论次数<p><span class="courtBox-evaluationNumb">{{evaluationNumb}}</spn>次</p></li>
+           <li class="courtBox-record">举办比赛次数<p><span class="courtBox-recordNumb">{{recordNumb}}?</span>次</p></li> 
+           <li class="courtBox-evaluation">评论次数<p><span class="courtBox-evaluationNumb">{{evaluationNumb}}?</spn>次</p></li>
 		  </ul> 
          </div> 
         </div>
@@ -161,7 +161,7 @@
 		    		  return this.name;
 		    	  }
 	              });
-	        	Handlebars.registerHelper("recordNumb",function(){
+	        	/* Handlebars.registerHelper("recordNumb",function(){
 	          	  	var recordNumb = $.ajax({
 	          	        url: "getMatchByCourtId",
 	          	        data: {
@@ -188,7 +188,7 @@
 	          	  		 return 0;
 	          	  	 }
 	          	  	 return evaluationNumb.responseJSON.length;
-	              });
+	              }); */
 		      target.empty().show().html(template(rspdata.body));
 		      $("#ajaxState .load").hide();
 		      $("#ajaxState .noresult").hide();
