@@ -241,7 +241,23 @@ function e(argso){
 	                 selectCity.append("<option value=" + rspdata[i].code + " data-order=\"" + rspdata[i].order + "\" data-regionid=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</option>");
 	             }
 	        	 if(region.cId){
-	        		 $(".selectCity").find("option[data-regionid='"+region.cId+"']").attr("selected",true);		 
+	        		 $(".selectCity").find("option[data-regionid='"+region.cId+"']").attr("selected",true);	
+	        		 
+	        		 $.ajax({
+	                     url: "selRegion",
+	                     data: {
+	                         "region.level": 2,
+	                         "region.code": region.cId,
+	                         "region.order": region.code,
+	                     },
+	                     success: function(rspdata) {
+	                         var selectCountry = $(".selectCountry");
+	                         selectCountry.empty().append("<option value=0 data-regionid=0>请选择区</option>");
+	                         for (var i = 0; i < rspdata.length; i++) {
+	                             selectCountry.append("<option value=" + rspdata[i].code + " data-order=\"" + rspdata[i].order + "\" data-regionid=\"" + rspdata[i].id + "\" >" + rspdata[i].name + "</option>");
+	                         }
+	                     },
+	                 });
 	        	 }
 	         },
 	     });	 
