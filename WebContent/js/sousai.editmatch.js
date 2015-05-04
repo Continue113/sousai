@@ -102,14 +102,21 @@ function searchExistedCourt(crtPage,rs){
 	  var data = getRegion();
 	  data.currentPage = crtPage||$("div.existCourtsBox ul.pagination li.active a").html()||1;
 	  data.rows = rs||25;
+	  data.keyValue = $("#keyValue").val()||"";
+	  data.matchType = ($("select.selectParticularMatchType option:selected").attr("value") == "0" ? null : $("select.selectParticularMatchType option:selected").text());
+
+	  data.courtTypeId = null;
+	  data.orderByCol = "relDate";
+	  data.isAsc = false;
+	  
 	  if(data.regionId == null){
 		  sousaiRemindDialog("省，市，区请至少选择一个为比赛区域！");
 		  return false;
 	  }
 	  console.log(data);
-	  //ajax 获取已有场地信息列表
+		  
 	  $.ajax({
-	      url: "getCourtM",
+	      url: "getCourtByP",//"getCourtM",
 	      data: data,
 	      success: function(rspdata) {
 	    	  console.log(rspdata);
@@ -126,7 +133,7 @@ function searchExistedCourt(crtPage,rs){
 	        }
 	        pagesCourts(rspdata.count,data.currentPage,data.rows);
 	      }
-	    });
+	    }); 
 	  
     $("div.existCourtsBox").slideDown(); //将已有场地类表滑出
     //若添加新场地列表存在，则隐藏并删除

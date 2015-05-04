@@ -111,8 +111,8 @@
 				<td>{{name}}</td>
 				<td>{{addr}}</td>
 				<td>{{courtType}}</td>
-				<td>{{tableNum}}</td>
-				<td>{{matchCount}}</td>
+				<td>{{#if tableNum}}{{tableNum}}{{else}}暂无赛场数据{{/if}}</td>
+				<td>{{#if matchCount}}{{else}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;?{{/if}}</td>
 				<td><a target="_blank" href="courtSearchDetail.jsp?id={{id}}">详细</a></td>
 			</tr>
 

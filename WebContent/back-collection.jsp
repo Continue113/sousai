@@ -192,7 +192,7 @@ function sureDeleteEdit(){
         $("#inputMatchType").val(data.matchType).attr("data-oldtype",data.matchType);
         $("#inputMatchTimefrom").val(data.matchStartTime);
         $("#inputMatchTimeto").val(data.matchDeadline);
-        $("#inputMatchCourt").val(data.matchAddress).attr("data-oldcourt",data.matchAddress);
+        $("#inputMatchCourt").val(data.matchAddress).attr("data-oldcourt",data.matchAddress).attr("data-courtid","");
         tinymce.activeEditor.setContent(data.matchIntroduction);
         
     	$(".matchList").slideUp();
@@ -266,11 +266,7 @@ function sureDeleteEdit(){
     	//iscourt = $("#inputMatchCourt").attr("data-iscourt"),
         intro = tinymce.activeEditor.getContent();
     	
-    	//console.log("id: "+id+",title: "+title+",type: "+type+",typeid: "+typeid+",begintime: "+begintime+",endtime: "+endtime+",court: "+court+",courtid: "+courtid+",userid: "+userid+",iscourt: "+iscourt+",rule: "+rule);
-    	
-    	
     	if( $("#editMatchForm").valid() === true ){
-    		console.log("验证通过");
                 $.ajax({
                   url: "updateCollections",
                   data: {
@@ -303,10 +299,16 @@ function sureDeleteEdit(){
     });
     //发布比赛 编辑界面
     $(".editMatch .passCollection").click(function (){
+    	if(!$("#inputMatchCourt").attr("data-courtid")){
+    		sousaiRemindDialog("比赛地点不存在，请先修改比赛地点。");
+    		return false;
+    	}
+    	
                  $.ajax({
                   url: "publishCollections",
                   data: {
                     "collectionId": $("#inputMatchTitle").attr("data-id"),
+                    "courtId": $("#inputMatchCourt").attr("data-courtid"),
                   },
                   success: function(rspdata) {
                 	  if( rspdata == "success" ){
