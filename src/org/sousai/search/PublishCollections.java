@@ -12,6 +12,22 @@ import com.opensymphony.xwork2.ActionContext;
 
 public class PublishCollections {
 	private String collectionId = null;
+	private Integer courtId;
+
+	/**
+	 * @return the courtId
+	 */
+	public Integer getCourtId() {
+		return courtId;
+	}
+
+	/**
+	 * @param courtId
+	 *            the courtId to set
+	 */
+	public void setCourtId(Integer courtId) {
+		this.courtId = courtId;
+	}
 
 	public String getCollectionId() {
 		return collectionId;
@@ -37,7 +53,7 @@ public class PublishCollections {
 			return null;
 		}
 		for (int i = 0; i < matchList.size(); ++i) {
-			publishJdbc.publish(matchList.get(i), userId);
+			publishJdbc.publish(matchList.get(i), userId, courtId);
 		}
 		JSONUtils.toJson(ServletActionContext.getResponse(), Constant.SUCCESS);
 		return null;

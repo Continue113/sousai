@@ -201,8 +201,8 @@ public class Jdbc {
 		return matchData;
 	}
 
-	public void publish(MatchData matchData, int userId) {
-		String sql = "insert into MATCHES(USERID,NAME,TYPE,BEGINTIME,ENDTIME,RULE) values(?,?,?,?,?,?)";
+	public void publish(MatchData matchData, int userId, int courtId) {
+		String sql = "insert into MATCHES(USERID,NAME,TYPE,BEGINTIME,ENDTIME,RULE,COURTID) values(?,?,?,?,?,?,?)";
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
 		Timestamp startTime = null;
 		Timestamp deadline = null;
@@ -223,6 +223,7 @@ public class Jdbc {
 			pstmt.setTimestamp(4, startTime);
 			pstmt.setTimestamp(5, deadline);
 			pstmt.setString(6, matchData.getMatchIntroduction());
+			pstmt.setInt(7, courtId);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
