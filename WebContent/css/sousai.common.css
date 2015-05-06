@@ -329,7 +329,13 @@ div.box-active ul.breadcrumb, div.box-active > div.courtBox-block > ul.breadcrum
   .existCourtsBox tr{cursor: pointer;}
   .existCourtsBox tr.active {
     font-weight: bold;
+    color: #fff;
   }
+  
+  .table-striped tbody >  tr.active > td, .table-striped tbody > tr.active:nth-child(2n+1) > td{
+    background-color: #51a351;
+  }
+
   /** 最小宽度情况下 **/
   @media (max-width: 480px) {
     /** 搜索现有场地按钮 **/

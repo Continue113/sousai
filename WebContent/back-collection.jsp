@@ -29,7 +29,7 @@
         <select class="select selectRows span1"></select>
         <div class="btnbar pull-right"> 
          <button type="button" class="btn deleteCollection">删除选中</button>
-         <button type="button" class="btn passCollection">发布选中</button> 
+         <!-- <button type="button" class="btn passCollection">发布选中</button>  -->
         </div> 
        </div>
        <table class="table table-striped table-hover collectionsTable">
