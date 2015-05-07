@@ -255,12 +255,51 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 		}
 		return count(strHql);
 	}
+	
+	@Override
+	public int countCourtByAdmin(String[] columns,
+			String keyValue, Integer selType) throws Exception{
+		String strWhere = null;
+		String[] columnsCopy = new String[columns.length];
+		if (!CommonUtils.isNullOrEmpty(keyValue)) {
+			keyValue = " %" + keyValue + "% ";
+			int[] types = new int[columns.length];
+			int[] relations = new int[columns.length];
+			String[] args = new String[columns.length];
+			for (int i = 0; i < columns.length; i++) {
+				types[i] = 2;
+				// args[i] = new String(keyValue.getBytes("UTF-8"));
+				args[i] = keyValue;
+				relations[i] = 1;
+				// 列前加上表别名
+				columnsCopy[i] = addPrefixToColumn(columns[i]);
+			}
+			strWhere = Append_StringV2(" ", types, columnsCopy, args, relations, false);
+		}
+
+		if (!CommonUtils.isNullOrEmpty(selType) && selType == 1) {
+			if (CommonUtils.isNullOrEmpty(strWhere)) {
+				strWhere = " c.verify='0'";
+			} else {
+				strWhere = strWhere+" and c.verify='0'";
+			}
+		}
+		if (!CommonUtils.isNullOrEmpty(strWhere)) {
+			strWhere = " where " + strWhere;
+		}
+		
+		String strHql = "select count(*) from Court c ";
+		if(strWhere!=null)
+			strHql += strWhere;
+		return count(strHql);
+	}
 
 	@Override
 	public List<CourtBean> findPagedByKeyValueOrderBy(String[] columns,
 			String keyValue, Integer currentPage, Integer rows,
 			String orderByCol, Boolean isAsc, Integer selType) throws Exception {
 		String strWhere = null;
+		String[] columnsCopy = new String[columns.length];
 		if (!CommonUtils.isNullOrEmpty(keyValue)) {
 			keyValue = " %" + keyValue + "% ";
 			int[] types = new int[columns.length];
@@ -270,9 +309,9 @@ public class CourtDaoHibernate extends SqlHelper implements CourtDao {
 				// args[i] = new String(keyValue.getBytes("UTF-8"));
 				args[i] = keyValue;
 				// 列前加上表别名
-				columns[i] = " and " + addPrefixToColumn(columns[i]);
+				columnsCopy[i] = " and " + addPrefixToColumn(columns[i]);
 			}
-			strWhere = Append_String(" and ", types, columns, args);
+			strWhere = Append_String(" and ", types, columnsCopy, args);
 		}
 
 		if (!CommonUtils.isNullOrEmpty(selType) && selType == 1) {

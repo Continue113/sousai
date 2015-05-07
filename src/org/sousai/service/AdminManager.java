@@ -185,5 +185,11 @@ public interface AdminManager {
 
 	List<CourtType> findCourtTypeByMatchTypeId(Integer id) throws Exception;
 
+	int countMatchByAdmin(String[] columns, String keyValue, Integer selType)
+			throws Exception;
+
+	int countCourtByAdmin(String[] columns, String keyValue, Integer selType)
+			throws Exception;
+
 	
 }

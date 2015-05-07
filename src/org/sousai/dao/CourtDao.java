@@ -236,4 +236,7 @@ public interface CourtDao {
 	void relCourts(Integer[] ids, boolean isRel) throws Exception;
 
 	Integer saveWithoutT(Court court) throws Exception;
+
+	int countCourtByAdmin(String[] columns, String keyValue, Integer selType)
+			throws Exception;
 }

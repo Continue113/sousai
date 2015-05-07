@@ -476,6 +476,10 @@ $(function(){
     "court.matchType": { 
     	min: 1,
     },
+    "court.addr":{
+    	minlength: 6,
+    	maxlength: 60
+    },
     mcId: {
     	min: 1,
     },
@@ -491,12 +495,16 @@ $(function(){
     "court.tableNum":{
     	digits: true, 
     	min: 1,
+    	max: 999.1,
+    },
+    "court.tel":{
+    	maxlength: 30
     },
     "court.price": {
-        maxlength: 60
+        maxlength: 30
     },
     "court.workTime": {
-        maxlength: 60
+        maxlength: 30
     },
   },
   messages: {
@@ -512,16 +520,24 @@ $(function(){
     selectCity: "",//市
     selectCountry: "",//区
     intro: "请输入场地介绍",
-    "court.addr": "请输入场地地址",//场地的场地地址
+    "court.addr": {
+    	required: "请输入场地详细地址",
+  	  	minlength: "场地详细地址至少6个字符",
+  	  	maxlength: "场地详细地址至多60个字符"
+    },//场地的场地地址
     "court.tableNum": {
-    	digits: "请填写整数，最小为1",
-    	min: "请填写整数，最小为1"    	
+    	digits: "请填写整数，最小为1，最大为999",
+    	min: "请填写整数，最小为1，最大为999",
+    	max: "请填写整数，最小为1，，最大为999",
     }, //赛场数
+    "court.tel":{
+    	maxlength: "联系电话最多填写30个字符",
+    },
     "court.price": {
-        maxlength: "价格最多填写60个字符",
+        maxlength: "价格最多填写30个字符",
     },
     "court.workTime": {
-        maxlength: "开发时间最多填写60个字符",
+        maxlength: "开发时间最多填写30个字符",
     },
     "court.courtTypeId": "",//场地的场地类型
   },

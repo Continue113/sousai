@@ -73,6 +73,7 @@
   <script src="js/bootstrap-datetimepicker.min.js"></script> 
   <script src="js/bootstrap-datetimepicker.zh-CN.js"></script> 
   <script src="js/handlebars-v2.0.0.js"></script>
+  <script src="js/jquery.wordLimit.js"></script>
   <script src="tinymce/jquery.tinymce.min.js"></script> 
   <script src="tinymce/tinymce.min.js"></script> 
   <script src="js/jquery.validate.min.js"></script>

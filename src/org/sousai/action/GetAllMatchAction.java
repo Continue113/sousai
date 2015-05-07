@@ -153,7 +153,8 @@ public class GetAllMatchAction extends UserBaseAction {
 				List<MatchBean> list = amg.findPagedMatchByKeyValueOrderBy(
 						columns, keyValue, currentPage, rows, orderByCol,
 						isAsc, selType);
-				int count = amg.countAllMatch(selType);
+//				int count = amg.countAllMatch(selType);
+				int count = amg.countMatchByAdmin(columns, keyValue, selType);
 				FrontMessage msg = new FrontMessage(list, count);
 				if (list != null) {
 					MyPrint.myPrint("list.size()=" + list.size());

@@ -156,8 +156,9 @@ public class GetAllCourtAction extends UserBaseAction {
 				List<CourtBean> list = amg.findPagedCourtByKeyValueOrderBy(
 						columns, keyValue, currentPage, rows, orderByCol,
 						isAsc, selType);
-				MyPrint.myPrint("Intro=" + list.get(0).getIntro());
-				int count = amg.countAllCourt(selType);
+//				MyPrint.myPrint("Intro=" + list.get(0).getIntro());
+//				int count = amg.countAllCourt(selType);
+				int count = amg.countCourtByAdmin(columns, keyValue, selType);
 				FrontMessage msg = new FrontMessage(list, count);
 				if (list != null) {
 					JSONUtils.toJson(ServletActionContext.getResponse(), msg);

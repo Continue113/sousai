@@ -119,13 +119,14 @@ function searchExistedCourt(crtPage,rs){
 	      url: "getCourtByP",//"getCourtM",
 	      data: data,
 	      success: function(rspdata) {
-	    	  console.log(rspdata);
 	        var target = $(".existCourtsBox > table > tbody"),template = Handlebars.compile($('#existCourts-template').html());
 	        $(".existCourtsBox .noresult").hide(); //隐藏无结果提醒
 	        Handlebars.registerHelper("data",function(){
 	          return JSON.stringify(this);
 	        });
 	        target.empty().html(template(rspdata.body));
+	        
+	        target.find("td").wordLimit();
 	        //若没有相应的结果，给出提醒
 	        if($(".tritem").length == 0){
 	        	//sousaiRemindDialog("在您选择的比赛地点没有搜索到已有场地，请更换比赛地点或在此地点添加新场地。");
@@ -249,7 +250,7 @@ $(function(){
                   data: data,
                   success: function(rspdata) {
                 	  if( rspdata == "success" ){
-                		  window.setTimeout("window.location。href=window.location。href",3000);
+                		  window.setTimeout("location.href=location.href",3000);
                   		  sousaiRemindDialog("保存成功,3秒后将刷新页面。");
                 	  }else{
                 		  sousaiRemindDialog("保存失败，错误代码为："+rspdata);

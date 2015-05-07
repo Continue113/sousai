@@ -185,5 +185,8 @@ public interface MatchDao {
 	 * @throws Exception 
 	 */
 	Map<Integer, Integer> countByCourtIds(Integer[] ids) throws Exception;
+
+	int countMatchByAdmin(String[] columns, String keyValue, Integer selType)
+			throws Exception;
 	
 }

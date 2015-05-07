@@ -263,6 +263,29 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 	}
 
 	@Override
+	public int countMatchByAdmin(String[] columns,
+			String keyValue, Integer selType) throws Exception {
+		String strWhere = buildKeyValueStatement(keyValue, columns);
+		if (!CommonUtils.isNullOrEmpty(selType) && selType == 1) {
+			if (CommonUtils.isNullOrEmpty(strWhere)) {
+				strWhere = " where m.verify='0'";
+			} else {
+				// strWhere += " and m.verify='0'";
+				strWhere = String
+						.format(" where %1$s and m.verify='0'", strWhere);
+			}
+		} else {
+			if (!CommonUtils.isNullOrEmpty(strWhere)) {
+				strWhere = " where " + strWhere;
+			}
+		}
+		String strHql = "select count(*) from Match m ";
+		if(strWhere!=null)
+			strHql += strWhere;
+		return count(strHql);
+	}
+	
+	@Override
 	public int countMatch(Integer selType) {
 		String strHql = "select count(*) from Match";
 		if (!CommonUtils.isNullOrEmpty(selType) && selType == 1) {
@@ -555,6 +578,7 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 	private String buildKeyValueStatement(String keyValue, String[] columns)
 			throws Exception {
 		String strWhere = null;
+		String[] columnsCopy = new String[columns.length];
 		if (!CommonUtils.isNullOrEmpty(keyValue)) {
 			String[] keyValues = keyValue.split(" ");
 			int[] types = new int[columns.length];
@@ -582,7 +606,7 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 					// tempRelations[j] = 0;
 					// }
 				}
-				columns[i] = Append_StringV2(" ", tempTypes, tempColumns,
+				columnsCopy[i] = Append_StringV2(" ", tempTypes, tempColumns,
 						tempArgs, tempRelations, false);
 				types[i] = 11;
 				args[i] = null;
@@ -593,7 +617,7 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 				// relations[i] = 0;
 				// }
 			}
-			strWhere = Append_StringV2(" ", types, columns, args, relations,
+			strWhere = Append_StringV2(" ", types, columnsCopy, args, relations,
 					false);
 			MyPrint.myPrint("buildKeyValueStatement.strWhere = " + strWhere);
 		}

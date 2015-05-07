@@ -319,19 +319,15 @@ div.box-active ul.breadcrumb, div.box-active > div.courtBox-block > ul.breadcrum
   -webkit-border-radius: 0 0 6px 6px;
   -moz-border-radius: 0 0 6px 6px;
   border-radius: 0 0 6px 6px;}
-  /** 避免验证后无圆角 **/
-  /* .input-append span.add-on{
-  -webkit-border-radius: 0 4px 4px 0;
-  -moz-border-radius: 0 4px 4px 0;
-  border-radius: 0 4px 4px 0;
-  } */
   /** 现有场地表格 **/
   .existCourtsBox tr{cursor: pointer;}
   .existCourtsBox tr.active {
     font-weight: bold;
     color: #fff;
   }
-  
+  .existCourtsBox > tbody > th:nth-child(3),  .existCourtsBox > tbody > td:nth-child(3){
+    text-align: right;
+  }
   .table-striped tbody >  tr.active > td, .table-striped tbody > tr.active:nth-child(2n+1) > td{
     background-color: #51a351;
   }

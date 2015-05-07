@@ -60,18 +60,15 @@
            <div class="controls form-inline">
             <s:include value="seg-selectPCC.jsp"/>
             <!-- /选择省市区三级下拉框 --> 
-            <a href="javascript:void(0)" class="btn btn-success pull-right" id="searchExistedCourt">搜索现有球场</a>
+            <a href="javascript:void(0)" class="btn btn-success pull-right" id="searchExistedCourt">搜索现有场地</a>
             </div>
             </div>
           <div class="control-group existCourtsBox hide matchAdressControls"> 
            <table class="table table-striped table-hover"> 
             <thead> 
              <tr> 
-              <th>球场名称</th> 
+              <th>场地名称</th> 
               <th>详细地址</th> 
-              <th>类型</th> 
-              <th>球台数</th> 
-              <th>比赛次数</th> 
               <th>详细</th> 
              </tr> 
             </thead> 
@@ -110,9 +107,6 @@
 		    <tr class="tritem"  data-info="{{data this}}" data-courtid="{{id}}">
 				<td>{{name}}</td>
 				<td>{{addr}}</td>
-				<td>{{courtType}}</td>
-				<td>{{#if tableNum}}{{tableNum}}{{else}}暂无赛场数据{{/if}}</td>
-				<td>{{#if matchCount}}{{else}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;?{{/if}}</td>
 				<td><a target="_blank" href="courtSearchDetail.jsp?id={{id}}">详细</a></td>
 			</tr>
 

@@ -237,7 +237,19 @@ public class AdminManagerImpl implements AdminManager {
 	public int countAllCourt(Integer selType) throws Exception {
 		return courtDao.countMatch(selType);
 	}
+	
+	@Override
+	public int countCourtByAdmin(String[] columns,
+			String keyValue, Integer selType) throws Exception {
+		return courtDao.countCourtByAdmin(columns, keyValue, selType);
+	}
 
+	@Override
+	public int countMatchByAdmin(String[] columns,
+			String keyValue, Integer selType) throws Exception {
+		return matchDao.countMatchByAdmin(columns, keyValue, selType);
+	}
+	
 	@Override
 	public int countAllMatch(Integer selType) throws Exception {
 		return matchDao.countMatch(selType);

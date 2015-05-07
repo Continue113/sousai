@@ -7,7 +7,7 @@
   <meta name="description" content="搜赛网场地详情页面" >
   <s:include value="seg-meta.jsp"/>
   <style type="text/css">
-  .courtSearchDetail .courtShortInfo .title{font-weight: bold;font-size: 14px;color: #000;margin: 10px 0;}
+.courtSearchDetail .courtShortInfo .title{font-weight: bold;font-size: 14px;color: #000;margin: 10px 0;}
 .courtSearchDetail .courtShortInfo .title span{margin-left: 10px;}
 .courtSearchDetail .courtShortInfo .courtImgs{margin-left: 0;}
 .courtSearchDetail .courtShortInfo .courtImg-big{width:270px;height: 200px;border:1px solid #ccc;}
@@ -106,8 +106,8 @@
        <div class="courtImg-small"> 
         <ul class="breadcrumb"> 
          <li class="firstImg active"><img src="img/defaultImg.png" ></li> 
-         <li><img src="" ></li> 
-         <li class="lastImg"><img src="" ></li> 
+         <li></li> 
+         <li class="lastImg"></li> 
         </ul> 
        </div> 
       </div> 
@@ -513,12 +513,12 @@ function pagesMesg(count,crtPage,rs){
 		        	console.log(rspdata);
 		      	  $.each(rspdata.list,function(index,item){
 		      		  if(index == 0){
-		      			$('.courtImg-big').find("img:eq(0)").attr("src",'.'+item.url);	 
+		      			$('.courtImg-big').find("img:eq(0)").attr("src",'.'+item.url);
 			      		$('.courtImg-small').find("img:eq(0)").attr("src",'.'+item.url);	      			  
 		      		  }else if(index ==1){
-		      			$('.courtImg-small').find("img:eq(1)").attr("src",'.'+item.url);	 
+		      			$('.courtImg-small').find("li:eq(1)").html('<img src=".'+item.url+'" >');	 
 		      		  }else if(index ==2){
-		      			$('.courtImg-small').find("img:eq(2)").attr("src",'.'+item.url);	 
+		      			$('.courtImg-small').find("li:eq(2)").html('<img src=".'+item.url+'" >');	 
 		      		  }
 		      	  });
 		        },
