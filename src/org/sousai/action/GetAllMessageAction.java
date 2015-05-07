@@ -149,7 +149,8 @@ public class GetAllMessageAction extends UserBaseAction {
 				List<MessageBean> list = amg.findPagedMesgByKeyValueOrderBy(
 						columns, keyValue, currentPage, rows, orderByCol,
 						isAsc, selType);
-				int count = amg.countAllMessage(selType);
+//				int count = amg.countAllMessage(selType);
+				int count = amg.countMessageByAdmin(columns, keyValue, selType);
 				FrontMessage msg = new FrontMessage(list, count);
 				if (list != null) {
 					JSONUtils.toJson(ServletActionContext.getResponse(), msg);

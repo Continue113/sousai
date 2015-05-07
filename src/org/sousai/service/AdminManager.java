@@ -191,5 +191,11 @@ public interface AdminManager {
 	int countCourtByAdmin(String[] columns, String keyValue, Integer selType)
 			throws Exception;
 
+	public int countMessageByAdmin(String[] columns, String keyValue,
+			Integer selType) throws Exception;
+
+	public int countUserByAdmin(String[] columns, String keyValue,
+			Integer selType)throws Exception;
+
 	
 }

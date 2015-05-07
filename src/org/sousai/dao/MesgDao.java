@@ -99,6 +99,9 @@ public interface MesgDao {
 			String orderByCol, Boolean isAsc, Integer selType) throws Exception;
 
 	int countCourt(Integer selType);
+	
+	int countMessageByAdmin(String[] columns,
+			String keyValue, Integer selType) throws Exception;
 
 	/**
 	 * 查找指定场地的评论数

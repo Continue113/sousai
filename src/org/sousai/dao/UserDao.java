@@ -91,4 +91,7 @@ public interface UserDao {
 	 * @param PicId
 	 */
 	void updateUserPic(Integer id, String picId);
+	
+	int countUserByAdmin(String[] columns,
+			String keyValue, Integer selType) throws Exception;
 }

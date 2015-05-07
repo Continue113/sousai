@@ -423,4 +423,16 @@ public class AdminManagerImpl implements AdminManager {
 			throws Exception {
 		return userMarkDao.countByMatchIds(matchIds);
 	}
+
+	@Override
+	public int countMessageByAdmin(String[] columns, String keyValue,
+			Integer selType) throws Exception {
+		return mesgDao.countMessageByAdmin(columns, keyValue, selType);
+	}
+
+	@Override
+	public int countUserByAdmin(String[] columns, String keyValue,
+			Integer selType) throws Exception{
+		return userDao.countUserByAdmin(columns, keyValue, selType);
+	}
 }

@@ -114,6 +114,7 @@ public class MesgDaoHibernate extends SqlHelper implements MesgDao {
 			String keyValue, Integer currentPage, Integer rows,
 			String orderByCol, Boolean isAsc, Integer selType) throws Exception {
 		String strWhere = null;
+		String[] columnsCopy = new String[columns.length];
 		if (!CommonUtils.isNullOrEmpty(keyValue)) {
 			keyValue = " %" + keyValue + "% ";
 			int[] types = new int[columns.length];
@@ -121,9 +122,9 @@ public class MesgDaoHibernate extends SqlHelper implements MesgDao {
 			for (int i = 0; i < columns.length; i++) {
 				types[i] = 2;
 				args[i] = keyValue;
-				columns[i] = " and" + addPrefixToColumn(columns[i]);
+				columnsCopy[i] = " and" + addPrefixToColumn(columns[i]);
 			}
-			strWhere = Append_String(" and ", types, columns, args);
+			strWhere = Append_String(" and ", types, columnsCopy, args);
 		}
 		if (!CommonUtils.isNullOrEmpty(selType) && selType == 1) {
 			if (CommonUtils.isNullOrEmpty(strWhere)) {
@@ -188,6 +189,44 @@ public class MesgDaoHibernate extends SqlHelper implements MesgDao {
 	@Override
 	public int countByCourtId(Integer courtId) throws Exception{
 		String strHql = String.format("select count(*) from Message where courtId=%1$s and state=1",courtId);
+		return count(strHql);
+	}
+
+	@Override
+	public int countMessageByAdmin(String[] columns, String keyValue,
+			Integer selType) throws Exception {
+		String strWhere = null;
+		String[] columnsCopy = new String[columns.length];
+		if (!CommonUtils.isNullOrEmpty(keyValue)) {
+			keyValue = " %" + keyValue + "% ";
+			int[] types = new int[columns.length];
+			int[] relations = new int[columns.length];
+			String[] args = new String[columns.length];
+			for (int i = 0; i < columns.length; i++) {
+				types[i] = 2;
+				// args[i] = new String(keyValue.getBytes("UTF-8"));
+				args[i] = keyValue;
+				relations[i] = 1;
+				// 列前加上表别名
+				columnsCopy[i] = addPrefixToColumn(columns[i]);
+			}
+			strWhere = Append_StringV2(" ", types, columnsCopy, args, relations, false);
+		}
+
+		if (!CommonUtils.isNullOrEmpty(selType) && selType == 1) {
+			if (CommonUtils.isNullOrEmpty(strWhere)) {
+				strWhere = " state=1";
+			} else {
+				strWhere = strWhere+" and state=1";
+			}
+		}
+		if (!CommonUtils.isNullOrEmpty(strWhere)) {
+			strWhere = " where " + strWhere;
+		}
+		
+		String strHql = "select count(*) from Message ";
+		if(strWhere!=null)
+			strHql += strWhere;
 		return count(strHql);
 	}
 

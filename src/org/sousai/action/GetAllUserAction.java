@@ -149,7 +149,8 @@ public class GetAllUserAction extends UserBaseAction {
 				List<UserBean> list = amg.findPagedUserByKeyValueOrderBy(
 						columns, keyValue, currentPage, rows, orderByCol,
 						isAsc, selType);
-				int count = amg.countAllUser(selType);
+//				int count = amg.countAllUser(selType);
+				int count = amg.countUserByAdmin(columns, keyValue, selType);
 				FrontMessage msg = new FrontMessage(list, count);
 				if (list != null) {
 					JSONUtils.toJson(ServletActionContext.getResponse(), msg);
