@@ -321,9 +321,12 @@ div.box-active ul.breadcrumb, div.box-active > div.courtBox-block > ul.breadcrum
   border-radius: 0 0 6px 6px;}
   /** 现有场地表格 **/
   .existCourtsBox tr{cursor: pointer;}
-  .existCourtsBox tr.active {
+  .existCourtsBox tr.active, .existCourtsBox tr.active a{
     font-weight: bold;
     color: #fff;
+  }
+  .existCourtsBox tr.active a:hover,  .existCourtsBox tr.active a:active{
+    color: #000;
   }
   .existCourtsBox > tbody > th:nth-child(3),  .existCourtsBox > tbody > td:nth-child(3){
     text-align: right;

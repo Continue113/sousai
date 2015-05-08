@@ -517,6 +517,10 @@ $(function() {
 	    //   $(".isp").html(remote_ip_info.isp);
 	  });
    }*/
+    //若不存在session中的已选城市，则使用此cookie中存储的上次使用的城市
+    if( ($(".sessionCity").length != 1) && (getCookie("sousaiUserSessionregion") != null) ){
+        $("#city").html("你所在的城市["+unescape(getCookie("sousaiUserRegion"))+"] ").attr("data-sessionregion",unescape(getCookie("sousaiUserSessionregion")));
+    }    
 
     //搜索栏模糊搜索
     $("#searchbox-match button").click(function() {
@@ -606,9 +610,14 @@ $(function() {
                     "regionBean.rId": rId,
                 },
                 success: function(rspdata) {
+                	var sousaiUserSessionregion = "{'pName':'" + pName + "','pId':'" + pId + "','cName':'" + cName + "','cId':'" + cId + "','code':'" + cCode + "'}";
                     if (rspdata == 0) {
-                        $("#city").text("你所在的城市["+rName+"]  ").attr("data-sessionregion", "{'pName':'" + pName + "','pId':'" + pId + "','cName':'" + cName + "','cId':'" + cId + "','code':'" + cCode + "'}");
+                        $("#city").text("你所在的城市["+rName+"]  ").attr("data-sessionregion", sousaiUserSessionregion);
                     }
+                    //设置cookie中的region
+                    setCookie("sousaiUserSessionregion",sousaiUserSessionregion);
+                    setCookie("sousaiUserRegion",rName);
+                    //console.log(unescape(getCookie("sousaiUserSessionregion")),unescape(getCookie("sousaiUserRegion")));
                 },
             });
         tgPrt.hide();

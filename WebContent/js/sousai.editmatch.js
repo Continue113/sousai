@@ -126,7 +126,8 @@ function searchExistedCourt(crtPage,rs){
 	        });
 	        target.empty().html(template(rspdata.body));
 	        
-	        target.find("td").wordLimit();
+	        target.find("tr").find("td:eq(0),td:eq(1)").wordLimit();
+	        
 	        //若没有相应的结果，给出提醒
 	        if($(".tritem").length == 0){
 	        	//sousaiRemindDialog("在您选择的比赛地点没有搜索到已有场地，请更换比赛地点或在此地点添加新场地。");
