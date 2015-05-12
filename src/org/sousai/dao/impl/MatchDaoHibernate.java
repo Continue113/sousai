@@ -3,6 +3,7 @@ package org.sousai.dao.impl;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -159,7 +160,7 @@ public class MatchDaoHibernate extends SqlHelper implements MatchDao {
 	@Override
 	public Map<String, Integer> getEachMatchCount(Integer userId) {
 		try {
-			Map<String, Integer> rs = new HashMap<String, Integer>();
+			Map<String, Integer> rs = new LinkedHashMap<String, Integer>();
 			String hql = null;
 			Session session = null;
 			Query q = null;
