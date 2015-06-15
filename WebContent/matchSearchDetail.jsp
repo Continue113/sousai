@@ -115,7 +115,7 @@ function e(){
 	        	  // 比赛进程（状态）是报名中，则不显示比赛成绩这栏。这个页面是在新的窗口打开，添加“修改”和“录入成绩”的按钮，可以修改“比赛规程”和“基本比赛信息”，按钮根据比赛状态（进程），改变按钮出现的情况。根据是否是发布者，出现录入成绩和修改比赛按钮
 				  //修改title
 				  $("title").html(rspdata.name+" &middot; 搜赛网");
-			      $("meta").attr("content",rspdata.name+" &middot; 搜赛网");	        	  
+			      $('meta[name="description"]').attr("content",rspdata.name+" &middot; 搜赛网");	        	  
 				  target.find(".thisname").text(rspdata.name).attr("data-info", JSON.stringify(rspdata));
 				  target.find(".thistime").text(rspdata.beginTime+" -  "+rspdata.endTime+"    "+rspdata.beginDayOfWeek+"-"+rspdata.endDayOfWeek);
 				  target.find(".thisreltime").text(rspdata.relTime);

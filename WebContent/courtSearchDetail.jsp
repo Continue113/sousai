@@ -497,7 +497,7 @@ function pagesMesg(count,crtPage,rs){
 	      });
 	      target.empty().html(template(temp));
 	      $("title").html(rspdata.name+" &middot; 搜赛网");
-	      $("meta").attr("content",rspdata.name+" &middot; 搜赛网");
+	      $('meta[name="description"]').attr("content",rspdata.name+" &middot; 搜赛网");
 	      $(".title").html(rspdata.name).attr("data-id",rspdata.id);
 	      $("#courtContent").html(rspdata.intro);
 	      ajaxAllEvaluation({courtId:id});
