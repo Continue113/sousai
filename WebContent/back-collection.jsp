@@ -28,7 +28,9 @@
        <div class="panel-top form-inline"> 
         <select class="select selectRows span1"></select>
         <div class="btnbar pull-right"> 
+         <button type="button" class="btn selectAll">全选</button>
          <button type="button" class="btn deleteCollection">删除选中</button>
+         <button type="button" class="btn btn-danger deleteAll">删除所有记录</button>
          <!-- <button type="button" class="btn passCollection">发布选中</button>  -->
         </div> 
        </div>
@@ -148,6 +150,24 @@ function sureDelete(){
       }
     });
 }
+
+function sureDeleteAll(){
+	hideSousaiRemindDialog();
+    $.ajax({
+      url: "deleteAllCollections",
+      data: {
+        //"collectionId": collectionId.join(","),
+      },
+      success: function(rspdata) {
+    	  if( rspdata == "success" ){
+    		  sousaiRemindDialog("删除成功");
+    	  }else{
+    		  sousaiRemindDialog("删除失败，错误代码为："+rspdata);
+    	  }
+      }
+    });
+}
+
 function sureDeleteEdit(){
 	hideSousaiRemindDialog();
 	$.ajax({
@@ -166,9 +186,9 @@ function sureDeleteEdit(){
       });
 }
   $(function(){
-	  if(isAdmin() == '-1'){
+	  /* if(isAdmin() == '-1'){
 		  return false;
-	  }
+	  } */
 	  
 	  setMenu();
 	  //删除.btnbar 中绑定为比赛的class 改为Collection 使原来的发布比赛、保存修改、删除比赛的点击函数失效，
@@ -198,6 +218,16 @@ function sureDeleteEdit(){
     	$(".matchList").slideUp();
     	$(".editMatch").slideDown();
   	});
+    //点击全选
+    $(".matchList .selectAll").click(function(){
+    	$(".match").find("input").attr("checked","checked");
+    });
+    //点击删除所有记录
+    $(".matchList .deleteAll").click(function(){
+    	$("#SRDadd").text("小提示：一旦确定删除将无法取消操作。");
+    	$("#sousaiRemindDialog > .modal-footer > button.btn-success").attr("onclick","sureDeleteAll()");
+    	sousaiRemindDialog("确定删除？",-1,"show");
+    });
     //点击删除比赛 列表界面
     $(".matchList .deleteCollection").click(function(){
     	var checked = $(".match input:checked"),n = checked.length;

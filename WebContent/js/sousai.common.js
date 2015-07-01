@@ -477,7 +477,7 @@ $(function() {
     //检测是否在IE8下，若是则提醒升级或使用其他现代浏览器
     var userAgent=navigator.userAgent.toLowerCase(), 
     	browser={
-        version:(userAgent.match(/(?:firefox|opera|safari|chrome|msie)[\/: ]([\d.]+)/))[1],
+        version:(userAgent.match(/(?:firefox|opera|safari|chrome|msie)[\/: ]([\d.]+)/)),
         safari:/version.+safari/.test(userAgent),
         chrome:/chrome/.test(userAgent),
         firefox:/firefox/.test(userAgent),
@@ -485,7 +485,7 @@ $(function() {
         opera: /opera/.test(userAgent )
     }; /* 获得浏览器的名称及版本信息 */
 
-    if (browser.ie && browser.version <= 8.0)
+    if (browser.ie && browser.version[1] <= 8.0)
     {
       /* 判断是否为IE 8.0以下版本，是则执行以下操作 */
       $("body").prepend('<div style="text-align:center;"><p style="color:red;font-weight:bold;height:20px;width:100%;">您使用的是IE '+browser.version+',为了更好的体验本站,请升级IE浏览器或使用其他现代浏览器。<\/p><\/div>');
