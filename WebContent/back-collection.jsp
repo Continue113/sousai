@@ -154,10 +154,7 @@ function sureDelete(){
 function sureDeleteAll(){
 	hideSousaiRemindDialog();
     $.ajax({
-      url: "deleteAllCollections",
-      data: {
-        //"collectionId": collectionId.join(","),
-      },
+      url: "deleteCollectionsAll",
       success: function(rspdata) {
     	  if( rspdata == "success" ){
     		  sousaiRemindDialog("删除成功");

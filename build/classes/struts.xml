@@ -146,6 +146,10 @@
 			<result name="success">/</result>
 		</action>
 		
+		<action name="deleteCollectionsAll" class="org.sousai.search.DeleteCollections" method="deleteCollectionsAll">
+			<result name="success">/</result>
+		</action>
+		
 		<action name="publishCollections" class="org.sousai.search.PublishCollections" method="publishCollections">
 			<result name="success">/</result>
 		</action>
