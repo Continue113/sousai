@@ -107,7 +107,7 @@ public class Jdbc {
 	public LinkedList<MatchData> select() {
 		LinkedList<MatchData> matchList = new LinkedList<MatchData>();
 		try {
-			String sql = "select * from DATA_COLLECTION";
+			String sql = "select * from DATA_COLLECTION where state = 1";
 			pstmt = conn.prepareStatement(sql);
 			result = pstmt.executeQuery();
 
