@@ -58,10 +58,27 @@ public class Jdbc {
 
 	// 2.删除信息
 	public void delete(int id) {
-		String sql = "delete from DATA_COLLECTION where id = ?";
+		String sql = "update DATA_COLLECTION set state = 2 where id = ?";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, id);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	// 删除所有数据
+	public void deleteAll(){
+		String sql = "update DATA_COLLECTION set state = 2";
+		try {
+			pstmt = conn.prepareStatement(sql);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -107,7 +124,7 @@ public class Jdbc {
 	public LinkedList<MatchData> select() {
 		LinkedList<MatchData> matchList = new LinkedList<MatchData>();
 		try {
-			String sql = "select * from DATA_COLLECTION";
+			String sql = "select * from DATA_COLLECTION where state = 1";
 			pstmt = conn.prepareStatement(sql);
 			result = pstmt.executeQuery();
 

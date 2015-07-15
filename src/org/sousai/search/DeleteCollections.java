@@ -30,4 +30,16 @@ public class DeleteCollections {
 		}
 		return null ;
 	}
+	
+	public String deleteCollectionsAll(){
+		Jdbc delAllJdbc = new Jdbc();
+		
+		try{
+			delAllJdbc.deleteAll();
+			JSONUtils.toJson(ServletActionContext.getResponse(), "success");
+		}catch(Exception e){
+			JSONUtils.toJson(ServletActionContext.getResponse(), "error");
+		}
+		return null;
+	}
 }
